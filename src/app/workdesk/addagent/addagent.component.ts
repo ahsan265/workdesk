@@ -31,21 +31,7 @@ export class AddagentComponent implements OnInit {
   integration:any;
   constructor(public dialog: MatDialog,private gigaaaapi:GigaaaApiService,private messageservie:MessageService) { }
   form:FormGroup;
-  // form = new FormGroup({
-  //   email: new FormControl('', [
-  //     Validators.required,
-  //     Validators.email
-  //   ]),
-  //   language_ids: new FormControl('', [
-  //     Validators.required,Validators.minLength(6)
-  //   ]),
- 
-  //   role: new FormControl('', [
-  //     Validators.required,
-  //   ]),
-  //   integration_ids: new FormControl('', [
-  //     Validators.required,
-  //   ]),
+  
   //  });
   ngOnInit(): void {
     this.getallintegrationlist();
@@ -79,7 +65,6 @@ export class AddagentComponent implements OnInit {
         integration_ids: this.idofintg
       }
     }
-    console.log(data);
     const getdata = JSON.parse(localStorage.getItem('gigaaa-subscription'))
     var accesstoken=getdata.access_token;
     var subsid=getdata.subscription_id.subsid.uuid
@@ -144,7 +129,6 @@ export class AddagentComponent implements OnInit {
   {
     this.allintegration=this.allintegration.filter(({ id }) => id !== val);
     this.idofintg=this.idofintg.filter( (val)  => val !== val);
-    console.log(this.idofintg);
   } 
   removealanguagefromarray(val)
   {    this.idoflang=this.idoflang.filter( (val)  => val !== val);
@@ -157,7 +141,6 @@ export class AddagentComponent implements OnInit {
   }
 
   private handleLoginRegisterError(response: any) {
-    console.log(response)
         this.messageservie.setErrorMessage(response.error.error, 'toast-bottom-right');
   }
 }

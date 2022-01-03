@@ -111,7 +111,6 @@ datesecondfrompicker:any;
     @Inject(MAT_DIALOG_DATA) public data,) { }
 
   ngOnInit(): void {
-    console.log(this.data)
     this.showselectedpanel("main");
     this.getallthecountries();
     this.getlllangugaes();
@@ -174,9 +173,7 @@ showselectedpanel(val)
   var accesstoken=getdata?.access_token;
   try{
     var data= await this.gigaaaservice.getAllCountries(accesstoken);
-    console.log(data)
     var countrylist= data.map((item, i) => Object.assign(item,{ status: false}));
-
     countrylist=data;
      this.countrylist= countrylist.sort((a, b)=> {
       var textA = a.name;
@@ -227,7 +224,6 @@ showselectedpanel(val)
       val.forEach(ele=>{
       var  index = this.lang.findIndex(x => x.id ==ele);
       this.id_soflanguages.push(ele)
-      console.log(index)
       this.lang[index].status=true;
      
     });
@@ -334,7 +330,7 @@ showselectedpanel(val)
  //selectionpanel for selecting the panes
  onDateChange(event: Array<Date>)
  { 
-       console.log(event)
+
        var ismatched=false;
        var d = new Date(event[0]);
        var d1 = new Date(event[1]);
@@ -432,7 +428,6 @@ showselectedpanel(val)
 }
  selectDatetab(tabId:any)
  {
-   console.log(tabId)
    this.rangeSelected= tabId;
  }
 
@@ -502,7 +497,6 @@ showselectedpanel(val)
      }
       else if(val=="Custom")
       {
-        console.log(val)
         this.selectDatetab(val);
         var date1 = this.dateonefrompicker;
         var date2 = this.datesecondfrompicker;

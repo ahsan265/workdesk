@@ -202,7 +202,6 @@ public getAllUsers(): Observable<any> {
 
    public   getallagents(accesstoken:string,subsid:string,intid:string,show_active:number,show_invited:number,show_inactive:number,languages:any)
    {
-   console.log(show_active,show_inactive,show_invited)
      const httpOptions: any = {
 
      headers: new HttpHeaders({
@@ -212,7 +211,6 @@ public getAllUsers(): Observable<any> {
      })
    };
     const apiUrl = this.workdeskurl;
-    console.log(this.http.get("https://gigaaa-customer-support.azurewebsites.net/private/agents?show_active="+show_active+"&show_invited="+show_invited+"&show_inactive="+show_inactive+"&languages="+languages+"&organization="+subsid+"&integration="+intid,httpOptions))
     return this.http.get("https://gigaaa-customer-support.azurewebsites.net/private/agents?show_active="+show_active+"&show_invited="+show_invited+"&show_inactive="+show_inactive+"&languages="+languages+"&organization="+subsid+"&integration="+intid,httpOptions)
 
     }
@@ -360,7 +358,6 @@ public getAllUsers(): Observable<any> {
        'Authorization': `Bearer ${accesstoken}`
      })
    };
-   console.log(addrole)
     const apiUrl = this.subsidurl;
     return await this.http.put(apiUrl+"/agents/"+id+"?subscription="+subsid,addrole,httpOptions).toPromise()
       .catch((err) => {
@@ -462,7 +459,6 @@ public getAllUsers(): Observable<any> {
             })
           };
            const apiUrl = this.workdeskurl;
-           console.log(agentdata)
            return await this.http.post("https://gigaaa-customer-support.azurewebsites.net/private/invitation?organization="+uuid+"&integration="+intid,agentdata,httpOptions).toPromise()
              .catch((err) => {
                throw (err);
@@ -488,7 +484,6 @@ public getAllUsers(): Observable<any> {
     // delete agents
     public async  deleteagent(accesstoken:string,orgid:string,intid:string,agentuuid:any): Promise<any>
         {
-          console.log(orgid,intid);
           const httpOptions: any = {
             headers: new HttpHeaders({
            'Content-Type': 'application/json',
@@ -594,8 +589,8 @@ public getAllUsers(): Observable<any> {
               }
 
                  // get call chart
-                 public   getcallchart(accesstoken:string,orgid:string,intid:string,time:string,languages:any,countries:any)
-                 {  console.log(time,languages,countries)
+                 public   getcallchart(accesstoken:string,orgid:string,intid:string,time:string,languages:Array<any>,countries:Array<any>)
+                 {  
                    const httpOptions: any = {
                      headers: new HttpHeaders({
                       'Content-Type': 'application/json',
@@ -610,7 +605,6 @@ public getAllUsers(): Observable<any> {
                   // get call chart
                   public   getusers_and_visitors_chart(accesstoken:string,orgid:string,intid:string,date_from:string,date_to:string,languages:any,countries:any)
                   { 
-                    console.log(date_from,date_to);
                     const httpOptions: any = {
                       headers: new HttpHeaders({
                        'Content-Type': 'application/json',
@@ -624,7 +618,6 @@ public getAllUsers(): Observable<any> {
                  // get loggedin agent uuid
                  getloggedinagentuuid(accesstoken:string,orgid:string,intid:string)
                  {
-                  console.log(orgid,intid)
                   const httpOptions: any = {
                     headers: new HttpHeaders({
                      'Content-Type': 'application/json',

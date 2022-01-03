@@ -106,7 +106,6 @@ export class CroppictureComponent implements OnInit {
         }
   }
   filesDropped(event: any): void {
-        console.log(event[0])
         this.filename=event[0].file.name;
 
         this.bytesToSize
@@ -135,7 +134,6 @@ export class CroppictureComponent implements OnInit {
   }
 
   fileChangeEvent(event: any): void {
-      console.log(event)
        this.filename=event.target.files[0].name;
         this.filesize=this.bytesToSize(event.target.files[0].size);
        this.uploadpicture=false;
@@ -166,15 +164,11 @@ export class CroppictureComponent implements OnInit {
 imageCropped(event: ImageCroppedEvent) {
     this.croppedImage = event.base64;
     this.imagesfile=base64ToFile(event.base64);
-    console.log(typeof(this.imagesfile))
-    console.log(event, base64ToFile(event.base64));
+
 }
 
 imageLoaded() {
     this.showCropper = true;
-
-    console.log('Image loaded');
-
 }
 getSliderTickInterval(): number | 'auto' {
     if (this.showTicks) {
@@ -199,11 +193,9 @@ updateSetting(event: MatSliderChange) {
 }
 
 cropperReady(sourceImageDimensions: Dimensions) {
-    console.log('Cropper ready', sourceImageDimensions);
 }
 
 loadImageFailed() {
-    console.log('Load failed');
 }
 
 rotateLeft() {
@@ -273,7 +265,6 @@ zoomIn() {
             scale: this.scale
         };
     }
-    console.log(this.zoomoutnumber)
 }
 
 toggleContainWithinAspectRatio() {
@@ -299,14 +290,12 @@ uploadprofilepicture()
 }
 public  updateuserprofilepic(file:any)
   {
-      console.log(file)
       const getdata = JSON.parse(localStorage.getItem('gigaaa-subscription'))
       var accesstoken=getdata.access_token;
       var subsid=getdata.subscription_id.subsid.uuid;
       var id=JSON.parse(localStorage.getItem('intgid'));
 
      this.gigaaapi.uploaduserprofilepic(accesstoken,subsid,id.int_id,file).subscribe(event=>{
-       console.log(event)
        if(event['type']===4)
        {        
         this.shared_res.sendpictureupdated(event['body']['96'])
@@ -315,8 +304,8 @@ public  updateuserprofilepic(file:any)
        }
        
      },err=>{
-        console.log(err)
 
+        
        this.message.setErrorMessage(err.error.error)
      })
     
@@ -324,14 +313,12 @@ public  updateuserprofilepic(file:any)
 }
 public  agentupdateuserprofilepic(file:any,uuid:any)
 {
-    console.log(uuid)
     const getdata = JSON.parse(localStorage.getItem('gigaaa-subscription'))
     var accesstoken=getdata.access_token;
     var subsid=getdata.subscription_id.subsid.uuid;
     var id=JSON.parse(localStorage.getItem('intgid'));
 
    this.gigaaapi.agentuploaduserprofilepic(accesstoken,subsid,id.int_id,uuid,file).subscribe(event=>{
-     console.log(event)
      if(event['type']===4)
      {   
         
@@ -345,7 +332,6 @@ public  agentupdateuserprofilepic(file:any,uuid:any)
      
      
    },err=>{
-       console.log(err)
      this.message.setErrorMessage(err.error.error)
    })
   

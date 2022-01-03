@@ -277,7 +277,18 @@ export class DashboardComponent implements OnInit {
   mob_idsof_countries1=[];
   mob_idsof_countries2=[];
   mob_idsof_countries3=[];
-  lang:any;
+  lang=[];
+
+  calls_first_data1:any;
+  calls_first_data2:any;
+  calls_first_data3:any;
+  calls_first_data4:any;
+
+  visit_first_data1:any;
+  visit_first_data2:any;
+
+  user_first_data:any;
+  chartInterval_id:any;
   constructor(private sharedres:sharedres_service,
     private router:Router,
     private localeService: BsLocaleService,
@@ -303,6 +314,53 @@ export class DashboardComponent implements OnInit {
       })
 
      }
+
+    // get inetervise data for calls / chat / visitors 
+    
+  
+    getDataTimeInterval()
+    {
+     this.chartInterval_id= setInterval(() =>{
+        if(this.selectedtabs=="Calls")
+        {
+          if(this.idsoflanguages1.length==6 && this.idsof_countries1.length==249)
+          {
+            this.getcallcharts(this.charttimeslot1,[],[],0);
+
+          }
+          else{
+            this.getcallcharts(this.charttimeslot1,this.idsoflanguages1,this.idsof_countries1,0);
+          }
+
+        }
+        else if(this.selectedtabs=="Visitors")
+        {
+          if(this.idsoflanguages3.length==6 && this.idsof_countries3.length==249)
+          {          
+            this.getuser_and_call_chart("Visitors",this.datefrom_visitor,this.dateto_visitor,[],[],0);
+
+          }
+          else{
+            this.getuser_and_call_chart("Visitors",this.datefrom_visitor,this.dateto_visitor,this.idsoflanguages3,this.idsof_countries3,0);
+          }
+
+        }
+        else if(this.selectedtabs=="Users")
+        {
+          if(this.idsoflanguages2.length==6 && this.idsof_countries2.length==249)
+          {
+            this.getuser_and_call_chart("Users",this.datefrom_user,this.dateto_user,[],[],0);
+
+          }
+          else
+          {
+            this.getuser_and_call_chart("Users",this.datefrom_user,this.dateto_user,this.idsoflanguages2,this.idsof_countries2,0);
+
+          }
+
+        }
+      },1000);
+    }
      getlistofdashboard(val)
      {
        
@@ -334,9 +392,9 @@ export class DashboardComponent implements OnInit {
         this.createoschart();
         this.createdevicechart();
         this.createbrowerschart();
-        if(this.starting_flag==0)
+        if(this.starting_flag==0 && this.idsoflanguages3.length==6 && this.mob_idsof_countries3.length==249)
         {
-          this.getuser_and_call_chart("Visitors",this.datefrom_visitor,this.dateto_visitor,this.idsoflanguages3,this.idsof_countries3);
+          this.getuser_and_call_chart("Visitors",this.datefrom_visitor,this.dateto_visitor,[],[],1000);
           this.starting_flag=1
         }
         
@@ -361,9 +419,9 @@ export class DashboardComponent implements OnInit {
         this.showchatsdashboard=true;
         this.showvisitordashboard=true;
         this.showticketsdashboard=true;
-         if(this.starting_flag1==0)
+         if(this.starting_flag1==0 && this.mob_idsof_countries2.length==6 && this.idsof_countries2.length==249)
         {
-          this.getuser_and_call_chart("Users",this.datefrom_user,this.dateto_user,this.idsoflanguages2,this.idsof_countries2);
+          this.getuser_and_call_chart("Users",this.datefrom_user,this.dateto_user,[],[],1000);
           this.starting_flag1=1;
         }
      
@@ -464,14 +522,11 @@ export class DashboardComponent implements OnInit {
   
    if(tabs=="Calls")
    {
-     console.log(udpatedcountry)
      this.countrylist_calls=udpatedcountry;
      this.idsof_countries1=countryid;
      this.mob_idsof_countries1=countryid;
-     //  this.idsof_countries1=this.idsoflanguages1;
      if(signal!=1)
      {
-    //  this.gigaaasocketapi.sendfilterparams({"tab":this.selectedtabs,"languages":this.idsoflanguages1,"call_type":this.idsofcalltype1});
   
      }
   
@@ -481,9 +536,6 @@ export class DashboardComponent implements OnInit {
      this.countrylist_chats=udpatedcountry;
      this.idsof_countries2=countryid;
      this.mob_idsof_countries2=countryid;
-
-     //this.selected_languages2=this.idsoflanguages2;
-  
    if(signal!=1)
      {
      // this.gigaaasocketapi.sendfilterparams({"tab":this.selectedtabs,"languages":this.idsoflanguages2,"call_type":this.idsofcalltype2});
@@ -514,7 +566,7 @@ export class DashboardComponent implements OnInit {
        const intid = JSON.parse(localStorage.getItem('intgid'))
        if(intid?.int_id!=null && accesstoken!=null&&subsid!=null)
         {
-          await this.Updatelanguageendpoint(accesstoken,subsid,intid.int_id);
+          await this.Updatelanguageendpoint(accesstoken,subsid,intid.int_id)
         
       }
     
@@ -530,14 +582,14 @@ export class DashboardComponent implements OnInit {
         {name:'Turkish' ,status:false}];
         var  language= await this.gigaaaservice.getAllLanguages(accesstoken,subsid,intid)
         let updatearr = language.map((item, i) => Object.assign({}, item, languagee[i]));
-         this.lang=updatearr;
+          this.lang=updatearr;
           this.lang1=updatearr;
           this.lang2=updatearr;
           this.lang3=updatearr;
           this.lang3=updatearr;
           this.getalllanguage(true,"Calls",0);
           this.getalllanguage(true,"Users",0);
-          this.getalllanguage(true,"Tickets",0);
+          this.getalllanguage(true,"Visitors",0);
           this.showselectednumberoflanguages("Calls","All Selected")
           this.showselectednumberoflanguages("Users","All Selected")
           this.showselectednumberoflanguages("Tickets","All Selected")
@@ -551,8 +603,8 @@ export class DashboardComponent implements OnInit {
     
     // get all languages 
     getalllanguage(val,tabs,signal)
-    {
-      console.log(tabs)
+    {const intg = JSON.parse(localStorage.getItem('intgid'))
+    var int_id=intg?.int_id;
        var udpatedlang=[];
        var languageid=[];
        this.lang.forEach(element=>{
@@ -575,6 +627,7 @@ export class DashboardComponent implements OnInit {
        if(this.lang.length==6)
        {
            this.showselectednumberoflanguages(this.selectedtabs,"All Selected")
+
        }
  
    }
@@ -600,8 +653,11 @@ export class DashboardComponent implements OnInit {
     this.mob_idsoflanguages1=languageid;
     if(signal!=1)
     {
+    
       this.showselectednumberoflanguages(this.selectedtabs,"All Selected")
-
+      this.getcallcharts("today",[],[],1000);
+      this.getcallstats(int_id);
+      this.getDataTimeInterval()
  
     }
  
@@ -619,7 +675,7 @@ export class DashboardComponent implements OnInit {
     }
  
   }
-  else if(tabs=="Tickets")
+  else if(tabs=="Visitors")
   {
     this.lang3=udpatedlang;
     this.idsoflanguages3=languageid;
@@ -641,120 +697,118 @@ export class DashboardComponent implements OnInit {
       this.onDateChange([this.ranges[0].value[0],this.ranges[0].value[1]],"calls",0)
       this.getallthecountries();
       this.getlllangugaes();
-
-      this.roundbarchartcorners()
+      this.roundbarchartcorners();
       this.loadcallstatsoninit();
       this.loadcallchartinit();
       this.getstatsonintg();
       this.getdatafrommobilepopup();
-
-      $(document).ready(function() {
-        $(document).foundation();
-      });
-
   }
 
-  incomingbarchart(data,lebel)
-  {
-    console.log(data,lebel)
-    if (typeof(this.myChart) != "undefined") {
-      this.myChart.destroy();
-     
-      }
-    var ctx = document.getElementById("income") as HTMLCanvasElement;
-   this.myChart = new Chart(ctx, {
+  incomingbarchart(data,lebel,anim_val)
+  { 
    
-      type: 'bar',
-      data: {
-        labels:lebel,
-        datasets: [{
-          data:data,
-         backgroundColor : 
-            "#1C54DB",
-          
-          hoverBackgroundColor: 
-            "#1C54DB"
-          ,
-          radius:[24],
-          hoverRadius:24,
-          hitRadius:24,
-          borderCapStyle:'round',
-          maxBarThickness:65,
-          fill: false,
-        }],
-
-      },
-      options: {
-        responsive: true,
-        maintainAspectRatio: false,
-        showLines:false,
-        layout:{
-          padding:{
-            bottom:22
-          }
-        },
-        legend:{
-          position:'top',
-          align:'center',
-          display:false
-        },
-
-         tooltips: {
-          enabled: true,
-          mode: 'nearest',
-          displayColors: false,
-
-          callbacks: {
-              title: function () {
-                  return null;
-              },
-
-          }
-      },
-      hover: {
-        mode: 'index',
-        intersect: false
-     },
-      scales: {
-
-        xAxes: [{
-         
-            gridLines: {
-                display:false
-            },
-            ticks:{
-              autoSkip:true,
-           
-            }
-
-        },
-
-      ],
-        yAxes: [{
-            gridLines: {
-                display:true,
-                drawBorder: false,
-
-            },
-            ticks: {
-              display: true,
-              beginAtZero: true,
-              maxTicksLimit: 4,
-              padding: 14,
+  
+      if (typeof(this.myChart) != "undefined") {
+        this.myChart.destroy();
+       
+        }
+      var ctx = document.getElementById("income") as HTMLCanvasElement;
+     this.myChart = new Chart(ctx, {
+     
+        type: 'bar',
+        data: {
+          labels:lebel,
+          datasets: [{
+            data:data,
+           backgroundColor : 
+              "#1C54DB",
             
-
+            hoverBackgroundColor: 
+              "#1C54DB"
+            ,
+            radius:[24],
+            hoverRadius:24,
+            hitRadius:24,
+            borderCapStyle:'round',
+            maxBarThickness:65,
+            fill: false,
+          }],
+  
+        },
+        options: {
+          animation:{
+            duration: anim_val
+              
           },
-        }],
-
-    }
-    }
-    });
-    this.myChart.update()
-
+          responsive: true,
+          maintainAspectRatio: false,
+          showLines:false,
+          layout:{
+            padding:{
+              bottom:22
+            }
+          },
+          legend:{
+            position:'top',
+            align:'center',
+            display:false
+          },
+  
+           tooltips: {
+            enabled: true,
+            mode: 'nearest',
+            displayColors: false,
+  
+            callbacks: {
+                title: function () {
+                    return null;
+                },
+  
+            }
+        },
+        hover: {
+          mode: 'index',
+          intersect: false
+       },
+        scales: {
+  
+          xAxes: [{
+           
+              gridLines: {
+                  display:false
+              },
+              ticks:{
+                autoSkip:true,
+             
+              }
+  
+          },
+  
+        ],
+          yAxes: [{
+              gridLines: {
+                  display:true,
+                  drawBorder: false,
+  
+              },
+              ticks: {
+                display: true,
+                beginAtZero: true,
+                maxTicksLimit: 4,
+                padding: 14,
+              
+  
+            },
+          }],
+  
+      }
+      }
+      });
+      this.myChart.update()
  
   }
-  
-  missedbarchart(data,lebel)
+   // call misses chart
+  missedbarchart(data,lebel,anim_val)
   {
     if (typeof(this.myChart1) != "undefined") {
       this.myChart1.destroy();
@@ -782,6 +836,10 @@ export class DashboardComponent implements OnInit {
 
       },
       options: {
+        animation:{
+          duration: anim_val
+            
+        },
         responsive: true,
         maintainAspectRatio: false,
         showLines:false,
@@ -844,7 +902,7 @@ export class DashboardComponent implements OnInit {
     this.myChart1.update()
 
   }
-  answeredbarchart(data,lebel)
+  answeredbarchart(data,lebel,anim_val)
   {
     if (typeof(this.myChart2) != "undefined") {
       this.myChart2.destroy();
@@ -871,6 +929,10 @@ export class DashboardComponent implements OnInit {
 
       },
       options: {
+        animation:{
+          duration: anim_val
+            
+        },
         responsive: true,
         maintainAspectRatio: false,
         showLines:false,
@@ -932,7 +994,7 @@ export class DashboardComponent implements OnInit {
     });
     this.myChart2.update();
   }
-  ansbyaibarchart(data,lebel)
+  ansbyaibarchart(data,lebel,anim_val)
   {
     if (typeof(this.myChart3) != "undefined") {
       this.myChart3.destroy();
@@ -958,6 +1020,10 @@ export class DashboardComponent implements OnInit {
 
       },
       options: {
+        animation:{
+          duration: anim_val
+            
+        },
         responsive: true,
         maintainAspectRatio: false,
         showLines:true,
@@ -1037,6 +1103,10 @@ export class DashboardComponent implements OnInit {
 
       },
       options: {
+        animation:{
+          duration: 0
+            
+        },
          cutoutPercentage: 48,
         responsive: false,
         tooltips: {
@@ -1074,8 +1144,8 @@ export class DashboardComponent implements OnInit {
    $("#devicechartlegend").html(myChart.generateLegend());
   }
   // visitor chart
-  visitorchart1(data,lebel)
-  {  console.log(data[1].line1)
+  visitorchart1(data,lebel,anim_val)
+  {  
     if (typeof(this.linechart_visitor2) != "undefined") {
       this.linechart_visitor2.destroy();
       }
@@ -1113,7 +1183,11 @@ export class DashboardComponent implements OnInit {
       ],
 
       },
-      options:{ responsive: true,
+      options:{
+        animation:{
+          duration:anim_val
+        },
+         responsive: true,
         maintainAspectRatio: false,
 
         legend:{
@@ -1177,7 +1251,7 @@ export class DashboardComponent implements OnInit {
 
     this.linechart_visitor2.update()
   }
-  visitorchart(data:any,labels:Array<any>)
+  visitorchart(data:any,labels:Array<any>,anim_val)
   {
   
     if (typeof(this.linechart_visitor1) != "undefined") {
@@ -1217,7 +1291,12 @@ export class DashboardComponent implements OnInit {
       ],
 
       },
-      options:{ responsive: true,
+      options:{ 
+        animation:{
+          duration: anim_val
+            
+        },
+        responsive: true,
         maintainAspectRatio: false,
       legend:{position:'bottom',
     display:false},
@@ -1279,12 +1358,11 @@ export class DashboardComponent implements OnInit {
   }
 
   // usercharts
-  usercharts(data:any,labels:Array<any>)
+  usercharts(data:any,labels:Array<any>,anim_val)
   {
       if (typeof(this.linechart_user1) != "undefined") {
       this.linechart_user1.destroy();
       }
-    console.log(data,labels)
     var ctx = document.getElementById("userchart") as HTMLCanvasElement;
    this.linechart_user1= new Chart(ctx, {
       type: 'line',
@@ -1320,7 +1398,12 @@ export class DashboardComponent implements OnInit {
       ],
 
       },
-      options:{ responsive: true,
+      options:{ 
+        animation:{
+          duration: anim_val
+            
+        },
+        responsive: true,
         maintainAspectRatio: false,
 
         legend:{
@@ -1401,6 +1484,10 @@ export class DashboardComponent implements OnInit {
 
       },
       options: {
+        animation:{
+          duration: 0
+            
+        },
          cutoutPercentage: 48,
         responsive: false,
         tooltips: {
@@ -1409,7 +1496,7 @@ export class DashboardComponent implements OnInit {
         callbacks: {
           title : () => null // or function () { return null; }
        }
-     },
+       },
 
         legend:{
           display:false,
@@ -1591,18 +1678,14 @@ createoschart()
 }
 
    getstatsonintg()
-  { const getdata = JSON.parse(localStorage.getItem('gigaaa-subscription'))
+  { 
+      const getdata = JSON.parse(localStorage.getItem('gigaaa-subscription'))
        const accesstoken=getdata.access_token;
        const subsid=getdata.subscription_id?.subsid?.uuid;
-    try{
-    this.subscription=  this.sharedres.submitapplication$.subscribe(data=>{
-      console.log(data)
+      try{
+      this.subscription=  this.sharedres.submitapplication$.subscribe(data=>{
       this.Updatelanguageendpoint(accesstoken,subsid,data.int_id);
-      this.getcallstats()
-      this.getcallcharts("today",this.idsoflanguages1,this.idsof_countries);
-    //  this.getuser_and_call_chart("Users",this.datefrom_user,this.dateto_user,this.idsoflanguages2,this.idsof_countries2);
-//this.getuser_and_call_chart("Visitors",this.datefrom_visitor,this.dateto_visitor,this.idsoflanguages3,this.idsof_countries3);
-
+      this.getcallstats(data.int_id);
     })
     }
     catch(error)
@@ -1612,17 +1695,15 @@ createoschart()
 
   }
   // call stats
-  getcallstats()
+  getcallstats(int_id:any)
   {
     try
     {
       const getdata = JSON.parse(localStorage.getItem('gigaaa-subscription'))
       var accesstoken=getdata?.access_token;
       var orgid=getdata?.subscription_id?.subsid?.uuid
-      const intg = JSON.parse(localStorage.getItem('intgid'))
-      var int_id=intg?.int_id;
+      
         this.gigaaaservice.getcallstatistics(accesstoken,orgid,int_id).subscribe(data=>{
-          console.log(data)
           this.answeredbyai=data['handed_to_ai']?.count;
           this.totalmissed=data['missed']?.count;
           this.answered=data['answered']?.count;
@@ -1653,9 +1734,8 @@ createoschart()
 
   }
   // users and visitors charts
-  getuser_and_call_chart(tabs:any,datefrom:any,dateto:any,languages:Array<any>,countries:Array<any>)
+  getuser_and_call_chart(tabs:any,datefrom:any,dateto:any,languages:Array<any>,countries:Array<any>,anim_val)
   {
-    console.log(datefrom,dateto)
     try{
       const getdata = JSON.parse(localStorage.getItem('gigaaa-subscription'))
       const intg_id = JSON.parse(localStorage.getItem('intgid'))
@@ -1663,21 +1743,20 @@ createoschart()
       var accesstoken=getdata?.access_token;
       var orgid=getdata?.subscription_id?.subsid?.uuid
       this.gigaaaservice.getusers_and_visitors_chart(accesstoken,orgid,int_id,datefrom,dateto,languages,countries).subscribe(data=>{
-      console.log(data)
         var line_chart;
         line_chart=data;
       if(tabs=="Users")
       {
       var dataforlinechart=  this.getlinechartdata(line_chart);
       var labelforlinechart=this.getlinechartlabel(line_chart);
-      this.usercharts(dataforlinechart,labelforlinechart);
+      this.usercharts(dataforlinechart,labelforlinechart,anim_val);
       }
       else if(tabs=="Visitors")
       {
         var dataforlinechart=  this.getlinechartdata(line_chart);
         var labelforlinechart=this.getlinechartlabel(line_chart);
-        this.visitorchart(dataforlinechart,labelforlinechart);
-        this.visitorchart1(dataforlinechart,labelforlinechart);
+        this.visitorchart(dataforlinechart,labelforlinechart,anim_val);
+        this.visitorchart1(dataforlinechart,labelforlinechart,anim_val);
 
       }
     
@@ -1691,7 +1770,7 @@ createoschart()
 
   }
   //  call charts
-  getcallcharts(time:any,languages:Array<any>,countries:Array<any>)
+  getcallcharts(time:any,languages:Array<any>,countries:Array<any>,anim_val)
   {
     try
     {
@@ -1701,7 +1780,6 @@ createoschart()
       var accesstoken=getdata?.access_token;
       var orgid=getdata?.subscription_id?.subsid?.uuid
         this.gigaaaservice.getcallchart(accesstoken,orgid,int_id,time,languages,countries).subscribe(data=>{
-      console.log(data)
       var dataforincoming=this.getbarchartdata(data['incoming']);
       var dataforincoming1=this.getbarchartdata(data['missed']);
       var dataforincoming2=this.getbarchartdata(data['handed_to_ai']);
@@ -1712,10 +1790,10 @@ createoschart()
       var labelforincoming2=this.getbarchartlabels(data['handed_to_ai'],data['num_bars']);
       var labelforincoming3=this.getbarchartlabels(data['incoming'],data['num_bars']);
 
-      this.incomingbarchart(dataforincoming,labelforincoming);
-      this.missedbarchart(dataforincoming1,labelforincoming1);
-      this.ansbyaibarchart(dataforincoming2,labelforincoming2);
-      this.answeredbarchart(dataforincoming3,labelforincoming3);
+      this.incomingbarchart(dataforincoming,labelforincoming,anim_val);
+      this.missedbarchart(dataforincoming1,labelforincoming1,anim_val);
+      this.ansbyaibarchart(dataforincoming2,labelforincoming2,anim_val);
+      this.answeredbarchart(dataforincoming3,labelforincoming3,anim_val);
 
         })
     }
@@ -1759,7 +1837,6 @@ createoschart()
   getlinechartlabel(val:Array<any>)
   {
 
-    console.log(val)
     var label=[]
     val.forEach(element=> {
     var date =new Date(element.date).toDateString();
@@ -1868,7 +1945,7 @@ createoschart()
       const intg_id = JSON.parse(localStorage.getItem('intgid'))
       if(intg_id?.int_id!=null)
       {
-      this.getcallstats()
+    //  this.getcallstats()
 
       }
     },500)
@@ -1876,14 +1953,14 @@ createoschart()
   }
   loadcallchartinit()
   {
-    setTimeout(() => {
-      const intg_id = JSON.parse(localStorage.getItem('intgid'))
-      if(intg_id?.int_id!=null)
-      {
-        this.getcallcharts("today",this.idsoflanguages1,this.idsof_countries);
+    // setTimeout(() => {
+    //   const intg_id = JSON.parse(localStorage.getItem('intgid'))
+    //   if(intg_id?.int_id!=null)
+    //   {
+    //     this.getcallcharts("today",this.idsoflanguages1,this.idsof_countries,1000);
 
-      }
-    }, 500);
+    //   }
+    // }, 500);
 
   }
   generatecircleround()
@@ -2054,18 +2131,18 @@ createoschart()
   {
     if(this.selectedtabs=="Calls")
     {
-      this.getcallcharts(this.charttimeslot1,this.idsoflanguages1,this.idsof_countries1);
+      this.getcallcharts(this.charttimeslot1,this.idsoflanguages1,this.idsof_countries1,1000);
 
     }
     else if(this.selectedtabs=="Users")
     {
 
-      this.getuser_and_call_chart("Users",this.datefrom_user,this.dateto_user,this.idsoflanguages2,this.idsof_countries2);
+      this.getuser_and_call_chart("Users",this.datefrom_user,this.dateto_user,this.idsoflanguages2,this.idsof_countries2,1000);
 
     }
     else if(this.selectedtabs=="Visitors")
     {
-      this.getuser_and_call_chart("Visitors",this.datefrom_visitor,this.dateto_visitor,this.idsoflanguages2,this.idsof_countries2);
+      this.getuser_and_call_chart("Visitors",this.datefrom_visitor,this.dateto_visitor,this.idsoflanguages2,this.idsof_countries2,1000);
 
     }
 
@@ -2073,7 +2150,6 @@ createoschart()
   //selectionpanel for selecting the panes
   onDateChange(event: Array<Date>,tabsname:any,val:any)
       {
-       console.log(event)
         var ismatched=false;
         var d = new Date(event[0])
         var d1 = new Date(event[1])
@@ -2271,7 +2347,6 @@ createoschart()
  // select languages one by one
  selectcountryonebyone(e,id)
  {
-   console.log()
    if(this.selectedtabs=="Calls")
    {
     if(e==true)
@@ -2282,12 +2357,12 @@ createoschart()
      if(this.idsof_countries1.length==249)
      {
       this.showselectedNumberofcountries(this.selectedtabs,"All Selected")
+      this.getcallcharts(this.charttimeslot1,this.idsoflanguages1,[],1000);
 
      }
      else{
       this.showselectedNumberofcountries(this.selectedtabs,this.idsof_countries1.length +"\xa0"+"Selected")
      }
-     this.getcallcharts(this.charttimeslot1,this.idsoflanguages1,this.idsof_countries1);
 
    }
    else if(e==false)
@@ -2305,7 +2380,7 @@ createoschart()
     else{
      this.showselectedNumberofcountries(this.selectedtabs,this.idsof_countries1.length +"\xa0"+"Selected")
     }
-    this.getcallcharts(this.charttimeslot1,this.idsoflanguages1,this.idsof_countries1);
+    this.getcallcharts(this.charttimeslot1,this.idsoflanguages1,this.idsof_countries1,1000);
   }
    }
    else if(this.selectedtabs=="Users")
@@ -2317,13 +2392,14 @@ createoschart()
    this.idsof_countries2.push(id);
    if(this.idsof_countries2.length==249)
    {
-    this.showselectedNumberofcountries(this.selectedtabs,"All Selected")
+    this.showselectedNumberofcountries(this.selectedtabs,"All Selected");
+    this.getuser_and_call_chart("Users",this.datefrom_user,this.dateto_user,this.idsoflanguages2,[],1000);
+
    }
    else{
     this.showselectedNumberofcountries(this.selectedtabs,this.idsof_countries2.length +"\xa0"+"Selected")
 
    }
-   this.getuser_and_call_chart("Users",this.datefrom_user,this.dateto_user,this.idsoflanguages2,this.idsof_countries2);
 
  }
  else if(e==false)
@@ -2342,7 +2418,7 @@ createoschart()
   else{
    this.showselectedNumberofcountries(this.selectedtabs,this.idsof_countries2.length +"\xa0"+"Selected")
   }
-  this.getuser_and_call_chart("Users",this.datefrom_user,this.dateto_user,this.idsoflanguages2,this.idsof_countries2);
+  this.getuser_and_call_chart("Users",this.datefrom_user,this.dateto_user,this.idsoflanguages2,this.idsof_countries2,1000);
 
  }
 
@@ -2356,12 +2432,13 @@ createoschart()
      this.idsof_countries3.push(id);
      if(this.idsof_countries3.length==249)
      {
-      this.showselectedNumberofcountries(this.selectedtabs,"All Selected")
+      this.showselectedNumberofcountries(this.selectedtabs,"All Selected");
+      this.getuser_and_call_chart("Visitors",this.datefrom_visitor,this.dateto_visitor,this.idsoflanguages3,[],1000);
+
     }
      else{
       this.showselectedNumberofcountries(this.selectedtabs,this.idsof_countries3.length +"\xa0"+"Selected")
      }
-     this.getuser_and_call_chart("Visitors",this.datefrom_visitor,this.dateto_visitor,this.idsoflanguages3,this.idsof_countries3);
     }
    else if(e==false)
    { var objIndex = this.countrytlist_ticket.findIndex((obj => obj.id == id));
@@ -2380,7 +2457,7 @@ createoschart()
     else{
      this.showselectedNumberofcountries(this.selectedtabs,this.idsof_countries3.length +"\xa0"+"Selected")
     }
-    this.getuser_and_call_chart("Visitors",this.datefrom_visitor,this.dateto_visitor,this.idsoflanguages3,this.idsof_countries3);
+    this.getuser_and_call_chart("Visitors",this.datefrom_visitor,this.dateto_visitor,this.idsoflanguages3,this.idsof_countries3,1000);
    }
    }
    }
@@ -2397,13 +2474,13 @@ createoschart()
         if(this.idsoflanguages1.length==6)
         {
          this.showselectednumberoflanguages(this.selectedtabs,"All Selected")
- 
+         this.getcallcharts(this.charttimeslot1,[],this.idsof_countries1,1000);
+
  
         }
         else{
          this.showselectednumberoflanguages(this.selectedtabs,this.idsoflanguages1.length +"\xa0"+"Selected")
         }
-        this.getcallcharts(this.charttimeslot1,this.idsoflanguages1,this.idsof_countries);
  
       }
       else if(e==false)
@@ -2421,7 +2498,7 @@ createoschart()
        else{
         this.showselectednumberoflanguages(this.selectedtabs,this.idsoflanguages1.length +"\xa0"+"Selected")
        }
-       this.getcallcharts(this.charttimeslot1,this.idsoflanguages1,this.idsof_countries);
+       this.getcallcharts(this.charttimeslot1,this.idsoflanguages1,this.idsof_countries1,1000);
 
  
       }
@@ -2437,12 +2514,13 @@ createoschart()
       if(this.idsoflanguages2.length==6)
       {
        this.showselectednumberoflanguages(this.selectedtabs,"All Selected")
+       this.getuser_and_call_chart("Users",this.datefrom_user,this.dateto_user,[],this.idsof_countries2,1000);
+
       }
       else{
        this.showselectednumberoflanguages(this.selectedtabs,this.idsoflanguages2.length +"\xa0"+"Selected")
  
       }
-      this.getuser_and_call_chart("Users",this.datefrom_user,this.dateto_user,this.idsoflanguages2,this.idsof_countries2);
 
  
     }
@@ -2462,7 +2540,7 @@ createoschart()
      else{
       this.showselectednumberoflanguages(this.selectedtabs,this.idsoflanguages2.length +"\xa0"+"Selected")
      }
-     this.getuser_and_call_chart("Users",this.datefrom_user,this.dateto_user,this.idsoflanguages2,this.idsof_countries2);
+     this.getuser_and_call_chart("Users",this.datefrom_user,this.dateto_user,this.idsoflanguages2,this.idsof_countries2,1000);
 
  
     }
@@ -2478,11 +2556,12 @@ createoschart()
         if(this.idsoflanguages3.length==6)
         {
           this.showselectednumberoflanguages(this.selectedtabs,"All Selected")
+          this.getuser_and_call_chart("Visitors",this.datefrom_visitor,this.dateto_visitor,[],this.idsof_countries3,1000);
+
         }
         else{
          this.showselectednumberoflanguages(this.selectedtabs,this.idsoflanguages3.length +"\xa0"+"Selected")
         }
-        this.getuser_and_call_chart("Visitors",this.datefrom_visitor,this.dateto_visitor,this.idsoflanguages3,this.idsof_countries3);
       }
       else if(e==false)
       { var objIndex = this.lang3.findIndex((obj => obj.id == id));
@@ -2501,7 +2580,7 @@ createoschart()
        else{
         this.showselectednumberoflanguages(this.selectedtabs,this.idsoflanguages3.length +"\xa0"+"Selected")
        }
-       this.getuser_and_call_chart("Visitors",this.datefrom_visitor,this.dateto_visitor,this.idsoflanguages3,this.idsof_countries3);
+       this.getuser_and_call_chart("Visitors",this.datefrom_visitor,this.dateto_visitor,this.idsoflanguages3,this.idsof_countries3,1000);
       }
       }
       }
@@ -2588,13 +2667,12 @@ createoschart()
       getdatafrommobilepopup()
       {
         this.sharedres.sendparamfromdashboardpopup$.subscribe(data=>{
-          console.log(data)
             this.rangeSelected=data.daterangeslot;
           if(data.dashboard_name=="Calls")
           {
             if(data.daterangetab!="Custom")
             {
-              this.getcallcharts(data.daterangeslot,data.languageids,data.countryids);
+              this.getMobileChar_calls(data)            
             }
             this.mob_idsoflanguages1=data.languageids;
             this.mob_idsof_countries1=data.countryids;
@@ -2603,7 +2681,7 @@ createoschart()
             this.mob_date_to_chat=data.todate
           }
           else   if(data.dashboard_name=="Users")
-          {        this.getuser_and_call_chart("Users",data.fromdate,data.todate,data.languageids,data.countryids);
+          {       // this.getuser_and_call_chart("Users",data.fromdate,data.todate,data.languageids,data.countryids,1000);
 
             this.mob_idsoflanguages2=data.languageids;
             this.mob_idsof_countries2=data.countryids;
@@ -2611,11 +2689,12 @@ createoschart()
             this.mob_date_from_user=data.fromdate;
             this.mob_date_to_user=data.todate
             this.rangeSelected2=data.daterangeslot;
+            this.getMobileChar_user_visitor(data);
 
 
           }
           else   if(data.dashboard_name=="Visitors")
-          {      this.getuser_and_call_chart("Visitors",data.fromdate,data.todate,data.languageids,data.countryids);
+          {     
 
             this.mob_idsoflanguages3=data.languageids;
             this.mob_idsof_countries3=data.countryids;
@@ -2623,7 +2702,55 @@ createoschart()
             this.mob_date_from_visitor=data.fromdate;
             this.mob_date_to_visitor=data.todate
             this.rangeSelected3=data.daterangeslot;
+            this.getMobileChar_user_visitor(data);
+
+            
+            
           }
         })
+      }
+      // mobile param for charts for user and visitors
+      getMobileChar_user_visitor(data:any)
+      {
+        if(data.languageids.length==6 || data.countryids.length==249)
+        {
+          this.getuser_and_call_chart(data.dashboard_name,data.fromdate,data.todate,[],[],1000);
+
+        }
+        else if(data.languageids.length==6){
+
+          this.getuser_and_call_chart(data.dashboard_name,data.fromdate,data.todate,[],data.countryids,1000);
+
+        }
+        else if(data.countryids.length==249)
+        {
+          this.getuser_and_call_chart(data.dashboard_name,data.fromdate,data.todate,[],data.countryids,1000);
+
+        }
+      }
+      // mobiel params for calls charts
+
+      getMobileChar_calls(data:any)
+      {
+        if(data.languageids.length==6 || data.countryids.length==249)
+        {
+          this.getcallcharts(data.daterangeslot,[],[],1000);
+
+        }
+        else if(data.languageids.length==6){
+
+          this.getcallcharts(data.daterangeslot,[],data.countryids,1000);
+
+        }
+        else if(data.countryids.length==249)
+        {
+          this.getcallcharts(data.daterangeslot,data.languageids,[],1000);
+
+        }
+      }
+      ngOnDestroy() {
+        if (this.chartInterval_id) {
+          clearInterval(this.chartInterval_id);
+        }
       }
 }

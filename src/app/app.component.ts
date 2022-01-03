@@ -119,7 +119,6 @@ websites=[{text:"Partnership",url:['https://partnerships.gigaaa.com/'],image:'..
       });
    
       this.authService.user.subscribe((r: any) => {
-      console.log('App component Auth Service', r);
         this.user = r;
 
       });
@@ -157,13 +156,10 @@ websites=[{text:"Partnership",url:['https://partnerships.gigaaa.com/'],image:'..
   }
 
   isSlideOpened(slideOpened: any) {
-    console.log(slideOpened)
-  
     this.slideOpened = slideOpened;
   }
 
   onNoLoggedUsers(event: any) {
-    console.log(event)
     if (event) {
     
       this.agentsocketapi.closeagentsocket();
@@ -210,7 +206,6 @@ websites=[{text:"Partnership",url:['https://partnerships.gigaaa.com/'],image:'..
       localStorage.setItem('intgid', JSON.stringify({int_id:element.uuid,name:element.name}));
       this.lastuserintegration=element.name;
       this.apiService.getloggedinagentuuid(accesstoken,uuid,element?.uuid).subscribe(data=>{
-        console.log(data);
         localStorage.setItem('userlogged_uuid', JSON.stringify(data));
           this.sharedres.getcallsocketapi(1);
         });
@@ -249,7 +244,6 @@ else
 }
 }
 private handleLoginRegisterError(response: any) {
-  console.log(response)
       this.messegeService.setErrorMessage(response.error.error, 'toast-bottom-right');
 }
 showonlinetatus(value:boolean){
@@ -324,10 +318,7 @@ showonlinetatus(value:boolean){
 
  public setonlinestatus(e)
 {
-
-  console.log(e)
     localStorage.setItem('user-status', JSON.stringify(e));
- 
     if(e==true)
     {
       this.showonlinetatus(true)
@@ -346,7 +337,6 @@ public openwebsites(val)
 }
 // sidebar open collapse
 isSidebarOpen(event: any) {
-  console.log('Is sidebar open', event);
 }
 
 }

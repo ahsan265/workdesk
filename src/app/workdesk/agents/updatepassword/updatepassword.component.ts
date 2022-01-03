@@ -128,7 +128,6 @@ export class UpdatepasswordComponent implements OnInit {
       }
     }
     catch(error){
-      console.log(error)
       this.message.setErrorMessage(error.error.error)
     }
     

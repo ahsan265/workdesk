@@ -201,7 +201,6 @@ else{
     this.gigaaaapi.getvisitorlist(token,uuid,id).subscribe(data=>{
       this.visitorlist=data
       this.currentvisitorlength=this.visitorlist.length;
-      console.log(data);
     },err=>{
       this.messege.setErrorMessage(err.error);
     })
@@ -215,7 +214,6 @@ else{
         this.socketapi.getlistofvisitor$.subscribe(data=>{
           this.visitorlist=data;
           this.currentvisitorlength=this.visitorlist.length;
-          console.log(data);
 
         })
     }

@@ -56,9 +56,6 @@ export class oAuthService  {
 
 }
 catch(err){
-  console.log(err)
-  // this.logOff();
-  // this.route.navigateByUrl('home');
   this.handleLoginRegisterError(err);
 }
 
@@ -76,7 +73,6 @@ catch(err){
     if(element.last_used===true)
     {        localStorage.setItem('intgid', JSON.stringify({int_id:element.uuid,name:element.name}));
     this.gigaaaapi.getloggedinagentuuid(accesstoken,uuid,element.uuid).subscribe(data=>{
-     // console.log(data);
       localStorage.setItem('userlogged_uuid', JSON.stringify(data));
       this.sharedres.getcallsocketapi(1);
       });

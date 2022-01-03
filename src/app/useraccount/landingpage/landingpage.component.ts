@@ -40,7 +40,7 @@ export class LandingpageComponent implements OnInit {
   getdetailsforinviteduser()
   {
       this.sharedres.inviteduserdetails$.subscribe(data=>{
-        console.log(data)
+
         this.inviteduserdata=data;
         if(data!=null)
         {

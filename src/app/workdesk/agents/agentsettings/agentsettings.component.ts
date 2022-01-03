@@ -56,7 +56,7 @@ form = new FormGroup({
 
     this.getlllangugaes();
     this.getagentprofilesettingview();
-    this.updategaentprofilewith();
+    //this.updategaentprofilewith();
     this.recieveupdatedpicture();
   }
   selectsubscription(val)
@@ -81,7 +81,6 @@ form = new FormGroup({
        udpatedlang.push({name:element.name,status:true,id:element.id})
        this.idsoflanguages.push(element.id)
     });
-    console.log(this.idsoflanguages)
     this.selectedlanguages=this.lang.length +"\xa0"+"Selected";
       if(this.lang.length==6)
       {
@@ -101,14 +100,12 @@ form = new FormGroup({
       }
 
       });
-      console.log(this.idsoflanguages)
       this.selectedlanguages="Not Selected";
       this.allselectedtag=false;
       if(this.idsoflanguages.length!=0)
       { 
-        //this.updateagentprofile()
-        console.log("hello language")
-        //this.sharedres.getrefreshagentlist(1);
+        this.selectedlanguages="Not Selected";
+
   
       }
   }
@@ -177,7 +174,7 @@ form = new FormGroup({
    }
 
    deleteagent() {
-     var agentdata:{};
+ 
     const dialogRef = this.dialog.open(DeleteagentpopupComponent,{
       hasBackdrop:false,
       data:this.agentsettingdata,
@@ -193,7 +190,6 @@ form = new FormGroup({
       var timestamp = (new Date()).getTime();
 
        this.agentprofilepic=this.agentsettingdata?.image + '?_=' + timestamp;
-      console.log(data)
       if(data.invited==true)
       {
         this.profiledetals=false;
@@ -219,7 +215,6 @@ form = new FormGroup({
         this.agentfullname=this.agentsettingdata.first_name+"\xa0"+this.agentsettingdata.last_name
       }
       const getdata = JSON.parse(localStorage.getItem('gigaaa-user'))
-      console.log(this.agentsettingdata?.email,getdata.email)
     if(this.agentsettingdata?.email!=getdata?.email)
     {
       this.form.controls["first_name"].disable();
@@ -273,7 +268,6 @@ form = new FormGroup({
       var accesstoken=getdata.access_token;
       var subsid=getdata.subscription_id.subsid.uuid;
       const intg_id = JSON.parse(localStorage.getItem('intgid'))
-     console.log(this.agentsettingdata?.agentuuid);
     try{
     await  this.gigaaaapi.deleteagent(accesstoken,subsid,intg_id?.int_id,this.agentsettingdata?.agentuuid);
       // this.sharedres.getrefreshagentlist(1);
@@ -285,7 +279,6 @@ form = new FormGroup({
     }
     catch(err)
     {
-      console.log(err)
       this.message.setErrorMessage(err.error.error);
     }
   }
@@ -306,26 +299,10 @@ form = new FormGroup({
     }
     catch(err)
     {
-      console.log(err)
       this.message.setErrorMessage(err.error.error);
     }
   }
-  // set isadmins status
-  // getisadmin(val)
-  // {
-  //   console.log(val)
-  //   if(val==true)
-  //   {
-  //     this.isadmin=true;
-  //     this.updategaentprofilewith()
 
-  //   }
-  //   else if(val==false){
-  //     this.isadmin=false;
-  //     this.updategaentprofilewith()
-
-  //   }
-  // }
   // show agent information
 
   showagentinformation(val)
@@ -365,7 +342,6 @@ form = new FormGroup({
           val.forEach(ele=>{
           var  index = this.lang.findIndex(x => x.id ==ele.id);
           this.idsoflanguages.push(ele.id)
-          console.log(index)
           this.lang[index].status=true;
          
        });
@@ -384,7 +360,6 @@ form = new FormGroup({
   {
 
     this.form.valueChanges.subscribe(data=>{
-     // console.log(data)
      if(this.idsoflanguages.length!=0)
      {
   
@@ -466,9 +441,7 @@ public async updateagentprofile(): Promise<any>
     ];
     var  language= await this.gigaaaapi.getAllLanguages(accesstoken,subsid,intid.int_id)
       let updatearr = language.map((item, i) => Object.assign({}, item, languagee[i]));
-        console.log(updatearr)
         this.lang=updatearr;
-       // this.getalllanguage(false);
 
     }
     catch(err){
@@ -480,7 +453,6 @@ public async updateagentprofile(): Promise<any>
   recieveupdatedpicture()
   {
     this.sharedres.sendpicture$.subscribe(data=>{
-      console.log(data)
       var timestamp = (new Date()).getTime();
       this.agentprofilepic=data + '?_=' + timestamp;
     })

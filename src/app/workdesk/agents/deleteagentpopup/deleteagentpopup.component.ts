@@ -22,7 +22,6 @@ export class DeleteagentpopupComponent implements OnInit {
     { }
 
   ngOnInit(): void {
-    console.log(this.data);
     this.agentfullname=this.data?.agentfullname;
     this.agentdisplayname=this.data?.display_name;
     this.agentpic=this.data?.image;
@@ -44,7 +43,6 @@ export class DeleteagentpopupComponent implements OnInit {
     }
     catch(err)
     {
-      console.log(err)
       this.message.setErrorMessage(err.error.error);
     }
   }

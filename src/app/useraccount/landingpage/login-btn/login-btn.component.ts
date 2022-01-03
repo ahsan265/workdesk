@@ -22,7 +22,6 @@ export class LoginBtnComponent implements OnInit {
   constructor(
     private cookies: CookieService
     ) {
-      console.log(this.cookies)
   }
 
   ngOnInit() {}

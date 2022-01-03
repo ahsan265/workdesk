@@ -84,7 +84,6 @@ export class sharedres_service {
 
     }
     getintegrationrelation(intid:any) {
-       console.log(intid)
     this.submitappsubject.next({int_id:intid});
  }
  getagentsettingview(val)
@@ -135,13 +134,10 @@ getinivationdetail()
   var code;
   this.router.queryParams.subscribe(data=>{
     code=  data['invitation_code']
-    console.log(code)
-
     if(code!=null)
     {    localStorage.setItem('gigaaa-invitation', JSON.stringify(code))
 
     this.gigaaaapi.getinvitationdetails(code).subscribe(data=>{
-      console.log(data)
     this.inviteduserdetailssubject.next(data);
 
 

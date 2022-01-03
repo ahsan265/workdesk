@@ -257,7 +257,6 @@ call:any;
 
   ////////////////////////////
   startTimer() {
-    console.log("=====>");
     this.interval = setInterval(() => {
       if (this.time === 0) {
         this.time++;
@@ -319,9 +318,7 @@ return ("0" + minutes).slice(-2) + ":" + ("0" +seconds).slice(-2);
     this.rangeSelected1="Today";
     this.rangeSelected2="Today";
 
-    interval(1000).subscribe(() => {
-      this.changeDetector.detectChanges();
-    });
+   
     this.incoming=true;
     this.outgoing=false;
     this.missed=false;
@@ -352,14 +349,7 @@ return ("0" + minutes).slice(-2) + ":" + ("0" +seconds).slice(-2);
     this.selectednumbercalls("ongoing","All Selected");
     this.selectednumbercalls("missed","All Selected");
     this.selectednumbercalls("finished","All Selected");
- 
       this.getlllangugaes();
-
-
-
-  //   $(document).ready(function() {
-  //     $(document).foundation();
-  //  })
     this.getmobileSeachFilterData();
     this.getmobileLanguagesFilterData();
     this.getDateRangeMobileFilter();
@@ -370,7 +360,10 @@ return ("0" + minutes).slice(-2) + ":" + ("0" +seconds).slice(-2);
         this.onDateChange([this.ranges[0].value[0],this.ranges[0].value[1]],'missed_date',1);
         this.onDateChange([this.ranges[0].value[0],this.ranges[0].value[1]],'finished_date',1);
       }
-    })
+    });
+    interval(1000).subscribe(() => {
+      this.changeDetector.detectChanges();
+    });
   }
 
   counter(u: number) {
@@ -443,7 +436,6 @@ return ("0" + minutes).slice(-2) + ":" + ("0" +seconds).slice(-2);
   getagentlist()
   {
   this.sharedres.submitapplication$.subscribe(data=>{
-    console.log(data)
     // this.gigaaasocketapi.sendfilterparams({"tab":this.defaultab_selected,"languages":this.idsoflanguages,"call_type":this.idsofcalltype});
     // this.onDateChange([this.date_one_selected,this.date_two_selected],this.defaultab_selected);
     })
@@ -517,11 +509,7 @@ return ("0" + minutes).slice(-2) + ":" + ("0" +seconds).slice(-2);
   getlistofoagentonappl()
   {
     const getdata = JSON.parse(localStorage.getItem('gigaaa-subscription'))
-    var accesstoken=getdata.access_token;
     const id = JSON.parse(localStorage.getItem('intgid'))
-    var uuid=getdata.subscription_id.subsid.uuid;
-
-    //this.getlistofagents(accesstoken,uuid,id.int_id);
   }
 
 
@@ -529,7 +517,7 @@ return ("0" + minutes).slice(-2) + ":" + ("0" +seconds).slice(-2);
   {
    if(val=="en")
    {
- return this.langurl='../../../assets/assets_workdesk/Flags/english.svg'
+ return this.langurl='../../../assets/assets_workdesk/Flags/us_flag.svg'
    }
    else if(val=="de") {
     return this.langurl='../../../assets/assets_workdesk/Flags/german.svg'
@@ -700,7 +688,6 @@ return time;
 
 public async dialcall(callid:any): Promise<void>
 {
-  console.log("callid",callid)
   const getdata = JSON.parse(localStorage.getItem('gigaaa-subscription'))
     var accesstoken=getdata.access_token;
     const id = JSON.parse(localStorage.getItem('intgid'))
@@ -714,7 +701,6 @@ public async dialcall(callid:any): Promise<void>
 
   }
   catch(err){
-    console.log(err)
     this.messageservie.setErrorMessage(err.error.error);
   }
 }
@@ -740,15 +726,10 @@ calculatetime(totalSeconds)
 
 getreasonformissedcall(val)
 {
-
-
     return val
-
 }
 
-search(term:string,column:any) {
-  console.log(this.call[column])
-  
+search(term:string,column:any) {  
   var result =  this.call[column].filter(obj => {
     if(obj['user_id']!=null)
     {
@@ -761,8 +742,6 @@ search(term:string,column:any) {
 
     }
   })
-  console.log(result)
-
 
   if(column=='finished')
   {
@@ -809,7 +788,6 @@ search(term:string,column:any) {
     var  language= await this.gigaaaservice.getAllLanguages(accesstoken,subsid,intid.int_id)
       let updatearr = language.map((item, i) => Object.assign({}, item, languagee[i]));
 
-        console.log(updatearr)
         this.lang=updatearr;
           this.lang1=updatearr;
           this.lang2=updatearr;
@@ -843,7 +821,6 @@ search(term:string,column:any) {
 
     }
     catch(err){
-      console.log(err)
       this.messageservie.setErrorMessage(err.error.error)
     }
   }
@@ -1131,7 +1108,6 @@ search(term:string,column:any) {
    if(e==true)
    {
      this.Call.forEach(element=>{
-       console.log(element.name)
       updatecalltypes.push({name:element.name ,status:true})
       nameofcalltype.push(element.name.toLowerCase());
      })
@@ -1158,8 +1134,8 @@ search(term:string,column:any) {
      this.selectedtabholdcalltype(this.selectedtabs,false);
 
    }
-   console.log(nameofcalltype)
 
+   
 
    if(tabs=="incoming")
  {
@@ -1536,7 +1512,6 @@ this.allselectedcall2=status;
  }
  onDateChange(event: Array<Date>,tabsname:any,val:any)
  {
-      console.log(event)
        var ismatched=false;
        var d = new Date(event[0])
        var d1 = new Date(event[1])
@@ -1704,8 +1679,8 @@ this.allselectedcall2=status;
  // open mobile filter for call page
  openmobilefilterpopup(val:any)
  {
-    console.log(this.selected_languages1);
-   let data;
+
+  let data;
    if(val=="incoming")
    {
   
@@ -1739,7 +1714,6 @@ this.allselectedcall2=status;
   getmobileSeachFilterData()
   {
     this.sharedres.sendcallsearchfilter$.subscribe(data=>{
-      console.log(data)
       if(data.call_type=="incoming")
       {
         this.seachValue1=data.search_value
@@ -1767,7 +1741,6 @@ this.allselectedcall2=status;
   getmobileLanguagesFilterData()
   {
     this.sharedres.sendcalllanguagesfilter$.subscribe(data=>{
-      console.log(data)
       if(data.call_type=="incoming")
       {
         this.selected_languages1=data.languages;
@@ -1800,7 +1773,6 @@ this.allselectedcall2=status;
   getDateRangeMobileFilter()
   {
     this.sharedres.senddaterangecallmobilefilter$.subscribe(data=>{
-      console.log(data)
       if(this.selectedtabs=="missed")
       {
 

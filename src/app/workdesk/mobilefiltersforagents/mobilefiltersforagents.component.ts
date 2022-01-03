@@ -164,7 +164,6 @@ showselectedpanel(val)
   var accesstoken=getdata?.access_token;
   try{
     var data= await this.gigaaaservice.getAllCountries(accesstoken);
-    console.log(data)
      this.countrylist=data;
      this.countrylist= this.countrylist.sort((a, b)=> {
       var textA = a.name;
@@ -195,7 +194,6 @@ showselectedpanel(val)
   ];
   var  language= await this.gigaaaservice.getAllLanguages(accesstoken,subsid,intid.int_id)
     let updatearr = language.map((item, i) => Object.assign({}, item, languagee[i]));
-      console.log(updatearr)
      this.lang=updatearr;
     // this.getalllanguage(true);
      this.getselectedlanguages(this.data.languages);
@@ -208,7 +206,6 @@ showselectedpanel(val)
  //selectionpanel for selecting the panes
  onDateChange(event: Array<Date>)
  { 
-       console.log(event)
        var ismatched=false;
        var d = new Date(event[0]);
        var d1 = new Date(event[1]);
@@ -340,7 +337,7 @@ else if(val==false){
  }
  // slect language one by one
  selectlanguageonebyone(e,id)
- {   const intid = JSON.parse(localStorage.getItem('intgid'));
+ {  
      if(e==true)
      {
        this.id_soflanguages.push(id);
@@ -370,7 +367,6 @@ else if(val==false){
       }
  
      }
-    console.log(this.id_soflanguages)
 
    }
    // send languages mobile filter ()
@@ -390,12 +386,11 @@ else if(val==false){
    // get selected languages
 
    getselectedlanguages(val:Array<any>)
-   {  console.log(this.lang);
+   {  
        
     val.forEach(ele=>{
       var  index = this.lang.findIndex(x => x.id ==ele);
       this.id_soflanguages.push(ele)
-      console.log(index)
       this.lang[index].status=true;
      
    });

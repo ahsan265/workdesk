@@ -86,7 +86,7 @@ callsocketapi_by_selecting_intgid()
         this.message.setErrorMessage("socket-"+e.type);
       }
       this.ws.onclose=(e)=>{
-        this.message.setErrorMessage("socket-"+e.type);
+       // this.message.setErrorMessage("socket-"+e.type);
         this.closestate=e.code;
        setTimeout(()=>{
          this.getlistofliveque();
@@ -114,7 +114,7 @@ callsocketapi_by_selecting_intgid()
   }
   // send params to get filter calls data
    sendfilterparams(data:any)
-  { console.log(data)
+  { 
     this.currentStateofcallsocket=data;
     if(this.ws.readyState==this.ws.OPEN)
     {
@@ -124,7 +124,7 @@ callsocketapi_by_selecting_intgid()
   // send params to get filter calls data
   send_daterange_params(data:any)
   {
-      console.log(data)
+    
     if(this.ws.readyState==this.ws.OPEN)
     {
       this.ws.send(JSON.stringify(data))

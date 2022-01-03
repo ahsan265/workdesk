@@ -68,7 +68,7 @@ export class CallbackComponent implements OnInit {
           });
           
         },
-        err => console.log(err)
+        err => this.message.setErrorMessage(err)
       )
     }
   }

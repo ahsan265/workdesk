@@ -66,12 +66,9 @@ form: FormGroup;
   // select languages one by one
   selectlanguage(id,status)
   {
-
-    console.log(id,status);
     if(status==true)
     {
       this.selected_lang_ids.push(id);
-      console.log(this.selected_lang_ids);
       this.number_of_lang=this.selected_lang_ids.length+"\xa0"+"Selected"
       this.number_of_lang=this.number_of_lang.slice()
      if(this.selected_lang_ids.length==6)
@@ -93,7 +90,6 @@ form: FormGroup;
       }
 
     }
-     console.log(this.selected_lang_ids)
 
   }
   // get all langugaes
@@ -203,7 +199,6 @@ addinvitelist() {
       language_ids:this.formBuilder.array(this.selected_lang_ids)
     })
   );
-console.log(creds.value)
 }
 ///////////////////
 
@@ -234,7 +229,6 @@ removeandaddlang(e,empIndex:number,langindex:number,id) {
 
   }
   else if(e.target.checked===false){
-    console.log(langindex);
     var index=this.getlangselect(empIndex).value.findIndex(idd => idd === id)
   this.getlangselect(empIndex).removeAt(index);
 
@@ -333,17 +327,10 @@ checkhowmanyselected(val)
 // invite agent endpoint
 
  Inviteagent(){
- var index;
     this.form.get('emailgroup').value.forEach( (element) => {
       var data=({"email":element.email,"role":element.role,"language_ids":element.language_ids})
-      console.log(data)
-        this.calladdgent(data);
-
-
+      this.calladdgent(data);
       });
-      // this.sharedres.getrefreshagentlist(1);
-
-
   }
 
   public async  calladdgent(data): Promise<void>
@@ -361,10 +348,7 @@ checkhowmanyselected(val)
     catch(err){
      this.messageService.setErrorMessage(err.error.error)
     }
-
-
       this.dialogRef.close();
-
   }
   public async getlllangugaes(): Promise<void>{
     const getdata = JSON.parse(localStorage.getItem('gigaaa-subscription'))
@@ -374,7 +358,6 @@ checkhowmanyselected(val)
     try{
       this.lang= await this.gigaaaApiService.getAllLanguages(accesstoken,subsid,intid.int_id)
       let updatearr = this.lang.map((item, i) => Object.assign({}, item, this.language[i]));
-        console.log(updatearr)
         this.lang=updatearr;
       this.getalllanguage(false,0);
 

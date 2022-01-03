@@ -135,7 +135,6 @@ export class AgentComponent implements OnInit {
   // get agents details live
   getagentdetailslive(){
   this.agentsocketgigaaaapi.getagetnlist$.subscribe(data=>{
-    console.log(data);
     var updateagentdata;
     updateagentdata =data;
     var count=0;
@@ -168,24 +167,23 @@ export class AgentComponent implements OnInit {
  }
   });
   }
-  counter(u: number) {
-    return new Array(u);
-  }
+      counter(u: number) {
+        return new Array(u);
+      }
 
 
-  getlistofagentwithintg()
-  {
-    this.agentsocketgigaaaapi.send_agentsparam_status(this.active_agents,this.inactive_agents,this.invited_agents,this.id_soflanguages)
-  }
-  geteditagent(val)
-
-  { console.log(val)
-    this.dialog.open(EditformComponent,{
-      hasBackdrop:true,
-      panelClass:"edit-form-container",
-      data :{"role":val.role,'id':val.id,"name":val.display_name,"agentlanguages":val.languages,"agentintegrations":val.integrations}
-    });
-  }
+      getlistofagentwithintg()
+      {
+        this.agentsocketgigaaaapi.send_agentsparam_status(this.active_agents,this.inactive_agents,this.invited_agents,this.id_soflanguages)
+      }
+      geteditagent(val)
+      { 
+        this.dialog.open(EditformComponent,{
+          hasBackdrop:true,
+          panelClass:"edit-form-container",
+          data :{"role":val.role,'id':val.id,"name":val.display_name,"agentlanguages":val.languages,"agentintegrations":val.integrations}
+        });
+      }
 
   getengamentofagentcall(val,val1)
   {
@@ -229,7 +227,6 @@ export class AgentComponent implements OnInit {
        var subsid=getdata.subscription_id.subsid.uuid
     
         this.gigaaaapi.getallagents(accesstoken,subsid,intid,parma1,param2,param3,lang).subscribe(data=>{
-          console.log(data)
            var updateagentdata;
            updateagentdata =data;
             updateagentdata.forEach(element => {
@@ -270,7 +267,6 @@ export class AgentComponent implements OnInit {
         integration_ids: this.idofintg
       }
     }
-    console.log(data);
     const getdata = JSON.parse(localStorage.getItem('gigaaa-subscription'))
     var accesstoken=getdata.access_token;
     var subsid=getdata.subscription_id.subsid.uuid
@@ -332,7 +328,6 @@ isagentonline(val,val1){
   {
     this.allintegration=this.allintegration.filter(({ id }) => id !== val);
     this.idofintg=this.idofintg.filter( (val)  => val !== val);
-    console.log(this.idofintg);
   } 
   removealanguagefromarray(val)
   {    this.idoflang=this.idoflang.filter( (val)  => val !== val);
@@ -345,7 +340,6 @@ isagentonline(val,val1){
   }
 
   private handleLoginRegisterError(response: any) {
-    console.log(response)
         this.messageservie.setErrorMessage(response.error.error, 'toast-bottom-right');
   }
   // get pictures
@@ -360,8 +354,7 @@ isagentonline(val,val1){
 
   selectusertype(e,val,status)
   { 
-    console.log(val)
-    const intid = JSON.parse(localStorage.getItem('intgid'))
+  
     this.selectedusername=val;
   if(e==true&& val=="Show all")
   {
@@ -436,7 +429,6 @@ isagentonline(val,val1){
     this.agentlistview=true;
      this.agentlist=true
     var data={image:images,email:email,invited:invited,display_name:displayName,first_name:firstname,last_name:lastname,language_ids:languageids,role:role,agentuuid:useruuid}
-   console.log(data)
     if(data.invited==true)
     {
       this.sharedres.getagentprofilesetting(data);
@@ -581,7 +573,6 @@ return false;
     ];
     var  language= await this.gigaaaapi.getAllLanguages(accesstoken,subsid,intid.int_id)
       let updatearr = language.map((item, i) => Object.assign({}, item, languagee[i]));
-        console.log(updatearr)
         this.lang=updatearr;
        this.getalllanguage(true);
 
@@ -612,7 +603,6 @@ return false;
       });
 
       
-      console.log(this.id_soflanguages)
       this.selectedlanguages=this.lang.length +"\xa0"+"Selected";
         if(this.lang.length==6)
         {
@@ -639,7 +629,6 @@ return false;
         }
   
         });
-        console.log(this.id_soflanguages)
         this.selectedlanguages="Not Selected";
         this.allselectedtag=false;
         if(this.id_soflanguages.length!=0)
@@ -748,18 +737,17 @@ return false;
    });
  }
 
- // get agents by languages using mobile filter
- getagentslistbylanguages_mobilefilter()
- {
-   this.sharedres.loadagentwithlanguages$.subscribe(data=>{
-    this.langaugesfrommobilefilter=data;
-    this.agentsocketgigaaaapi.send_agentsparam_status(this.active_agents,this.inactive_agents,this.invited_agents,data);
-    this.getselectedlanguages(data);
-   })
- }
- getselectedlanguages(val:Array<any>)
- {    
-          console.log(val)
+          // get agents by languages using mobile filter
+          getagentslistbylanguages_mobilefilter()
+          {
+            this.sharedres.loadagentwithlanguages$.subscribe(data=>{
+              this.langaugesfrommobilefilter=data;
+              this.agentsocketgigaaaapi.send_agentsparam_status(this.active_agents,this.inactive_agents,this.invited_agents,data);
+              this.getselectedlanguages(data);
+            })
+          }
+        getselectedlanguages(val:Array<any>)
+        {    
           this.lang.forEach((ele,i)=>{
             this.lang[i].status=false;
           })
@@ -779,7 +767,6 @@ return false;
           this.selectedlanguages="All Selected"
           this.allselectedtag=true;
       }
-      console.log(this.lang);
 
    }
  

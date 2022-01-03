@@ -17,10 +17,9 @@ import { sharedres_service } from "./sharedres.service";
      this.callsocketapi_by_selecting_intgid()
       }
         public  callsocketapi_by_selecting_intgid()
-          {    const socketvalue = JSON.parse(localStorage.getItem('gigaaa-socket'))
+          {   // const socketvalue = JSON.parse(localStorage.getItem('gigaaa-socket'))
           
             this.sharedres.runsocketapiusingint_id$.subscribe(data=>{
-              console.log(data)
               if(data==1)
               {   
                 this.getagentlive()
@@ -31,13 +30,11 @@ import { sharedres_service } from "./sharedres.service";
       getagentlive()
       {
         var getdata = JSON.parse(localStorage.getItem('gigaaa-subscription'))
-        var accesstoken=getdata?.access_token;
           var uuid=getdata?.subscription_id.subsid.uuid;
           var intid = JSON.parse(localStorage.getItem('intgid'))
           const loggedinuser_uuid = JSON.parse(localStorage.getItem('userlogged_uuid'));
 
           var integrationid=intid?.int_id;
-          console.log(loggedinuser_uuid?.uuid,uuid,integrationid)
 
           if(loggedinuser_uuid?.uuid!=null&&uuid!=null&&integrationid!=null)
             { 
@@ -104,7 +101,6 @@ import { sharedres_service } from "./sharedres.service";
     { 
       if(this.ws.readyState==this.ws.OPEN)
       {var object= {"action": "filter", "data":{"languages": languages, "invited":invited, "active":active, "inactive":inactive}}
-      console.log(object)
      
         this.ws.send(JSON.stringify(object))    
     }
