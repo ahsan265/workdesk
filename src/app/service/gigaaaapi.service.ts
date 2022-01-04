@@ -193,7 +193,7 @@ public getAllUsers(): Observable<any> {
       'Authorization': `Bearer ${accesstoken}`
     })
   };
-   const apiUrl = this.subsidurl;
+   
    return await this.http.get(this.gigaabackendUlr+"/organization",httpOptions).toPromise()
      .catch((err) => {
        throw (err);
