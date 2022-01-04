@@ -21,9 +21,9 @@ export class GigaaaApiService  {
   protected API_URL = `${environment.apiUrl}`;
   protected oauthUrl = `${environment.oauth_url}`;
 
-  private apiUrl = 'https://gigaaa-core.westeurope.cloudapp.azure.com/api/v1/';
+  private apiUrl = 'https://api.gconsole.io/v1/v1/';
   private authurl='https://api.gigaaa.link/oauth/token';
-  private subsidurl='https://nlu-test.gigaaa.link/customer_support';
+  private subsidurl='https://api.gconsole.io/cs';
   private workdeskurl_cs=`${environment.prod_url_cs}`;
   private gigaabackendUlr=`${environment.prod_url_workdesk}`
   private httpOptions: any = {
