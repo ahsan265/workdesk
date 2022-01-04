@@ -23,15 +23,15 @@ export class GigaaaApiService  {
 
   private apiUrl = 'https://gigaaa-core.westeurope.cloudapp.azure.com/api/v1/';
   private authurl='https://api.gigaaa.link/oauth/token';
-  private subsidurl='https://nlu-test.gigaaa.link/customer_support'
-  private workdeskurl='https://gigaaa-backend.azurewebsites.net/workdesk/customer-support/'
+  private subsidurl='https://nlu-test.gigaaa.link/customer_support';
+  private workdeskurl_cs=`${environment.prod_url_cs}`;
+  private gigaabackendUlr=`${environment.prod_url_workdesk}`
   private httpOptions: any = {
     headers: new HttpHeaders({
       'Content-Type': 'application/json',
       'Accept': 'application/json'
     })
   };
-
   constructor(private http: HttpClient, private authService: AuthService) {
     this.getagentdata$ = this.agentdatasubject.asObservable().pipe();
 }
@@ -111,7 +111,7 @@ public getAllUsers(): Observable<any> {
         'Authorization': `Bearer ${access_token}`
       })
     };
-    return await this.http.post("https://gigaaa-backend.azurewebsites.net/users/password", passwordPayload, httpOptions).toPromise();
+    return await this.http.post(this.gigaabackendUlr+"/users/password", passwordPayload, httpOptions).toPromise();
   }
 
   public getAllCountries(accesstoken: string): Promise<any> {
@@ -122,7 +122,7 @@ public getAllUsers(): Observable<any> {
         'Authorization': `Bearer ${accesstoken}`
       })
     };
-    return this.http.get('https://gigaaa-backend.azurewebsites.net/public/countries', httpOptions).toPromise();
+    return this.http.get(this.gigaabackendUlr+'/public/countries', httpOptions).toPromise();
   }
 
   public getAllLanguages(accesstoken: string,orgid:string,intid:string): Promise<any> {
@@ -133,7 +133,7 @@ public getAllUsers(): Observable<any> {
         'Authorization': `Bearer ${accesstoken}`
       })
     };
-    return this.http.get("https://gigaaa-customer-support.azurewebsites.net/private/languages?organization="+orgid+"&integration="+intid, httpOptions).toPromise();
+    return this.http.get(this.workdeskurl_cs+"/private/languages?organization="+orgid+"&integration="+intid, httpOptions).toPromise();
   }
 
   public forgotPassword(email: string) {
@@ -194,7 +194,7 @@ public getAllUsers(): Observable<any> {
     })
   };
    const apiUrl = this.subsidurl;
-   return await this.http.get("https://gigaaa-backend.azurewebsites.net/organization",httpOptions).toPromise()
+   return await this.http.get(this.gigaabackendUlr+"/organization",httpOptions).toPromise()
      .catch((err) => {
        throw (err);
      });
@@ -210,8 +210,7 @@ public getAllUsers(): Observable<any> {
        'Authorization': `Bearer ${accesstoken}`
      })
    };
-    const apiUrl = this.workdeskurl;
-    return this.http.get("https://gigaaa-customer-support.azurewebsites.net/private/agents?show_active="+show_active+"&show_invited="+show_invited+"&show_inactive="+show_inactive+"&languages="+languages+"&organization="+subsid+"&integration="+intid,httpOptions)
+    return this.http.get(this.workdeskurl_cs+"/private/agents?show_active="+show_active+"&show_invited="+show_invited+"&show_inactive="+show_inactive+"&languages="+languages+"&organization="+subsid+"&integration="+intid,httpOptions)
 
     }
 
@@ -239,8 +238,8 @@ public getAllUsers(): Observable<any> {
          'Authorization': `Bearer ${accesstoken}`
        })
      };
-      const apiUrl = this.workdeskurl;
-      return  this.http.get(apiUrl+"queue?organization="+orgid+"&integration="+intid+"&languages=",httpOptions)
+ 
+      return  this.http.get(this.workdeskurl_cs+"queue?organization="+orgid+"&integration="+intid+"&languages=",httpOptions)
 
       }
 
@@ -266,8 +265,7 @@ public getAllUsers(): Observable<any> {
            'Authorization': `Bearer ${accesstoken}`
          })
        };
-        const apiUrl = this.workdeskurl;
-        return  this.http.get("https://gigaaa-customer-support.azurewebsites.net/private/integrations?organization="+uuid,httpOptions)
+        return  this.http.get(this.workdeskurl_cs+"/private/integrations?organization="+uuid,httpOptions)
 
         }
         public async updatelastusedintegration(accesstoken:string,uuid:string,integrationbody:any)
@@ -280,8 +278,7 @@ public getAllUsers(): Observable<any> {
            'Authorization': `Bearer ${accesstoken}`
          })
        };
-        const apiUrl = this.workdeskurl;
-        return await this.http.put("https://gigaaa-customer-support.azurewebsites.net/private/integrations?organization="+uuid,integrationbody,httpOptions).toPromise()
+        return await this.http.put(this.workdeskurl_cs+"/private/integrations?organization="+uuid,integrationbody,httpOptions).toPromise()
         .catch((err) => {
           throw (err);
         });
@@ -313,8 +310,7 @@ public getAllUsers(): Observable<any> {
         'Authorization': `Bearer ${accesstoken}`
       })
     };
-     const apiUrl = this.workdeskurl;
-     return await this.http.post("https://gigaaa-customer-support.azurewebsites.net/private/start-call?organization="+orguuid+"&integration="+intid,id,httpOptions).toPromise()
+     return await this.http.post(this.workdeskurl_cs+"/private/start-call?organization="+orguuid+"&integration="+intid,id,httpOptions).toPromise()
        .catch((err) => {
          throw (err);
        });
@@ -329,10 +325,9 @@ public getAllUsers(): Observable<any> {
        reportProgress:true,
        observe:'events'
      };
-      const apiUrl = this.workdeskurl;
       var formdata = new FormData();
       formdata.append("image",file);
-      return  this.http.post("https://gigaaa-customer-support.azurewebsites.net/private/agents/image?organization="+subsid+"&integration="+intgid,formdata,httpOptions);
+      return  this.http.post(this.workdeskurl_cs+"/private/agents/image?organization="+subsid+"&integration="+intgid,formdata,httpOptions);
       }
       // agent upload pic by admin
       public   agentuploaduserprofilepic(accesstoken:string,orgid:string,intgid:String,uuid:string ,file: File)
@@ -344,10 +339,9 @@ public getAllUsers(): Observable<any> {
         reportProgress:true,
         observe:'events'
       };
-       const apiUrl = this.workdeskurl;
        var formdata = new FormData();
        formdata.append("image",file);
-       return  this.http.post("https://gigaaa-customer-support.azurewebsites.net/private/agents/image?organization="+orgid+"&integration="+intgid+"&agent="+uuid,formdata,httpOptions);
+       return  this.http.post(this.workdeskurl_cs+"/private/agents/image?organization="+orgid+"&integration="+intgid+"&agent="+uuid,formdata,httpOptions);
        }
     public  async editagent(accesstoken:string,subsid:string,id:number,addrole:any): Promise<any>
    {   const httpOptions: any = {
@@ -359,7 +353,7 @@ public getAllUsers(): Observable<any> {
      })
    };
     const apiUrl = this.subsidurl;
-    return await this.http.put(apiUrl+"/agents/"+id+"?subscription="+subsid,addrole,httpOptions).toPromise()
+    return await this.http.put(this.workdeskurl_cs+"/customer-support/agents/"+id+"?subscription="+subsid,addrole,httpOptions).toPromise()
       .catch((err) => {
         throw (err);
       });
@@ -401,8 +395,7 @@ public getAllUsers(): Observable<any> {
           'Authorization': `Bearer ${accesstoken}`
         })
       };
-       const apiUrl = this.workdeskurl;
-       return  this.http.get("https://gigaaa-backend.azurewebsites.net/workdesk/visitors?organization="+orgid+"&integration="+intid,httpOptions)
+       return  this.http.get(this.gigaabackendUlr+"/workdesk/visitors?organization="+orgid+"&integration="+intid,httpOptions)
        }
 
        //get visitors
@@ -415,8 +408,7 @@ public getAllUsers(): Observable<any> {
           'Authorization': `Bearer ${accesstoken}`
         })
       };
-       const apiUrl = this.workdeskurl;
-       return  this.http.get("https://gigaaa-customer-support.azurewebsites.net/private/is-admin?organization="+orgid+"&integration="+intid,httpOptions)
+       return  this.http.get(this.workdeskurl_cs+"/private/is-admin?organization="+orgid+"&integration="+intid,httpOptions)
        }
 
 
@@ -430,23 +422,10 @@ public getAllUsers(): Observable<any> {
            'Authorization': `Bearer ${accesstoken}`
          })
        };
-        const apiUrl = this.workdeskurl;
-        return  this.http.get(apiUrl+"queue/websocket/access-token?organization="+orgid+"&integration="+intid,httpOptions)
+        return  this.http.get(this.workdeskurl_cs+"queue/websocket/access-token?organization="+orgid+"&integration="+intid,httpOptions)
         }
 
-        // get token for visitor socket api
-        public   getvisitorsockettoken(accesstoken:string,orgid:string,intid:string)
-        {   const httpOptions: any = {
-            headers: new HttpHeaders({
-           'Content-Type': 'application/json',
-           'Accept': 'application/json',
-           'Authorization': `Bearer ${accesstoken}`
-         })
-         };
-        const apiUrl = this.workdeskurl;
-        return  this.http.get("https://gigaaa-backend.azurewebsites.net/workdesk/visitors/websocket/access-token?organization="+orgid+"&integration="+intid,httpOptions)
-        }
-
+    
           // invite agent endpoint
 
           public  async getinviteagent(accesstoken:string,uuid:string,intid:string,agentdata:any): Promise<any>
@@ -458,8 +437,7 @@ public getAllUsers(): Observable<any> {
               'Authorization': `Bearer ${accesstoken}`
             })
           };
-           const apiUrl = this.workdeskurl;
-           return await this.http.post("https://gigaaa-customer-support.azurewebsites.net/private/invitation?organization="+uuid+"&integration="+intid,agentdata,httpOptions).toPromise()
+           return await this.http.post(this.workdeskurl_cs+"/private/invitation?organization="+uuid+"&integration="+intid,agentdata,httpOptions).toPromise()
              .catch((err) => {
                throw (err);
              });
@@ -474,8 +452,7 @@ public getAllUsers(): Observable<any> {
                'Authorization': `Bearer ${accesstoken}`
              })
            };
-            const apiUrl = this.workdeskurl;
-            return await this.http.put("https://gigaaa-customer-support.azurewebsites.net/public/invitation/accept?code",agentdata,httpOptions).toPromise()
+            return await this.http.put(this.workdeskurl_cs+"/public/invitation/accept?code",agentdata,httpOptions).toPromise()
               .catch((err) => {
                 throw (err);
               });
@@ -491,8 +468,7 @@ public getAllUsers(): Observable<any> {
            'Authorization': `Bearer ${accesstoken}`
          })
          };
-        const apiUrl = this.workdeskurl;
-        return  this.http.delete("https://gigaaa-customer-support.azurewebsites.net/private/agents/"+agentuuid+"?organization="+orgid+"&integration="+intid,httpOptions).toPromise()
+        return  this.http.delete(this.workdeskurl_cs+"/private/agents/"+agentuuid+"?organization="+orgid+"&integration="+intid,httpOptions).toPromise()
         .catch((err) => {
           throw (err);
         });
@@ -507,8 +483,7 @@ public getAllUsers(): Observable<any> {
            'Authorization': `Bearer ${accesstoken}`
          })
          };
-        const apiUrl = this.workdeskurl;
-        return  this.http.get("https://gigaaa-customer-support.azurewebsites.net/private/is-online?organization="+orgid+"&integration="+intid,httpOptions)
+        return  this.http.get(this.workdeskurl_cs+"/private/is-online?organization="+orgid+"&integration="+intid,httpOptions)
         }
           // set online status
           public  async putonlinestatus(accesstoken:string,orgid:string,intid:string,online:any): Promise<any>
@@ -520,8 +495,7 @@ public getAllUsers(): Observable<any> {
               'Authorization': `Bearer ${accesstoken}`
             })
           };
-           const apiUrl = this.workdeskurl;
-           return await this.http.put("https://gigaaa-customer-support.azurewebsites.net/private/is-online?organization="+orgid+"&integration="+intid,online,httpOptions).toPromise()
+           return await this.http.put(this.workdeskurl_cs+"/private/is-online?organization="+orgid+"&integration="+intid,online,httpOptions).toPromise()
              .catch((err) => {
                throw (err);
              });
@@ -538,8 +512,7 @@ public getAllUsers(): Observable<any> {
              'Authorization': `Bearer ${accesstoken}`
              })
              };
-             const apiUrl = this.workdeskurl;
-             return await this.http.post("https://gigaaa-customer-support.azurewebsites.net/private/invitation/resend?agent="+agentuuid+"&organization="+orgid+"&integration="+intid,{},httpOptions).toPromise()
+             return await this.http.post(this.workdeskurl_cs+"/private/invitation/resend?agent="+agentuuid+"&organization="+orgid+"&integration="+intid,{},httpOptions).toPromise()
                .catch((err) => {
                  throw (err);
                });
@@ -557,8 +530,7 @@ public getAllUsers(): Observable<any> {
               'Authorization': `Bearer ${accesstoken}`
               })
               };
-              const apiUrl = this.workdeskurl;
-              return await this.http.put("https://gigaaa-customer-support.azurewebsites.net/private/agents/"+agentuuid+"?organization="+orgid+"&integration="+intid,agentbody,httpOptions).toPromise()
+              return await this.http.put(this.workdeskurl_cs+"/private/agents/"+agentuuid+"?organization="+orgid+"&integration="+intid,agentbody,httpOptions).toPromise()
                 .catch((err) => {
                   throw (err);
                 });
@@ -572,8 +544,7 @@ public getAllUsers(): Observable<any> {
                 'Accept': 'application/json'
               })
               };
-             const apiUrl = this.workdeskurl;
-             return  this.http.get("https://gigaaa-customer-support.azurewebsites.net/public/invitation?code="+code,httpOptions)
+             return  this.http.get(this.workdeskurl_cs+"/public/invitation?code="+code,httpOptions)
              }
                 // get call stats
                 public   getcallstatistics(accesstoken:string,orgid:string,intid:string)
@@ -584,8 +555,7 @@ public getAllUsers(): Observable<any> {
                       'Authorization': `Bearer ${accesstoken}`
                  })
                  };
-                const apiUrl = this.workdeskurl;
-                return  this.http.get("https://gigaaa-customer-support.azurewebsites.net/private/analytics/counts?organization="+orgid+"&integration="+intid,httpOptions)
+                return  this.http.get(this.workdeskurl_cs+"/private/analytics/counts?organization="+orgid+"&integration="+intid,httpOptions)
               }
 
                  // get call chart
@@ -599,7 +569,7 @@ public getAllUsers(): Observable<any> {
                   })
                   };
 
-                 return  this.http.get("https://gigaaa-customer-support.azurewebsites.net/private/analytics/aggregates?organization="+orgid+"&integration="+intid+"&time="+time+"&languages="+languages+"&countries="+countries,httpOptions)
+                 return  this.http.get(this.workdeskurl_cs+"/private/analytics/aggregates?organization="+orgid+"&integration="+intid+"&time="+time+"&languages="+languages+"&countries="+countries,httpOptions)
                  }
 
                   // get call chart
@@ -613,7 +583,7 @@ public getAllUsers(): Observable<any> {
                    })
                    };
  
-                  return  this.http.get("https://gigaaa-backend.azurewebsites.net/organization/analytics/users/visitors?organization="+orgid+"&integration="+intid+"&date_from="+date_from+"&date_to="+date_to+"&languages="+languages+"&countries="+countries,httpOptions)
+                  return  this.http.get(this.gigaabackendUlr+"/organization/analytics/users/visitors?organization="+orgid+"&integration="+intid+"&date_from="+date_from+"&date_to="+date_to+"&languages="+languages+"&countries="+countries,httpOptions)
                   }
                  // get loggedin agent uuid
                  getloggedinagentuuid(accesstoken:string,orgid:string,intid:string)
@@ -626,7 +596,7 @@ public getAllUsers(): Observable<any> {
                  })
                  };
 
-                return  this.http.get("https://gigaaa-customer-support.azurewebsites.net/private/agent?organization="+orgid+"&integration="+intid,httpOptions)
+                return  this.http.get(this.workdeskurl_cs+"/private/agent?organization="+orgid+"&integration="+intid,httpOptions)
                  }
 }
 

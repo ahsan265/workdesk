@@ -6,5 +6,9 @@ export const environment = {
   oauth_url: "https://accounts.gigaaa.com/oauth",
   accounts_url: 'https://accounts.gigaaa.com/oauth',
   redirect_uri: "https://workdeskdev.gigaaa.com/callback",
-  uri: "https://workdeskdev.gigaaa.com"
+  uri: "https://workdeskdev.gigaaa.com",
+
+  // 
+  prod_url_cs:"https://api.gconsole.io",
+  prod_url_workdesk:"https://api.gconsole.io/v2"
 };

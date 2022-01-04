@@ -1679,7 +1679,7 @@ createoschart()
 
    getstatsonintg()
   { 
-      const getdata = JSON.parse(localStorage.getItem('gigaaa-subscription'))
+       const getdata = JSON.parse(localStorage.getItem('gigaaa-subscription'))
        const accesstoken=getdata.access_token;
        const subsid=getdata.subscription_id?.subsid?.uuid;
       try{

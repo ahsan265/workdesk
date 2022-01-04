@@ -11,7 +11,10 @@ export const environment = {
   oauth_url: 'https://accounts.gigaaa.com/oauth',
   accounts_url: 'https://accounts.gigaaa.com/oauth',
   redirect_uri: 'http://localhost:4202/callback',
-  uri: 'http://localhost:4202'
+  uri: 'http://localhost:4202',
+    // 
+    prod_url_cs:"https://gigaaa-customer-support.azurewebsites.net",
+    prod_url_workdesk:"https://gigaaa-backend.azurewebsites.net"
 };
 
 /*
