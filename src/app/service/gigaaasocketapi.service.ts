@@ -5,6 +5,7 @@ import { ActivatedRouteSnapshot, CanActivate, CanLoad, Route, Router, RouterStat
 import { Observable, Observer } from 'rxjs';
 import { Subject } from 'rxjs';
 import { webSocket, WebSocketSubject } from "rxjs/webSocket";
+import { environment } from 'src/environments/environment';
 import { GigaaaApiService } from './gigaaaapi.service';
 import { MessageService } from './messege.service';
 import { sharedres_service } from './sharedres.service';
@@ -13,6 +14,9 @@ import { sharedres_service } from './sharedres.service';
   providedIn: 'root'
 })
 export class gigaaasocketapi {
+  protected websocket_url = `${environment.websocket_url}`;
+
+
   tokenque:any;
   tokenvisit:any;
   closestate:any;
@@ -54,7 +58,7 @@ callsocketapi_by_selecting_intgid()
    if(accesstoken!=null&&uuid!=null&&integrationid!=null)
      {
 
-      var  url="wss://websockets.gigaaa.com/customer-support/queue?organization="+uuid+"&integration="+integrationid+"&token="+accesstoken;
+      var  url=this.websocket_url+"/customer-support/queue?organization="+uuid+"&integration="+integrationid+"&token="+accesstoken;
      this.ws = new WebSocket(url);
 
      this.ws.onopen=(e)=>{

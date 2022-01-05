@@ -14,7 +14,9 @@ export const environment = {
   uri: 'http://localhost:4202',
     // 
     prod_url_cs:"https://gigaaa-customer-support.azurewebsites.net",
-    prod_url_workdesk:"https://gigaaa-backend.azurewebsites.net"
+    prod_url_workdesk:"https://gigaaa-backend.azurewebsites.net",
+    //
+    websocket_url:"wss://websockets.gigaaa.com"
 };
 
 /*

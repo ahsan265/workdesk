@@ -359,7 +359,7 @@ export class DashboardComponent implements OnInit {
           }
 
         }
-      },1000);
+      },60000);
     }
      getlistofdashboard(val)
      {

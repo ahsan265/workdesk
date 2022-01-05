@@ -9,6 +9,9 @@ export const environment = {
   uri: "https://workdesk.gconsole.io",
 
   // 
-  prod_url_cs:"https://api.gconsole.io/customer-support",
-  prod_url_workdesk:"https://api.gconsole.io/v2"
+  prod_url_cs:"https://api.gconsole.io/cs",
+  prod_url_workdesk:"https://api.gconsole.io/v2",
+  // 
+
+  websocket_url:"wss://websockets.gigaaa.com"
 };

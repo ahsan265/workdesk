@@ -22,7 +22,6 @@ export class GigaaaApiService  {
   protected oauthUrl = `${environment.oauth_url}`;
 
   private apiUrl = 'https://api.gconsole.io/v1/v1/';
-  private authurl='https://api.gigaaa.link/oauth/token';
   private workdeskurl_cs=`${environment.prod_url_cs}`;
   private gigaabackendUlr=`${environment.prod_url_workdesk}`
   private httpOptions: any = {

@@ -1,5 +1,6 @@
 import { Injectable } from "@angular/core";
 import { Observable, Subject } from "rxjs";
+import { environment } from "src/environments/environment";
 import { MessageService } from "./messege.service";
 import { sharedres_service } from "./sharedres.service";
 
@@ -7,6 +8,8 @@ import { sharedres_service } from "./sharedres.service";
     providedIn: 'root'
   })
   export class agentsocketapi {
+    protected websocket_url = `${environment.websocket_url}`;
+
     getagetnlist$: Observable<any>;
     private getagentlistsubject = new Subject<any>();
      ws:  WebSocket;
@@ -38,7 +41,7 @@ import { sharedres_service } from "./sharedres.service";
 
           if(loggedinuser_uuid?.uuid!=null&&uuid!=null&&integrationid!=null)
             { 
-                var  url="wss://websockets.gigaaa.com/customer-support/agents?organization="+uuid+"&integration="+integrationid+"&agent="+loggedinuser_uuid?.uuid;
+                var  url=this.websocket_url+"/customer-support/agents?organization="+uuid+"&integration="+integrationid+"&agent="+loggedinuser_uuid?.uuid;
                 this.ws = new WebSocket(url);
                     this.ws.onopen=(e)=>{
                      this.message.setSuccessMessage("Agent-socket-"+e.type);
