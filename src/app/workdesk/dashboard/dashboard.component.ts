@@ -1704,6 +1704,7 @@ createoschart()
       var orgid=getdata?.subscription_id?.subsid?.uuid
       
         this.gigaaaservice.getcallstatistics(accesstoken,orgid,int_id).subscribe(data=>{
+         
           this.answeredbyai=data['handed_to_ai']?.count;
           this.totalmissed=data['missed']?.count;
           this.answered=data['answered']?.count;

@@ -1,6 +1,6 @@
 export const environment = {
   production: true,
-  apiUrl: 'https://api.gigaaa.link/api/v1',
+  apiUrl: 'https://api.gconsole.io/v1',
   backendApi: 'https://api.gconsole.io/v2',
   client_id: 14,
   oauth_url: "https://accounts.gconsole.io/oauth",
@@ -9,6 +9,6 @@ export const environment = {
   uri: "https://workdesk.gconsole.io",
 
   // 
-  prod_url_cs:"https://api.gconsole.io/v1",
+  prod_url_cs:"https://api.gconsole.io/customer-support",
   prod_url_workdesk:"https://api.gconsole.io/v2"
 };

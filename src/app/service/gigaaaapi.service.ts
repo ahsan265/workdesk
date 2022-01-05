@@ -23,7 +23,6 @@ export class GigaaaApiService  {
 
   private apiUrl = 'https://api.gconsole.io/v1/v1/';
   private authurl='https://api.gigaaa.link/oauth/token';
-  private subsidurl='https://api.gconsole.io/cs';
   private workdeskurl_cs=`${environment.prod_url_cs}`;
   private gigaabackendUlr=`${environment.prod_url_workdesk}`
   private httpOptions: any = {
@@ -149,39 +148,6 @@ public getAllUsers(): Observable<any> {
     return this.http.post(`https://gigaaa-core.westeurope.cloudapp.azure.com/password/email`, body, httpOptions);
   }
 
-  public uploadImage(user: User, file: File): Promise<any> {
-    const httpOptions: any = {
-      method: 'POST',
-      headers: new HttpHeaders({
-        'Accept': 'application/json',
-        'Authorization': `Bearer ${user.api_token}`
-      })
-    };
-    const formData: FormData = new FormData();
-    formData.append('avatar', file);
-    return this.http.post(this.apiUrl + `users/${user.id}/avatars`, formData, httpOptions).toPromise();
-  }
-
-  public getUserById(user: User, id:number) {
-    const httpOptions: any = {
-      method: 'GET',
-      headers: new HttpHeaders({
-        'Content-Type': 'application/json',
-        'Accept': 'application/json',
-        'Authorization': `Bearer ${user.api_token}`
-      })
-    };
-    return this.http.get(this.apiUrl + `users/${id}`, httpOptions).toPromise()
-  }
- public  async getsubstoken(subsdata: subsdata): Promise<any>
- {
-  const apiUrl = this.authurl;
-  return await this.http.post(apiUrl,subsdata).toPromise()
-    .catch((err) => {
-      throw (err);
-    });
-
-  }
 
 
   public  async getsubsid(accesstoken:any)
@@ -224,8 +190,7 @@ public getAllUsers(): Observable<any> {
         'Authorization': `Bearer ${accesstoken}`
       })
     };
-     const apiUrl = this.subsidurl;
-     return  this.http.get(apiUrl+"/statistics?subscription="+subsid+"&integration="+intid,httpOptions)
+     return  this.http.get(this.workdeskurl_cs+"/statistics?subscription="+subsid+"&integration="+intid,httpOptions)
 
      }
 
@@ -252,8 +217,7 @@ public getAllUsers(): Observable<any> {
           'Authorization': `Bearer ${accesstoken}`
         })
       };
-       const apiUrl = this.subsidurl;
-       return  this.http.get(apiUrl+"/queue/"+id+"?subscription="+subsid,httpOptions)
+       return  this.http.get(this.workdeskurl_cs+"/queue/"+id+"?subscription="+subsid,httpOptions)
 
        }
        public   getallintegration(accesstoken:string,uuid:string)
@@ -294,8 +258,7 @@ public getAllUsers(): Observable<any> {
        'Authorization': `Bearer ${accesstoken}`
      })
    };
-    const apiUrl = this.subsidurl;
-    return await this.http.post(apiUrl+"/agents?subscription="+subsid,addrole,httpOptions).toPromise()
+    return await this.http.post(this.workdeskurl_cs+"/agents?subscription="+subsid,addrole,httpOptions).toPromise()
       .catch((err) => {
         throw (err);
       });
@@ -352,38 +315,12 @@ public getAllUsers(): Observable<any> {
        'Authorization': `Bearer ${accesstoken}`
      })
    };
-    const apiUrl = this.subsidurl;
     return await this.http.put(this.workdeskurl_cs+"/customer-support/agents/"+id+"?subscription="+subsid,addrole,httpOptions).toPromise()
       .catch((err) => {
         throw (err);
       });
     }
-    public  async updateagentdisplayname(accesstoken:string,subsid:string,intid:string,id:number,displayname:any): Promise<any>
-    {   const httpOptions: any = {
-         headers: new HttpHeaders({
-        'Content-Type': 'application/json',
-        'Accept': 'application/json',
-        'Authorization': `Bearer ${accesstoken}`
-      })
-    };
-     const apiUrl = this.subsidurl;
-     return await this.http.put(apiUrl+"/agents/"+id+"/name?subscription="+subsid+"&integration="+intid,displayname,httpOptions).toPromise()
-       .catch((err) => {
-         throw (err);
-       });
-     }
-     public   getagentdislayname(accesstoken:string,subsid:string,intid:string)
-     {   const httpOptions: any = {
-
-          headers: new HttpHeaders({
-         'Content-Type': 'application/json',
-         'Accept': 'application/json',
-         'Authorization': `Bearer ${accesstoken}`
-       })
-     };
-      const apiUrl = this.subsidurl;
-      return  this.http.get(apiUrl+"/agent?subscription="+subsid+"&integration="+intid,httpOptions)
-      }
+  
 
       //get visitors
       public   getvisitorlist(accesstoken:string,orgid:string,intid:string)
