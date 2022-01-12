@@ -30,10 +30,16 @@ export class MobilefiltersforagentsComponent implements OnInit {
   allselectedtag:boolean;
    // get last week days 
    beforeOneWeek = new Date(new Date().getTime() - 60 * 60 * 24 * 7 * 1000)
-   day = this.beforeOneWeek.getDay()
-   diffToMonday = this.beforeOneWeek.getDate() - this.day + (this.day === 0 ? -6 : 1)
-   lastMonday = new Date(this.beforeOneWeek.setDate(this.diffToMonday))
-   lastSunday = new Date(this.beforeOneWeek.setDate(this.diffToMonday + 6));
+   beforeOneWeek2 = new Date(this.beforeOneWeek);
+
+ day = this.beforeOneWeek.getDay()
+ diffToMonday = this.beforeOneWeek.getDate() - this.day + (this.day === 0 ? -6 : 1)
+ lastMonday = new Date(this.beforeOneWeek.setDate(this.diffToMonday))
+ lastSunday = new Date(this.beforeOneWeek2.setDate(this.diffToMonday + 6));
+ 
+  dayd = new Date().getDay();
+  Startdayofweek=  new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate() + (this.dayd == 0?-6:1)-this.dayd );
+  Enddayofweek=  new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate() + (this.dayd  == 0?0:7)-this.dayd );
   ranges: IRange[] = [
     {
       value: [new Date(new Date().setDate(new Date().getDate())),new Date()],
@@ -43,8 +49,8 @@ export class MobilefiltersforagentsComponent implements OnInit {
       value: [new Date(new Date().setDate(new Date().getDate() - 1)),new Date(new Date().setDate(new Date().getDate() - 1))],
       label: 'Yesterday'
     },{
-    value: [new Date(new Date().setDate(new Date().getDate()-new Date().getDay()+1)),new Date(new Date().setDate(new Date().getDate()-new Date().getDay()+7))],
-    label: 'This week'
+      value: [this.Startdayofweek,this.Enddayofweek],
+      label: 'This week'
   }, {
     value: [this.lastMonday,this.lastSunday],
     label: 'Last week'

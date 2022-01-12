@@ -9,6 +9,7 @@ import { GigaaaApiService } from 'src/app/service/gigaaaapi.service';
 import { gigaaasocketapi } from 'src/app/service/gigaaasocketapi.service';
 import { MessageService } from 'src/app/service/messege.service';
 import { sharedres_service } from 'src/app/service/sharedres.service';
+import { CallInterfaceComponent } from './call-interface/call-interface.component';
 import { CallMobilePopupFilterComponent } from './call-mobile-popup-filter/call-mobile-popup-filter.component';
 declare var $: any;
 export interface TimeSpan {
@@ -73,10 +74,16 @@ export class ChatComponent implements OnInit {
 
   // get last week days
   beforeOneWeek = new Date(new Date().getTime() - 60 * 60 * 24 * 7 * 1000)
-  day = this.beforeOneWeek.getDay()
-  diffToMonday = this.beforeOneWeek.getDate() - this.day + (this.day === 0 ? -6 : 1)
-  lastMonday = new Date(this.beforeOneWeek.setDate(this.diffToMonday))
-  lastSunday = new Date(this.beforeOneWeek.setDate(this.diffToMonday + 6));
+  beforeOneWeek2 = new Date(this.beforeOneWeek);
+
+day = this.beforeOneWeek.getDay()
+diffToMonday = this.beforeOneWeek.getDate() - this.day + (this.day === 0 ? -6 : 1)
+lastMonday = new Date(this.beforeOneWeek.setDate(this.diffToMonday))
+lastSunday = new Date(this.beforeOneWeek2.setDate(this.diffToMonday + 6));
+
+ dayd = new Date().getDay();
+ Startdayofweek=  new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate() + (this.dayd == 0?-6:1)-this.dayd );
+ Enddayofweek=  new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate() + (this.dayd  == 0?0:7)-this.dayd );
   ranges: IRange[] = [
     {
       value: [new Date(new Date().setDate(new Date().getDate())),new Date()],
@@ -86,8 +93,8 @@ export class ChatComponent implements OnInit {
       value: [new Date(new Date().setDate(new Date().getDate() - 1)),new Date(new Date().setDate(new Date().getDate() - 1))],
       label: 'Yesterday'
     },{
-    value: [new Date(new Date().setDate(new Date().getDate()-new Date().getDay()+1)),new Date(new Date().setDate(new Date().getDate()-new Date().getDay()+7))],
-    label: 'This week'
+      value: [this.Startdayofweek,this.Enddayofweek],
+      label: 'This week'
   }, {
     value: [this.lastMonday,this.lastSunday],
     label: 'Last week'
@@ -313,21 +320,17 @@ return ("0" + minutes).slice(-2) + ":" + ("0" +seconds).slice(-2);
 
 
   }
+  alreadydonecall:any;
   ngOnInit(): void {
     this.getpanalview("incoming");
     this.rangeSelected1="Today";
     this.rangeSelected2="Today";
-
-   
     this.incoming=true;
     this.outgoing=false;
     this.missed=false;
     this.answered=false;
     this.changecalltype(true);
-    //this.getalllanguage(true);
     this.getcalltype(true);
-    this.getlistofoagentonappl();
-
     this.getsocketapidata();
     this.getagentlist();
     this.selectedtabhold("incoming",true);
@@ -344,12 +347,11 @@ return ("0" + minutes).slice(-2) + ":" + ("0" +seconds).slice(-2);
     this.showselectednumberoflanguages("ongoing","All Selected");
     this.showselectednumberoflanguages("missed","All Selected");
     this.showselectednumberoflanguages("finished","All Selected");
-
     this.selectednumbercalls("incoming","All Selected");
     this.selectednumbercalls("ongoing","All Selected");
     this.selectednumbercalls("missed","All Selected");
     this.selectednumbercalls("finished","All Selected");
-      this.getlllangugaes();
+    this.getlllangugaes();
     this.getmobileSeachFilterData();
     this.getmobileLanguagesFilterData();
     this.getDateRangeMobileFilter();
@@ -359,6 +361,7 @@ return ("0" + minutes).slice(-2) + ":" + ("0" +seconds).slice(-2);
         this.gigaaasocketapi.sendfilterparams({"tab":"default","languages":this.idsoflanguages,"call_type":this.idsofcalltype});
         this.onDateChange([this.ranges[0].value[0],this.ranges[0].value[1]],'missed_date',1);
         this.onDateChange([this.ranges[0].value[0],this.ranges[0].value[1]],'finished_date',1);
+        this.alreadydonecall=1;
       }
     });
     interval(1000).subscribe(() => {
@@ -411,7 +414,7 @@ return ("0" + minutes).slice(-2) + ":" + ("0" +seconds).slice(-2);
       this.missed=false;
       this.answered=false;
       this.selectedtabs="ongoing"
-
+    //  this.openCallInterface();
     }
     else if(val=="missed")
     {
@@ -504,12 +507,6 @@ return ("0" + minutes).slice(-2) + ":" + ("0" +seconds).slice(-2);
       this.messageservie.setErrorMessage(err.error);
 
     })
-  }
-
-  getlistofoagentonappl()
-  {
-    const getdata = JSON.parse(localStorage.getItem('gigaaa-subscription'))
-    const id = JSON.parse(localStorage.getItem('intgid'))
   }
 
 
@@ -688,6 +685,7 @@ return time;
 
 public async dialcall(callid:any): Promise<void>
 {
+  
   const getdata = JSON.parse(localStorage.getItem('gigaaa-subscription'))
     var accesstoken=getdata.access_token;
     const id = JSON.parse(localStorage.getItem('intgid'))
@@ -803,21 +801,22 @@ search(term:string,column:any) {
               });
               this.idsoflanguages=idoflang;
               this.idsofcalltype=idofcall;
-              this.gigaaasocketapi.sendfilterparams({"tab":"default","languages":this.idsoflanguages,"call_type":this.idsofcalltype});
-              this.onDateChange([this.ranges[0].value[0],this.ranges[0].value[1]],'missed_date',1);
-              this.onDateChange([this.ranges[0].value[0],this.ranges[0].value[1]],'finished_date',1);
-            this.getalllanguage(true,"incoming",1);
-            this.getalllanguage(true,"ongoing",1);
-            this.getalllanguage(true,"missed",1);
-            this.getalllanguage(true,"finished",1);
-
-            this.selectallcalltype(true,"incoming",1);
-            this.selectallcalltype(true,"ongoing",1);
-            this.selectallcalltype(true,"missed",1);
-            this.selectallcalltype(true,"finished",1);
-
-      
-
+              this.getalllanguage(true,"incoming",1);
+              this.getalllanguage(true,"ongoing",1);
+              this.getalllanguage(true,"missed",1);
+              this.getalllanguage(true,"finished",1);
+  
+              this.selectallcalltype(true,"incoming",1);
+              this.selectallcalltype(true,"ongoing",1);
+              this.selectallcalltype(true,"missed",1);
+              this.selectallcalltype(true,"finished",1);
+              if(this.alreadydonecall!=1)
+              {
+                this.gigaaasocketapi.sendfilterparams({"tab":"default","languages":this.idsoflanguages,"call_type":this.idsofcalltype});
+                this.onDateChange([this.ranges[0].value[0],this.ranges[0].value[1]],'missed_date',1);
+                this.onDateChange([this.ranges[0].value[0],this.ranges[0].value[1]],'finished_date',1);
+              }
+             
 
     }
     catch(err){
@@ -1789,6 +1788,13 @@ this.allselectedcall2=status;
         this.gigaaasocketapi.send_daterange_params({tab:'finished_date',start_date:data.daterangestart,end_date:data.daterangeend})
       }
     })
+  }
+  openCallInterface()
+  {
+    this.dialog.open(CallInterfaceComponent,{
+        hasBackdrop:true,
+        panelClass:"callinterface-form-container",
+      });
   }
 }
 

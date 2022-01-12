@@ -59,6 +59,9 @@ export class sharedres_service {
     
     sendtrigger_message$: Observable<any>;
     private sendtrigger_message_subject = new Subject<any>();
+
+    showTopandSidebar$: Observable<any>;
+    private showTopandSidebarSubject = new Subject<any>();
     constructor(private gigaaaapi:GigaaaApiService,
       private router: ActivatedRoute,
 
@@ -81,7 +84,7 @@ export class sharedres_service {
 
         this.sendtrigger_message$=this.sendtrigger_message_subject.asObservable().pipe();
         this.sendparamfromdashboardpopup$=this.sendparamfromdashboardpopup_subject.asObservable().pipe();
-
+        this.showTopandSidebar$=this.showTopandSidebarSubject.asObservable().pipe(); 
     }
     getintegrationrelation(intid:any) {
     this.submitappsubject.next({int_id:intid});
@@ -208,5 +211,10 @@ send_trigger_message(val)
 send_param_from_dashboard(val)
 {
   this.sendparamfromdashboardpopup_subject.next(val)
+}
+// show top and sidebar ()
+showtopandsidebar(val)
+{
+  this.showTopandSidebarSubject.next(val)
 }
 }

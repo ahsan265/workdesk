@@ -14,6 +14,7 @@ import { agentsocketapi } from './service/agentsocketapi';
 import { textChangeRangeIsUnchanged } from 'typescript';
 import { oAuthService } from './service/authservice.service';
 import { gigaaasocketapi } from './service/gigaaasocketapi.service';
+import { promise } from 'protractor';
 
 @Component({
   selector: 'app-root',
@@ -81,7 +82,7 @@ websites=[{text:"Partnership",url:['https://partnerships.gigaaa.com/'],image:'..
   accessToken;
   user: User;
   url:String;
-  hideTopbar:boolean;
+  hideTopbar:boolean=false;
   constructor(
     public authService: AuthService,
     private oAuthService:oAuthService,
@@ -99,9 +100,12 @@ websites=[{text:"Partnership",url:['https://partnerships.gigaaa.com/'],image:'..
   }
   sendUserStatus = new ReplaySubject(1);
   ngOnInit(): void {
+  
+    this.getShowandTOpbar().finally(()=>{
+
+    })
     this.statusonline = JSON.parse(localStorage.getItem('user-status'));
     this.sendUserStatus.subscribe((res)=>{
-      console.log(res)
       localStorage.setItem('user-status', JSON.stringify(res));
     })
     this.lastuserintegration="Select integration";
@@ -125,7 +129,7 @@ websites=[{text:"Partnership",url:['https://partnerships.gigaaa.com/'],image:'..
    
 
     this.authService.accessToken.subscribe((res: any) => {
- 
+
       if (res) {
        
         this.accessToken=res
@@ -141,13 +145,18 @@ websites=[{text:"Partnership",url:['https://partnerships.gigaaa.com/'],image:'..
             this.socketapi.closewebsocketcalls();
             this.agentsocketapi.closeagentsocket();
             this.getallintegrationlist();
+            localStorage.setItem('gigaaa-socket', JSON.stringify(false));
+            this.sharedres.showtopandsidebar(1);
+            this.router.navigate(['/dashboard']);
+
           })
-       this.router.navigate(['/dashboard']);
         });
       }
     
     });
-    this.getuserloggedinstatus()
+  
+    this.getuserloggedinstatus();
+   
   }
 
   addNewRouteName(event: any) {
@@ -171,7 +180,7 @@ websites=[{text:"Partnership",url:['https://partnerships.gigaaa.com/'],image:'..
   }
 
   onAddAnotherAccount(event: any) {
-    this.hideTopbar=false
+  
     const callLogin = new LoginBtnComponent(this.cookie);
     const action: string = 'add';
     if (event) {
@@ -180,7 +189,7 @@ websites=[{text:"Partnership",url:['https://partnerships.gigaaa.com/'],image:'..
   }
 
   onSignin(event: any) {
-  this.hideTopbar=false
+  
     const callLogin = new LoginBtnComponent(this.cookie);
     const action: string = 'add';
     if (event) {
@@ -208,6 +217,7 @@ websites=[{text:"Partnership",url:['https://partnerships.gigaaa.com/'],image:'..
       this.apiService.getloggedinagentuuid(accesstoken,uuid,element?.uuid).subscribe(data=>{
         localStorage.setItem('userlogged_uuid', JSON.stringify(data));
           this.sharedres.getcallsocketapi(1);
+
         });
     }
   });
@@ -264,7 +274,12 @@ showonlinetatus(value:boolean){
  }
  // get last used integration
  getintegrationlist()
- {
+  { 
+    if(this.hideTopbar==false)
+    {
+      this.sharedres.showtopandsidebar(1);
+    }
+
   try {
  const getdata = JSON.parse(localStorage.getItem('gigaaa-subscription'))
  var accesstoken=getdata.access_token;
@@ -299,18 +314,31 @@ showonlinetatus(value:boolean){
  this.handleLoginRegisterError(error.error.error);
 }
 }
+// show top and sidebar
+private async getShowandTOpbar(): Promise<any>
+{
+    this.sharedres.showTopandSidebar$.subscribe(data=>{
+      if(data==1)
+      {
+        this.hideTopbar=true
+
+      }
+      else if(data==0)
+      {
+          this.hideTopbar=false;
+      }
+  })
+
+}
  // get the online status when agent is online or away.
  getuserloggedinstatus()
  {    
    this.sharedres.runthesocketforagent$.subscribe(data=>{
-
     this.getintegrationlist();
     const status = JSON.parse(localStorage.getItem('user-status'))
     if(data==1)
     {  
-   
     this.showonlinetatus(status);
-    this.hideTopbar=true;
     }
 
   });

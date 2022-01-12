@@ -110,12 +110,12 @@ export class SignupComponent implements OnInit {
 
       try {
     
-        await this.gigaaaApiService.registerUser(this.form.value);
+       // await this.gigaaaApiService.registerUser(this.form.value);
         await this.login(this.form.value.email, this.form.value.password);
         const profileData = JSON.parse(localStorage.getItem('gigaaa-user'))
         profileData['profile'] = { first_name: this.form.value.first_name, last_name: this.form.value.last_name };
         localStorage.setItem('gigaaa-user', JSON.stringify(profileData))
-       const user= await this.gigaaaApiService.updateUserProfile(this.authService.getLoggedUser(), data)
+    //   const user= await this.gigaaaApiService.updateUserProfile(this.authService.getLoggedUser(), data)
         await this.authService.updateUser(this.authService.getLoggedUser())
         this.useraccountservice.getopendashboard(1);
         this.dialogRef.close()

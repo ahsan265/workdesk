@@ -24,6 +24,7 @@ export class LogoutComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+ 
     this.authService.accessToken.next(null);
     this.socketapi.closewebsocketcalls();
     this.agentsocket.closewebsocketcalls();

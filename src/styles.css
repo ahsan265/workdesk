@@ -2092,7 +2092,19 @@ body .bs-datepicker-container  .bs-datepicker-body   tbody tr:nth-child(even){
     overflow-y: hidden;
     vertical-align: middle;
    }
-
+   /* call interface */
+   .callinterface-form-container .mat-dialog-container {
+    background: #FFFFFF;
+    box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.23);
+    border-radius: 0px;
+    opacity: 1;
+    width: 100%;
+    height: 100%;
+    padding: 0px;
+    overflow-x: hidden;
+    overflow-y: hidden;
+    vertical-align: middle;
+   }
    .mobilefilter-form-container .mat-dialog-container {
     background: #FFFFFF;
     box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.23);
@@ -2171,6 +2183,10 @@ body .bs-datepicker-container  .bs-datepicker-body   tbody tr:nth-child(even){
 .portalWrapper{
     right: 6.2% !important;
     top: 80% !important;
+}
+.settingsIcon.iconWrap
+{
+    visibility: hidden !important;
 }
 @media (max-width: 768px){
     #toast-container{

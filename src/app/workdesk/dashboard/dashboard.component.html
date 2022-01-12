@@ -84,13 +84,13 @@
                       display: contents;"  type="text"
                       bsDaterangepicker
                       placement="bottom"
-                      [bsValue]="bsValue"
+                      [bsValue]="bsValueCall"
                       (bsValueChange)="onDateChange($event,'Calls',1)"
                       [bsConfig]="bsConfig">
                     </bs-daterangepicker-inline>
                     <div class="datepreviewpanel">
                       <div class="previewmain">
-                        <p class="selectedvalue">{{datepreviewend_calls}}</p><span><svg style="margin: 9px;" width="12" height="3" viewBox="0 0 12 3" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <p class="selectedvalue">{{datepreviewstart_calls}}</p><span><svg style="margin: 9px;" width="12" height="3" viewBox="0 0 12 3" fill="none" xmlns="http://www.w3.org/2000/svg">
                           <path d="M11.2383 2.23828H0.761719V0.761719H11.2383V2.23828Z" fill="#162741"/>
                           </svg>
                           </span><p  class="selectedvalue">{{datepreviewend_calls}}</p> 
@@ -172,7 +172,7 @@
                       display: contents;"  type="text"
                       bsDaterangepicker
                       placement="bottom"
-                      [bsValue]="bsValue"
+                      [bsValue]="bsValueUser"
                       (bsValueChange)="onDateChange($event,'Users',1)"
                       [bsConfig]="bsConfig">
                     </bs-daterangepicker-inline>
@@ -260,7 +260,7 @@
                       display: contents;"  type="text"
                       bsDaterangepicker
                       placement="bottom"
-                      [bsValue]="bsValue"
+                      [bsValue]="bsValueVisitor"
                       (bsValueChange)="onDateChange($event,'Visitors',1)"
                       [bsConfig]="bsConfig">
                     </bs-daterangepicker-inline>
@@ -301,14 +301,14 @@
           </div>
         </div>
     
-        <div class="carddetails">
-          <p class="cardheading">
+        <div class="carddetails" [ngStyle]="{'margin-top': (vsForTimeLable_calls==null) ? '10px' : '0px'}">
+          <p class="cardheading" >
             Total Incoming
             </p>
             <p class="cardvalue" >
              {{totalincoming}}
             </p>
-              <p class="time"><span ><img class="trendupdown" [src]="totalincper|percentpipe" alt=""> </span>{{totalincomingper}}% vs last week</p>
+              <p  *ngIf="vsForTimeLable_calls!=null" class="time"><span ><img class="trendupdown" [src]="totalincper|percentpipe" alt=""> </span>{{totalincomingper}}% vs {{vsForTimeLable_calls}}</p>
         </div>
        </div>
       
@@ -318,14 +318,14 @@
             <img class="iconsfordashboard" src="../../../assets/assets_workdesk/calls_total_missed.svg" alt="">
           </div>
         </div>
-        <div  class="carddetails">
+        <div  class="carddetails" [ngStyle]="{'margin-top': (vsForTimeLable_calls==null) ? '10px' : '0px'}">
           <p class="cardheading">
             Total Missed
             </p>
             <p class="cardvalue" >
               {{totalmissed}}
             </p>
-              <p class="time"><span ><img class="trendupdown" [src]="totalmissper|percentpipe" alt=""> </span> {{totalmissedper}}% vs last week</p>
+              <p *ngIf="vsForTimeLable_calls!=null" class="time"><span ><img class="trendupdown" [src]="totalmissper|percentpipe" alt=""> </span> {{totalmissedper}}% vs {{vsForTimeLable_calls}}</p>
         </div>
 
       </div>
@@ -335,14 +335,14 @@
             <img class="iconsfordashboard" src="../../../assets/assets_workdesk/calls_answered.svg" alt="">
           </div>
         </div>
-        <div  class="carddetails">
+        <div  class="carddetails" [ngStyle]="{'margin-top': (vsForTimeLable_calls==null) ? '10px' : '0px'}">
           <p class="cardheading">
             Total Answered
             </p>
             <p class="cardvalue" >
               {{answered}}
             </p>
-              <p class="time"><span ><img class="trendupdown" [src]="ansper|percentpipe" alt=""></span>{{answeredper}}% vs last week</p>
+              <p  *ngIf="vsForTimeLable_calls!=null" class="time"><span ><img class="trendupdown" [src]="ansper|percentpipe" alt=""></span>{{answeredper}}% vs {{vsForTimeLable_calls}}</p>
         </div>
       </div>
       <div class="withincard last">
@@ -351,14 +351,14 @@
             <img class="iconsfordashboard" src="../../../assets/assets_workdesk/chats_answered_ai.svg" alt="">
           </div>
         </div>
-        <div  class="carddetails">
+        <div  class="carddetails" [ngStyle]="{'margin-top': (vsForTimeLable_calls==null) ? '10px' : '0px'}">
           <p class="cardheading">
             Total Answered by AI
             </p>
             <p class="cardvalue" >
              {{answeredbyai}}
             </p>
-              <p class="time"><span><img class="trendupdown" [src]="ansbyai|percentpipe" alt=""> </span>  {{answeredbyaiper}}% vs last week</p>
+              <p *ngIf="vsForTimeLable_calls!=null" class="time"><span><img class="trendupdown" [src]="ansbyai|percentpipe" alt=""> </span>  {{answeredbyaiper}}% vs {{vsForTimeLable_calls}}</p>
         </div>
         
       </div>
@@ -552,14 +552,14 @@
           </div>
         </div>
     
-        <div class="carddetails">
+        <div class="carddetails" [ngStyle]="{'margin-top': (vsForTimeLable_visitors==null) ? '10px' : '0px'}">
           <p class="cardheading">
            Total Visitors
             </p>
             <p class="cardvalue" >
-             {{totalincoming}}
+             {{totalVisitor}}
             </p>
-              <p class="time"><span ><img  class="trendupdown" [src]="totalincper|percentpipe" alt=""> </span>{{totalincomingper}}% vs last week</p>
+              <p *ngIf="vsForTimeLable_visitors!=null" class="time"><span ><img  class="trendupdown" [src]="totalVisitorres|percentpipe" alt=""> </span>{{totalVisitorper}}% vs {{vsForTimeLable_visitors}}</p>
         </div>
        </div>
       
@@ -569,14 +569,14 @@
             <img class="iconsfordashboard" src="../../../assets/assets_workdesk/Group_1707.svg" alt="">
           </div>
         </div>
-        <div  class="carddetails">
+        <div  class="carddetails" [ngStyle]="{'margin-top': (vsForTimeLable_visitors==null) ? '10px' : '0px'}">
           <p class="cardheading">
             Total Unique Visitors
             </p>
             <p class="cardvalue" >
-              {{totalmissed}}
+              {{uniqueVisitor}}
             </p>
-            <p class="time"><span ><img class="trendupdown" [src]="totalmissper|percentpipe" alt=""> </span>{{totalmissedper}}% vs last week</p>
+            <p *ngIf="vsForTimeLable_visitors!=null" class="time"><span ><img class="trendupdown" [src]="uniqueVisitorres|percentpipe" alt=""> </span>{{uniqueVisitorper}}% vs {{vsForTimeLable_visitors}}</p>
           </div>
 
       </div>
@@ -587,14 +587,14 @@
             margin-top: 10.5px;" class="iconsfordashboard" src="../../../assets/assets_workdesk/visitors_session_duration.svg" alt="">
           </div>
         </div>
-        <div  class="carddetails">
+        <div  class="carddetails" [ngStyle]="{'margin-top': (vsForTimeLable_visitors==null) ? '10px' : '0px'}">
           <p class="cardheading">
             Average Session Duration
             </p>
             <p class="cardvalue" >
-              {{answered}}
+              {{sessionVisitor}}
             </p>
-              <p class="time"><span > <img class="trendupdown" [src]="ansper|percentpipe" alt=""></span>{{answeredper}}% vs last week</p>
+              <p *ngIf="vsForTimeLable_visitors!=null" class="time"><span > <img class="trendupdown" [src]="sessionVisitorres|percentpipe" alt=""></span>{{sessionVisitorper}}% vs {{vsForTimeLable_visitors}}</p>
         </div>
       </div>
 
@@ -627,7 +627,7 @@
             </div>
         </div>
        </div>
-    <div class="barchartpanel">
+    <div class="barchartpanel" hidden="true">
     <div class=" chartscard circle">
       <div class=" chartheadingpanel" style="text-align: left; padding-left: 23px;">
       <p class="heading bar">INTERNET BROWSERS</p>
@@ -875,14 +875,14 @@
               <img class="iconsfordashboard" src="../../../assets/assets_workdesk/Total Active Users.svg" alt="">
             </div>
           </div>
-          <div  class="carddetails">
+          <div  class="carddetails" [ngStyle]="{'margin-top': (vsForTimeLable_users==null) ? '10px' : '0px'}">
             <p class="cardheading">
               Total Users
               </p>
               <p class="cardvalue" >
-                {{totalmissed}}
+                {{totalUser}}
               </p>
-                <p class="time"><span ><img class="trendupdown" [src]="totalmissper|percentpipe" alt=""> </span> {{totalmissedper}}% vs last week</p>
+                <p *ngIf="vsForTimeLable_users!=null" class="time"><span ><img class="trendupdown" [src]="totalUserres|percentpipe" alt=""> </span> {{totalUserper}}% vs {{vsForTimeLable_users}}</p>
           </div>
   
         </div>
@@ -892,14 +892,14 @@
               <img class="iconsfordashboard" src="../../../assets/assets_workdesk/Total Unique Users.svg" alt="">
             </div>
           </div>
-          <div  class="carddetails">
+          <div  class="carddetails" [ngStyle]="{'margin-top': (vsForTimeLable_users==null) ? '10px' : '0px'}">
             <p class="cardheading">
               Total Unique Users
               </p>
               <p class="cardvalue" >
-                {{answered}}
+                {{uniqueUser}}
               </p>
-                <p class="time"><span ><img class="trendupdown" [src]="ansper|percentpipe" alt=""></span>{{answeredper}}% vs last week</p>
+                <p *ngIf="vsForTimeLable_users!=null" class="time"><span ><img class="trendupdown" [src]="uniqueUserres|percentpipe" alt=""></span>{{uniqueUserper}}% vs {{vsForTimeLable_users}}</p>
           </div>
         </div>
         <div class="withincard last visit">
@@ -908,14 +908,14 @@
               <img class="iconsfordashboard" src="../../../assets/assets_workdesk/Average Duration.svg" alt="">
             </div>
           </div>
-          <div  class="carddetails">
+          <div  class="carddetails" [ngStyle]="{'margin-top': (vsForTimeLable_users==null) ? '10px' : '0px'}">
             <p class="cardheading">
               Average Session Duration
               </p>
               <p class="cardvalue" >
-               {{answeredbyai}}
+               {{sessionUser}}
               </p>
-                <p class="time"><span><img class="trendupdown" [src]="ansbyai|percentpipe" alt=""> </span>  {{answeredbyaiper}}% vs last week</p>
+                <p *ngIf="vsForTimeLable_users!=null" class="time"><span><img class="trendupdown" [src]="sessionUserres|percentpipe" alt=""> </span>  {{sessionUserper}}% vs {{vsForTimeLable_users}}</p>
           </div>
           
         </div>

@@ -37,7 +37,7 @@ export class CallbackComponent implements OnInit {
     )   { }
 
   ngOnInit(): void {
-  
+    this.sharedres.showtopandsidebar(0);
     let ch = localStorage.getItem('ch');
     if (ch != null){
       let challenge = JSON.parse(ch)
@@ -61,8 +61,8 @@ export class CallbackComponent implements OnInit {
             this.cookie.set('gigaaa_user', JSON.stringify(r));
             this.cookie.set('access_token_active', JSON.stringify(res));
             this.oauthService.login().finally(()=>{
-     
-              this.getallintegrationlist()
+              this.getallintegrationlist();
+              this.sharedres.showtopandsidebar(1);
               this.router.navigate(["dashboard"]);
             })
           });

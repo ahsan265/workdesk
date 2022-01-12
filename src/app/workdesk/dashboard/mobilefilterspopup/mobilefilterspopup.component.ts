@@ -44,10 +44,16 @@ datesecondfrompicker:any;
   allselectedtag:boolean;
    // get last week days 
    beforeOneWeek = new Date(new Date().getTime() - 60 * 60 * 24 * 7 * 1000)
-   day = this.beforeOneWeek.getDay()
-   diffToMonday = this.beforeOneWeek.getDate() - this.day + (this.day === 0 ? -6 : 1)
-   lastMonday = new Date(this.beforeOneWeek.setDate(this.diffToMonday))
-   lastSunday = new Date(this.beforeOneWeek.setDate(this.diffToMonday + 6));
+   beforeOneWeek2 = new Date(this.beforeOneWeek);
+
+ day = this.beforeOneWeek.getDay()
+ diffToMonday = this.beforeOneWeek.getDate() - this.day + (this.day === 0 ? -6 : 1)
+ lastMonday = new Date(this.beforeOneWeek.setDate(this.diffToMonday))
+ lastSunday = new Date(this.beforeOneWeek2.setDate(this.diffToMonday + 6));
+
+   dayd = new Date().getDay();
+   Startdayofweek=  new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate() + (this.dayd == 0?-6:1)-this.dayd );
+   Enddayofweek=  new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate() + (this.dayd  == 0?0:7)-this.dayd );
    ranges: IRange[] = [
     {
       value: [new Date(new Date().setDate(new Date().getDate())),new Date()],
@@ -59,8 +65,8 @@ datesecondfrompicker:any;
       label: 'Yesterday',
       timeslot:"yesterday",
     },{
-    value: [new Date(new Date().setDate(new Date().getDate()-new Date().getDay()+1)),new Date(new Date().setDate(new Date().getDate()-new Date().getDay()+7))],
-    label: 'This week',
+      value: [this.Startdayofweek,this.Enddayofweek],
+      label: 'This week',
     timeslot:"this_week",
   }, {
     value: [this.lastMonday,this.lastSunday],
@@ -414,6 +420,7 @@ showselectedpanel(val)
          day1 = '0' + day1;
         
        }
+       this.selectedtimeSlot="custom";
        var dateEnd= [day1,month1,year1].join('/');
        var senddateEnd= [year1,month1,day1].join('-');
        this.sendDate_to=senddateEnd;
@@ -603,13 +610,13 @@ showselectedpanel(val)
     if(this.data.dashboard_name=="Users"||this.data.dashboard_name=="Visitors")
     {
       this.sharedres.send_param_from_dashboard({dashboard_name:this.data.dashboard_name,countryids:this.defaultcount_ids,languageids:this.defaultlang_ids,daterangetab:"Today",
-      daterangeslot:"today",
+      daterangeslot:"this_week",
       fromdate:this.gettodaydate().fromdate,todate:this.gettodaydate().todate}) 
     this.dialogRef.close();
     }
     else if(this.data.dashboard_name=="Calls"){
       this.sharedres.send_param_from_dashboard({dashboard_name:this.data.dashboard_name,countryids:this.defaultcount_ids,languageids:this.defaultlang_ids,daterangetab:"Today",
-        daterangeslot:"today",
+        daterangeslot:"this_week",
         fromdate:this.gettodaydate().fromdate,todate:this.gettodaydate().todate}) 
       this.dialogRef.close(); 
     }
@@ -617,8 +624,8 @@ showselectedpanel(val)
   // get today date 
   gettodaydate()
   {
-   var startdate = this.ranges[0].value[0];
-   var enddate =  this.ranges[0].value[1];
+   var startdate = this.ranges[2].value[0];
+   var enddate =  this.ranges[2].value[1];
    var  month = '' + (startdate.getMonth() + 1);
    var   day = '' +(startdate.getDate());
    var  year = startdate.getFullYear();

@@ -1,5 +1,6 @@
 import { CUSTOM_ELEMENTS_SCHEMA, NgModule, NO_ERRORS_SCHEMA } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import {DragDropModule} from '@angular/cdk/drag-drop';
 
 import { WorkdeskRoutingModule } from './workdesk-routing.module';
 import { AgentComponent } from './agents/agent.component';
@@ -32,10 +33,40 @@ import { gigaaasocketapi } from '../service/gigaaasocketapi.service';
 import { MobilefiltersforagentsComponent } from './mobilefiltersforagents/mobilefiltersforagents.component';
 import { CallMobilePopupFilterComponent } from './call/call-mobile-popup-filter/call-mobile-popup-filter.component';
 import { MobilefilterspopupComponent } from './dashboard/mobilefilterspopup/mobilefilterspopup.component';
+import { getflagpipes } from './Datapipes/flagpipe';
+import { getbrowserpipes } from './Datapipes/getbrowserpipe';
+import { getdevicepipes } from './Datapipes/devicepipe';
+import { getospipes } from './Datapipes/ospipe';
+import { getcalltypepipes } from './Datapipes/calltype_iconpipe';
+import { getcalltypetextpipes } from './Datapipes/changecalltypetext';
+import { CallInterfaceComponent } from './call/call-interface/call-interface.component';
 
 
 @NgModule({
-  declarations:[CallMobilePopupFilterComponent,MobilefiltersforagentsComponent, DragDirective,percentcolorpipe,getloadpictures, AgentComponent, ChatComponent, ViewchatComponent, ActivechatComponent, EditformComponent, AddagentComponent, DashboardComponent, InviteagentComponent, AgentsettingsComponent, DeleteagentpopupComponent, UpdatepasswordComponent, CroppictureComponent,MobilefilterspopupComponent, CallMobilePopupFilterComponent],
+  declarations:[CallMobilePopupFilterComponent,MobilefiltersforagentsComponent,
+     DragDirective,percentcolorpipe,
+     getloadpictures, 
+     AgentComponent, 
+     ChatComponent,
+      ViewchatComponent, 
+      ActivechatComponent, 
+      EditformComponent, 
+      AddagentComponent, 
+      DashboardComponent, 
+      InviteagentComponent, 
+      AgentsettingsComponent, 
+      DeleteagentpopupComponent, 
+      UpdatepasswordComponent, 
+      CroppictureComponent,
+      MobilefilterspopupComponent, 
+      getflagpipes,
+      getbrowserpipes,
+      getdevicepipes,
+      getospipes,
+      getcalltypepipes,
+      getcalltypetextpipes,
+      CallMobilePopupFilterComponent,
+      CallInterfaceComponent],
   imports: [  Ng2SearchPipeModule,  ImageCropperModule,
     BsDatepickerModule.forRoot(),
     ChartsModule,
@@ -47,6 +78,7 @@ import { MobilefilterspopupComponent } from './dashboard/mobilefilterspopup/mobi
     CountUpModule,
     MatProgressBarModule,
     MatSliderModule,
+    DragDropModule
   ],
   providers: [agentsocketapi,gigaaasocketapi],
   schemas: [CUSTOM_ELEMENTS_SCHEMA,NO_ERRORS_SCHEMA],

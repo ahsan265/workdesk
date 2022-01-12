@@ -3,17 +3,15 @@ import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import * as Chart from 'chart.js';
 import { ChartOptions, ChartType, ChartDataSets } from 'chart.js';
-import { Console, dirxml } from 'console';
-import { ChartsModule, Label, MultiDataSet } from 'ng2-charts';
+import { time } from 'console';
+import {  Label } from 'ng2-charts';
 import { defineLocale, enGbLocale } from 'ngx-bootstrap/chronos';
 import { BsDaterangepickerDirective, BsLocaleService } from 'ngx-bootstrap/datepicker';
-import { element } from 'protractor';
 import { Subscription } from 'rxjs';
 import { AuthService } from 'src/app/service/auth.service';
 import { GigaaaApiService } from 'src/app/service/gigaaaapi.service';
 import { MessageService } from 'src/app/service/messege.service';
 import { sharedres_service } from 'src/app/service/sharedres.service';
-import { threadId } from 'worker_threads';
 import { MobilefilterspopupComponent } from './mobilefilterspopup/mobilefilterspopup.component';
 declare var $: any;
 interface IRange {
@@ -31,10 +29,19 @@ export class DashboardComponent implements OnInit {
   starting_flag1:number=0;
     // get last week days
     beforeOneWeek = new Date(new Date().getTime() - 60 * 60 * 24 * 7 * 1000)
+     beforeOneWeek2 = new Date(this.beforeOneWeek);
+
    day = this.beforeOneWeek.getDay()
    diffToMonday = this.beforeOneWeek.getDate() - this.day + (this.day === 0 ? -6 : 1)
    lastMonday = new Date(this.beforeOneWeek.setDate(this.diffToMonday))
-   lastSunday = new Date(this.beforeOneWeek.setDate(this.diffToMonday + 6));
+   lastSunday = new Date(this.beforeOneWeek2.setDate(this.diffToMonday + 6));
+   
+    dayd = new Date().getDay();
+    Startdayofweek=  new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate() + (this.dayd == 0?-6:1)-this.dayd );
+    Enddayofweek=  new Date(new Date().getFullYear(), new Date().getMonth(), new Date().getDate() + (this.dayd  == 0?0:7)-this.dayd );
+
+    
+
   ranges: IRange[] = [
     {
       value: [new Date(new Date().setDate(new Date().getDate())),new Date()],
@@ -46,7 +53,7 @@ export class DashboardComponent implements OnInit {
       label: 'Yesterday',
       timeslot:"yesterday",
     },{
-    value: [new Date(new Date().setDate(new Date().getDate()-new Date().getDay()+1)),new Date(new Date().setDate(new Date().getDate()-new Date().getDay()+7))],
+    value: [this.Startdayofweek,this.Enddayofweek],
     label: 'This week',
     timeslot:"this_week",
   }, {
@@ -118,9 +125,9 @@ export class DashboardComponent implements OnInit {
   charttimeslot2:any;
   charttimeslot3:any;
 
-  mob_chart_slot1:any=this.ranges[0].label;
-  mob_chart_slot2:any=this.ranges[0].label;
-  mob_chart_slot3:any=this.ranges[0].label;
+  mob_chart_slot1:any=this.ranges[2].label;
+  mob_chart_slot2:any=this.ranges[2].label;
+  mob_chart_slot3:any=this.ranges[2].label;
   mob_date_from_chat:any;
   mob_date_to_chat:any;
   mob_date_from_user:any;
@@ -148,14 +155,19 @@ export class DashboardComponent implements OnInit {
      // visitors chart variable 
      linechart_visitor1:any;
      linechart_visitor2:any;
-   // line chart daterange:
+   // line chart and call chart daterange:
+   datefrom_call:any;
+   dateto_call:any;
    datefrom_user:any;
    dateto_user:any;
    datefrom_visitor:any;
    dateto_visitor:any;
    subscription: Subscription;
    // get last current month days
-  bsValue=this.ranges[0].value
+  bsValueCall=this.ranges[2].value
+  bsValueUser=this.ranges[2].value
+  bsValueVisitor=this.ranges[2].value
+
   @ViewChild(BsDaterangepickerDirective, { static: false }) dateRangePicker: BsDaterangepickerDirective;
  date=new Date(new Date().setDate(new Date().getDate()))
   bsConfig={
@@ -289,6 +301,32 @@ export class DashboardComponent implements OnInit {
 
   user_first_data:any;
   chartInterval_id:any;
+  // user cards variable 
+  totalUser:any=0;
+  uniqueUser:any=0;
+  sessionUser:any=0;
+
+  totalUserper:any=0;
+  uniqueUserper:any=0;
+  sessionUserper:any=0;
+  totalUserres:any=0;
+  uniqueUserres:any=0;
+  sessionUserres:any=0;
+  // visitor cards variable 
+  totalVisitor:any=0;
+  uniqueVisitor:any=0;
+  sessionVisitor:any=0;
+  totalVisitorper:any=0;
+  uniqueVisitorper:any=0;
+  sessionVisitorper:any=0;
+  totalVisitorres:any=0;
+  uniqueVisitorres:any=0;
+  sessionVisitorres:any=0;
+
+  vsForTimeLable_calls:any="last week";
+  vsForTimeLable_users:any="last week";
+  vsForTimeLable_visitors:any="last week";
+
   constructor(private sharedres:sharedres_service,
     private router:Router,
     private localeService: BsLocaleService,
@@ -296,6 +334,7 @@ export class DashboardComponent implements OnInit {
      private gigaaaservice:GigaaaApiService,private messageservie:MessageService,
     private authService: AuthService
      ) {
+       console.log(this.ranges[2].value)
       enGbLocale.weekdaysShort = ['S', 'M', 'T', 'W', 'T', 'F', 'S'];
       enGbLocale.week.dow = 1;
       defineLocale('en-gb', enGbLocale);
@@ -316,49 +355,98 @@ export class DashboardComponent implements OnInit {
      }
 
     // get inetervise data for calls / chat / visitors 
-    
+    // call the endpoint functions
+     callFunctionCharts()
+     {
+      if(this.selectedtabs=="Calls")
+      {          
+
+        if(this.idsoflanguages1.length==6 && this.idsof_countries1.length==249)
+        {
+          this.getcallcharts(this.charttimeslot1,[],[],0,this.datefrom_call,this.dateto_call);
+          this.getcallstats(this.charttimeslot1,[],[],this.datefrom_call,this.dateto_call);
+        }
+        else if(this.idsoflanguages1.length==6)
+        {
+          this.getcallcharts(this.charttimeslot1,[],this.idsof_countries1,0,this.datefrom_call,this.dateto_call);
+          this.getcallstats(this.charttimeslot1,[],this.idsof_countries1,this.datefrom_call,this.dateto_call);
+        }
+        else if(this.idsof_countries1.length==249)
+        {
+          this.getcallcharts(this.charttimeslot1,this.idsoflanguages1,[],0,this.datefrom_call,this.dateto_call);
+          this.getcallstats(this.charttimeslot1,this.idsoflanguages1,[],this.datefrom_call,this.dateto_call);
+
+        }
+        else{
+          this.getcallcharts(this.charttimeslot1,this.idsoflanguages1,this.idsof_countries1,0,this.datefrom_call,this.dateto_call);
+          this.getcallstats(this.charttimeslot1,this.idsoflanguages1,this.idsof_countries1,this.datefrom_call,this.dateto_call);
+
+        }
+        this.vsForTimeLable_calls= this.setVsFunctionForcards(this.charttimeslot1);
+
+      }
+      else if(this.selectedtabs=="Visitors")
+      {
+        if(this.idsoflanguages3.length==6 && this.idsof_countries3.length==249)
+        {          
+          this.getuser_and_call_chart("Visitors",this.datefrom_visitor,this.dateto_visitor,[],[],0,this.charttimeslot3);
+          this.getVisitorTotalCard(this.charttimeslot3,[],[],this.datefrom_visitor,this.dateto_visitor);
+        }
+        else if(this.idsoflanguages3.length==6)
+        {
+          this.getuser_and_call_chart("Visitors",this.datefrom_visitor,this.dateto_visitor,[],this.idsof_countries3,0,this.charttimeslot3);
+          this.getVisitorTotalCard(this.charttimeslot3,[],this.idsof_countries3,this.datefrom_visitor,this.dateto_visitor);
+        }
+        else if(this.idsof_countries3.length==249)
+        {
+          this.getuser_and_call_chart("Visitors",this.datefrom_visitor,this.dateto_visitor,this.idsoflanguages3,[],0,this.charttimeslot3);
+          this.getVisitorTotalCard(this.charttimeslot3,this.idsoflanguages3,[],this.datefrom_visitor,this.dateto_visitor);
+
+        }
+        else{
+          this.getuser_and_call_chart("Visitors",this.datefrom_visitor,this.dateto_visitor,this.idsoflanguages3,this.idsof_countries3,0,this.charttimeslot3);
+          this.getVisitorTotalCard(this.charttimeslot3,this.idsoflanguages3,this.idsof_countries3,this.datefrom_visitor,this.dateto_visitor);
+
+        }
+        this.vsForTimeLable_visitors= this.setVsFunctionForcards(this.charttimeslot3);
+      }
+      else if(this.selectedtabs=="Users")
+      {
+        if(this.idsoflanguages2.length==6 && this.idsof_countries2.length==249)
+        {
+          this.getuser_and_call_chart("Users",this.datefrom_user,this.dateto_user,[],[],0,this.charttimeslot2);
+          this.getUserTotalCard(this.charttimeslot2,[],[],this.datefrom_user,this.dateto_user);
+
+
+        }
+        else if(this.idsoflanguages2.length==6)
+        {
+          this.getuser_and_call_chart("Users",this.datefrom_user,this.dateto_user,[],this.idsof_countries2,0,this.charttimeslot2);
+          this.getUserTotalCard(this.charttimeslot2,[],this.idsof_countries2,this.datefrom_user,this.dateto_user);
+
+        }
+        else if(this.idsof_countries2.length==249)
+        {
+          this.getuser_and_call_chart("Users",this.datefrom_user,this.dateto_user,this.idsoflanguages2,[],0,this.charttimeslot2);
+          this.getUserTotalCard(this.charttimeslot2,this.idsoflanguages2,[],this.datefrom_user,this.dateto_user);
+
+
+        }
+        else
+        {
+          this.getuser_and_call_chart("Users",this.datefrom_user,this.dateto_user,this.idsoflanguages2,this.idsof_countries2,0,this.charttimeslot2);
+          this.getUserTotalCard(this.charttimeslot2,this.idsoflanguages2,this.idsof_countries2,this.datefrom_user,this.dateto_user);
+
+        }
+        this.vsForTimeLable_users=  this.setVsFunctionForcards(this.charttimeslot2);
+
+      }
+     }
   
     getDataTimeInterval()
     {
      this.chartInterval_id= setInterval(() =>{
-        if(this.selectedtabs=="Calls")
-        {
-          if(this.idsoflanguages1.length==6 && this.idsof_countries1.length==249)
-          {
-            this.getcallcharts(this.charttimeslot1,[],[],0);
-
-          }
-          else{
-            this.getcallcharts(this.charttimeslot1,this.idsoflanguages1,this.idsof_countries1,0);
-          }
-
-        }
-        else if(this.selectedtabs=="Visitors")
-        {
-          if(this.idsoflanguages3.length==6 && this.idsof_countries3.length==249)
-          {          
-            this.getuser_and_call_chart("Visitors",this.datefrom_visitor,this.dateto_visitor,[],[],0);
-
-          }
-          else{
-            this.getuser_and_call_chart("Visitors",this.datefrom_visitor,this.dateto_visitor,this.idsoflanguages3,this.idsof_countries3,0);
-          }
-
-        }
-        else if(this.selectedtabs=="Users")
-        {
-          if(this.idsoflanguages2.length==6 && this.idsof_countries2.length==249)
-          {
-            this.getuser_and_call_chart("Users",this.datefrom_user,this.dateto_user,[],[],0);
-
-          }
-          else
-          {
-            this.getuser_and_call_chart("Users",this.datefrom_user,this.dateto_user,this.idsoflanguages2,this.idsof_countries2,0);
-
-          }
-
-        }
+       this.callFunctionCharts()
       },60000);
     }
      getlistofdashboard(val)
@@ -392,9 +480,9 @@ export class DashboardComponent implements OnInit {
         this.createoschart();
         this.createdevicechart();
         this.createbrowerschart();
-        if(this.starting_flag==0 && this.idsoflanguages3.length==6 && this.mob_idsof_countries3.length==249)
+        if(this.starting_flag==0)
         {
-          this.getuser_and_call_chart("Visitors",this.datefrom_visitor,this.dateto_visitor,[],[],1000);
+          this.callFunctionCharts();
           this.starting_flag=1
         }
         
@@ -419,9 +507,9 @@ export class DashboardComponent implements OnInit {
         this.showchatsdashboard=true;
         this.showvisitordashboard=true;
         this.showticketsdashboard=true;
-         if(this.starting_flag1==0 && this.mob_idsof_countries2.length==6 && this.idsof_countries2.length==249)
+         if(this.starting_flag1==0)
         {
-          this.getuser_and_call_chart("Users",this.datefrom_user,this.dateto_user,[],[],1000);
+          this.callFunctionCharts();
           this.starting_flag1=1;
         }
      
@@ -655,9 +743,11 @@ export class DashboardComponent implements OnInit {
     {
     
       this.showselectednumberoflanguages(this.selectedtabs,"All Selected")
-      this.getcallcharts("today",[],[],1000);
-      this.getcallstats(int_id);
-      this.getDataTimeInterval()
+      this.getcallcharts("this_week",[],[],1000,this.datefrom_call,this.dateto_call);
+      this.getUserTotalCard("this_week",[],[],this.datefrom_user,this.dateto_user);
+      this.getVisitorTotalCard("this_week",[],[],this.datefrom_visitor,this.dateto_visitor);
+      this.getcallstats("this_week",[],[],this.datefrom_call,this.dateto_call);
+      this.getDataTimeInterval();
  
     }
  
@@ -694,20 +784,93 @@ export class DashboardComponent implements OnInit {
     }
      ngOnInit(): void {
       this.getlistofdashboard("Calls");
-      this.onDateChange([this.ranges[0].value[0],this.ranges[0].value[1]],"calls",0)
+      this.onDateChange([this.ranges[2].value[0],this.ranges[2].value[1]],"Calls",0)
+      this.onDateChange([this.ranges[2].value[0],this.ranges[2].value[1]],"Users",0)
+      this.onDateChange([this.ranges[2].value[0],this.ranges[2].value[1]],"Visitors",0)
+
       this.getallthecountries();
       this.getlllangugaes();
       this.roundbarchartcorners();
       this.loadcallstatsoninit();
-      this.loadcallchartinit();
       this.getstatsonintg();
       this.getdatafrommobilepopup();
   }
-
-  incomingbarchart(data,lebel,anim_val)
-  { 
+    // user charts card
+    getUserTotalCard(timeslot:any,languagesid:Array<any>,countryids:Array<any>,datefrom:string,dateto:string)
+    {this.vsForTimeLable_users= this.setVsFunctionForcards(timeslot);
+     const getdata = JSON.parse(localStorage.getItem('gigaaa-subscription'));
+     const accesstoken=getdata.access_token;
+     const subsid=getdata.subscription_id?.subsid?.uuid;
+     const intid = JSON.parse(localStorage.getItem('intgid'));
    
   
+      this.gigaaaservice.getUserCountsSession(accesstoken,subsid,intid.int_id,timeslot,languagesid,countryids,datefrom,dateto).subscribe(data=>{
+        this.sessionUser=data['count'];
+        if(timeslot=="today"||timeslot=="this_week"||timeslot=="this_month"||timeslot=="this_year")
+        {
+        
+        this.sessionUserper=this.getpercentagecalculated(data['increase']);
+        this.sessionUserres=this.sessionUserper.cal;
+        this.sessionUserper=this.sessionUserper.withsign;  
+      }
+      },err=>{
+        this.messageservie.setErrorMessage(err.error.error);
+      })
+   
+   
+
+  }
+
+// set vs function for cards 
+
+  setVsFunctionForcards(val)
+  {
+    if(val=="today")
+    {
+      return "yesterday";
+    }
+    else if(val=="this_week")
+    {
+      return "last week";
+    }
+    else if(val=="this_month")
+    {
+      return "last month";
+    }
+    else if(val=="this_year")
+    {
+      return "last year";
+    }
+    else 
+    {
+      return null;
+    }
+  }
+ 
+  getVisitorTotalCard(timeslot:any,languagesid:Array<any>,countryids:Array<any>,datefrom:string,dateto:string)
+    {  console.log(timeslot)
+      this.vsForTimeLable_visitors= this.setVsFunctionForcards(timeslot);
+      const getdata = JSON.parse(localStorage.getItem('gigaaa-subscription'));
+      const accesstoken=getdata.access_token;
+      const subsid=getdata.subscription_id?.subsid?.uuid;
+      const intid = JSON.parse(localStorage.getItem('intgid'));
+      this.gigaaaservice.getVisitorCountsSession(accesstoken,subsid,intid.int_id,timeslot,languagesid,countryids,datefrom,dateto).subscribe(data=>{
+        this.sessionVisitor=data['count'];
+        if(timeslot=="today"||timeslot=="this_week"||timeslot=="this_month"||timeslot=="this_year")
+        {
+        this.sessionVisitorper=this.getpercentagecalculated(data['increase']);
+        this.sessionVisitorres=this.sessionVisitorper.cal;
+        this.sessionVisitorper=this.sessionVisitorper.withsign;
+       }
+      },err=>{
+        this.messageservie.setErrorMessage(err.error.error);
+      })
+  
+    
+  }
+
+  incomingbarchart(data,lebel,anim_val)
+    { 
       if (typeof(this.myChart) != "undefined") {
         this.myChart.destroy();
        
@@ -1198,6 +1361,7 @@ export class DashboardComponent implements OnInit {
         scales: {
 
           xAxes: [{
+            offset:true,
               gridLines: {
                   display:false,
                   drawBorder: false,
@@ -1253,7 +1417,6 @@ export class DashboardComponent implements OnInit {
   }
   visitorchart(data:any,labels:Array<any>,anim_val)
   {
-  
     if (typeof(this.linechart_visitor1) != "undefined") {
       this.linechart_visitor1.destroy();
       }
@@ -1303,6 +1466,7 @@ export class DashboardComponent implements OnInit {
       scales: {
 
         xAxes: [{
+          offset:true,
             gridLines: {
                 display:false,
                 drawBorder: false,
@@ -1360,6 +1524,8 @@ export class DashboardComponent implements OnInit {
   // usercharts
   usercharts(data:any,labels:Array<any>,anim_val)
   {
+
+    
       if (typeof(this.linechart_user1) != "undefined") {
       this.linechart_user1.destroy();
       }
@@ -1371,7 +1537,7 @@ export class DashboardComponent implements OnInit {
         datasets: [
         {
           data: data.line1,
-          label: 'Active Users',
+          label: 'Users',
           backgroundColor: 'rgba(77,83,96,0.2)',
           borderColor: '#FF155A',
           pointBackgroundColor: '#FF155A',
@@ -1414,6 +1580,7 @@ export class DashboardComponent implements OnInit {
         scales: {
 
           xAxes: [{
+            offset:true,
               gridLines: {
                   display:false,
                   drawBorder: false,
@@ -1424,6 +1591,7 @@ export class DashboardComponent implements OnInit {
 
         ],
           yAxes: [{
+            offset:true,
               gridLines: {
                   display:true,
                   drawBorder: false,
@@ -1677,15 +1845,16 @@ createoschart()
  $("#oslegend").html(myChart.generateLegend());
 }
 
-   getstatsonintg()
-  { 
+     getstatsonintg()
+    { 
        const getdata = JSON.parse(localStorage.getItem('gigaaa-subscription'))
        const accesstoken=getdata.access_token;
        const subsid=getdata.subscription_id?.subsid?.uuid;
       try{
       this.subscription=  this.sharedres.submitapplication$.subscribe(data=>{
       this.Updatelanguageendpoint(accesstoken,subsid,data.int_id);
-      this.getcallstats(data.int_id);
+      this.getcallstats("this_week",[],[],this.datefrom_call,this.dateto_call);
+
     })
     }
     catch(error)
@@ -1695,39 +1864,45 @@ createoschart()
 
   }
   // call stats
-  getcallstats(int_id:any)
+  getcallstats(timeslot:any,languagesid:Array<any>,countryids:Array<any>,datefrom:String,dateto:String)
   {
     try
-    {
+    {this.vsForTimeLable_calls= this.setVsFunctionForcards(timeslot);
       const getdata = JSON.parse(localStorage.getItem('gigaaa-subscription'))
       var accesstoken=getdata?.access_token;
       var orgid=getdata?.subscription_id?.subsid?.uuid
-      
-        this.gigaaaservice.getcallstatistics(accesstoken,orgid,int_id).subscribe(data=>{
-         
-          this.answeredbyai=data['handed_to_ai']?.count;
-          this.totalmissed=data['missed']?.count;
-          this.answered=data['answered']?.count;
-          this.totalincoming=data['incoming']?.count;
+      const intid = JSON.parse(localStorage.getItem('intgid'));
 
-          this.answeredper =this.getpercentagecalculated(data['answered']?.increase);
-          this.answeredbyaiper=this.getpercentagecalculated(data['handed_to_ai']?.increase);
-          this.totalmissedper=this.getpercentagecalculated(data['missed']?.increase);
-          this.totalincomingper=this.getpercentagecalculated(data['incoming']?.increase);
+     
+      this.gigaaaservice.getcallstatistics(accesstoken,orgid,intid.int_id,timeslot,languagesid,countryids).subscribe(data=>{
+        this.answeredbyai=data['handed_to_ai']?.count;
+        this.totalmissed=data['missed']?.count;
+        this.answered=data['answered']?.count;
+        this.totalincoming=data['incoming']?.count;
+        if(timeslot=="today"||timeslot=="this_week"||timeslot=="this_month"||timeslot=="this_year")
+      {
+        this.answeredper =this.getpercentagecalculated(data['answered']?.increase);
+        this.answeredbyaiper=this.getpercentagecalculated(data['handed_to_ai']?.increase);
+        this.totalmissedper=this.getpercentagecalculated(data['missed']?.increase);
+        this.totalincomingper=this.getpercentagecalculated(data['incoming']?.increase);
 
-          this.ansper=this.answeredper?.cal;
-          this.ansbyai=this.answeredbyaiper?.cal;
-          this.totalmissper=this.totalmissedper?.cal;
-          this.totalincper=this.totalincomingper?.cal;
+        this.ansper=this.answeredper?.cal;
+        this.ansbyai=this.answeredbyaiper?.cal;
+        this.totalmissper=this.totalmissedper?.cal;
+        this.totalincper=this.totalincomingper?.cal;
 
-          this.answeredper=this.answeredper?.withsign;
-          this.answeredbyaiper=this.answeredbyaiper?.withsign;
-          this.totalmissedper=this.totalmissedper?.withsign;
-          this.totalincomingper=this.totalincomingper?.withsign;
+        this.answeredper=this.answeredper?.withsign;
+        this.answeredbyaiper=this.answeredbyaiper?.withsign;
+        this.totalmissedper=this.totalmissedper?.withsign;
+        this.totalincomingper=this.totalincomingper?.withsign;
+      }
 
+      },err=>{
+        this.messageservie.setErrorMessage(err.error.error);
 
-        })
+      })
     }
+    
     catch (err){
 
       this.messageservie.setErrorMessage(err.error.error);
@@ -1735,7 +1910,7 @@ createoschart()
 
   }
   // users and visitors charts
-  getuser_and_call_chart(tabs:any,datefrom:any,dateto:any,languages:Array<any>,countries:Array<any>,anim_val)
+  getuser_and_call_chart(tabs:any,datefrom:any,dateto:any,languages:Array<any>,countries:Array<any>,anim_val,timeslot:any)
   {
     try{
       const getdata = JSON.parse(localStorage.getItem('gigaaa-subscription'))
@@ -1743,25 +1918,61 @@ createoschart()
       var int_id=intg_id?.int_id;
       var accesstoken=getdata?.access_token;
       var orgid=getdata?.subscription_id?.subsid?.uuid
-      this.gigaaaservice.getusers_and_visitors_chart(accesstoken,orgid,int_id,datefrom,dateto,languages,countries).subscribe(data=>{
+     
+      if(tabs=="Users")
+      { this.gigaaaservice.getuserline_Graph_Cards_Data(accesstoken,orgid,int_id,datefrom,dateto,languages,countries,timeslot).subscribe(data=>{
+       
         var line_chart;
         line_chart=data;
-      if(tabs=="Users")
-      {
-      var dataforlinechart=  this.getlinechartdata(line_chart);
-      var labelforlinechart=this.getlinechartlabel(line_chart);
+       
+        // total card
+        this.totalUser=data['totals']['visits'];
+        this.uniqueUser=data['totals']['unique_visitors'];
+        if(timeslot=="today"||timeslot=="this_week"||timeslot=="this_month"||timeslot=="this_year")
+        {//user cards percent
+        this.totalUserper=this.getpercentagecalculated(data['increases']['visits']);
+        this.totalUserres=this.totalUserper.cal;
+        this.totalUserper=this.totalUserper.withsign
+        
+        this.uniqueUserper=this.getpercentagecalculated(data['increases']['unique_visitors']);
+        this.uniqueUserres=this.uniqueUserper.cal;
+        this.uniqueUserper=this.uniqueUserper.withsign
+      }
+
+      var dataforlinechart=  this.getlinechartdata(line_chart['dates']);
+      var labelforlinechart=this.getlinechartlabel(line_chart['dates']);
       this.usercharts(dataforlinechart,labelforlinechart,anim_val);
+      })
       }
       else if(tabs=="Visitors")
-      {
-        var dataforlinechart=  this.getlinechartdata(line_chart);
-        var labelforlinechart=this.getlinechartlabel(line_chart);
+      {this.gigaaaservice.getvisitor_Graph_cards_Data(accesstoken,orgid,int_id,datefrom,dateto,languages,countries,timeslot).subscribe(data=>{
+        console.log(timeslot)
+        var line_chart;
+        line_chart=data;
+        
+        // total visit
+        this.totalVisitor=data['totals']['visits'];
+        this.uniqueVisitor=data['totals']['unique_visitors'];
+
+        if(timeslot=="today"||timeslot=="this_week"||timeslot=="this_month"||timeslot=="this_year")
+        { // total unique visitor percent
+        this.totalVisitorper=this.getpercentagecalculated(data['increases']['visits']);
+        this.totalVisitorres=this.totalVisitorper.cal;
+        this.totalVisitorper=this.totalVisitorper.withsign
+
+       
+        this.uniqueVisitorper=this.getpercentagecalculated(data['increases']['unique_visitors']);
+        this.uniqueVisitorres=this.uniqueVisitorper.cal;
+        this.uniqueVisitorper=this.uniqueVisitorper.withsign
+          }
+        var dataforlinechart=  this.getlinechartdata(line_chart['dates']);
+        var labelforlinechart=this.getlinechartlabel(line_chart['dates']);
         this.visitorchart(dataforlinechart,labelforlinechart,anim_val);
         this.visitorchart1(dataforlinechart,labelforlinechart,anim_val);
-
+      })
       }
     
-      })
+     
     }
     catch(err)
     {
@@ -1771,7 +1982,7 @@ createoschart()
 
   }
   //  call charts
-  getcallcharts(time:any,languages:Array<any>,countries:Array<any>,anim_val)
+  getcallcharts(timeslot:any,languages:Array<any>,countries:Array<any>,anim_val,fromdate:any,todate:any )
   {
     try
     {
@@ -1780,7 +1991,7 @@ createoschart()
       var int_id=intg_id?.int_id;
       var accesstoken=getdata?.access_token;
       var orgid=getdata?.subscription_id?.subsid?.uuid
-        this.gigaaaservice.getcallchart(accesstoken,orgid,int_id,time,languages,countries).subscribe(data=>{
+        this.gigaaaservice.getcallchart(accesstoken,orgid,int_id,timeslot,languages,countries,fromdate,todate).subscribe(data=>{
       var dataforincoming=this.getbarchartdata(data['incoming']);
       var dataforincoming1=this.getbarchartdata(data['missed']);
       var dataforincoming2=this.getbarchartdata(data['handed_to_ai']);
@@ -1816,8 +2027,8 @@ createoschart()
     if(this.selectedtabs=="Users")
     {
       val.forEach(element => {
-        line1.push(element.num_users.active_visits);
-        line2.push(element.num_users.unique_active_visitors);
+        line1.push(element.num_users.visits);
+        line2.push(element.num_users.unique_visitors);
       });
       return {line1:line1,line2:line2};
     }
@@ -1829,7 +2040,7 @@ createoschart()
         line5.push(element.num_users.first_time_visits);
         line6.push(element.num_users.returning_visits);
       });
-      return [{line1:line3,line2:line5}, {line1:line5,line2:line6}];
+      return [{line1:line3,line2:line4}, {line1:line5,line2:line6}];
     }
 
 
@@ -1843,16 +2054,29 @@ createoschart()
     var date =new Date(element.date).toDateString();
     var update= date.substring(0, date.length-4);
 
-   if(val.length==7 && this.rangeSelected2=="this_week"||this.rangeSelected2=="last_week")
+   if(val.length==7 )
     {
-      label.push(update[0])
-    }
-    else if(val.length>12 && this.rangeSelected2=="last_month"||this.rangeSelected2=="this_month")
-    { 
+      if(this.rangeSelected=="this_week"||this.rangeSelected=="last_week")
+      {
+        label.push(update[0])
+      }
+      else{
         label.push(update.substring(4))
+
+      }
+    }
+    else if(val.length>12)
+    { 
+      if(this.rangeSelected=="last_month"||this.rangeSelected=="this_month")
+      {
+        label.push(update.substring(4))
+      }
+      else {
+        label.push(update.substring(4))
+      }
    
     }
-    else if(val.length==12 && this.rangeSelected2=="last_year"||this.rangeSelected2=="this_year")
+    else if(val.length==12 && this.rangeSelected=="last_year"||this.rangeSelected=="this_year")
     {
      label.push(update.substring(4,7))
      }
@@ -1930,12 +2154,13 @@ createoschart()
         return {cal:calculated,withsign:'\xa0'+'+'+'\xa0'+calculated};
 
       }
-      else{
-        return {cal:calculated,withsign:'\xa0'+calculated};
+      else{     
 
+        return {cal:calculated,withsign:'\xa0'+calculated};
       }
     }
     else{
+      
       return {cal:0,withsign:'\xa0'+0};
     }
   }
@@ -1952,18 +2177,7 @@ createoschart()
     },500)
 
   }
-  loadcallchartinit()
-  {
-    // setTimeout(() => {
-    //   const intg_id = JSON.parse(localStorage.getItem('intgid'))
-    //   if(intg_id?.int_id!=null)
-    //   {
-    //     this.getcallcharts("today",this.idsoflanguages1,this.idsof_countries,1000);
 
-    //   }
-    // }, 500);
-
-  }
   generatecircleround()
   {Chart.defaults.doughnut    = Chart.helpers.clone(Chart.defaults.doughnut);
 
@@ -2130,22 +2344,7 @@ createoschart()
   // apply date filter 
   ApplyDateFilter()
   {
-    if(this.selectedtabs=="Calls")
-    {
-      this.getcallcharts(this.charttimeslot1,this.idsoflanguages1,this.idsof_countries1,1000);
-
-    }
-    else if(this.selectedtabs=="Users")
-    {
-
-      this.getuser_and_call_chart("Users",this.datefrom_user,this.dateto_user,this.idsoflanguages2,this.idsof_countries2,1000);
-
-    }
-    else if(this.selectedtabs=="Visitors")
-    {
-      this.getuser_and_call_chart("Visitors",this.datefrom_visitor,this.dateto_visitor,this.idsoflanguages2,this.idsof_countries2,1000);
-
-    }
+    this.callFunctionCharts();
 
   }
   //selectionpanel for selecting the panes
@@ -2212,6 +2411,13 @@ createoschart()
  
           if(tabsname=="Calls" )
           { 
+           
+            var  dateStart_calls=[year,month,day].join('-');
+        this.datefrom_call=dateStart_calls;
+
+        var  dateend_calls=[year1,month1,day1].join('-');
+        this.dateto_call=dateend_calls;
+
             this.charttimeslot1=x.timeslot;
              this.rangeSelected1=x.label
              this.datepreviewstart_calls=dateStart;
@@ -2296,7 +2502,15 @@ createoschart()
         var dateEnd= [day1,month1,year1].join('/');
       
         if(tabsname=="Calls")
-        {
+        { 
+          this.charttimeslot1="custom";
+
+          var  dateStart_calls=[year,month,day].join('-');
+        this.datefrom_call=dateStart_calls;
+
+        var  dateend_calls=[year1,month1,day1].join('-');
+        this.dateto_call=dateend_calls;
+
          this.rangeSelected1= dateStart+ " -"+ dateEnd;
          this.datepreviewstart_calls=dateStart;
           this.datepreviewend_calls=dateEnd;
@@ -2308,6 +2522,8 @@ createoschart()
        }
         else if(tabsname=="Users")
         { 
+          this.charttimeslot2="custom";
+          this.rangeSelected2= dateStart+ " -"+ dateEnd;
             var  dateStart_user_vistor=[year,month,day].join('-');
             this.datefrom_user=dateStart_user_vistor;
             var  dateend_user_vistor=[year1,month1,day1].join('-');
@@ -2323,14 +2539,15 @@ createoschart()
          }
  
        }
-       else if(tabsname=="Visitor")
-       {
+       else if(tabsname=="Visitors")
+       {          
+        this.charttimeslot3="custom";
+        this.rangeSelected3= dateStart+ " -"+ dateEnd;
+
         var  dateStart_user_vistor=[year,month,day].join('-');
         var  dateend_user_vistor=[year1,month1,day1].join('-');
         this.datefrom_visitor=dateStart_user_vistor;
         this.dateto_visitor=dateend_user_vistor; 
-        
-      
         this.datepreviewstart_tickets=dateStart;
         this.datepreviewend_tickets=dateEnd;
         if(val==1)
@@ -2348,7 +2565,7 @@ createoschart()
  // select languages one by one
  selectcountryonebyone(e,id)
  {
-   if(this.selectedtabs=="Calls")
+   if(this.selectedtabs=="calls")
    {
     if(e==true)
     { var objIndex = this.countrylist_calls.findIndex((obj => obj.id == id));
@@ -2358,8 +2575,8 @@ createoschart()
      if(this.idsof_countries1.length==249)
      {
       this.showselectedNumberofcountries(this.selectedtabs,"All Selected")
-      this.getcallcharts(this.charttimeslot1,this.idsoflanguages1,[],1000);
-
+     // this.getcallcharts(this.charttimeslot1,this.idsoflanguages1,[],1000);
+     this.callFunctionCharts();
      }
      else{
       this.showselectedNumberofcountries(this.selectedtabs,this.idsof_countries1.length +"\xa0"+"Selected")
@@ -2381,7 +2598,8 @@ createoschart()
     else{
      this.showselectedNumberofcountries(this.selectedtabs,this.idsof_countries1.length +"\xa0"+"Selected")
     }
-    this.getcallcharts(this.charttimeslot1,this.idsoflanguages1,this.idsof_countries1,1000);
+   // this.getcallcharts(this.charttimeslot1,this.idsoflanguages1,this.idsof_countries1,1000);
+   this.callFunctionCharts();
   }
    }
    else if(this.selectedtabs=="Users")
@@ -2394,8 +2612,8 @@ createoschart()
    if(this.idsof_countries2.length==249)
    {
     this.showselectedNumberofcountries(this.selectedtabs,"All Selected");
-    this.getuser_and_call_chart("Users",this.datefrom_user,this.dateto_user,this.idsoflanguages2,[],1000);
-
+  //  this.getuser_and_call_chart("Users",this.datefrom_user,this.dateto_user,this.idsoflanguages2,[],1000);
+  this.callFunctionCharts();
    }
    else{
     this.showselectedNumberofcountries(this.selectedtabs,this.idsof_countries2.length +"\xa0"+"Selected")
@@ -2419,8 +2637,8 @@ createoschart()
   else{
    this.showselectedNumberofcountries(this.selectedtabs,this.idsof_countries2.length +"\xa0"+"Selected")
   }
-  this.getuser_and_call_chart("Users",this.datefrom_user,this.dateto_user,this.idsoflanguages2,this.idsof_countries2,1000);
-
+  //this.getuser_and_call_chart("Users",this.datefrom_user,this.dateto_user,this.idsoflanguages2,this.idsof_countries2,1000);
+  this.callFunctionCharts();
  }
 
    }
@@ -2434,8 +2652,8 @@ createoschart()
      if(this.idsof_countries3.length==249)
      {
       this.showselectedNumberofcountries(this.selectedtabs,"All Selected");
-      this.getuser_and_call_chart("Visitors",this.datefrom_visitor,this.dateto_visitor,this.idsoflanguages3,[],1000);
-
+     // this.getuser_and_call_chart("Visitors",this.datefrom_visitor,this.dateto_visitor,this.idsoflanguages3,[],1000);
+     this.callFunctionCharts();
     }
      else{
       this.showselectedNumberofcountries(this.selectedtabs,this.idsof_countries3.length +"\xa0"+"Selected")
@@ -2458,8 +2676,9 @@ createoschart()
     else{
      this.showselectedNumberofcountries(this.selectedtabs,this.idsof_countries3.length +"\xa0"+"Selected")
     }
-    this.getuser_and_call_chart("Visitors",this.datefrom_visitor,this.dateto_visitor,this.idsoflanguages3,this.idsof_countries3,1000);
-   }
+  //  this.getuser_and_call_chart("Visitors",this.datefrom_visitor,this.dateto_visitor,this.idsoflanguages3,this.idsof_countries3,1000);
+  this.callFunctionCharts();
+    }   
    }
    }
     // select languages one by one
@@ -2475,9 +2694,8 @@ createoschart()
         if(this.idsoflanguages1.length==6)
         {
          this.showselectednumberoflanguages(this.selectedtabs,"All Selected")
-         this.getcallcharts(this.charttimeslot1,[],this.idsof_countries1,1000);
-
- 
+        // this.getcallcharts(this.charttimeslot1,[],this.idsof_countries1,1000);
+        this.callFunctionCharts();
         }
         else{
          this.showselectednumberoflanguages(this.selectedtabs,this.idsoflanguages1.length +"\xa0"+"Selected")
@@ -2499,8 +2717,8 @@ createoschart()
        else{
         this.showselectednumberoflanguages(this.selectedtabs,this.idsoflanguages1.length +"\xa0"+"Selected")
        }
-       this.getcallcharts(this.charttimeslot1,this.idsoflanguages1,this.idsof_countries1,1000);
-
+       //this.getcallcharts(this.charttimeslot1,this.idsoflanguages1,this.idsof_countries1,1000);
+       this.callFunctionCharts();
  
       }
  
@@ -2515,8 +2733,8 @@ createoschart()
       if(this.idsoflanguages2.length==6)
       {
        this.showselectednumberoflanguages(this.selectedtabs,"All Selected")
-       this.getuser_and_call_chart("Users",this.datefrom_user,this.dateto_user,[],this.idsof_countries2,1000);
-
+      // this.getuser_and_call_chart("Users",this.datefrom_user,this.dateto_user,[],this.idsof_countries2,1000);
+      this.callFunctionCharts();
       }
       else{
        this.showselectednumberoflanguages(this.selectedtabs,this.idsoflanguages2.length +"\xa0"+"Selected")
@@ -2541,8 +2759,8 @@ createoschart()
      else{
       this.showselectednumberoflanguages(this.selectedtabs,this.idsoflanguages2.length +"\xa0"+"Selected")
      }
-     this.getuser_and_call_chart("Users",this.datefrom_user,this.dateto_user,this.idsoflanguages2,this.idsof_countries2,1000);
-
+    // this.getuser_and_call_chart("Users",this.datefrom_user,this.dateto_user,this.idsoflanguages2,this.idsof_countries2,1000);
+    this.callFunctionCharts();
  
     }
  
@@ -2557,8 +2775,8 @@ createoschart()
         if(this.idsoflanguages3.length==6)
         {
           this.showselectednumberoflanguages(this.selectedtabs,"All Selected")
-          this.getuser_and_call_chart("Visitors",this.datefrom_visitor,this.dateto_visitor,[],this.idsof_countries3,1000);
-
+         // this.getuser_and_call_chart("Visitors",this.datefrom_visitor,this.dateto_visitor,[],this.idsof_countries3,1000);
+         this.callFunctionCharts();
         }
         else{
          this.showselectednumberoflanguages(this.selectedtabs,this.idsoflanguages3.length +"\xa0"+"Selected")
@@ -2581,8 +2799,9 @@ createoschart()
        else{
         this.showselectednumberoflanguages(this.selectedtabs,this.idsoflanguages3.length +"\xa0"+"Selected")
        }
-       this.getuser_and_call_chart("Visitors",this.datefrom_visitor,this.dateto_visitor,this.idsoflanguages3,this.idsof_countries3,1000);
-      }
+      // this.getuser_and_call_chart("Visitors",this.datefrom_visitor,this.dateto_visitor,this.idsoflanguages3,this.idsof_countries3,1000);
+      this.callFunctionCharts();
+       }
       }
       }
         // selected number of languages 
@@ -2667,45 +2886,53 @@ createoschart()
       // get data from mobile popup
       getdatafrommobilepopup()
       {
-        this.sharedres.sendparamfromdashboardpopup$.subscribe(data=>{
+           this.sharedres.sendparamfromdashboardpopup$.subscribe(data=>{
             this.rangeSelected=data.daterangeslot;
           if(data.dashboard_name=="Calls")
           {
-            if(data.daterangetab!="Custom")
-            {
-              this.getMobileChar_calls(data)            
-            }
+           
+            this.getMobileChar_calls(data)            
             this.mob_idsoflanguages1=data.languageids;
             this.mob_idsof_countries1=data.countryids;
+            this.idsoflanguages1=this.mob_idsoflanguages1;
+            this.idsof_countries1=this.mob_idsof_countries1;
             this.mob_chart_slot1=data.daterangetab;
             this.mob_date_from_chat=data.fromdate;
-            this.mob_date_to_chat=data.todate
+            this.mob_date_to_chat=data.todate;
+            this.charttimeslot1=data.daterangeslot;
+
           }
           else   if(data.dashboard_name=="Users")
-          {       // this.getuser_and_call_chart("Users",data.fromdate,data.todate,data.languageids,data.countryids,1000);
+          {     
 
             this.mob_idsoflanguages2=data.languageids;
             this.mob_idsof_countries2=data.countryids;
+            this.idsoflanguages2=this.mob_idsoflanguages2;
+            this.idsof_countries2=this.mob_idsof_countries2;
             this.mob_chart_slot2=data.daterangetab;
             this.mob_date_from_user=data.fromdate;
             this.mob_date_to_user=data.todate
             this.rangeSelected2=data.daterangeslot;
+            this.charttimeslot2=this.rangeSelected2;
+            this.getMobileCardUser(data);
             this.getMobileChar_user_visitor(data);
 
 
           }
           else   if(data.dashboard_name=="Visitors")
           {     
-
             this.mob_idsoflanguages3=data.languageids;
             this.mob_idsof_countries3=data.countryids;
+            this.idsoflanguages1=this.mob_idsoflanguages3;
+            this.idsof_countries1=this.mob_idsof_countries3;
             this.mob_chart_slot3=data.daterangetab;
             this.mob_date_from_visitor=data.fromdate;
             this.mob_date_to_visitor=data.todate
             this.rangeSelected3=data.daterangeslot;
-            this.getMobileChar_user_visitor(data);
+            this.charttimeslot3=this.rangeSelected3;
 
-            
+            this.getMobileCardVisitor(data);
+            this.getMobileChar_user_visitor(data);
             
           }
         })
@@ -2713,41 +2940,110 @@ createoschart()
       // mobile param for charts for user and visitors
       getMobileChar_user_visitor(data:any)
       {
-        if(data.languageids.length==6 || data.countryids.length==249)
+        if(data.languageids.length==6 && data.countryids.length==249)
         {
-          this.getuser_and_call_chart(data.dashboard_name,data.fromdate,data.todate,[],[],1000);
+          this.getuser_and_call_chart(data.dashboard_name,data.fromdate,data.todate,[],[],1000,data.daterangeslot);
+         
+
 
         }
         else if(data.languageids.length==6){
 
-          this.getuser_and_call_chart(data.dashboard_name,data.fromdate,data.todate,[],data.countryids,1000);
+          this.getuser_and_call_chart(data.dashboard_name,data.fromdate,data.todate,[],data.countryids,1000,data.daterangeslot);
 
         }
         else if(data.countryids.length==249)
         {
-          this.getuser_and_call_chart(data.dashboard_name,data.fromdate,data.todate,[],data.countryids,1000);
+          this.getuser_and_call_chart(data.dashboard_name,data.fromdate,data.todate,[],data.countryids,1000,data.daterangeslot);
 
         }
+
+    
       }
       // mobiel params for calls charts
 
       getMobileChar_calls(data:any)
       {
-        if(data.languageids.length==6 || data.countryids.length==249)
+        if(data.languageids.length==6 && data.countryids.length==249)
         {
-          this.getcallcharts(data.daterangeslot,[],[],1000);
+          this.getcallcharts(data.daterangeslot,[],[],1000,data.fromdate,data.todate);
+          this.getcallstats(data.daterangeslot,[],[],data.fromdate,data.todate);
+
 
         }
         else if(data.languageids.length==6){
 
-          this.getcallcharts(data.daterangeslot,[],data.countryids,1000);
+          this.getcallcharts(data.daterangeslot,[],data.countryids,1000,data.fromdate,data.todate);
+          this.getcallstats(data.daterangeslot,[],data.countryids,data.fromdate,data.todate);
+
 
         }
         else if(data.countryids.length==249)
         {
-          this.getcallcharts(data.daterangeslot,data.languageids,[],1000);
+          this.getcallcharts(data.daterangeslot,data.languageids,[],1000,data.fromdate,data.todate);
+          this.getcallstats(data.daterangeslot,data.languageids,[],data.fromdate,data.todate);
 
         }
+        else{
+          this.getcallcharts(data.daterangeslot,data.languageids,data.countryids,1000,data.fromdate,data.todate);
+          this.getcallstats(data.daterangeslot,data.languageids,data.countryids,data.fromdate,data.todate);
+        }
+        this.vsForTimeLable_calls=this.setVsFunctionForcards(data.daterangeslot);
+     
+      }
+            // mobile cards data from mobile version visitors
+
+      getMobileCardVisitor(data:any)
+      {
+       
+          if(data.languageids.length==6 && data.countryids.length==249)
+          {          
+            this.getVisitorTotalCard(data.daterangeslot,[],[],data.fromdate,data.todate);
+          }
+          else if(data.languageids.length==6)
+          {
+            this.getVisitorTotalCard(data.daterangeslot,[],data.countryids,data.fromdate,data.todate);
+          }
+          else if(data.countryids.length==249)
+          {
+            this.getVisitorTotalCard(data.daterangeslot,data.languageids,[],data.fromdate,data.todate);
+  
+          }
+          else{
+            this.getVisitorTotalCard(data.daterangeslot,data.languageids,data.countryids,data.fromdate,data.todate);
+  
+          }
+          this.vsForTimeLable_visitors=     this.setVsFunctionForcards(data.daterangeslot);
+       
+        
+      }
+      // mobile cards data from mobile version users
+         getMobileCardUser(data:any)
+         {
+          if(data.languageids.length==6 && data.countryids.length==249)
+          {
+            this.getUserTotalCard(data.daterangeslot,[],[],data.fromdate,data.todate);
+          
+  
+          }
+          else if(data.languageids.length==6)
+          {
+            this.getUserTotalCard(data.daterangeslot,[],data.countryids,data.fromdate,data.todate);
+  
+          }
+          else if(data.countryids.length==249)
+          {
+            this.getUserTotalCard(data.daterangeslot,this.idsoflanguages2,[],data.fromdate,data.todate);
+  
+  
+          }
+          else
+          {
+            this.getUserTotalCard(data.daterangeslot,data.languageids,data.countryids,data.fromdate,data.todate);
+  
+          }
+          this.vsForTimeLable_users=   this.setVsFunctionForcards(data.daterangeslot);
+      
       }
       ngOnDestroy() {
         if (this.chartInterval_id) {
@@ -2755,3 +3051,7 @@ createoschart()
         }
       }
 }
+function diff(diff: any): string | number | Date {
+  throw new Error('Function not implemented.');
+}
+

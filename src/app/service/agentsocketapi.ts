@@ -20,10 +20,9 @@ import { sharedres_service } from "./sharedres.service";
      this.callsocketapi_by_selecting_intgid()
       }
         public  callsocketapi_by_selecting_intgid()
-          {   // const socketvalue = JSON.parse(localStorage.getItem('gigaaa-socket'))
-          
+          { const socketvalue = JSON.parse(localStorage.getItem('gigaaa-socket'))
             this.sharedres.runsocketapiusingint_id$.subscribe(data=>{
-              if(data==1)
+              if(data==1&&socketvalue!=true)
               {   
                 this.getagentlive()
               }
@@ -70,6 +69,7 @@ import { sharedres_service } from "./sharedres.service";
                                 this.sharedres.runagentsocket(1);
                               }
                             }
+                            
                             });
                           
                         

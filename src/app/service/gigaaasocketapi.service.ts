@@ -63,7 +63,7 @@ callsocketapi_by_selecting_intgid()
 
      this.ws.onopen=(e)=>{
        this.sharedres.send_trigger_message(1);
-        this.message.setErrorMessage("socket-"+e.type);
+        this.message.setSuccessMessage("socket-"+e.type);
         this.checksocketopen=true;
         localStorage.setItem('gigaaa-socket', JSON.stringify(this.checksocketopen));
       }
@@ -81,7 +81,11 @@ callsocketapi_by_selecting_intgid()
             }
         }
         else {
-         this.ws.send("pong")
+          const socketvalue = JSON.parse(localStorage.getItem('gigaaa-socket'))
+          if(socketvalue==true)
+          {
+            this.ws.send("pong")
+          }
         }
 
       };
@@ -128,7 +132,6 @@ callsocketapi_by_selecting_intgid()
   // send params to get filter calls data
   send_daterange_params(data:any)
   {
-    
     if(this.ws.readyState==this.ws.OPEN)
     {
       this.ws.send(JSON.stringify(data))

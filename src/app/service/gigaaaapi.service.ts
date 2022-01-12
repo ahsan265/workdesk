@@ -23,7 +23,8 @@ export class GigaaaApiService  {
 
   private apiUrl = 'https://api.gconsole.io/v1/v1/';
   private workdeskurl_cs=`${environment.prod_url_cs}`;
-  private gigaabackendUlr=`${environment.prod_url_workdesk}`
+  private gigaabackendUlr=`${environment.prod_url_workdesk}`;
+  private workdeskanalytics=`${environment.prod_anlytics}`;
   private httpOptions: any = {
     headers: new HttpHeaders({
       'Content-Type': 'application/json',
@@ -483,7 +484,7 @@ public getAllUsers(): Observable<any> {
              return  this.http.get(this.workdeskurl_cs+"/public/invitation?code="+code,httpOptions)
              }
                 // get call stats
-                public   getcallstatistics(accesstoken:string,orgid:string,intid:string)
+           public   getcallstatistics(accesstoken:string,orgid:string,intid:string,time:string,languages:Array<any>,countries:Array<any>)
                 {   const httpOptions: any = {
                     headers: new HttpHeaders({
                       'Content-Type': 'application/json',
@@ -491,11 +492,11 @@ public getAllUsers(): Observable<any> {
                       'Authorization': `Bearer ${accesstoken}`
                  })
                  };
-                return  this.http.get(this.workdeskurl_cs+"/private/analytics/counts?organization="+orgid+"&integration="+intid,httpOptions)
-              }
+                return  this.http.get(this.workdeskanalytics+"/private/cs/counts?organization="+orgid+"&integration="+intid+"&time="+time+"&languages="+languages+"&countries="+countries,httpOptions)
+          }
 
                  // get call chart
-                 public   getcallchart(accesstoken:string,orgid:string,intid:string,time:string,languages:Array<any>,countries:Array<any>)
+                 public   getcallchart(accesstoken:string,orgid:string,intid:string,time:string,languages:Array<any>,countries:Array<any>,date_from:string,date_to:string)
                  {  
                    const httpOptions: any = {
                      headers: new HttpHeaders({
@@ -505,11 +506,11 @@ public getAllUsers(): Observable<any> {
                   })
                   };
 
-                 return  this.http.get(this.workdeskurl_cs+"/private/analytics/aggregates?organization="+orgid+"&integration="+intid+"&time="+time+"&languages="+languages+"&countries="+countries,httpOptions)
+                 return  this.http.get(this.workdeskanalytics+"/private/cs/aggregates?organization="+orgid+"&integration="+intid+"&time="+time+"&languages="+languages+"&countries="+countries+"&date_from="+date_from+"&date_to="+date_to,httpOptions)
                  }
 
-                  // get call chart
-                  public   getusers_and_visitors_chart(accesstoken:string,orgid:string,intid:string,date_from:string,date_to:string,languages:any,countries:any)
+                  // get user line graphs
+                  public   getuserline_Graph_Cards_Data(accesstoken:string,orgid:string,intid:string,date_from:string,date_to:string,languages:Array<any>,countries:Array<any>,time:string)
                   { 
                     const httpOptions: any = {
                       headers: new HttpHeaders({
@@ -519,7 +520,20 @@ public getAllUsers(): Observable<any> {
                    })
                    };
  
-                  return  this.http.get(this.gigaabackendUlr+"/organization/analytics/users/visitors?organization="+orgid+"&integration="+intid+"&date_from="+date_from+"&date_to="+date_to+"&languages="+languages+"&countries="+countries,httpOptions)
+                  return  this.http.get(this.workdeskanalytics+"/private/plugin/stats/users?organization="+orgid+"&integration="+intid+"&date_from="+date_from+"&date_to="+date_to+"&languages="+languages+"&countries="+countries+"&date_range=including"+"&time="+time,httpOptions)
+                  }
+                  // get visitor line graphs
+                  public   getvisitor_Graph_cards_Data(accesstoken:string,orgid:string,intid:string,date_from:string,date_to:string,languages:Array<any>,countries:Array<any>,time:string)
+                  { 
+                    const httpOptions: any = {
+                      headers: new HttpHeaders({
+                       'Content-Type': 'application/json',
+                       'Accept': 'application/json',
+                       'Authorization': `Bearer ${accesstoken}`
+                   })
+                   };
+ 
+                  return  this.http.get(this.workdeskanalytics+"/private/plugin/stats/visitors?organization="+orgid+"&integration="+intid+"&date_from="+date_from+"&date_to="+date_to+"&languages="+languages+"&countries="+countries+"&date_range=including"+"&time="+time,httpOptions)
                   }
                  // get loggedin agent uuid
                  getloggedinagentuuid(accesstoken:string,orgid:string,intid:string)
@@ -534,6 +548,75 @@ public getAllUsers(): Observable<any> {
 
                 return  this.http.get(this.workdeskurl_cs+"/private/agent?organization="+orgid+"&integration="+intid,httpOptions)
                  }
+
+                 // get user counts for cards
+                 // total
+                 public   getUserCountsTotal(accesstoken:string,orgid:string,intid:string,time:string,languages:Array<any>,countries:Array<any>)
+                 {   const httpOptions: any = {
+                     headers: new HttpHeaders({
+                       'Content-Type': 'application/json',
+                       'Accept': 'application/json',
+                       'Authorization': `Bearer ${accesstoken}`
+                  })
+                  };
+                  return  this.http.get(this.workdeskanalytics+"/private/plugin/users/total?organization="+orgid+"&integration="+intid+"&time="+time+"&languages="+languages+"&countries="+countries,httpOptions)
+                }
+                  // Unique
+                  public   getUserCountsUnique(accesstoken:string,orgid:string,intid:string,time:string,languages:Array<any>,countries:Array<any>)
+                  {   const httpOptions: any = {
+                      headers: new HttpHeaders({
+                        'Content-Type': 'application/json',
+                        'Accept': 'application/json',
+                        'Authorization': `Bearer ${accesstoken}`
+                   })
+                   };
+                   return  this.http.get(this.workdeskanalytics+"/private/plugin/users/unique?organization="+orgid+"&integration="+intid+"&time="+time+"&languages="+languages+"&countries="+countries,httpOptions)
+                 }
+                  // sessions
+                  public   getUserCountsSession(accesstoken:string,orgid:string,intid:string,time:string,languages:Array<any>,countries:Array<any>,date_from:string,date_to:String)
+                  {   const httpOptions: any = {
+                      headers: new HttpHeaders({
+                        'Content-Type': 'application/json',
+                        'Accept': 'application/json',
+                        'Authorization': `Bearer ${accesstoken}`
+                   })
+                   };
+                   return  this.http.get(this.workdeskanalytics+"/private/plugin/users/sessions?organization="+orgid+"&integration="+intid+"&time="+time+"&languages="+languages+"&countries="+countries+"&date_from="+date_from+"&date_to="+date_to,httpOptions)
+                 }
+                 /// get visitor counts for cards
+                 public   getVisitorCountsTotal(accesstoken:string,orgid:string,intid:string,time:string,languages:Array<any>,countries:Array<any>)
+                 {   const httpOptions: any = {
+                     headers: new HttpHeaders({
+                       'Content-Type': 'application/json',
+                       'Accept': 'application/json',
+                       'Authorization': `Bearer ${accesstoken}`
+                  })
+                  };
+                  return  this.http.get(this.workdeskanalytics+"/private/plugin/visitors/total?organization="+orgid+"&integration="+intid+"&time="+time+"&languages="+languages+"&countries="+countries,httpOptions)
+                }
+                  // Unique
+                  public   getVisitorCountsUnique(accesstoken:string,orgid:string,intid:string,time:string,languages:Array<any>,countries:Array<any>)
+                  {   const httpOptions: any = {
+                      headers: new HttpHeaders({
+                        'Content-Type': 'application/json',
+                        'Accept': 'application/json',
+                        'Authorization': `Bearer ${accesstoken}`
+                   })
+                   };
+                   return  this.http.get(this.workdeskanalytics+"/private/plugin/visitors/unique?organization="+orgid+"&integration="+intid+"&time="+time+"&languages="+languages+"&countries="+countries,httpOptions)
+                 }
+                  // sessions
+                  public   getVisitorCountsSession(accesstoken:string,orgid:string,intid:string,time:string,languages:Array<any>,countries:Array<any>,date_from:String,date_to:String)
+                  {   const httpOptions: any = {
+                      headers: new HttpHeaders({
+                        'Content-Type': 'application/json',
+                        'Accept': 'application/json',
+                        'Authorization': `Bearer ${accesstoken}`
+                   })
+                   };
+                   return  this.http.get(this.workdeskanalytics+"/private/plugin/visitors/sessions?organization="+orgid+"&integration="+intid+"&time="+time+"&languages="+languages+"&countries="+countries+"&date_from="+date_from+"&date_to="+date_to,httpOptions)
+                 }
+
 }
 
 
