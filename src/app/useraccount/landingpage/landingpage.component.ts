@@ -36,6 +36,7 @@ export class LandingpageComponent implements OnInit {
     }
     this.sharedres.getinivationdetail();
     this.getdetailsforinviteduser();
+
   }
   getdetailsforinviteduser()
   {

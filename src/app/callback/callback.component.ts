@@ -35,8 +35,10 @@ export class CallbackComponent implements OnInit {
       private socketapi:gigaaasocketapi,
       private agentsocketapi:agentsocketapi
     )   { }
-
+    expiredDate:any
   ngOnInit(): void {
+    this.expiredDate = new Date();
+    this.expiredDate.setDate( this.expiredDate.getDate() + 7 );
     this.sharedres.showtopandsidebar(0);
     let ch = localStorage.getItem('ch');
     if (ch != null){
@@ -58,9 +60,9 @@ export class CallbackComponent implements OnInit {
             this.apiService.getCurrentUser(res.access_token).subscribe((r: any) => {
             this.authService.user.next(r);
             r.color = color.default(r.profile.first_name + r.profile.last_name);
-            this.cookie.set('gigaaa_user', JSON.stringify(r));
-            this.cookie.set('access_token_active', JSON.stringify(res));
-            this.oauthService.login().finally(()=>{
+            this.cookie.set('gigaaa_user', JSON.stringify(r),this.expiredDate);
+            this.cookie.set('access_token_active', JSON.stringify(res),this.expiredDate);
+             this.oauthService.login().finally(()=>{
               this.getallintegrationlist();
               this.sharedres.showtopandsidebar(1);
               this.router.navigate(["dashboard"]);

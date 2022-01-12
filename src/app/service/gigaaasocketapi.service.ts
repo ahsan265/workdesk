@@ -16,7 +16,7 @@ import { sharedres_service } from './sharedres.service';
 export class gigaaasocketapi {
   protected websocket_url = `${environment.websocket_url}`;
 
-
+  isopensocker:any=0;
   tokenque:any;
   tokenvisit:any;
   closestate:any;
@@ -32,8 +32,8 @@ export class gigaaasocketapi {
   constructor(private message:MessageService,private sharedres:sharedres_service) {
     this.getlistofagentsinque$ = this.getlistofagentsinquesubjecct.asObservable().pipe();
     this.getlistofvisitor$=this.getlistofvisitorsubject.asObservable().pipe();
-
-    this.getlistofliveque();
+ 
+      this.getlistofliveque()
     this.callsocketapi_by_selecting_intgid();
   }
 
@@ -41,7 +41,7 @@ callsocketapi_by_selecting_intgid()
 {    const socketvalue = JSON.parse(localStorage.getItem('gigaaa-socket'))
 
   this.sharedres.runsocketapiusingint_id$.subscribe(data=>{
-    if(data==1 && socketvalue!=true)
+    if(data==1&&socketvalue!=true)
     {
         this.getlistofliveque();
     }
@@ -62,6 +62,7 @@ callsocketapi_by_selecting_intgid()
      this.ws = new WebSocket(url);
 
      this.ws.onopen=(e)=>{
+      this.isopensocker=1;
        this.sharedres.send_trigger_message(1);
         this.message.setSuccessMessage("socket-"+e.type);
         this.checksocketopen=true;
@@ -85,6 +86,7 @@ callsocketapi_by_selecting_intgid()
           if(socketvalue==true)
           {
             this.ws.send("pong")
+
           }
         }
 
@@ -140,7 +142,7 @@ callsocketapi_by_selecting_intgid()
     closewebsocketcalls()
     { const socketvalue = JSON.parse(localStorage.getItem('gigaaa-socket'))
       if(socketvalue==true)
-      {
+      {this.isopensocker=1;
         this.ws.close();
       }
     }

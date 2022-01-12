@@ -14,7 +14,6 @@ import { agentsocketapi } from './service/agentsocketapi';
 import { textChangeRangeIsUnchanged } from 'typescript';
 import { oAuthService } from './service/authservice.service';
 import { gigaaasocketapi } from './service/gigaaasocketapi.service';
-import { promise } from 'protractor';
 
 @Component({
   selector: 'app-root',
@@ -99,11 +98,12 @@ websites=[{text:"Partnership",url:['https://partnerships.gigaaa.com/'],image:'..
   
   }
   sendUserStatus = new ReplaySubject(1);
-  ngOnInit(): void {
-  
-    this.getShowandTOpbar().finally(()=>{
+  expiredDate:any
 
-    })
+  ngOnInit(): void {
+    this.expiredDate = new Date();
+    this.expiredDate.setDate( this.expiredDate.getDate() + 7 );
+    this.getShowandTOpbar();
     this.statusonline = JSON.parse(localStorage.getItem('user-status'));
     this.sendUserStatus.subscribe((res)=>{
       localStorage.setItem('user-status', JSON.stringify(res));
@@ -135,17 +135,17 @@ websites=[{text:"Partnership",url:['https://partnerships.gigaaa.com/'],image:'..
         this.accessToken=res
         this.token = res.access_token;
         this.apiService.getCurrentUser(this.token).subscribe((r: any) => {
+          console.log("btn login")
           r.api_token = this.token;
           r.color = color.default(r.profile.first_name + r.profile.last_name);
           this.authService.user.next(r);
-          this.cookie.set('gigaaa_user', JSON.stringify(r));
-          this.cookie.set('access_token_active', JSON.stringify(res));
+          this.cookie.set('gigaaa_user', JSON.stringify(r),this.expiredDate);
+          this.cookie.set('access_token_active', JSON.stringify(res),this.expiredDate);
           this.oAuthService.login().finally(()=>{
-           localStorage.setItem('gigaaa-socket', JSON.stringify(false));
             this.socketapi.closewebsocketcalls();
             this.agentsocketapi.closeagentsocket();
-            this.getallintegrationlist();
             localStorage.setItem('gigaaa-socket', JSON.stringify(false));
+            this.getallintegrationlist();
             this.sharedres.showtopandsidebar(1);
             this.router.navigate(['/dashboard']);
 
@@ -180,7 +180,8 @@ websites=[{text:"Partnership",url:['https://partnerships.gigaaa.com/'],image:'..
   }
 
   onAddAnotherAccount(event: any) {
-  
+    this.agentsocketapi.closeagentsocket();
+    this.socketapi.closewebsocketcalls();
     const callLogin = new LoginBtnComponent(this.cookie);
     const action: string = 'add';
     if (event) {
@@ -189,7 +190,8 @@ websites=[{text:"Partnership",url:['https://partnerships.gigaaa.com/'],image:'..
   }
 
   onSignin(event: any) {
-  
+    this.agentsocketapi.closeagentsocket();
+    this.socketapi.closewebsocketcalls();
     const callLogin = new LoginBtnComponent(this.cookie);
     const action: string = 'add';
     if (event) {
@@ -216,7 +218,7 @@ websites=[{text:"Partnership",url:['https://partnerships.gigaaa.com/'],image:'..
       this.lastuserintegration=element.name;
       this.apiService.getloggedinagentuuid(accesstoken,uuid,element?.uuid).subscribe(data=>{
         localStorage.setItem('userlogged_uuid', JSON.stringify(data));
-          this.sharedres.getcallsocketapi(1);
+         this.sharedres.getcallsocketapi(1);
 
         });
     }
@@ -296,6 +298,8 @@ showonlinetatus(value:boolean){
      this.lastuserintegration=element.name;
 
    }
+ },err=>{
+   this.messegeService.setErrorMessage(err.error.error);
  });
  let updatearr = this.integration.map((item, i) => Object.assign(item,{ routeUrl: ['/intents']}));
   let update_integration_list = updatearr;
@@ -308,24 +312,25 @@ showonlinetatus(value:boolean){
  });
  }
  });
-// this.setloggedINUUid();
 
 } catch (error) {
- this.handleLoginRegisterError(error.error.error);
+  this.messegeService.setErrorMessage(error);
+
 }
+
 }
 // show top and sidebar
-private async getShowandTOpbar(): Promise<any>
+getShowandTOpbar()
 {
     this.sharedres.showTopandSidebar$.subscribe(data=>{
       if(data==1)
       {
-        this.hideTopbar=true
+        this.hideTopbar=true;
 
       }
       else if(data==0)
       {
-          this.hideTopbar=false;
+        this.hideTopbar=false;
       }
   })
 
@@ -333,11 +338,10 @@ private async getShowandTOpbar(): Promise<any>
  // get the online status when agent is online or away.
  getuserloggedinstatus()
  {    
-   this.sharedres.runthesocketforagent$.subscribe(data=>{
-    this.getintegrationlist();
+    this.sharedres.runthesocketforagent$.subscribe(data=>{
     const status = JSON.parse(localStorage.getItem('user-status'))
     if(data==1)
-    {  
+    { this.getintegrationlist();
     this.showonlinetatus(status);
     }
 
