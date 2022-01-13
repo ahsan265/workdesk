@@ -101,10 +101,9 @@ websites=[{text:"Partnership",url:['https://partnerships.gigaaa.com/'],image:'..
   expiredDate:any
 
   ngOnInit(): void {
-    this.sharedres.showtopandsidebar(1);
+    this.getShowandTOpbar();
     this.expiredDate = new Date();
     this.expiredDate.setDate( this.expiredDate.getDate() + 7 );
-    this.getShowandTOpbar();
     this.statusonline = JSON.parse(localStorage.getItem('user-status'));
     this.sendUserStatus.subscribe((res)=>{
       localStorage.setItem('user-status', JSON.stringify(res));
@@ -157,6 +156,12 @@ websites=[{text:"Partnership",url:['https://partnerships.gigaaa.com/'],image:'..
     });
   
     this.getuserloggedinstatus();
+
+    if(this.authService.isLoggedIn()==true)
+    {
+      this.sharedres.showtopandsidebar(1);
+
+    }
    
   }
 
@@ -324,10 +329,11 @@ showonlinetatus(value:boolean){
 getShowandTOpbar()
 {
     this.sharedres.showTopandSidebar$.subscribe(data=>{
+      console.log(data)
       if(data==1)
       {
         this.hideTopbar=true;
-
+        this.getintegrationlist();
       }
       else if(data==0)
       {
