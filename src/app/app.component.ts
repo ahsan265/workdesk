@@ -101,14 +101,7 @@ websites=[{text:"Partnership",url:['https://partnerships.gigaaa.com/'],image:'..
   expiredDate:any
 
   ngOnInit(): void {
-    const socketvalue = JSON.parse(localStorage.getItem('gigaaa-socket'))
-    if(socketvalue==true)
-    {
-      this.hideTopbar=true;
-    }
-    else{
-      this.sharedres.showtopandsidebar(1);
-    }
+    this.sharedres.showtopandsidebar(1);
     this.expiredDate = new Date();
     this.expiredDate.setDate( this.expiredDate.getDate() + 7 );
     this.getShowandTOpbar();
@@ -322,7 +315,7 @@ showonlinetatus(value:boolean){
  });
 
 } catch (error) {
-  this.messegeService.setErrorMessage(error);
+  //this.messegeService.setErrorMessage(error);
 
 }
 
