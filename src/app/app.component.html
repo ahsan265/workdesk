@@ -7,7 +7,7 @@
 
   </gigaaa-sidebar>
   <div class="consoleWrap">
-    <gigaaa-header [portalData]="websites" *ngIf=" hideTopbar" (signin)="onSignin($event)"
+    <gigaaa-header [portalData]="websites" *ngIf="hideTopbar" (signin)="onSignin($event)"
     (addAnotherAccount)="onAddAnotherAccount($event)" (noLoggedUsers)="onNoLoggedUsers($event)"
     [accessTokenSubject]="this.authService.accessToken" [token]="this.authService.token.access_token"
     [oauthUrl]="oauthUrl" [slideOpened]="slideOpened" [redirectUri]="redirectUri" [pageTitle]="pageTitle"

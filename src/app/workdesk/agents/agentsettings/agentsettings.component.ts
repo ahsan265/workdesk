@@ -184,7 +184,7 @@ form = new FormGroup({
 
   getagentprofilesettingview()
   {
-    this.sharedres.agentsprofilesetting$.subscribe(data=>{
+      this.sharedres.agentsprofilesetting$.subscribe(data=>{
       this.agentsettingdata=data;
       this.showagentinformation(this.agentsettingdata);
       var timestamp = (new Date()).getTime();
