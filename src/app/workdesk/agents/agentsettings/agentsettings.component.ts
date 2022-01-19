@@ -264,8 +264,8 @@ form = new FormGroup({
    }
   // cancel invitation 
   public async cancelagentinvitation(): Promise<void>
-  {  const getdata = JSON.parse(localStorage.getItem('gigaaa-subscription'))
-      var accesstoken=getdata.access_token;
+  {  const getdata = JSON.parse(localStorage.getItem('gigaaa-user'))
+      var accesstoken=getdata.api_token;
       var subsid=getdata.subscription_id.subsid.uuid;
       const intg_id = JSON.parse(localStorage.getItem('intgid'))
     try{
@@ -285,8 +285,8 @@ form = new FormGroup({
 
   // resend invitation 
   public async invitationresendagent(): Promise<void>
-  {  const getdata = JSON.parse(localStorage.getItem('gigaaa-subscription'))
-      var accesstoken=getdata.access_token;
+  {  const getdata = JSON.parse(localStorage.getItem('gigaaa-user'))
+      var accesstoken=getdata.api_token;
       var subsid=getdata.subscription_id.subsid.uuid;
       const intg_id = JSON.parse(localStorage.getItem('intgid'))
      
@@ -370,8 +370,8 @@ form = new FormGroup({
   // update profile
 public async updateagentprofile(): Promise<any>
   {
-    const getdata = JSON.parse(localStorage.getItem('gigaaa-subscription'))
-      var accesstoken=getdata.access_token;
+    const getdata = JSON.parse(localStorage.getItem('gigaaa-user'))
+      var accesstoken=getdata.api_token;
       var subsid=getdata.subscription_id.subsid.uuid;
       const intg_id = JSON.parse(localStorage.getItem('intgid'))
     try{
@@ -426,8 +426,8 @@ public async updateagentprofile(): Promise<any>
   // get all languages
 
   public async getlllangugaes(): Promise<void>{
-    const getdata = JSON.parse(localStorage.getItem('gigaaa-subscription'))
-    var accesstoken=getdata.access_token;
+    const getdata = JSON.parse(localStorage.getItem('gigaaa-user'))
+    var accesstoken=getdata.api_token;
     var subsid=getdata.subscription_id.subsid.uuid;
     const intid = JSON.parse(localStorage.getItem('intgid'))
     try{

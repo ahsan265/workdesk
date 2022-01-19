@@ -56,8 +56,8 @@ export class EditformComponent implements OnInit {
   getallintegrationlist()
   {
    try {
-    const getdata = JSON.parse(localStorage.getItem('gigaaa-subscription'))
-    var accesstoken=getdata.access_token;
+    const getdata = JSON.parse(localStorage.getItem('gigaaa-user'))
+    var accesstoken=getdata.api_token;
     var subsid=getdata.subscription_id.subsid.uuid
      this.gigaaaapi.getallintegration(accesstoken,"").subscribe(data=>{
        this.allintegration=data
@@ -95,8 +95,8 @@ export class EditformComponent implements OnInit {
     try
       { this.idoflang=this.idoflang.filter((value,index)=>this.idoflang.indexOf(value)===index)
         this.idofintg=this.idofintg.filter((value,index)=>this.idofintg.indexOf(value)===index)
-        const getdata = JSON.parse(localStorage.getItem('gigaaa-subscription'))
-        var accesstoken=getdata.access_token;
+        const getdata = JSON.parse(localStorage.getItem('gigaaa-user'))
+        var accesstoken=getdata.api_token;
         var subsid=getdata.subscription_id.subsid.uuid
         console.log(this.idofintg)
 if(this.form.value.role=="")

@@ -97,7 +97,7 @@ export class MainPageComponent implements OnInit {
 
   onNoLoggedUsers(event: any) {
     if (event) {
-      this.authService.logOff();
+    //  this.authService.logOff();
       location.href = this.redirectUri;
     }
   }

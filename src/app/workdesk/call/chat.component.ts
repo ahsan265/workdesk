@@ -686,8 +686,8 @@ return time;
 public async dialcall(callid:any): Promise<void>
 {
   
-  const getdata = JSON.parse(localStorage.getItem('gigaaa-subscription'))
-    var accesstoken=getdata.access_token;
+  const getdata = JSON.parse(localStorage.getItem('gigaaa-user'))
+    var accesstoken=getdata.api_token;
     const id = JSON.parse(localStorage.getItem('intgid'))
     const agentuuid = JSON.parse(localStorage.getItem('userlogged_uuid'))
 
@@ -770,8 +770,8 @@ search(term:string,column:any) {
 
    // get all langugaes
   public async getlllangugaes(): Promise<void>{
-    const getdata = JSON.parse(localStorage.getItem('gigaaa-subscription'))
-    var accesstoken=getdata.access_token;
+    const getdata = JSON.parse(localStorage.getItem('gigaaa-user'))
+    var accesstoken=getdata.api_token;
     var subsid=getdata.subscription_id.subsid.uuid;
     const intid = JSON.parse(localStorage.getItem('intgid'))
     try{

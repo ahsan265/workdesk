@@ -29,8 +29,8 @@ export class DeleteagentpopupComponent implements OnInit {
 
 
   public async setdeleteagent(): Promise<void>
-  {  const getdata = JSON.parse(localStorage.getItem('gigaaa-subscription'))
-      var accesstoken=getdata.access_token;
+  {  const getdata = JSON.parse(localStorage.getItem('gigaaa-user'))
+      var accesstoken=getdata.api_token;
       var subsid=getdata.subscription_id.subsid.uuid;
       const intg_id = JSON.parse(localStorage.getItem('intgid'))
      

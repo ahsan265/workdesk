@@ -1,13 +1,10 @@
-import { AfterViewInit, Component, OnInit } from '@angular/core';
+import {  Component, OnInit } from '@angular/core';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
-import { ActivatedRoute, Router } from '@angular/router';
+import {  Router } from '@angular/router';
+import { GigaaaHeaderService } from '@gigaaa/gigaaa-components';
 import { AuthService } from 'src/app/service/auth.service';
-import { GigaaaApiService } from 'src/app/service/gigaaaapi.service';
-import { MessageService } from 'src/app/service/messege.service';
 import { sharedres_service } from 'src/app/service/sharedres.service';
-import { InviteagentComponent } from 'src/app/workdesk/agents/inviteagent/inviteagent.component';
 import { LinkexpiredialogComponent } from '../linkexpiredialog/linkexpiredialog.component';
-import { SiginComponent } from '../sigin/sigin.component';
 import { SignupComponent } from '../signup/signup.component';
 declare var $: any;
 
@@ -21,22 +18,19 @@ export class LandingpageComponent implements OnInit {
   inviteduserdata: any;
   constructor(
     public authService: AuthService,
-    private gigaaaapi: GigaaaApiService,
     private sharedres: sharedres_service,
     public dialog: MatDialog,
     public dialogRef: MatDialogRef<SignupComponent>,
     private router:Router,
+    private headerService: GigaaaHeaderService
   ) {}
 
   ngOnInit(): void {
-    let user=this.authService.isLoggedIn();
-    if(user==true)
-    {
-      this.router.navigate(['dashboard'])
+    if (this.authService.isLoggedIn()) {
+      this.router.navigate(['/dashboard']);
     }
     this.sharedres.getinivationdetail();
     this.getdetailsforinviteduser();
-
   }
   getdetailsforinviteduser()
   {
@@ -63,7 +57,7 @@ export class LandingpageComponent implements OnInit {
        hasBackdrop:false,
        panelClass:"linkexpired-form-container",
      });
-     
+
    }
   getsociallinks(linkval: any) {
     window.open(linkval, '_blank');
@@ -71,5 +65,9 @@ export class LandingpageComponent implements OnInit {
   //
   tabslinksforfooter(linkval: any) {
     window.open(linkval);
+  }
+
+  login() {
+    this.headerService.login();
   }
 }

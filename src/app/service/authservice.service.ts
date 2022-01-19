@@ -28,13 +28,13 @@ export class oAuthService  {
   public  async login(): Promise<void> {
  
     try { 
-      const Loggedin_user= this.AccountAuth.getLoggedUserToken();
-      const data={ token_type: Loggedin_user['token_type'],
-      expires_in: Loggedin_user['expires_in'],
-      access_token:Loggedin_user['access_token'],
-      refresh_token :Loggedin_user['refresh_token']};
+      // const Loggedin_user= this.AccountAuth.getLoggedUserToken();
+      // const data={ token_type: Loggedin_user['token_type'],
+      // expires_in: Loggedin_user['expires_in'],
+      // access_token:Loggedin_user['access_token'],
+      // refresh_token :Loggedin_user['refresh_token']};
 
-    localStorage.setItem('gigaaa-subscription', JSON.stringify(data))
+  //  localStorage.setItem('gigaaa-subscription', JSON.stringify(data))
     const token = JSON.parse(localStorage.getItem('gigaaa-subscription'))
     const code = JSON.parse(localStorage.getItem('gigaaa-invitation'))
   
@@ -42,10 +42,7 @@ export class oAuthService  {
     if(code!=undefined)
     {
       var code_invite={"invitation_code": code}
-
       await this.gigaaaApiService.sendinvitationcode(token.access_token,code_invite);
-
-
     }
     const subsiddata = JSON.parse(localStorage.getItem('gigaaa-subscription'))
     const subsid=await this.gigaaaApiService.getsubsid(subsiddata.access_token);
@@ -53,14 +50,11 @@ export class oAuthService  {
     subsiddata['subscription_id']={subsid}
     localStorage.setItem('gigaaa-subscription', JSON.stringify(subsiddata))
     localStorage.removeItem('gigaaa-invitation');
-
-}
-catch(err){
-  this.handleLoginRegisterError(err);
-}
-
-
-  }
+    }
+    catch(err){
+      this.handleLoginRegisterError(err);
+    }
+    }
   getallintegrationlist()
   {
    try {
@@ -71,8 +65,8 @@ catch(err){
   this.integration=data;
   this.integration.forEach(element => {
     if(element.last_used===true)
-    {        localStorage.setItem('intgid', JSON.stringify({int_id:element.uuid,name:element.name}));
-    this.gigaaaapi.getloggedinagentuuid(accesstoken,uuid,element.uuid).subscribe(data=>{
+    { localStorage.setItem('intgid', JSON.stringify({int_id:element.uuid,name:element.name}));
+      this.gigaaaapi.getloggedinagentuuid(accesstoken,uuid,element.uuid).subscribe(data=>{
       localStorage.setItem('userlogged_uuid', JSON.stringify(data));
       this.sharedres.getcallsocketapi(1);
       });

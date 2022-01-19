@@ -1,59 +1,97 @@
 import { Injectable } from '@angular/core';
-import { ReplaySubject } from 'rxjs';
+import { BehaviorSubject, ReplaySubject } from 'rxjs';
 import { CanActivate, Router } from '@angular/router';
 import { CookieService } from 'ngx-cookie-service';
 import { User } from '../model/User';
 import { oAuthService } from './authservice.service';
+import { gigaaasocketapi } from './gigaaasocketapi.service';
+import { GigaaaApiService } from './gigaaaapi.service';
+import { ltLocale } from 'ngx-bootstrap/chronos';
+import { MessageService } from './messege.service';
+import { sharedres_service } from './sharedres.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService implements CanActivate {
-
-  public user: ReplaySubject<User> = new ReplaySubject(1);
-  public accessToken: ReplaySubject<any> = new ReplaySubject(1);
-  
+  integration:any;
+  public user: BehaviorSubject<User>;
   token: any;
-
-  constructor(
-    private cookie: CookieService,
-    private router:Router
-
-  ) {
-    if (this.isLoggedIn()) {
-      this.user.next(this.getLoggedUser());
-    }
-    if (this.cookie.get('access_token_active')) {
-      this.token = JSON.parse(this.cookie.get('access_token_active'));
-    //  console.log('AUTH SERVICE TOKEN', this.token);
-    }
+  orgId:any;
+  constructor(private gigaaaApiService:GigaaaApiService,
+    private message:MessageService,
+    private sharedres:sharedres_service) {
+    this.user = new BehaviorSubject(this.getLoggedUser());
+    this.user.subscribe(data=>{
+      console.log(data)
+      if(data!=null)
+      { 
+         this.getOrganizationId(data.api_token);
+      }
+    })
    }
-  canActivate(): boolean {
-
-    if (this.isLoggedIn()){
-      return true;
-    }
-    else{
-      this.router.navigate(['']);
-      return false;
-
-    }
-  }
-
-  public logOff() {
-    this.cookie.delete('access_token_active');
-    this.cookie.delete('gigaaa_user');
-  }
 
   public isLoggedIn(): boolean {
-    return !!this.cookie.check("access_token_active");
+    return !!localStorage.getItem('gigaaa-user');
   }
 
-  public getLoggedUser(): any {
-    return JSON.parse(this.cookie.get('gigaaa_user'));
-  }
-  public getLoggedUserToken():any{
-    return JSON.parse(this.cookie.get('access_token_active'));
+  public getLoggedUser(): User {
+    const user: any = localStorage.getItem('gigaaa-user');
+    return JSON.parse(user);
   }
 
+  canActivate() {
+    return this.isLoggedIn()
+  }
+
+// get organization id 
+ public  async getOrganizationId(token:any): Promise<any>{
+   try{
+    const subsiddata = JSON.parse(localStorage.getItem('gigaaa-user'));
+      const subsid=await this.gigaaaApiService.getsubsid(token);
+      console.log(subsid)
+      this.orgId=subsid['uuid'];
+      subsiddata['subscription_id']={subsid};
+      this.getallintegrationlist(token,this.orgId);
+      localStorage.setItem('gigaaa-user', JSON.stringify(subsiddata));
+
+   }
+   catch(err)
+   {
+    this.message.setErrorMessage(err.error.error);
+
+   }
+    
+}
+
+// get all integration
+getallintegrationlist(token:any,orgid:any)
+{
+try {
+
+     this.gigaaaApiService.getallintegration(token,orgid).subscribe(data=>{
+
+      this.integration=data;
+      if(this.integration.length!=0)
+      {
+      this.integration.forEach(element => {
+        if(element.last_used===true)
+        { 
+     localStorage.setItem('intgid', JSON.stringify({int_id:element.uuid,name:element.name}));
+     this.sharedres.showagentListonload(1);
+     this.gigaaaApiService.getloggedinagentuuid(token,orgid,element?.uuid).subscribe(data=>{
+      localStorage.setItem('userlogged_uuid', JSON.stringify(data));
+      this.sharedres.getcallsocketapi(1);
+      this.sharedres.getintegrationrelation(1);
+      });
+      }
+      });
+      }
+  
+    });
+
+    } catch (error) {
+    this.message.setErrorMessage(error);
+    }
+    }
 }

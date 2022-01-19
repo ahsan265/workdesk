@@ -334,8 +334,8 @@ checkhowmanyselected(val)
   }
 
   public async  calladdgent(data): Promise<void>
-  {   const getdata = JSON.parse(localStorage.getItem('gigaaa-subscription'))
-  var accesstoken=getdata?.access_token;
+  {   const getdata = JSON.parse(localStorage.getItem('gigaaa-user'))
+  var accesstoken=getdata?.api_token;
   var subsid=getdata?.subscription_id.subsid.uuid;
   const intid = JSON.parse(localStorage.getItem('intgid'))
     try{
@@ -351,8 +351,8 @@ checkhowmanyselected(val)
       this.dialogRef.close();
   }
   public async getlllangugaes(): Promise<void>{
-    const getdata = JSON.parse(localStorage.getItem('gigaaa-subscription'))
-    var accesstoken=getdata.access_token;
+    const getdata = JSON.parse(localStorage.getItem('gigaaa-user'))
+    var accesstoken=getdata.api_token;
     var subsid=getdata.subscription_id.subsid.uuid;
     const intid = JSON.parse(localStorage.getItem('intgid'))
     try{

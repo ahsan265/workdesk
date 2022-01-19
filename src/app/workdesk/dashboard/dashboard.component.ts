@@ -521,8 +521,8 @@ export class DashboardComponent implements OnInit {
      // get all country
      public async getallthecountries(): Promise<void>
      {
-      const getdata = JSON.parse(localStorage.getItem('gigaaa-subscription'))
-      var accesstoken=getdata?.access_token;
+      const getdata = JSON.parse(localStorage.getItem('gigaaa-user'))
+      var accesstoken=getdata?.api_token;
       try{
         
         var idsof_countries=[];
@@ -648,8 +648,8 @@ export class DashboardComponent implements OnInit {
      }
      // get all languages
      public async getlllangugaes(): Promise<void>{
-       const getdata = JSON.parse(localStorage.getItem('gigaaa-subscription'))
-       const accesstoken=getdata.access_token;
+       const getdata = JSON.parse(localStorage.getItem('gigaaa-user'))
+       const accesstoken=getdata.api_token;
        const subsid=getdata.subscription_id?.subsid?.uuid;
        const intid = JSON.parse(localStorage.getItem('intgid'))
        if(intid?.int_id!=null && accesstoken!=null&&subsid!=null)
@@ -792,14 +792,14 @@ export class DashboardComponent implements OnInit {
       this.getlllangugaes();
       this.roundbarchartcorners();
       this.loadcallstatsoninit();
-      this.getstatsonintg();
+      this.getdashboardDataonLoad();
       this.getdatafrommobilepopup();
   }
-    // user charts card
+  
     getUserTotalCard(timeslot:any,languagesid:Array<any>,countryids:Array<any>,datefrom:string,dateto:string)
     {this.vsForTimeLable_users= this.setVsFunctionForcards(timeslot);
-     const getdata = JSON.parse(localStorage.getItem('gigaaa-subscription'));
-     const accesstoken=getdata.access_token;
+     const getdata = JSON.parse(localStorage.getItem('gigaaa-user'));
+     const accesstoken=getdata.api_token;
      const subsid=getdata.subscription_id?.subsid?.uuid;
      const intid = JSON.parse(localStorage.getItem('intgid'));
    
@@ -850,8 +850,8 @@ export class DashboardComponent implements OnInit {
   getVisitorTotalCard(timeslot:any,languagesid:Array<any>,countryids:Array<any>,datefrom:string,dateto:string)
     {  console.log(timeslot)
       this.vsForTimeLable_visitors= this.setVsFunctionForcards(timeslot);
-      const getdata = JSON.parse(localStorage.getItem('gigaaa-subscription'));
-      const accesstoken=getdata.access_token;
+      const getdata = JSON.parse(localStorage.getItem('gigaaa-user'));
+      const accesstoken=getdata.api_token;
       const subsid=getdata.subscription_id?.subsid?.uuid;
       const intid = JSON.parse(localStorage.getItem('intgid'));
       this.gigaaaservice.getVisitorCountsSession(accesstoken,subsid,intid.int_id,timeslot,languagesid,countryids,datefrom,dateto).subscribe(data=>{
@@ -1845,16 +1845,11 @@ createoschart()
  $("#oslegend").html(myChart.generateLegend());
 }
 
-     getstatsonintg()
+     getdashboardDataonLoad()
     { 
-       const getdata = JSON.parse(localStorage.getItem('gigaaa-subscription'))
-       const accesstoken=getdata.access_token;
-       const subsid=getdata.subscription_id?.subsid?.uuid;
       try{
-      this.subscription=  this.sharedres.submitapplication$.subscribe(data=>{
-      this.Updatelanguageendpoint(accesstoken,subsid,data.int_id);
-      this.getcallstats("this_week",[],[],this.datefrom_call,this.dateto_call);
-
+      this.sharedres.submitapplication$.subscribe(data=>{
+        this.callFunctionCharts()
     })
     }
     catch(error)
@@ -1868,8 +1863,8 @@ createoschart()
   {
     try
     {this.vsForTimeLable_calls= this.setVsFunctionForcards(timeslot);
-      const getdata = JSON.parse(localStorage.getItem('gigaaa-subscription'))
-      var accesstoken=getdata?.access_token;
+      const getdata = JSON.parse(localStorage.getItem('gigaaa-user'))
+      var accesstoken=getdata?.api_token;
       var orgid=getdata?.subscription_id?.subsid?.uuid
       const intid = JSON.parse(localStorage.getItem('intgid'));
 
@@ -1913,10 +1908,10 @@ createoschart()
   getuser_and_call_chart(tabs:any,datefrom:any,dateto:any,languages:Array<any>,countries:Array<any>,anim_val,timeslot:any)
   {
     try{
-      const getdata = JSON.parse(localStorage.getItem('gigaaa-subscription'))
+      const getdata = JSON.parse(localStorage.getItem('gigaaa-user'))
       const intg_id = JSON.parse(localStorage.getItem('intgid'))
       var int_id=intg_id?.int_id;
-      var accesstoken=getdata?.access_token;
+      var accesstoken=getdata?.api_token;
       var orgid=getdata?.subscription_id?.subsid?.uuid
      
       if(tabs=="Users")
@@ -1986,10 +1981,10 @@ createoschart()
   {
     try
     {
-      const getdata = JSON.parse(localStorage.getItem('gigaaa-subscription'))
+      const getdata = JSON.parse(localStorage.getItem('gigaaa-user'))
       const intg_id = JSON.parse(localStorage.getItem('intgid'))
       var int_id=intg_id?.int_id;
-      var accesstoken=getdata?.access_token;
+      var accesstoken=getdata?.api_token;
       var orgid=getdata?.subscription_id?.subsid?.uuid
         this.gigaaaservice.getcallchart(accesstoken,orgid,int_id,timeslot,languages,countries,fromdate,todate).subscribe(data=>{
       var dataforincoming=this.getbarchartdata(data['incoming']);

@@ -14,6 +14,7 @@ import { agentsocketapi } from './service/agentsocketapi';
 import { textChangeRangeIsUnchanged } from 'typescript';
 import { oAuthService } from './service/authservice.service';
 import { gigaaasocketapi } from './service/gigaaasocketapi.service';
+import { GigaaaHeaderService } from '@gigaaa/gigaaa-components';
 
 @Component({
   selector: 'app-root',
@@ -74,7 +75,7 @@ websites=[{text:"Partnership",url:['https://partnerships.gigaaa.com/'],image:'..
     },
   ];
   slideOpened: boolean = false;
-  oauthUrl = `${environment.oauth_url}`;
+  oauthUrl = `${environment.accounts_url}`;
   token: string;
   online_status:any;
   statusonline:boolean;
@@ -93,7 +94,8 @@ websites=[{text:"Partnership",url:['https://partnerships.gigaaa.com/'],image:'..
     private socketapi:gigaaasocketapi,
     private sharedres:sharedres_service,
     private router: Router,
-    private route:ActivatedRoute
+    private route:ActivatedRoute,
+    private headerService: GigaaaHeaderService
   ) {
   
   }
@@ -101,67 +103,62 @@ websites=[{text:"Partnership",url:['https://partnerships.gigaaa.com/'],image:'..
   expiredDate:any
 
   ngOnInit(): void {
-    this.getShowandTOpbar();
-    this.expiredDate = new Date();
-    this.expiredDate.setDate( this.expiredDate.getDate() + 7 );
-    this.statusonline = JSON.parse(localStorage.getItem('user-status'));
-    this.sendUserStatus.subscribe((res)=>{
-      localStorage.setItem('user-status', JSON.stringify(res));
-    })
-    this.lastuserintegration="Select integration";
-    this.route.queryParams
-      .subscribe(params => {
-       if(params.code!=null)
-       {
-         this.pageTitle="Dashboard"
-       }
-       else{
-        this.url= window.location.href;
-        let locID = this.url.split('/');
-        this.pageTitle=locID[3].charAt(0).toUpperCase() + locID[3].slice(1);
-       }
-      });
-   
-      this.authService.user.subscribe((r: any) => {
-        this.user = r;
-
-      });
-   
-
-    this.authService.accessToken.subscribe((res: any) => {
-
-      if (res) {
-       
-        this.accessToken=res
-        this.token = res.access_token;
-        this.apiService.getCurrentUser(this.token).subscribe((r: any) => {
-          console.log("btn login")
-          r.api_token = this.token;
-          r.color = color.default(r.profile.first_name + r.profile.last_name);
-          this.authService.user.next(r);
-          this.cookie.set('gigaaa_user', JSON.stringify(r),this.expiredDate);
-          this.cookie.set('access_token_active', JSON.stringify(res),this.expiredDate);
-          this.oAuthService.login().finally(()=>{
-            this.socketapi.closewebsocketcalls();
-            this.agentsocketapi.closeagentsocket();
-            localStorage.setItem('gigaaa-socket', JSON.stringify(false));
-            this.getallintegrationlist();
-            this.sharedres.showtopandsidebar(1);
-            this.router.navigate(['/dashboard']);
-
+          this.getuserloggedinstatus();
+          this.getagentlistOnload()
+          this.statusonline = JSON.parse(localStorage.getItem('user-status'));
+          this.sendUserStatus.subscribe((res)=>{
+            localStorage.setItem('user-status', JSON.stringify(res));
           })
-        });
-      }
+           this.lastuserintegration="Select integration";
+          //  this.route.queryParams
+          // .subscribe(params => {
+       
+          //   this.url= window.location.href;
+          //   let locID = this.url.split('/');
+          //   this.pageTitle=locID[3].charAt(0).toUpperCase() + locID[3].slice(1);
+          
+          // });
+          
+          this.authService.user.subscribe((r: any) => {
+            this.user = r;
+            console.log(r)
+          });
+   
+
+    // this.authService.accessToken.subscribe((res: any) => {
+
+    //   if (res) {
+       
+    //     this.accessToken=res
+    //     this.token = res.access_token;
+    //     this.apiService.getCurrentUser(this.token).subscribe((r: any) => {
+    //       console.log("btn login")
+    //       r.api_token = this.token;
+    //       r.color = color.default(r.profile.first_name + r.profile.last_name);
+    //       this.authService.user.next(r);
+    //       this.cookie.set('gigaaa_user', JSON.stringify(r),this.expiredDate);
+    //       this.cookie.set('access_token_active', JSON.stringify(res),this.expiredDate);
+    //       this.oAuthService.login().finally(()=>{
+    //         this.socketapi.closewebsocketcalls();
+    //         this.agentsocketapi.closeagentsocket();
+    //         localStorage.setItem('gigaaa-socket', JSON.stringify(false));
+    //         this.getallintegrationlist();
+    //         this.sharedres.showtopandsidebar(1);
+    //         this.router.navigate(['/dashboard']);
+
+    //       })
+    //     });
+    //   }
     
-    });
+    // });
   
-    this.getuserloggedinstatus();
+    // this.getuserloggedinstatus();
 
-    if(this.authService.isLoggedIn()==true)
-    {
-      this.sharedres.showtopandsidebar(1);
+    // if(this.authService.isLoggedIn()==true)
+    // {
+    //   this.sharedres.showtopandsidebar(1);
 
-    }
+    // }
    
   }
 
@@ -177,10 +174,9 @@ websites=[{text:"Partnership",url:['https://partnerships.gigaaa.com/'],image:'..
   onNoLoggedUsers(event: any) {
     if (event) {
     
-      this.agentsocketapi.closeagentsocket();
-      this.socketapi.closewebsocketcalls();
-      this.authService.logOff();
-      this.oAuthService.logOff();
+      // this.agentsocketapi.closeagentsocket();
+      // this.socketapi.closewebsocketcalls();
+     // localStorage.clear();
       location.href = this.redirectUri;
     }
   }
@@ -205,65 +201,8 @@ websites=[{text:"Partnership",url:['https://partnerships.gigaaa.com/'],image:'..
     }
   }
 
- // get all integration
-  getallintegrationlist()
-  {
-   try {
-  const getdata = JSON.parse(localStorage.getItem('gigaaa-subscription'))
-  var accesstoken=getdata.access_token;
-  var uuid=getdata.subscription_id.subsid.uuid;
-  this.apiService.getallintegration(accesstoken,uuid).subscribe(data=>{
-  
-  this.integration=data;
-  if(this.integration.length!=0)
-  {
-  this.integration.forEach(element => {
-    if(element.last_used===true)
-    { 
-      localStorage.setItem('intgid', JSON.stringify({int_id:element.uuid,name:element.name}));
-      this.lastuserintegration=element.name;
-      this.apiService.getloggedinagentuuid(accesstoken,uuid,element?.uuid).subscribe(data=>{
-        localStorage.setItem('userlogged_uuid', JSON.stringify(data));
-         this.sharedres.getcallsocketapi(1);
 
-        });
-    }
-  });
-  let updatearr = this.integration.map((item, i) => Object.assign(item,{ routeUrl: ['/intents']}));
-   let update_integration_list = updatearr;
-  this.sidebarData.forEach(element => {
-    if(element.dropdown==true)
-    {
-      element.dropdownItems=update_integration_list;
-      element.name=this.lastuserintegration;
-   }
-  });
-}
-else 
-{
-  this.sidebarData.forEach(element => {
-    if(element.name==this.lastuserintegration)
-    {
 
-      this.lastuserintegration="No Integration";
-      element.name=this.lastuserintegration;
-      element.dropdownItems=[];
-      localStorage.removeItem('intgid');
-      localStorage.removeItem('userlogged_uuid');
-      this.showonlinetatus(false)
-   }
-  });
-}
-  });
- // this.setloggedINUUid();
-
-} catch (error) {
-  this.handleLoginRegisterError(error.error.error);
-}
-}
-private handleLoginRegisterError(response: any) {
-      this.messegeService.setErrorMessage(response.error.error, 'toast-bottom-right');
-}
 showonlinetatus(value:boolean){
   
   if(value==true)
@@ -283,14 +222,14 @@ showonlinetatus(value:boolean){
  // get last used integration
  getintegrationlist()
   { 
-    if(this.hideTopbar==false)
-    {
-      this.sharedres.showtopandsidebar(1);
-    }
+    // if(this.hideTopbar==false)
+    // {
+    //   this.sharedres.showtopandsidebar(1);
+    // }
 
   try {
- const getdata = JSON.parse(localStorage.getItem('gigaaa-subscription'))
- var accesstoken=getdata.access_token;
+ const getdata = JSON.parse(localStorage.getItem('gigaaa-user'))
+ var accesstoken=getdata.api_token;
  var uuid=getdata.subscription_id.subsid.uuid;
  this.apiService.getallintegration(accesstoken,uuid).subscribe(data=>{
  
@@ -326,18 +265,17 @@ showonlinetatus(value:boolean){
 
 }
 // show top and sidebar
-getShowandTOpbar()
+getagentlistOnload()
 {
-    this.sharedres.showTopandSidebar$.subscribe(data=>{
+      this.sharedres.showagentListonload$.subscribe(data=>{
       console.log(data)
       if(data==1)
       {
-        this.hideTopbar=true;
-        this.getintegrationlist();
+      this.getintegrationlist()
       }
       else if(data==0)
       {
-        this.hideTopbar=false;
+      
       }
   })
 
@@ -348,7 +286,7 @@ getShowandTOpbar()
     this.sharedres.runthesocketforagent$.subscribe(data=>{
     const status = JSON.parse(localStorage.getItem('user-status'))
     if(data==1)
-    { this.getintegrationlist();
+    {
     this.showonlinetatus(status);
     }
 
@@ -378,4 +316,15 @@ public openwebsites(val)
 isSidebarOpen(event: any) {
 }
 
+onLoginClicked(event: boolean) {
+  if (event) {
+    this.headerService.login();
+    }
+}
+onGetLoggedUser(user: any) {
+  if (user) {
+    this.authService.user.next(user);
+    this.token = user.api_token;
+  }
+}
 }

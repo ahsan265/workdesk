@@ -34,7 +34,7 @@ import { sharedres_service } from "./sharedres.service";
       }
       getagentlive()
       {
-        var getdata = JSON.parse(localStorage.getItem('gigaaa-subscription'))
+        var getdata = JSON.parse(localStorage.getItem('gigaaa-user'))
           var uuid=getdata?.subscription_id.subsid.uuid;
           var intid = JSON.parse(localStorage.getItem('intgid'))
           const loggedinuser_uuid = JSON.parse(localStorage.getItem('userlogged_uuid'));
@@ -46,10 +46,8 @@ import { sharedres_service } from "./sharedres.service";
                 var  url=this.websocket_url+"/customer-support/agents?organization="+uuid+"&integration="+integrationid+"&agent="+loggedinuser_uuid?.uuid;
                 this.ws = new WebSocket(url);
                     this.ws.onopen=(e)=>{
-                     this.message.setSuccessMessage("Agent-socket-"+e.type);
                       var checksocketopen=true;
                         localStorage.setItem('gigaaa-socket', JSON.stringify(checksocketopen));
-                      //  this.issocketliveornot=true;
 
                     }
                     this.ws.onmessage = (e) => {
@@ -73,19 +71,13 @@ import { sharedres_service } from "./sharedres.service";
                               }
                             }
                             });
-                          
-                        
-                          
-
                             this.getagentlistsubject.next(data)
                           }
                     }
                     }
                     this.ws.onerror=(e)=>{
-                        this.message.setErrorMessage("Agent-socket-"+e.type);
                     }
                     this.ws.onclose=(e)=>{
-                        //this.message.setErrorMessage("Agent-socket-"+e.type);
                     }
 
       }

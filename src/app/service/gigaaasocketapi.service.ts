@@ -38,8 +38,7 @@ export class gigaaasocketapi {
   }
 
 callsocketapi_by_selecting_intgid()
-{    const socketvalue = JSON.parse(localStorage.getItem('gigaaa-socket'))
-
+{ const socketvalue = JSON.parse(localStorage.getItem('gigaaa-socket'))
   this.sharedres.runsocketapiusingint_id$.subscribe(data=>{
     if(data==1&&socketvalue!=true)
     {
@@ -50,8 +49,8 @@ callsocketapi_by_selecting_intgid()
 
  public  getlistofliveque()
   {
-    var getdata = JSON.parse(localStorage.getItem('gigaaa-subscription'))
-    var accesstoken=getdata?.access_token;
+    var getdata = JSON.parse(localStorage.getItem('gigaaa-user'))
+    var accesstoken=getdata?.api_token;
       var uuid=getdata?.subscription_id.subsid.uuid;
       var intid = JSON.parse(localStorage.getItem('intgid'))
       var integrationid=intid?.int_id;
@@ -64,7 +63,6 @@ callsocketapi_by_selecting_intgid()
      this.ws.onopen=(e)=>{
       this.isopensocker=1;
        this.sharedres.send_trigger_message(1);
-        this.message.setSuccessMessage("socket-"+e.type);
         this.checksocketopen=true;
         localStorage.setItem('gigaaa-socket', JSON.stringify(this.checksocketopen));
       }
@@ -93,14 +91,9 @@ callsocketapi_by_selecting_intgid()
       };
 
       this.ws.onerror=(e)=>{
-        this.message.setErrorMessage("socket-"+e.type);
       }
       this.ws.onclose=(e)=>{
-       // this.message.setErrorMessage("socket-"+e.type);
         this.closestate=e.code;
-       setTimeout(()=>{
-         this.getlistofliveque();
-        }, 100);
       }
 
       }

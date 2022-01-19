@@ -290,8 +290,8 @@ uploadprofilepicture()
 }
 public  updateuserprofilepic(file:any)
   {
-      const getdata = JSON.parse(localStorage.getItem('gigaaa-subscription'))
-      var accesstoken=getdata.access_token;
+      const getdata = JSON.parse(localStorage.getItem('gigaaa-user'))
+      var accesstoken=getdata.api_token;
       var subsid=getdata.subscription_id.subsid.uuid;
       var id=JSON.parse(localStorage.getItem('intgid'));
 
@@ -313,8 +313,8 @@ public  updateuserprofilepic(file:any)
 }
 public  agentupdateuserprofilepic(file:any,uuid:any)
 {
-    const getdata = JSON.parse(localStorage.getItem('gigaaa-subscription'))
-    var accesstoken=getdata.access_token;
+    const getdata = JSON.parse(localStorage.getItem('gigaaa-user'))
+    var accesstoken=getdata.api_token;
     var subsid=getdata.subscription_id.subsid.uuid;
     var id=JSON.parse(localStorage.getItem('intgid'));
 

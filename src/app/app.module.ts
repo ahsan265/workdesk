@@ -41,10 +41,8 @@ import { agentsocketapi } from './service/agentsocketapi';
 
 //Auth imports
 import { LoginBtnComponent } from './useraccount/landingpage/login-btn/login-btn.component';
-import { LogoutComponent } from './logout/logout.component';
-import { CallbackComponent } from './callback/callback.component';
 import { environment } from 'src/environments/environment';
-import { GigaaaSidebarModule, GigaaaHeaderModule, GigaaaTableModule } from '@gigaaa/gigaaa-components';
+import { GigaaaSidebarModule, GigaaaHeaderModule, GigaaaTableModule, CallbackModule, LogoutModule, GigaaaHeaderService } from '@gigaaa/gigaaa-components';
 import { MainPageComponent } from './main-page/main-page.component';
 import { AuthService } from './service/auth.service';
 
@@ -58,8 +56,6 @@ import { AuthService } from './service/auth.service';
     SidebarComponent,
     LinkexpiredialogComponent,
     LoginBtnComponent,
-    LogoutComponent,
-    CallbackComponent,
     MainPageComponent,
     
   ],
@@ -88,12 +84,18 @@ import { AuthService } from './service/auth.service';
     MatExpansionModule,
     GigaaaSidebarModule,
     GigaaaHeaderModule.forRoot(environment),
-    GigaaaTableModule
+    GigaaaTableModule,
+    CallbackModule,
+    LogoutModule
+
   ],
   bootstrap: [AppComponent],
-  providers: [GigaaaApiService,MessageService,AuthService,oAuthService,{
-    provide: MatDialogRef,
-    useValue: {}
+  providers: [GigaaaApiService,MessageService,AuthService,oAuthService, {
+    provide: 'GigaaaHeaderService',
+    useClass: GigaaaHeaderService
+  },
+  {provide: MatDialogRef,
+  useValue: {}
   }],
   entryComponents: [LandingpageComponent],
   schemas: [CUSTOM_ELEMENTS_SCHEMA,NO_ERRORS_SCHEMA],

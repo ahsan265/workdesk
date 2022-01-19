@@ -3,12 +3,10 @@ import { Routes, RouterModule } from '@angular/router';
 import { GigaaaApiService } from './service/gigaaaapi.service';
 import { MessageService } from './service/messege.service';
 import { UserloginserviceService } from './service/userloginservice.service';
-import { CallbackComponent } from './callback/callback.component';
-import { LogoutComponent } from './logout/logout.component';
 import { AuthService } from './service/auth.service';
 import { LandingpageComponent } from './useraccount/landingpage/landingpage.component';
-import { MainPageComponent } from './main-page/main-page.component';
 import { AppComponent } from './app.component';
+import { CallbackComponent, LogoutComponent } from '@gigaaa/gigaaa-components';
 
 const routes: Routes = [
   { path: "", component: LandingpageComponent },
@@ -28,6 +26,8 @@ const routes: Routes = [
     canActivate: [AuthService],
   },
   { path: "callback", component: CallbackComponent },
+
+
 ];
 
 @NgModule({

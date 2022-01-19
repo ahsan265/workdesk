@@ -135,6 +135,7 @@ export class AgentComponent implements OnInit {
   // get agents details live
   getagentdetailslive(){
   this.agentsocketgigaaaapi.getagetnlist$.subscribe(data=>{
+    console.log(data)
     var updateagentdata;
     updateagentdata =data;
     var count=0;
@@ -222,8 +223,8 @@ export class AgentComponent implements OnInit {
   public  getallagents(intid,parma1,param2,param3,lang) {
 
     try {
-      const getdata = JSON.parse(localStorage.getItem('gigaaa-subscription'))
-      var accesstoken=getdata.access_token;
+      const getdata = JSON.parse(localStorage.getItem('gigaaa-user'))
+      var accesstoken=getdata.api_token;
        var subsid=getdata.subscription_id.subsid.uuid
     
         this.gigaaaapi.getallagents(accesstoken,subsid,intid,parma1,param2,param3,lang).subscribe(data=>{
@@ -560,8 +561,8 @@ return false;
 
   // get languages api
   public async getlllangugaes(): Promise<void>{
-    const getdata = JSON.parse(localStorage.getItem('gigaaa-subscription'))
-    var accesstoken=getdata.access_token;
+    const getdata = JSON.parse(localStorage.getItem('gigaaa-user'))
+    var accesstoken=getdata.api_token;
     var subsid=getdata.subscription_id.subsid.uuid;
     const intid = JSON.parse(localStorage.getItem('intgid'))
     try{
