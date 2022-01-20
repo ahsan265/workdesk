@@ -19,7 +19,9 @@
 //     prod_url_workdesk:"https://gigaaa-backend.azurewebsites.net",
 //     prod_anlytics:"https://gigaaa-analytics.azurewebsites.net",
 //     //
-//     websocket_url:"wss://websockets.gigaaa.com"
+//     websocket_url:"wss://websockets.gigaaa.com",
+// 
+//     logged_user:'https://api.gconsole.io/v1/api/v1',
 // };
 
 // for production server testing
@@ -41,8 +43,10 @@ export const environment = {
   //
   prod_url_cs:"https://api.gconsole.io/cs",
   prod_url_workdesk:"https://api.gconsole.io/v2",
-  prod_anlytics:"https://api.gconsole.io/analytics/",
+  prod_anlytics:"https://api.gconsole.io/analytics",
   //
-  websocket_url:"wss://api.gconsole.io/websockets"
+  websocket_url:"wss://api.gconsole.io/websockets",
+  // 
+  logged_user:'https://api.gconsole.io/v1/api/v1',
 };
 

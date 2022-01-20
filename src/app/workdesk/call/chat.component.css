@@ -791,7 +791,8 @@ padding-top: 10px;
     font-style: normal;
     font-weight: 500;
     font-size: 12px;
-    line-height: 17px;
+    vertical-align: inherit;
+    line-height: 44px;
     display: inline-block;
     align-items: center;
     letter-spacing: 0.02em;
@@ -855,41 +856,45 @@ padding-top: 10px;
     margin-right: 6px;
     height: 10px;
     width: 10px;
+    vertical-align: top;
   }
   .agentinfodata{
     font-family: "Roboto",sans-serif;
-font-style: normal;
-font-weight: normal;
-font-size: 12px;
-line-height: 160%;
-/* or 19px */
-
-display: flex;
-align-items: center;
-letter-spacing: 0.02em;
-
-color: #162741;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 12px;
+    line-height: 12px;
+    display: block;
+    height: 22px;
+    align-items: center;
+    letter-spacing: 0.02em;
+    color: #162741;
   }
 .agentinfoheading{
- font-family: "Roboto",sans-serif;
-font-style: normal;
-font-weight: 500;
-font-size: 12px;
-line-height:16px;
-align-items: center;
-letter-spacing: 0.02em;
-color: rgba(22, 39, 65, 0.45);
+  font-family: "Roboto",sans-serif;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 16px;
+  height: 18px;
+  display: block;
+  align-items: center;
+  letter-spacing: 0.02em;
+  color: rgba(22, 39, 65, 0.45);
   }
   .agentidpanel{
     display: inline-block;
     width: 25%;
     text-align: left;
+    vertical-align: bottom;
   }
   .agentinfopanel
   {
     display: inline-block;
     width: 35%;
     text-align: left;
+    vertical-align: super;
+    height: 44px;
 
   }
   .userinfopanel{
@@ -935,8 +940,9 @@ color: #445167;
   }
   .reasonpanel{
     display: inline-block;
-    width: 25%;
+    width: 35%;
     text-align: right;
+    vertical-align: middle;
   }
   .iconpanel{
     display: inline-block;
@@ -949,7 +955,9 @@ color: #445167;
   }
   .usernamepanel{
     display: inline-block;
-    width: 40%;
+    width: 30%;
+    overflow: hidden;
+    vertical-align: middle;
   }
   .cardspanel{
     display: block;
@@ -976,9 +984,7 @@ color: #445167;
 font-style: normal;
 font-weight: 500;
 font-size: 12px;
-overflow: hidden;
-line-height: 10px;
-/* identical to box height, or 146% */
+line-height: 45px;
 align-items: center;
 letter-spacing: 0.02em;
 text-overflow: ellipsis;
@@ -994,7 +1000,11 @@ width: 100%;
     background: #FFFFFF;
     padding-left: 7.5%;
     padding-right: 7.5%;
+    text-align: center;
 
+  }
+  .tabsitem.last{
+  padding-right: 0%;
   }
   .dropdown-menu.calltype.show
   {
@@ -1044,7 +1054,7 @@ width: 100%;
 }
 
   .tabsitem{
-   padding-right: 3.5%;
+   padding-right: 2.5%;
   }
 
     th{

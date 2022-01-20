@@ -304,7 +304,7 @@ public  updateuserprofilepic(file:any)
        }
        
      },err=>{
-
+      console.log(err)
         
        this.message.setErrorMessage(err.error.error)
      })

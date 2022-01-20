@@ -334,7 +334,6 @@ export class DashboardComponent implements OnInit {
      private gigaaaservice:GigaaaApiService,private messageservie:MessageService,
     private authService: AuthService
      ) {
-       console.log(this.ranges[2].value)
       enGbLocale.weekdaysShort = ['S', 'M', 'T', 'W', 'T', 'F', 'S'];
       enGbLocale.week.dow = 1;
       defineLocale('en-gb', enGbLocale);
@@ -848,7 +847,7 @@ export class DashboardComponent implements OnInit {
   }
  
   getVisitorTotalCard(timeslot:any,languagesid:Array<any>,countryids:Array<any>,datefrom:string,dateto:string)
-    {  console.log(timeslot)
+    {  
       this.vsForTimeLable_visitors= this.setVsFunctionForcards(timeslot);
       const getdata = JSON.parse(localStorage.getItem('gigaaa-user'));
       const accesstoken=getdata.api_token;
@@ -1849,7 +1848,8 @@ createoschart()
     { 
       try{
       this.sharedres.submitapplication$.subscribe(data=>{
-        this.callFunctionCharts()
+        this.getlllangugaes();
+        this.callFunctionCharts();
     })
     }
     catch(error)
@@ -1941,7 +1941,6 @@ createoschart()
       }
       else if(tabs=="Visitors")
       {this.gigaaaservice.getvisitor_Graph_cards_Data(accesstoken,orgid,int_id,datefrom,dateto,languages,countries,timeslot).subscribe(data=>{
-        console.log(timeslot)
         var line_chart;
         line_chart=data;
         

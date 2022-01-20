@@ -121,14 +121,14 @@ export class UpdatepasswordComponent implements OnInit {
       } 
       else{
         const subsiddata = JSON.parse(localStorage.getItem('gigaaa-user'))
-        var data={"old": this.form.value.oldpassword, "new1": this.form.value.newpassword, "new2": this.form.value.confirmpassword}
-       await this.gigaaaapi.updatePassword(subsiddata.api_token,data)
+        var data={"password_old": this.form.value.oldpassword, "password": this.form.value.newpassword, "password_confirmation": this.form.value.confirmpassword}
+        await this.gigaaaapi.updatePassword(subsiddata.api_token,data,subsiddata.id)
         this.message.setSuccessMessage("Password Updated Successfully")
         this.dialogRef.close();
       }
     }
     catch(error){
-      this.message.setErrorMessage(error.error.error)
+      this.message.setErrorMessage(error.error.message);
     }
     
   }

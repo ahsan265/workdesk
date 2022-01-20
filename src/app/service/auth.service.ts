@@ -23,7 +23,6 @@ export class AuthService implements CanActivate {
     private sharedres:sharedres_service) {
     this.user = new BehaviorSubject(this.getLoggedUser());
     this.user.subscribe(data=>{
-      console.log(data)
       if(data!=null)
       { 
          this.getOrganizationId(data.api_token);
@@ -49,7 +48,6 @@ export class AuthService implements CanActivate {
    try{
     const subsiddata = JSON.parse(localStorage.getItem('gigaaa-user'));
       const subsid=await this.gigaaaApiService.getsubsid(token);
-      console.log(subsid)
       this.orgId=subsid['uuid'];
       subsiddata['subscription_id']={subsid};
       this.getallintegrationlist(token,this.orgId);
@@ -92,6 +90,24 @@ try {
 
     } catch (error) {
     this.message.setErrorMessage(error);
+    }
+    }
+    public  async getinvitationToken(token): Promise<void>
+    {
+      try
+      {
+
+      const code = JSON.parse(localStorage.getItem('gigaaa-invitation'))
+
+    if(code!=undefined)
+    {
+      var code_invite={"invitation_code": code}
+      await this.gigaaaApiService.sendinvitationcode(token,code_invite);
+      localStorage.removeItem('gigaaa-invitation');
+    }
+    }
+    catch(err){
+      this.message.setErrorMessage(err.error.error);
     }
     }
 }

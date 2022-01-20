@@ -121,7 +121,6 @@ websites=[{text:"Partnership",url:['https://partnerships.gigaaa.com/'],image:'..
           
           this.authService.user.subscribe((r: any) => {
             this.user = r;
-            console.log(r)
           });
    
 
@@ -174,9 +173,9 @@ websites=[{text:"Partnership",url:['https://partnerships.gigaaa.com/'],image:'..
   onNoLoggedUsers(event: any) {
     if (event) {
     
-      // this.agentsocketapi.closeagentsocket();
-      // this.socketapi.closewebsocketcalls();
-     // localStorage.clear();
+      this.agentsocketapi.closeagentsocket();
+      this.socketapi.closewebsocketcalls();
+       localStorage.clear();
       location.href = this.redirectUri;
     }
   }
@@ -268,7 +267,6 @@ showonlinetatus(value:boolean){
 getagentlistOnload()
 {
       this.sharedres.showagentListonload$.subscribe(data=>{
-      console.log(data)
       if(data==1)
       {
       this.getintegrationlist()

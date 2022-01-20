@@ -21,7 +21,7 @@ export class GigaaaApiService  {
   protected API_URL = `${environment.apiUrl}`;
   protected oauthUrl = `${environment.oauth_url}`;
 
-  private apiUrl = 'https://api.gconsole.io/v1/v1/';
+  private userapiUrl = `${environment.logged_user}`;
   private workdeskurl_cs=`${environment.prod_url_cs}`;
   private gigaabackendUlr=`${environment.prod_url_workdesk}`;
   private workdeskanalytics=`${environment.prod_anlytics}`;
@@ -54,55 +54,11 @@ getCurrentUser(token):Observable<User> {
     }})
 }
 
-public getAllUsers(): Observable<any> {
-  return this.http.get<any>(`${this.oauthUrl}/accounts`, {
-    headers: this.getHeaders(),
-  });
-}
 
-//
 
-  public async loginUser(loginCredentials: LoginCredentials): Promise<any> {
-    const apiUrl = this.apiUrl + 'auth/login';
-    return await this.http.post(apiUrl, loginCredentials, this.httpOptions).toPromise()
-      .catch((err) => {
-        throw (err);
-      });
-  }
 
-  public async registerUser(userData: UserData) {
-    const apiUrl = this.apiUrl + 'auth/signup';
-    return await this.http.post(apiUrl, userData, this.httpOptions).toPromise()
-      .catch((err) => {
-        throw (err);
-      });
-  }
 
-  public async updateUsername(user: User): Promise<any> {
-    const apiUrl = `${this.apiUrl}users/${user.id}`;
-    const httpOptions: any = {
-      headers: new HttpHeaders({
-        'Content-Type': 'application/json',
-        'Accept': 'application/json',
-        'Authorization': `Bearer ${user.api_token}`
-      })
-    };
-    return await this.http.put(apiUrl, { name: user.name }, httpOptions).toPromise();
-  }
-
-  public async updateUserProfile(user: User, data: {profile: Profile}): Promise<any> {
-    const apiUrl = `${this.apiUrl}users/${user.id}`;
-    const httpOptions: any = {
-      headers: new HttpHeaders({
-        'Content-Type': 'application/json',
-        'Accept': 'application/json',
-        'Authorization': `Bearer ${user.api_token}`
-      })
-    };
-    return await this.http.put(apiUrl, data, httpOptions).toPromise();
-  }
-
-  public async updatePassword(access_token: string, passwordPayload: any): Promise<any> {
+  public async updatePassword(access_token: string, passwordPayload: any,USER_ID:any): Promise<any> {
     const httpOptions: any = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
@@ -110,7 +66,7 @@ public getAllUsers(): Observable<any> {
         'Authorization': `Bearer ${access_token}`
       })
     };
-    return await this.http.post(this.gigaabackendUlr+"/users/password", passwordPayload, httpOptions).toPromise();
+    return await this.http.put(this.userapiUrl+`/users/${USER_ID}`, passwordPayload, httpOptions).toPromise();
   }
 
   public getAllCountries(accesstoken: string): Promise<any> {

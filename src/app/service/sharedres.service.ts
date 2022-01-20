@@ -96,8 +96,8 @@ export class sharedres_service {
 }
 
 public getuserole()
-{  const getdata = JSON.parse(localStorage.getItem('gigaaa-subscription'))
-var accesstoken=getdata?.access_token;
+{  const getdata = JSON.parse(localStorage.getItem('gigaaa-user'))
+var accesstoken=getdata?.api_token;
 var uuid=getdata?.subscription_id.subsid.uuid;
 if(accesstoken!=null &&uuid !=null)
 {
