@@ -308,8 +308,10 @@
             <p class="cardvalue" >
              {{totalincoming}}
             </p>
-              <p  *ngIf="vsForTimeLable_calls!=null" class="time"><span ><img class="trendupdown" [src]="totalincper|percentpipe" alt=""> </span>{{totalincomingper}}% vs {{vsForTimeLable_calls}}</p>
-        </div>
+              <p  [hidden]="totalincper==0" *ngIf="vsForTimeLable_calls!=null" class="time"><span ><img class="trendupdown" [src]="totalincper|percentpipe" alt=""> </span>{{totalincomingper}}% vs {{vsForTimeLable_calls}}</p>
+              <p  class="time" [hidden]="vsForTimeLable_calls==null" *ngIf="totalincper==0">{{vsForTimeLable_calls | Uppercase }}: {{totalincper}}</p>
+
+            </div>
        </div>
       
        <div class="withincard">
@@ -325,8 +327,10 @@
             <p class="cardvalue" >
               {{totalmissed}}
             </p>
-              <p *ngIf="vsForTimeLable_calls!=null" class="time"><span ><img class="trendupdown" [src]="totalmissper|percentpipe" alt=""> </span> {{totalmissedper}}% vs {{vsForTimeLable_calls}}</p>
-        </div>
+              <p  [hidden]="totalmissedper==0" *ngIf="vsForTimeLable_calls!=null" class="time"><span ><img class="trendupdown" [src]="totalmissper|percentpipe" alt=""> </span> {{totalmissedper}}% vs {{vsForTimeLable_calls}}</p>
+              <p class="time" [hidden]="vsForTimeLable_calls==null" *ngIf="totalmissedper==0">{{vsForTimeLable_calls | Uppercase }}: {{totalmissedper}}</p>
+
+            </div>
 
       </div>
       <div class="withincard">
@@ -342,8 +346,9 @@
             <p class="cardvalue" >
               {{answered}}
             </p>
-              <p  *ngIf="vsForTimeLable_calls!=null" class="time"><span ><img class="trendupdown" [src]="ansper|percentpipe" alt=""></span>{{answeredper}}% vs {{vsForTimeLable_calls}}</p>
-        </div>
+              <p [hidden]="answeredper==0" *ngIf="vsForTimeLable_calls!=null" class="time"><span ><img class="trendupdown" [src]="ansper|percentpipe" alt=""></span>{{answeredper}}% vs {{vsForTimeLable_calls}}</p>
+              <p class="time"  [hidden]="vsForTimeLable_calls==null" *ngIf="answeredper==0">{{vsForTimeLable_calls | Uppercase }}: {{answeredper}}</p>
+            </div>
       </div>
       <div class="withincard last">
         <div class="imagepanelforcard">
@@ -358,7 +363,8 @@
             <p class="cardvalue" >
              {{answeredbyai}}
             </p>
-              <p *ngIf="vsForTimeLable_calls!=null" class="time"><span><img class="trendupdown" [src]="ansbyai|percentpipe" alt=""> </span>  {{answeredbyaiper}}% vs {{vsForTimeLable_calls}}</p>
+              <p [hidden]="answeredbyaiper==0"  *ngIf="vsForTimeLable_calls!=null  " class="time"><span><img class="trendupdown" [src]="ansbyai|percentpipe" alt=""> </span>  {{answeredbyaiper}}% vs {{vsForTimeLable_calls}}</p>
+              <p [hidden]="vsForTimeLable_calls==null"  class="time" *ngIf="answeredbyaiper==0 ">{{vsForTimeLable_calls  | Uppercase }}: {{answeredbyaiper}}</p>
         </div>
         
       </div>
@@ -559,8 +565,10 @@
             <p class="cardvalue" >
              {{totalVisitor}}
             </p>
-              <p *ngIf="vsForTimeLable_visitors!=null" class="time"><span ><img  class="trendupdown" [src]="totalVisitorres|percentpipe" alt=""> </span>{{totalVisitorper}}% vs {{vsForTimeLable_visitors}}</p>
-        </div>
+              <p [hidden]="totalVisitorper==0" *ngIf="vsForTimeLable_visitors!=null" class="time"><span ><img  class="trendupdown" [src]="totalVisitorres|percentpipe" alt=""> </span>{{totalVisitorper}}% vs {{vsForTimeLable_visitors}}</p>
+              <p [hidden]="vsForTimeLable_visitors==null"  class="time" *ngIf="totalVisitorper==0 ">{{vsForTimeLable_visitors | Uppercase }}: {{totalVisitorper}}</p>
+
+            </div>
        </div>
       
        <div class="withincard visit">
@@ -576,7 +584,9 @@
             <p class="cardvalue" >
               {{uniqueVisitor}}
             </p>
-            <p *ngIf="vsForTimeLable_visitors!=null" class="time"><span ><img class="trendupdown" [src]="uniqueVisitorres|percentpipe" alt=""> </span>{{uniqueVisitorper}}% vs {{vsForTimeLable_visitors}}</p>
+            <p [hidden]="uniqueVisitorres==0"  *ngIf="vsForTimeLable_visitors!=null" class="time"><span ><img class="trendupdown" [src]="uniqueVisitorres|percentpipe" alt=""> </span>{{uniqueVisitorper}}% vs {{vsForTimeLable_visitors}}</p>
+            <p [hidden]="vsForTimeLable_visitors==null"  class="time" *ngIf="uniqueVisitorres==0 ">{{vsForTimeLable_visitors | Uppercase }}: {{uniqueVisitorres}}</p>
+
           </div>
 
       </div>
@@ -594,8 +604,10 @@
             <p class="cardvalue" >
               {{sessionVisitor}}
             </p>
-              <p *ngIf="vsForTimeLable_visitors!=null" class="time"><span > <img class="trendupdown" [src]="sessionVisitorres|percentpipe" alt=""></span>{{sessionVisitorper}}% vs {{vsForTimeLable_visitors}}</p>
-        </div>
+              <p  [hidden]="sessionVisitorres==0" *ngIf="vsForTimeLable_visitors!=null" class="time"><span > <img class="trendupdown" [src]="sessionVisitorres|percentpipe" alt=""></span>{{sessionVisitorper}}% vs {{vsForTimeLable_visitors}}</p>
+              <p [hidden]="vsForTimeLable_visitors==null"  class="time" *ngIf="sessionVisitorres==0 ">{{vsForTimeLable_visitors | Uppercase }}: {{sessionVisitorres}}</p>
+
+            </div>
       </div>
 
       
@@ -882,8 +894,10 @@
               <p class="cardvalue" >
                 {{totalUser}}
               </p>
-                <p *ngIf="vsForTimeLable_users!=null" class="time"><span ><img class="trendupdown" [src]="totalUserres|percentpipe" alt=""> </span> {{totalUserper}}% vs {{vsForTimeLable_users}}</p>
-          </div>
+                <p  [hidden]="totalUserres==0" *ngIf="vsForTimeLable_users!=null" class="time"><span ><img class="trendupdown" [src]="totalUserres|percentpipe" alt=""> </span> {{totalUserper}}% vs {{vsForTimeLable_users}}</p>
+         
+                <p  class="time" [hidden]="vsForTimeLable_users==null" *ngIf="totalUserres==0">{{vsForTimeLable_users | Uppercase }}: {{totalUserres}}</p>
+              </div>
   
         </div>
         <div class="withincard visit">
@@ -899,8 +913,10 @@
               <p class="cardvalue" >
                 {{uniqueUser}}
               </p>
-                <p *ngIf="vsForTimeLable_users!=null" class="time"><span ><img class="trendupdown" [src]="uniqueUserres|percentpipe" alt=""></span>{{uniqueUserper}}% vs {{vsForTimeLable_users}}</p>
-          </div>
+                <p  [hidden]="uniqueUserres==0" *ngIf="vsForTimeLable_users!=null" class="time"><span ><img class="trendupdown" [src]="uniqueUserres|percentpipe" alt=""></span>{{uniqueUserper}}% vs {{vsForTimeLable_users}}</p>
+                <p  class="time" [hidden]="vsForTimeLable_users==null" *ngIf="uniqueUserres==0">{{vsForTimeLable_users | Uppercase }}: {{uniqueUserres}}</p>
+
+              </div>
         </div>
         <div class="withincard last visit">
           <div class="imagepanelforcard">
@@ -915,8 +931,10 @@
               <p class="cardvalue" >
                {{sessionUser}}
               </p>
-                <p *ngIf="vsForTimeLable_users!=null" class="time"><span><img class="trendupdown" [src]="sessionUserres|percentpipe" alt=""> </span>  {{sessionUserper}}% vs {{vsForTimeLable_users}}</p>
-          </div>
+                <p   [hidden]="sessionUserres==0" *ngIf="vsForTimeLable_users!=null" class="time"><span><img class="trendupdown" [src]="sessionUserres|percentpipe" alt=""> </span>  {{sessionUserper}}% vs {{vsForTimeLable_users}}</p>
+                <p  class="time" [hidden]="vsForTimeLable_users==null" *ngIf="sessionUserres==0">{{vsForTimeLable_users | Uppercase }}: {{sessionUserres}}</p>
+
+              </div>
           
         </div>
         

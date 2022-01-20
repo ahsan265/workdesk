@@ -30,12 +30,15 @@ export const environment = {
 //   redirect_uri: "https://workdeskdev.gigaaa.com/callback",
 //   uri: "https://workdeskdev.gigaaa.com",
 //   //
+//   accounts_callback_url: 'https://workdeskdev.gigaaa.com',
+//     accounts_client_id: 8,
+//   //
 //   prod_url_cs:"https://gigaaa-customer-support.azurewebsites.net",
 //   prod_url_workdesk:"https://gigaaa-backend.azurewebsites.net",
 //   prod_anlytics:"https://gigaaa-analytics.azurewebsites.net",
 
 //   //
-//   websocket_url:"wss://websockets.gigaaa.com"
-     // 
+//   websocket_url:"wss://websockets.gigaaa.com",
+     
 //   logged_user:'https://api.gconsole.io/v1/api/v1',
 // };

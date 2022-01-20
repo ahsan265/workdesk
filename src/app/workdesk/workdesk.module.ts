@@ -40,6 +40,7 @@ import { getospipes } from './Datapipes/ospipe';
 import { getcalltypepipes } from './Datapipes/calltype_iconpipe';
 import { getcalltypetextpipes } from './Datapipes/changecalltypetext';
 import { CallInterfaceComponent } from './call/call-interface/call-interface.component';
+import { getcapitalletter } from './Datapipes/capitalizepipe';
 
 
 @NgModule({
@@ -65,6 +66,7 @@ import { CallInterfaceComponent } from './call/call-interface/call-interface.com
       getospipes,
       getcalltypepipes,
       getcalltypetextpipes,
+      getcapitalletter,
       CallMobilePopupFilterComponent,
       CallInterfaceComponent],
   imports: [  Ng2SearchPipeModule,  ImageCropperModule,
