@@ -17,7 +17,7 @@ export const environment = {
   //
   websocket_url:"wss://api.gconsole.io/websockets",
     // 
-    logged_user:'https://api.gconsole.io/v1/api/v1',
+  logged_user:'https://api.gconsole.io/v1/api/v1',
 };
 
 // export const environment = {

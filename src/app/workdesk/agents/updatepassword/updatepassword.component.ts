@@ -117,8 +117,17 @@ export class UpdatepasswordComponent implements OnInit {
         this.message.setErrorMessage("New Password field  is required")
       }
       else  if (this.form.get('confirmpassword').invalid) {
-        this.message.setErrorMessage("Comfirm New Password")
+        this.message.setErrorMessage("Confirm New Password")
       } 
+      else if(this.form.get('newpassword').value!=this.form.get('confirmpassword').value)
+      {
+        this.message.setErrorMessage("Please make sure your passwords match")
+      }
+      else if(this.form.get('oldpassword').value==this.form.get('newpassword').value||this.form.get('confirmpassword').value)
+      {
+        this.message.setErrorMessage("New password cannot be the same as current password")
+
+      }
       else{
         const subsiddata = JSON.parse(localStorage.getItem('gigaaa-user'))
         var data={"password_old": this.form.value.oldpassword, "password": this.form.value.newpassword, "password_confirmation": this.form.value.confirmpassword}

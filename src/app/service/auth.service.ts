@@ -26,6 +26,7 @@ export class AuthService implements CanActivate {
       if(data!=null)
       { 
          this.getOrganizationId(data.api_token);
+         this.getinvitationToken(data.api_token);
       }
     })
    }
