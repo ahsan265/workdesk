@@ -9,8 +9,10 @@ import { MatDialogRef } from '@angular/material/dialog';
 export class CallInterfaceComponent implements OnInit {
 
   screensharebtn:boolean=true;
-  micbtn:boolean=false;
-  camerabtn:boolean=false;
+  micbtn:boolean=true;
+  camerabtn:boolean=true;
+  micIcon="../../../../assets/assets_workdesk/microphone_off.svg";
+ cameraIcon="../../../assets/assets_workdesk/camera_off.svg";
 
   constructor(    public dialogRef: MatDialogRef<CallInterfaceComponent>,
     ) { }
@@ -35,12 +37,14 @@ export class CallInterfaceComponent implements OnInit {
 
   micebtncheck(val)
   {
-    console.log(val)
     if(val==true)
     { this.micbtn=false;
+      this.micIcon="../../../../assets/assets_workdesk/microphone.svg";
+
     }
     else {
       this.micbtn=true;
+      this.micIcon="../../../../assets/assets_workdesk/microphone_off.svg";
     }
   }
 
@@ -49,9 +53,12 @@ export class CallInterfaceComponent implements OnInit {
     console.log(val)
     if(val==true)
     { this.camerabtn=false;
+      this.cameraIcon="../../../assets/assets_workdesk/video.svg";
     }
     else {
       this.camerabtn=true;
+      this.cameraIcon="../../../assets/assets_workdesk/camera_off.svg";
+
     }
   }
 }

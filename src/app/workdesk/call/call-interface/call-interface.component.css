@@ -52,6 +52,20 @@ text-align: center;
 display: block;
 
 }
+.capitalinitials
+{
+font-family: "Roboto",sans-serif;
+font-style: normal;
+font-weight: 600;
+font-size: 40px;
+line-height: 17px;
+display: block;
+align-items: center;
+text-align: center;
+letter-spacing: 0.02em;
+
+color: #FFFFFF;
+}
 .callcontrolpanel{
     display: block;
     width: 100%;
@@ -59,7 +73,7 @@ display: block;
     margin: 0 auto;
     text-align: center;
     position: absolute;
-    bottom: 42px;
+    bottom:21px;
 }
 .callcontrol{
 width: 317px;
@@ -75,7 +89,7 @@ text-align: left;
 .callcontrolicons{
     width: 60%;
     display: inline-block;
-
+    vertical-align: middle;
 }
 .callicons{
 width: 35px;
@@ -101,7 +115,7 @@ line-height: 20px;
     padding-left: 14px;
 }
 .calltime_drop{
-vertical-align: super;
+vertical-align: middle;
 width: 107px;
 height: 35px;
 background: rgba(255, 255, 255, 0.1);
@@ -115,10 +129,10 @@ display: inline-block;
     display: inline-flex;
     border: none;
     float: right;
-    padding-left: 5.5px;
-    padding-top: 11px;
     border-radius: 50%;
     cursor: pointer;
+    padding-left: 4px;
+    padding-right: 4px;
  }
  .loggedUsercamera{
     margin: 24px;

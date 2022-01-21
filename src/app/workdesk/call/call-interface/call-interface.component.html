@@ -10,48 +10,38 @@
   </div>
 </div>
 <div class="callarea">
-    <div cdkDragBoundary=".callcontrolpanel" class="loggedUsercamera" cdkDrag>
-       <p class="camerapersonname">Lisa (me)</p> 
+    <div  [ngStyle]="{'background': (camerabtn==true) ? '#2B3A51' : '#000000'}" cdkDragBoundary=".callcontrolpanel" class="loggedUsercamera" cdkDrag>
+            <p *ngIf="camerabtn" class="capitalinitials">LM</p>
+        <p class="camerapersonname">Lisa (me)</p> 
     </div>
 <img height="200" width="200" class="userimagebig" src="../../../../assets/picface.jpeg" alt="">
 
 <div class="callcontrolpanel">
    
     <div class="callcontrol">
+        
         <div class="callcontrolicons">
-            <div class="callicons"  [ngStyle]="{'background': (camerabtn==true) ? 'rgba(255, 255, 255, 0.1)' : '#1C54DB'}" (click)="camerabtncheck(camerabtn)"   style=" padding-left: 8.6px;
-            padding-top: 7.5px;">
-                <svg width="18" height="21" viewBox="0 0 18 21" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <rect x="4.82289" y="0.7" width="7.96923" height="12.1333" rx="3.98462" stroke="white" stroke-width="1.4"/>
-                    <path d="M16.6154 8.84875C16.6154 13.1608 13.1198 16.6564 8.80775 16.6564C4.49568 16.6564 1.00006 13.1608 1.00006 8.84875" stroke="white" stroke-width="1.4" stroke-linecap="round"/>
-                    <path d="M8.80768 16.6564V20.3" stroke="white" stroke-width="1.4" stroke-linecap="round"/>
-              </svg>  
+            <div class="callicons"  [ngStyle]="{'background': (micbtn==true) ? 'rgba(255, 255, 255, 0.1)' : '#1C54DB'}" (click)=" micebtncheck(micbtn)"   >
+             <img style=" display: block; margin: 0 auto;
+             margin-top: 8px;" [src]="micIcon" alt="">
             </div>
              
-            <div class="callicons"  [ngStyle]="{'background': (micbtn==true) ? 'rgba(255, 255, 255, 0.1)' : '#1C54DB'}" (click)="micebtncheck(micbtn)"   style="    padding-left: 8.2px;
-            padding-top: 10px;">
-                <svg width="21" height="16" viewBox="0 0 21 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <rect x="1.00006" y="1" width="14" height="14" rx="4" stroke="white" stroke-width="1.4"/>
-                    <path d="M15.0002 6.61107C15.0002 5.85353 15.4282 5.161 16.1058 4.82221L18.803 3.47361C19.4679 3.14116 20.2502 3.62465 20.2502 4.36803V11.632C20.2502 12.3754 19.4679 12.8588 18.803 12.5264L16.1058 11.1778C15.4282 10.839 15.0002 10.1465 15.0002 9.38893V6.61107Z" stroke="white" stroke-width="1.4"/>
-                </svg>
+            <div class="callicons"  [ngStyle]="{'background': (camerabtn==true) ? 'rgba(255, 255, 255, 0.1)' : '#1C54DB'}" (click)="camerabtncheck(camerabtn)"  >
+              <img [ngStyle]="{'margin-top': (camerabtn==true) ? '8px' : '9.5px'}"  style="display: block; margin: 0 auto;
+              margin-top: 8px;" [src]="cameraIcon" alt="">
+
             </div>
       
-            <div class="callicons" [ngStyle]="{'background': (screensharebtn==true) ? 'rgba(255, 255, 255, 0.1)' : '#1C54DB'}" (click)="screensharebtncheck(screensharebtn)"  style="     padding-left: 7px;
-            padding-top: 7px;">
-                <svg width="21" height="20" viewBox="0 0 21 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M20.0001 19H1.00006" stroke="white" stroke-width="1.4" stroke-linecap="round"/>
-                    <path d="M6.46017 11.015L10.5467 6.92847L14.6333 11.015" stroke="white" stroke-width="1.4" stroke-linecap="round"/>
-                    <path d="M10.508 6.92859L10.508 15.4999" stroke="white" stroke-width="1.4" stroke-linecap="round"/>
-                    <path d="M6.8572 15.4285H6.00006C3.79092 15.4285 2.00006 13.6376 2.00006 11.4285V4.85705C2.00006 2.64791 3.79092 0.857056 6.00006 0.857056H15.0001C17.2092 0.857056 19.0001 2.64792 19.0001 4.85706V11.4285C19.0001 13.6376 17.2092 15.4285 15.0001 15.4285H14.1429" stroke="white" stroke-width="1.4" stroke-linecap="round"/>
-                </svg>
+            <div class="callicons" [ngStyle]="{'background': (screensharebtn==true) ? 'rgba(255, 255, 255, 0.1)' : '#1C54DB'}" (click)="screensharebtncheck(screensharebtn)"  >
+              <img style="display: block;
+              margin: 0 auto;
+              margin-top: 8.5px;" src="../../../../assets/assets_workdesk/sharing.svg" alt="">
             </div>
         </div>
         <div class="calltime_drop">
             <p class="calltime">25m 14s</p>
             <div class="callicon_drop" (click)=" closecall()">
-                <svg width="24" height="11" viewBox="0 0 24 11" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path fill-rule="evenodd" clip-rule="evenodd" d="M22.3726 9.61899C21.6134 10.358 20.5183 10.3305 19.1328 10.2956C18.7908 10.2876 18.4193 10.2769 18.0162 10.2775C16.0587 10.2769 15.5383 9.19986 15.1219 8.33409C14.6665 7.39053 14.2742 6.57573 11.7446 6.57573C9.21507 6.57573 8.82343 7.38986 8.37076 8.33476C7.95296 9.20053 7.43659 10.2775 5.47705 10.2789C5.0787 10.2789 4.71254 10.2883 4.37254 10.297C2.98101 10.3312 1.88187 10.3587 1.12129 9.61709C0.474244 8.98459 0.210022 7.94245 0.210022 6.02181L0.923559 5.885L0.212704 5.89439C0.207339 5.46385 0.191915 4.31777 1.2924 3.20387L1.31252 3.18375C2.98369 1.51258 6.49303 0.664246 11.7446 0.663575C17.0177 0.662904 20.5358 1.51593 22.2003 3.20046C23.3007 4.31307 23.2873 5.45983 23.2819 5.89036L23.2836 5.92928L23.2839 6.01979C23.2839 7.94446 23.0184 9.00135 22.3726 9.61899ZM21.3794 8.60033L21.3848 8.59496C21.6859 8.29381 21.8415 7.53469 21.8597 6.27726L21.862 6.02339L21.8609 6.02516C21.8609 6.02516 21.8593 6.00166 21.8589 5.96398L21.8589 5.87427C21.8636 5.55438 21.8716 4.89047 21.189 4.20104C20.2346 3.23606 17.8218 2.08528 11.7453 2.08595C5.69835 2.08663 3.28078 3.22734 2.31844 4.18968L2.30436 4.20376C1.62234 4.89383 1.63106 5.55707 1.63508 5.87628C1.63642 5.97285 1.63441 6.04863 1.62905 6.09826C1.63307 7.43949 1.79067 8.28111 2.11522 8.59901C2.44653 8.92222 3.23987 8.90143 4.33834 8.87461C4.68706 8.86522 5.0673 8.8565 5.47772 8.8565C6.54065 8.85449 6.71232 8.50175 7.08854 7.7178C7.60894 6.63542 8.3218 5.15269 11.7446 5.15403C15.1668 5.15336 15.881 6.63475 16.4034 7.71645C16.7803 8.49839 16.9513 8.85449 18.0156 8.85516C18.4314 8.85516 18.8156 8.86522 19.169 8.87394C20.2608 8.90076 21.0494 8.92088 21.3794 8.60033Z" fill="white"/>
-                </svg>
+              <img src="../../../../assets/assets_workdesk/endcall.svg" alt="">
             </div>
         </div>
       
