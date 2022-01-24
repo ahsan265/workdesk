@@ -2874,6 +2874,8 @@ createoschart()
           data:data,
           hasBackdrop:true,
           panelClass:"mobilefilter-form-container",
+          backdropClass:"backdropBackgroundPopups",
+          disableClose:true,
         });
       }
 

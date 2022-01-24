@@ -94,9 +94,7 @@ import { AuthService } from './service/auth.service';
     provide: 'GigaaaHeaderService',
     useClass: GigaaaHeaderService
   },
-  {provide: MatDialogRef,
-  useValue: {}
-  }],
+  {provide : MatDialogRef, useValue : {}}],
   entryComponents: [LandingpageComponent],
   schemas: [CUSTOM_ELEMENTS_SCHEMA,NO_ERRORS_SCHEMA],
 

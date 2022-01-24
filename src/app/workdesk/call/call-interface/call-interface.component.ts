@@ -1,4 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Overlay, OverlayRef } from '@angular/cdk/overlay';
+import { TemplatePortal } from '@angular/cdk/portal';
+import { typeWithParameters } from '@angular/compiler/src/render3/util';
+import { AfterViewInit, Component, ElementRef, HostListener, OnDestroy, OnInit, TemplateRef, ViewChild, ViewContainerRef } from '@angular/core';
 import { MatDialogRef } from '@angular/material/dialog';
 
 @Component({
@@ -6,18 +9,48 @@ import { MatDialogRef } from '@angular/material/dialog';
   templateUrl: './call-interface.component.html',
   styleUrls: ['./call-interface.component.css']
 })
-export class CallInterfaceComponent implements OnInit {
+export class CallInterfaceComponent implements OnInit,AfterViewInit,OnDestroy  {
+  dragPosition = {x: 0, y: 0};
 
   screensharebtn:boolean=true;
   micbtn:boolean=true;
   camerabtn:boolean=true;
+ screenSize:boolean=true;
   micIcon="../../../../assets/assets_workdesk/microphone_off.svg";
  cameraIcon="../../../assets/assets_workdesk/camera_off.svg";
+  is_dragable:boolean=true;
+ hideContant:boolean=true;
+ @ViewChild(TemplateRef) _dialogTemplate: TemplateRef<any>;
+ private _overlayRef: OverlayRef;
+ private _portal: TemplatePortal;
+  constructor(private _overlay: Overlay, 
+    private _viewContainerRef: ViewContainerRef,   
+     public dialogRef: MatDialogRef<CallInterfaceComponent>,
+    ) 
+    {
+     }
+  ngAfterViewInit(): void {
+    
+    this._portal = new TemplatePortal(this._dialogTemplate, this._viewContainerRef);
+    this._overlayRef = this._overlay.create({ positionStrategy: this._overlay.position().global().centerHorizontally().centerVertically(),
+      hasBackdrop: true,
+    });
+    
+      this._overlayRef.backdropClick().subscribe(()=>{
+       
+      });
 
-  constructor(    public dialogRef: MatDialogRef<CallInterfaceComponent>,
-    ) { }
-
+    
+  }
+  changePosition() {
+    this.dragPosition = {x: this.dragPosition.x , y: this.dragPosition.y};
+  }
   ngOnInit(): void {
+
+  
+  }
+  ngOnDestroy() {
+    this._overlayRef.dispose();
   }
   closecall()
   {
@@ -60,5 +93,31 @@ export class CallInterfaceComponent implements OnInit {
       this.cameraIcon="../../../assets/assets_workdesk/camera_off.svg";
 
     }
-  }
+    }
+    // maximize the screen 
+
+       miniMizetheScreen(val)
+      {   
+        if(val==true)
+        {
+          this.dialogRef.removePanelClass('maximizecallinterface');
+          this.dialogRef.addPanelClass('minimizecallinterface');
+          this.hideContant=false;
+          this.is_dragable=false;
+
+        }
+        else{
+          this.hideContant=true;
+          this.changePosition();
+          this.dialogRef.removePanelClass('minimizecallinterface');
+          this.dialogRef.addPanelClass('maximizecallinterface');
+          this.is_dragable=true;
+        }
+        
+      }
+      // minimize the screen
+      maxMizetheScreen()
+      { 
+       
+      }
 }

@@ -1757,15 +1757,7 @@ input:checked+.slider:before {
     justify-content: center;
  
 }
-.cdk-global-overlay-wrapper {
-    display: flex;
-    position: relative;
-    z-index: 1000;
-    background:  rgba(0, 0, 0, 0.3);
-    overflow-y: hidden;
-    overflow-x: hidden;
-    pointer-events: auto;  
-  }
+
   .cdk-overlay-pane{
     display: contents;
     scroll-behavior: auto;
@@ -2105,6 +2097,44 @@ body .bs-datepicker-container  .bs-datepicker-body   tbody tr:nth-child(even){
     overflow-y: hidden;
     vertical-align: middle;
    }
+
+   .minimizecallinterface .mat-dialog-container {
+    background: #FFFFFF;
+    box-shadow: none;
+    border-radius: 0px;
+    opacity: 1;
+    width: 255px;
+    height: 100px;
+    padding: 0px;
+    overflow-x: hidden;
+    overflow-y: hidden;
+    vertical-align: middle;
+    bottom: 12%;
+    right: 5%;
+    position: absolute;
+    box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.23);
+   border-radius: 4px;
+   transition-duration: 0.4s;
+   z-index: 1000;
+   }
+
+   .maximizecallinterface .mat-dialog-container {
+    background: #FFFFFF;
+    box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.23);
+    border-radius: 0px;
+    opacity: 1;
+    width: 100%;
+    height: 100%;
+    padding: 0px;
+    overflow-x: hidden;
+    overflow-y: hidden;
+    vertical-align: middle;
+    transition-duration: 0.4s;
+    bottom:0;
+    right:0;
+    top: 0;
+    left: 0;
+   }
    .mobilefilter-form-container .mat-dialog-container {
     background: #FFFFFF;
     box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.23);
@@ -2117,6 +2147,99 @@ body .bs-datepicker-container  .bs-datepicker-body   tbody tr:nth-child(even){
     vertical-align: middle;
     padding: 0px;
    }
+   .minimizecallinterface .callcontrolpanel{
+    width: 100% !important;
+    text-align: center !important;
+    height: 34px !important;
+   }
+   .minimizecallinterface .callcontrol{
+    box-shadow: none !important;
+    height: 50px !important;
+    padding: 0px !important;
+    width: 255px  !important;
+    text-align: center  !important;
+    background: #162741;
+    border-radius: 0px !important;
+   }
+   .minimizecallinterface .callicons{
+       margin-right: 11px !important;
+       height: 30px !important;
+       width: 30px !important;
+   }
+   .minimizecallinterface .callinterface{
+    height: 100px !important;
+    padding: 0px !important;
+   }
+   .minimizecallinterface  .username{
+        line-height: 18px!important;
+        height: 34px !important;
+        font-size: 14px !important;
+        margin-left: 12px !important;
+        display: inline !important;
+    }
+    .minimizecallinterface .userimage{
+        height: 30px !important;
+        width: 30px !important;
+    }
+    .minimizecallinterface .userinformation{
+        width: 75% !important;
+        
+    }
+    .minimizecallinterface .callcontrolicons{
+        width: 125px !important;
+        height: 34px !important;
+    }
+    .minimizecallinterface .minimizeiconpanel{
+        width: 25% !important;
+        height: 50px !important;
+    }
+    .minimizecallinterface .maximizeicon{
+        float: right!important;
+        margin-top: -42px!important;
+        height: 20px!important;
+        margin-right: 10px!important;
+        cursor: pointer!important;
+    }
+    .minimizecallinterface .calltime_drop{
+        width: 110px    !important;
+        margin-left: 0px !important;
+        margin-right: 0px !important;
+        height: 30px !important;
+    }
+    .minimizecallinterface .callicon_drop{
+        height: 30px !important;
+        width: 30px !important;
+        float: left !important;
+    }
+    
+element.style {
+    justify-content: center;
+    align-items: center;
+}
+
+
+.backdropBackgroundPopups{
+    display: flex;
+    position: relative;
+    z-index: 1000;
+    background:  rgba(0, 0, 0, 0.3);
+    overflow-y: hidden;
+    overflow-x: hidden;
+    pointer-events: auto;   
+    height: 100%;
+    width: 100%;
+  }
+  .backdropBackgroundforcall {
+    display: contents;
+    position: relative;
+    z-index: 1000;
+    background:  rgba(0, 0, 0, 0.3);
+    overflow-y: hidden;
+    overflow-x: hidden;
+    pointer-events: auto;   
+    height: 100%;
+    width: 100%;
+}
    button:focus { outline-style: none; }
    .container {
     grid-row: auto;

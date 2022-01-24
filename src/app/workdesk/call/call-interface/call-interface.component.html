@@ -1,41 +1,52 @@
-<div class="callinterface">
+
+
+
+ <ng-container  [cdkDragDisabled]="is_dragable" cdkDrag cdkDragRootElement=".cdk-overlay-container" [cdkDragFreeDragPosition]="dragPosition">
+   <div style="height: 100vh" cdkDragHandle >
+<div class="callinterface" >
   <div class="userinformation">
 <img class="userimage" src="../../../../assets/picface.jpeg" height="34" width="34" alt="">
 <p class="username">Andrea Peterson Williams</p>
   </div>  
   <div class="minimizeiconpanel">
-    <svg style="cursor: pointer;margin-bottom: 15px;" (click)="closecall()" width="12" height="2" viewBox="0 0 12 2" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <svg style="height: 20px; cursor: pointer;"  *ngIf="hideContant" style="cursor: pointer;margin-bottom: 15px;" (click)="miniMizetheScreen(hideContant)" width="12" height="2" viewBox="0 0 12 2" fill="none" xmlns="http://www.w3.org/2000/svg">
         <path d="M11.8204 1.82031H0.179749V0.179688H11.8204V1.82031Z" fill="white"/>
         </svg>
+
+    
   </div>
+  <svg class="maximizeicon" style="float: right;
+  margin-top: -50px;
+  height: 20px;
+  margin-right: -7px;
+  cursor: pointer;" (click)="miniMizetheScreen(hideContant)" *ngIf="!hideContant" width="20" height="16" viewBox="0 0 20 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M17.5 13.8594V2.14062H2.5V13.8594H17.5ZM17.5 0.5C17.9427 0.5 18.3333 0.669271 18.6719 1.00781C19.0104 1.34635 19.1797 1.73698 19.1797 2.17969V13.8203C19.1797 14.263 19.0104 14.6536 18.6719 14.9922C18.3333 15.3307 17.9427 15.5 17.5 15.5H2.5C2.05729 15.5 1.66667 15.3307 1.32812 14.9922C0.989583 14.6536 0.820312 14.263 0.820312 13.8203V2.17969C0.820312 1.73698 0.989583 1.34635 1.32812 1.00781C1.66667 0.669271 2.05729 0.5 2.5 0.5H17.5ZM5.82031 5.5V8H4.17969V3.82031H8.32031V5.5H5.82031ZM15.8203 8V12.1797H11.6797V10.5H14.1797V8H15.8203Z" fill="white"/>
+</svg>
 </div>
-<div class="callarea">
-    <div  [ngStyle]="{'background': (camerabtn==true) ? '#2B3A51' : '#000000'}" cdkDragBoundary=".callcontrolpanel" class="loggedUsercamera" cdkDrag>
+<div class="callarea" [ngStyle]="{'background': (hideContant==false) ? '#162741' : '#0E1D35'}">
+    <div [hidden]="!hideContant" [ngStyle]="{'background': (camerabtn==true) ? '#2B3A51' : '#000000'}" cdkDragBoundary=".callcontrolpanel" class="loggedUsercamera" cdkDrag>
             <p *ngIf="camerabtn" class="capitalinitials">LM</p>
         <p class="camerapersonname">Lisa (me)</p> 
     </div>
-<img height="200" width="200" class="userimagebig" src="../../../../assets/picface.jpeg" alt="">
+<img [hidden]="!hideContant" height="200" width="200" class="userimagebig" src="../../../../assets/picface.jpeg" alt="">
 
 <div class="callcontrolpanel">
    
-    <div class="callcontrol">
+    <div class="callcontrol"  [ngStyle]="{'background': (hideContant==false) ? '#162741' : 'rgba(22, 39, 65, 0.73);'}">
         
         <div class="callcontrolicons">
-            <div class="callicons"  [ngStyle]="{'background': (micbtn==true) ? 'rgba(255, 255, 255, 0.1)' : '#1C54DB'}" (click)=" micebtncheck(micbtn)"   >
-             <img style=" display: block; margin: 0 auto;
-             margin-top: 8px;" [src]="micIcon" alt="">
+            <div class="callicons"   (click)=" micebtncheck(micbtn)"   >
+             <img  [src]="micIcon" alt="">
             </div>
              
-            <div class="callicons"  [ngStyle]="{'background': (camerabtn==true) ? 'rgba(255, 255, 255, 0.1)' : '#1C54DB'}" (click)="camerabtncheck(camerabtn)"  >
-              <img [ngStyle]="{'margin-top': (camerabtn==true) ? '8px' : '9.5px'}"  style="display: block; margin: 0 auto;
-              margin-top: 8px;" [src]="cameraIcon" alt="">
+            <div class="callicons"   (click)="camerabtncheck(camerabtn)"  >
+              <img    [src]="cameraIcon" alt="">
 
             </div>
       
-            <div class="callicons" [ngStyle]="{'background': (screensharebtn==true) ? 'rgba(255, 255, 255, 0.1)' : '#1C54DB'}" (click)="screensharebtncheck(screensharebtn)"  >
+            <div class="callicons" style="margin-right: 0px;" [ngStyle]="{'background': (screensharebtn==true) ? 'rgba(255, 255, 255, 0.1)' : '#1C54DB'}" (click)="screensharebtncheck(screensharebtn)"  >
               <img style="display: block;
-              margin: 0 auto;
-              margin-top: 8.5px;" src="../../../../assets/assets_workdesk/sharing.svg" alt="">
+              padding: 7px;" src="../../../../assets/assets_workdesk/sharing.svg" alt="">
             </div>
         </div>
         <div class="calltime_drop">
@@ -49,3 +60,5 @@
 </div>
 
 </div>
+</div>
+</ng-container>

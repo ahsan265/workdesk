@@ -414,7 +414,7 @@ return ("0" + minutes).slice(-2) + ":" + ("0" +seconds).slice(-2);
       this.missed=false;
       this.answered=false;
       this.selectedtabs="ongoing"
-     // this.openCallInterface();
+      //this.openCallInterface();
     }
     else if(val=="missed")
     {
@@ -1707,6 +1707,9 @@ this.allselectedcall2=status;
    data:data,
      hasBackdrop:true,
      panelClass:"mobilefilter-form-container",
+     backdropClass:"backdropBackgroundPopups",
+     disableClose:true,
+    
    });
  }
 // get mobile search results
@@ -1794,6 +1797,9 @@ this.allselectedcall2=status;
     this.dialog.open(CallInterfaceComponent,{
         hasBackdrop:true,
         panelClass:"callinterface-form-container",
+        backdropClass:"backdropBackgroundforcall",
+        disableClose:true
+        
       });
   }
 }

@@ -176,14 +176,7 @@ export class AgentComponent implements OnInit {
       {
         this.agentsocketgigaaaapi.send_agentsparam_status(this.active_agents,this.inactive_agents,this.invited_agents,this.id_soflanguages)
       }
-      geteditagent(val)
-      { 
-        this.dialog.open(EditformComponent,{
-          hasBackdrop:true,
-          panelClass:"edit-form-container",
-          data :{"role":val.role,'id':val.id,"name":val.display_name,"agentlanguages":val.languages,"agentintegrations":val.integrations}
-        });
-      }
+    
 
   getengamentofagentcall(val,val1)
   {
@@ -217,6 +210,8 @@ export class AgentComponent implements OnInit {
     this.dialog.open(AddagentComponent,{
       hasBackdrop:true,
       panelClass:"addagent-form-container",
+      backdropClass:"backdropBackgroundPopups",
+      disableClose:true,
     });
   }
   public  getallagents(intid,parma1,param2,param3,lang) {
@@ -419,8 +414,10 @@ isagentonline(val,val1){
 
   Invtieteagentpopup() {
     const dialogRef = this.dialog.open(InviteagentComponent,{
-      hasBackdrop:false,
+      hasBackdrop:true,
       panelClass:"addagent-dialog-container",
+      backdropClass:"backdropBackgroundPopups",
+      disableClose:true,
     });
   }
 
@@ -734,6 +731,8 @@ return false;
      data:{languages:this.langaugesfrommobilefilter,search_item:this.searchquerymobilefilter},
      hasBackdrop:true,
      panelClass:"mobilefilter-form-container",
+     backdropClass:"backdropBackgroundPopups",
+     disableClose:true,
    });
  }
 
