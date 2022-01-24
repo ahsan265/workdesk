@@ -20,7 +20,7 @@ export class CallInterfaceComponent implements OnInit,AfterViewInit,OnDestroy  {
  cameraIcon="../../../assets/assets_workdesk/camera_off.svg";
   is_dragable:boolean=true;
  hideContant:boolean=true;
- hidecamera:boolean=true;
+ hidecamera:boolean=false;
  @ViewChild(TemplateRef) _dialogTemplate: TemplateRef<any>;
  private _overlayRef: OverlayRef;
  private _portal: TemplatePortal;
@@ -92,7 +92,7 @@ export class CallInterfaceComponent implements OnInit,AfterViewInit,OnDestroy  {
       {
         this.dialogRef.removePanelClass('minimizecallinterface');
         this.dialogRef.addPanelClass('maximizeVideocallinterface'); 
-        this.hidecamera=true;
+        this.hidecamera=false;
 
       }
     }
@@ -103,7 +103,7 @@ export class CallInterfaceComponent implements OnInit,AfterViewInit,OnDestroy  {
       {
         this.dialogRef.removePanelClass('maximizeVideocallinterface');
         this.dialogRef.addPanelClass('minimizecallinterface');
-        this.hidecamera=false;
+        this.hidecamera=true;
       }
 
     }
@@ -113,22 +113,31 @@ export class CallInterfaceComponent implements OnInit,AfterViewInit,OnDestroy  {
        miniMizetheScreen(val)
       {   
         if(val==true)
-        {
-          this.dialogRef.removePanelClass('maximizecallinterface');
-          this.dialogRef.addPanelClass('minimizecallinterface');
-          this.hideContant=false;
+        { this.hideContant=false;
           this.is_dragable=false;
-          this.hidecamera=false;
+       
+          this.dialogRef.removePanelClass('maximizecallinterface');
+          if(this.camerabtn==false)
+          {
+            this.dialogRef.addPanelClass('maximizeVideocallinterface');
+            this.hidecamera=false;
+          }
+          else 
+          { this.dialogRef.addPanelClass('minimizecallinterface');
+            this.hidecamera=true;
+          }
+    
 
         }
         else{
           this.hideContant=true;
+          this.is_dragable=true;
+          this.hidecamera=false;
           this.changePosition();
           this.dialogRef.removePanelClass('minimizecallinterface');
           this.dialogRef.removePanelClass('maximizeVideocallinterface');
           this.dialogRef.addPanelClass('maximizecallinterface');
-          this.is_dragable=true;
-          this.hidecamera=true;
+       
 
         }
         

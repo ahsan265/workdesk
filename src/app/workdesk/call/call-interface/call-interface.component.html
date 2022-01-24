@@ -27,12 +27,12 @@
   </div>
 
 </div>
-<div class="callarea" [ngStyle]="{'background': (hidecamera==false) ? '#162741' : '#0E1D35'}">
-    <div [hidden]="!hidecamera" [ngStyle]="{'background': (camerabtn==true) ? '#2B3A51' : '#000000'}" cdkDragBoundary=".callcontrolpanel" class="loggedUsercamera" cdkDrag>
+<div class="callarea" [ngStyle]="{'background': (hidecamera==true) ? '#162741' : '#0E1D35'}">
+    <div [hidden]="hidecamera" [ngStyle]="{'background': (camerabtn==true) ? '#2B3A51' : '#000000'}" cdkDragBoundary=".callcontrolpanel" class="loggedUsercamera" cdkDrag>
             <p *ngIf="camerabtn" class="capitalinitials">LM</p>
         <p class="camerapersonname">Lisa (me)</p> 
     </div>
-<img *ngIf="hidecamera" height="200" width="200" class="userimagebig" src="../../../../assets/picface.jpeg" alt="">
+<img *ngIf="!hidecamera" height="200" width="200" class="userimagebig" src="../../../../assets/picface.jpeg" alt="">
 <div class="callcontrolpanel">
    
     <div class="callcontrol"  [ngStyle]="{'background': (hideContant==false) ? '#162741' : 'rgba(22, 39, 65, 0.73);'}">
