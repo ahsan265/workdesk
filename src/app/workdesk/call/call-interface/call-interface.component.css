@@ -71,71 +71,72 @@ color: #FFFFFF;
 .callcontrolpanel{
     display: block;
     width: 100%;
-    height: 80px;
+    height: 56px;
     margin: 0 auto;
     text-align: center;
     position: absolute;
     bottom:21px;
 }
 .callcontrol{
-    width: 317px;
-    height: 76px;
+    width: 250px;
+    height: 56px;
     background: rgba(22, 39, 65, 0.73);
     box-shadow: 3px 3px 10px rgb(0 0 0 / 23%);
     border-radius: 51px;
     display: inline-block;
     bottom: 42px;
-    padding-top: 21px;
-    padding-bottom: 21px;
-    text-align: end;
+    padding-top: 13px;
+    padding-bottom: 13px;
+    text-align: center;
 }
 
 .callcontrolicons{
-    width: 139px;
+    width: 120px;
+    height: 30px;
     display: inline-block;
     text-align: left;
-    vertical-align: top;
+    vertical-align: initial;
 }
 .callicons{
-width: 35px;
-height: 35px;
+width: 30px;
+height: 30px;
 display: inline-flex;
-margin-right:17px;
+margin-right:15px;
 border: none;
 cursor: pointer;
 border-radius: 50%;
-line-height: 20px;
 }
 .calltime{
     font-family: "Roboto",sans-serif;
     font-style: normal;
     font-weight: normal;
     font-size: 12px;
-    line-height: 36px;
+    line-height: 31px;
     display: inline-block;
     align-items: center;
     letter-spacing: 0.02em;
     color: #FFFFFF;
-    padding-left: 14px;
+    padding-left: 5px;
+    padding-right: 7px;
 }
 .calltime_drop{
     vertical-align: middle;
-    width: 34%;
-    height: 35px;
-    margin-left: 17px;
+    width: 92px;
+    height: 30px;
+    margin-left: 15px;
     background: rgba(255, 255, 255, 0.1);
     border-radius: 35px;
     display: inline-block;
-    margin-right: 27px;
-    text-align: left;
+    text-align: right;
+    margin-bottom: 22px;
 }
 .callicon_drop{
-    width: 35px;
-    height: 35px;
+    width: 30px;
+    height: 30px;
     background: #FF155A;
     display: inline-flex;
     border: none;
-    float: right;
+    float: left;
     border-radius: 50%;
     cursor: pointer;
     padding-left: 4px;

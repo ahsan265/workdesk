@@ -2135,6 +2135,24 @@ body .bs-datepicker-container  .bs-datepicker-body   tbody tr:nth-child(even){
     top: 0;
     left: 0;
    }
+   .maximizeVideocallinterface .mat-dialog-container {
+    background: #FFFFFF;
+    box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.23);
+    border-radius: 0px;
+    opacity: 1;
+    width: 382px;
+    height: 325px;
+    padding: 0px;
+    overflow-x: hidden;
+    overflow-y: hidden;
+    vertical-align: middle;
+    transition-duration: 0.4s;
+    /* bottom:0;
+    right:0;
+    top: 0;
+    left: 0; */
+    position: relative;
+   }
    .mobilefilter-form-container .mat-dialog-container {
     background: #FFFFFF;
     box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.23);
@@ -2150,7 +2168,9 @@ body .bs-datepicker-container  .bs-datepicker-body   tbody tr:nth-child(even){
    .minimizecallinterface .callcontrolpanel{
     width: 100% !important;
     text-align: center !important;
-    height: 34px !important;
+    height: 50px !important;
+    bottom: 0 !important;
+    padding-top: 10px !important;
    }
    .minimizecallinterface .callcontrol{
     box-shadow: none !important;
@@ -2171,11 +2191,16 @@ body .bs-datepicker-container  .bs-datepicker-body   tbody tr:nth-child(even){
     padding: 0px !important;
    }
    .minimizecallinterface  .username{
-        line-height: 18px!important;
-        height: 34px !important;
-        font-size: 14px !important;
-        margin-left: 12px !important;
-        display: inline !important;
+    line-height: 18px!important;
+    height: 34px !important;
+    font-size: 14px !important;
+    margin-left: 16px !important;
+    width: 124px;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+    display: inline-block!important;
+    vertical-align: text-top !important;
     }
     .minimizecallinterface .userimage{
         height: 30px !important;
@@ -2183,7 +2208,11 @@ body .bs-datepicker-container  .bs-datepicker-body   tbody tr:nth-child(even){
     }
     .minimizecallinterface .userinformation{
         width: 75% !important;
-        
+        height: 50px !important;
+        top: 0 !important;
+        position: absolute;
+        padding: 10px;
+        background: #2B3A51;
     }
     .minimizecallinterface .callcontrolicons{
         width: 125px !important;
@@ -2195,13 +2224,13 @@ body .bs-datepicker-container  .bs-datepicker-body   tbody tr:nth-child(even){
     }
     .minimizecallinterface .maximizeicon{
         float: right!important;
-        margin-top: -42px!important;
+        margin-top: 10px!important;
         height: 20px!important;
-        margin-right: 10px!important;
+        margin-right: 16px!important;
         cursor: pointer!important;
     }
     .minimizecallinterface .calltime_drop{
-        width: 110px    !important;
+        width: 92px    !important;
         margin-left: 0px !important;
         margin-right: 0px !important;
         height: 30px !important;
@@ -2210,6 +2239,60 @@ body .bs-datepicker-container  .bs-datepicker-body   tbody tr:nth-child(even){
         height: 30px !important;
         width: 30px !important;
         float: left !important;
+    }
+    .maximizeVideocallinterface .callinterface{
+        padding: 0px !important;
+        height: 50px  !important;
+    }
+    .maximizeVideocallinterface .userimage{
+        height: 30px !important;
+        width: 30px !important;
+    }
+    .maximizeVideocallinterface .userinformation{
+        display: inline-block !important;
+        width: 80%!important;
+        text-align: left!important;
+        background: #2B3A51 !important;
+        height: 50px !important;
+        padding-top: 10px !important;
+        padding-left: 15px !important;
+    }
+    .maximizeVideocallinterface .maxiconforvideo
+    {    float: right!important;
+        cursor: pointer!important;
+        height: 50px!important;
+        background: rgb(43, 58, 81)!important;
+        width: 25%!important;
+        text-align: right!important;
+        vertical-align: text-bottom!important;
+        position: relative!important;
+        top: -50px!important;
+        right: 0px !important;
+        padding-top: 10px !important;
+        padding-right: 15px!important;
+    }
+    .maximizeVideocallinterface .callcontrolpanel{
+        position:  absolute !important;
+        bottom: 9px !important;
+    }
+    .maximizeVideocallinterface .loggedUsercamera{
+        margin: 20px !important;
+        height:  71px !important;
+        width: 112px !important;
+    }
+    .maximizeVideocallinterface .camerapersonname{
+        bottom: 9px !important;
+    }
+    .maximizeVideocallinterface .callarea{
+        width: 100% !important;
+        text-align: center!important;
+        position: absolute;
+        height: 275px !important;
+    }
+    .maximizeVideocallinterface .userimagebig{
+        height: 100px !important;
+        width: 100px !important;
+ 
     }
     
 element.style {
