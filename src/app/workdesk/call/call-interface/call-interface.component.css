@@ -102,9 +102,19 @@ width: 30px;
 height: 30px;
 display: inline-flex;
 margin-right:15px;
+background: #2D3D54;
 border: none;
 cursor: pointer;
 border-radius: 50%;
+transition-duration: 0.4s;
+}
+.callicons img.caIcon:hover{
+background: #173b96;
+border-radius: 50%;
+}
+.callicon_drop img.hangicon:hover{
+    background: #CC0943;
+    border-radius: 50%;
 }
 .calltime{
     font-family: "Roboto",sans-serif;
@@ -139,8 +149,8 @@ border-radius: 50%;
     float: left;
     border-radius: 50%;
     cursor: pointer;
-    padding-left: 4px;
-    padding-right: 4px;
+    transition-duration: 0.4s;
+    
  }
  .loggedUsercamera{
     margin: 24px;

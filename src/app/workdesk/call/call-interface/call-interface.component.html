@@ -38,24 +38,24 @@
     <div class="callcontrol"  [ngStyle]="{'background': (hideContant==false) ? '#162741' : 'rgba(22, 39, 65, 0.73);'}">
         
         <div class="callcontrolicons">
-            <div class="callicons"   (click)=" micebtncheck(micbtn)"   >
-             <img  [src]="micIcon" alt="">
+            <div class="callicons" [ngStyle]="{'background': (micbtn==true) ? 'rgba(255, 255, 255, 0.1)' : '#1C54DB'}"  (click)=" micebtncheck(micbtn)"   >
+             <img  class="caIcon"  height="30" width="30" [src]="micIcon" alt="" >
             </div>
              
-            <div class="callicons"   (click)="camerabtncheck(camerabtn)"  >
-              <img    [src]="cameraIcon" alt="">
+            <div class="callicons" [ngStyle]="{'background': (camerabtn==true) ? 'rgba(255, 255, 255, 0.1)' : '#1C54DB'}"  (click)="camerabtncheck(camerabtn)"  >
+              <img class="caIcon"    height="30" width="30"  [src]="cameraIcon" alt="">
 
             </div>
       
             <div class="callicons" style="margin-right: 0px;" [ngStyle]="{'background': (screensharebtn==true) ? 'rgba(255, 255, 255, 0.1)' : '#1C54DB'}" (click)="screensharebtncheck(screensharebtn)"  >
-              <img style="display: block;
-              padding: 7px;" src="../../../../assets/assets_workdesk/sharing.svg" alt="">
+              <img   class="caIcon" height="30" width="30" style="display: block;
+            " src="../../../../assets/assets_workdesk/sharing.svg" alt="">
             </div>
         </div>
         <div class="calltime_drop">
             <p class="calltime">25m 14s</p>
             <div class="callicon_drop" (click)=" closecall()">
-              <img src="../../../../assets/assets_workdesk/endcall.svg" alt="">
+              <img style="padding: 4px;" class="hangicon" src="../../../../assets/assets_workdesk/endcall.svg" alt="">
             </div>
         </div>
       

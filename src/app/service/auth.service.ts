@@ -23,6 +23,7 @@ export class AuthService implements CanActivate {
     private sharedres:sharedres_service) {
     this.user = new BehaviorSubject(this.getLoggedUser());
     this.user.subscribe(data=>{
+      console.log(data)
       if(data!=null)
       { 
          this.getOrganizationId(data.api_token);
