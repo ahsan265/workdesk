@@ -122,9 +122,12 @@
             </div> {{getfullname(data?.invited,data?.inactive,data?.active,data?.first_name,data?.last_name)}}
           </td>
           <td>
-            <p [style.color]="getinvitedagents(data?.invited,data?.inactive,data?.active)"
-              *ngFor="let lang of data?.languages; let i=index;" style="display:inline-block;padding-right: 2px;">
-              {{lang.name}}<span [hidden]="i == data.languages.length-1">, </span> </p>
+            <!-- <p [style.color]="getinvitedagents(data?.invited,data?.inactive,data?.active)" -->
+              <div  *ngFor="let lang of data?.languages; let i=index;" style="display:inline-block;margin-right: 13px;">
+                <img src="{{lang?.code | flagpipes}}" height="18" width="18" style="border-radius: 50%; height: 18px; width: 18px;border: solid 1px #c0c0c0;">
+
+              </div>
+            <!-- </p> -->
           </td>
           <td [style.color]="getinvitedagents(data?.invited,data?.inactive,data?.active)">{{data?.role}}</td>
           <td><img class="settings"

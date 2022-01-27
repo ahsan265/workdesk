@@ -731,7 +731,7 @@ search(term:string,column:any) {
   var result =  this.call[column].filter(obj => {
     if(obj['user_id']!=null)
     {
-      return obj['name'].toLowerCase().includes(term.toLowerCase())||obj['user_id'].toString().toLowerCase().includes(term);;
+      return obj['name'].toLowerCase().includes(term.toLowerCase())||obj['user_id'].toString().toLowerCase().includes(term);
 
     }
     else  if(obj['user_id']==null)
@@ -740,28 +740,25 @@ search(term:string,column:any) {
 
     }
   })
-
   if(column=='finished')
   {
     this.answered_call=result;
     this.seachValue4=term;
-
   }
   else if(column=='missed')
   {
     this.missed_call=result;
     this.seachValue3=term;
-
   }
   else if(column=='incoming')
-  { this.seachValue2=term;
+  { 
+    this.seachValue2=term;
     this.size_incoming_call=this.call[column]?.length;
     this.incoming_call=result;
-
-
   }
   else if(column=='ongoing')
-  {this.seachValue1=term;
+  {
+    this.seachValue1=term;
     this.size_ougoing_call=this.call[column]?.length;
     this.ougoing_call=result;
 
@@ -1709,7 +1706,6 @@ this.allselectedcall2=status;
      panelClass:"mobilefilter-form-container",
      backdropClass:"backdropBackgroundPopups",
      disableClose:true,
-    
    });
  }
 // get mobile search results

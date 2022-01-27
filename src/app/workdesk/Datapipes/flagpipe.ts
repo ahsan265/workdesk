@@ -24,7 +24,7 @@ export class getflagpipes implements PipeTransform{
  
    }
    else if(val=="es") {
-     return '../../../assets/Flagsassets_workdesk/Flags/spanish.svg'
+     return '../../../assets/assets_workdesk/Flags/spanish.svg'
  
    }
    else if(val=="ru") {

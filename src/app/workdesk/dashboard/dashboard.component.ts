@@ -276,6 +276,9 @@ export class DashboardComponent implements OnInit {
    totalmissper:any;
    totalincper:any;
    countrylist=[];
+   callchecked:boolean=true;
+  userchecked:boolean=true;
+  visitorchecked:boolean=true;
 
   countrylist_calls=[];
   countrylist_chats=[];
@@ -564,6 +567,7 @@ export class DashboardComponent implements OnInit {
   
         var udpatedcountry=[];
         var countryid=[];
+        var checked;
         this.countrylist.forEach(element=>{
         var index = countryid.indexOf(element.id);
         if (index !== -1) {
@@ -578,18 +582,19 @@ export class DashboardComponent implements OnInit {
         udpatedcountry.push({name:element.name,status:true,id:element.id})
         countryid.push(element.id)
       });
+      this.countrylist=udpatedcountry;
   
   
-  
-      this.showselectedNumberofcountries(this.selectedtabs,this.countrylist.length +"\xa0"+"Selected")
-        if(this.countrylist.length==249)
+      this.showselectedNumberofcountries(this.selectedtabs,countryid.length +"\xa0"+"Selected")
+        if(countryid.length==249)
         {
             this.showselectedNumberofcountries(this.selectedtabs,"All Selected")
+            checked=true;
         }
   
-    }
-    else if(val==false){
-        this.lang.forEach(element => {
+        }
+       else if(val==false){
+        this.countrylist.forEach(element => {
           udpatedcountry.push({name:element.name,status:false,id:element.id})
        var index = countryid.indexOf(element.id);
         if (index !== -1) {
@@ -597,10 +602,10 @@ export class DashboardComponent implements OnInit {
         }
   
         });
-        this.showselectedNumberofcountries(this.selectedtabs,this.countrylist.length +"\xa0"+"Selected")
+        this.countrylist=udpatedcountry;
+        this.showselectedNumberofcountries(this.selectedtabs,"Not Selected")
+        checked=false;
 
-
-      //  this.selectedtabhold(this.selectedtabs,false)
   
   
     }
@@ -612,9 +617,10 @@ export class DashboardComponent implements OnInit {
      this.countrylist_calls=udpatedcountry;
      this.idsof_countries1=countryid;
      this.mob_idsof_countries1=countryid;
-     if(signal!=1)
+     this.callchecked=checked;
+     if(signal==1)
      {
-  
+      this.callFunctionCharts()
      }
   
    }
@@ -623,10 +629,11 @@ export class DashboardComponent implements OnInit {
      this.countrylist_chats=udpatedcountry;
      this.idsof_countries2=countryid;
      this.mob_idsof_countries2=countryid;
-   if(signal!=1)
+     this.userchecked=checked;
+
+   if(signal==1)
      {
-     // this.gigaaasocketapi.sendfilterparams({"tab":this.selectedtabs,"languages":this.idsoflanguages2,"call_type":this.idsofcalltype2});
-  
+      this.callFunctionCharts()  
      }
   
    }
@@ -635,12 +642,11 @@ export class DashboardComponent implements OnInit {
      this.countrytlist_ticket=udpatedcountry;
      this.idsof_countries3=countryid;
      this.mob_idsof_countries3=countryid;
-
+     this.visitorchecked=checked;
   
-     if(signal!=1)
+     if(signal==1)
      {
-   //   this.gigaaasocketapi.sendfilterparams({"tab":this.selectedtabs,"languages":this.idsoflanguages3,"call_type":this.idsofcalltype3});
-  
+      this.callFunctionCharts()  
      }
      }
   
@@ -2559,7 +2565,7 @@ createoschart()
  // select languages one by one
  selectcountryonebyone(e,id)
  {
-   if(this.selectedtabs=="calls")
+   if(this.selectedtabs=="Calls")
    {
     if(e==true)
     { var objIndex = this.countrylist_calls.findIndex((obj => obj.id == id));
@@ -2569,7 +2575,7 @@ createoschart()
      if(this.idsof_countries1.length==249)
      {
       this.showselectedNumberofcountries(this.selectedtabs,"All Selected")
-     // this.getcallcharts(this.charttimeslot1,this.idsoflanguages1,[],1000);
+     this.callchecked=true;
      this.callFunctionCharts();
      }
      else{
@@ -2592,6 +2598,8 @@ createoschart()
     else{
      this.showselectedNumberofcountries(this.selectedtabs,this.idsof_countries1.length +"\xa0"+"Selected")
     }
+    this.callchecked=false;
+
    // this.getcallcharts(this.charttimeslot1,this.idsoflanguages1,this.idsof_countries1,1000);
    this.callFunctionCharts();
   }
@@ -2606,7 +2614,7 @@ createoschart()
    if(this.idsof_countries2.length==249)
    {
     this.showselectedNumberofcountries(this.selectedtabs,"All Selected");
-  //  this.getuser_and_call_chart("Users",this.datefrom_user,this.dateto_user,this.idsoflanguages2,[],1000);
+    this.userchecked=true;
   this.callFunctionCharts();
    }
    else{
@@ -2631,7 +2639,7 @@ createoschart()
   else{
    this.showselectedNumberofcountries(this.selectedtabs,this.idsof_countries2.length +"\xa0"+"Selected")
   }
-  //this.getuser_and_call_chart("Users",this.datefrom_user,this.dateto_user,this.idsoflanguages2,this.idsof_countries2,1000);
+  this.userchecked=false;
   this.callFunctionCharts();
  }
 
@@ -2646,8 +2654,8 @@ createoschart()
      if(this.idsof_countries3.length==249)
      {
       this.showselectedNumberofcountries(this.selectedtabs,"All Selected");
-     // this.getuser_and_call_chart("Visitors",this.datefrom_visitor,this.dateto_visitor,this.idsoflanguages3,[],1000);
-     this.callFunctionCharts();
+      this.visitorchecked=true;
+      this.callFunctionCharts();
     }
      else{
       this.showselectedNumberofcountries(this.selectedtabs,this.idsof_countries3.length +"\xa0"+"Selected")
@@ -2670,8 +2678,8 @@ createoschart()
     else{
      this.showselectedNumberofcountries(this.selectedtabs,this.idsof_countries3.length +"\xa0"+"Selected")
     }
-  //  this.getuser_and_call_chart("Visitors",this.datefrom_visitor,this.dateto_visitor,this.idsoflanguages3,this.idsof_countries3,1000);
-  this.callFunctionCharts();
+    this.visitorchecked=false;
+    this.callFunctionCharts();
     }   
    }
    }
@@ -3046,6 +3054,32 @@ createoschart()
           clearInterval(this.chartInterval_id);
         }
       }
+      // search country list
+      search(term:string,field:any) {  
+        var result=this.countrylist.filter(obj => {
+          if(obj['name']!=null)
+          {
+           return obj['name'].toLowerCase().includes(term.toLowerCase());
+          }
+          else  if(obj['name']==null)
+          {
+            return obj['name'].toLowerCase().includes(term.toLowerCase());
+          }
+        });
+        console.log(result);
+        if(this.selectedtabs=="Calls")
+        {
+          this.countrylist_calls=result;
+        }
+        else if(this.selectedtabs=="Users")
+        { 
+          this.countrylist_chats=result;
+        }
+        else if(this.selectedtabs=="Visitors")
+        { 
+            this.countrytlist_ticket=result
+        }
+       }
 }
 function diff(diff: any): string | number | Date {
   throw new Error('Function not implemented.');

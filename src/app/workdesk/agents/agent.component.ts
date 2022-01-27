@@ -135,6 +135,7 @@ export class AgentComponent implements OnInit {
   // get agents details live
   getagentdetailslive(){
    this.agentsocketgigaaaapi.getagetnlist$.subscribe(data=>{
+     console.log(data)
     var updateagentdata;
     updateagentdata =data;
     var count=0;

@@ -2147,6 +2147,7 @@ body .bs-datepicker-container  .bs-datepicker-body   tbody tr:nth-child(even){
     overflow-y: hidden;
     vertical-align: middle;
     transition-duration: 0.4s;
+    border-radius: 4px;
     /* bottom:0;
     right:0;
     top: 0;
@@ -2394,6 +2395,9 @@ element.style {
 {
     visibility: hidden !important;
 }
+#root.gigaaa-plugin-root .App.Roboto   {
+    z-index: 1000  !important;
+}
 @media (max-width: 768px){
     #toast-container{
         padding-left: 10%;
@@ -2456,6 +2460,7 @@ element.style {
 
     #root.gigaaa-plugin-root .Roboto {
         bottom: 89px;
+       
     }
 
     .plugin{
@@ -2761,4 +2766,5 @@ element.style {
         min-height: 540px;
         max-height: 540px;
     }
+
 }
