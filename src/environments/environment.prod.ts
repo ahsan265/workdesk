@@ -5,7 +5,7 @@ export const environment = {
   client_id: 14,
   oauth_url: "https://accounts.gconsole.io/oauth",
   accounts_url: 'https://accounts.gconsole.io/oauth',
-  redirect_uri: 'https://workdesk.gconsole.io',
+  redirect_uri: 'https://workdesk.gconsole.io/callback',
   uri: 'https://workdesk.gconsole.io',
 
   accounts_callback_url: 'https://workdesk.gconsole.io',
