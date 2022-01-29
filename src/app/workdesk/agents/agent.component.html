@@ -166,7 +166,7 @@
           vertical-align: middle;">
   <p class="displayname"  [style.color]="getinvitedagents(data?.invited,data?.inactive,data?.active)">
     {{getagentname(data?.display_name)}}</p>
-  <p  class="displayname"[style.line-height]="getlineheight(data?.invited,data?.inactive,data?.active)"  [style.color]="getinvitedagents(data?.invited,data?.inactive,data?.active)">{{data?.email}}</p>
+  <p  class="displayname"[style.line-height]="getlineheight(data?.display_name)"  [style.color]="getinvitedagents(data?.invited,data?.inactive,data?.active)">{{data?.email}}</p>
    </div></div> 
    <div style="width: 20%; display: inline-block; text-align: right; vertical-align: middle;">
     <img class="settings"
@@ -190,6 +190,12 @@
       *ngFor="let lang of data?.languages; let i=index;" style="display:inline-block;padding-right: 2px; line-height: 25px;">
       {{lang.name}}<span [hidden]="i == data.languages.length-1">, </span> </p></div>
     
+   </div>
+   <div class="agentfullname">
+    <p class="fullname">ROLE</p>
+    <div style="padding-left: 20px;">
+      <p  [style.color]="getinvitedagents(data?.invited,data?.inactive,data?.active)">{{data?.role}}</p>
+    </div>
    </div>
   </div>
   <div [hidden]="noagent">
