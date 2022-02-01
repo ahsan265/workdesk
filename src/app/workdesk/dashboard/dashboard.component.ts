@@ -7,6 +7,7 @@ import { time } from 'console';
 import {  Label } from 'ng2-charts';
 import { defineLocale, enGbLocale } from 'ngx-bootstrap/chronos';
 import { BsDaterangepickerDirective, BsLocaleService } from 'ngx-bootstrap/datepicker';
+import { element } from 'protractor';
 import { Subscription } from 'rxjs';
 import { AuthService } from 'src/app/service/auth.service';
 import { GigaaaApiService } from 'src/app/service/gigaaaapi.service';
@@ -3055,8 +3056,9 @@ createoschart()
         }
       }
       // search country list
-      search(term:string,field:any) {  
-        var result=this.countrylist.filter(obj => {
+      search(term:string,field:Array<any>) {  
+
+         var result=this.countrylist.filter((obj ,i)=> {
           if(obj['name']!=null)
           {
            return obj['name'].toLowerCase().includes(term.toLowerCase());

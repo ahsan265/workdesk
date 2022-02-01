@@ -489,9 +489,9 @@ getagentname(val)
 
 
   // get invieted or active agent list
-  getlineheight(invited,inactive,active)
+  getlineheight(name)
   {
- if(invited==true&&inactive==false&&active==false)
+ if(name==null)
  {
   return '50px';
 
