@@ -91,6 +91,8 @@ export class AuthService implements CanActivate {
       localStorage.setItem('userlogged_uuid', JSON.stringify(data));
       this.sharedres.getcallsocketapi(1);
       this.sharedres.getintegrationrelation(1);
+      this.sharedres.getuserole();
+
       });
       }
       });

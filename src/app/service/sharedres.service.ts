@@ -108,7 +108,7 @@ if(accesstoken!=null &&uuid !=null)
         if(intid!=null)
         {
           this.gigaaaapi.getroleofagent(accesstoken,uuid,intid?.int_id).subscribe(data=>{
-            this.agentrolesubject.next(data);
+          this.agentrolesubject.next(data);
 
           }) }
   }
