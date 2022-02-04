@@ -41,6 +41,7 @@ import { getcalltypepipes } from './Datapipes/calltype_iconpipe';
 import { getcalltypetextpipes } from './Datapipes/changecalltypetext';
 import { CallInterfaceComponent } from './call/call-interface/call-interface.component';
 import { getcapitalletter } from './Datapipes/capitalizepipe';
+import { webrtcsocket } from '../service/webrtcsocket';
 
 
 @NgModule({
@@ -83,7 +84,7 @@ import { getcapitalletter } from './Datapipes/capitalizepipe';
     MatSliderModule,
     DragDropModule
   ],
-  providers: [agentsocketapi,gigaaasocketapi],
+  providers: [agentsocketapi,gigaaasocketapi,webrtcsocket],
   schemas: [CUSTOM_ELEMENTS_SCHEMA,NO_ERRORS_SCHEMA],
 
 })

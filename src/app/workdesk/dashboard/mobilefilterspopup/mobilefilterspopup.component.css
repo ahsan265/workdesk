@@ -168,12 +168,12 @@ color: #162741;
     margin-top: 6px;
 }
 .scrollpanelforcountrylist{
-    min-height: 203px;
-    max-height: 212px;
+    min-height: 115px;
+    max-height: 115px;
     overflow-y: scroll;
     overflow-x: hidden;
     width: 95%;
-    margin-top: 6px;
+    margin-top: 12px;
 }
 .country.dropdown{
  width: 100%;
@@ -187,8 +187,8 @@ display: block;
 .dropdown-menu.show.country{
     width: 100%;
     margin-top: -40px;
-    min-height: 226px;
-    max-height: 226px;
+    min-height: 210px;
+    max-height: 210px;
     padding: 0px;
     position: relative !important;
 
@@ -247,7 +247,7 @@ input[type="checkbox"]  {
     background: #FFFFFF;
     border: 0.5px solid rgba(166, 168, 186, 0.5);
     box-sizing: border-box;
-    border-radius: 4px;
+    border-radius: 2px;
     vertical-align: middle;
     appearance: inherit;
     cursor: pointer;
@@ -382,3 +382,37 @@ color: rgba(22, 39, 65, 0.8);
 .active {
     background: #EDEDF6;
       }
+      .clearalla{
+        display: inline-flex;
+        text-align: right;
+        float: right;
+        font-family: "Roboto",sans-serif;
+        font-style: normal;
+        font-weight: 500;
+        font-size: 12px;
+        line-height: 34px;
+        height: inherit;
+        margin-right: 22px;
+        letter-spacing: 0.02em;
+        color: #1C54DB;
+    
+    }
+    .form_input.search{
+        background: url(../../../../assets/search.svg) no-repeat scroll 10px 9px;
+        padding-left: 42px;
+        cursor: text;
+        font-family: "Roboto",sans-serif;
+        font-style: normal;
+        font-weight: normal;
+        font-size: 12px;
+        line-height: 22px;
+        background-position: 16px;
+        display: flex;
+        align-items: center;
+        letter-spacing: 0.02em;
+        border: none;
+        margin: 0px;
+        color: #7D8696;
+        box-shadow: none;
+    
+    }

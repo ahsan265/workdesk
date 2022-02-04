@@ -21,7 +21,7 @@ import { sharedres_service } from "./sharedres.service";
      this.callsocketapi_by_selecting_intgid()
       }
         public  callsocketapi_by_selecting_intgid()
-          {    const socketvalue = JSON.parse(localStorage.getItem('gigaaa-socket'))
+          { const socketvalue = JSON.parse(localStorage.getItem('gigaaa-socket'))
           
             this.sharedres.runsocketapiusingint_id$.subscribe(data=>{
            
