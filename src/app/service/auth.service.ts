@@ -11,6 +11,7 @@ import { MessageService } from './messege.service';
 import { sharedres_service } from './sharedres.service';
 import { environment } from 'src/environments/environment';
 import { HttpClient } from '@angular/common/http';
+import { agentsocketapi } from './agentsocketapi';
 
 @Injectable({
   providedIn: 'root'
@@ -23,7 +24,9 @@ export class AuthService implements CanActivate {
   
   constructor(private http: HttpClient,private gigaaaApiService:GigaaaApiService,
     private message:MessageService,
-    private sharedres:sharedres_service) {
+    private sharedres:sharedres_service,
+    private agentsocket:agentsocketapi,
+    private gigaaasocket:gigaaasocketapi) {
     this.user = new BehaviorSubject(this.getLoggedUser());
       console.log(this.user)
    }
@@ -74,11 +77,16 @@ export class AuthService implements CanActivate {
 
     // get all integration
       getallintegrationlist(token:any,orgid:any)
-      {
+      {          
+        const gigaaasocket = JSON.parse(localStorage.getItem('gigaaa-socket'));
+        if(gigaaasocket==true)
+        {
+          this.agentsocket.closeagentsocket();
+          //this.gigaaasocket.closewebsocketcalls();
+          localStorage.setItem("gigaaa-socket",JSON.stringify(false));
+        }
       try {
-
      this.gigaaaApiService.getallintegration(token,orgid).subscribe(data=>{
-
       this.integration=data;
       if(this.integration.length!=0)
       {

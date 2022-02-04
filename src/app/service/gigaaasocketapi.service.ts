@@ -135,7 +135,7 @@ callsocketapi_by_selecting_intgid()
     closewebsocketcalls()
     { const socketvalue = JSON.parse(localStorage.getItem('gigaaa-socket'))
       if(socketvalue==true)
-      {this.isopensocker=1;
+      {
         this.ws.close();
       }
     }
