@@ -32,9 +32,13 @@ export interface Language {
     language: Language;
     profile: Profile;
     timestamp: string;
+    subscription_id:subsid;
     
   }
-  
+  export interface subsid{
+    subsid:{uuid:string,
+      currency:string}
+  }
   
   export interface LoginCredentials {
     email: string;

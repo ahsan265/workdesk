@@ -25,14 +25,7 @@ export class AuthService implements CanActivate {
     private message:MessageService,
     private sharedres:sharedres_service) {
     this.user = new BehaviorSubject(this.getLoggedUser());
-    this.user.subscribe(data=>{
-      console.log(data)
-      if(data!=null)
-      { 
-         this.getOrganizationId(data.api_token);
-         this.getinvitationToken(data.api_token);
-      }
-    })
+      console.log(this.user)
    }
 
   public isLoggedIn(): boolean {
@@ -44,44 +37,45 @@ export class AuthService implements CanActivate {
 
 
   public getLoggedUser(): User {
+    console.log("hello")
     const user: any = localStorage.getItem('gigaaa-user');
    let logged_user= JSON.parse(user);
-  //  if(logged_user!=null)
-  //  {
-  //   this.getOrganizationId(logged_user.api_token);
-  //   this.getinvitationToken(logged_user.api_token);
-  //  }
-  
+   if(logged_user!=null)
+   {
+    this.getOrganizationId(logged_user.api_token);
+    this.getinvitationToken(logged_user.api_token);
+   }
    return logged_user;
   }
 
-  canActivate() {
-    return this.isLoggedIn()
-  }
+      canActivate() {
+        return this.isLoggedIn()
+      }
 
-// get organization id 
- public  async getOrganizationId(token:any): Promise<any>{
-   try{
-    const subsiddata = JSON.parse(localStorage.getItem('gigaaa-user'));
-      const subsid=await this.gigaaaApiService.getsubsid(token);
-      this.orgId=subsid['uuid'];
-      subsiddata['subscription_id']={subsid};
-      this.getallintegrationlist(token,this.orgId);
-      localStorage.setItem('gigaaa-user', JSON.stringify(subsiddata));
+    // get organization id 
+    public  async getOrganizationId(token:any): Promise<any>{
+      try{
+      
+          const subsid=await this.gigaaaApiService.getsubsid(token);
+          this.orgId=subsid['uuid'];
+          const subsiddata = JSON.parse(localStorage.getItem('gigaaa-user'));
+          subsiddata['subscription_id']={subsid};
+          this.getallintegrationlist(token,this.orgId);
+          localStorage.setItem('gigaaa-user', JSON.stringify(subsiddata));
 
-   }
-   catch(err)
-   {
-    this.message.setErrorMessage(err.error.error);
+      }
+      catch(err)
+      {
+        this.message.setErrorMessage(err.error.error);
 
-   }
-    
-}
+      }
+        
+    }
 
-// get all integration
-getallintegrationlist(token:any,orgid:any)
-{
-try {
+    // get all integration
+      getallintegrationlist(token:any,orgid:any)
+      {
+      try {
 
      this.gigaaaApiService.getallintegration(token,orgid).subscribe(data=>{
 
@@ -108,6 +102,7 @@ try {
     this.message.setErrorMessage(error);
     }
     }
+    // invitation code 
     public  async getinvitationToken(token): Promise<void>
     {
       try

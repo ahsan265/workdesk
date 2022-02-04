@@ -118,10 +118,13 @@ websites=[{text:"Partnership",url:['https://partnerships.gigaaa.com/'],image:'..
           //   this.pageTitle=locID[3].charAt(0).toUpperCase() + locID[3].slice(1);
           
           // });
-          
           this.authService.user.subscribe((r: any) => {
             this.user = r;
-        
+            if(this.user!=null)
+            {
+              this.authService.getOrganizationId(this.user.api_token);
+            }
+          
           });
    
 
