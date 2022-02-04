@@ -17,6 +17,7 @@ interface IRange {
   styleUrls: ['./mobilefilterspopup.component.css']
 })
 export class MobilefilterspopupComponent implements OnInit {
+  countrychecked:boolean=true;
   defaultlang_ids=[];
   defaultcount_ids=[];
   selectedtimeSlot:any;
@@ -308,7 +309,7 @@ showselectedpanel(val)
        if(this.id_sofcountries.length==249)
        {
         this.countrySelected="All Selected"
-  
+        this.countrychecked=true;
        }
        else{
         this.countrySelected=this.id_sofcountries.length +"\xa0"+"Selected";
@@ -327,10 +328,13 @@ showselectedpanel(val)
       if(this.id_sofcountries.length==0)
       {
         this.countrySelected="Not Selected";
+       
+
       }
       else{
         this.countrySelected=this.id_sofcountries.length +"\xa0"+"Selected";
       }
+      this.countrychecked=false;
     }
     }
  //selectionpanel for selecting the panes
@@ -637,5 +641,37 @@ showselectedpanel(val)
 
  return  {fromdate:dateStart1,todate:enddate1};
 
+  }
+  getallcountriesshow(tabs,val,signal)
+  {
+
+  }
+
+   // search country list
+   search(term:string,field:Array<any>) {  
+
+    var result=this.countrylist.filter((obj ,i)=> {
+     if(obj['name']!=null)
+     {
+      return obj['name'].toLowerCase().includes(term.toLowerCase());
+     }
+     else  if(obj['name']==null)
+     {
+       return obj['name'].toLowerCase().includes(term.toLowerCase());
+     }
+   });
+   console.log(result);
+  //  if(this.selectedtabs=="Calls")
+  //  {
+  //    this.countrylist_calls=result;
+  //  }
+  //  else if(this.selectedtabs=="Users")
+  //  { 
+  //    this.countrylist_chats=result;
+  //  }
+  //  else if(this.selectedtabs=="Visitors")
+  //  { 
+  //      this.countrytlist_ticket=result
+  //  }
   }
 }

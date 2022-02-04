@@ -414,7 +414,7 @@ return ("0" + minutes).slice(-2) + ":" + ("0" +seconds).slice(-2);
       this.missed=false;
       this.answered=false;
       this.selectedtabs="ongoing"
-   //  this.openCallInterface();
+    //  this.openCallInterface("");
     }
     else if(val=="missed")
     {
@@ -683,20 +683,22 @@ return time;
 
 // dial call
 
-public async dialcall(callid:any): Promise<void>
+public async  dialcall(callid:any):Promise<void>
 {
-  
-  const getdata = JSON.parse(localStorage.getItem('gigaaa-user'))
-    var accesstoken=getdata.api_token;
+  let data= {"call_uuid": callid}
+  //this.openCallInterface(data);
+   const getdata = JSON.parse(localStorage.getItem('gigaaa-user'))
+    let accesstoken=getdata.api_token;
     const id = JSON.parse(localStorage.getItem('intgid'))
     const agentuuid = JSON.parse(localStorage.getItem('userlogged_uuid'))
 
-    var uuid=getdata.subscription_id.subsid.uuid;
-   var data= {"call_uuid": callid}
+   let uuid=getdata.subscription_id.subsid.uuid;
+
   try{
   const call_url= await this.gigaaaservice.getcalltype(accesstoken,uuid,id.int_id,data);
   window.open(call_url.url+"&integration="+id.int_id+"&agentlogged_uuid="+agentuuid?.uuid, "_blank");
-
+   
+// this.openCallInterface(data);
   }
   catch(err){
     this.messageservie.setErrorMessage(err.error.error);
@@ -1788,13 +1790,14 @@ this.allselectedcall2=status;
       }
     })
   }
-  openCallInterface()
+  openCallInterface(data:any)
   {
     this.dialog.open(CallInterfaceComponent,{
         hasBackdrop:true,
         panelClass:"callinterface-form-container",
         backdropClass:"backdropBackgroundforcall",
-        disableClose:true
+        disableClose:true,
+        data:data
         
       });
   }

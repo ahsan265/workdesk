@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, ReplaySubject } from 'rxjs';
+import { BehaviorSubject, Observable, ReplaySubject } from 'rxjs';
 import { CanActivate, Router } from '@angular/router';
 import { CookieService } from 'ngx-cookie-service';
 import { User } from '../model/User';
@@ -9,6 +9,8 @@ import { GigaaaApiService } from './gigaaaapi.service';
 import { ltLocale } from 'ngx-bootstrap/chronos';
 import { MessageService } from './messege.service';
 import { sharedres_service } from './sharedres.service';
+import { environment } from 'src/environments/environment';
+import { HttpClient } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
@@ -18,7 +20,8 @@ export class AuthService implements CanActivate {
   public user: BehaviorSubject<User>;
   token: any;
   orgId:any;
-  constructor(private gigaaaApiService:GigaaaApiService,
+  
+  constructor(private http: HttpClient,private gigaaaApiService:GigaaaApiService,
     private message:MessageService,
     private sharedres:sharedres_service) {
     this.user = new BehaviorSubject(this.getLoggedUser());
@@ -35,10 +38,21 @@ export class AuthService implements CanActivate {
   public isLoggedIn(): boolean {
     return !!localStorage.getItem('gigaaa-user');
   }
+  getCurrentUser(token):Observable<any> {
+    return this.http.get(`${environment.apiUrl}/current-user`, { headers: { 'Content-Type': 'application/json', 'Accept': 'application/json', 'Authorization': `Bearer ${token}`}})
+  }
+
 
   public getLoggedUser(): User {
     const user: any = localStorage.getItem('gigaaa-user');
-    return JSON.parse(user);
+   let logged_user= JSON.parse(user);
+  //  if(logged_user!=null)
+  //  {
+  //   this.getOrganizationId(logged_user.api_token);
+  //   this.getinvitationToken(logged_user.api_token);
+  //  }
+  
+   return logged_user;
   }
 
   canActivate() {

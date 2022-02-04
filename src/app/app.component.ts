@@ -121,6 +121,7 @@ websites=[{text:"Partnership",url:['https://partnerships.gigaaa.com/'],image:'..
           
           this.authService.user.subscribe((r: any) => {
             this.user = r;
+        
           });
    
 
