@@ -35,7 +35,7 @@ import { sharedres_service } from "./sharedres.service";
       getagentlive()
       {
         var getdata = JSON.parse(localStorage.getItem('gigaaa-user'))
-          var uuid=getdata?.subscription_id.subsid.uuid;
+          var uuid=getdata?.subscription_id?.subsid.uuid;
           var intid = JSON.parse(localStorage.getItem('intgid'))
           const loggedinuser_uuid = JSON.parse(localStorage.getItem('userlogged_uuid'));
 

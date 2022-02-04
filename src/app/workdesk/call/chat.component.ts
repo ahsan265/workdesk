@@ -414,7 +414,7 @@ return ("0" + minutes).slice(-2) + ":" + ("0" +seconds).slice(-2);
       this.missed=false;
       this.answered=false;
       this.selectedtabs="ongoing"
-    //  this.openCallInterface("");
+   //   this.openCallInterface("");
     }
     else if(val=="missed")
     {
@@ -698,7 +698,7 @@ public async  dialcall(callid:any):Promise<void>
   const call_url= await this.gigaaaservice.getcalltype(accesstoken,uuid,id.int_id,data);
   window.open(call_url.url+"&integration="+id.int_id+"&agentlogged_uuid="+agentuuid?.uuid, "_blank");
    
-// this.openCallInterface(data);
+
   }
   catch(err){
     this.messageservie.setErrorMessage(err.error.error);

@@ -51,7 +51,7 @@ callsocketapi_by_selecting_intgid()
   {
     var getdata = JSON.parse(localStorage.getItem('gigaaa-user'))
     var accesstoken=getdata?.api_token;
-      var uuid=getdata?.subscription_id.subsid.uuid;
+      var uuid=getdata?.subscription_id?.subsid.uuid;
       var intid = JSON.parse(localStorage.getItem('intgid'))
       var integrationid=intid?.int_id;
    if(accesstoken!=null&&uuid!=null&&integrationid!=null)
