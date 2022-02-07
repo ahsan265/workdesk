@@ -85,7 +85,6 @@ websites=[{text:"Partnership",url:['https://partnerships.gigaaa.com/'],image:'..
   hideTopbar:boolean=false;
   constructor(
     public authService: AuthService,
-    private oAuthService:oAuthService,
     private apiService: GigaaaApiService,
     private cookie: CookieService,
     private share_res:sharedres_service,

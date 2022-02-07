@@ -13,7 +13,10 @@ import { textChangeRangeIsUnchanged } from 'typescript';
 
 const webrtcmediacontraints={
   audio:true,
-  video:{width:226,height:144}
+  video:{width:226,height:144},
+  autoGainControl: true,
+  echoCancellation: true,
+  noiseSuppression: true
 }
 const webrtcmediacontraints_user={
    offerToReceiveAudio:true,
@@ -302,7 +305,7 @@ export class CallInterfaceComponent implements OnInit,AfterViewInit,OnDestroy  {
     if(val==true)
     { this.micbtn=false;
       this.micIcon="../../../../assets/assets_workdesk/microphone.svg";
-
+    
     }
     else {
       this.micbtn=true;

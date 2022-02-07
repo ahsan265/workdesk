@@ -1,5 +1,6 @@
 import { ChangeDetectorRef, Component, Inject, OnInit, ViewChild } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { count } from 'console';
 import { BsDaterangepickerDirective } from 'ngx-bootstrap/datepicker';
 import { element } from 'protractor';
 import { GigaaaApiService } from 'src/app/service/gigaaaapi.service';
@@ -29,6 +30,7 @@ datesecondfrompicker:any;
   showlanguagefilter:boolean=false;
   showcustomdatefilter:boolean=false;
   countrylist:any;
+  countryArray:any;
   rangeSelected:any;
   languageselected:any;
   countrySelected:any;
@@ -37,6 +39,7 @@ datesecondfrompicker:any;
   lang=[];
   id_soflanguages=[];
   id_sofcountries=[];
+  countryallChecked:boolean=true;
 
   sendDate_from:any;
   sendDate_to:any;
@@ -181,12 +184,13 @@ showselectedpanel(val)
   try{
     var data= await this.gigaaaservice.getAllCountries(accesstoken);
     var countrylist= data.map((item, i) => Object.assign(item,{ status: false}));
-    countrylist=data;
+      countrylist=data;
      this.countrylist= countrylist.sort((a, b)=> {
       var textA = a.name;
       var textB = b.name;
       return (textA < textB) ? -1 : (textA > textB) ? 1 : 0;
   });
+  this.countryArray=this.countrylist;
   this.getselectedcountry(this.data?.country_ids)
   this.countrylist.forEach(element => {
     this.defaultcount_ids.push(element.id);
@@ -263,7 +267,6 @@ showselectedpanel(val)
      selectlanguagesonebyone(e:any,id:any)
      {
 
-     
      if(e==true)
      { var objIndex = this.lang.findIndex((obj => obj.id == id));
 
@@ -272,8 +275,6 @@ showselectedpanel(val)
       if(this.id_soflanguages.length==6)
       {
         this.languageselected="All Selected"
-
-
       }
       else{
         this.languageselected=this.id_soflanguages.length +"\xa0"+"Selected"
@@ -309,8 +310,8 @@ showselectedpanel(val)
        if(this.id_sofcountries.length==249)
        {
         this.countrySelected="All Selected"
-        this.countrychecked=true;
-       }
+        this.countryallChecked=true;
+      }
        else{
         this.countrySelected=this.id_sofcountries.length +"\xa0"+"Selected";
        }
@@ -334,7 +335,7 @@ showselectedpanel(val)
       else{
         this.countrySelected=this.id_sofcountries.length +"\xa0"+"Selected";
       }
-      this.countrychecked=false;
+      this.countryallChecked=false;
     }
     }
  //selectionpanel for selecting the panes
@@ -642,15 +643,12 @@ showselectedpanel(val)
  return  {fromdate:dateStart1,todate:enddate1};
 
   }
-  getallcountriesshow(tabs,val,signal)
-  {
 
-  }
 
    // search country list
    search(term:string,field:Array<any>) {  
-
-    var result=this.countrylist.filter((obj ,i)=> {
+    
+    let result=this.countryArray.filter((obj ,i)=> {
      if(obj['name']!=null)
      {
       return obj['name'].toLowerCase().includes(term.toLowerCase());
@@ -660,18 +658,63 @@ showselectedpanel(val)
        return obj['name'].toLowerCase().includes(term.toLowerCase());
      }
    });
-   console.log(result);
-  //  if(this.selectedtabs=="Calls")
-  //  {
-  //    this.countrylist_calls=result;
-  //  }
-  //  else if(this.selectedtabs=="Users")
-  //  { 
-  //    this.countrylist_chats=result;
-  //  }
-  //  else if(this.selectedtabs=="Visitors")
-  //  { 
-  //      this.countrytlist_ticket=result
-  //  }
+  //  console.log(result);
+  //  var mergedArrayWithoutDuplicates = this.countryArray.concat(
+  //  this.countrylist.filter(seccondArrayItem => !this.countryArray.includes(seccondArrayItem))
+  // );
+        this.countrylist=result;
+
   }
+
+       // get all countries
+       getallcountriesshow(val)
+       {
+          var udpatedcountry=[];
+          var countryid=[];
+          var checked;
+          this.countrylist.forEach(element=>{
+          var index = countryid.indexOf(element.id);
+          if (index !== -1) {
+            countryid.splice(index, 1);
+    
+          }
+            })
+          if(val==true)
+          {
+    
+          this.countrylist.forEach(element => {
+          udpatedcountry.push({name:element.name,status:true,id:element.id})
+          countryid.push(element.id)
+        });
+        this.countrylist=udpatedcountry;
+        this.id_sofcountries=countryid;
+    
+        this.countrySelected=countryid.length +"\xa0"+"Selected";
+          if(countryid.length==249)
+          {
+            this.countrySelected="All Selected";
+              this.countryallChecked=true;
+          }
+    
+          }
+         else if(val==false){
+          this.countrylist.forEach(element => {
+            udpatedcountry.push({name:element.name,status:false,id:element.id})
+         var index = countryid.indexOf(element.id);
+          if (index !== -1) {
+            countryid.splice(index, 1);
+          }
+    
+          });
+          this.countrylist=udpatedcountry;
+          this.id_sofcountries=countryid;
+          this.countryallChecked=false;
+          this.countrySelected="Not Selected";
+          checked=false;
+  
+    
+    
+      }
+    
+       }
 }

@@ -414,7 +414,8 @@ return ("0" + minutes).slice(-2) + ":" + ("0" +seconds).slice(-2);
       this.missed=false;
       this.answered=false;
       this.selectedtabs="ongoing"
-   //   this.openCallInterface("");
+    //   let data= {"call_uuid": 1234567892555}
+    // this.openCallInterface(data);
     }
     else if(val=="missed")
     {
@@ -686,7 +687,7 @@ return time;
 public async  dialcall(callid:any):Promise<void>
 {
   let data= {"call_uuid": callid}
-  //this.openCallInterface(data);
+ // this.openCallInterface(data);
    const getdata = JSON.parse(localStorage.getItem('gigaaa-user'))
     let accesstoken=getdata.api_token;
     const id = JSON.parse(localStorage.getItem('intgid'))
