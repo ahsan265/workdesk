@@ -41,7 +41,6 @@ export class AuthService implements CanActivate {
   public getLoggedUser(): User {
     const user: any = localStorage.getItem('gigaaa-user');
    let logged_user= JSON.parse(user);
-  //  console.log(logged_user)
   //  if(logged_user!=null)
   //  {
   //   this.getOrganizationId(logged_user.api_token);

@@ -29,9 +29,7 @@ export class LandingpageComponent implements OnInit {
     if (this.authService.isLoggedIn()) {
       this.router.navigate(['/dashboard']);
     }
-    else {
-      localStorage.clear();
-    }
+   
     this.sharedres.getinivationdetail();
     this.getdetailsforinviteduser();
   }

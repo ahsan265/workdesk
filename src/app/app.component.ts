@@ -133,7 +133,6 @@ websites=[{text:"Partnership",url:['https://partnerships.gigaaa.com/'],image:'..
             this.user = r;
             if(this.user!=null)
             {
-              console.log(  this.user)
               this.authService.getOrganizationId(this.user.api_token);
             }
           
@@ -188,11 +187,13 @@ websites=[{text:"Partnership",url:['https://partnerships.gigaaa.com/'],image:'..
 
   onNoLoggedUsers(event: any) {
     if (event) {
-    
+      console.log(event)
+      localStorage.clear();
       this.agentsocketapi.closeagentsocket();
       this.socketapi.closewebsocketcalls();
-       localStorage.clear();
+   
       location.href = this.redirectUri;
+      
     }
   }
 

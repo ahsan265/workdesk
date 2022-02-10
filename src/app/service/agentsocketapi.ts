@@ -22,7 +22,6 @@ import { sharedres_service } from "./sharedres.service";
       }
         public  callsocketapi_by_selecting_intgid()
           { const socketvalue = JSON.parse(localStorage.getItem('gigaaa-socket'))
-          
             this.sharedres.runsocketapiusingint_id$.subscribe(data=>{
            
               if(data==1&&socketvalue!=true)
