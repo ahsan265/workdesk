@@ -314,12 +314,12 @@ input[type="checkbox"]  {
     }
     
     input[type=checkbox]:checked:after {
-    content: "\2714";
-    margin-left: 2px;
-    margin-top: 0px;
+      content: "\2714";
+      margin-left: 2px;
+      margin-top: -4px;
       position: absolute;
-    color: #FFFFFF;
-    border-bottom:none;
+      color: #FFFFFF;
+      border-bottom: none;
     }
     li.listitem{
     margin: 4px;

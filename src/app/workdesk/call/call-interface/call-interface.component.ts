@@ -6,7 +6,9 @@ import { AfterViewInit, Component, ElementRef, HostListener, Inject, OnDestroy, 
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { url } from 'inspector';
 import { element, promise } from 'protractor';
+import { of } from 'rxjs';
 import { MessageService } from 'src/app/service/messege.service';
+import { sharedres_service } from 'src/app/service/sharedres.service';
 import { webrtcsocket } from 'src/app/service/webrtcsocket';
 import { environment } from 'src/environments/environment';
 import { textChangeRangeIsUnchanged } from 'typescript';
@@ -14,10 +16,8 @@ import { textChangeRangeIsUnchanged } from 'typescript';
 const webrtcmediacontraints={
   audio:true,
   video:{width:226,height:144},
-  autoGainControl: true,
-  echoCancellation: true,
-  noiseSuppression: true
 }
+
 const webrtcmediacontraints_user={
    offerToReceiveAudio:true,
    offerToReceiveVideo:true,
@@ -28,12 +28,12 @@ const webrtcmediacontraints_user={
   styleUrls: ['./call-interface.component.css']
 })
 export class CallInterfaceComponent implements OnInit,AfterViewInit,OnDestroy  {
-
+ 
   localstream:MediaStream;
   peerconnection:RTCPeerConnection;
-  @ViewChild ('localVideo',{static: true})  localVideo: ElementRef;
-  @ViewChild ('remoteVideo',{static: true})  remotevideo: ElementRef;
-
+  @ViewChild ('localVideo')  localVideo: ElementRef;
+  @ViewChild ('remoteVideo')  remotevideo: ElementRef;
+ showUserRemoveVideo:boolean;
   dragPosition = {x: 0, y: 0};
 
   screensharebtn:boolean=true;
@@ -52,27 +52,33 @@ export class CallInterfaceComponent implements OnInit,AfterViewInit,OnDestroy  {
     private _viewContainerRef: ViewContainerRef,   
      public dialogRef: MatDialogRef<CallInterfaceComponent>,
      private webrtcservice:webrtcsocket,
+     private shared_res:sharedres_service,
      @Inject(MAT_DIALOG_DATA) public data,
      private message:MessageService) 
      {
-     
-   
+      this.requestmediadevices();
      }
 
      ngOnInit(): void {
-
       this.webrtcservice.callUserSocket(this.data.call_uuid);
       this.addIncomingCallHandler();
+    
     }
+       
     //call the user 
     async callTheUser(): Promise<void>
     {
       await this.createPeerConnection();
      
     }
-    // send offer to user 
+
+    // send offer to user  and call 
    private async sendOffertoUser(id):Promise <any>
-    {
+    { 
+      if(!this.peerconnection)
+      {
+        this.createPeerConnection();
+      }
       this.localstream.getTracks().forEach(track=>{
         console.log(track)
         this.peerconnection.addTrack(track,this.localstream);
@@ -91,16 +97,17 @@ export class CallInterfaceComponent implements OnInit,AfterViewInit,OnDestroy  {
     createPeerConnection()
     {
       this.peerconnection= new RTCPeerConnection({
-        iceServers:[
-          {
-            urls: 'turn:13.81.45.178:3478?transport=tcp',  // A TURN server
-            username: 'username',
-            credential: 'password',
-            credentialType: "password"
-          },
-          {
-            urls: 'stun:stun.l.google.com:19302'
-          }
+     
+          iceServers:[
+            {
+              urls: 'turn:13.81.45.178:3478?transport=tcp',  // A TURN server
+              username: 'username',
+              credential: 'password',
+              credentialType: "password"
+            },
+            {
+              urls: 'stun:stun.l.google.com:19302'
+            }
         ],
         iceCandidatePoolSize: 10,
       });
@@ -127,6 +134,7 @@ export class CallInterfaceComponent implements OnInit,AfterViewInit,OnDestroy  {
       });
       this.peerconnection.close();
       this.peerconnection=null;
+      this.dialogRef.close();
     }
     // handle error 
     handleError(e:Error)
@@ -171,26 +179,31 @@ export class CallInterfaceComponent implements OnInit,AfterViewInit,OnDestroy  {
     }
     private handleTrackEvent=(event:RTCTrackEvent)=>{
       console.log(event);
-      this.remotevideo.nativeElement.srcObject=event.streams[0];
+      if(event.transceiver.receiver.track.kind=="video"&& event.transceiver.receiver.track.enabled==true)
+      {
+        document.getElementById("remoteVideo").style.background="block";
+      }
+      else if(event.transceiver.receiver.track.kind=="video"&& event.transceiver.receiver.track.enabled==false)
+      {
+        document.getElementById("remoteVideo").style.background="block";
 
+      }
+      this.remotevideo.nativeElement.srcObject=event.streams[0];
+      console.log(event.track);
     }
    ngAfterViewInit(): void {
-    
+ 
       this._portal = new TemplatePortal(this._dialogTemplate, this._viewContainerRef);
-      this._overlayRef = this._overlay.create({ positionStrategy: this._overlay.position().global().centerHorizontally().centerVertically(),
-        hasBackdrop: true,
+      this._overlayRef = this._overlay.create({ positionStrategy: this._overlay.position().global().centerVertically().centerVertically(),
+        hasBackdrop: false,
       });
-      this._overlayRef.backdropClick().subscribe(()=>{
-      });
-
-
-      this.requestmediadevices();
-      this.callTheUser();
+      this._overlayRef.backdropClick().subscribe(() => this._overlayRef.detach());
+          this.callTheUser();
+     
   }
   // add incoming call handler
   addIncomingCallHandler()
   {
-    // this.webrtcservice.callUserSocket();
     this.webrtcservice.callobject$.subscribe(msg=>{
       switch(msg.type)
       {
@@ -235,8 +248,8 @@ export class CallInterfaceComponent implements OnInit,AfterViewInit,OnDestroy  {
       this.localstream.getTracks().forEach(track=>this.peerconnection.addTrack(track,this.localstream));
     }).then(()=>{
       return this.peerconnection.createAnswer();
-    }).then((answere)=>{
-      return this.peerconnection.setLocalDescription(answere);
+    }).then((answer)=>{
+      return this.peerconnection.setLocalDescription(answer);
     }).then(()=>{
       this.webrtcservice.sendDataforCall({type:"answer",data:this.peerconnection.localDescription});
     }).catch(this.handleError);
@@ -244,6 +257,7 @@ export class CallInterfaceComponent implements OnInit,AfterViewInit,OnDestroy  {
   }
   private handleAnswereMessage(data)
   {
+  
     this.peerconnection.setRemoteDescription(data);
   }
 
@@ -254,7 +268,8 @@ export class CallInterfaceComponent implements OnInit,AfterViewInit,OnDestroy  {
   
   private handleIceCandidateMessage(data)
   {
-    this.peerconnection.addIceCandidate(data).catch(this.reportError);
+    const candidate = new RTCIceCandidate(data);
+    this.peerconnection.addIceCandidate(candidate).catch(this.reportError);
   }
   private reportError=(e:Error)=>
   {
@@ -271,7 +286,7 @@ export class CallInterfaceComponent implements OnInit,AfterViewInit,OnDestroy  {
   private async requestmediadevices(): Promise<void>
   {
     this.localstream=await navigator.mediaDevices.getUserMedia(webrtcmediacontraints);
-    this.pausevideoCall();
+   this.pausevideoCall();
   
   }
   changePosition() {
@@ -283,10 +298,9 @@ export class CallInterfaceComponent implements OnInit,AfterViewInit,OnDestroy  {
   }
   closecall()
   {
-
+    this.hangupCall()
     this.webrtcservice.ws.close();
-    this.closeVideoCall()
-    this.dialogRef.close(); 
+   
   }
 
   screensharebtncheck(val)
@@ -315,7 +329,6 @@ export class CallInterfaceComponent implements OnInit,AfterViewInit,OnDestroy  {
 
   camerabtncheck(val)
   {
-    console.log(val)
     if(val==true)
     { this.camerabtn=false;
       this.cameraIcon="../../../assets/assets_workdesk/video.svg";
@@ -351,7 +364,7 @@ export class CallInterfaceComponent implements OnInit,AfterViewInit,OnDestroy  {
         if(val==true)
         { this.hideContant=false;
           this.is_dragable=false;
-       
+
           this.dialogRef.removePanelClass('maximizecallinterface');
           if(this.camerabtn==false)
           {
@@ -370,25 +383,20 @@ export class CallInterfaceComponent implements OnInit,AfterViewInit,OnDestroy  {
           this.is_dragable=true;
           this.hidecamera=false;
           this.changePosition();
-          this.dialogRef.removePanelClass('minimizecallinterface');
-          this.dialogRef.removePanelClass('maximizeVideocallinterface');
+          this.dialogRef.removePanelClass(['maximizeVideocallinterface','minimizecallinterface']);
           this.dialogRef.addPanelClass('maximizecallinterface');
        
 
         }
         
       }
-      // minimize the screen
-      maxMizetheScreen()
-      { 
-       
-      }
-
+   
       startvideoCall()
       {
       this.localstream.getTracks().forEach(track=>{
         track.enabled=true;
       });
+    
       this.localVideo.nativeElement.srcObject=this.localstream;
       }
       pausevideoCall()
@@ -397,6 +405,12 @@ export class CallInterfaceComponent implements OnInit,AfterViewInit,OnDestroy  {
           track.enabled=false;
         });
         this.localVideo.nativeElement.srcObject=undefined;
+      }
+      stopvideocall()
+      {
+        this.localstream.getTracks().forEach(track=>{
+          track.stop();
+        });
       }
 
     

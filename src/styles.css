@@ -1,15 +1,10 @@
 /* You can add global styles to this file, and also import other style files */
-
-@import "https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700";
-@import '~ngx-toastr/toastr.css';
-
-@import '../node_modules/foundation-sites/dist/css/foundation-float.css';
-@import '../node_modules/foundation-sites/dist/css/foundation-float.min.css';
-@import '../node_modules/foundation-sites/dist/css/foundation-rtl.css';
-@import '../node_modules/foundation-sites/dist/css/foundation-rtl.min.css';
-@import '../node_modules/foundation-sites/dist/css/foundation.css';
-@import '../node_modules/foundation-sites/dist/css/foundation.min.css';
-
+.main{
+    overflow: hidden;
+}
+.cdk-global-scrollblock{
+    overflow: hidden;
+}
 .sidebarWrap{
     border: 0px !important;
     border-right: 1px solid rgba(208,208,222,.8) !important;
@@ -1760,7 +1755,7 @@ input:checked+.slider:before {
 
   .cdk-overlay-pane{
     display: contents;
-    scroll-behavior: auto;
+    overflow: hidden;
   
   }
 .custom-dialog-container1 > .mat-dialog-container {
@@ -2057,6 +2052,9 @@ body .bs-datepicker-container  .bs-datepicker-body   tbody tr:nth-child(even){
     background-color: #FFFFFF;
 }
 
+.cdk-overlay-container{
+    overflow: hidden;
+}
    .linkexpired-form-container .mat-dialog-container {
     background: #FFFFFF;
     box-shadow: 0px 1px 5px 2px rgba(166, 168, 186, 0.3);
@@ -2109,6 +2107,7 @@ body .bs-datepicker-container  .bs-datepicker-body   tbody tr:nth-child(even){
     overflow-x: hidden;
     overflow-y: hidden;
     vertical-align: middle;
+    display: contents;
     bottom: 12%;
     right: 5%;
     position: absolute;
@@ -2148,10 +2147,7 @@ body .bs-datepicker-container  .bs-datepicker-body   tbody tr:nth-child(even){
     vertical-align: middle;
     transition-duration: 0.4s;
     border-radius: 4px;
-    /* bottom:0;
-    right:0;
-    top: 0;
-    left: 0; */
+    display: contents;
     position: relative;
    }
    .mobilefilter-form-container .mat-dialog-container {
@@ -2166,34 +2162,55 @@ body .bs-datepicker-container  .bs-datepicker-body   tbody tr:nth-child(even){
     vertical-align: middle;
     padding: 0px;
    }
+   .minimizecallinterface .minimizearea
+   {   width: 255px;
+       height: 100px;
+       border-radius: 4px;
+       box-shadow: 3px 3px 10px rgb(0 0 0 / 23%);
+   }
+   .maximizeVideocallinterface .minimizearea{
+    box-shadow: 3px 3px 10px rgb(0 0 0 / 23%);
+    height: 325px !important;
+    width: 382px !important;
+    border-radius: 4px;
+   }
+   .minimizecallinterface .minimizearea:active{
+    cursor: grabbing;
+
+   }
+   .maximizeVideocallinterface .minimizearea:active{
+    cursor: grabbing;
+
+   }
    .minimizecallinterface .callcontrolpanel{
     width: 100% !important;
     text-align: center !important;
-    height: 50px !important;
+    height: 0 !important;
     bottom: 0 !important;
-    padding-top: 10px !important;
+    padding-top: 0px !important;
+    border-radius: 4px;
    }
    .minimizecallinterface .callcontrol{
     box-shadow: none !important;
-    height: 50px !important;
+    height: 40px !important;
     padding: 0px !important;
-    width: 255px  !important;
+    width: 250px  !important;
     text-align: center  !important;
     background: #162741;
-    border-radius: 0px !important;
+    border-radius: 4px !important;
    }
    .minimizecallinterface .callicons{
-       margin-right: 11px !important;
        height: 30px !important;
        width: 30px !important;
    }
    .minimizecallinterface .callinterface{
     height: 100px !important;
     padding: 0px !important;
+    border-radius: 4px;
    }
    .minimizecallinterface  .username{
     line-height: 18px!important;
-    height: 34px !important;
+    height: 18px !important;
     font-size: 14px !important;
     margin-left: 16px !important;
     width: 124px;
@@ -2208,15 +2225,19 @@ body .bs-datepicker-container  .bs-datepicker-body   tbody tr:nth-child(even){
         width: 30px !important;
     }
     .minimizecallinterface .userinformation{
-        width: 75% !important;
+        width: 76% !important;
         height: 50px !important;
         top: 0 !important;
         position: absolute;
+        border-top-left-radius: 4px;
         padding: 10px;
         background: #2B3A51;
     }
+    .minimizecallinterface .maxiconforvideo {
+        border-top-right-radius: 4px;
+    }
     .minimizecallinterface .callcontrolicons{
-        width: 125px !important;
+        width: 120px !important;
         height: 34px !important;
     }
     .minimizecallinterface .minimizeiconpanel{
@@ -2232,7 +2253,7 @@ body .bs-datepicker-container  .bs-datepicker-body   tbody tr:nth-child(even){
     }
     .minimizecallinterface .calltime_drop{
         width: 92px    !important;
-        margin-left: 0px !important;
+        margin-left: 15px !important;
         margin-right: 0px !important;
         height: 30px !important;
     }
@@ -2241,9 +2262,21 @@ body .bs-datepicker-container  .bs-datepicker-body   tbody tr:nth-child(even){
         width: 30px !important;
         float: left !important;
     }
+    .minimizecallinterface .callarea{
+    background: #0E1D35 !important;
+    height: 0% !important;
+    text-align: center !important;
+    display: block !important;
+    position: relative !important;
+    }
+
     .maximizeVideocallinterface .callinterface{
         padding: 0px !important;
         height: 50px  !important;
+        width: 382px !important;
+        box-shadow: none !important;
+        border-top-left-radius: 4px;
+        border-top-right-radius: 4px;
     }
     .maximizeVideocallinterface .userimage{
         height: 30px !important;
@@ -2257,6 +2290,8 @@ body .bs-datepicker-container  .bs-datepicker-body   tbody tr:nth-child(even){
         height: 50px !important;
         padding-top: 10px !important;
         padding-left: 15px !important;
+        border-top-left-radius: 4px;
+
     }
     .maximizeVideocallinterface .maxiconforvideo
     {    float: right!important;
@@ -2271,6 +2306,8 @@ body .bs-datepicker-container  .bs-datepicker-body   tbody tr:nth-child(even){
         right: 0px !important;
         padding-top: 10px !important;
         padding-right: 15px!important;
+        border-top-right-radius: 4px;
+
     }
     .maximizeVideocallinterface .callcontrolpanel{
         position:  absolute !important;
@@ -2281,6 +2318,10 @@ body .bs-datepicker-container  .bs-datepicker-body   tbody tr:nth-child(even){
         height:  71px !important;
         width: 112px !important;
     }
+    .maximizeVideocallinterface .loggedUsercamera .localcamera{
+        height:  71px !important;
+        width: 111px !important;
+    }
     .maximizeVideocallinterface .camerapersonname{
         bottom: 9px !important;
     }
@@ -2289,11 +2330,16 @@ body .bs-datepicker-container  .bs-datepicker-body   tbody tr:nth-child(even){
         text-align: center!important;
         position: absolute;
         height: 275px !important;
+        border-bottom-left-radius: 4px;
+       border-bottom-right-radius: 4px;
     }
     .maximizeVideocallinterface .userimagebig{
         height: 100px !important;
         width: 100px !important;
  
+    }
+    .maximizeVideocallinterface .callcontrol{
+        bottom: 4px !important;
     }
     
 element.style {
@@ -2323,6 +2369,12 @@ element.style {
     pointer-events: auto;   
     height: 100%;
     width: 100%;
+}
+.cdk-overlay-pane {
+    pointer-events: auto;
+    box-sizing: border-box;
+    max-width: 100%;
+    max-height: 100%;
 }
    button:focus { outline-style: none; }
    .container {

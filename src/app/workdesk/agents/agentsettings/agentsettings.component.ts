@@ -431,18 +431,9 @@ public async updateagentprofile(): Promise<any>
     var subsid=getdata.subscription_id.subsid.uuid;
     const intid = JSON.parse(localStorage.getItem('intgid'))
     try{
-     var languagee=[{name:'Arabic' ,status:false},
-      {name:'English' ,status:false},
-      {name:'German' ,status:false},
-      {name:'Russian' ,status:false},
-      {name:'Spanish' ,status:false},
-      {name:'Turkish' ,status:false},
-
-    ];
     var  language= await this.gigaaaapi.getAllLanguages(accesstoken,subsid,intid.int_id)
-      let updatearr = language.map((item, i) => Object.assign({}, item, languagee[i]));
+    let updatearr = language.map((item, i) => Object.assign({status:false}, item));
         this.lang=updatearr;
-
     }
     catch(err){
       this.message.setErrorMessage(err.error.error)

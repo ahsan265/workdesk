@@ -35,6 +35,9 @@ export class getflagpipes implements PipeTransform{
      return '../../../assets/assets_workdesk/Flags/turkish.svg'
  
    }
+   else if(val=="ur") {
+    return '../../../assets/assets_workdesk/Flags/Flag_of_Pakistan.svg'
+  }
    else
    {
      return '../../../assets/Wikipedia-Flags-DE-Germany-Flag_27.svg'

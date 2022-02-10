@@ -239,7 +239,7 @@ showselectedpanel(val)
      
     });
      this.languageselected=this.id_soflanguages.length +"\xa0"+"Selected";
-      if(this.id_soflanguages.length==6)
+      if(this.id_soflanguages.length==this.lang.length)
       {
           this.languageselected="All Selected"
           this.allselectedtag=true;
@@ -272,7 +272,7 @@ showselectedpanel(val)
 
        this.lang[objIndex].status = true;
       this.id_soflanguages.push(id);
-      if(this.id_soflanguages.length==6)
+      if(this.id_soflanguages.length==this.lang.length)
       {
         this.languageselected="All Selected"
       }

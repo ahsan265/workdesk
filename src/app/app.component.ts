@@ -25,7 +25,7 @@ export class AppComponent implements OnInit {
   integration:any;
   lastuserintegration:any="";
   integration_id:any;
-  pageTitle: string = 'Dashboard';
+  pageTitle: string;
   workplaces = [];
   redirectUri = `${environment.oauth_url}/logout?continue=${environment.uri}/logout`;
 
@@ -51,13 +51,16 @@ websites=[{text:"Partnership",url:['https://partnerships.gigaaa.com/'],image:'..
 {text:"Messenger",url:['https://messenger.gigaaa.com/'],image:'../assets/assets_workdesk/messenger.svg'},
 {text:"Analytics",url:['https://analytics.gigaaa.com/'],image:'../assets/assets_workdesk/analytics.svg'}]
   sidebarData: any = [
-    { iconUrl: this.select_integration_icon, name:"Select integration", dropdownItems:[], dropdown: true },
+    { iconUrl: this.select_integration_icon, name:"Select integration", dropdownItems:[], dropdown: true ,      isLink: false
+  },
     {
       iconUrl: this.dashboardIcon,
       activeIconUrl: this.activedashboardIcon,
       name: 'Dashboard',
       routeUrl: ['/dashboard'],
       dropdown: false,
+      isLink: true
+
     },
     {
       iconUrl: this.callIcon,
@@ -65,6 +68,8 @@ websites=[{text:"Partnership",url:['https://partnerships.gigaaa.com/'],image:'..
       name: 'Calls',
       routeUrl: ['/calls'],
       dropdown: false,
+      isLink: true
+
     },
     {
       iconUrl: this.agentIcon,
@@ -72,6 +77,8 @@ websites=[{text:"Partnership",url:['https://partnerships.gigaaa.com/'],image:'..
       name: 'Agents',
       routeUrl: ['/agents'],
       dropdown: false,
+      isLink: true
+
     },
   ];
   slideOpened: boolean = false;
@@ -109,14 +116,19 @@ websites=[{text:"Partnership",url:['https://partnerships.gigaaa.com/'],image:'..
             localStorage.setItem('user-status', JSON.stringify(res));
           })
            this.lastuserintegration="Select integration";
-          //  this.route.queryParams
-          // .subscribe(params => {
-       
-          //   this.url= window.location.href;
-          //   let locID = this.url.split('/');
-          //   this.pageTitle=locID[3].charAt(0).toUpperCase() + locID[3].slice(1);
-          
-          // });
+           this.route.queryParams
+          .subscribe(params => {
+            if(params.code!="")
+            {
+              this.pageTitle="Dashboard";
+            }
+            else 
+            {
+              this.url= window.location.href;
+              let locID = this.url.split('/');
+              this.pageTitle=locID[3].charAt(0).toUpperCase() + locID[3].slice(1);
+            }
+          });
           this.authService.user.subscribe((r: any) => {
             this.user = r;
             if(this.user!=null)
@@ -328,4 +340,30 @@ onGetLoggedUser(user: any) {
     this.token = user.api_token;
   }
 }
+
+
+// get integration callBack fucntion
+getselectedDropdownItem(event: any) {
+  // Here you are getting selected integration
+  console.log(event);
+  this.getintegration(event?.name,event?.uuid);
+}
+
+// setIntergration 
+public async   getintegration(val,int_id)
+    {
+      const getdata = JSON.parse(localStorage.getItem('gigaaa-user'))
+      let accesstoken=getdata?.api_token;
+      let uuid=getdata?.subscription_id?.subsid.uuid;
+      this.socketapi.closewebsocketcalls();
+      this.agentsocketapi.closeagentsocket();
+      await  this.apiService.updatelastusedintegration(accesstoken,uuid,{"integration": int_id})
+      localStorage.setItem('intgid', JSON.stringify({int_id:int_id,name:val}));
+      this.authService.getLOggedinUserUuid(accesstoken,uuid,int_id);
+      localStorage.setItem('gigaaa-socket',JSON.stringify(false));
+      // this.sharedres.getuserole();
+      // this.sharedres.getcallsocketapi(1);
+      // this.sharedres.getintegrationrelation(int_id)
+
+    }
 }

@@ -19,5 +19,3 @@ export const environment = {
     // 
   logged_user:'https://api.gconsole.io/v1/api/v1',
 };
-
-

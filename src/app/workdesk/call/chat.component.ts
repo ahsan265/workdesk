@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit, ViewChild, ViewContainerRef } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { add, defineLocale, enGbLocale } from 'ngx-bootstrap/chronos';
 import { BsDaterangepickerDirective, BsLocaleService } from 'ngx-bootstrap/datepicker';
@@ -9,6 +9,7 @@ import { GigaaaApiService } from 'src/app/service/gigaaaapi.service';
 import { gigaaasocketapi } from 'src/app/service/gigaaasocketapi.service';
 import { MessageService } from 'src/app/service/messege.service';
 import { sharedres_service } from 'src/app/service/sharedres.service';
+import { webrtcsocket } from 'src/app/service/webrtcsocket';
 import { CallInterfaceComponent } from './call-interface/call-interface.component';
 import { CallMobilePopupFilterComponent } from './call-mobile-popup-filter/call-mobile-popup-filter.component';
 declare var $: any;
@@ -220,6 +221,8 @@ call:any;
     private gigaaaservice:GigaaaApiService,
     private messageservie:MessageService,
     public dialog: MatDialog,
+    private container: ViewContainerRef,
+    private webrtcservice:webrtcsocket
     ) {
     enGbLocale.weekdaysShort = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
     enGbLocale.week.dow = 1;
@@ -414,8 +417,8 @@ return ("0" + minutes).slice(-2) + ":" + ("0" +seconds).slice(-2);
       this.missed=false;
       this.answered=false;
       this.selectedtabs="ongoing"
-    //   let data= {"call_uuid": 1234567892555}
-    // this.openCallInterface(data);
+      //  let data= {"call_uuid": "jhfdjgdf65454fsdbfjg"};
+      // this.openCallInterface(data);
     }
     else if(val=="missed")
     {
@@ -846,7 +849,7 @@ search(term:string,column:any) {
 
 
     this.showselectednumberoflanguages(this.selectedtabs,this.lang.length +"\xa0"+"Selected")
-      if(this.lang.length==6)
+      if(this.lang.length==this.lang.length)
       {
           this.showselectednumberoflanguages(this.selectedtabs,"All Selected")
           this.selectedtabhold(this.selectedtabs,true)
@@ -936,7 +939,7 @@ search(term:string,column:any) {
 
         this.lang1[objIndex].status = true;
        this.idsoflanguages1.push(id);
-       if(this.idsoflanguages1.length==6)
+       if(this.idsoflanguages1.length==this.lang.length)
        {
         this.showselectednumberoflanguages(this.selectedtabs,"All Selected")
 
@@ -977,7 +980,7 @@ search(term:string,column:any) {
 
       this.lang2[objIndex].status = true;
      this.idsoflanguages2.push(id);
-     if(this.idsoflanguages2.length==6)
+     if(this.idsoflanguages2.length==this.lang.length)
      {
       this.showselectednumberoflanguages(this.selectedtabs,"All Selected")
       this.selectedtabhold(this.selectedtabs,true)
@@ -1018,7 +1021,7 @@ search(term:string,column:any) {
 
         this.lang3[objIndex].status = true;
        this.idsoflanguages3.push(id);
-       if(this.idsoflanguages3.length==6)
+       if(this.idsoflanguages3.length==this.lang.length)
        {
         this.showselectednumberoflanguages(this.selectedtabs,"All Selected")
         this.selectedtabhold(this.selectedtabs,true)
@@ -1060,7 +1063,7 @@ search(term:string,column:any) {
 
         this.lang4[objIndex].status = true;
        this.idsoflanguages4.push(id);
-       if(this.idsoflanguages4.length==6)
+       if(this.idsoflanguages4.length==this.lang.length)
        {
         this.showselectednumberoflanguages(this.selectedtabs,"All Selected")
         this.selectedtabhold(this.selectedtabs,true)
@@ -1216,7 +1219,7 @@ search(term:string,column:any) {
      else if(this.idsofcalltype1.length<2)
      {
       //this.totalsizeofcalltype= this.idsofcalltype.length +"\xa0"+"Selected";
-      this.selectednumbercalls(this.selectedtabs,this.idsofcalltype1.length +"\xa0"+"Selected")
+      this.selectednumbercalls(this.selectedtabs, this.idsofcalltype1[0])
 
      }
      this.gigaaasocketapi.sendfilterparams({"tab":this.selectedtabs,"languages":this.idsoflanguages1,"call_type":this.idsofcalltype1});
@@ -1240,7 +1243,7 @@ search(term:string,column:any) {
     else
     {
      // this.totalsizeofcalltype= this.idsofcalltype.length +"\xa0"+"Selected";
-      this.selectednumbercalls(this.selectedtabs,this.idsofcalltype1.length +"\xa0"+"Selected")
+      this.selectednumbercalls(this.selectedtabs,this.idsofcalltype1[0])
 
 
     }
@@ -1268,7 +1271,7 @@ search(term:string,column:any) {
      else if(this.idsofcalltype2.length<2)
      {
       //this.totalsizeofcalltype= this.idsofcalltype.length +"\xa0"+"Selected";
-      this.selectednumbercalls(this.selectedtabs,this.idsofcalltype2.length +"\xa0"+"Selected")
+      this.selectednumbercalls(this.selectedtabs,this.idsofcalltype2[0])
 
      }
      this.gigaaasocketapi.sendfilterparams({"tab":this.selectedtabs,"languages":this.idsoflanguages2,"call_type":this.idsofcalltype2});
@@ -1292,7 +1295,7 @@ search(term:string,column:any) {
     else
     {
      // this.totalsizeofcalltype= this.idsofcalltype.length +"\xa0"+"Selected";
-      this.selectednumbercalls(this.selectedtabs,this.idsofcalltype2.length +"\xa0"+"Selected")
+      this.selectednumbercalls(this.selectedtabs,this.idsofcalltype2[0])
 
 
     }
@@ -1319,7 +1322,7 @@ search(term:string,column:any) {
    else if(this.idsofcalltype3.length<2)
    {
     //this.totalsizeofcalltype= this.idsofcalltype.length +"\xa0"+"Selected";
-    this.selectednumbercalls(this.selectedtabs,this.idsofcalltype3.length +"\xa0"+"Selected")
+    this.selectednumbercalls(this.selectedtabs,this.idsofcalltype3[0])
 
    }
    this.gigaaasocketapi.sendfilterparams({"tab":this.selectedtabs,"languages":this.idsoflanguages3,"call_type":this.idsofcalltype3});
@@ -1343,7 +1346,7 @@ else if(e==false)
   else
   {
    // this.totalsizeofcalltype= this.idsofcalltype.length +"\xa0"+"Selected";
-    this.selectednumbercalls(this.selectedtabs,this.idsofcalltype3.length +"\xa0"+"Selected")
+    this.selectednumbercalls(this.selectedtabs,this.idsofcalltype3[0])
 
 
   }
@@ -1370,7 +1373,7 @@ else if(e==false)
    else if(this.idsofcalltype4.length<2)
    {
     //this.totalsizeofcalltype= this.idsofcalltype.length +"\xa0"+"Selected";
-    this.selectednumbercalls(this.selectedtabs,this.idsofcalltype4.length +"\xa0"+"Selected")
+    this.selectednumbercalls(this.selectedtabs,this.idsofcalltype4[0])
 
    }
    this.gigaaasocketapi.sendfilterparams({"tab":this.selectedtabs,"languages":this.idsoflanguages4,"call_type":this.idsofcalltype4});
@@ -1394,7 +1397,7 @@ else if(e==false)
   else
   {
    // this.totalsizeofcalltype= this.idsofcalltype.length +"\xa0"+"Selected";
-    this.selectednumbercalls(this.selectedtabs,this.idsofcalltype4.length +"\xa0"+"Selected")
+    this.selectednumbercalls(this.selectedtabs,this.idsofcalltype4[0])
 
 
   }

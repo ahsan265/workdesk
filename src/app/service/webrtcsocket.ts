@@ -1,4 +1,5 @@
 import { Injectable } from "@angular/core";
+import { promise } from "protractor";
 import { Observable, Subject } from "rxjs";
 import { environment } from "src/environments/environment";
 import { MessageService } from "./messege.service";
@@ -16,22 +17,20 @@ import { sharedres_service } from "./sharedres.service";
     {
        this.callobject$=this.callsubject.asObservable().pipe();  
     }
-    callUserSocket(calluuid)
+   public async callUserSocket(calluuid):Promise <any>
     {
 
         let  url=this.websocket_url+"/gigaaa-webrtc?call_uuid="+calluuid;
         this.ws = new WebSocket(url);
-        // open the connection for websocket
-        
         this.ws.onopen=(e)=>{
           this.message.setErrorMessage("conection :"+ e.type);
         }
         // recieve data and send it to required place
-        this.ws.onmessage=(e)=>{
+        this.ws.onmessage=async (e)=>{
           if(e.data!="ping")
           {
             let msg =JSON.parse(e.data);
-            this.callsubject.next(msg);
+            await   this.callsubject.next(msg);
           }
            
         }

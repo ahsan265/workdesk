@@ -62,6 +62,9 @@ export class sharedres_service {
 
     showagentListonload$: Observable<any>;
     private showagentListonloadSubject = new Subject<any>();
+
+    devicerequestCall$: Observable<any>;
+    private devicerequestCallSubjecte = new Subject<any>();
     constructor(private gigaaaapi:GigaaaApiService,
       private router: ActivatedRoute,
 
@@ -85,6 +88,7 @@ export class sharedres_service {
         this.sendtrigger_message$=this.sendtrigger_message_subject.asObservable().pipe();
         this.sendparamfromdashboardpopup$=this.sendparamfromdashboardpopup_subject.asObservable().pipe();
         this.showagentListonload$=this.showagentListonloadSubject.asObservable().pipe(); 
+        this.devicerequestCall$=this.devicerequestCallSubjecte.asObservable().pipe();
     }
     getintegrationrelation(val) {
     this.submitappsubject.next(val);
@@ -216,5 +220,11 @@ send_param_from_dashboard(val)
 showagentListonload(val)
 {
   this.showagentListonloadSubject.next(val)
+}
+// start Devices request 
+startDevicesRequest(val)
+{
+  this.devicerequestCallSubjecte.next(val)
+
 }
 }

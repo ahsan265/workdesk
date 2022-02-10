@@ -78,13 +78,13 @@ export class AuthService implements CanActivate {
     // get all integration
       getallintegrationlist(token:any,orgid:any)
       {          
-        const gigaaasocket = JSON.parse(localStorage.getItem('gigaaa-socket'));
-        if(gigaaasocket==true)
-        {
-          this.agentsocket.closeagentsocket();
-          //this.gigaaasocket.closewebsocketcalls();
-          localStorage.setItem("gigaaa-socket",JSON.stringify(false));
-        }
+        // const gigaaasocket = JSON.parse(localStorage.getItem('gigaaa-socket'));
+        // if(gigaaasocket==true)
+        // {
+        //   //this.agentsocket.closeagentsocket();
+        //   //this.gigaaasocket.closewebsocketcalls();
+        //   localStorage.setItem("gigaaa-socket",JSON.stringify(false));
+        // }
       try {
      this.gigaaaApiService.getallintegration(token,orgid).subscribe(data=>{
       this.integration=data;
@@ -95,13 +95,8 @@ export class AuthService implements CanActivate {
         { 
      localStorage.setItem('intgid', JSON.stringify({int_id:element.uuid,name:element.name}));
      this.sharedres.showagentListonload(1);
-     this.gigaaaApiService.getloggedinagentuuid(token,orgid,element?.uuid).subscribe(data=>{
-      localStorage.setItem('userlogged_uuid', JSON.stringify(data));
-      this.sharedres.getcallsocketapi(1);
-      this.sharedres.getintegrationrelation(1);
-      this.sharedres.getuserole();
+     this.getLOggedinUserUuid(token,orgid,element.uuid)
 
-      });
       }
       });
       }
@@ -111,6 +106,20 @@ export class AuthService implements CanActivate {
     } catch (error) {
     this.message.setErrorMessage(error);
     }
+    }
+    // get loggedin Agent uuid with relation to integration id
+    getLOggedinUserUuid(token,orgid,int_id)
+    {
+      this.gigaaaApiService.getloggedinagentuuid(token,orgid,int_id).subscribe(data=>{
+        console.log(data)
+        localStorage.setItem('userlogged_uuid', JSON.stringify(data));
+        this.sharedres.getcallsocketapi(1);
+        this.sharedres.getintegrationrelation(1);
+        this.sharedres.getuserole();
+  
+        },err=>{
+          this.message.setErrorMessage(err.error.error)
+        });
     }
     // invitation code 
     public  async getinvitationToken(token): Promise<void>

@@ -1,21 +1,17 @@
-
-
-
- <ng-container  [cdkDragDisabled]="is_dragable" cdkDrag cdkDragRootElement=".cdk-overlay-container" [cdkDragFreeDragPosition]="dragPosition">
-   <div style="height: 100vh" cdkDragHandle >
+   <div class="minimizearea" style="height: 100%;"  [cdkDragDisabled]="is_dragable" 
+   cdkDrag  cdkDragBoundary=".main" 
+    [cdkDragFreeDragPosition]="dragPosition"  cdkDragHandle   >
 <div class="callinterface" >
   <div class="userinformation">
 <img class="userimage" src="../../../../assets/picface.jpeg" height="34" width="34" alt="">
 <p class="username">Andrea Peterson Williams</p>
-  </div>  
-  <div class="minimizeiconpanel">
-    <svg style="height: 20px; cursor: pointer;"  *ngIf="hideContant" style="cursor: pointer;margin-bottom: 15px;" (click)="miniMizetheScreen(hideContant)" width="12" height="2" viewBox="0 0 12 2" fill="none" xmlns="http://www.w3.org/2000/svg">
+</div>  
+<div class="minimizeiconpanel">
+<svg style="height: 20px; cursor: pointer;"  *ngIf="hideContant" style="cursor: pointer;margin-bottom: 15px;" (click)="miniMizetheScreen(hideContant)" width="12" height="2" viewBox="0 0 12 2" fill="none" xmlns="http://www.w3.org/2000/svg">
         <path d="M11.8204 1.82031H0.179749V0.179688H11.8204V1.82031Z" fill="white"/>
-        </svg>
-
-    
+</svg>
   </div>
-  <div class="maxiconforvideo"  *ngIf="!hideContant" style="float: right;
+  <div class="maxiconforvideo"   *ngIf="!hideContant" style="float: right;
   cursor: pointer;
   height: 50px;
   background: #2B3A51;
@@ -28,47 +24,47 @@
 
 </div>
 <div class="callarea" [ngStyle]="{'background': (hidecamera==true) ? '#162741' : '#0E1D35'}">
-    <div [hidden]="hidecamera" [ngStyle]="{'background': (camerabtn==true) ? '#2B3A51' : '#000000'}" cdkDragBoundary=".callcontrolpanel" class="loggedUsercamera" cdkDrag>
+    <div [hidden]="hidecamera" [ngStyle]="{'background': (camerabtn==true) ? '#2B3A51' : '#000000'}" cdkDragBoundary=".callarea" class="loggedUsercamera" cdkDrag>
             <p *ngIf="camerabtn" class="capitalinitials">LM</p>
-            <video id="localVideo" #localVideo autoplay='true' [muted]="micbtn"   style=" height: 144px;width: 226px;border-radius: 4px;" [hidden]="camerabtn" ></video>
-        <p class="camerapersonname">Lisa (me)</p> 
+            <video id="localVideo" #localVideo [autoplay]='true' [muted]="micbtn"  class="localcamera"  style=" height: 144px;width: 226px;border-radius: 4px;" [hidden]="camerabtn" ></video>
+        <p  *ngIf="camerabtn" class="camerapersonname">Lisa (me)</p> 
     </div>
 <img *ngIf="!hidecamera" height="200" width="200" class="userimagebig" src="../../../../assets/picface.jpeg" alt="">
-<video    id="remoteVideo" #remoteVideo autoplay='true' [muted]="micbtn"   style="width: 100%;
+<video   id="remoteVideo" #remoteVideo [autoplay]='true'   style="width: 100%;
 margin: 0px;
 display: block;
 top: 80px;
 /* left: 0; */
 position: absolute;"  ></video>
-<div class="callcontrolpanel">
+
+
+</div>
+<div class="callcontrolpanel" [ngStyle]="{'background': (hidecamera==true) ? '#162741' : '#0E1D35'}">
    
-    <div class="callcontrol"  [ngStyle]="{'background': (hideContant==false) ? '#162741' : 'rgba(22, 39, 65, 0.73);'}">
-        
-        <div class="callcontrolicons">
-            <div class="callicons" [ngStyle]="{'background': (micbtn==true) ? 'rgba(255, 255, 255, 0.1)' : '#1C54DB'}"  (click)=" micebtncheck(micbtn)"   >
-             <img  class="caIcon"  height="30" width="30" [src]="micIcon" alt="" >
-            </div>
-             
-            <div class="callicons" [ngStyle]="{'background': (camerabtn==true) ? 'rgba(255, 255, 255, 0.1)' : '#1C54DB'}"  (click)="camerabtncheck(camerabtn)"  >
-              <img class="caIcon"    height="30" width="30"  [src]="cameraIcon" alt="">
-
-            </div>
+  <div class="callcontrol"  [ngStyle]="{'background': (hideContant==false) ? '#162741' : 'rgba(22, 39, 65, 0.73);'}">
       
-            <div class="callicons" style="margin-right: 0px;" [ngStyle]="{'background': (screensharebtn==true) ? 'rgba(255, 255, 255, 0.1)' : '#1C54DB'}" (click)="screensharebtncheck(screensharebtn)"  >
-              <img   class="caIcon" height="30" width="30" style="display: block;
-            " src="../../../../assets/assets_workdesk/sharing.svg" alt="">
-            </div>
-        </div>
-        <div class="calltime_drop">
-            <p class="calltime">25m 14s</p>
-            <div class="callicon_drop" (click)=" closecall()">
-              <img style="padding: 4px;" class="hangicon" src="../../../../assets/assets_workdesk/endcall.svg" alt="">
-            </div>
-        </div>
-      
-    </div>
-</div>
+      <div class="callcontrolicons">
+          <div class="callicons" [ngStyle]="{'background': (micbtn==true) ? 'rgba(255, 255, 255, 0.1)' : '#1C54DB'}"  (click)=" micebtncheck(micbtn)"   >
+           <img  class="caIcon"  height="30" width="30" [src]="micIcon" alt="" >
+          </div>
+           
+          <div class="callicons" [ngStyle]="{'background': (camerabtn==true) ? 'rgba(255, 255, 255, 0.1)' : '#1C54DB'}"  (click)="camerabtncheck(camerabtn)"  >
+            <img class="caIcon"    height="30" width="30"  [src]="cameraIcon" alt="">
 
+          </div>
+    
+          <div class="callicons" style="margin-right: 0px;" [ngStyle]="{'background': (screensharebtn==true) ? 'rgba(255, 255, 255, 0.1)' : '#1C54DB'}" (click)="screensharebtncheck(screensharebtn)"  >
+            <img   class="caIcon" height="30" width="30" style="display: block;
+          " src="../../../../assets/assets_workdesk/sharing.svg" alt="">
+          </div>
+      </div>
+      <div class="calltime_drop">
+          <p class="calltime">25m 14s</p>
+          <div class="callicon_drop" (click)=" closecall()">
+            <img style="padding: 4px;" class="hangicon" src="../../../../assets/assets_workdesk/endcall.svg" alt="">
+          </div>
+      </div>
+    
+  </div>
 </div>
 </div>
-</ng-container>

@@ -94,14 +94,13 @@ websites=[{name:"Partnership",url:'https://partnerships.gigaaa.com/'},
   }
   toggleSideBar(){
     console.log('Brate moj');
-    this.gigaaasocket.closewebsocketcalls();
-    this.agentsocketapi.closeagentsocket();
+
     this.AuthService.logOff();
     this.useraccountservice.getopendashboard(2);
     this.route.navigate(['/']);
   }
 
- public async   getintegration(val,int_id)
+    public async   getintegration(val,int_id)
     {
 
       const getdata = JSON.parse(localStorage.getItem('gigaaa-subscription'))

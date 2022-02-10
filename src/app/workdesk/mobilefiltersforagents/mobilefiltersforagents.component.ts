@@ -318,7 +318,7 @@ if(val==true)
      this.id_soflanguages.push(element.id)
   });
   this.selectedlanguages=this.lang.length +"\xa0"+"Selected";
-    if(this.lang.length==6)
+    if(this.lang.length==this.lang.length)
     {
         this.selectedlanguages="All Selected"
         this.allselectedtag=true;
@@ -347,7 +347,7 @@ else if(val==false){
      if(e==true)
      {
        this.id_soflanguages.push(id);
-       if(this.id_soflanguages.length==6)
+       if(this.id_soflanguages.length==this.lang.length)
        {
         this.selectedlanguages="All Selected";
         this.allselectedtag=true;
@@ -401,7 +401,7 @@ else if(val==false){
      
    });
      this.selectedlanguages=this.id_soflanguages.length +"\xa0"+"Selected";
-      if(this.id_soflanguages.length==6)
+      if(this.id_soflanguages.length==this.lang.length)
       {
           this.selectedlanguages="All Selected"
           this.allselectedtag=true;

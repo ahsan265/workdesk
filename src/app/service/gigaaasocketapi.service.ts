@@ -80,12 +80,12 @@ callsocketapi_by_selecting_intgid()
             }
         }
         else {
-          const socketvalue = JSON.parse(localStorage.getItem('gigaaa-socket'))
-          if(socketvalue==true)
-          {
-            this.ws.send("pong")
+          // const socketvalue = JSON.parse(localStorage.getItem('gigaaa-socket'))
+          // if(socketvalue==true)
+          // {
+          //   this.ws.send("pong")
 
-          }
+          // }
         }
 
       };
@@ -133,11 +133,8 @@ callsocketapi_by_selecting_intgid()
     }
     }
     closewebsocketcalls()
-    { const socketvalue = JSON.parse(localStorage.getItem('gigaaa-socket'))
-      if(socketvalue==true)
-      {
+    {  this.message.setErrorMessage("closedd call");
         this.ws.close();
-      }
     }
 
 }

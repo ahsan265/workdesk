@@ -47,7 +47,7 @@
                                       </label></li> -->
                                       <div formArrayName="language_ids" >
                                           <div class="inner">
-                                            <li  *ngFor="let d of getlangselect(i).controls; let count of this.lang; let j=index; "  class="listitem">  <input [name]='j'  (change)="$event ? removeandaddlang($event,i,j,count.id):false" [value]="count.id" 	[checked]="isRowSelected(i,j) || getselectedonebyone(this.getlangselect(i).length)"  type="checkbox"   [attr.id]="count.id" required> <label [for]="count.id" class="dropdownlistitem"  > 
+                                            <li  *ngFor="let d of getlangselect(i).controls; let count of this.lang; let j=index; "  class="listitem">  <input [name]='j'  (change)="$event ? removeandaddlang($event,i,j,count.id):false" [value]="count.id" 	[checked]="d.status"  type="checkbox"   [attr.id]="count.id" required> <label [for]="count.id" class="dropdownlistitem"  > 
                                                 {{count.name}}
                                                </label></li>
                                           </div>

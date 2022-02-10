@@ -583,7 +583,6 @@ return false;
      // get all langugaes
      getalllanguage(val)
      {
-      const intid = JSON.parse(localStorage.getItem('intgid'));
        var udpatedlang=[];
        this.lang.forEach(element=>{
         var index = this.id_soflanguages.indexOf(element.id);
@@ -602,15 +601,12 @@ return false;
 
       
       this.selectedlanguages=this.lang.length +"\xa0"+"Selected";
-        if(this.lang.length==6)
+        if(this.lang.length==this.lang.length)
         {
             this.selectedlanguages="All Selected"
             this.allselectedtag=true;
-           // this.updateagentprofile()
-           // this.sharedres.getrefreshagentlist(1);
            if(this.all_agent!=null)
            {
-           // this.getallagents(intid?.int_id,this.active_agents, this.inactive_agents,this.invited_agents,this.id_soflanguages);
             this.agentsocketgigaaaapi.send_agentsparam_status(this.active_agents,this.inactive_agents,this.invited_agents,this.id_soflanguages)
 
            }
@@ -649,7 +645,7 @@ return false;
      if(e==true)
      {
        this.id_soflanguages.push(id);
-       if(this.id_soflanguages.length==6)
+       if(this.id_soflanguages.length==this.lang.length)
        {
         this.selectedlanguages="All Selected";
         this.allselectedtag=true;

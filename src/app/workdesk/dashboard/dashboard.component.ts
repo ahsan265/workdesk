@@ -718,7 +718,7 @@ export class DashboardComponent implements OnInit {
  
  
         this.showselectednumberoflanguages(this.selectedtabs,this.lang.length +"\xa0"+"Selected")
-       if(this.lang.length==6)
+       if(this.lang.length==7)
        {
            this.showselectednumberoflanguages(this.selectedtabs,"All Selected")
 
@@ -2694,7 +2694,7 @@ createoschart()
  
          this.lang1[objIndex].status = true;
         this.idsoflanguages1.push(id);
-        if(this.idsoflanguages1.length==6)
+        if(this.idsoflanguages1.length==this.lang.length)
         {
          this.showselectednumberoflanguages(this.selectedtabs,"All Selected")
         // this.getcallcharts(this.charttimeslot1,[],this.idsof_countries1,1000);
@@ -2733,7 +2733,7 @@ createoschart()
  
        this.lang2[objIndex].status = true;
       this.idsoflanguages2.push(id);
-      if(this.idsoflanguages2.length==6)
+      if(this.idsoflanguages2.length==this.lang.length)
       {
        this.showselectednumberoflanguages(this.selectedtabs,"All Selected")
       // this.getuser_and_call_chart("Users",this.datefrom_user,this.dateto_user,[],this.idsof_countries2,1000);
@@ -2775,7 +2775,7 @@ createoschart()
  
          this.lang3[objIndex].status = true;
         this.idsoflanguages3.push(id);
-        if(this.idsoflanguages3.length==6)
+        if(this.idsoflanguages3.length==this.lang.length)
         {
           this.showselectednumberoflanguages(this.selectedtabs,"All Selected")
          // this.getuser_and_call_chart("Visitors",this.datefrom_visitor,this.dateto_visitor,[],this.idsof_countries3,1000);

@@ -25,7 +25,7 @@ import { sharedres_service } from "./sharedres.service";
           
             this.sharedres.runsocketapiusingint_id$.subscribe(data=>{
            
-              if(data==1)
+              if(data==1&&socketvalue!=true)
               {     
                 this.getagentlive()
               }
@@ -34,19 +34,19 @@ import { sharedres_service } from "./sharedres.service";
       }
       getagentlive()
       {
-        var getdata = JSON.parse(localStorage.getItem('gigaaa-user'))
-          var uuid=getdata?.subscription_id?.subsid.uuid;
-          var intid = JSON.parse(localStorage.getItem('intgid'))
+        const getdata = JSON.parse(localStorage.getItem('gigaaa-user'))
+          let uuid=getdata?.subscription_id?.subsid.uuid;
+          let intid = JSON.parse(localStorage.getItem('intgid'))
           const loggedinuser_uuid = JSON.parse(localStorage.getItem('userlogged_uuid'));
 
           var integrationid=intid?.int_id;
 
           if(loggedinuser_uuid?.uuid!=null&&uuid!=null&&integrationid!=null)
             { 
-                var  url=this.websocket_url+"/customer-support/agents?organization="+uuid+"&integration="+integrationid+"&agent="+loggedinuser_uuid?.uuid;
+                let  url=this.websocket_url+"/customer-support/agents?organization="+uuid+"&integration="+integrationid+"&agent="+loggedinuser_uuid?.uuid;
                 this.ws = new WebSocket(url);
                     this.ws.onopen=(e)=>{
-                      var checksocketopen=true;
+                      let checksocketopen=true;
                         localStorage.setItem('gigaaa-socket', JSON.stringify(checksocketopen));
 
                     }
@@ -56,7 +56,7 @@ import { sharedres_service } from "./sharedres.service";
                    {
                        if(e.data !="ping")
                        {
-                         var data=JSON.parse(e.data)
+                        let data=JSON.parse(e.data)
                           data.forEach(element => {
                             if(element?.email==this.getsettingforloggedinagent())
                             {
@@ -105,11 +105,9 @@ import { sharedres_service } from "./sharedres.service";
 
       // close agent socket
       closeagentsocket()
-      {const socketvalue = JSON.parse(localStorage.getItem('gigaaa-socket'));
-        if(socketvalue==true)
-        {
+      {  
         this.ws.close();
-        }
+       this.message.setErrorMessage("Agent socket closed");
       }
       // get loggedin Email
 

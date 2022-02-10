@@ -71,7 +71,7 @@ form: FormGroup;
       this.selected_lang_ids.push(id);
       this.number_of_lang=this.selected_lang_ids.length+"\xa0"+"Selected"
       this.number_of_lang=this.number_of_lang.slice()
-     if(this.selected_lang_ids.length==6)
+     if(this.selected_lang_ids.length==this.lang.length)
      {
       this.number_of_lang="Selected All";
       this.selectalllangstat=true
@@ -105,7 +105,7 @@ form: FormGroup;
 
 
    });
-   if(this.selected_lang_ids.length==6)
+   if(this.selected_lang_ids.length==this.lang.length)
    {
      this.number_of_lang="Selected All"
      this.selectalllangstat=true;
@@ -159,11 +159,7 @@ form: FormGroup;
     //this.addmoreagents(this.arraycounter)
   }
 
-  showlangdropdown()
-  {
-      $('#accordion').foundation('hideAll');
-
-  }
+ 
 
 //invite agent invitation
 getinviteagentvalidation()
@@ -232,6 +228,7 @@ removeandaddlang(e,empIndex:number,langindex:number,id) {
     var index=this.getlangselect(empIndex).value.findIndex(idd => idd === id)
   this.getlangselect(empIndex).removeAt(index);
 
+  
  }
 
 
@@ -285,7 +282,7 @@ checkhowmanyselected(val)
     {
       return "Not selected"
     }
-    else if(val<6)
+    else if(val<this.lang.length)
     {
       return val+"\xa0"+"Selected"
 
@@ -315,7 +312,7 @@ checkhowmanyselected(val)
     {
       return true
     }
-    else  if(val<=6){
+    else  if(val<=this.lang.length){
       return
     }
 
@@ -356,8 +353,10 @@ checkhowmanyselected(val)
     var subsid=getdata.subscription_id.subsid.uuid;
     const intid = JSON.parse(localStorage.getItem('intgid'))
     try{
-      this.lang= await this.gigaaaApiService.getAllLanguages(accesstoken,subsid,intid.int_id)
-      let updatearr = this.lang.map((item, i) => Object.assign({}, item, this.language[i]));
+      this.lang= await this.gigaaaApiService.getAllLanguages(accesstoken,subsid,intid.int_id);
+      let updatearr = this.lang.map((item, i) => Object.assign({status:false}, item));
+      console.log(updatearr)
+
         this.lang=updatearr;
       this.getalllanguage(false,0);
 

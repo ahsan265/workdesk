@@ -26,6 +26,7 @@ export class MessageService {
   }
 
   public setErrorMessage(message: string, position?: string): void {
+
     this.toastrService.warning(message, '', {
       timeOut: 3000,
       positionClass: position ? position : 'toast-bottom-right',

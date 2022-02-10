@@ -45,13 +45,15 @@ padding: 24px;
     color: #FFFFFF;
     display: inline-block;
     margin-left: 22px;
+    cursor: default;
     
 }
 .callarea{
 background: #0E1D35;
-height: 100%;
+height: calc(100% - 100px);
 text-align: center;
 display: block;
+
 
 }
 .capitalinitials
@@ -71,11 +73,11 @@ color: #FFFFFF;
 .callcontrolpanel{
     display: block;
     width: 100%;
-    height: 56px;
+    height:56px;
     margin: 0 auto;
     text-align: center;
-    position: absolute;
-    bottom:21px;
+    position: relative;
+    bottom:0;
 }
 .callcontrol{
     width: 250px;
@@ -88,6 +90,7 @@ color: #FFFFFF;
     padding-top: 13px;
     padding-bottom: 13px;
     text-align: center;
+    position: relative;
 }
 
 .callcontrolicons{
@@ -194,4 +197,14 @@ border-radius: 50%;
     margin: 0 auto;
     text-align: center;
     position: relative;
+ }
+ .mainarea{
+     width: 100%;
+     height: 100%;
+ }
+ .loggedUsercamera:hover{
+    cursor: grab;
+ }
+ .loggedUsercamera:active{
+    cursor: grabbing;
  }

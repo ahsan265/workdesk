@@ -45,6 +45,7 @@ import { environment } from 'src/environments/environment';
 import { GigaaaSidebarModule, GigaaaHeaderModule, GigaaaTableModule, CallbackModule, LogoutModule, GigaaaHeaderService } from '@gigaaa/gigaaa-components';
 import { MainPageComponent } from './main-page/main-page.component';
 import { AuthService } from './service/auth.service';
+import { NgxPaginationModule } from 'ngx-pagination';
 
 @NgModule({
   declarations: [
@@ -86,8 +87,8 @@ import { AuthService } from './service/auth.service';
     GigaaaHeaderModule.forRoot(environment),
     GigaaaTableModule,
     CallbackModule,
-    LogoutModule
-
+    LogoutModule,
+    NgxPaginationModule
   ],
   bootstrap: [AppComponent],
   providers: [GigaaaApiService,MessageService,AuthService,oAuthService, {
