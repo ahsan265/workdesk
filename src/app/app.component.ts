@@ -133,6 +133,7 @@ websites=[{text:"Partnership",url:['https://partnerships.gigaaa.com/'],image:'..
             this.user = r;
             if(this.user!=null)
             {
+              console.log(  this.user)
               this.authService.getOrganizationId(this.user.api_token);
             }
           
@@ -286,10 +287,7 @@ getagentlistOnload()
       {
       this.getintegrationlist()
       }
-      else if(data==0)
-      {
-      
-      }
+   
   })
 
 }
@@ -349,21 +347,18 @@ getselectedDropdownItem(event: any) {
   this.getintegration(event?.name,event?.uuid);
 }
 
-// setIntergration 
-public async   getintegration(val,int_id)
+    // setIntergration 
+    public async   getintegration(val,int_id)
     {
       const getdata = JSON.parse(localStorage.getItem('gigaaa-user'))
       let accesstoken=getdata?.api_token;
       let uuid=getdata?.subscription_id?.subsid.uuid;
       this.socketapi.closewebsocketcalls();
       this.agentsocketapi.closeagentsocket();
-      await  this.apiService.updatelastusedintegration(accesstoken,uuid,{"integration": int_id})
+      await  this.apiService.updatelastusedintegration(accesstoken,uuid,{"integration": int_id});
       localStorage.setItem('intgid', JSON.stringify({int_id:int_id,name:val}));
       this.authService.getLOggedinUserUuid(accesstoken,uuid,int_id);
-      localStorage.setItem('gigaaa-socket',JSON.stringify(false));
-      // this.sharedres.getuserole();
-      // this.sharedres.getcallsocketapi(1);
-      // this.sharedres.getintegrationrelation(int_id)
+      localStorage.setItem('gigaaa-socket', JSON.stringify(false));
 
     }
 }

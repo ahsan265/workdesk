@@ -331,12 +331,13 @@ export class DashboardComponent implements OnInit {
   vsForTimeLable_users:any="last week";
   vsForTimeLable_visitors:any="last week";
 
+
+  alreadyloadedlang:any;
   constructor(private sharedres:sharedres_service,
     private router:Router,
     private localeService: BsLocaleService,
     public dialog: MatDialog,
      private gigaaaservice:GigaaaApiService,private messageservie:MessageService,
-    private authService: AuthService
      ) {
       enGbLocale.weekdaysShort = ['S', 'M', 'T', 'W', 'T', 'F', 'S'];
       enGbLocale.week.dow = 1;
@@ -654,28 +655,27 @@ export class DashboardComponent implements OnInit {
      }
      // get all languages
      public async getlllangugaes(): Promise<void>{
-       const getdata = JSON.parse(localStorage.getItem('gigaaa-user'))
-       const accesstoken=getdata.api_token;
-       const subsid=getdata.subscription_id?.subsid?.uuid;
+       const getdata = JSON.parse(localStorage.getItem('gigaaa-user'));
+       let accesstoken=getdata.api_token;
+       let subsid=getdata.subscription_id?.subsid?.uuid;
        const intid = JSON.parse(localStorage.getItem('intgid'))
        if(intid?.int_id!=null && accesstoken!=null&&subsid!=null)
         {
-          await this.Updatelanguageendpoint(accesstoken,subsid,intid.int_id)
-        
-      }
+          await this.Updatelanguageendpoint(accesstoken,subsid,intid.int_id);
+        }
     
     }
     public async Updatelanguageendpoint(accesstoken:any,subsid:any,intid:any): Promise<void>
     {
       try{
-        const languagee=[{name:'Arabic' ,status:false},
-        {name:'English' ,status:false},
-        {name:'German' ,status:false},
-        {name:'Russian' ,status:false},
-        {name:'Spanish' ,status:false},
-        {name:'Turkish' ,status:false}];
+        // const languagee=[{name:'Arabic' ,status:false},
+        // {name:'English' ,status:false},
+        // {name:'German' ,status:false},
+        // {name:'Russian' ,status:false},
+        // {name:'Spanish' ,status:false},
+        // {name:'Turkish' ,status:false}];
         var  language= await this.gigaaaservice.getAllLanguages(accesstoken,subsid,intid)
-        let updatearr = language.map((item, i) => Object.assign({}, item, languagee[i]));
+        let updatearr = language.map((item, i) => Object.assign({status:false}, item));
           this.lang=updatearr;
           this.lang1=updatearr;
           this.lang2=updatearr;
@@ -698,7 +698,6 @@ export class DashboardComponent implements OnInit {
     // get all languages 
     getalllanguage(val,tabs,signal)
     {const intg = JSON.parse(localStorage.getItem('intgid'))
-    var int_id=intg?.int_id;
        var udpatedlang=[];
        var languageid=[];
        this.lang.forEach(element=>{
@@ -753,7 +752,7 @@ export class DashboardComponent implements OnInit {
       this.getUserTotalCard("this_week",[],[],this.datefrom_user,this.dateto_user);
       this.getVisitorTotalCard("this_week",[],[],this.datefrom_visitor,this.dateto_visitor);
       this.getcallstats("this_week",[],[],this.datefrom_call,this.dateto_call);
-      this.getDataTimeInterval();
+  
  
     }
  
@@ -1852,10 +1851,13 @@ createoschart()
 }
 
      getdashboardDataonLoad()
-    { 
+    { const intid = JSON.parse(localStorage.getItem('intgid'))
       try{
       this.sharedres.submitapplication$.subscribe(data=>{
-        this.getlllangugaes();
+        if(intid?.int_id==null)
+        {
+          this.getlllangugaes();
+        }
         this.callFunctionCharts();
     })
     }

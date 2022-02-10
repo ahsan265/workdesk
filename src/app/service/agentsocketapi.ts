@@ -107,13 +107,12 @@ import { sharedres_service } from "./sharedres.service";
       closeagentsocket()
       {  
         this.ws.close();
-       this.message.setErrorMessage("Agent socket closed");
       }
       // get loggedin Email
 
       getsettingforloggedinagent()
       {
          const getdata = JSON.parse(localStorage.getItem('gigaaa-user'))
-        return getdata.email;  
+        return getdata?.email;  
       }
 }

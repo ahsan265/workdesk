@@ -133,7 +133,7 @@ callsocketapi_by_selecting_intgid()
     }
     }
     closewebsocketcalls()
-    {  this.message.setErrorMessage("closedd call");
+    {  
         this.ws.close();
     }
 

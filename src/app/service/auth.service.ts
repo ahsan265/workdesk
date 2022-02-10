@@ -28,7 +28,6 @@ export class AuthService implements CanActivate {
     private agentsocket:agentsocketapi,
     private gigaaasocket:gigaaasocketapi) {
     this.user = new BehaviorSubject(this.getLoggedUser());
-      console.log(this.user)
    }
 
   public isLoggedIn(): boolean {
@@ -40,14 +39,14 @@ export class AuthService implements CanActivate {
 
 
   public getLoggedUser(): User {
-    console.log("hello")
     const user: any = localStorage.getItem('gigaaa-user');
    let logged_user= JSON.parse(user);
-   if(logged_user!=null)
-   {
-    this.getOrganizationId(logged_user.api_token);
-    this.getinvitationToken(logged_user.api_token);
-   }
+  //  console.log(logged_user)
+  //  if(logged_user!=null)
+  //  {
+  //   this.getOrganizationId(logged_user.api_token);
+  //   this.getinvitationToken(logged_user.api_token);
+  //  }
    return logged_user;
   }
 
@@ -78,19 +77,12 @@ export class AuthService implements CanActivate {
     // get all integration
       getallintegrationlist(token:any,orgid:any)
       {          
-        // const gigaaasocket = JSON.parse(localStorage.getItem('gigaaa-socket'));
-        // if(gigaaasocket==true)
-        // {
-        //   //this.agentsocket.closeagentsocket();
-        //   //this.gigaaasocket.closewebsocketcalls();
-        //   localStorage.setItem("gigaaa-socket",JSON.stringify(false));
-        // }
       try {
      this.gigaaaApiService.getallintegration(token,orgid).subscribe(data=>{
       this.integration=data;
       if(this.integration.length!=0)
       {
-      this.integration.forEach(element => {
+        this.integration.forEach(element => {
         if(element.last_used===true)
         { 
      localStorage.setItem('intgid', JSON.stringify({int_id:element.uuid,name:element.name}));
@@ -111,12 +103,10 @@ export class AuthService implements CanActivate {
     getLOggedinUserUuid(token,orgid,int_id)
     {
       this.gigaaaApiService.getloggedinagentuuid(token,orgid,int_id).subscribe(data=>{
-        console.log(data)
         localStorage.setItem('userlogged_uuid', JSON.stringify(data));
         this.sharedres.getcallsocketapi(1);
         this.sharedres.getintegrationrelation(1);
         this.sharedres.getuserole();
-  
         },err=>{
           this.message.setErrorMessage(err.error.error)
         });

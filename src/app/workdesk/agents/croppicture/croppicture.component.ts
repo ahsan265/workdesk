@@ -320,7 +320,8 @@ public  agentupdateuserprofilepic(file:any,uuid:any)
 
    this.gigaaapi.agentuploaduserprofilepic(accesstoken,subsid,id.int_id,uuid,file).subscribe(event=>{
      if(event['type']===4)
-     {   
+     {              console.log(event['body']['96'])
+
         
         this.shared_res.sendpictureupdated(event['body']['96'])
 
