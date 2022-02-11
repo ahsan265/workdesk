@@ -59,15 +59,20 @@ export class AuthService implements CanActivate {
           const subsid=await this.gigaaaApiService.getsubsid(token);
           this.orgId=subsid['uuid'];
           const subsiddata = JSON.parse(localStorage.getItem('gigaaa-user'));
+          if( subsiddata!=null)
+          {
           subsiddata['subscription_id']={subsid};
-          this.getallintegrationlist(token,this.orgId);
-       
-
-          localStorage.setItem('gigaaa-user', JSON.stringify(subsiddata));
+        
+            this.getallintegrationlist(token,this.orgId);
+            localStorage.setItem('gigaaa-user', JSON.stringify(subsiddata));
+          }
+         
+        
 
       }
       catch(err)
       {
+        console.log(err)
         this.message.setErrorMessage(err.error.error);
 
       }

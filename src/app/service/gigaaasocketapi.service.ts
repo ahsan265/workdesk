@@ -61,7 +61,6 @@ callsocketapi_by_selecting_intgid()
      this.ws = new WebSocket(url);
 
      this.ws.onopen=(e)=>{
-      this.isopensocker=1;
        this.sharedres.send_trigger_message(1);
         this.checksocketopen=true;
         localStorage.setItem('gigaaa-socket', JSON.stringify(this.checksocketopen));
