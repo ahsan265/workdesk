@@ -61,6 +61,8 @@ export class AuthService implements CanActivate {
           const subsiddata = JSON.parse(localStorage.getItem('gigaaa-user'));
           subsiddata['subscription_id']={subsid};
           this.getallintegrationlist(token,this.orgId);
+       
+
           localStorage.setItem('gigaaa-user', JSON.stringify(subsiddata));
 
       }
@@ -114,11 +116,10 @@ export class AuthService implements CanActivate {
     {
       try
       {
-
       const code = JSON.parse(localStorage.getItem('gigaaa-invitation'))
-
     if(code!=undefined)
     {
+      console.log(code)
       var code_invite={"invitation_code": code}
       await this.gigaaaApiService.sendinvitationcode(token,code_invite);
       localStorage.removeItem('gigaaa-invitation');

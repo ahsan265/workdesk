@@ -135,7 +135,6 @@ callsocketapi_by_selecting_intgid()
     closewebsocketcalls()
     {  
         this.ws.close();
-        this.message.setErrorMessage("Closed")
     }
 
 }

@@ -115,11 +115,17 @@ websites=[{text:"Partnership",url:['https://partnerships.gigaaa.com/'],image:'..
             localStorage.setItem('user-status', JSON.stringify(res));
           })
            this.lastuserintegration="Select integration";
-           this.route.queryParams
-          .subscribe(params => {
-            if(params.code!="")
+           this.route.url
+           .subscribe(params => {
+            let loc=window.location;
+          let path= loc.pathname.replace("/", "");
+            if(path=="callback")
             {
               this.pageTitle="Dashboard";
+            }
+            else if(path=="logout")
+            {
+              localStorage.removeItem("gigaaa-socket")
             }
             else 
             {
@@ -133,6 +139,8 @@ websites=[{text:"Partnership",url:['https://partnerships.gigaaa.com/'],image:'..
             if(this.user!=null)
             {
               this.authService.getOrganizationId(this.user.api_token);
+              this.authService.getinvitationToken(this.user.api_token);
+
             }
           
           });
@@ -190,7 +198,6 @@ websites=[{text:"Partnership",url:['https://partnerships.gigaaa.com/'],image:'..
       localStorage.clear();
       this.agentsocketapi.closeagentsocket();
       this.socketapi.closewebsocketcalls();
-   
       location.href = this.redirectUri;
       
     }

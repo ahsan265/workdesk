@@ -145,6 +145,7 @@ getinivationdetail()
     {    localStorage.setItem('gigaaa-invitation', JSON.stringify(code))
 
     this.gigaaaapi.getinvitationdetails(code).subscribe(data=>{
+
     this.inviteduserdetailssubject.next(data);
 
 
