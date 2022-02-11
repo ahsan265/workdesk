@@ -4,7 +4,6 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { GigaaaApiService } from 'src/app/service/gigaaaapi.service';
 import { MessageService } from 'src/app/service/messege.service';
-import { SiginComponent } from 'src/app/useraccount/sigin/sigin.component';
 
 @Component({
   selector: 'app-editform',

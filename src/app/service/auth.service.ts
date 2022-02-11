@@ -3,7 +3,6 @@ import { BehaviorSubject, Observable, ReplaySubject } from 'rxjs';
 import { CanActivate, Router } from '@angular/router';
 import { CookieService } from 'ngx-cookie-service';
 import { User } from '../model/User';
-import { oAuthService } from './authservice.service';
 import { gigaaasocketapi } from './gigaaasocketapi.service';
 import { GigaaaApiService } from './gigaaaapi.service';
 import { ltLocale } from 'ngx-bootstrap/chronos';

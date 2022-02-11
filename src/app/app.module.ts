@@ -7,10 +7,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { LandingpageComponent } from './useraccount/landingpage/landingpage.component';
 import { HttpClientModule } from '@angular/common/http';
 import { MatDialogModule, MatDialogRef } from '@angular/material/dialog';
-import { SignupComponent } from './useraccount/signup/signup.component';
-import { SiginComponent } from './useraccount/sigin/sigin.component';
+
 import { FooterComponent } from './useraccount/footer/footer.component';
-import { SidebarComponent } from './pages/sidebar/sidebar.component';
 import { WorkdeskModule } from './workdesk/workdesk.module';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { ReactiveFormsModule } from '@angular/forms';
@@ -25,8 +23,6 @@ import {MatDividerModule} from '@angular/material/divider';
 import {MatListModule} from '@angular/material/list';
 import {MatSidenavModule} from '@angular/material/sidenav';
 import {MatExpansionModule} from '@angular/material/expansion';
-import { UserloginserviceService } from './service/userloginservice.service';
-import { oAuthService } from './service/authservice.service';
 import { GigaaaApiService } from './service/gigaaaapi.service';
 import { MessageService } from './service/messege.service';
 import { ToastrModule, ToastrService } from 'ngx-toastr';
@@ -50,15 +46,11 @@ import { NgxPaginationModule } from 'ngx-pagination';
 @NgModule({
   declarations: [
     AppComponent,
-    SignupComponent,
-    SiginComponent,
     LandingpageComponent,
     FooterComponent,
-    SidebarComponent,
     LinkexpiredialogComponent,
     LoginBtnComponent,
     MainPageComponent,
-    
   ],
   imports: [
     ChartsModule,
@@ -91,7 +83,7 @@ import { NgxPaginationModule } from 'ngx-pagination';
     NgxPaginationModule
   ],
   bootstrap: [AppComponent],
-  providers: [GigaaaApiService,MessageService,AuthService,oAuthService, {
+  providers: [GigaaaApiService,MessageService,AuthService, {
     provide: 'GigaaaHeaderService',
     useClass: GigaaaHeaderService
   },

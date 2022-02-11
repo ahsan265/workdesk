@@ -12,7 +12,6 @@ import { sharedres_service } from './service/sharedres.service';
 import { MessageService } from './service/messege.service';
 import { agentsocketapi } from './service/agentsocketapi';
 import { textChangeRangeIsUnchanged } from 'typescript';
-import { oAuthService } from './service/authservice.service';
 import { gigaaasocketapi } from './service/gigaaasocketapi.service';
 import { GigaaaHeaderService } from '@gigaaa/gigaaa-components';
 

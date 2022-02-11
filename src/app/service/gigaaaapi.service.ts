@@ -502,7 +502,7 @@ getCurrentUser(token):Observable<User> {
                  })
                  };
 
-                return  this.http.get(this.workdeskurl_cs+"/private/agent?organization="+orgid+"&integration="+intid,httpOptions)
+                return  this.http.get(this.workdeskurl_cs+"/private/integration/agent?organization="+orgid+"&integration="+intid,httpOptions)
                  }
 
                  // get user counts for cards

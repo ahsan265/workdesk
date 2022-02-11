@@ -376,12 +376,13 @@ border-bottom:none;
   color: #A6A8BA;  
 }
 input[type=checkbox]:checked:after {
-content: "✔";
-margin-top: 0px;
-margin-left: 1px;
-margin-bottom: 1px;
-color: #FFFFFF;
-border-bottom:none;
+  content: "✔";
+  margin-top: -5px;
+  margin-left: 1px;
+  position: absolute;
+  margin-bottom: 0px;
+  color: #FFFFFF;
+  border-bottom: none;
 }
 /* input[type=checkbox]:checked:after {
 background: #1C54DB;

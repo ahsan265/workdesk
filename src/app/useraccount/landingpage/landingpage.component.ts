@@ -5,7 +5,6 @@ import { GigaaaHeaderService } from '@gigaaa/gigaaa-components';
 import { AuthService } from 'src/app/service/auth.service';
 import { sharedres_service } from 'src/app/service/sharedres.service';
 import { LinkexpiredialogComponent } from '../linkexpiredialog/linkexpiredialog.component';
-import { SignupComponent } from '../signup/signup.component';
 declare var $: any;
 
 @Component({
@@ -20,7 +19,6 @@ export class LandingpageComponent implements OnInit {
     public authService: AuthService,
     private sharedres: sharedres_service,
     public dialog: MatDialog,
-    public dialogRef: MatDialogRef<SignupComponent>,
     private router:Router,
     private headerService: GigaaaHeaderService
   ) {}
