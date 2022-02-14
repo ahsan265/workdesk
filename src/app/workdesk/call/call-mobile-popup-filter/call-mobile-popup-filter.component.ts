@@ -247,7 +247,7 @@ selectlanguageonebyone(e,id)
      if(e==true)
      {
        this.id_soflanguages.push(id);
-       if(this.id_soflanguages.length==6)
+       if(this.id_soflanguages.length==this.lang.length)
        {
         this.selectedlanguages="All Selected";
         this.allselectedtag=true;
@@ -457,7 +457,7 @@ selectlanguageonebyone(e,id)
       
     });
       this.selectedlanguages=this.id_soflanguages.length +"\xa0"+"Selected";
-       if(this.id_soflanguages.length==6)
+       if(this.id_soflanguages.length==this.lang.length)
        {
            this.selectedlanguages="All Selected"
            this.allselectedtag=true;

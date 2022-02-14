@@ -345,7 +345,7 @@ export class DashboardComponent implements OnInit {
       this.localeService.use('en-gb');
       this.localeService.currentLocale;
       //this.sharedres.getuserole();
-      this.sharedres.agentrole$.subscribe(data=>{
+      this.sharedres.agentrolesubject.subscribe(data=>{
        if(data?.is_admin==true)
        {
           this.showtopticketedagent=false;
@@ -1853,7 +1853,7 @@ createoschart()
      getdashboardDataonLoad()
     { const intid = JSON.parse(localStorage.getItem('intgid'))
       try{
-      this.sharedres.submitapplication$.subscribe(data=>{
+      this.sharedres.submitappsubject.subscribe(data=>{
         if(intid?.int_id==null)
         {
           this.getlllangugaes();
@@ -2893,7 +2893,7 @@ createoschart()
       // get data from mobile popup
       getdatafrommobilepopup()
       {
-           this.sharedres.sendparamfromdashboardpopup$.subscribe(data=>{
+           this.sharedres.sendparamfromdashboardpopup_subject.subscribe(data=>{
             this.rangeSelected=data.daterangeslot;
           if(data.dashboard_name=="Calls")
           {

@@ -32,17 +32,21 @@ export class gigaaasocketapi {
   constructor(private message:MessageService,private sharedres:sharedres_service) {
     this.getlistofagentsinque$ = this.getlistofagentsinquesubjecct.asObservable().pipe();
     this.getlistofvisitor$=this.getlistofvisitorsubject.asObservable().pipe();
- 
-      this.getlistofliveque()
+    const socketvalue = JSON.parse(localStorage.getItem('call-socket'))
+      if(socketvalue==true)
+      {
+        this.getlistofliveque()
+      }
     this.callsocketapi_by_selecting_intgid();
   }
 
 callsocketapi_by_selecting_intgid()
-{ const socketvalue = JSON.parse(localStorage.getItem('gigaaa-socket'))
-  this.sharedres.runsocketapiusingint_id$.subscribe(data=>{
+{ const socketvalue = JSON.parse(localStorage.getItem('call-socket'))
+  this.sharedres.runsocketapiusingint_idsubject.subscribe(data=>{
     if(data==1&&socketvalue!=true)
     {
-        this.getlistofliveque();
+        this.getlistofliveque();     
+     
     }
   })
 }
@@ -61,9 +65,10 @@ callsocketapi_by_selecting_intgid()
      this.ws = new WebSocket(url);
 
      this.ws.onopen=(e)=>{
+       this.isopensocker=1;
        this.sharedres.send_trigger_message(1);
         this.checksocketopen=true;
-        localStorage.setItem('gigaaa-socket', JSON.stringify(this.checksocketopen));
+        localStorage.setItem('call-socket', JSON.stringify(this.checksocketopen));
       }
 
        this.ws.onmessage = (e) => {
@@ -133,7 +138,10 @@ callsocketapi_by_selecting_intgid()
     }
     closewebsocketcalls()
     {  
-        this.ws.close();
+      if(this.isopensocker==1)
+      {
+        this.ws.close()
+      }
     }
 
 }

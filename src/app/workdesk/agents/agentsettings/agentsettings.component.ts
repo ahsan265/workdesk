@@ -184,7 +184,7 @@ form = new FormGroup({
 
   getagentprofilesettingview()
   {
-      this.sharedres.agentsprofilesetting$.subscribe(data=>{
+      this.sharedres.agentsprofilesettingsubject.subscribe(data=>{
       this.agentsettingdata=data;
       this.showagentinformation(this.agentsettingdata);
       var timestamp = (new Date()).getTime();
@@ -443,7 +443,7 @@ public async updateagentprofile(): Promise<any>
   // recieve updated picture
   recieveupdatedpicture()
   {
-    this.sharedres.sendpicture$.subscribe(data=>{
+    this.sharedres.sendpciture_subject.subscribe(data=>{
       var timestamp = (new Date()).getTime();
       this.agentprofilepic=data + '?_=' + timestamp;
     })

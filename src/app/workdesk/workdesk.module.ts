@@ -6,8 +6,6 @@ import { WorkdeskRoutingModule } from './workdesk-routing.module';
 import { AgentComponent } from './agents/agent.component';
 import { UserloginserviceService } from '../service/userloginservice.service';
 import { ChatComponent } from './call/chat.component';
-import { ViewchatComponent } from './visitors/viewchat.component';
-import { ActivechatComponent } from './activechat/activechat.component';
 import { EditformComponent } from './editform/editform.component';
 import { MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -50,8 +48,6 @@ import { webrtcsocket } from '../service/webrtcsocket';
      getloadpictures, 
      AgentComponent, 
      ChatComponent,
-      ViewchatComponent, 
-      ActivechatComponent, 
       EditformComponent, 
       AddagentComponent, 
       DashboardComponent, 

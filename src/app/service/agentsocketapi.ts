@@ -13,20 +13,23 @@ import { sharedres_service } from "./sharedres.service";
     getagetnlist$: Observable<any>;
     private getagentlistsubject = new Subject<any>();
      ws:  WebSocket;
-     issocketliveornot:boolean=false;
+     issocketliveornot:any=0;
     constructor(private message:MessageService,private sharedres:sharedres_service)
      {    this.getagetnlist$ = this.getagentlistsubject.asObservable().pipe();
-   
-     this.getagentlive();
+      const socketvalue = JSON.parse(localStorage.getItem('agent-socket'))
+      if(socketvalue==true)
+      {
+        this.getagentlive();
+      }
      this.callsocketapi_by_selecting_intgid()
       }
         public  callsocketapi_by_selecting_intgid()
-          { const socketvalue = JSON.parse(localStorage.getItem('gigaaa-socket'))
-            this.sharedres.runsocketapiusingint_id$.subscribe(data=>{
+          { const socketvalue = JSON.parse(localStorage.getItem('agent-socket'))
+            this.sharedres.runsocketapiusingint_idsubject.subscribe(data=>{
            
               if(data==1&&socketvalue!=true)
               {     
-                this.getagentlive()
+               this.getagentlive();
               }
         })
       
@@ -45,8 +48,10 @@ import { sharedres_service } from "./sharedres.service";
                 let  url=this.websocket_url+"/customer-support/agents?organization="+uuid+"&integration="+integrationid+"&agent="+loggedinuser_uuid?.uuid;
                 this.ws = new WebSocket(url);
                     this.ws.onopen=(e)=>{
+                      this.issocketliveornot=1;
                       let checksocketopen=true;
-                        localStorage.setItem('gigaaa-socket', JSON.stringify(checksocketopen));
+                      this.sharedres.sendMessagetoAgent(1);
+                      localStorage.setItem('agent-socket', JSON.stringify(checksocketopen));
 
                     }
                     this.ws.onmessage = (e) => {
@@ -104,13 +109,18 @@ import { sharedres_service } from "./sharedres.service";
 
       // close agent socket
       closeagentsocket()
-      {  
-        this.ws.close();
+      {         
+        if(this.issocketliveornot==1)
+        {
+          this.ws.close()
+        }
+      //  this.message.setErrorMessage("closed agents")
       }
       // get loggedin Email
 
       getsettingforloggedinagent()
       {
+
          const getdata = JSON.parse(localStorage.getItem('gigaaa-user'))
         return getdata?.email;  
       }

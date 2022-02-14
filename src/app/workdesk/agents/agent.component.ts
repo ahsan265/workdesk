@@ -123,10 +123,17 @@ export class AgentComponent implements OnInit {
     this.getagentslistbylanguages_mobilefilter();
     this.getagentlist();
     this.getagentrole();
-      setTimeout(() => {
+    setTimeout(() => {
       this.selectusertype(true,"Show all",0)
-      }, 500);
-    this.sharedres.submitapplication$.subscribe(data=>{
+    }, 1000);
+     
+     this.sharedres.sendtrigger_agentpage_subject.subscribe(data=>{
+       if(data==1)
+       {
+        this.agentsocketgigaaaapi.send_agentsparam_status(1,1,1,this.id_soflanguages)
+       }
+     }) 
+    this.sharedres.submitappsubject.subscribe(data=>{
     this.agentsocketgigaaaapi.send_agentsparam_status(this.invited_agents,this.active_agents,this.inactive_agents,this.id_soflanguages)
     })
     this.getagentdetailslive()
@@ -135,7 +142,6 @@ export class AgentComponent implements OnInit {
   // get agents details live
   getagentdetailslive(){
    this.agentsocketgigaaaapi.getagetnlist$.subscribe(data=>{
-     console.log(data)
     var updateagentdata;
     updateagentdata =data;
     var count=0;
@@ -443,7 +449,7 @@ isagentonline(val,val1){
 
   getagentviews()
   {
-    this.sharedres.agentsetting$.subscribe(data=>{
+    this.sharedres.agentsettingsubject.subscribe(data=>{
       if(data=="teams")
       {
         this.agentlistview=false;
@@ -474,7 +480,7 @@ getagentname(val)
   //getsettingsview
   getagentrole()
    {
-    this.sharedres.agentrole$.subscribe(data=>{
+    this.sharedres.agentrolesubject.subscribe(data=>{
       this.isagent=data['is_admin']
     if ( data['is_admin']==true)
     {
@@ -548,7 +554,7 @@ return false;
 
   getagentlist()
   {
-    this.sharedres.refreshagentlist$.subscribe(data=>{
+    this.sharedres.refreshagentlistsubject.subscribe(data=>{
       if(data==1)
       {
         this.agentsocketgigaaaapi.send_agentsparam_status(this.active_agents,this.inactive_agents,this.invited_agents,this.id_soflanguages)
@@ -693,7 +699,7 @@ return false;
 
   get_search_query()
   {
-    this.sharedres.sendsearchqueryforagent$.subscribe(data=>{
+    this.sharedres.sendsearchqueryforagent_subject.subscribe(data=>{
       this.search(data);
     })
   }
@@ -736,7 +742,7 @@ return false;
           // get agents by languages using mobile filter
           getagentslistbylanguages_mobilefilter()
           {
-            this.sharedres.loadagentwithlanguages$.subscribe(data=>{
+            this.sharedres.loadagentwithlanguages_subject.subscribe(data=>{
               this.langaugesfrommobilefilter=data;
               this.agentsocketgigaaaapi.send_agentsparam_status(this.active_agents,this.inactive_agents,this.invited_agents,data);
               this.getselectedlanguages(data);

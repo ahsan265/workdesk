@@ -37,62 +37,47 @@ export class AuthService implements CanActivate {
   }
 
 
-  public getLoggedUser(): User {
-    const user: any = localStorage.getItem('gigaaa-user');
-   let logged_user= JSON.parse(user);
-  //  if(logged_user!=null)
-  //  {
-  //   this.getOrganizationId(logged_user.api_token);
-  //   this.getinvitationToken(logged_user.api_token);
-  //  }
-   return logged_user;
-  }
+      public getLoggedUser(): User {
+      const user: any = localStorage.getItem('gigaaa-user');
+      let logged_user= JSON.parse(user);
+      return logged_user;
+       }
 
       canActivate() {
         return this.isLoggedIn()
       }
 
-    // get organization id 
-    public  async getOrganizationId(token:any): Promise<any>{
-      try{
+        // get organization id 
+        public  async getOrganizationId(token:any): Promise<any>{
+          try{
       
           const subsid=await this.gigaaaApiService.getsubsid(token);
           this.orgId=subsid['uuid'];
           const subsiddata = JSON.parse(localStorage.getItem('gigaaa-user'));
-          if( subsiddata!=null)
-          {
           subsiddata['subscription_id']={subsid};
-        
-            this.getallintegrationlist(token,this.orgId);
-            localStorage.setItem('gigaaa-user', JSON.stringify(subsiddata));
+          this.getallintegrationlist(token,this.orgId);
+          localStorage.setItem('gigaaa-user', JSON.stringify(subsiddata));
           }
-         
-        
+          catch(err)
+          {
+            this.message.setErrorMessage(err.error.error);
+          }
+          }
 
-      }
-      catch(err)
-      {
-        console.log(err)
-        this.message.setErrorMessage(err.error.error);
-
-      }
-        
-    }
-
-    // get all integration
+      // get all integration
       getallintegrationlist(token:any,orgid:any)
       {          
       try {
-     this.gigaaaApiService.getallintegration(token,orgid).subscribe(data=>{
+      this.gigaaaApiService.getallintegration(token,orgid).subscribe(data=>{
       this.integration=data;
       if(this.integration.length!=0)
       {
         this.integration.forEach(element => {
         if(element.last_used===true)
         { 
-     localStorage.setItem('intgid', JSON.stringify({int_id:element.uuid,name:element.name}));
-     this.sharedres.showagentListonload(1);
-     this.getLOggedinUserUuid(token,orgid,element.uuid)
+        localStorage.setItem('intgid', JSON.stringify({int_id:element.uuid,name:element.name}));
+        this.sharedres.showagentListonload(1);
+        this.getLOggedinUserUuid(token,orgid,element.uuid);
 
       }
       });
@@ -109,9 +94,7 @@ export class AuthService implements CanActivate {
     {
       this.gigaaaApiService.getloggedinagentuuid(token,orgid,int_id).subscribe(data=>{
         localStorage.setItem('userlogged_uuid', JSON.stringify(data));
-        this.sharedres.getcallsocketapi(1);
-        this.sharedres.getintegrationrelation(1);
-        this.sharedres.getuserole();
+        this.ClosellSockets();
         },err=>{
           this.message.setErrorMessage(err.error.error)
         });
@@ -133,5 +116,14 @@ export class AuthService implements CanActivate {
     catch(err){
       this.message.setErrorMessage(err.error.error);
     }
+    }
+
+    // close the socket if open alreayd and open
+    ClosellSockets()    {
+      setTimeout(() => {
+        this.sharedres.getcallsocketapi(1);
+        this.sharedres.getintegrationrelation(1);
+        this.sharedres.getuserole();  
+      }, 1000);
     }
 }

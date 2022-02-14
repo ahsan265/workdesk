@@ -123,9 +123,11 @@ websites=[{text:"Partnership",url:['https://partnerships.gigaaa.com/'],image:'..
             {
               this.pageTitle="Dashboard";
             }
-            else if(path=="logout")
+            else if(path=="")
             {
-              localStorage.removeItem("gigaaa-socket")
+              console.log(path)
+              localStorage.setItem('call-socket', JSON.stringify(false));
+              localStorage.setItem('agent-socket', JSON.stringify(false));
             }
             else 
             {
@@ -135,12 +137,17 @@ websites=[{text:"Partnership",url:['https://partnerships.gigaaa.com/'],image:'..
             }
           });
           this.authService.user.subscribe((r: any) => {
+       
             this.user = r;
             if(this.user!=null)
             {
               this.authService.getOrganizationId(this.user.api_token);
               this.authService.getinvitationToken(this.user.api_token);
-
+            }
+            else
+            {
+              this.socketapi.closewebsocketcalls();
+              this.agentsocketapi.closeagentsocket();
             }
           
           });
@@ -241,55 +248,50 @@ showonlinetatus(value:boolean){
   }
  
  }
- // get last used integration
- getintegrationlist()
-  { 
-    // if(this.hideTopbar==false)
-    // {
-    //   this.sharedres.showtopandsidebar(1);
-    // }
+    // get last used integration
+     getintegrationlist()
+       { 
+          try {
+        const getdata = JSON.parse(localStorage.getItem('gigaaa-user'))
+        var accesstoken=getdata.api_token;
+        var uuid=getdata.subscription_id.subsid.uuid;
+        this.apiService.getallintegration(accesstoken,uuid).subscribe(data=>{
+        
+        this.integration=data;
+        if(this.integration.length!=0)
+        {
+        this.integration.forEach(element => {
+          if(element.last_used===true)
+          {       
+            localStorage.setItem('intgid', JSON.stringify({int_id:element.uuid,name:element.name}));
+            this.lastuserintegration=element.name;
 
-  try {
- const getdata = JSON.parse(localStorage.getItem('gigaaa-user'))
- var accesstoken=getdata.api_token;
- var uuid=getdata.subscription_id.subsid.uuid;
- this.apiService.getallintegration(accesstoken,uuid).subscribe(data=>{
- 
- this.integration=data;
- if(this.integration.length!=0)
- {
- this.integration.forEach(element => {
-   if(element.last_used===true)
-   {       
-     localStorage.setItem('intgid', JSON.stringify({int_id:element.uuid,name:element.name}));
-     this.lastuserintegration=element.name;
+          }
+        },err=>{
+          this.messegeService.setErrorMessage(err.error.error);
+        });
+        let updatearr = this.integration.map((item, i) => Object.assign(item,{ routeUrl: ['/intents']}));
+          let update_integration_list = updatearr;
+        this.sidebarData.forEach(element => {
+          if(element.dropdown==true)
+          {
+            element.dropdownItems=update_integration_list;
+            element.name=this.lastuserintegration;
+          }
+        });
+        }
+        });
 
-   }
- },err=>{
-   this.messegeService.setErrorMessage(err.error.error);
- });
- let updatearr = this.integration.map((item, i) => Object.assign(item,{ routeUrl: ['/intents']}));
-  let update_integration_list = updatearr;
- this.sidebarData.forEach(element => {
-   if(element.dropdown==true)
-   {
-     element.dropdownItems=update_integration_list;
-     element.name=this.lastuserintegration;
-   }
- });
- }
- });
+        } catch (error) {
+          //this.messegeService.setErrorMessage(error);
 
-} catch (error) {
-  //this.messegeService.setErrorMessage(error);
+        }
 
-}
-
-}
+        }
 // show top and sidebar
 getagentlistOnload()
 {
-      this.sharedres.showagentListonload$.subscribe(data=>{
+      this.sharedres.showagentListonloadSubject.subscribe(data=>{
       if(data==1)
       {
       this.getintegrationlist()
@@ -301,7 +303,7 @@ getagentlistOnload()
  // get the online status when agent is online or away.
  getuserloggedinstatus()
  {    
-    this.sharedres.runthesocketforagent$.subscribe(data=>{
+    this.sharedres.runthesocketforagent_subject.subscribe(data=>{
     const status = JSON.parse(localStorage.getItem('user-status'))
     if(data==1)
     {
@@ -336,6 +338,7 @@ isSidebarOpen(event: any) {
 
 onLoginClicked(event: boolean) {
   if (event) {
+    console.log(event)
     this.headerService.login();
     }
 }
@@ -347,12 +350,10 @@ onGetLoggedUser(user: any) {
 }
 
 
-// get integration callBack fucntion
-getselectedDropdownItem(event: any) {
-  // Here you are getting selected integration
-  console.log(event);
-  this.getintegration(event?.name,event?.uuid);
-}
+    // get integration callBack fucntion
+    getselectedDropdownItem(event: any) {
+      this.getintegration(event?.name,event?.uuid);
+    }   
 
     // setIntergration 
     public async   getintegration(val,int_id)
@@ -365,7 +366,7 @@ getselectedDropdownItem(event: any) {
       await  this.apiService.updatelastusedintegration(accesstoken,uuid,{"integration": int_id});
       localStorage.setItem('intgid', JSON.stringify({int_id:int_id,name:val}));
       this.authService.getLOggedinUserUuid(accesstoken,uuid,int_id);
-      localStorage.setItem('gigaaa-socket', JSON.stringify(false));
-
+      localStorage.setItem('call-socket', JSON.stringify(false));
+      localStorage.setItem('agent-socket', JSON.stringify(false));
     }
 }

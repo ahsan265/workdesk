@@ -358,7 +358,7 @@ return ("0" + minutes).slice(-2) + ":" + ("0" +seconds).slice(-2);
     this.getmobileSeachFilterData();
     this.getmobileLanguagesFilterData();
     this.getDateRangeMobileFilter();
-    this.sharedres.sendtrigger_message$.subscribe(data=>{
+    this.sharedres.sendtrigger_message_subject.subscribe(data=>{
       if(data==1)
       {
         this.gigaaasocketapi.sendfilterparams({"tab":"default","languages":this.idsoflanguages,"call_type":this.idsofcalltype});
@@ -417,8 +417,8 @@ return ("0" + minutes).slice(-2) + ":" + ("0" +seconds).slice(-2);
       this.missed=false;
       this.answered=false;
       this.selectedtabs="ongoing"
-       let data= {"call_uuid": "jhfdjgdf65454fsdbfjg"};
-      this.openCallInterface(data);
+      //  let data= {"call_uuid": "jhfdjgdf65454fsdbfjg"};
+      // this.openCallInterface(data);
     }
     else if(val=="missed")
     {
@@ -442,7 +442,7 @@ return ("0" + minutes).slice(-2) + ":" + ("0" +seconds).slice(-2);
 
   getagentlist()
   {
-  this.sharedres.submitapplication$.subscribe(data=>{
+  this.sharedres.submitappsubject.subscribe(data=>{
     // this.gigaaasocketapi.sendfilterparams({"tab":this.defaultab_selected,"languages":this.idsoflanguages,"call_type":this.idsofcalltype});
     // this.onDateChange([this.date_one_selected,this.date_two_selected],this.defaultab_selected);
     })
@@ -1717,7 +1717,7 @@ this.allselectedcall2=status;
 // get mobile search results
   getmobileSeachFilterData()
   {
-    this.sharedres.sendcallsearchfilter$.subscribe(data=>{
+    this.sharedres.sendcallsearchfilter_subject.subscribe(data=>{
       if(data.call_type=="incoming")
       {
         this.seachValue1=data.search_value
@@ -1744,7 +1744,7 @@ this.allselectedcall2=status;
   // get languages search results
   getmobileLanguagesFilterData()
   {
-    this.sharedres.sendcalllanguagesfilter$.subscribe(data=>{
+    this.sharedres.sendcalllanguagesfilter_subject.subscribe(data=>{
       if(data.call_type=="incoming")
       {
         this.selected_languages1=data.languages;
@@ -1776,7 +1776,7 @@ this.allselectedcall2=status;
 
   getDateRangeMobileFilter()
   {
-    this.sharedres.senddaterangecallmobilefilter$.subscribe(data=>{
+    this.sharedres.senddaterangecallmobilefilter_subject.subscribe(data=>{
       if(this.selectedtabs=="missed")
       {
 
