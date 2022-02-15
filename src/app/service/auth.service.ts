@@ -90,18 +90,22 @@ export class AuthService implements CanActivate {
     }
     }
     // get loggedin Agent uuid with relation to integration id
-    getLOggedinUserUuid(token,orgid,int_id)
+    public async getLOggedinUserUuid(token,orgid,int_id):Promise<any>
     {
-      this.gigaaaApiService.getloggedinagentuuid(token,orgid,int_id).subscribe(data=>{
+      try{
+        let data=await this.gigaaaApiService.getloggedinagentuuid(token,orgid,int_id);
         localStorage.setItem('userlogged_uuid', JSON.stringify(data));
         this.ClosellSockets();
-        },err=>{
-          this.message.setErrorMessage(err.error.error)
-        });
+      }
+      catch(err)
+      {
+         this.message.setErrorMessage(err.error.error); 
+      }        
+      
     }
     // invitation code 
-    public  async getinvitationToken(token): Promise<void>
-    {
+      public  async getinvitationToken(token): Promise<void>
+       {
       try
       {
       const code = JSON.parse(localStorage.getItem('gigaaa-invitation'))
@@ -119,11 +123,12 @@ export class AuthService implements CanActivate {
     }
 
     // close the socket if open alreayd and open
-    ClosellSockets()    {
-      setTimeout(() => {
-        this.sharedres.getcallsocketapi(1);
-        this.sharedres.getintegrationrelation(1);
+  private async  ClosellSockets():Promise<void>    {
+     
+
+      await  this.sharedres.getcallsocketapi(1);
+      await   this.sharedres.getintegrationrelation(1);
         this.sharedres.getuserole();  
-      }, 1000);
+
     }
 }

@@ -19,17 +19,16 @@ import { sharedres_service } from "./sharedres.service";
       const socketvalue = JSON.parse(localStorage.getItem('agent-socket'))
       if(socketvalue==true)
       {
-        this.getagentlive();
+       // this.getagentlive();
       }
      this.callsocketapi_by_selecting_intgid()
       }
         public  callsocketapi_by_selecting_intgid()
-          { const socketvalue = JSON.parse(localStorage.getItem('agent-socket'))
+          { 
             this.sharedres.runsocketapiusingint_idsubject.subscribe(data=>{
-           
-              if(data==1&&socketvalue!=true)
-              {     
-               this.getagentlive();
+              if(data==1)
+              {  
+                  this.getagentlive();
               }
         })
       
@@ -45,14 +44,11 @@ import { sharedres_service } from "./sharedres.service";
 
           if(loggedinuser_uuid?.uuid!=null&&uuid!=null&&integrationid!=null)
             { 
-                let  url=this.websocket_url+"/customer-support/agents?organization="+uuid+"&integration="+integrationid+"&agent="+loggedinuser_uuid?.uuid;
-                this.ws = new WebSocket(url);
+                  let  url=this.websocket_url+"/customer-support/agents?organization="+uuid+"&integration="+integrationid+"&agent="+loggedinuser_uuid?.uuid;
+                  this.ws = new WebSocket(url);
                     this.ws.onopen=(e)=>{
-                      this.issocketliveornot=1;
-                      let checksocketopen=true;
+                     
                       this.sharedres.sendMessagetoAgent(1);
-                      localStorage.setItem('agent-socket', JSON.stringify(checksocketopen));
-
                     }
                     this.ws.onmessage = (e) => {
                   
@@ -108,13 +104,9 @@ import { sharedres_service } from "./sharedres.service";
       }
 
       // close agent socket
-      closeagentsocket()
-      {         
-        if(this.issocketliveornot==1)
-        {
-          this.ws.close()
-        }
-      //  this.message.setErrorMessage("closed agents")
+     public async closeagentsocket():Promise<void>
+      {     
+      await    this.ws.close()
       }
       // get loggedin Email
 

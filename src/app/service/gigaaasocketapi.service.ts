@@ -33,20 +33,19 @@ export class gigaaasocketapi {
     this.getlistofagentsinque$ = this.getlistofagentsinquesubjecct.asObservable().pipe();
     this.getlistofvisitor$=this.getlistofvisitorsubject.asObservable().pipe();
     const socketvalue = JSON.parse(localStorage.getItem('call-socket'))
-      if(socketvalue==true)
-      {
-        this.getlistofliveque()
-      }
+      // if(socketvalue==true)
+      // {
+      //   this.getlistofliveque()
+      // }
     this.callsocketapi_by_selecting_intgid();
   }
 
 callsocketapi_by_selecting_intgid()
 { const socketvalue = JSON.parse(localStorage.getItem('call-socket'))
   this.sharedres.runsocketapiusingint_idsubject.subscribe(data=>{
-    if(data==1&&socketvalue!=true)
+    if(data==1)
     {
         this.getlistofliveque();     
-     
     }
   })
 }
@@ -65,10 +64,9 @@ callsocketapi_by_selecting_intgid()
      this.ws = new WebSocket(url);
 
      this.ws.onopen=(e)=>{
-       this.isopensocker=1;
        this.sharedres.send_trigger_message(1);
         this.checksocketopen=true;
-        localStorage.setItem('call-socket', JSON.stringify(this.checksocketopen));
+
       }
 
        this.ws.onmessage = (e) => {
@@ -136,12 +134,10 @@ callsocketapi_by_selecting_intgid()
       this.ws.send(JSON.stringify(data))
     }
     }
-    closewebsocketcalls()
+  public async  closewebsocketcalls():Promise<void>
     {  
-      if(this.isopensocker==1)
-      {
-        this.ws.close()
-      }
+    await   this.ws.close()
+
     }
 
 }

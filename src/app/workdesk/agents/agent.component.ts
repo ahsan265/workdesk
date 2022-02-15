@@ -123,9 +123,11 @@ export class AgentComponent implements OnInit {
     this.getagentslistbylanguages_mobilefilter();
     this.getagentlist();
     this.getagentrole();
+    this.selectusertype(true,"Show all",1)
+
     setTimeout(() => {
       this.selectusertype(true,"Show all",0)
-    }, 1000);
+    }, 5000);
      
      this.sharedres.sendtrigger_agentpage_subject.subscribe(data=>{
        if(data==1)
@@ -133,9 +135,9 @@ export class AgentComponent implements OnInit {
         this.agentsocketgigaaaapi.send_agentsparam_status(1,1,1,this.id_soflanguages)
        }
      }) 
-    this.sharedres.submitappsubject.subscribe(data=>{
-    this.agentsocketgigaaaapi.send_agentsparam_status(this.invited_agents,this.active_agents,this.inactive_agents,this.id_soflanguages)
-    })
+    // this.sharedres.submitappsubject.subscribe(data=>{
+    // this.agentsocketgigaaaapi.send_agentsparam_status(this.invited_agents,this.active_agents,this.inactive_agents,this.id_soflanguages)
+    // })
     this.getagentdetailslive()
 
   }

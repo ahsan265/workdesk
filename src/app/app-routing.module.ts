@@ -16,7 +16,7 @@ const routes: Routes = [
     component: AppComponent,
     children: [
       {
-        path: '',
+        path: 'dashboard',
         loadChildren: () =>
           import('./workdesk/workdesk.module').then(
             (module) => module.WorkdeskModule

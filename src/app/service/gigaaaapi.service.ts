@@ -492,7 +492,7 @@ getCurrentUser(token):Observable<User> {
                   return  this.http.get(this.workdeskanalytics+"/private/plugin/stats/visitors?organization="+orgid+"&integration="+intid+"&date_from="+date_from+"&date_to="+date_to+"&languages="+languages+"&countries="+countries+"&date_range=including"+"&time="+time,httpOptions)
                   }
                  // get loggedin agent uuid
-                 getloggedinagentuuid(accesstoken:string,orgid:string,intid:string)
+               public async  getloggedinagentuuid(accesstoken:string,orgid:string,intid:string):Promise<any>
                  {
                   const httpOptions: any = {
                     headers: new HttpHeaders({
@@ -502,7 +502,10 @@ getCurrentUser(token):Observable<User> {
                  })
                  };
 
-                return  this.http.get(this.workdeskurl_cs+"/private/integration/agent?organization="+orgid+"&integration="+intid,httpOptions)
+                return await this.http.get(this.workdeskurl_cs+"/private/integration/agent?organization="+orgid+"&integration="+intid,httpOptions).toPromise()
+                .catch((err) => {
+                  throw (err);
+                });
                  }
 
                  // get user counts for cards

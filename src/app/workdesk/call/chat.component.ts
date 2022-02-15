@@ -701,7 +701,6 @@ public async  dialcall(callid:any):Promise<void>
   try{
   const call_url= await this.gigaaaservice.getcalltype(accesstoken,uuid,id.int_id,data);
   window.open(call_url.url+"&integration="+id.int_id+"&agentlogged_uuid="+agentuuid?.uuid, "_blank");
-   
 
   }
   catch(err){

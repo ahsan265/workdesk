@@ -14,6 +14,7 @@ import { agentsocketapi } from './service/agentsocketapi';
 import { textChangeRangeIsUnchanged } from 'typescript';
 import { gigaaasocketapi } from './service/gigaaasocketapi.service';
 import { GigaaaHeaderService } from '@gigaaa/gigaaa-components';
+import { abort } from 'process';
 
 @Component({
   selector: 'app-root',
@@ -136,21 +137,68 @@ websites=[{text:"Partnership",url:['https://partnerships.gigaaa.com/'],image:'..
               this.pageTitle=locID[3].charAt(0).toUpperCase() + locID[3].slice(1);
             }
           });
-          this.authService.user.subscribe((r: any) => {
-       
-            this.user = r;
-            if(this.user!=null)
-            {
-              this.authService.getOrganizationId(this.user.api_token);
-              this.authService.getinvitationToken(this.user.api_token);
+          let userarray=[];
+          let isTwoitem;
+          let firstLoad;
+          const isloaded = JSON.parse(localStorage.getItem('Loaded'))
+
+         this.authService.user.subscribe(r=>{
+          let user= r;
+          if(userarray.length!=2)
+          {
+            if(user!=null){
+              userarray.push(user);
             }
-            else
-            {
-              this.socketapi.closewebsocketcalls();
-              this.agentsocketapi.closeagentsocket();
-            }
+        if(userarray.length==2)
+        {
+          isTwoitem=true;
+        }
+      
+            
+          }
+        
           
-          });
+          if(user!=null)
+          {
+          console.log(userarray,isTwoitem)
+          let seconditem;
+         if(userarray.length==2 &&userarray[0].api_token!=userarray[1].api_token &&isTwoitem==true)
+          {
+           console.log("one")
+            this.authService.getOrganizationId(userarray[0].api_token);
+            this.authService.getinvitationToken(userarray[0].api_token);
+            seconditem =userarray[1];
+            isTwoitem=false;
+          }
+          else if(userarray.length==2 && isTwoitem==false) {
+            this.authService.getOrganizationId(user.api_token);
+            this.authService.getinvitationToken(user.api_token);
+            console.log("two")
+
+          }
+          else if(userarray.length==1 && isloaded!=true)
+          {
+            this.authService.getOrganizationId(user.api_token);
+            this.authService.getinvitationToken(user.api_token);
+            localStorage.setItem("Loaded",JSON.stringify(true));
+            console.log("three")
+
+          }
+         
+         
+          // else 
+          // {
+          //   this.socketapi.closewebsocketcalls();
+          //   this.agentsocketapi.closeagentsocket();
+          // }
+        }
+         
+         
+        })
+            // this.user = r;
+           
+          
+          
    
 
     // this.authService.accessToken.subscribe((res: any) => {
@@ -202,7 +250,7 @@ websites=[{text:"Partnership",url:['https://partnerships.gigaaa.com/'],image:'..
   onNoLoggedUsers(event: any) {
     if (event) {
       console.log(event)
-      localStorage.clear();
+     // localStorage.clear();
       this.agentsocketapi.closeagentsocket();
       this.socketapi.closewebsocketcalls();
       location.href = this.redirectUri;
@@ -356,17 +404,17 @@ onGetLoggedUser(user: any) {
     }   
 
     // setIntergration 
-    public async   getintegration(val,int_id)
-    {
+    public async   getintegration(val,int_id):Promise<any>
+    { 
+      localStorage.setItem('intgid', JSON.stringify({int_id:int_id,name:val}));
+      this.socketapi.closewebsocketcalls();
+      this.agentsocketapi.closeagentsocket();
       const getdata = JSON.parse(localStorage.getItem('gigaaa-user'))
       let accesstoken=getdata?.api_token;
       let uuid=getdata?.subscription_id?.subsid.uuid;
-      this.socketapi.closewebsocketcalls();
-      this.agentsocketapi.closeagentsocket();
-      await  this.apiService.updatelastusedintegration(accesstoken,uuid,{"integration": int_id});
-      localStorage.setItem('intgid', JSON.stringify({int_id:int_id,name:val}));
-      this.authService.getLOggedinUserUuid(accesstoken,uuid,int_id);
-      localStorage.setItem('call-socket', JSON.stringify(false));
-      localStorage.setItem('agent-socket', JSON.stringify(false));
+ 
+       await  this.apiService.updatelastusedintegration(accesstoken,uuid,{"integration": int_id});
+       await this.authService.getLOggedinUserUuid(accesstoken,uuid,int_id);
+     
     }
 }

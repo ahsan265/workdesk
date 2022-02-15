@@ -17,7 +17,7 @@ export class sharedres_service {
      agentrolesubject = new Subject<any>();
      agentsettingsubject = new Subject();
     agentsprofilesettingsubject = new Subject<any>();
-    runsocketapiusingint_idsubject = new Subject();
+    runsocketapiusingint_idsubject = new Subject<any>();
      runthesocketforagent_subject = new Subject<any>();
      sendsearchqueryforagent_subject = new Subject<any>();
      loadagentwithlanguages_subject = new Subject<any>();
@@ -39,8 +39,8 @@ export class sharedres_service {
 
 
      // send integration
-      getintegrationrelation(val) {
-          this.submitappsubject.next(val);
+    public  async getintegrationrelation(val):Promise<any> {
+       await   this.submitappsubject.next(val);
       }
       getagentsettingview(val)
 
@@ -105,8 +105,8 @@ export class sharedres_service {
         }
 
         // get run socket api
-        getcallsocketapi(val){
-        this.runsocketapiusingint_idsubject.next(val)
+      public async  getcallsocketapi(val):Promise <any> {
+      await  this.runsocketapiusingint_idsubject.next(val)
         }
 
 
