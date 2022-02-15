@@ -162,7 +162,7 @@ websites=[{text:"Partnership",url:['https://partnerships.gigaaa.com/'],image:'..
           {
           console.log(userarray,isTwoitem)
           let seconditem;
-         if(userarray.length==2 &&userarray[0].api_token!=userarray[1].api_token &&isTwoitem==true)
+         if(userarray.length==2  &&isTwoitem==true)
           {
            console.log("one")
             this.authService.getOrganizationId(userarray[0].api_token);
