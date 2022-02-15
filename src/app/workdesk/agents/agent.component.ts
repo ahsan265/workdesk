@@ -127,7 +127,7 @@ export class AgentComponent implements OnInit {
 
     setTimeout(() => {
       this.selectusertype(true,"Show all",0)
-    }, 5000);
+    },0);
      
      this.sharedres.sendtrigger_agentpage_subject.subscribe(data=>{
        if(data==1)
