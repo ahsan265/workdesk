@@ -32,16 +32,12 @@ export class gigaaasocketapi {
   constructor(private message:MessageService,private sharedres:sharedres_service) {
     this.getlistofagentsinque$ = this.getlistofagentsinquesubjecct.asObservable().pipe();
     this.getlistofvisitor$=this.getlistofvisitorsubject.asObservable().pipe();
-    const socketvalue = JSON.parse(localStorage.getItem('call-socket'))
-      // if(socketvalue==true)
-      // {
-      //   this.getlistofliveque()
-      // }
+
     this.callsocketapi_by_selecting_intgid();
   }
 
 callsocketapi_by_selecting_intgid()
-{ const socketvalue = JSON.parse(localStorage.getItem('call-socket'))
+{ 
   this.sharedres.runsocketapiusingint_idsubject.subscribe(data=>{
     if(data==1)
     {

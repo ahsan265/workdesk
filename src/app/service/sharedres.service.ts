@@ -39,7 +39,7 @@ export class sharedres_service {
 
 
      // send integration
-    public  async getintegrationrelation(val):Promise<any> {
+      public  async getintegrationrelation(val):Promise<any> {
        await   this.submitappsubject.next(val);
       }
       getagentsettingview(val)

@@ -1854,7 +1854,8 @@ createoschart()
     { const intid = JSON.parse(localStorage.getItem('intgid'))
       try{
       this.sharedres.submitappsubject.subscribe(data=>{
-        if(intid?.int_id==null)
+        console.log(data)
+        if(data['int_id']!=null)
         {
           this.getlllangugaes();
         }

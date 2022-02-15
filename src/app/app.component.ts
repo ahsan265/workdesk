@@ -90,6 +90,7 @@ websites=[{text:"Partnership",url:['https://partnerships.gigaaa.com/'],image:'..
   user: User;
   url:String;
   hideTopbar:boolean=false;
+  isload:boolean=false;
   constructor(
     public authService: AuthService,
     private apiService: GigaaaApiService,
@@ -120,16 +121,13 @@ websites=[{text:"Partnership",url:['https://partnerships.gigaaa.com/'],image:'..
            .subscribe(params => {
             let loc=window.location;
           let path= loc.pathname.replace("/", "");
+          console.log(path)
             if(path=="callback")
             {
               this.pageTitle="Dashboard";
+           
             }
-            else if(path=="")
-            {
-              console.log(path)
-              localStorage.setItem('call-socket', JSON.stringify(false));
-              localStorage.setItem('agent-socket', JSON.stringify(false));
-            }
+        
             else 
             {
               this.url= window.location.href;
@@ -137,6 +135,8 @@ websites=[{text:"Partnership",url:['https://partnerships.gigaaa.com/'],image:'..
               this.pageTitle=locID[3].charAt(0).toUpperCase() + locID[3].slice(1);
             }
           });
+       
+       
           let userarray=[];
           let isTwoitem;
           let firstLoad;
@@ -153,28 +153,20 @@ websites=[{text:"Partnership",url:['https://partnerships.gigaaa.com/'],image:'..
         {
           isTwoitem=true;
         }
-      
             
           }
         
           
           if(user!=null)
           {
-          console.log(userarray,isTwoitem)
-          let seconditem;
-         if(userarray.length==2  &&isTwoitem==true)
+        
+         if((userarray.length==2 || userarray.length==1)  &&isTwoitem==true)
           {
            console.log("one")
             this.authService.getOrganizationId(userarray[0].api_token);
             this.authService.getinvitationToken(userarray[0].api_token);
-            seconditem =userarray[1];
-            isTwoitem=false;
-          }
-          else if(userarray.length==2 && isTwoitem==false) {
-            this.authService.getOrganizationId(user.api_token);
-            this.authService.getinvitationToken(user.api_token);
-            console.log("two")
-
+            userarray.length=0;
+            
           }
           else if(userarray.length==1 && isloaded!=true)
           {
@@ -182,60 +174,17 @@ websites=[{text:"Partnership",url:['https://partnerships.gigaaa.com/'],image:'..
             this.authService.getinvitationToken(user.api_token);
             localStorage.setItem("Loaded",JSON.stringify(true));
             console.log("three")
-
+            
           }
          
-         
-          // else 
-          // {
-          //   this.socketapi.closewebsocketcalls();
-          //   this.agentsocketapi.closeagentsocket();
-          // }
+       
         }
          
          
         })
-            // this.user = r;
-           
-          
-          
-   
 
-    // this.authService.accessToken.subscribe((res: any) => {
 
-    //   if (res) {
-       
-    //     this.accessToken=res
-    //     this.token = res.access_token;
-    //     this.apiService.getCurrentUser(this.token).subscribe((r: any) => {
-    //       console.log("btn login")
-    //       r.api_token = this.token;
-    //       r.color = color.default(r.profile.first_name + r.profile.last_name);
-    //       this.authService.user.next(r);
-    //       this.cookie.set('gigaaa_user', JSON.stringify(r),this.expiredDate);
-    //       this.cookie.set('access_token_active', JSON.stringify(res),this.expiredDate);
-    //       this.oAuthService.login().finally(()=>{
-    //         this.socketapi.closewebsocketcalls();
-    //         this.agentsocketapi.closeagentsocket();
-    //         localStorage.setItem('gigaaa-socket', JSON.stringify(false));
-    //         this.getallintegrationlist();
-    //         this.sharedres.showtopandsidebar(1);
-    //         this.router.navigate(['/dashboard']);
-
-    //       })
-    //     });
-    //   }
-    
-    // });
-  
-    // this.getuserloggedinstatus();
-
-    // if(this.authService.isLoggedIn()==true)
-    // {
-    //   this.sharedres.showtopandsidebar(1);
-
-    // }
-   
+      
   }
 
   addNewRouteName(event: any) {
@@ -250,7 +199,7 @@ websites=[{text:"Partnership",url:['https://partnerships.gigaaa.com/'],image:'..
   onNoLoggedUsers(event: any) {
     if (event) {
       console.log(event)
-     // localStorage.clear();
+      localStorage.clear();
       this.agentsocketapi.closeagentsocket();
       this.socketapi.closewebsocketcalls();
       location.href = this.redirectUri;

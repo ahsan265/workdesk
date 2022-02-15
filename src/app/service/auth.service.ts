@@ -11,6 +11,7 @@ import { sharedres_service } from './sharedres.service';
 import { environment } from 'src/environments/environment';
 import { HttpClient } from '@angular/common/http';
 import { agentsocketapi } from './agentsocketapi';
+import { promise } from 'protractor';
 
 @Injectable({
   providedIn: 'root'
@@ -55,7 +56,7 @@ export class AuthService implements CanActivate {
           this.orgId=subsid['uuid'];
           const subsiddata = JSON.parse(localStorage.getItem('gigaaa-user'));
           subsiddata['subscription_id']={subsid};
-          this.getallintegrationlist(token,this.orgId);
+         await this.getallintegrationlist(token,this.orgId);
           localStorage.setItem('gigaaa-user', JSON.stringify(subsiddata));
           }
           catch(err)
@@ -65,19 +66,19 @@ export class AuthService implements CanActivate {
           }
 
       // get all integration
-      getallintegrationlist(token:any,orgid:any)
+    private async  getallintegrationlist(token:any,orgid:any):Promise<any>
       {          
       try {
       this.gigaaaApiService.getallintegration(token,orgid).subscribe(data=>{
       this.integration=data;
       if(this.integration.length!=0)
       {
-        this.integration.forEach(element => {
+        this.integration.forEach(async element => {
         if(element.last_used===true)
         { 
         localStorage.setItem('intgid', JSON.stringify({int_id:element.uuid,name:element.name}));
         this.sharedres.showagentListonload(1);
-        this.getLOggedinUserUuid(token,orgid,element.uuid);
+      await  this.getLOggedinUserUuid(token,orgid,element.uuid);
 
       }
       });
@@ -95,7 +96,7 @@ export class AuthService implements CanActivate {
       try{
         let data=await this.gigaaaApiService.getloggedinagentuuid(token,orgid,int_id);
         localStorage.setItem('userlogged_uuid', JSON.stringify(data));
-        this.ClosellSockets();
+        this.ClosellSockets({int_id:int_id});
       }
       catch(err)
       {
@@ -123,11 +124,11 @@ export class AuthService implements CanActivate {
     }
 
     // close the socket if open alreayd and open
-  private async  ClosellSockets():Promise<void>    {
+  private async  ClosellSockets(data):Promise<void>    {
      
 
       await  this.sharedres.getcallsocketapi(1);
-      await   this.sharedres.getintegrationrelation(1);
+      await   this.sharedres.getintegrationrelation(data);
         this.sharedres.getuserole();  
 
     }
