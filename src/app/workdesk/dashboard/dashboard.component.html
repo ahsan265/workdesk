@@ -356,7 +356,7 @@
             </div>
 
       </div>
-      <div class="withincard">
+      <div class="withincard last">
         <div class="imagepanelforcard">
           <div class="imageforcard" style="background: #EBF7DD; padding-left: 12.5px;padding-top: 9px;">
             <img class="iconsfordashboard" src="../../../assets/assets_workdesk/calls_answered.svg" alt="">
@@ -372,24 +372,6 @@
               <p [hidden]="answeredper==0" *ngIf="vsForTimeLable_calls!=null" class="time"><span ><img class="trendupdown" [src]="ansper|percentpipe" alt=""></span>{{answeredper}}% vs {{vsForTimeLable_calls}}</p>
               <p class="time"  [hidden]="vsForTimeLable_calls==null" *ngIf="answeredper==0">{{vsForTimeLable_calls | Uppercase }}: {{answeredper}}</p>
             </div>
-      </div>
-      <div class="withincard last">
-        <div class="imagepanelforcard">
-          <div class="imageforcard" style="background: #E9EFFE; padding-left: 10.5px;padding-top: 7px;">
-            <img class="iconsfordashboard" src="../../../assets/assets_workdesk/chats_answered_ai.svg" alt="">
-          </div>
-        </div>
-        <div  class="carddetails" [ngStyle]="{'margin-top': (vsForTimeLable_calls==null) ? '10px' : '0px'}">
-          <p class="cardheading">
-            Total Answered by AI
-            </p>
-            <p class="cardvalue" >
-             {{answeredbyai}}
-            </p>
-              <p [hidden]="answeredbyaiper==0"  *ngIf="vsForTimeLable_calls!=null  " class="time"><span><img class="trendupdown" [src]="ansbyai|percentpipe" alt=""> </span>  {{answeredbyaiper}}% vs {{vsForTimeLable_calls}}</p>
-              <p [hidden]="vsForTimeLable_calls==null"  class="time" *ngIf="answeredbyaiper==0 ">{{vsForTimeLable_calls  | Uppercase }}: {{answeredbyaiper}}</p>
-        </div>
-        
       </div>
       
       </div>
@@ -415,7 +397,7 @@
     
         </div>
         </div>
-        <div class="chartscard">
+        <div class="chartscard mobilelastcard">
           <div class="cell large-12 chartheadingpanel" style="text-align: left; padding-left: 23px;">
           <p class="heading bar">ANSWERED</p>
           </div>
@@ -425,7 +407,7 @@
       
           </div>
           </div>
-          <div class="chartscard mobilelastcard">
+          <!-- <div class="chartscard mobilelastcard">
             <div class="cell large-12 chartheadingpanel" style="text-align: left; padding-left: 23px;">
             <p class="heading bar">ANSWERED BY AI
             </p>
@@ -434,7 +416,7 @@
               <canvas
               id="ansbyai" style="display: block; width: 100%;"  ></canvas>
             </div>
-            </div>
+            </div> -->
         
   </div>
   </div>

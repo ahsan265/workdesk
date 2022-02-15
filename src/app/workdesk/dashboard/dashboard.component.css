@@ -198,15 +198,16 @@
            width: 100%;
        }
        .withincard{
-           height: 89px;
-           display: inline-block;
-           width: 24.2%;
-           background: #FFFFFF;
-           border: 1px solid rgba(208, 208, 222, 0.6);
-           box-sizing: border-box;
-           border-radius: 7px;
-           margin-right: 1.06%;
-           font-size: 30px;
+        height: 89px;
+        display: inline-block;
+        width: 32%;
+        background: #FFFFFF;
+        border: 1px solid rgba(208, 208, 222, 0.6);
+        box-sizing: border-box;
+        border-radius: 7px;
+        margin-right: 2%;
+        font-size: 30px;
+    
        }
       .withincard.visit{
            width: 32.6%;

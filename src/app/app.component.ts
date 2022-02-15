@@ -137,49 +137,15 @@ websites=[{text:"Partnership",url:['https://partnerships.gigaaa.com/'],image:'..
           });
        
        
-          let userarray=[];
-          let isTwoitem;
-          let firstLoad;
-          const isloaded = JSON.parse(localStorage.getItem('Loaded'))
+        
 
          this.authService.user.subscribe(r=>{
           let user= r;
-          if(userarray.length!=2)
-          {
-            if(user!=null){
-              userarray.push(user);
-            }
-        if(userarray.length==2)
-        {
-          isTwoitem=true;
-        }
-            
-          }
-        
-          
           if(user!=null)
-          {
-        
-         if((userarray.length==2 || userarray.length==1)  &&isTwoitem==true)
-          {
-           console.log("one")
-            this.authService.getOrganizationId(userarray[0].api_token);
-            this.authService.getinvitationToken(userarray[0].api_token);
-            userarray.length=0;
-            
-          }
-          else if(userarray.length==1 && isloaded!=true)
           {
             this.authService.getOrganizationId(user.api_token);
             this.authService.getinvitationToken(user.api_token);
-            localStorage.setItem("Loaded",JSON.stringify(true));
-            console.log("three")
-            
           }
-         
-       
-        }
-         
          
         })
 
