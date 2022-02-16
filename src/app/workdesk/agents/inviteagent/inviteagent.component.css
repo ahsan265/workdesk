@@ -68,6 +68,7 @@ color: #162741;
   display: block;
   align-items: center;
   color: #A6A8BA;
+  box-shadow: none;
 
 }
 .agentcounter{

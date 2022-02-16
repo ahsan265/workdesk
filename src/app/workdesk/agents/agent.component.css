@@ -79,6 +79,9 @@ tr:last-child td
     font-size: 12px;
     cursor: text;
     margin: 0px;
+    box-shadow: none;
+
+
   }
   .form_input.search{
     background: url(../../../assets/search.svg) no-repeat scroll 10px 9px;
