@@ -357,7 +357,10 @@ border-bottom:none;
 
 }
 input[type=checkbox]:checked{
-background-color: #1C54DB; 
+  background-image: url(../../../../assets/assets_workdesk/checkbox_icon.svg);
+  background-repeat: no-repeat;
+  background-size: 19px 21px;
+  background-position: center;
 border-bottom:none;
 
 }
@@ -377,13 +380,12 @@ border-bottom:none;
   color: #A6A8BA;  
 }
 input[type=checkbox]:checked:after {
-  content: "✔";
-  margin-top: -5px;
-  margin-left: 1px;
+  content: " ";
+  margin-left: 2px;
+  margin-top: 0px;
   position: absolute;
-  margin-bottom: 0px;
   color: #FFFFFF;
-  border-bottom: none;
+  border-bottom:none;
 }
 /* input[type=checkbox]:checked:after {
 background: #1C54DB;

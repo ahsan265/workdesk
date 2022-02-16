@@ -309,18 +309,21 @@ input[type="checkbox"]  {
     
     }
     input[type=checkbox]:checked{
-    background-color: #1C54DB; 
+      background-image: url(../../../../assets/assets_workdesk/checkbox_icon.svg);
+      background-repeat: no-repeat;
+      background-size: 19px 21px;
+      background-position: center;
     border-bottom:none;
     
     }
     
     input[type=checkbox]:checked:after {
-      content: "\2714";
+      content: " ";
       margin-left: 2px;
-      margin-top: -4px;
+      margin-top: 0px;
       position: absolute;
       color: #FFFFFF;
-      border-bottom: none;
+      border-bottom:none;
     }
     li.listitem{
     margin: 4px;
