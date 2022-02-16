@@ -27,8 +27,10 @@ import { sharedres_service } from "./sharedres.service";
           { 
             this.sharedres.runsocketapiusingint_idsubject.subscribe(data=>{
               if(data==1)
-              {  
+              {
                   this.getagentlive();
+                
+                  
               }
         })
       
