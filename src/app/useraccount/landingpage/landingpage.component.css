@@ -103,6 +103,7 @@ cursor: pointer;
 }
 .content-area{
   background-color: #F5F6FB;
+  padding-top: 106px;
   height: 682px;
   background-image: url(../../../assets/main.png);
   background-repeat: no-repeat;
@@ -119,7 +120,7 @@ cursor: pointer;
   line-height: 37px;
   letter-spacing: 0.02em;
   color: #162741;
-  margin-top: 186px;
+  margin-top: 80px;
   margin-left: 118px;
   position: relative;
 
