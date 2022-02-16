@@ -42,6 +42,7 @@ import { GigaaaSidebarModule, GigaaaHeaderModule, GigaaaTableModule, CallbackMod
 import { MainPageComponent } from './main-page/main-page.component';
 import { AuthService } from './service/auth.service';
 import { NgxPaginationModule } from 'ngx-pagination';
+import { RestrictionModalComponent } from './modals/restriction-modal/restriction-modal.component';
 
 @NgModule({
   declarations: [
@@ -51,6 +52,7 @@ import { NgxPaginationModule } from 'ngx-pagination';
     LinkexpiredialogComponent,
     LoginBtnComponent,
     MainPageComponent,
+    RestrictionModalComponent
   ],
   imports: [
     ChartsModule,

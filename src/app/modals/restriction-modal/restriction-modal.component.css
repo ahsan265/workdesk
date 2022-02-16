@@ -1,0 +1,73 @@
+.wrapper {
+  z-index: 9;
+  background: rgba(0, 0, 0, 0.3);
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.restrictionModalWrapper {
+  width: 390px;
+  height: 279px;
+  background: #ffffff;
+  box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.23);
+  border-radius: 4px;
+  display: flex;
+  justify-content: center;
+  padding: 40px 28px 33px 28px;
+}
+
+.restrictionModal {
+  display: grid;
+  align-content: space-between;
+}
+
+svg,
+span,
+.buttonWrapper {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.title {
+  font-style: normal;
+  font-weight: 500;
+  font-size: 17px;
+  text-align: center;
+  letter-spacing: 0.02em;
+  color: #162741;
+}
+
+.text {
+  font-style: normal;
+  font-weight: normal;
+  font-size: 14px;
+  text-align: center;
+  letter-spacing: 0.02em;
+  color: #162741;
+}
+
+.modalButton {
+  width: 83px;
+  height: 35px;
+  background: #ffffff;
+  border: 1px solid rgba(208, 208, 222, 0.6);
+  box-sizing: border-box;
+  border-radius: 4px;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  letter-spacing: 0.02em;
+  color: #162741;
+}

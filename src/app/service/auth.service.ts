@@ -21,7 +21,7 @@ export class AuthService implements CanActivate {
   public user: BehaviorSubject<User>;
   token: any;
   orgId:any;
-  
+  isApproved: boolean = false;
   constructor(private http: HttpClient,private gigaaaApiService:GigaaaApiService,
     private message:MessageService,
     private sharedres:sharedres_service,

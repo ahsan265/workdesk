@@ -41,9 +41,10 @@ getHeaders() {
   return {
     "Content-Type": "application/json",
     Accept: "application/json",
-    Authorization: `Bearer ${this.authService.token.access_token}`
+    Authorization: `Bearer ${this.authService.getLoggedUser().api_token}`
   }
 }
+
 
 getCurrentUser(token):Observable<User> {
   return this.http.get<User>(`${this.API_URL}/current-user`, {
@@ -575,7 +576,30 @@ getCurrentUser(token):Observable<User> {
                    };
                    return  this.http.get(this.workdeskanalytics+"/private/plugin/visitors/sessions?organization="+orgid+"&integration="+intid+"&time="+time+"&languages="+languages+"&countries="+countries+"&date_from="+date_from+"&date_to="+date_to,httpOptions)
                  }
-
+                 public userRestriction(organization_uuid: any, integration_uuid: any, token: any) {
+                  const httpOptions: any = {
+                    headers: new HttpHeaders({
+                      'Content-Type': 'application/json',
+                      'Accept': 'application/json',
+                      'Authorization': `Bearer ${token}`
+                    }),
+                    observe:'response',
+                  };
+                  return this.http.get(`${this.workdeskurl_cs}/private/allowed?organization=${organization_uuid}&integration=${integration_uuid}`, httpOptions)
+                }
+              
+                public getOrganizations(token: any): Observable<any> {
+                  const httpOptions: any = {
+                    headers: new HttpHeaders({
+                      'Content-Type': 'application/json',
+                      'Accept': 'application/json',
+                      'Authorization': `Bearer ${token}`
+                    })
+                  };
+                  return this.http.get<any>(
+                    `${this.gigaabackendUlr}/organization`, httpOptions
+                  );
+                }
 }
 
 

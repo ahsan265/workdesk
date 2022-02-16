@@ -15,6 +15,7 @@ import { textChangeRangeIsUnchanged } from 'typescript';
 import { gigaaasocketapi } from './service/gigaaasocketapi.service';
 import { GigaaaHeaderService } from '@gigaaa/gigaaa-components';
 import { abort } from 'process';
+import { catchError, switchMap, tap } from "rxjs/operators";
 
 @Component({
   selector: 'app-root',
@@ -91,6 +92,10 @@ websites=[{text:"Partnership",url:['https://partnerships.gigaaa.com/'],image:'..
   url:String;
   hideTopbar:boolean=false;
   isload:boolean=false;
+
+  organization: any;
+  lastUseIntegration: any;
+  showModal: boolean = false;
   constructor(
     public authService: AuthService,
     private apiService: GigaaaApiService,
@@ -143,8 +148,8 @@ websites=[{text:"Partnership",url:['https://partnerships.gigaaa.com/'],image:'..
           let user= r;
           if(user!=null)
           {
-            this.authService.getOrganizationId(user.api_token);
-            this.authService.getinvitationToken(user.api_token);
+            this. userRestriction();
+          
           }
          
         })
@@ -332,4 +337,42 @@ onGetLoggedUser(user: any) {
        await this.authService.getLOggedinUserUuid(accesstoken,uuid,int_id);
      
     }
+     userRestriction() {
+    const user = JSON.parse(localStorage.getItem('gigaaa-user'));
+   if(user!=null)
+   {
+    this.apiService.getOrganizations(user.api_token).pipe(
+      tap((organization) => (this.organization = organization)),
+      switchMap((organization) => this.apiService.getallintegration(user.api_token, organization.uuid)),
+      tap((integrations: any) => {
+        if (integrations.length !== 0) {
+          integrations.forEach((integration) => {
+            if (integration.last_used === true) {
+            //  localStorage.setItem('integration_uuid', JSON.stringify({ int_id: integration.uuid, name: integration.name }));
+              this.lastUseIntegration = integration;
+            }
+          })
+        }
+      }),
+      switchMap(() => this.apiService.userRestriction(this.organization.uuid, this.lastUseIntegration.uuid, user.api_token)),
+      tap({
+        next: (event) => {
+        this.authService.getOrganizationId(user.api_token);
+        this.authService.getinvitationToken(user.api_token);  },
+        error: (error) => {this.router.navigate(['logout']), this.showModal = true}
+      }),
+    ).subscribe((res: any) => {
+      if (this.showModal) {
+        this.router.navigate(['logout']);
+      }
+    });
+   }
+   
+  }
+
+  onCancelButtonClicked(event: boolean) {
+    if (event) {
+      this.showModal = false;
+    }
+  }
 }
