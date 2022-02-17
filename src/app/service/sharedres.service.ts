@@ -30,7 +30,7 @@ export class sharedres_service {
      sendtrigger_agentpage_subject = new Subject<any>();
      showagentListonloadSubject = new Subject<any>();
      devicerequestCallSubjecte = new Subject<any>();
-
+     ShowrestrictedUserSubject = new Subject<any>();
 
     constructor(private gigaaaapi:GigaaaApiService,
       private router: ActivatedRoute,
@@ -40,7 +40,7 @@ export class sharedres_service {
 
      // send integration
       public  async getintegrationrelation(val):Promise<any> {
-       await   this.submitappsubject.next(val);
+       this.submitappsubject.next(val);
       }
       getagentsettingview(val)
 
@@ -106,7 +106,7 @@ export class sharedres_service {
 
         // get run socket api
       public async  getcallsocketapi(val):Promise <any> {
-      await  this.runsocketapiusingint_idsubject.next(val)
+      this.runsocketapiusingint_idsubject.next(val)
         }
 
 
@@ -163,14 +163,20 @@ export class sharedres_service {
             this.sendparamfromdashboardpopup_subject.next(val)
           }
           // show top and sidebar ()
-          showagentListonload(val)
+          public async  showagentListonload(val):Promise<any>
           {
-            this.showagentListonloadSubject.next(val)
+           this.showagentListonloadSubject.next(val)
           }
 
           // send trigger to agent page 
           sendMessagetoAgent(val)
           {
             this.sendtrigger_agentpage_subject.next(val);
+          }
+          // show restricted user modal
+          showRestrictedUser(val)
+          {
+            this.ShowrestrictedUserSubject.next(val);
+
           }
           }

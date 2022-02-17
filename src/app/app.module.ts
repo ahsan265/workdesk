@@ -1,5 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { CUSTOM_ELEMENTS_SCHEMA, NgModule, NO_ERRORS_SCHEMA } from '@angular/core';
+import { APP_INITIALIZER, CUSTOM_ELEMENTS_SCHEMA, NgModule, NO_ERRORS_SCHEMA } from '@angular/core';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -28,7 +28,7 @@ import { MessageService } from './service/messege.service';
 import { ToastrModule, ToastrService } from 'ngx-toastr';
 import { sharedres_service } from './service/sharedres.service';
 import { gigaaasocketapi } from './service/gigaaasocketapi.service';
-import { RouterModule } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 import { LinkexpiredialogComponent } from './useraccount/linkexpiredialog/linkexpiredialog.component';
 import { ChartsModule } from 'ng2-charts';
 import { MatDatepickerModule } from '@angular/material/datepicker';
@@ -39,10 +39,11 @@ import { agentsocketapi } from './service/agentsocketapi';
 import { LoginBtnComponent } from './useraccount/landingpage/login-btn/login-btn.component';
 import { environment } from 'src/environments/environment';
 import { GigaaaSidebarModule, GigaaaHeaderModule, GigaaaTableModule, CallbackModule, LogoutModule, GigaaaHeaderService } from '@gigaaa/gigaaa-components';
-import { MainPageComponent } from './main-page/main-page.component';
 import { AuthService } from './service/auth.service';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { RestrictionModalComponent } from './modals/restriction-modal/restriction-modal.component';
+import { restrictionservice } from './service/RouterRestrictionService';
+import { MaincomponentComponent } from './maincomponent/maincomponent.component';
 
 @NgModule({
   declarations: [
@@ -51,8 +52,8 @@ import { RestrictionModalComponent } from './modals/restriction-modal/restrictio
     FooterComponent,
     LinkexpiredialogComponent,
     LoginBtnComponent,
-    MainPageComponent,
-    RestrictionModalComponent
+    RestrictionModalComponent,
+    MaincomponentComponent,
   ],
   imports: [
     ChartsModule,
@@ -83,15 +84,25 @@ import { RestrictionModalComponent } from './modals/restriction-modal/restrictio
     CallbackModule,
     LogoutModule,
     NgxPaginationModule
+    
   ],
   bootstrap: [AppComponent],
-  providers: [GigaaaApiService,MessageService,AuthService, {
+  providers: [GigaaaApiService,MessageService,AuthService, restrictionservice ,{
+    provide: APP_INITIALIZER,
+    useFactory:appInitFactory,
+    deps: [restrictionservice,Router,AuthService],
+    multi: true
+},{
     provide: 'GigaaaHeaderService',
     useClass: GigaaaHeaderService
   },
+
   {provide : MatDialogRef, useValue : {}}],
   entryComponents: [LandingpageComponent],
   schemas: [CUSTOM_ELEMENTS_SCHEMA,NO_ERRORS_SCHEMA],
 
 })
 export class AppModule { }
+export function appInitFactory(appInitService: restrictionservice): () => Promise<any> {
+  return () => appInitService.initCheck()
+}

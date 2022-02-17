@@ -1,5 +1,5 @@
-<div class="mainContainer">
-  <gigaaa-sidebar (selectedDropdownItem)="getselectedDropdownItem($event)" *ngIf="this.authService.isLoggedIn()" [logo]="logo" [logoCollapsed]="logoCollapsed" [sidebarData]="sidebarData"
+<div class="mainContainer" >
+  <gigaaa-sidebar (selectedDropdownItem)="getselectedDropdownItem($event)" *ngIf="this.authService.isLoggedIn() " [logo]="logo" [logoCollapsed]="logoCollapsed" [sidebarData]="sidebarData"
     (newRouteName)="addNewRouteName($event)" (slideOpened)="isSlideOpened($event)"
     (isSidebarOpen)="isSidebarOpen($event)" [showOnlineButton]="true" [currentUserStatus]="statusonline"
     [sendUserStatus]="sendUserStatus" (isOnlineButtonClicked)="setonlinestatus($event)">
@@ -10,6 +10,7 @@
       [redirectUri]="redirectUri" [pageTitle]="pageTitle" [portalData]="websites"
       (onLoggedUser)="onGetLoggedUser($event)">
     </gigaaa-header>
+  
       <router-outlet ></router-outlet>
   </div>
 </div>

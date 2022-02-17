@@ -37,13 +37,13 @@ export class GigaaaApiService  {
 
 // Auth endpoint
 
-getHeaders() {
-  return {
-    "Content-Type": "application/json",
-    Accept: "application/json",
-    Authorization: `Bearer ${this.authService.getLoggedUser().api_token}`
-  }
-}
+// getHeaders() {
+//   return {
+//     "Content-Type": "application/json",
+//     Accept: "application/json",
+//     Authorization: `Bearer ${this.authService.getLoggedUser()['api_token']}`
+//   }
+// }
 
 
 getCurrentUser(token):Observable<User> {

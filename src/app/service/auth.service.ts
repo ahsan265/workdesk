@@ -1,6 +1,6 @@
-import { Injectable } from '@angular/core';
+import { Injectable, Injector } from '@angular/core';
 import { BehaviorSubject, Observable, ReplaySubject } from 'rxjs';
-import { CanActivate, Router } from '@angular/router';
+import { ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot } from '@angular/router';
 import { CookieService } from 'ngx-cookie-service';
 import { User } from '../model/User';
 import { gigaaasocketapi } from './gigaaasocketapi.service';
@@ -12,42 +12,54 @@ import { environment } from 'src/environments/environment';
 import { HttpClient } from '@angular/common/http';
 import { agentsocketapi } from './agentsocketapi';
 import { promise } from 'protractor';
+import { tap, switchMap } from 'rxjs/operators';
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable()
 export class AuthService implements CanActivate {
   integration:any;
-  public user: BehaviorSubject<User>;
+  public user: ReplaySubject<User>=new ReplaySubject(1);
   token: any;
   orgId:any;
-  isApproved: boolean = false;
+  //public LoggedUser: BehaviorSubject<User>;
+
+  organization: any;
+  lastUseIntegration: any;
+  showModal: boolean ;
   constructor(private http: HttpClient,private gigaaaApiService:GigaaaApiService,
     private message:MessageService,
     private sharedres:sharedres_service,
-    private agentsocket:agentsocketapi,
-    private gigaaasocket:gigaaasocketapi) {
-    this.user = new BehaviorSubject(this.getLoggedUser());
+    private router: Router) {
+
+   //   this.LoggedUser = new BehaviorSubject(this.getLoggedUser());
+
+
+
+    
    }
 
-  public isLoggedIn(): boolean {
-    return !!localStorage.getItem('gigaaa-user');
-  }
-  getCurrentUser(token):Observable<any> {
-    return this.http.get(`${environment.apiUrl}/current-user`, { headers: { 'Content-Type': 'application/json', 'Accept': 'application/json', 'Authorization': `Bearer ${token}`}})
-  }
+          public isLoggedIn(): boolean {
+            return !!localStorage.getItem('gigaaa-user');
+          }
 
 
-      public getLoggedUser(): User {
-      const user: any = localStorage.getItem('gigaaa-user');
-      let logged_user= JSON.parse(user);
-      return logged_user;
-       }
+          public getLoggedUser():User{
+          const user: any = localStorage.getItem('gigaaa-user');
+          let logged_user= JSON.parse(user);
+          return logged_user;
+          }
 
-      canActivate() {
-        return this.isLoggedIn()
-      }
-
+          // auth Guard
+          canActivate(
+            next: ActivatedRouteSnapshot,
+            state: RouterStateSnapshot): Observable<boolean> | Promise<boolean> | boolean {
+              if(localStorage.getItem('gigaaa-user') != undefined || null){
+               return  true
+              }else{
+                this.router.navigate(['logout']);
+                localStorage.clear();
+                return false;
+              }
+          }
         // get organization id 
         public  async getOrganizationId(token:any): Promise<any>{
           try{
@@ -77,8 +89,8 @@ export class AuthService implements CanActivate {
         if(element.last_used===true)
         { 
         localStorage.setItem('intgid', JSON.stringify({int_id:element.uuid,name:element.name}));
-        this.sharedres.showagentListonload(1);
-      await  this.getLOggedinUserUuid(token,orgid,element.uuid);
+   
+        await  this.getLOggedinUserUuid(token,orgid,element.uuid);
 
       }
       });
@@ -125,11 +137,50 @@ export class AuthService implements CanActivate {
 
     // close the socket if open alreayd and open
   private async  ClosellSockets(data):Promise<void>    {
-     
-
+      await       this.sharedres.showagentListonload(1);
       await  this.sharedres.getcallsocketapi(1);
       await   this.sharedres.getintegrationrelation(data);
         this.sharedres.getuserole();  
 
+    }
+
+
+    // user restriction 
+    userRestriction(usertoken:string) {
+      const user = JSON.parse(localStorage.getItem('gigaaa-user'));
+    if(user!=null)
+    {
+      this.gigaaaApiService.getOrganizations(usertoken).pipe(
+        tap((organization) => (this.organization = organization)),
+        switchMap((organization) => this.gigaaaApiService.getallintegration(usertoken, organization.uuid)),
+        tap((integrations: any) => {
+          if (integrations.length !== 0) {
+            integrations.forEach((integration) => {
+              if (integration.last_used === true) {
+              //  localStorage.setItem('integration_uuid', JSON.stringify({ int_id: integration.uuid, name: integration.name }));
+                this.lastUseIntegration = integration;
+              }
+            })
+          }
+        }),
+        switchMap(() => this.gigaaaApiService.userRestriction(this.organization.uuid, this.lastUseIntegration.uuid,usertoken)),
+        tap({
+          next: (event) => {
+            this.sharedres.showRestrictedUser(false);
+            this.showModal=false
+          },
+          error: (error) => {this.router.navigate(['logout']), this.sharedres.showRestrictedUser(true)
+          this.showModal=true
+        }
+        }),
+      ).subscribe((res: any) => {
+        if (this.showModal) {
+          this.router.navigate(['logout']);
+      //    this.sharedres.showRestrictedUser(true)
+        }
+      });
+      return   this.showModal;
+    }
+    
     }
 }

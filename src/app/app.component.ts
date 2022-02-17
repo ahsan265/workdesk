@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CookieService } from 'ngx-cookie-service';
 import { ReplaySubject } from 'rxjs';
@@ -88,14 +88,14 @@ websites=[{text:"Partnership",url:['https://partnerships.gigaaa.com/'],image:'..
   online_status:any;
   statusonline:boolean;
   accessToken;
-  user: User;
   url:String;
   hideTopbar:boolean=false;
   isload:boolean=false;
 
   organization: any;
   lastUseIntegration: any;
-  showModal: boolean = false;
+  showModal: boolean=false;
+  
   constructor(
     public authService: AuthService,
     private apiService: GigaaaApiService,
@@ -108,9 +108,30 @@ websites=[{text:"Partnership",url:['https://partnerships.gigaaa.com/'],image:'..
     private router: Router,
     private route:ActivatedRoute,
     private headerService: GigaaaHeaderService
-  ) {
+  ) { router.initialNavigation();
+    // this.authService.user.subscribe(r=>{
+    //   let user= r;
+    //   console.log(user)
+    //   if(user!=null)
+    //   {
+    //     this.authService.getOrganizationId(user.api_token);
+    //     this.authService.getinvitationToken(user.api_token); 
+    //   }
+    // })
+  // show restriction model
+    this.share_res.ShowrestrictedUserSubject.subscribe(data=>{
+      if(data==true)
+      {
+        this.showModal=data;
+      }
+      else if(data==false)
+      {
+        this.showModal=data;
+      }
+    })
   
   }
+
   sendUserStatus = new ReplaySubject(1);
   expiredDate:any
 
@@ -126,7 +147,7 @@ websites=[{text:"Partnership",url:['https://partnerships.gigaaa.com/'],image:'..
            .subscribe(params => {
             let loc=window.location;
           let path= loc.pathname.replace("/", "");
-          console.log(path)
+         
             if(path=="callback")
             {
               this.pageTitle="Dashboard";
@@ -144,15 +165,7 @@ websites=[{text:"Partnership",url:['https://partnerships.gigaaa.com/'],image:'..
        
         
 
-         this.authService.user.subscribe(r=>{
-          let user= r;
-          if(user!=null)
-          {
-            this. userRestriction();
-          
-          }
-         
-        })
+       
 
 
       
@@ -173,7 +186,7 @@ websites=[{text:"Partnership",url:['https://partnerships.gigaaa.com/'],image:'..
       localStorage.clear();
       this.agentsocketapi.closeagentsocket();
       this.socketapi.closewebsocketcalls();
-      location.href = this.redirectUri;
+     window.location.href = this.redirectUri;
       
     }
   }
@@ -260,6 +273,7 @@ showonlinetatus(value:boolean){
 getagentlistOnload()
 {
       this.sharedres.showagentListonloadSubject.subscribe(data=>{
+
       if(data==1)
       {
       this.getintegrationlist()
@@ -310,10 +324,14 @@ onLoginClicked(event: boolean) {
     this.headerService.login();
     }
 }
-onGetLoggedUser(user: any) {
+onGetLoggedUser(user: User) {
   if (user) {
-    this.authService.user.next(user);
-    this.token = user.api_token;
+    console.log(user)
+    if(user!=null )
+    { this.authService.userRestriction(user.api_token);
+      this.authService.getOrganizationId(user.api_token);
+   
+    }
   }
 }
 
@@ -335,40 +353,11 @@ onGetLoggedUser(user: any) {
  
        await  this.apiService.updatelastusedintegration(accesstoken,uuid,{"integration": int_id});
        await this.authService.getLOggedinUserUuid(accesstoken,uuid,int_id);
-     
     }
-     userRestriction() {
-    const user = JSON.parse(localStorage.getItem('gigaaa-user'));
-   if(user!=null)
-   {
-    this.apiService.getOrganizations(user.api_token).pipe(
-      tap((organization) => (this.organization = organization)),
-      switchMap((organization) => this.apiService.getallintegration(user.api_token, organization.uuid)),
-      tap((integrations: any) => {
-        if (integrations.length !== 0) {
-          integrations.forEach((integration) => {
-            if (integration.last_used === true) {
-            //  localStorage.setItem('integration_uuid', JSON.stringify({ int_id: integration.uuid, name: integration.name }));
-              this.lastUseIntegration = integration;
-            }
-          })
-        }
-      }),
-      switchMap(() => this.apiService.userRestriction(this.organization.uuid, this.lastUseIntegration.uuid, user.api_token)),
-      tap({
-        next: (event) => {
-        this.authService.getOrganizationId(user.api_token);
-        this.authService.getinvitationToken(user.api_token);  },
-        error: (error) => {this.router.navigate(['logout']), this.showModal = true}
-      }),
-    ).subscribe((res: any) => {
-      if (this.showModal) {
-        this.router.navigate(['logout']);
-      }
-    });
-   }
-   
-  }
+
+
+
+     
 
   onCancelButtonClicked(event: boolean) {
     if (event) {

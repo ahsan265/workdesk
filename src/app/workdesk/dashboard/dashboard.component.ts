@@ -799,6 +799,7 @@ export class DashboardComponent implements OnInit {
       this.loadcallstatsoninit();
       this.getdashboardDataonLoad();
       this.getdatafrommobilepopup();
+      this.getDataTimeInterval();
   }
   
     getUserTotalCard(timeslot:any,languagesid:Array<any>,countryids:Array<any>,datefrom:string,dateto:string)
@@ -1854,12 +1855,13 @@ createoschart()
     { const intid = JSON.parse(localStorage.getItem('intgid'))
       try{
       this.sharedres.submitappsubject.subscribe(data=>{
-        console.log(data)
         if(data['int_id']!=null)
-        {
+        { 
           this.getlllangugaes();
+        
         }
-        this.callFunctionCharts();
+       
+        
     })
     }
     catch(error)

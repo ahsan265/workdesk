@@ -1,5 +1,5 @@
-import { NgModule } from '@angular/core';
-import { Routes, RouterModule } from '@angular/router';
+import { APP_INITIALIZER, NgModule } from '@angular/core';
+import { Routes, RouterModule, RouterLink, Router } from '@angular/router';
 import { GigaaaApiService } from './service/gigaaaapi.service';
 import { MessageService } from './service/messege.service';
 import { UserloginserviceService } from './service/userloginservice.service';
@@ -7,16 +7,21 @@ import { AuthService } from './service/auth.service';
 import { LandingpageComponent } from './useraccount/landingpage/landingpage.component';
 import { AppComponent } from './app.component';
 import { CallbackComponent, LogoutComponent } from '@gigaaa/gigaaa-components';
+import { BehaviorSubject, ReplaySubject } from 'rxjs';
+import { User } from './model/User';
+import { retry } from 'rxjs/operators';
+import { MaincomponentComponent } from './maincomponent/maincomponent.component';
 
 const routes: Routes = [
-  { path: "", component: LandingpageComponent },
+  {path:'',component:LandingpageComponent,},
   { path: "logout", component: LogoutComponent },
+
   {
     path: '',
     component: AppComponent,
     children: [
       {
-        path: 'dashboard',
+        path: '',
         loadChildren: () =>
           import('./workdesk/workdesk.module').then(
             (module) => module.WorkdeskModule
@@ -24,6 +29,7 @@ const routes: Routes = [
       },
     ],
     canActivate: [AuthService],
+  
   },
   { path: "callback", component: CallbackComponent },
 
@@ -31,13 +37,20 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes, { relativeLinkResolution: 'legacy' })],
+  imports: [RouterModule.forRoot(routes,{ relativeLinkResolution: 'legacy',initialNavigation: 'disabled'})],
   exports: [RouterModule],
   providers: [
-    UserloginserviceService,
     AuthService,
     GigaaaApiService,
     MessageService,
   ],
 })
-export class AppRoutingModule {}
+export class AppRoutingModule {
+
+
+
+}
+
+
+
+

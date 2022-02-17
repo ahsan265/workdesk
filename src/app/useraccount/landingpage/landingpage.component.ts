@@ -25,8 +25,9 @@ export class LandingpageComponent implements OnInit {
 
   ngOnInit(): void {
     if (this.authService.isLoggedIn()==true) {
-      this.router.navigate(['/dashboard']);
+      this.router.navigate(['dashboard']);
     }
+   
 
    
     this.sharedres.getinivationdetail();
