@@ -393,7 +393,7 @@ public async updateagentprofile(): Promise<any>
     }
     catch(err)
     {     
-
+      console.log(err)
       this.message.setErrorMessage(err.error.error);
     }
   }

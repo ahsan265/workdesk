@@ -1,5 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { APP_INITIALIZER, CUSTOM_ELEMENTS_SCHEMA, NgModule, NO_ERRORS_SCHEMA } from '@angular/core';
+import { APP_INITIALIZER, CUSTOM_ELEMENTS_SCHEMA, ErrorHandler, NgModule, NO_ERRORS_SCHEMA } from '@angular/core';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -87,16 +87,22 @@ import { MaincomponentComponent } from './maincomponent/maincomponent.component'
     
   ],
   bootstrap: [AppComponent],
-  providers: [GigaaaApiService,MessageService,AuthService, restrictionservice ,{
+  providers: [GigaaaApiService,AuthService, restrictionservice 
+    ,{
     provide: APP_INITIALIZER,
     useFactory:appInitFactory,
-    deps: [restrictionservice,Router,AuthService],
+    deps: [restrictionservice,AuthService],
     multi: true
-},{
+}
+
+,{
     provide: 'GigaaaHeaderService',
     useClass: GigaaaHeaderService
   },
-
+  {
+    provide: ErrorHandler,
+    useClass: MessageService
+  },
   {provide : MatDialogRef, useValue : {}}],
   entryComponents: [LandingpageComponent],
   schemas: [CUSTOM_ELEMENTS_SCHEMA,NO_ERRORS_SCHEMA],

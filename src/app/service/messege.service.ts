@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Inject, Injectable, Injector } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
 
 @Injectable({
@@ -6,8 +6,10 @@ import { ToastrService } from 'ngx-toastr';
 })
 export class MessageService {
 
-  constructor(private toastrService: ToastrService) { }
-
+  constructor(@Inject(Injector) private injector: Injector) { }
+  private get toastrService(): ToastrService {
+    return this.injector.get(ToastrService);
+  }
   public setSuccessMessage(message: string, position?: string): void {
     this.toastrService.success(message, '', {
       timeOut: 3000,
