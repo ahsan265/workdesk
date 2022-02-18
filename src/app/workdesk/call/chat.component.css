@@ -509,8 +509,11 @@ li.listitem:hover{
   background: rgba(166, 168, 186, 0.15);
 
 }
+li.listitem.call{
+  width: 93%;
+}
 li.listitem.call:hover{
-  background: none;
+  background: rgba(166, 168, 186, 0.15);
 
 }
 .dropdownlistitem1{ font-family: "Roboto",sans-serif;

@@ -531,6 +531,12 @@
        display: block;
        width: 95.6%;
        }
+       li.listitem.user:hover{
+        background: rgba(166, 168, 186, 0.15);
+       }
+       li.listitem.user.all:hover{
+           background: none;
+       }
        li.listitem.lang:hover{
         background: rgba(166, 168, 186, 0.15);
        }
@@ -713,6 +719,7 @@
     margin-right: 22px;
     letter-spacing: 0.02em;
     color: #1C54DB;
+    cursor: pointer;
 
 }
 .form_input.search{

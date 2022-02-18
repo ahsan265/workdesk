@@ -392,8 +392,13 @@ border-radius: 4px;
 display: block;
 width: 93%;
 }
-
-li.listitem:hover {
+li.listitem.user{
+  width: 95%;
+}
+li.listitem.user:hover{
+  background: rgba(166, 168, 186, 0.15);
+}
+li.listitem.lang:hover {
   background: rgba(166, 168, 186, 0.15);
 }
 .searchandaddagent{
