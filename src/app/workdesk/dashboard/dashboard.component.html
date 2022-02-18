@@ -72,7 +72,7 @@
                      </svg>
                 </a>  
                 <ul class="dropdown-menu usertype" style="transform: translate3d(0px, 23px, 0px);">
-                    <li class="listitem user"   *ngFor="let count of this.lang1" [ngValue]="count.name" > <input   #i (change)="!i['checked']" (click)="selectlanguageonebyone($event.target.checked,count.id)" [checked]="count.status" name="user"  type="checkbox" [value]="count.name" [attr.id]="count.name"> <label class="dropdownlistitem1"  [for]="count.name"> 
+                    <li class="listitem user lang"   *ngFor="let count of this.lang1" [ngValue]="count.name" > <input   #i (change)="!i['checked']" (click)="selectlanguageonebyone($event.target.checked,count.id)" [checked]="count.status" name="user"  type="checkbox" [value]="count.name" [attr.id]="count.name"> <label class="dropdownlistitem1"  [for]="count.name"> 
                         {{count.name}}
                        </label></li>
                 </ul>
@@ -167,7 +167,7 @@
                      </svg>
                 </a>  
                 <ul class="dropdown-menu usertype" style="transform: translate3d(0px, 23px, 0px);">
-                    <li class="listitem user"   *ngFor="let count of this.lang2" [ngValue]="count.name" > <input   #i (change)="!i['checked']"  (click)="selectlanguageonebyone($event.target.checked,count.id)" [checked]="count.status" name="user"  type="checkbox" [value]="count.name" [attr.id]="count.name"> <label class="dropdownlistitem1"  [for]="count.name"> 
+                    <li class="listitem user lang"   *ngFor="let count of this.lang2" [ngValue]="count.name" > <input   #i (change)="!i['checked']"  (click)="selectlanguageonebyone($event.target.checked,count.id)" [checked]="count.status" name="user"  type="checkbox" [value]="count.name" [attr.id]="count.name"> <label class="dropdownlistitem1"  [for]="count.name"> 
                         {{count.name}}
                        </label></li>
                 </ul>
@@ -264,7 +264,7 @@
                      </svg>
                 </a>  
                 <ul class="dropdown-menu usertype" style="transform: translate3d(0px, 23px, 0px);">
-                    <li class="listitem user"   *ngFor="let count of this.lang3" [ngValue]="count.name" > <input (click)="selectlanguageonebyone($event.target.checked,count.id)"    #i (change)="!i['checked']" [checked]="count.status" name="user"  type="checkbox" [value]="count.name" [attr.id]="count.name"> <label class="dropdownlistitem1"  [for]="count.name"> 
+                    <li class="listitem user lang"   *ngFor="let count of this.lang3" [ngValue]="count.name" > <input (click)="selectlanguageonebyone($event.target.checked,count.id)"    #i (change)="!i['checked']" [checked]="count.status" name="user"  type="checkbox" [value]="count.name" [attr.id]="count.name"> <label class="dropdownlistitem1"  [for]="count.name"> 
                         {{count.name}}
                        </label></li>
                 </ul>

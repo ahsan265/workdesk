@@ -396,6 +396,9 @@ border-radius: 4px;
 display: block;
 width: 95%;
 }
+li.listitem:hover {
+  background: rgba(166, 168, 186, 0.15);
+}
 
 .addnewagent{
   font-family: "Roboto",sans-serif;
@@ -465,6 +468,9 @@ color: #FFFFFF;
   position: relative;
 }
 .cancel{
+  display: none;
+}
+.deleteagenttext{
   display: none;
 }
 @media (max-width: 768px){

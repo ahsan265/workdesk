@@ -503,7 +503,15 @@ li.listitem{
   margin: 4px;
   border-radius: 4px;
   display: block;
-  width: 95%;
+  width: 95.6%;
+}
+li.listitem:hover{
+  background: rgba(166, 168, 186, 0.15);
+
+}
+li.listitem.call:hover{
+  background: none;
+
 }
 .dropdownlistitem1{ font-family: "Roboto",sans-serif;
 font-style: normal;
@@ -692,7 +700,7 @@ input[type="radio"]  {
   background: #FFFFFF;
   border: 0.5px solid rgba(166, 168, 186, 0.5);
   box-sizing: border-box;
-  border-radius: 4px;
+  border-radius: 2px;
   vertical-align: middle;
   appearance: inherit;
   cursor: pointer;

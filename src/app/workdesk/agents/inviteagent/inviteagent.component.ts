@@ -53,9 +53,6 @@ form: FormGroup;
         emailgroup:this.formBuilder.array([]),
       });
       this.addinvitelist()
-    $(document).ready(function() {
-      $(document).foundation()
-    });
     this.showlang=true;
     this.arraycounter=1;
     this.addmoreagents(1);

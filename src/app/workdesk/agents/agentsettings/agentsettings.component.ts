@@ -176,9 +176,11 @@ form = new FormGroup({
    deleteagent() {
  
     const dialogRef = this.dialog.open(DeleteagentpopupComponent,{
-      hasBackdrop:false,
+      hasBackdrop:true,
       data:this.agentsettingdata,
       panelClass:"deleteagent-dialog-container",
+      backdropClass:"backdropBackgroundPopups",
+
     });
   }
 
@@ -258,8 +260,9 @@ form = new FormGroup({
    updatepasswordpopup()
    {
     const dialogRef = this.dialog.open(UpdatepasswordComponent,{
-      hasBackdrop:false,
+      hasBackdrop:true,
       panelClass:"password-form-container",
+      backdropClass:"backdropBackgroundPopups",
     });
    }
   // cancel invitation 
@@ -406,6 +409,7 @@ public async updateagentprofile(): Promise<any>
         this.dialog.open(CroppictureComponent,{
           hasBackdrop:true,
           panelClass:"croppicture-dialog-container",
+          backdropClass:"backdropBackgroundPopups",
           data:data
         });
       

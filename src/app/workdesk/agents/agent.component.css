@@ -390,14 +390,18 @@ li.listitem{
 margin: 4px;
 border-radius: 4px;
 display: block;
-width: 95%;
+width: 93%;
 }
 
+li.listitem:hover {
+  background: rgba(166, 168, 186, 0.15);
+}
 .searchandaddagent{
   display: inline-block;
   width: 75%;
   text-align: right;
   margin-top: 30px;
+  margin-bottom: 30px;
 }
 .showagenttypes{
   margin-top: 30px;
