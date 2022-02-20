@@ -1,6 +1,6 @@
 .mainContainer {
   width: 100vw;
-  height: 100vh;
+  height: 100%;
   display: flex;
   margin: 0 auto;
   align-items: center;
@@ -14,7 +14,7 @@
   position: relative;
   border-left: none;
   box-sizing: border-box;
-  overflow: hidden;
+  scrollbar-width: none;
 }
 
 .dropdown-menu.show{
