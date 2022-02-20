@@ -1,4 +1,6 @@
-
+::marker{
+  margin: 0px;
+}
 table{
   border: 1px solid rgba(208, 208, 222, 0.6);
   box-sizing: border-box;
@@ -75,7 +77,6 @@ margin-right: 20px;
   display: inline-block;
   vertical-align: bottom;
   list-style: none;
-  padding-left: 12px;
   text-align: left;
 }
 /* .dropdown-menu{
@@ -290,7 +291,7 @@ cursor: pointer;
 display: inline-block;
 align-items: center;
 letter-spacing: 0.02em;
-
+background: none;
 color: #706F6F;
 }
 .applybtn{
@@ -536,13 +537,15 @@ height: 24px;
   align-items: center;
   letter-spacing: 0.02em;
   margin-left: 0px;
+  padding-left: 10px;
   color: rgba(22, 39, 65, 0.8);
 }
 .dropdownlistitem{ font-family: "Roboto",sans-serif;
   font-style: normal;
  font-weight: normal;
  font-size: 14px;
- line-height: 24px;
+ line-height: 34px;
+    padding-left: 8px;
  display: inline-block;
  overflow: hidden;
  white-space: nowrap;
@@ -757,10 +760,9 @@ font-style: normal;
 font-weight: normal;
 font-size: 12px;
 line-height: 120%;
-/* or 14px */
+
 align-items: center;
 letter-spacing: 0.02em;
-
 color: #7D8696;
 }
 .imagetag{

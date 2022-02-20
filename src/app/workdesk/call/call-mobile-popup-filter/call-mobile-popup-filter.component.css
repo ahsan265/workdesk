@@ -206,7 +206,8 @@ display: block;
     font-style: normal;
    font-weight: normal;
    font-size: 12px;
-   line-height: 20px;
+   line-height: 36px;
+   padding-left: 8px;
    display: inline-block;
    width: 45px;
     /* overflow: hidden; */
@@ -387,6 +388,7 @@ color: rgba(22, 39, 65, 0.8);
     box-shadow: none;
     height: 50px;
     width: 100%;
+    margin-bottom: 30px;
   }
 .calenderview{
     height: 293px;

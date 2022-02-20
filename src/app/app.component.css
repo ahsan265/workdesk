@@ -14,6 +14,7 @@
   position: relative;
   border-left: none;
   box-sizing: border-box;
+  overflow: hidden;
 }
 
 .dropdown-menu.show{

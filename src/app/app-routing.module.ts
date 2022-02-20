@@ -18,7 +18,6 @@ const routes: Routes = [
 
   {
     path: '',
-    component: AppComponent,
     children: [
       {
         path: '',

@@ -1,5 +1,12 @@
 @import '~ngx-toastr/toastr.css';
-
+button{
+    outline: none;
+    border: none;
+}
+input{
+    outline: none;
+    border: none;
+}
 .main{
     overflow: hidden;
 }
@@ -1674,7 +1681,9 @@ input:checked+.slider:before {
     display: none;
 }
 
-
+.mat-dialog-container{
+    scrollbar-width: none;
+}
 
 
 .signin-dialog-container  .mat-dialog-container {
@@ -1689,6 +1698,7 @@ input:checked+.slider:before {
     min-width:432px;
     max-width: 432px;
     justify-content: center;
+    
  
 }
 .addagent-dialog-container > .mat-dialog-container {

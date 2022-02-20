@@ -6,6 +6,7 @@ import { ChatComponent } from './call/chat.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 
 const routes: Routes = [
+ 
   { path: 'dashboard', component: DashboardComponent,canActivate:[AuthService] },
   { path: 'agents', component: AgentComponent,canActivate:[AuthService]},
   { path: 'calls', component: ChatComponent ,canActivate:[AuthService]},

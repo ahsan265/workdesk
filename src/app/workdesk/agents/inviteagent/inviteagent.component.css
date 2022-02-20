@@ -60,6 +60,8 @@ color: #162741;
   box-sizing: border-box;
   border-radius: 4px;
   height: 36px;
+  width: 100%;
+  padding-left: 8px;
   font-family: "Roboto",sans-serif;
   font-style: normal;
   font-weight: normal;
@@ -70,6 +72,9 @@ color: #162741;
   color: #A6A8BA;
   box-shadow: none;
 
+}
+.arryitem{
+  margin-bottom: 30px;
 }
 .agentcounter{
   font-family: "Roboto",sans-serif;
@@ -464,7 +469,7 @@ color: #FFFFFF;
   text-align: right; 
   bottom: 0; 
   right: 0; 
-  padding: 20px; 
+  padding-right: 15px; 
   position: relative;
 }
 .cancel{
@@ -531,6 +536,7 @@ color: #FFFFFF;
     margin: 0px;
     width: 100% !important;
     display: block !important;
+    height: 150px;
   }
   .langdropdown{
     margin-left: 0px;

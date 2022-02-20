@@ -206,9 +206,10 @@ display: block;
     font-style: normal;
    font-weight: normal;
    font-size: 12px;
-   line-height: 20px;
+   line-height: 36px;
    display: inline-block;
    width: 45px;
+   padding-left: 8px;
     /* overflow: hidden; */
     white-space: nowrap;
     text-overflow: inherit;

@@ -186,7 +186,7 @@ websites=[{text:"Partnership",url:['https://partnerships.gigaaa.com/'],image:'..
       localStorage.clear();
       this.agentsocketapi.closeagentsocket();
       this.socketapi.closewebsocketcalls();
-     window.location.href = this.redirectUri;
+  location.href = this.redirectUri;
       
     }
   }
@@ -237,10 +237,9 @@ showonlinetatus(value:boolean){
         var accesstoken=getdata.api_token;
         var uuid=getdata.subscription_id.subsid.uuid;
         this.apiService.getallintegration(accesstoken,uuid).subscribe(data=>{
-        
+        console.log(data)
         this.integration=data;
-        if(this.integration.length!=0)
-        {
+       
         this.integration.forEach(element => {
           if(element.last_used===true)
           {       
@@ -260,7 +259,7 @@ showonlinetatus(value:boolean){
             element.name=this.lastuserintegration;
           }
         });
-        }
+      
         });
 
         } catch (error) {
@@ -273,7 +272,7 @@ showonlinetatus(value:boolean){
 getagentlistOnload()
 {
       this.sharedres.showagentListonloadSubject.subscribe(data=>{
-
+        console.log(data)
       if(data==1)
       {
       this.getintegrationlist()

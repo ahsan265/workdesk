@@ -26,7 +26,7 @@
 <form name="form" [formGroup]="form" (ngSubmit)="getinviteagentvalidation()" style="margin-top: 24px;">
    
     <div  formArrayName="emailgroup" >
-        <div [formGroupName]="i" *ngFor="let creds of emailgrouparray.controls; let i = index;" >
+        <div class="arryitem" [formGroupName]="i" *ngFor="let creds of emailgrouparray.controls; let i = index;" >
             <p class="mobilelanguages">Email</p>
             <div class="forfieldsformobile"  style="display: inline-block;     width: 45%;
             margin-right: 5%;

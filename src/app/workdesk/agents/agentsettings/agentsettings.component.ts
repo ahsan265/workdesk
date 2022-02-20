@@ -118,7 +118,7 @@ form = new FormGroup({
      if(e==true)
      {
        this.idsoflanguages.push(id);
-       if(this.idsoflanguages.length==6)
+       if(this.idsoflanguages.length==this.lang.length)
        {
         this.selectedlanguages="All Selected";
         this.allselectedtag=true;
@@ -349,7 +349,7 @@ form = new FormGroup({
          
        });
      this.selectedlanguages=this.idsoflanguages.length +"\xa0"+"Selected";
-      if(this.idsoflanguages.length==6)
+      if(this.idsoflanguages.length==this.lang.length)
       {
           this.selectedlanguages="All Selected"
           this.allselectedtag=true;
