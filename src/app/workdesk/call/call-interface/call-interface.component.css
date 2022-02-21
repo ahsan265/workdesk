@@ -115,9 +115,9 @@ transition-duration: 0.4s;
 background: #173b96;
 border-radius: 50%;
 }
-.callicon_drop img.hangicon:hover{
+.callicon_drop:hover{
     background: #CC0943;
-    border-radius: 50%;
+   
 }
 .calltime{
     font-family: "Roboto",sans-serif;
@@ -143,14 +143,19 @@ border-radius: 50%;
     text-align: right;
     margin-bottom: 22px;
 }
+.hangicon{
+    vertical-align: middle;
+    margin-top: 6px;
+}
 .callicon_drop{
     width: 30px;
     height: 30px;
     background: #FF155A;
-    display: inline-flex;
+    display: block;
     border: none;
     float: left;
     border-radius: 50%;
+    text-align: center;
     cursor: pointer;
     transition-duration: 0.4s;
     

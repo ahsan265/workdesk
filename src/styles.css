@@ -2829,5 +2829,72 @@ element.style {
         min-height: 540px;
         max-height: 540px;
     }
+    .callinterface-form-container .callinterface{
+        height: 50px !important;
+        padding: 0px !important;
+        padding-left: 0px!important;
+        box-shadow: 0px 0px 0px rgb(0 0 0 / 0)!important;
+    }
+    .callinterface-form-container .minimizeiconpanel{
+        width: 25% !important;
+        padding-right: 17px;
+        padding-top: 12px;
+    }
+    .callinterface-form-container .userinformation{
+        width: 75% !important;
+        padding-left: 15px !important;
+        padding-top: 9px !important;
+    }
+    .callinterface-form-container .loggedUsercamera{
+        height: 180px !important;
+        width: 140px!important;
+        bottom: 80px;
+    } 
+    .callinterface-form-container .localcamera{
+        height: 180px !important;
+        width: 138px !important;
+    }
+    .callinterface-form-container .userimagebig{
+        top: 20% !important;
+        height: 150px !important;
+        width: 150px !important;
+    }
+    .callinterface-form-container .username{
+        line-height: 18px!important;
+    height: 18px !important;
+    font-size: 14px !important;
+    margin-left: 16px !important;
+    width: 124px;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+    display: inline-block!important;
+    vertical-align: text-top !important;
+    }
+    .callinterface-form-container .miniicon{
+        margin-bottom: 3px !important;
+    }
+    .callinterface-form-container .callcontrol{
+        bottom: 26px !important;
+    }
 
+    .minimizecallinterface .callcontrol{
+        width: 255px !important;
+        bottom: 40px !important;
+    }
+    .minimizecallinterface .callinterface{
+        width: 255px !important;
+    height: 99px !important;
+    }
+    .minimizecallinterface .userinformation {
+        width: 78%!important;
+        padding-top: 11px !important;
+     }
+     .minimizecallinterface .maxiconforvideo 
+     {
+         width: 22%!important;
+     }
+     .minimizecallinterface .maximizeicon{
+        padding: 1px !important;
+     }
 }
