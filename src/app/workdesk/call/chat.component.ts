@@ -1,4 +1,5 @@
-import { ChangeDetectorRef, Component, OnInit, ViewChild, ViewContainerRef } from '@angular/core';
+import { ViewportScroller } from '@angular/common';
+import { ChangeDetectorRef, Component, ElementRef, HostListener, OnInit, Renderer2, ViewChild, ViewContainerRef } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { add, defineLocale, enGbLocale } from 'ngx-bootstrap/chronos';
 import { BsDaterangepickerDirective, BsLocaleService } from 'ngx-bootstrap/datepicker';
@@ -29,6 +30,7 @@ interface IRange {
   selector: 'app-chat',
   templateUrl: './chat.component.html',
   styleUrls: ['./chat.component.css']
+ 
 })
 
 export class ChatComponent implements OnInit {
@@ -222,7 +224,9 @@ call:any;
     private messageservie:MessageService,
     public dialog: MatDialog,
     private container: ViewContainerRef,
-    private webrtcservice:webrtcsocket
+    private webrtcservice:webrtcsocket,
+    private _renderer: Renderer2,
+  private _elementRef: ElementRef
     ) {
     enGbLocale.weekdaysShort = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
     enGbLocale.week.dow = 1;
@@ -323,8 +327,17 @@ return ("0" + minutes).slice(-2) + ":" + ("0" +seconds).slice(-2);
 
 
   }
+
+  mobile_missed:Array<any>=[];
   alreadydonecall:any;
+
+  
+  scrollid:any;
   ngOnInit(): void {
+    // this._renderer.listen(this._elementRef.nativeElement.parentNode, 
+    //   'scroll', (event) => {
+    //    console.log(event)
+    //  });
     this.getpanalview("incoming");
     this.rangeSelected1="Today";
     this.rangeSelected2="Today";
@@ -453,13 +466,13 @@ return ("0" + minutes).slice(-2) + ":" + ("0" +seconds).slice(-2);
   {
     this.gigaaasocketapi.getlistofagentsinque$.subscribe(data=>{
 
-
+  
         this.call=data;
         this.missed_call=data['missed'];
         this.ougoing_call=data['ongoing'];
         this.answered_call=data['finished'];
         this.incoming_call=data['incoming'];
-     
+        this.EqualPartsArray(this.missed_call,5)
         this.size_ougoing_call=data['ongoing']?.length;
         this.size_incoming_call=data['incoming']?.length;
         this.size_missed_call=data['missed']?.length;
@@ -1804,6 +1817,27 @@ this.allselectedcall2=status;
         
       });
   }
+
+  // split array into equal parts 
+
+  EqualPartsArray(array:Array<any>,chunksize:number){
+    if(array.length!=0)
+    {
+      var i,j, temporary, chunk = chunksize;
+      let UpdatedArray=[]
+      for (i = 0,j = array.length; i < j; i += chunk) {
+          temporary = array.slice(i, i + chunk);
+         
+         UpdatedArray.push(temporary)
+  
+      }
+       this.mobile_missed=UpdatedArray;
+    }
+}
+        scroll(event)
+        {
+            this.scrollid=event;
+        }
 }
 
 

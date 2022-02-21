@@ -423,14 +423,18 @@
           </tbody>
         </table>
 
-        <div class="cardspanel">
-       
 
-          <div class="cardsitem" *ngFor="let data of  missed_call; let i=index;">
-
+      <div style="    min-height: fit-content;
+      max-height: max-content;
+      display: block;
+      white-space: pre;
+      width: 100%;">
+        <div  (click)="scroll(j)" class="cardspanel" *ngFor="let cdata of  mobile_missed; let j=index;">
+         
+          <div    class="cardsitem" *ngFor="let data of  cdata; let i=index;">
             
             <div style="    padding-left: 16px;
-            padding-right: 16px;  " >
+            padding-right: 16px;  ">
               <div class="iconpanel" >
                   <div [ngClass]="{ rotateicon: isExpand(data.call_uuid+i) }" (click)="getExpandeditem(data.call_uuid+i)" class="notrorateicon"></div>
               </div>
@@ -470,6 +474,7 @@
           </div>
           </div>
         </div>
+        </div>
         <div class="callindicationpanel" [hidden]="!showmissed_message">
           <p class="numberofvailablerequest">{{size_missed_call}} missed requests</p>
             </div>
@@ -477,18 +482,10 @@
           <p class="call-status">There is no Missed requests yet.</p>
   
         </div>
-        <!-- <div class="pagedotspanel">
-          <div class="showdotsarea">
-            <div class="dots">
+        <div class="pagedotspanel">
+            <div  [ngStyle]="{'border':scrollid==j ? '2px solid #1C54DB' : '2px solid #E5E5E5' }" class="dots" *ngFor="let cdata of  mobile_missed; let j=index;">
             </div>
-            <div class="dots">
-            </div>
-            <div class="dots">
-            </div>
-            <div class="dots">
-            </div>
-          </div>
-      </div> -->
+      </div>
     </div>
     
     <div [hidden]="!answered">
