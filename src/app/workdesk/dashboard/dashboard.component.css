@@ -180,7 +180,7 @@
            background: #FFFFFF;
            border: 1px solid rgba(208, 208, 222, 0.6);
            box-sizing: border-box;
-           border-radius: 7px;
+           border-radius: 4px;
            margin-bottom: 20px;
            height: 328px;
        }
@@ -208,7 +208,7 @@
         background: #FFFFFF;
         border: 1px solid rgba(208, 208, 222, 0.6);
         box-sizing: border-box;
-        border-radius: 7px;
+        border-radius: 4px;
         margin-right: 2%;
         font-size: 30px;
     

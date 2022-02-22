@@ -1846,11 +1846,10 @@ createoschart()
         return text.join("") ;
       }
     }
-  });
-  // generate HTML legend
- $("#oslegend").html(myChart.generateLegend());
-}
-
+    });
+    // generate HTML legend
+    $("#oslegend").html(myChart.generateLegend());
+    }
      getdashboardDataonLoad()
     { const intid = JSON.parse(localStorage.getItem('intgid'))
       try{
@@ -1858,17 +1857,13 @@ createoschart()
         if(data['int_id']!=null)
         { 
           this.getlllangugaes();
-        
         }
-       
-        
     })
     }
     catch(error)
     {
       this.messageservie.setErrorMessage(error);
     }
-
   }
   // call stats
   getcallstats(timeslot:any,languagesid:Array<any>,countryids:Array<any>,datefrom:String,dateto:String)
@@ -1997,7 +1992,8 @@ createoschart()
       var int_id=intg_id?.int_id;
       var accesstoken=getdata?.api_token;
       var orgid=getdata?.subscription_id?.subsid?.uuid
-        this.gigaaaservice.getcallchart(accesstoken,orgid,int_id,timeslot,languages,countries,fromdate,todate).subscribe(data=>{
+      this.gigaaaservice.getcallchart(accesstoken,orgid,int_id,timeslot,languages,countries,fromdate,todate).subscribe(data=>{
+      
       var dataforincoming=this.getbarchartdata(data['incoming']);
       var dataforincoming1=this.getbarchartdata(data['missed']);
       var dataforincoming2=this.getbarchartdata(data['handed_to_ai']);
@@ -2048,7 +2044,6 @@ createoschart()
       });
       return [{line1:line3,line2:line4}, {line1:line5,line2:line6}];
     }
-
 
   }
   // get line chart label
@@ -2130,7 +2125,6 @@ createoschart()
     else 
     {
       label.push(update.substring(4))
-
     }
     }
     else if(numberofBars>12)
