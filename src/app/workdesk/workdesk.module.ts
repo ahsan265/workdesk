@@ -81,7 +81,6 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     MatProgressBarModule,
     MatSliderModule,
     DragDropModule,
-    BrowserAnimationsModule
   ],
   providers: [agentsocketapi,gigaaasocketapi,webrtcsocket],
   schemas: [CUSTOM_ELEMENTS_SCHEMA,NO_ERRORS_SCHEMA],
