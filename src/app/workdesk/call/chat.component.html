@@ -433,13 +433,13 @@
                   <div [ngClass]="{ rotateicon: isExpand(data.call_uuid+i) }" (click)="getExpandeditem(data.call_uuid+i)" class="notrorateicon"></div>
               </div>
               <div class="durationpanel">
-                <p class="callmissedat">{{gettimeduration(data?.missed_at)}}</p>
+                <p class="callmissedat" style="font-weight: 600;">{{gettimeduration(data?.missed_at)}}</p>
               </div>
               <div class="usernamepanel">
                 <p class="agentusername">{{data?.name}}</p>
               </div>
               <div class="reasonpanel">
-                <p class="callreason">{{getreasonformissedcall(data?.reason)}}</p>
+                <p class="callreason" >{{getreasonformissedcall(data?.reason)}}</p>
               </div>
               <div class="calltypepanel">
                 <img height="16" width="16" src="{{data?.is_video|call_type}}" alt="" srcset="">
@@ -447,16 +447,16 @@
             </div>
            
             <div class="showpanel" [ngClass]="{ expandedpanel: isExpand(data.call_uuid+i) }">
-              <div class="agentidpanel">
+              <div class="agentidpanel" style="width: 33%; text-align: left; padding-top: 6px;">
                 <p class="agentinfoheading">AGENT</p>
-                <p class="agentinfodata">{{data?.user_id}}</p>
+                <p class="agentinfodata">{{ data?.user_id| nA}}</p>
               </div>
-              <div class="agentinfopanel">
+              <div class="agentinfopanel" style="width: 33%; text-align: center;padding-top: 6px;">
                 <p class="agentinfoheading">WAIT TIME</p>
                 <p class="agentinfodata">{{calculatetime(data?.wait_time)}}</p>
 
               </div>
-              <div class="userinfopanel">
+              <div class="userinfopanel" style="width: 33%; text-align: right; padding-top: 6px;">
                 <p class="agentinfoheading">USER INFO</p>
                 <img class="userinfoicon" height="10" width="10" src="{{data?.language_icon | flagpipes}}" alt="">
                 <img  class="userinfoicon" height="10" width="10" src="{{data?.browser | getbrowser}}" alt="">
@@ -626,7 +626,7 @@
                 <p class="agentusername">{{data?.name}}</p>
               </div>
               <div class="durationpanel" style="width: 20%;">
-                <p class="callmissedat">{{gettimeduration(data?.call_started_at)}}</p>
+                <p class="callmissedat" style="font-weight: 600;">{{gettimeduration(data?.call_started_at)}}</p>
               </div>
               <div class="calltypepanel"style="width: 10%;">
                 <img height="16" width="16" src="{{data?.is_video|call_type}}" alt="" srcset="">
@@ -634,15 +634,15 @@
             </div>
            
             <div class="showpanel" [ngClass]="{ expandedpanel: isExpand(data.call_uuid+i) }">
-              <div class="agentinfopanel" style="width: 50%;">
+              <div class="agentinfopanel" style="width: 33%;">
                 <img class="agentpic" height="36p" width="36" src="{{data?.agent.images[96] | getpicture}}" alt="">
                 <p class="agentusername name">{{data?.agent?.display_name}}</p>
               </div>
-              <div class="agentidpanel" style="width: 25%;">
+              <div class="agentidpanel" style="width: 33%; text-align: center;">
                 <p class="agentinfoheading">AGENT</p>
                 <p class="agentinfodata">12345</p>
               </div>
-              <div class="userinfopanel" style="width: 25%; text-align: right;">
+              <div class="userinfopanel" style="width: 33%; text-align: right;">
                 <p class="agentinfoheading">USER INFO</p>
                 <img class="userinfoicon" height="10" width="10" src="{{data?.language_icon | flagpipes}}" alt="">
                 <img  class="userinfoicon" height="10" width="10" src="{{data?.browser | getbrowser}}" alt="">

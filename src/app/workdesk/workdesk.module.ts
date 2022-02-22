@@ -42,6 +42,7 @@ import { getcapitalletter } from './Datapipes/capitalizepipe';
 import { webrtcsocket } from '../service/webrtcsocket';
 import { CarouselModule } from 'ngx-bootstrap/carousel';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { notAvailable } from './Datapipes/NotAvailablepipe';
 
 
 @NgModule({
@@ -68,6 +69,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
       getcapitalletter,
       CallMobilePopupFilterComponent,
       CallInterfaceComponent,
+      notAvailable
       ],
   imports: [ CarouselModule.forRoot(), Ng2SearchPipeModule,  ImageCropperModule,
     BsDatepickerModule.forRoot(),
