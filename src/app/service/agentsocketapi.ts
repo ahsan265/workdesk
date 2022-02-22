@@ -98,7 +98,7 @@ import { sharedres_service } from "./sharedres.service";
           // send agents params
     send_agentsparam_status(invited:any,active:any,inactive:any,languages:Array<any>)
     { 
-      if(this.ws.readyState==this.ws.OPEN)
+      if(this.ws.OPEN==1)
       {var object= {"action": "filter", "data":{"languages": languages, "invited":invited, "active":active, "inactive":inactive}}
      
         this.ws.send(JSON.stringify(object))    

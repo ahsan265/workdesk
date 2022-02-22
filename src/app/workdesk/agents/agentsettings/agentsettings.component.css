@@ -335,9 +335,10 @@ input[type="checkbox"]  {
     }
     li.listitem:hover{
       background: rgba(166, 168, 186, 0.15);    
+      cursor: pointer;
     }
     .tagiconnn
-{
+    {
     color: #A6A8BA;
     cursor: pointer;
     float: right;
@@ -414,6 +415,7 @@ input[type="radio"]{
  padding-left: 8px;
  display: inline-block;
  width: 60px;
+ cursor: pointer;
   /* overflow: hidden; */
   white-space: nowrap;
   text-overflow: inherit;
@@ -447,6 +449,7 @@ padding: 0px;
  display: inline-block;
  padding-left: 8px;
  white-space: nowrap;
+ cursor: pointer;
  text-overflow: ellipsis;
  color: rgba(22, 39, 65, 0.8);
  vertical-align: middle;

@@ -1,4 +1,12 @@
 @import '~ngx-toastr/toastr.css';
+.dropdown {
+    cursor: default;
+
+}
+*:hover{
+    cursor: default;
+
+}
 button{
     outline: none;
     border: none;

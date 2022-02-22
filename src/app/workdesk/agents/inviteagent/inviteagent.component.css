@@ -206,7 +206,8 @@ input[type="radio"]{
   font-style: normal;
  font-weight: normal;
  font-size: 12px;
- line-height: 25.5px;
+ line-height: 36px;
+ margin-left: 8px;
  display: inline-block;
  /* width: 150px;
  overflow: hidden; */

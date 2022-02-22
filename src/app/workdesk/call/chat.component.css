@@ -215,7 +215,7 @@ display: inline-block;
 border-right: 1px solid rgba(166, 168, 186, 0.3);
 }
 *:hover{
-  cursor: default;
+  cursor: auto;
 
 }
 .dialcall{
@@ -506,13 +506,14 @@ li.listitem{
 }
 li.listitem:hover{
   background: rgba(166, 168, 186, 0.15);
-
+  cursor: pointer;
 }
 li.listitem.call{
   width: 93%;
 }
 li.listitem.call:hover{
   background: rgba(166, 168, 186, 0.15);
+  cursor: pointer;
 
 }
 .dropdownlistitem1{ font-family: "Roboto",sans-serif;
@@ -522,7 +523,7 @@ font-size: 14px;
 line-height: 16px;
 display: inline-block;
 width: 60px;
-/* overflow: hidden; */
+cursor: pointer;
 white-space: nowrap;
 text-overflow: inherit;
 color: #292F58;
@@ -548,6 +549,7 @@ height: 24px;
  line-height: 34px;
     padding-left: 8px;
  display: inline-block;
+ cursor: pointer;
  overflow: hidden;
  white-space: nowrap;
  text-overflow: ellipsis;
