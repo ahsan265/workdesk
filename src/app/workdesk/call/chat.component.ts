@@ -1,6 +1,7 @@
 import { ViewportScroller } from '@angular/common';
 import { ChangeDetectorRef, Component, ElementRef, HostListener, OnInit, Renderer2, ViewChild, ViewContainerRef } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
+import { CarouselComponent, CarouselConfig, CarouselModule } from 'ngx-bootstrap/carousel';
 import { add, defineLocale, enGbLocale } from 'ngx-bootstrap/chronos';
 import { BsDaterangepickerDirective, BsLocaleService } from 'ngx-bootstrap/datepicker';
 // import { off } from 'node:process';
@@ -29,11 +30,37 @@ interface IRange {
 @Component({
   selector: 'app-chat',
   templateUrl: './chat.component.html',
-  styleUrls: ['./chat.component.css']
+  styleUrls: ['./chat.component.css'],
+  
  
 })
 
 export class ChatComponent implements OnInit {
+
+  // for missed tabs
+  noWrapSlides3 = false;
+  singleSlideOffset3 = true;
+  public activeSlideIndex3: number = 0;
+
+  // for answered tab
+  noWrapSlides4 = false;
+  singleSlideOffset4 = true;
+  public activeSlideIndex4: number = 0;
+  // for incoming tab
+  noWrapSlides1 = false;
+  singleSlideOffset1 = true;
+  public activeSlideIndex1: number = 0;
+  // for ongoing tabs
+  noWrapSlides2 = false;
+  singleSlideOffset2 = true;
+  public activeSlideIndex2: number = 0;
+
+  public itemsPerSlide = 1;
+  slides: {image: string; text?: string}[] = [
+    {image: 'assets/images/nature/7.jpg'},
+    {image: 'assets/images/nature/5.jpg'},
+    {image: 'assets/images/nature/3.jpg'}
+  ];
 
   firstDate:any;
   lastDate:any;
@@ -217,6 +244,111 @@ call:any;
   time: number = 0;
   display ;
   interval;
+  private swipeCoord?: [number, number];
+private swipeTime?: number;
+@ViewChild('carousel') carousel:CarouselComponent;
+
+  swipe(e: TouchEvent, when: string): void {
+    const coord: [number, number] = [e.changedTouches[0].clientX, e.changedTouches[0].clientY];
+    const time = new Date().getTime();
+   
+    if (when === 'start') {
+      this.swipeCoord = coord;
+      this.swipeTime = time;
+    } else if (when === 'end') {
+      const direction = [coord[0] - this.swipeCoord[0], coord[1] - this.swipeCoord[1]];
+      const duration = time - this.swipeTime;
+  
+      if (duration < 1000 //
+        && Math.abs(direction[0]) > 30 // Long enough
+        && Math.abs(direction[0]) > Math.abs(direction[1] * 3)) { // Horizontal enough
+          let swipe
+          if(direction[0] < 0)
+          {
+            this.addSlide(this.selectedtabs);
+            
+          } 
+          else{
+            this.removeSlide(this.selectedtabs);
+          }
+          console.log(swipe)
+        
+      }
+    }
+  }
+
+  addSlide(val): void {
+    if(val=="incoming")
+    {
+      let countadd= this.mobile_incoming.length;
+      if( this.activeSlideIndex1<countadd)
+      {
+       this.activeSlideIndex1++;
+      }
+    }
+    else if(val=="ongoing")
+    {
+      let countadd= this.mobile_ongoing.length;
+      if( this.activeSlideIndex2<countadd)
+      {
+       this.activeSlideIndex2++;
+      }
+    }
+    else if(val=="missed")
+    {
+      let countadd= this.mobile_missed.length;
+      if( this.activeSlideIndex3<countadd)
+      {
+       this.activeSlideIndex3++;
+      }
+    }
+    else if(val=="finished")
+    {
+      let countadd= this.mobile_answered.length;
+      if( this.activeSlideIndex4<countadd)
+      {
+       this.activeSlideIndex4++;
+      }
+    }
+
+  }
+
+  removeSlide(val):void{
+    if( this.activeSlideIndex1!=0)
+    {
+      this.activeSlideIndex1--;    
+    }
+
+    if(val=="incoming")
+    {
+      if( this.activeSlideIndex2!=0)
+    {
+      this.activeSlideIndex2--;    
+    }
+    }
+    else if(val=="ongoing")
+    {
+      if( this.activeSlideIndex3!=0)
+    {
+      this.activeSlideIndex3--;    
+    }
+    }
+    else if(val=="missed")
+    {
+      if( this.activeSlideIndex3!=0)
+    {
+      this.activeSlideIndex3--;    
+    }
+    }
+    else if(val=="finished")
+    {
+      if( this.activeSlideIndex4!=0)
+      {
+        this.activeSlideIndex4--;    
+      }
+    }
+  }
+
   constructor(    private localeService: BsLocaleService,
     private changeDetector: ChangeDetectorRef,private gigaaasocketapi:gigaaasocketapi, 
     private sharedres:sharedres_service, 
@@ -233,6 +365,7 @@ call:any;
     defineLocale('en-gb', enGbLocale);
     this.localeService.use('en-gb');
     this.localeService.currentLocale;
+
    }
   option={
     duration:1000,
@@ -263,7 +396,6 @@ call:any;
     }
 
     seconds = totalSeconds;
-
     return  0+":"+seconds
 
   }
@@ -329,15 +461,15 @@ return ("0" + minutes).slice(-2) + ":" + ("0" +seconds).slice(-2);
   }
 
   mobile_missed:Array<any>=[];
+  mobile_answered:Array<any>=[];
+  mobile_ongoing:Array<any>=[];
+  mobile_incoming:Array<any>=[];
   alreadydonecall:any;
 
   
   scrollid:any;
   ngOnInit(): void {
-    // this._renderer.listen(this._elementRef.nativeElement.parentNode, 
-    //   'scroll', (event) => {
-    //    console.log(event)
-    //  });
+   
     this.getpanalview("incoming");
     this.rangeSelected1="Today";
     this.rangeSelected2="Today";
@@ -464,7 +596,7 @@ return ("0" + minutes).slice(-2) + ":" + ("0" +seconds).slice(-2);
 
   getsocketapidata()
   {
-    this.gigaaasocketapi.getlistofagentsinque$.subscribe(data=>{
+    this.gigaaasocketapi.getlistofagentsinque$.subscribe( data=>{
 
   
         this.call=data;
@@ -472,7 +604,6 @@ return ("0" + minutes).slice(-2) + ":" + ("0" +seconds).slice(-2);
         this.ougoing_call=data['ongoing'];
         this.answered_call=data['finished'];
         this.incoming_call=data['incoming'];
-        this.EqualPartsArray(this.missed_call,5)
         this.size_ougoing_call=data['ongoing']?.length;
         this.size_incoming_call=data['incoming']?.length;
         this.size_missed_call=data['missed']?.length;
@@ -486,6 +617,7 @@ return ("0" + minutes).slice(-2) + ":" + ("0" +seconds).slice(-2);
         {
           this.showincoming_message=true;
           this.showincoming=false
+        this.mobile_incoming=  this.EqualPartsArray(this.incoming_call,5);
 
 
         }
@@ -498,6 +630,8 @@ return ("0" + minutes).slice(-2) + ":" + ("0" +seconds).slice(-2);
         {
           this.showongoing_message=true;
           this.showongoing=false;
+          this.mobile_ongoing= this.EqualPartsArray(this.ougoing_call,5);
+
         }
          if(this.size_missed_call==0)
         {
@@ -508,6 +642,8 @@ return ("0" + minutes).slice(-2) + ":" + ("0" +seconds).slice(-2);
         {
           this.showmissed_message=true;
           this.showmissed=false;
+          this.mobile_missed=   this.EqualPartsArray(this.missed_call,5);
+
         }
          if(this.size_answered_call==0)
         {
@@ -518,6 +654,8 @@ return ("0" + minutes).slice(-2) + ":" + ("0" +seconds).slice(-2);
         {
             this.showanswered_message=true;
             this.showanswered=false;
+            this.mobile_answered= this.EqualPartsArray(this.answered_call,5);
+
         }
 
     },err=>{
@@ -692,9 +830,8 @@ else {
 gettimeduration(val)
 {
   this.getElapsedTime(val)
-
-  var myDate = new Date(val);
- var  time =  ("0" + myDate.getHours()).slice(-2) + ":" + ("0" +myDate.getMinutes()).slice(-2)
+  let myDate = new Date(val);
+ let  time =  ("0" + myDate.getHours()).slice(-2) + ":" + ("0" +myDate.getMinutes()).slice(-2)
 return time;
 }
 
@@ -1820,7 +1957,7 @@ this.allselectedcall2=status;
 
   // split array into equal parts 
 
-  EqualPartsArray(array:Array<any>,chunksize:number){
+ private  EqualPartsArray(array:Array<any>,chunksize:number){
     if(array.length!=0)
     {
       var i,j, temporary, chunk = chunksize;
@@ -1830,14 +1967,30 @@ this.allselectedcall2=status;
          
          UpdatedArray.push(temporary)
   
-      }
-       this.mobile_missed=UpdatedArray;
+      } 
+      return UpdatedArray;
+      // if(this.selectedtabs=="incoming")
+      // {
+      //   this.mobile_incoming= UpdatedArray;
+      // }
+      // else  if(this.selectedtabs=="outgoing")
+      // {
+      //   this.mobile_ongoing= UpdatedArray;
+      // }
+      // else  if(this.selectedtabs=="missed")
+      // {
+      //   this.mobile_missed=UpdatedArray;
+      // console.log(this.mobile_missed)
+      // }
+      // else  if(this.selectedtabs=="finished")
+      // {
+      //   this.mobile_answered=UpdatedArray;
+
+      // }
+ 
     }
-}
-        scroll(event)
-        {
-            this.scrollid=event;
-        }
+    }  
+        
 }
 
 

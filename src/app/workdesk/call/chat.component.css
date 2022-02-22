@@ -1008,6 +1008,7 @@ color: #445167;
     overflow-y: scroll;
     margin-right: 10px;
     vertical-align: top;
+    float: none;
 
 }
   
@@ -1142,5 +1143,8 @@ width: 10%;
 }
 .waitingtime{
   width: 12%;
+}
+.callindicationpanel{
+  display: none;
 }
 }

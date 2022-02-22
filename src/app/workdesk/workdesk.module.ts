@@ -40,6 +40,8 @@ import { getcalltypetextpipes } from './Datapipes/changecalltypetext';
 import { CallInterfaceComponent } from './call/call-interface/call-interface.component';
 import { getcapitalletter } from './Datapipes/capitalizepipe';
 import { webrtcsocket } from '../service/webrtcsocket';
+import { CarouselModule } from 'ngx-bootstrap/carousel';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 
 @NgModule({
@@ -67,7 +69,7 @@ import { webrtcsocket } from '../service/webrtcsocket';
       CallMobilePopupFilterComponent,
       CallInterfaceComponent,
       ],
-  imports: [  Ng2SearchPipeModule,  ImageCropperModule,
+  imports: [ CarouselModule.forRoot(), Ng2SearchPipeModule,  ImageCropperModule,
     BsDatepickerModule.forRoot(),
     ChartsModule,
     CommonModule,
@@ -78,7 +80,8 @@ import { webrtcsocket } from '../service/webrtcsocket';
     CountUpModule,
     MatProgressBarModule,
     MatSliderModule,
-    DragDropModule
+    DragDropModule,
+    BrowserAnimationsModule
   ],
   providers: [agentsocketapi,gigaaasocketapi,webrtcsocket],
   schemas: [CUSTOM_ELEMENTS_SCHEMA,NO_ERRORS_SCHEMA],

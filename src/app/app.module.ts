@@ -56,6 +56,7 @@ import { MaincomponentComponent } from './maincomponent/maincomponent.component'
     MaincomponentComponent,
   ],
   imports: [
+    
     ChartsModule,
     ToastrModule.forRoot(),
     WorkdeskModule,
@@ -88,21 +89,21 @@ import { MaincomponentComponent } from './maincomponent/maincomponent.component'
   ],
   bootstrap: [AppComponent],
   providers: [GigaaaApiService,AuthService, restrictionservice 
-    ,{
-    provide: APP_INITIALIZER,
-    useFactory:appInitFactory,
-    deps: [restrictionservice,AuthService],
-    multi: true
-}
+//     ,{
+//     provide: APP_INITIALIZER,
+//     useFactory:appInitFactory,
+//     deps: [restrictionservice,AuthService],
+//     multi: true
+// }
 
 ,{
     provide: 'GigaaaHeaderService',
     useClass: GigaaaHeaderService
   },
-  {
-    provide: ErrorHandler,
-    useClass: MessageService
-  },
+  // {
+  //   provide: ErrorHandler,
+  //   useClass: MessageService
+  // },
   {provide : MatDialogRef, useValue : {}}],
   entryComponents: [LandingpageComponent],
   schemas: [CUSTOM_ELEMENTS_SCHEMA,NO_ERRORS_SCHEMA],

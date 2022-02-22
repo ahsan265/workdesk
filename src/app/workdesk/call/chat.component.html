@@ -99,8 +99,10 @@
               </tr>
             </tbody>
           </table>
-          <div class="cardspanel">
-            <div class="cardsitem" *ngFor="let data of  incoming_call; let i=index;">
+          <carousel [interval]="0" data-interval="false" (touchstart)="swipe($event, 'start')" (touchend)="swipe($event, 'end')" [isAnimated]="true"  [itemsPerSlide]="itemsPerSlide" [(activeSlide)]="activeSlideIndex4"  [noWrap]="noWrapSlides4">
+
+          <div class="cardspanel" *ngFor="let cdata of  mobile_incoming; let j=index;">
+            <div class="cardsitem" *ngFor="let data of  cdata; let i=index;">
               <div style="    padding-left: 16px;
               padding-right: 16px;  " >
                 <div class="iconpanel" >
@@ -139,6 +141,7 @@
               </div>
             </div>
             </div>
+            </carousel>
           <div [hidden]="showincoming_message">
             <p class="call-status">There is no Incoming requests yet.</p>
     </div>
@@ -248,8 +251,10 @@
             </tr>
           </tbody>
         </table>
-        <div class="cardspanel">
-          <div class="cardsitem" *ngFor="let data of  ougoing_call; let i=index;">
+        <carousel [interval]="0" data-interval="false" (touchstart)="swipe($event, 'start')" (touchend)="swipe($event, 'end')" [isAnimated]="true"  [itemsPerSlide]="itemsPerSlide" [(activeSlide)]="activeSlideIndex2"  [noWrap]="noWrapSlides2">
+
+        <div class="cardspanel" *ngFor="let cdata of  mobile_ongoing; let j=index;"  >
+          <div class="cardsitem" *ngFor="let data of  cdata; let i=index;">
             <div style="    padding-left: 16px;
             padding-right: 16px;  " >
               <div class="iconpanel" >
@@ -284,7 +289,7 @@
               </div>
             </div>
           </div>
-          </div>
+          </div></carousel>
         <div  [hidden]="showongoing_message">
           <p class="call-status">There is no Oncoming requests yet.</p>
         </div>
@@ -424,16 +429,11 @@
         </table>
 
 
-      <div style="    min-height: fit-content;
-      max-height: max-content;
-      display: block;
-      white-space: pre;
-      width: 100%;">
-        <div  (click)="scroll(j)" class="cardspanel" *ngFor="let cdata of  mobile_missed; let j=index;">
-         
+      <div >
+      <carousel [interval]="0"  data-interval="false" (touchstart)="swipe($event, 'start')" (touchend)="swipe($event, 'end')" [isAnimated]="true"  [itemsPerSlide]="itemsPerSlide" [(activeSlide)]="activeSlideIndex3"  [noWrap]="noWrapSlides3">
+        <slide  class="cardspanel" *ngFor="let cdata of  mobile_missed; let j=index;">
           <div    class="cardsitem" *ngFor="let data of  cdata; let i=index;">
-            
-            <div style="    padding-left: 16px;
+            <div style="padding-left: 16px;
             padding-right: 16px;  ">
               <div class="iconpanel" >
                   <div [ngClass]="{ rotateicon: isExpand(data.call_uuid+i) }" (click)="getExpandeditem(data.call_uuid+i)" class="notrorateicon"></div>
@@ -472,7 +472,8 @@
               </div>
             </div>
           </div>
-          </div>
+          </slide>
+        </carousel>
         </div>
         </div>
         <div class="callindicationpanel" [hidden]="!showmissed_message">
@@ -482,10 +483,10 @@
           <p class="call-status">There is no Missed requests yet.</p>
   
         </div>
-        <div class="pagedotspanel">
+        <!-- <div class="pagedotspanel">
             <div  [ngStyle]="{'border':scrollid==j ? '2px solid #1C54DB' : '2px solid #E5E5E5' }" class="dots" *ngFor="let cdata of  mobile_missed; let j=index;">
             </div>
-      </div>
+      </div> -->
     </div>
     
     <div [hidden]="!answered">
@@ -621,8 +622,9 @@
            
           </tbody>
         </table>
-        <div class="cardspanel">
-          <div class="cardsitem" *ngFor="let data of  answered_call; let i=index;">
+        <carousel [interval]="0" data-interval="false" (touchstart)="swipe($event, 'start')" (touchend)="swipe($event, 'end')" [isAnimated]="true"  [itemsPerSlide]="itemsPerSlide" [(activeSlide)]="activeSlideIndex4"  [noWrap]="noWrapSlides4">
+        <slide  class="cardspanel" *ngFor="let cdata of  mobile_answered; let j=index;">
+          <div class="cardsitem" *ngFor="let data of  cdata; let i=index;">
             <div style="    padding-left: 16px;
             padding-right: 16px;  " >
               <div class="iconpanel" >
@@ -656,9 +658,10 @@
                 <img style="margin-right: 0px;"  class="userinfoicon" height="10" width="10" src="{{data?.operating_system | getos}}" alt="">
 
               </div>
-            </div>
+            </div>  
           </div>
-          </div>
+          </slide>
+          </carousel>
         <div class="callindicationpanel"[hidden]="!showanswered_message">
           <p class="numberofvailablerequest">{{size_answered_call}} answered requests</p>
             </div>
@@ -674,4 +677,7 @@
     </div>  -->
     
   </div>
+
+ 
+
   
