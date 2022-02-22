@@ -102,9 +102,9 @@
           <div class="cardspanel" *ngFor="let cdata of  mobile_incoming; let j=index;">
             <div class="cardsitem" *ngFor="let data of  cdata; let i=index;">
               <div style="    padding-left: 16px;
-              padding-right: 16px;  " >
+              padding-right: 16px;  " (click)="getExpandeditem(data.call_uuid+i)">
                 <div class="iconpanel" >
-                    <div [ngClass]="{ rotateicon: isExpand(data.call_uuid+i) }" (click)="getExpandeditem(data.call_uuid+i)" class="notrorateicon"></div>
+                    <div [ngClass]="{ rotateicon: isExpand(data.call_uuid+i) }" class="notrorateicon"></div>
                 </div>
                 <div class="usernamepanel" style="width: 60%;">
                   <p class="agentusername">{{data?.name}}</p>
@@ -252,9 +252,9 @@
         <div class="cardspanel" *ngFor="let cdata of  mobile_ongoing; let j=index;"  >
           <div class="cardsitem" *ngFor="let data of  cdata; let i=index;">
             <div style="    padding-left: 16px;
-            padding-right: 16px;  " >
+            padding-right: 16px;  " (click)="getExpandeditem(data.call_uuid+i)">
               <div class="iconpanel" >
-                  <div [ngClass]="{ rotateicon: isExpand(data.call_uuid+i) }" (click)="getExpandeditem(data.call_uuid+i)" class="notrorateicon"></div>
+                  <div [ngClass]="{ rotateicon: isExpand(data.call_uuid+i) }"  class="notrorateicon"></div>
               </div>
               <div class="usernamepanel" style="width: 60%;">
                 <p class="agentusername">{{data?.name}}</p>
@@ -426,11 +426,11 @@
       <div >
       <carousel [interval]="0"  data-interval="false" (touchstart)="swipe($event, 'start')" (touchend)="swipe($event, 'end')" [isAnimated]="true"  [itemsPerSlide]="itemsPerSlide" [(activeSlide)]="activeSlideIndex3"  [noWrap]="noWrapSlides3">
         <slide  class="cardspanel" *ngFor="let cdata of  mobile_missed; let j=index;">
-          <div    class="cardsitem" *ngFor="let data of  cdata; let i=index;">
+          <div  (click)="getExpandeditem(data.call_uuid+i)"   class="cardsitem" *ngFor="let data of  cdata; let i=index;">
             <div style="padding-left: 16px;
             padding-right: 16px;  ">
               <div class="iconpanel" >
-                  <div [ngClass]="{ rotateicon: isExpand(data.call_uuid+i) }" (click)="getExpandeditem(data.call_uuid+i)" class="notrorateicon"></div>
+                  <div [ngClass]="{ rotateicon: isExpand(data.call_uuid+i) }"  class="notrorateicon"></div>
               </div>
               <div class="durationpanel">
                 <p class="callmissedat" style="font-weight: 600;">{{gettimeduration(data?.missed_at)}}</p>
@@ -618,9 +618,9 @@
         <slide  class="cardspanel" *ngFor="let cdata of  mobile_answered; let j=index;">
           <div class="cardsitem" *ngFor="let data of  cdata; let i=index;">
             <div style="    padding-left: 16px;
-            padding-right: 16px;  " >
+            padding-right: 16px;  "  (click)="getExpandeditem(data.call_uuid+i)">
               <div class="iconpanel" >
-                  <div [ngClass]="{ rotateicon: isExpand(data.call_uuid+i) }" (click)="getExpandeditem(data.call_uuid+i)" class="notrorateicon"></div>
+                  <div [ngClass]="{ rotateicon: isExpand(data.call_uuid+i) }" class="notrorateicon"></div>
               </div>
               <div class="usernamepanel" style="width: 60%;">
                 <p class="agentusername">{{data?.name}}</p>
