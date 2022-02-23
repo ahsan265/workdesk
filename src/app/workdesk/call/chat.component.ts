@@ -281,7 +281,7 @@ private swipeTime?: number;
     if(val=="incoming")
     {
       let countadd= this.mobile_incoming.length;
-      if( this.activeSlideIndex1<countadd)
+      if( this.activeSlideIndex1<countadd-1)
       {
        this.activeSlideIndex1++;
       }
@@ -289,7 +289,7 @@ private swipeTime?: number;
     else if(val=="ongoing")
     {
       let countadd= this.mobile_ongoing.length;
-      if( this.activeSlideIndex2<countadd)
+      if( this.activeSlideIndex2<countadd-1)
       {
        this.activeSlideIndex2++;
       }
@@ -297,7 +297,7 @@ private swipeTime?: number;
     else if(val=="missed")
     {
       let countadd= this.mobile_missed.length;
-      if( this.activeSlideIndex3<countadd)
+      if( this.activeSlideIndex3<countadd-1)
       {
        this.activeSlideIndex3++;
       }
@@ -305,7 +305,7 @@ private swipeTime?: number;
     else if(val=="finished")
     {
       let countadd= this.mobile_answered.length;
-      if( this.activeSlideIndex4<countadd)
+      if( this.activeSlideIndex4<countadd-1)
       {
        this.activeSlideIndex4++;
       }
@@ -618,6 +618,7 @@ return ("0" + minutes).slice(-2) + ":" + ("0" +seconds).slice(-2);
           this.showincoming_message=true;
           this.showincoming=false
         this.mobile_incoming=  this.EqualPartsArray(this.incoming_call,5);
+        this.activeSlideIndex1=0;
 
 
         }
@@ -631,7 +632,7 @@ return ("0" + minutes).slice(-2) + ":" + ("0" +seconds).slice(-2);
           this.showongoing_message=true;
           this.showongoing=false;
           this.mobile_ongoing= this.EqualPartsArray(this.ougoing_call,5);
-
+          this.activeSlideIndex2=0;
         }
          if(this.size_missed_call==0)
         {
@@ -643,6 +644,7 @@ return ("0" + minutes).slice(-2) + ":" + ("0" +seconds).slice(-2);
           this.showmissed_message=true;
           this.showmissed=false;
           this.mobile_missed=   this.EqualPartsArray(this.missed_call,5);
+          this.activeSlideIndex3=0;
 
         }
          if(this.size_answered_call==0)
@@ -655,7 +657,7 @@ return ("0" + minutes).slice(-2) + ":" + ("0" +seconds).slice(-2);
             this.showanswered_message=true;
             this.showanswered=false;
             this.mobile_answered= this.EqualPartsArray(this.answered_call,5);
-
+            this.activeSlideIndex4=0;
         }
 
     },err=>{
@@ -899,23 +901,29 @@ search(term:string,column:any) {
   {
     this.answered_call=result;
     this.seachValue4=term;
+    this.mobile_answered= this.EqualPartsArray(this.answered_call,5)
+
   }
   else if(column=='missed')
   {
     this.missed_call=result;
     this.seachValue3=term;
+ this.mobile_missed= this.EqualPartsArray(this.missed_call,5)
   }
   else if(column=='incoming')
   { 
     this.seachValue2=term;
     this.size_incoming_call=this.call[column]?.length;
     this.incoming_call=result;
+    this.mobile_incoming= this.EqualPartsArray(this.incoming_call,5)
+
   }
   else if(column=='ongoing')
   {
     this.seachValue1=term;
     this.size_ougoing_call=this.call[column]?.length;
     this.ougoing_call=result;
+    this.mobile_ongoing= this.EqualPartsArray(this.ougoing_call,5)
 
   }
  }
@@ -1969,25 +1977,6 @@ this.allselectedcall2=status;
   
       } 
       return UpdatedArray;
-      // if(this.selectedtabs=="incoming")
-      // {
-      //   this.mobile_incoming= UpdatedArray;
-      // }
-      // else  if(this.selectedtabs=="outgoing")
-      // {
-      //   this.mobile_ongoing= UpdatedArray;
-      // }
-      // else  if(this.selectedtabs=="missed")
-      // {
-      //   this.mobile_missed=UpdatedArray;
-      // console.log(this.mobile_missed)
-      // }
-      // else  if(this.selectedtabs=="finished")
-      // {
-      //   this.mobile_answered=UpdatedArray;
-
-      // }
- 
     }
     }  
         
