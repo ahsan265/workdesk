@@ -158,6 +158,8 @@ hasVideoparam={width:226,height:144};
               await  this.createPeerConnection().finally(()=>{
                 const localtrack=  this.localstream.getAudioTracks()[0]
                 this.peerconnection.addTrack(localtrack,this.localstream);
+                this.localVideo.nativeElement.srcObject=this.localstream;
+                this.localVideo1.nativeElement.srcObject=this.localstream;
                 })
                 const offer:RTCSessionDescriptionInit=await this.peerconnection.createOffer(this.webrtcmediacontraints_user);
                 await this.peerconnection.setLocalDescription(offer);
@@ -337,7 +339,7 @@ hasVideoparam={width:226,height:144};
   {
    
     await   this.peerconnection.setRemoteDescription(new RTCSessionDescription(msg)).then(async ()=>{
-      this.localVideo.nativeElement.srcObject=this.localstream;
+      // this.localVideo.nativeElement.srcObject=this.localstream;
     }).then(() => {
       // Build SDP for answer message
       return this.peerconnection.createAnswer();
@@ -520,8 +522,10 @@ hasVideoparam={width:226,height:144};
             offerToReceiveVideo:true,
             iceRestart:true
           });
-          await this.peerconnection.setLocalDescription(offer);
-          this.webrtcservice.sendDataforCall({user_id:this.peerUserid,data:offer, type: "offer" });
+          await this.peerconnection.setLocalDescription(offer).catch(err=>{
+            console.log(err)
+          })
+          this.webrtcservice.sendDataforCall({user_id:this.peerUserid,data:offer, type: "offer" })
         })
       
       }
@@ -547,7 +551,9 @@ hasVideoparam={width:226,height:144};
                 offerToReceiveVideo:true,
                 iceRestart:true
               });
-              await this.peerconnection.setLocalDescription(offer);
+              await this.peerconnection.setLocalDescription(offer).catch(err=>{
+                console.log(err)
+              });
               this.webrtcservice.sendDataforCall({user_id:this.peerUserid,data:offer, type: "offer" });
                 })
                   }
