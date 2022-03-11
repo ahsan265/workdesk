@@ -2,8 +2,8 @@ import { Injectable } from "@angular/core";
 import { promise } from "protractor";
 import { Observable, Subject } from "rxjs";
 import { environment } from "src/environments/environment";
-import { MessageService } from "./messege.service";
-import { sharedres_service } from "./sharedres.service";
+import { MessageService } from "../../../../workdeskversion_1/src/app/service/messege.service";
+import { sharedres_service } from "../../../../workdeskversion_1/src/app/service/sharedres.service";
 
 @Injectable({
     providedIn: 'root'
@@ -11,9 +11,9 @@ import { sharedres_service } from "./sharedres.service";
   export class webrtcsocket {
     protected websocket_url = `${environment.websocket_url}`;
     callobject$: Observable<any>;
-    ws:  WebSocket;
+    ws:WebSocket;
     private callsubject = new Subject<any>();
-    constructor(private message:MessageService,private sharedres:sharedres_service)
+    constructor(private message:MessageService)
     {
        this.callobject$=this.callsubject.asObservable().pipe();  
     }
@@ -44,7 +44,12 @@ import { sharedres_service } from "./sharedres.service";
     // send data to webrtc 
     sendDataforCall(val)
     {
-      console.log(val)
       this.ws.send(JSON.stringify(val))
+    }
+
+    // close the websocket
+    closeWebsocket()
+    {
+      this.ws.close()
     }
 }

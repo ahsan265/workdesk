@@ -169,7 +169,8 @@ export class AuthService implements CanActivate {
             this.sharedres.showRestrictedUser(false);
             this.showModal=false
           },
-          error: (error) => {this.router.navigate(['logout']), this.sharedres.showRestrictedUser(true)
+          error: (error) => {
+            this.router.navigate(['logout']), this.sharedres.showRestrictedUser(true)
           this.showModal=true
         }
         }),

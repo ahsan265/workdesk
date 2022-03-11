@@ -1,5 +1,5 @@
 import { Injectable } from "@angular/core";
-import { Observable, Subject } from "rxjs";
+import { BehaviorSubject, Observable, Subject } from "rxjs";
 import { environment } from "src/environments/environment";
 import { MessageService } from "./messege.service";
 import { sharedres_service } from "./sharedres.service";
@@ -8,6 +8,7 @@ import { sharedres_service } from "./sharedres.service";
     providedIn: 'root'
   })
   export class agentsocketapi {
+    public getLoggedUserImage=new Subject<any>();
     protected websocket_url = `${environment.websocket_url}`;
 
     getagetnlist$: Observable<any>;
@@ -61,7 +62,7 @@ import { sharedres_service } from "./sharedres.service";
                         let data=JSON.parse(e.data)
                           data.forEach(element => {
                             if(element?.email==this.getsettingforloggedinagent())
-                            {
+                            { 
                               if(element?.is_available==true&&element?.is_online==true)
                               {
                                 localStorage.setItem('user-status', JSON.stringify(true));
@@ -71,6 +72,9 @@ import { sharedres_service } from "./sharedres.service";
                                 localStorage.setItem('user-status', JSON.stringify(false));
                                 this.sharedres.runagentsocket(1);
                               }
+                              const userdata = JSON.parse(localStorage.getItem('gigaaa-user'));
+                              userdata['agent_images']=element.images;
+                              localStorage.setItem('gigaaa-user', JSON.stringify(userdata));
                             }
                             });
                             this.getagentlistsubject.next(data)

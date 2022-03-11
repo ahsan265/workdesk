@@ -1,16 +1,24 @@
-   <div class="minimizearea" style="height: 100%;"  [cdkDragDisabled]="is_dragable" 
-   cdkDrag  cdkDragBoundary=".main" 
-    [cdkDragFreeDragPosition]="dragPosition"  cdkDragHandle   >
+<div class="minimizearea" style="height: 100%;"  [cdkDragDisabled]="is_dragable" 
+    cdkDrag  cdkDragBoundary=".main" 
+    [cdkDragFreeDragPosition]="dragPosition"  cdkDragHandle >
 <div class="callinterface" >
   <div class="userinformation">
-<img class="userimage" src="../../../../assets/picface.jpeg" height="34" width="34" alt="">
-<p class="username">Andrea Peterson Williams</p>
+    <div class="headerimagepanel" style="border: 1px solid rgba(255, 255, 255, 0.4);height: 34px; width: 34px; border-radius: 50%; background: #2B3A51; display: inline-block;">
+     <p style=" font-size: 11px;
+     line-height: 34px;
+     display: block;
+     text-align: center;" >{{peerFirstnameinitials}}{{peerLastnameinitials}}</p>
+      <!-- <img [hidden]="this.peerPicture==null" class="userimage" [src]="this.peerPicture" height="34" width="34" alt=""> -->
+    </div>
+<p  class="username">{{peerFirstname}} {{peerLastname}}</p>
 </div>  
-<div class="minimizeiconpanel">
-<svg style="height: 20px; cursor: pointer;" class="miniicon"  *ngIf="hideContant" style="cursor: pointer;margin-bottom: 15px;" (click)="miniMizetheScreen(hideContant)" width="12" height="2" viewBox="0 0 12 2" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <path d="M11.8204 1.82031H0.179749V0.179688H11.8204V1.82031Z" fill="white"/>
-</svg>
+  <div class="minimizeiconpanel">
+  <svg style="height: 20px; cursor: pointer;" class="miniicon"  *ngIf="hideContant" style="cursor: pointer;margin-bottom: 15px;" (click)="miniMizetheScreen(hideContant)" width="12" height="2" viewBox="0 0 12 2" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <path d="M11.8204 1.82031H0.179749V0.179688H11.8204V1.82031Z" fill="white"/>
+  </svg>
   </div>
+
+
   <div class="maxiconforvideo"   *ngIf="!hideContant" style="float: right;
   cursor: pointer;
   height: 50px;
@@ -23,23 +31,136 @@
   </div>
 
 </div>
-<div class="callarea" [ngStyle]="{'background': (hidecamera==true) ? '#162741' : '#0E1D35'}">
-    <div [hidden]="hidecamera" [ngStyle]="{'background': (camerabtn==true) ? '#2B3A51' : '#000000'}" cdkDragBoundary=".callarea" class="loggedUsercamera" cdkDrag>
-            <p *ngIf="camerabtn" class="capitalinitials">LM</p>
-            <video id="localVideo" #localVideo [autoplay]='true' [muted]="micbtn"  class="localcamera"  style=" height: 144px;width: 226px;border-radius: 4px;" [hidden]="camerabtn" ></video>
-        <p  *ngIf="camerabtn" class="camerapersonname">Lisa (me)</p> 
-    </div>
-<img *ngIf="!hidecamera" height="200" width="200" class="userimagebig" src="../../../../assets/picface.jpeg" alt="">
-<video   id="remoteVideo" #remoteVideo [autoplay]='true'   style="width: 100%;
-margin: 0px;
-display: block;
-top: 80px;
-/* left: 0; */
-position: absolute;"  ></video>
 
 
+
+<div class="callarea desktop">
+  <div class="dragarea " [ngStyle]="{'width':(splitscreen==true ) ? '50%' : '100%'}" >
+        <div style="display: block;
+        z-index: 1001;
+        position: absolute;
+        right: 51%;" [ngClass]="splitscreen==true? 'unsplit' : ' splitscreen'"   [ngStyle]="{'display': (splitscreen==true) ? 'block' : 'none'}">
+        <img (click)="splitScreen(splitscreen)"   class="spliticon" [src]="splitIcon" alt="">
+        </div>
+        <div  [cdkDragFreeDragPosition]="dragPosition"  [hidden]="splitscreen" [ngStyle]="{'background': (camerabtn==true) ? '#2B3A51' : '#000000'}" cdkDragBoundary=".dragarea" class="loggedUsercamera" cdkDrag>
+        <p *ngIf="camerabtn" class="capitalinitials">{{firstuserFirstName}}{{firstuserLastName}}</p>
+                  <video  id="localVideo"  aria-valuemin="0" aria-valuemax="100" #localVideo [autoplay]='true' [muted]="true"  class="localcamera"  style="height: 143px;
+                  width: 223px;
+                  border-radius: 4px;" [hidden]="camerabtn" ></video>
+              <p  *ngIf="camerabtn" class="camerapersonname">{{userFirstName}} (me)</p> 
+              <div class="splitscreen" [ngStyle]="{'display': (splitscreen==true) ? 'none' : 'block'}" >
+                <img (click)="splitScreen(splitscreen)" class="spliticon"   [src]="unsplitIcon" alt="">
+              </div>
+          </div>
+          <div  class="userimagepanel local desktop"   [ngStyle]="{'display': (splitscreen==true) ? 'none' : 'block'}" style="width: 200px;
+          height: 200px;
+          margin: 0 auto;
+          top: 32%;
+          position: relative;
+          background-color: #2B3A51;
+          border-radius: 50%;
+          border: 1px solid rgba(255, 255, 255, 0.4);">
+            <!-- <img [hidden]="this.peerPicture==null"  height="200" width="200" class="userimagebig desktop" [src]="this.peerPicture" alt=""> -->
+            <p style="position: relative;
+            margin: 0 auto;
+            vertical-align: middle;
+            top: 45%;" class="capitalinitials">{{peerFirstnameinitials}}{{peerLastnameinitials}}</p>
+          </div>
+          <!-- for splitedscreen -->
+          <div class="userimagepanel local desktop"   [ngStyle]="{'display': (splitscreen==true) ? 'block' : 'none'}" style="width: 200px;
+          height: 200px;
+          margin: 0 auto;
+          top: 32%;
+          position: relative;
+          background-color: #2B3A51;
+          border-radius: 50%;
+          border: 1px solid rgba(255, 255, 255, 0.4);">
+            <!-- <img [hidden]="this.userPicture==null"  height="200" width="200" class="userimagebig desktop" [src]="this.userPicture" alt=""> -->
+            <p style="position: relative;
+            margin: 0 auto;
+            vertical-align: middle;
+            top: 45%;" class="capitalinitials">{{firstuserFirstName}}{{firstuserLastName}}</p>
+          </div>
+
+       <div class="mobilecallerinformationpanel" style="position: relative;" [ngStyle]="{'top':(splitscreen==true ) ? '60%' : '20%'}">
+        <div [ngStyle]="{'display': (splitscreen==true) ?  'block' : 'none '}"   class="userimagepanel local mobile"   *ngIf="!hidecamera"style="width: 200px;
+        height: 200px;
+        margin: 0 auto;
+        top: 32%;
+        position: relative;
+        background-color: #2B3A51;
+        border-radius: 50%;
+        border: 1px solid rgba(255, 255, 255, 0.4);">
+          <!-- <img [hidden]="this.userPicture==null" height="200" width="200" class="userimagebig desktop" [src]="this.userPicture" alt=""> -->
+        
+            <p style="position: relative;
+                margin: 0 auto;
+                vertical-align: middle;
+                top: 45%;" class="capitalinitials" >{{firstuserFirstName}}{{firstuserLastName}}</p>
+        </div>
+       <!-- for splitedscreen  mobile -->
+        <div   [ngStyle]="{'display': (splitscreen==true) ? 'none' : 'block'}"   class="userimagepanel local mobile"   *ngIf="!hidecamera"style="width: 200px;
+        height: 200px;
+        margin: 0 auto;
+        top: 32%;
+        position: relative;
+        background-color: #2B3A51;
+        border-radius: 50%;
+        border: 1px solid rgba(255, 255, 255, 0.4);">
+          <!-- <img  [hidden]="this.peerPicture==null"  height="200" width="200" class="userimagebig desktop" [src]="this.peerPicture" alt=""> -->
+        
+            <p style="position: relative;
+                margin: 0 auto;
+                vertical-align: middle;
+                top: 45%;" class="capitalinitials">{{peerFirstnameinitials}}{{peerLastnameinitials}}</p>
+        </div>
+       </div>
+         
+      <!-- <img *ngIf="!hidecamera" height="200" width="200" class="userimagebig desktop" src="../../../../assets/picface.jpeg" alt=""> -->
+      <!-- <img  [ngStyle]="{'top':(splitscreen==true ) ? '58%' : '20%'}" *ngIf="!hidecamera" height="200" width="200" class="userimagebig local" src="../../../../assets/picface.jpeg" alt=""> -->
+
+      <div [ngStyle]="{'display': (camerabtn==false) ? 'block' : 'none'}">
+        <video class="videllocal" [hidden]="!splitscreen" [muted]="true"  height="100%" width="100%"  id="localVideo1" #localVideo1 [autoplay]='true'   style="top: 80px;
+        left: 0;
+        width: 50%;
+        height: 100vh;
+        object-fit: cover;
+        position: absolute;"></video>
+      </div>
+
+        <video  [ngClass]="splitscreen==true? 'splitvidepremote' : 'unspplitvideo'"  [ngStyle]="{'display': (peercamera==true) ? 'block' : 'none'}"     id="remoteVideo" 
+        #remoteVideo [autoplay]='true'    ></video>
+
+      <div   class="camerasplitinfo" [ngStyle]=" {'display': (splitscreen==true) ? 'block' : 'none'}">
+        <div class="userimagepanel" *ngIf="!hidecamera"  style="width: 200px;
+        height: 200px;
+        margin: 0 auto;
+        top: 32%;
+        position: relative;
+        background-color: #2B3A51;
+        border-radius: 50%;
+        border: 1px solid rgba(255, 255, 255, 0.4);">
+        <p style="position: relative;
+        margin: 0 auto;
+        vertical-align: middle;
+        top: 45%;"  class="capitalinitials">{{peerFirstnameinitials}}{{peerLastnameinitials}}</p>
+        <!-- <img [hidden]="this.peerPicture==null" height="200" width="200" class="userimagebig remote" [src]="this.peerPicture" alt=""> -->
+       
+        </div>
+        <!-- <video class="remoteVideo"   #remoteVideo   id="remoteVideo" 
+        style="top: 0px;
+        left: 0px;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        position: absolute;
+        display: block;"  ></video> -->
+      </div>
+
+  </div>
 </div>
-<div class="callcontrolpanel" [ngStyle]="{'background': (hidecamera==true) ? '#162741' : '#0E1D35'}">
+      
+<div class="callcontrolpanel" >
    
   <div class="callcontrol"  [ngStyle]="{'background': (hideContant==false) ? '#162741' : 'rgba(22, 39, 65, 0.73);'}">
       
@@ -59,8 +180,8 @@ position: absolute;"  ></video>
           </div>
       </div>
       <div class="calltime_drop">
-          <p class="calltime">25m 14s</p>
-          <div class="callicon_drop" (click)=" closecall()">
+          <p class="calltime">{{showtime()}}</p>
+          <div class="callicon_drop" (click)=" hangupCall()">
             <img  class="hangicon" src="../../../../assets/assets_workdesk/endcall.svg" alt="">
           </div>
       </div>

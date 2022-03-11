@@ -103,14 +103,29 @@ cursor: pointer;
 }
 .content-area{
   background-color: #F5F6FB;
-  padding-top: 106px;
-  height: 682px;
-  background-image: url(../../../assets/main.png);
-  background-repeat: no-repeat;
-  background-size: 708px 552px;
-  background-position: top 100% right 6.6% 
+  display: block;
 }
-
+.text-panel{
+  display: inline-block;
+  width: 55%;
+  position: relative;
+  margin-left: 118px;
+  top: 80px;
+  height: 685px;
+}
+.imagepanel{
+  height: 685px;
+  width: 35%;
+  display: inline-block;
+  position: absolute;
+  margin-right: 118px;
+  top: 80px;
+  text-align: left;
+  background-image: url('../../../assets/workdesk.png');
+  background-repeat: no-repeat;
+  background-size: 473px 353px;
+  background-position: top 100px right 60px;
+}
 .descp{
   margin: 0px;
   font-family: "Roboto",sans-serif;
@@ -121,7 +136,6 @@ cursor: pointer;
   letter-spacing: 0.02em;
   color: #162741;
   margin-top: 80px;
-  margin-left: 118px;
   position: relative;
 
   }
@@ -150,14 +164,10 @@ span{
     line-height: 25px;
     margin-top: 32px;
     color: #292F58;
-    margin-left: 118px;
-    
-    
     }    
   .gigaaa-iconspanels{
       display: block;
       margin-top: 49px;
-      margin-left: 118px;
   }      
   .iconslist{
       display: inline-block;
@@ -165,13 +175,13 @@ span{
       text-align: center;
       text-align: -webkit-center;
       width: fit-content;
-      margin-right: 28px;
+      margin-right: 42px;
   }
   .icontext
   {
           margin: 0px;
           margin-top: 12px;
-              font-family: "Roboto",sans-serif;
+          font-family: "Roboto",sans-serif;
           font-style: normal;
           font-weight: 500;
           font-size: 14px;
@@ -220,6 +230,27 @@ span{
   display: none;
 }
 @media (max-width: 768px) {
+  .imagepanel{
+    height: 685px;
+    width: 100%;
+    display: block;
+    position: absolute;
+    /* margin-right: 118px; */
+    top: 55px;
+    text-align: center;
+    background-image: url(../../../assets/workdesk.png);
+    background-repeat: no-repeat;
+    background-size: 324px 257px;
+    background-position: top 100px right 40%;
+}
+  .text-panel{
+    display: inline-block;
+    width: 100%;
+    position: relative;
+    margin-left: 0px;
+    top: 448px;
+    height: 685px;
+}
   .icon-image{
       margin: 0px;
       margin: 0 auto;
@@ -239,10 +270,9 @@ span{
       background-color: #F5F6FB;
       box-shadow: none;
   }
-  .content-area{
-  height: max-content;
-  background-size: 359px 297px;
-  background-position: top 12% right 100%;
+  .content-area
+  {
+    height: 1085px;
   }
   .descp{
      display: none;
@@ -260,7 +290,6 @@ span{
       line-height: 24px;
       letter-spacing: 0.02em;
       color: #162741;
-      margin-top:400px;
       position: relative;
   }
   .smallheading{
@@ -324,6 +353,7 @@ span{
   }
   .gigaaa-policy-text.mobile{
       text-align: center;
+
       width: 100%;
       margin-top: 18px;
       margin-bottom: 30px;

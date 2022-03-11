@@ -319,15 +319,14 @@ isSidebarOpen(event: any) {
 
 onLoginClicked(event: boolean) {
   if (event) {
-    console.log(event)
     this.headerService.login();
     }
 }
 onGetLoggedUser(user: User) {
   if (user) {
-    console.log(user)
     if(user!=null )
-    { this.authService.userRestriction(user.api_token);
+    { 
+      this.authService.userRestriction(user.api_token);
       this.authService.getOrganizationId(user.api_token);
    
     }

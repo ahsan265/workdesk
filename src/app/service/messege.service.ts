@@ -4,12 +4,10 @@ import { ToastrService } from 'ngx-toastr';
 @Injectable({
   providedIn: 'root'
 })
-export class MessageService {
+export class MessageService  {
 
-  constructor(@Inject(Injector) private injector: Injector) { }
-  private get toastrService(): ToastrService {
-    return this.injector.get(ToastrService);
-  }
+  constructor(private toastrService:ToastrService) { }
+ 
   public setSuccessMessage(message: string, position?: string): void {
     this.toastrService.success(message, '', {
       timeOut: 3000,

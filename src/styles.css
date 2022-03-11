@@ -2101,14 +2101,15 @@ body .bs-datepicker-container  .bs-datepicker-body   tbody tr:nth-child(even){
    .callinterface-form-container .mat-dialog-container {
     background: #FFFFFF;
     box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.23);
-    border-radius: 0px;
+    border-radius: 0px !important;
     opacity: 1;
     width: 100%;
     height: 100%;
-    padding: 0px;
+    padding: 0px!important;
     overflow-x: hidden;
     overflow-y: hidden;
     vertical-align: middle;
+    
    }
 
    .minimizecallinterface .mat-dialog-container {
@@ -2179,7 +2180,7 @@ body .bs-datepicker-container  .bs-datepicker-body   tbody tr:nth-child(even){
    }
    .minimizecallinterface .minimizearea
    {   width: 255px;
-       height: 100px;
+       height: 92px !important;
        border-radius: 4px;
        box-shadow: 3px 3px 10px rgb(0 0 0 / 23%);
    }
@@ -2203,25 +2204,29 @@ body .bs-datepicker-container  .bs-datepicker-body   tbody tr:nth-child(even){
     height: 0 !important;
     bottom: 0 !important;
     padding-top: 0px !important;
-    border-radius: 4px;
+    /* border-radius: 4px; */
    }
    .minimizecallinterface .callcontrol{
     box-shadow: none !important;
-    height: 40px !important;
+    height: 49px !important;
     padding: 0px !important;
-    width: 250px  !important;
-    text-align: center  !important;
-    background: #162741;
-    border-radius: 4px !important;
+    width: 100%!important;
+    text-align: center !important;
+    background: #0F1B2F!important;
+    padding-top: 9px !important;
+    border-radius: 0px !important;
+    border-bottom-left-radius: 4px !important;
+    border-bottom-right-radius: 4px !important;
    }
    .minimizecallinterface .callicons{
        height: 30px !important;
        width: 30px !important;
    }
    .minimizecallinterface .callinterface{
-    height: 100px !important;
+    height: 50px !important;
     padding: 0px !important;
     border-radius: 4px;
+    box-shadow: none !important;
    }
    .minimizecallinterface  .username{
     line-height: 18px!important;
@@ -2232,12 +2237,16 @@ body .bs-datepicker-container  .bs-datepicker-body   tbody tr:nth-child(even){
     text-overflow: ellipsis;
     overflow: hidden;
     white-space: nowrap;
-    display: inline-block!important;
+    display: inline!important;
     vertical-align: text-top !important;
     }
+    .minimizecallinterface .userimagepanel.local.desktop
+    {
+        display: none!important;
+    }
     .minimizecallinterface .userimage{
-        height: 30px !important;
-        width: 30px !important;
+        height: 34px !important;
+        width: 34px !important;
     }
     .minimizecallinterface .userinformation{
         width: 76% !important;
@@ -2246,10 +2255,11 @@ body .bs-datepicker-container  .bs-datepicker-body   tbody tr:nth-child(even){
         position: absolute;
         border-top-left-radius: 4px;
         padding: 10px;
-        background: #2B3A51;
+        background: #162741;
     }
     .minimizecallinterface .maxiconforvideo {
         border-top-right-radius: 4px;
+    background: #162741 !important;
     }
     .minimizecallinterface .callcontrolicons{
         width: 120px !important;
@@ -2284,7 +2294,9 @@ body .bs-datepicker-container  .bs-datepicker-body   tbody tr:nth-child(even){
     display: block !important;
     position: relative !important;
     }
-
+    /* .maximizeVideocallinterface .dragarea{
+        width: 100%!important;
+    } */
     .maximizeVideocallinterface .callinterface{
         padding: 0px !important;
         height: 50px  !important;
@@ -2294,8 +2306,8 @@ body .bs-datepicker-container  .bs-datepicker-body   tbody tr:nth-child(even){
         border-top-right-radius: 4px;
     }
     .maximizeVideocallinterface .userimage{
-        height: 30px !important;
-        width: 30px !important;
+        height: 34px !important;
+        width: 34px !important;
     }
     .maximizeVideocallinterface .userinformation{
         display: inline-block !important;
@@ -2317,16 +2329,21 @@ body .bs-datepicker-container  .bs-datepicker-body   tbody tr:nth-child(even){
         text-align: right!important;
         vertical-align: text-bottom!important;
         position: relative!important;
-        top: -50px!important;
         right: 0px !important;
+        top: -50px;
         padding-top: 10px !important;
         padding-right: 15px!important;
         border-top-right-radius: 4px;
 
     }
     .maximizeVideocallinterface .callcontrolpanel{
-        position:  absolute !important;
+        position: absolute !important;
+        height: 9px !important;
         bottom: 9px !important;
+    }
+    .maximizeVideocallinterface .camerapersonname{
+        font-size: 10px !important;
+        line-height: 12px !important;
     }
     .maximizeVideocallinterface .loggedUsercamera{
         margin: 20px !important;
@@ -2334,33 +2351,103 @@ body .bs-datepicker-container  .bs-datepicker-body   tbody tr:nth-child(even){
         width: 112px !important;
     }
     .maximizeVideocallinterface .loggedUsercamera .localcamera{
-        height:  71px !important;
-        width: 111px !important;
+        height: 70px !important;
+        width: 110px !important;
+        object-fit: cover;
+        margin: 0 auto;
+        border-radius: 4px !important;
     }
     .maximizeVideocallinterface .camerapersonname{
         bottom: 9px !important;
     }
     .maximizeVideocallinterface .callarea{
-        width: 100% !important;
         text-align: center!important;
         position: absolute;
         height: 275px !important;
-        border-bottom-left-radius: 4px;
-       border-bottom-right-radius: 4px;
+        /* border-bottom-left-radius: 4px; */
+        width: 100% !important;
+    }
+    .maximizeVideocallinterface .callarea .camerasplitinfo
+    {
+        width: 50%!important;
     }
     .maximizeVideocallinterface .userimagebig{
-        height: 100px !important;
-        width: 100px !important;
- 
+        height: 120px !important;
+        width: 120px !important;
+        top: 25%!important;
     }
-    .maximizeVideocallinterface .callcontrol{
+    /* .maximizeVideocallinterface .callcontrol{
         bottom: 4px !important;
+    } */
+    .maximizeVideocallinterface .camerasplitinfo{
+        width: 100%!important;
+        margin: 0px;
+        display: block;
+        top: 0px!important;
+        height: 100% !important;
+        left: 50%!important;
+        z-index: 0;
+        background: #0E1D35;
+        position: absolute;
+        border-bottom-right-radius: 4px;
+
     }
+    .maximizeVideocallinterface .splitscreen{
+        height: 30px  !important;
+        width: 30px !important;
+        top: 0 !important;
+        right: 0 !important;
+    }
+    .maximizecallinterface .unsplit{
+        height: 30px  !important;
+        width: 30px !important;
+    }
+    .maximizeVideocallinterface .capitalinitials{
+        font-size:  16px !important;
+    }
+    /* .maximizecallinterface .splitscreen.splitscreen{
+        right: 50% !important;
+
+    } */
+    .maximizeVideocallinterface .spliticon
+    {
+        margin-top: 8px !important;
+
+    }
+    .minimizecallinterface .splitscreen{
+        display: none !important;
+       
+    }
+    .minimizecallinterface .unsplit{
+        display: none !important;
+       
+    }
+    .minimizecallinterface .loggedUsercamera{
+        display: none!important;
+    }
+  .maximizeVideocallinterface .videllocal{
+    top: 0px!important;
+    left: 0!important;
+    width: 50%!important;
+    height: 275px!important;
+    border-bottom-left-radius: 4px!important;
+    object-fit: cover!important;
+    position: absolute!important;
+  }
+  .maximizeVideocallinterface .remotevideo{
+    top: 0px!important;
+    right: 0!important;
+    width: 50%!important;
+    height: 275px!important;
+    border-bottom-right-radius: 4px!important;
+    object-fit: cover!important;
+    position: absolute!important;
+  }
     
-element.style {
-    justify-content: center;
-    align-items: center;
-}
+        element.style {
+            justify-content: center;
+            align-items: center;
+        }
 
 
 .backdropBackgroundPopups{
@@ -2465,7 +2552,148 @@ element.style {
 #root.gigaaa-plugin-root .App.Roboto   {
     z-index: 1000  !important;
 }
+
+.callarea.mobile{
+    display: none;
+}
+.maximizeVideocallinterface .userimagepanel{
+    width: 120px !important;
+    height: 120px !important;
+    top: 20% !important;
+}
+/* .userimagepanel.local.desktop{
+    display: block!important;
+} */
+.mobilecallerinformationpanel{
+    display: none ;
+
+}
+/* .minimizecallinterface #remoteVideo{
+    display: none !important;
+} */
+.maximizeVideocallinterface .unspplitvideo{
+    width: 100%!important;
+    margin: 0px!important;
+    top: 0px!important;
+    height: 100%!important;
+    right: 0!important;
+    object-fit: cover!important;
+    position: absolute!important;
+}
+.maximizeVideocallinterface .splitvidepremote{
+    width: 50%!important;
+    margin: 0px!important;
+    top: 0!important;
+    height: 100%!important;
+    right: 0!important;
+    object-fit: cover!important;
+    position: absolute!important;
+}
+.maximizeVideocallinterface .unsplit {
+    top: 0px !important;
+}
 @media (max-width: 768px){
+    .unspplitvideo{
+        width: 100%!important;
+        margin: 0px!important;
+        top: 50px!important;
+        height: 100%!important;
+        right: 0!important;
+        object-fit: cover!important;
+        position: absolute!important;
+    }
+    .splitvidepremote {
+        width: 100%!important;
+        margin: 0px!important;
+        top: 50px!important;
+        right: 0!important;
+        height: 45vh!important;
+        float: right!important;
+        z-index: 1!important;
+        position: absolute!important;
+        object-fit: cover!important;
+    }
+    .maximizeVideocallinterface .splitvidepremote{
+        width: 50%!important;
+        margin: 0px!important;
+        top: 0!important;
+        height: 100%!important;
+        right: 0!important;
+        object-fit: cover!important;
+        position: absolute!important;
+    }
+    .splitvidepremote > .splitscreen {
+        width: 100%;
+        margin: 0px;
+        top: 50px;
+        right: 0;
+        height: 45vh;
+        float: right;
+        z-index: 1;
+        position: absolute;
+        object-fit: cover;
+    }
+    .mobilecallerinformationpanel{
+        display: block;
+    }
+    .maximizeVideocallinterface .userimagepanel.local.mobile
+    {
+        top: 20% !important;
+    }
+    .maximizeVideocallinterface .camerasplitinfo .userimagepanel{
+        top: 20%!important;
+    } 
+    .userimagepanel.local.desktop{
+        display: none !important;
+    }
+    .maximizeVideocallinterface .mobilecallerinformationpanel {
+        /* display: block!important; */
+        top: 20% !important;
+    }
+    .userimagepanel{
+        width: 120px !important;
+        height: 120px !important;
+    }
+    .maximizeVideocallinterface .userimagepanel{
+        width: 120px !important;
+        height: 120px !important;
+    }
+    .maximizeVideocallinterface .userimagebig {
+        height: 120px !important;
+        width: 120px !important;}
+    .maximizeVideocallinterface .callarea .camerasplitinfo{
+        height: 100%!important;
+    }
+    .maximizeVideocallinterface .unsplit {
+        top: 50px !important;
+    }
+    .maximizeVideocallinterface #localVideo1{
+        width: 50%!important;
+        top: unset !important;
+        height: 100%!important;
+        bottom: 0px !important;
+        position: absolute !important;
+        object-fit: cover !important;
+    }
+    .callinterface-form-container.maximizeVideocallinterface .loggedUsercamera{
+        height: 71px !important;
+        width: 109px!important;
+    }
+   .maximizeVideocallinterface .userimagebig.local {
+        height: 100px!important;
+        width: 100px!important;
+        top: 20% !important;
+    }
+    .callarea.desktop
+    {
+        display: none;
+    }
+    .callarea.mobile{
+        display: block;
+    }
+    /* .userimagebig.desktop{
+        display: none;
+    } */
     #toast-container{
         padding-left: 10%;
         padding-right: 10%;
@@ -2857,11 +3085,13 @@ element.style {
     .callinterface-form-container .localcamera{
         height: 180px !important;
         width: 138px !important;
+        object-fit: cover;
     }
-    .callinterface-form-container .userimagebig{
+    .userimagebig.desktop{
         top: 20% !important;
-        height: 150px !important;
-        width: 150px !important;
+        height: 120px !important;
+        width: 120px !important;
+    
     }
     .callinterface-form-container .username{
         line-height: 18px!important;
@@ -2872,7 +3102,7 @@ element.style {
     text-overflow: ellipsis;
     overflow: hidden;
     white-space: nowrap;
-    display: inline-block!important;
+    display: inline!important;
     vertical-align: text-top !important;
     }
     .callinterface-form-container .miniicon{
@@ -2880,6 +3110,9 @@ element.style {
     }
     .callinterface-form-container .callcontrol{
         bottom: 26px !important;
+    }
+    .maximizeVideocallinterface.callinterface-form-container .callcontrol {
+        bottom: 9px !important;
     }
 
     .minimizecallinterface .callcontrol{
@@ -2901,6 +3134,63 @@ element.style {
      .minimizecallinterface .maximizeicon{
         padding: 1px !important;
      }
+     .callarea{
+        height: calc(100% - 50px) !important;
+     }
+   
+        .dragarea{
+            width: 100%!important;
+            height: calc(100% - 0px) !important;
+        }
+        .maximizeVideocallinterface .dragarea{
+            width: 100%!important;
+        }
+      
+     .callarea .camerasplitinfo {
+         width: 100% !important;
+         height: calc(45% - 0px) !important;
+         top: 49px;
+     }
+     .userimagebig.local{
+        display: block !important;
+        height: 120px !important;
+        width: 120px  !important;
+  
+     }
+     .userimagebig.remote{
+        height: 120px !important;
+        width: 120px  !important; 
+        top: 25% !important;
+     }
+  .splitscreen.unsplit{
+    top: 55% !important;
+    right: 5% !important;;
+  }
+  #localVideo1{
+    width: 100%!important;
+    top: unset !important;
+    height: 55vh !important;
+    bottom: 0px !important;
+    position: absolute !important;
+    object-fit: cover !important;
+  }
+  #remotevideo1{
+    top: 0px;
+    right: 0px;
+    width: 100%!important;
+    /* bottom: 0; */
+    height: 100%;
+    object-fit: cover;
+    position: absolute;
+    display: block;
+  }
+  .maximizeVideocallinterface .callarea{
+    text-align: center!important;
+    position: absolute;
+    height: 275px !important;
+    /* border-bottom-left-radius: 4px; */
+    width: 100% !important;
+}
      .carousel {
         position: relative;
         min-height: min-content;
@@ -2955,4 +3245,15 @@ element.style {
     .carousel-control-prev {
         left: 0;
     }
+    /* .maximizeVideocallinterface .maxiconforvideo{
+        top: 0px  !important;
+    }
+     */
+     .unsplit{
+         right: 0px !important;
+     }
+     .maximizeVideocallinterface .unsplit{
+        top: 0px !important;
+        right: 50%!important;    
+     }
 }

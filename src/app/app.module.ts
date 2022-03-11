@@ -56,7 +56,6 @@ import { MaincomponentComponent } from './maincomponent/maincomponent.component'
     MaincomponentComponent,
   ],
   imports: [
-    
     ChartsModule,
     ToastrModule.forRoot(),
     WorkdeskModule,
@@ -72,7 +71,6 @@ import { MaincomponentComponent } from './maincomponent/maincomponent.component'
     MatToolbarModule,
     MatIconModule,
     MatButtonModule,
-    MatDialogModule,
     MatCardModule,
     MatCheckboxModule,
     MatDialogModule,
@@ -88,7 +86,7 @@ import { MaincomponentComponent } from './maincomponent/maincomponent.component'
     
   ],
   bootstrap: [AppComponent],
-  providers: [GigaaaApiService,AuthService, restrictionservice 
+  providers: [GigaaaApiService,AuthService, restrictionservice,MessageService
 //     ,{
 //     provide: APP_INITIALIZER,
 //     useFactory:appInitFactory,
@@ -100,10 +98,7 @@ import { MaincomponentComponent } from './maincomponent/maincomponent.component'
     provide: 'GigaaaHeaderService',
     useClass: GigaaaHeaderService
   },
-  // {
-  //   provide: ErrorHandler,
-  //   useClass: MessageService
-  // },
+  MessageService,
   {provide : MatDialogRef, useValue : {}}],
   entryComponents: [LandingpageComponent],
   schemas: [CUSTOM_ELEMENTS_SCHEMA,NO_ERRORS_SCHEMA],

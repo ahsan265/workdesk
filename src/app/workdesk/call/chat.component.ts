@@ -245,9 +245,9 @@ call:any;
   display ;
   interval;
   private swipeCoord?: [number, number];
-private swipeTime?: number;
-@ViewChild('carousel') carousel:CarouselComponent;
-
+  private swipeTime?: number;
+  @ViewChild('carousel') carousel:CarouselComponent;
+    // for mobile slides on all tabs
   swipe(e: TouchEvent, when: string): void {
     const coord: [number, number] = [e.changedTouches[0].clientX, e.changedTouches[0].clientY];
     const time = new Date().getTime();
@@ -562,7 +562,7 @@ return ("0" + minutes).slice(-2) + ":" + ("0" +seconds).slice(-2);
       this.missed=false;
       this.answered=false;
       this.selectedtabs="ongoing"
-      //  let data= {"call_uuid": "jhfdjgdf65454fsdbfjg"};
+      //  let data= {"call_uuid": "jhfdjgdf6545dd4fsdbfjg"};
       // this.openCallInterface(data);
     }
     else if(val=="missed")
@@ -970,16 +970,17 @@ search(term:string,column:any) {
               this.selectallcalltype(true,"ongoing",1);
               this.selectallcalltype(true,"missed",1);
               this.selectallcalltype(true,"finished",1);
-              if(this.alreadydonecall!=1)
-              {
-                this.gigaaasocketapi.sendfilterparams({"tab":"default","languages":this.idsoflanguages,"call_type":this.idsofcalltype});
-                this.onDateChange([this.ranges[0].value[0],this.ranges[0].value[1]],'missed_date',1);
-                this.onDateChange([this.ranges[0].value[0],this.ranges[0].value[1]],'finished_date',1);
-              }
+              // if(this.alreadydonecall!=1)
+              // {
+              //   this.gigaaasocketapi.sendfilterparams({"tab":"default","languages":this.idsoflanguages,"call_type":this.idsofcalltype});
+              //   this.onDateChange([this.ranges[0].value[0],this.ranges[0].value[1]],'missed_date',1);
+              //   this.onDateChange([this.ranges[0].value[0],this.ranges[0].value[1]],'finished_date',1);
+              // }
              
 
     }
     catch(err){
+      console.log(err)
       this.messageservie.setErrorMessage(err.error.error)
     }
   }

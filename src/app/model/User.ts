@@ -33,7 +33,12 @@ export interface Language {
     profile: Profile;
     timestamp: string;
     subscription_id:subsid;
-    
+    agent_images:images;
+  }
+  export interface images{
+    96:string,
+    128:string,
+    original:string,
   }
   export interface subsid{
     subsid:{uuid:string,
