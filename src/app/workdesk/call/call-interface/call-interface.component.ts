@@ -111,21 +111,26 @@ hasVideoparam={width:226,height:144};
         {
           try {
           this.localstream=await navigator.mediaDevices.getUserMedia(val)
-          this.localVideo.nativeElement.srcObject= this.localstream;
-          this.localVideo1.nativeElement.srcObject= this.localstream;
-              }
+            this.localstream.getTracks().forEach(track=>{
+              this.peerconnection.addTrack(track,this.localstream);
+              this.localVideo.nativeElement.srcObject=this.localstream;
+              this.localVideo1.nativeElement.srcObject=this.localstream;
+            });
+         
+         }
           catch (e) {
           console.log(e);
             }
          
-          }
+        }
             ngOnDestroy(): void {
             this.destroyed$.next();
             this.destroyed$.complete();
           }
 
           ngOnInit(): void {
-        
+            this.webrtcservice.callUserSocket(this.data.call_uuid);
+            this.addIncomingCallHandler();
   
           this.showUserInformation()
           interval(1000).subscribe(() => {
@@ -150,17 +155,11 @@ hasVideoparam={width:226,height:144};
         }
 
         // send offer to user  and call 
-        private async sendOffertoUser(id:any):Promise <void>
+        private async createOfferForPeer():Promise <void>
           {
-            if(!this.peerconnection)
-            {
+          
               try{
-              await  this.createPeerConnection().finally(()=>{
-                const localtrack=  this.localstream.getAudioTracks()[0]
-                this.peerconnection.addTrack(localtrack,this.localstream);
-                this.localVideo.nativeElement.srcObject=this.localstream;
-                this.localVideo1.nativeElement.srcObject=this.localstream;
-                })
+
                 const offer:RTCSessionDescriptionInit=await this.peerconnection.createOffer(this.webrtcmediacontraints_user);
                 await this.peerconnection.setLocalDescription(offer);
                  this.localoffer=offer;
@@ -169,7 +168,7 @@ hasVideoparam={width:226,height:144};
               catch(err){
                 console.log(err)
               }
-              }
+             
     }
     // detect browser
     detectBrowserName() { 
@@ -194,7 +193,7 @@ hasVideoparam={width:226,height:144};
     // create peer fucntion 
    private  async  createPeerConnection(): Promise<void>
     {
-     this.peerconnection= new RTCPeerConnection({
+    this.peerconnection= new RTCPeerConnection({
      
           iceServers:[
             {
@@ -204,19 +203,24 @@ hasVideoparam={width:226,height:144};
               credentialType: 'password'
             },
             {
+              urls: 'turn:13.81.45.178:3478?transport=udp',  // A TURN server
+              username: 'username',
+              credential: 'password',
+              credentialType: 'password'
+            },
+            {
               urls: 'stun:stun.l.google.com:19302',
             }
         ],
         
-        iceCandidatePoolSize: 10,
       });
- 
+
       this.peerconnection.onicecandidate= this.handIceCandidateEvent;
       this.peerconnection.oniceconnectionstatechange=this.handleIceConnectionStateChangeEvent;
       this.peerconnection.onsignalingstatechange=this.handleSignalingStatetChangeEvent;
       this.peerconnection.ontrack=this.handleTrackEvent;
-      await this.requestmediadevices(this.webrtcmediacontraints); 
-       this.message.setSuccessMessage("Peer connection")
+      this.message.setSuccessMessage("Peer connection")
+   
     }
     // close video call 
   private   closeVideoCall()
@@ -283,22 +287,23 @@ hasVideoparam={width:226,height:144};
   
    
    ngAfterViewInit(): void {
-     this.webrtcservice.callUserSocket(this.data.call_uuid);
-     this.addIncomingCallHandler();
-   
+     this.requestmediadevices(this.webrtcmediacontraints);
+     this.createPeerConnection()
+
   }
   // add incoming call handler
   addIncomingCallHandler()
   {
-    this.webrtcservice.callobject$.subscribe((msg:any)=>{
+    this.webrtcservice.callobject$.subscribe(async (msg:any)=>{
    
       switch(msg.type)
       {
 
           case "offer":
+            console.log(msg.data)
             if(msg.data!=undefined)
             {
-              this.handleOfferMessage(msg.data);
+            await  this.handleOfferMessage(msg.data);
             }
           break;
           case "answer":
@@ -313,15 +318,16 @@ hasVideoparam={width:226,height:144};
           break;
           case "user_id":
           this.userid=msg.id;
-          this.sendOffertoUser(msg.id);
+          localStorage.setItem("call_info",JSON.stringify({user_id:this.userid,is_refresh:false}));
+          await this.createOfferForPeer(); 
           break;
           case "accept":
           this.peerUserid=msg.user_id;
-          //this.sendOffertoUser(this.userid);
-          this.webrtcservice.sendDataforCall({type:"offer",data:this.localoffer,user_id: this.peerUserid});
+          this.senduserInformation();   
+          this.webrtcservice.sendDataforCall({user_id:this.peerUserid,data:this.localoffer, type: "offer" })
           this.callstart=true;
           this.callstarttime=new Date().getTime();
-          this.senduserInformation();
+          localStorage.setItem("call_info",JSON.stringify({user_id:this.userid,is_refresh:true}));
           break;
           case "peer_data":
           this.getPeerDataInformation(msg.data);
@@ -337,9 +343,9 @@ hasVideoparam={width:226,height:144};
   // message handler 
   private async  handleOfferMessage (msg:RTCSessionDescriptionInit): Promise<void>
   {
-   
     await   this.peerconnection.setRemoteDescription(new RTCSessionDescription(msg)).then(async ()=>{
-      // this.localVideo.nativeElement.srcObject=this.localstream;
+       this.localVideo.nativeElement.srcObject=this.localstream;
+       
     }).then(() => {
       // Build SDP for answer message
       return this.peerconnection.createAnswer();
@@ -512,9 +518,9 @@ hasVideoparam={width:226,height:144};
           const videotrack=stream.getVideoTracks();
            this.localVideo.nativeElement.srcObject = undefined;
            this.localVideo1.nativeElement.srcObject= undefined;
-           this.localstream.addTrack(videotrack[0]);
            this.localVideo1.nativeElement.srcObject=this.localstream;
             this.localVideo.nativeElement.srcObject=this.localstream;
+            this.localstream.addTrack(videotrack[0]);
            this.peerconnection.addTrack(videotrack[0],this.localstream);
           }).then(async ()=>{
           const offer:RTCSessionDescriptionInit=await this.peerconnection.createOffer({
@@ -554,22 +560,29 @@ hasVideoparam={width:226,height:144};
               await this.peerconnection.setLocalDescription(offer).catch(err=>{
                 console.log(err)
               });
-              this.webrtcservice.sendDataforCall({user_id:this.peerUserid,data:offer, type: "offer" });
+              this.webrtcservice.sendDataforCall({user_id:this.peerUserid,data:offer, type:"offer" });
                 })
                   }
-                  splitScreen(val:any)
-                  {
-                  if(val==true)
-                  {
-                  this.splitscreen=false;
-                  this.changePosition();
 
-                  }
-                  else if(val==false)
-                  { 
-                    this.splitscreen=true;
+          splitScreen(val:any)
+                {
+                if(val==true)
+                {
+                this.splitscreen=false;
+                this.changePosition();
 
-                  }
+                }
+                else if(val==false)
+                { 
+                this.splitscreen=true;
+                if(this.peerscreenView==true)
+                {
+                  this.renderer.setStyle(this.remotevideo.nativeElement, "top", "50px");
+
+                }
+              
+                
+                }
                 }
 
 
@@ -744,7 +757,7 @@ hasVideoparam={width:226,height:144};
                 }
                 else if(this.camerabtn==true)
                 {
-                 // this.pausevideoCall();
+                  this.pausevideoCall();
                   this.webrtcservice.sendDataforCall({"type": "update_peer", "user_id":this.userid,"data":{"is_camera_on": false, "is_microphone_on":true, "is_shared_screen":false, "first_name":  this.userFirstName,"last_name":  this.userLastName, "img_url":this.userPicture}})
 
                 }

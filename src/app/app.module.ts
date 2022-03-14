@@ -86,7 +86,7 @@ import { MaincomponentComponent } from './maincomponent/maincomponent.component'
     
   ],
   bootstrap: [AppComponent],
-  providers: [GigaaaApiService,AuthService, restrictionservice,MessageService
+  providers: [GigaaaApiService,AuthService, restrictionservice,MessageService,sharedres_service
 //     ,{
 //     provide: APP_INITIALIZER,
 //     useFactory:appInitFactory,

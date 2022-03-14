@@ -115,16 +115,17 @@ cursor: pointer;
 }
 .imagepanel{
   height: 685px;
-  width: 35%;
+  width: 473px;
   display: inline-block;
   position: absolute;
   margin-right: 118px;
   top: 80px;
   text-align: left;
-  background-image: url('../../../assets/workdesk.png');
-  background-repeat: no-repeat;
-  background-size: 473px 353px;
-  background-position: top 100px right 60px;
+
+}
+.bigimageforland{
+  position: absolute;
+  top: 120px;
 }
 .descp{
   margin: 0px;
@@ -230,7 +231,13 @@ span{
   display: none;
 }
 @media (max-width: 768px) {
+  .bigimageforland{
+    display: none;
+  }
   .imagepanel{
+    position: unset;
+  }
+  .imagepanelmobile{
     height: 685px;
     width: 100%;
     display: block;

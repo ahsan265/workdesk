@@ -129,7 +129,7 @@
       </div>
 
         <video  [ngClass]="splitscreen==true? 'splitvidepremote' : 'unspplitvideo'"  [ngStyle]="{'display': (peercamera==true) ? 'block' : 'none'}"     id="remoteVideo" 
-        #remoteVideo [autoplay]='true'    ></video>
+        #remoteVideo [autoplay]='true'    [muted]="false" ></video>
 
       <div   class="camerasplitinfo" [ngStyle]=" {'display': (splitscreen==true) ? 'block' : 'none'}">
         <div class="userimagepanel" *ngIf="!hidecamera"  style="width: 200px;
