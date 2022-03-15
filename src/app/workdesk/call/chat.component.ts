@@ -568,9 +568,9 @@ return ("0" + minutes).slice(-2) + ":" + ("0" +seconds).slice(-2);
       this.outgoing=true;
       this.missed=false;
       this.answered=false;
-      this.selectedtabs="ongoing"
-      //  let data= {"call_uuid": "jhfdjgdf6545dd4fsdbfjg"};
-      // this.openCallInterface(data);
+      this.selectedtabs="ongoing";
+      let data= {"call_uuid": "jhfdjgdf6545dd4fsdbfjg"};
+      this.openCallInterface(data);
     }
     else if(val=="missed")
     {
@@ -983,15 +983,13 @@ search(term:string,column:any) {
                 this.onDateChange([this.ranges[0].value[0],this.ranges[0].value[1]],'missed_date',1);
                 this.onDateChange([this.ranges[0].value[0],this.ranges[0].value[1]],'finished_date',1);
               }
-             
-
+              }
+              catch(err){
+                console.log(err)
+                this.messageservie.setErrorMessage(err.error.error)
+              }
     }
-    catch(err){
-      console.log(err)
-      this.messageservie.setErrorMessage(err.error.error)
-    }
-  }
-   getalllanguage(val,tabs,signal)
+  getalllanguage(val,tabs,signal)
    {
 
       var udpatedlang=[];

@@ -3,7 +3,6 @@ import { promise } from "protractor";
 import { Observable, Subject } from "rxjs";
 import { environment } from "src/environments/environment";
 import { MessageService } from "../../../../workdeskversion_1/src/app/service/messege.service";
-import { sharedres_service } from "../../../../workdeskversion_1/src/app/service/sharedres.service";
 
 @Injectable({
     providedIn: 'root'
