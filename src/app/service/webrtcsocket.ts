@@ -2,7 +2,7 @@ import { Injectable } from "@angular/core";
 import { promise } from "protractor";
 import { Observable, Subject } from "rxjs";
 import { environment } from "src/environments/environment";
-import { MessageService } from "../../../../workdeskversion_1/src/app/service/messege.service";
+import { MessageService } from "./messege.service";
 
 @Injectable({
     providedIn: 'root'

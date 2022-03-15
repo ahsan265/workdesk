@@ -569,8 +569,8 @@ return ("0" + minutes).slice(-2) + ":" + ("0" +seconds).slice(-2);
       this.missed=false;
       this.answered=false;
       this.selectedtabs="ongoing";
-      let data= {"call_uuid": "jhfdjgdf6545dd4fsdbfjg"};
-      this.openCallInterface(data);
+      // let data= {"call_uuid": "jhfdjgdf6545dd4fsdbfjg"};
+      // this.openCallInterface(data);
     }
     else if(val=="missed")
     {
