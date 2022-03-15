@@ -47,10 +47,10 @@ import { notAvailable } from './Datapipes/NotAvailablepipe';
 
 @NgModule({
   declarations:[CallMobilePopupFilterComponent,MobilefiltersforagentsComponent,
-     DragDirective,percentcolorpipe,
-     getloadpictures, 
-     AgentComponent, 
-     ChatComponent,
+      DragDirective,percentcolorpipe,
+      getloadpictures, 
+      AgentComponent, 
+      ChatComponent,
       EditformComponent, 
       AddagentComponent, 
       DashboardComponent, 
@@ -71,7 +71,7 @@ import { notAvailable } from './Datapipes/NotAvailablepipe';
       CallInterfaceComponent,
       notAvailable
       ],
-  imports: [ CarouselModule.forRoot(), Ng2SearchPipeModule,  ImageCropperModule,
+  imports: [CarouselModule.forRoot(),Ng2SearchPipeModule,ImageCropperModule,
     BsDatepickerModule.forRoot(),
     ChartsModule,
     CommonModule,
@@ -82,7 +82,7 @@ import { notAvailable } from './Datapipes/NotAvailablepipe';
     CountUpModule,
     MatProgressBarModule,
     MatSliderModule,
-    DragDropModule,
+    DragDropModule
   ],
   providers: [agentsocketapi,gigaaasocketapi,webrtcsocket],
   schemas: [CUSTOM_ELEMENTS_SCHEMA,NO_ERRORS_SCHEMA],

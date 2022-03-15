@@ -93,12 +93,10 @@ import { MaincomponentComponent } from './maincomponent/maincomponent.component'
 //     deps: [restrictionservice,AuthService],
 //     multi: true
 // }
-
 ,{
     provide: 'GigaaaHeaderService',
     useClass: GigaaaHeaderService
   },
-  MessageService,
   {provide : MatDialogRef, useValue : {}}],
   entryComponents: [LandingpageComponent],
   schemas: [CUSTOM_ELEMENTS_SCHEMA,NO_ERRORS_SCHEMA],
