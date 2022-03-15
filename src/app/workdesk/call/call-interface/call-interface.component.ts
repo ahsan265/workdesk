@@ -327,7 +327,7 @@ hasVideoparam={width:226,height:144};
           this.webrtcservice.sendDataforCall({user_id:this.peerUserid,data:this.localoffer, type: "offer" })
           this.callstart=true;
           this.callstarttime=new Date().getTime();
-          localStorage.setItem("call_info",JSON.stringify({user_id:this.userid,is_refresh:true}));
+          localStorage.setItem("call_info",JSON.stringify({user_id:this.userid,is_refresh:false}));
           break;
           case "peer_data":
           this.getPeerDataInformation(msg.data);
@@ -570,7 +570,11 @@ hasVideoparam={width:226,height:144};
                 {
                 this.splitscreen=false;
                 this.changePosition();
+                if(this.peerscreenView==true)
+                {
+                  this.renderer.setStyle(this.remotevideo.nativeElement, "top", "80px");
 
+                }
                 }
                 else if(val==false)
                 { 
@@ -580,7 +584,7 @@ hasVideoparam={width:226,height:144};
                   this.renderer.setStyle(this.remotevideo.nativeElement, "top", "50px");
 
                 }
-              
+           
                 
                 }
                 }
