@@ -1,6 +1,7 @@
 import { ViewportScroller } from '@angular/common';
 import { ChangeDetectorRef, Component, ElementRef, HostListener, OnInit, Renderer2, ViewChild, ViewContainerRef } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
+import { ActivatedRoute, Router } from '@angular/router';
 import { CarouselComponent, CarouselConfig, CarouselModule } from 'ngx-bootstrap/carousel';
 import { add, defineLocale, enGbLocale } from 'ngx-bootstrap/chronos';
 import { BsDaterangepickerDirective, BsLocaleService } from 'ngx-bootstrap/datepicker';
@@ -184,28 +185,28 @@ lastSunday = new Date(this.beforeOneWeek2.setDate(this.diffToMonday + 6));
   allselectedtagmiss:boolean;
   allselectedtagfinish:boolean;
 
-totalsizeofcalltype1:any;
-totalsizeofcalltype2:any;
-totalsizeofcalltype3:any;
-totalsizeofcalltype4:any;
-idsofcalltype=[];
+  totalsizeofcalltype1:any;
+  totalsizeofcalltype2:any;
+  totalsizeofcalltype3:any;
+  totalsizeofcalltype4:any;
+  idsofcalltype=[];
 
-idsofcalltype1=[];
-idsofcalltype2=[];
-idsofcalltype3=[];
-idsofcalltype4=[];
+  idsofcalltype1=[];
+  idsofcalltype2=[];
+  idsofcalltype3=[];
+  idsofcalltype4=[];
 
-selectedtabs:any;
+  selectedtabs:any;
 
 
-Call=[{name:'Audio' ,status:false},
-{name:'Video' ,status:false},
-];
-call1=this.Call;
-call2=this.Call;
-call3=this.Call;
-call4=this.Call;
-call:any;
+  Call=[{name:'Audio' ,status:false},
+  {name:'Video' ,status:false},
+  ];
+  call1=this.Call;
+  call2=this.Call;
+  call3=this.Call;
+  call4=this.Call;
+  call:any;
   intgg:any;
   all_agent:any;
   queueagent:any;
@@ -355,10 +356,10 @@ call:any;
     private gigaaaservice:GigaaaApiService,
     private messageservie:MessageService,
     public dialog: MatDialog,
-    private container: ViewContainerRef,
-    private webrtcservice:webrtcsocket,
-    private _renderer: Renderer2,
-  private _elementRef: ElementRef
+
+  private router:Router,
+  private route: ActivatedRoute
+
     ) {
     enGbLocale.weekdaysShort = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
     enGbLocale.week.dow = 1;
@@ -366,13 +367,7 @@ call:any;
     this.localeService.use('en-gb');
     this.localeService.currentLocale;
     
-    const callstat=JSON.parse(localStorage.getItem("call_info"))
-
-    if(callstat?.is_refresh==true)
-    {
-      let data= {"call_uuid": "jhfdjgdf6545dd4fsdbfjg",callstat};
-      this.openCallInterface(data);
-    }
+  
    }
   option={
     duration:1000,
@@ -476,8 +471,11 @@ return ("0" + minutes).slice(-2) + ":" + ("0" +seconds).slice(-2);
   
   scrollid:any;
   ngOnInit(): void {
+    this.route.params.subscribe(data=>{
+      console.log(data)
+      this.getpanalview(data.id);
+    })
    
-    this.getpanalview("incoming");
     this.rangeSelected1="Today";
     this.rangeSelected2="Today";
     this.incoming=true;
@@ -553,6 +551,7 @@ return ("0" + minutes).slice(-2) + ":" + ("0" +seconds).slice(-2);
 
   getpanalview(val)
   {
+    
     this.tab=val
     if(val=="incoming")
     {
@@ -562,15 +561,23 @@ return ("0" + minutes).slice(-2) + ":" + ("0" +seconds).slice(-2);
       this.answered=false;
       this.selectedtabs="incoming"
     }
-    else if(val=="outgoing")
+    else if(val=="ongoing")
     {
       this.incoming=false;
       this.outgoing=true;
       this.missed=false;
       this.answered=false;
       this.selectedtabs="ongoing";
-      // let data= {"call_uuid": "jhfdjgdf6545dd4fsdbfjg"};
-      // this.openCallInterface(data);
+      const callstat=JSON.parse(localStorage.getItem("call_info"))
+      // if(callstat?.is_refreshed==true)
+      // {
+      //   let data= {"call_uuid": "jhfdjgdf6545dd4fsdbfjg1qi",callstat};
+      //   this.openCallInterface(data);
+      // }
+      // else{
+      //   let data= {"call_uuid": "jhfdjgdf6545dd4fsdbfjg1qi",callstat};
+      //   this.openCallInterface(data);
+      // }
     }
     else if(val=="missed")
     {
@@ -1852,7 +1859,7 @@ this.allselectedcall2=status;
     data={call_type:val,search_value:this.seachValue1,languages:this.selected_languages1}
 
    }
-   else if(val=="outgoing")
+   else if(val=="ongoing")
    {
  
     data={call_type:val,search_value:this.seachValue2,languages:this.selected_languages2}
@@ -1886,7 +1893,7 @@ this.allselectedcall2=status;
         this.seachValue1=data.search_value
         this.search(data.search_value,data.call_type)
       }
-      else if(data.call_type=="outgoing")
+      else if(data.call_type=="ongoing")
       {        this.seachValue2=data.search_value
 
         this.search(data.search_value,data.call_type)
@@ -1914,7 +1921,7 @@ this.allselectedcall2=status;
         this.gigaaasocketapi.sendfilterparams({"tab":this.selectedtabs,"languages":data.languages,"call_type":this.idsofcalltype4});
 
       }
-      else if(data.call_type=="outgoing")
+      else if(data.call_type=="ongoing")
       {              
          this.selected_languages2=data.languages;
         this.gigaaasocketapi.sendfilterparams({"tab":this.selectedtabs,"languages":data.languages,"call_type":this.idsofcalltype4});
@@ -1986,6 +1993,9 @@ this.allselectedcall2=status;
     }
     }  
         
+
+    // store last offer 
+    Storelast
 }
 
 

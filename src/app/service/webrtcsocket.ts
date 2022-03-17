@@ -16,10 +16,10 @@ import { MessageService } from "./messege.service";
     {
        this.callobject$=this.callsubject.asObservable().pipe();  
     }
-   public async callUserSocket(calluuid):Promise <any>
+   public async callUserSocket(calluuid,userid,is_refresh):Promise <any>
     {
 
-        let  url=this.websocket_url+"/gigaaa-webrtc?call_uuid="+calluuid;
+        let  url=this.websocket_url+"/gigaaa-webrtc?call_uuid="+calluuid+"&user_id="+userid+"&is_refreshed="+is_refresh;
         this.ws = new WebSocket(url);
         this.ws.onopen=(e)=>{
           this.message.setErrorMessage("conection :"+ e.type);

@@ -1,11 +1,11 @@
 import { toBase64String } from '@angular/compiler/src/output/source_map';
-import { Pipe } from '@angular/core';
+import { AfterViewInit, Pipe } from '@angular/core';
 import { PipeTransform } from '@angular/core';
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { TransitionCheckState } from '@angular/material/checkbox';
 import { MatDialog } from '@angular/material/dialog';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { interval } from 'rxjs';
 import { agentsocketapi } from 'src/app/service/agentsocketapi';
 import { GigaaaApiService } from 'src/app/service/gigaaaapi.service';
@@ -22,7 +22,7 @@ declare var $: any;
   styleUrls: ['./agent.component.css'],
 })
 
-export class AgentComponent implements OnInit {
+export class AgentComponent implements OnInit,AfterViewInit {
   langaugesfrommobilefilter:any;
   searchquerymobilefilter:any=null;
   languagetag:any;
@@ -88,7 +88,20 @@ export class AgentComponent implements OnInit {
      private sharedres:sharedres_service,
      public dialog: MatDialog,
      private gigaaaapi:GigaaaApiService,
-     private agentsocketgigaaaapi:agentsocketapi,private messageservie:MessageService) { }
+     private router:Router,
+     private agentsocketgigaaaapi:agentsocketapi,
+     private route: ActivatedRoute,
+     private messageservie:MessageService) { }
+
+  ngAfterViewInit(): void {
+
+    this.route.params.subscribe(data=>{
+      if(data.id=="settings")
+      {
+    // this.getsettingspage(images,email,invited,displayName,firstname,lastname,languageids,role,useruuid)
+      }
+    })
+  }
   transform(value: any, ...args: any[]) {
     throw new Error('Method not implemented.');
   }
@@ -430,11 +443,13 @@ isagentonline(val,val1){
     });
   }
 
-  getsettingspage(images,email,invited,displayName,firstname,lastname,languageids,role,useruuid){
+  getsettingspage(images,email,invited,displayName,firstname,lastname,languageids,role,useruuid)
+  {
     this.agentsetting=false;
     this.agentlistview=true;
      this.agentlist=true
     var data={image:images,email:email,invited:invited,display_name:displayName,first_name:firstname,last_name:lastname,language_ids:languageids,role:role,agentuuid:useruuid}
+    
     if(data.invited==true)
     {
       this.sharedres.getagentprofilesetting(data);
@@ -445,6 +460,7 @@ isagentonline(val,val1){
       this.sharedres.getagentprofilesetting(data);
 
     }
+    this.router.navigate(['agents','settings',useruuid])
   }
 
 

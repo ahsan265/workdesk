@@ -393,7 +393,7 @@ selectlanguageonebyone(e,id)
       this.locationpanel=true;
       this.daterangepanel=true;
      }
-     else if(type=="outgoing")
+     else if(type=="ongoing")
      {
       this.searchpanel=false;
       this.languagepanel=false;
@@ -428,7 +428,7 @@ selectlanguageonebyone(e,id)
     {
      this.form.get("search").setValue(this.data.search_value);
     }
-    else if(this.data.call_type=="outgoing")
+    else if(this.data.call_type=="ongoing")
     {
      this.form.get("search").setValue(this.data.search_value);
     }
@@ -474,7 +474,7 @@ selectlanguageonebyone(e,id)
         this.form.get("search").setValue('');
 
       }
-      else if(type=="outgoing")
+      else if(type=="ongoing")
       {
         this.shared_res.send_call_languages_filter({call_type:this.data.call_type,languages:this.idsoflanguages})
         this.shared_res.Send_call_search_filter({call_type:'ongoing',search_value:''});

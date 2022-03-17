@@ -1,6 +1,6 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import * as Chart from 'chart.js';
 import { ChartOptions, ChartType, ChartDataSets } from 'chart.js';
 import { time } from 'console';
@@ -25,9 +25,10 @@ interface IRange {
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.css']
 })
-export class DashboardComponent implements OnInit {
+export class DashboardComponent implements OnInit ,AfterViewInit{
   starting_flag:number=0;
   starting_flag1:number=0;
+  starting_flag2:number=0;
     // get last week days
     beforeOneWeek = new Date(new Date().getTime() - 60 * 60 * 24 * 7 * 1000)
      beforeOneWeek2 = new Date(this.beforeOneWeek);
@@ -335,6 +336,7 @@ export class DashboardComponent implements OnInit {
   alreadyloadedlang:any;
   constructor(private sharedres:sharedres_service,
     private router:Router,
+    private route: ActivatedRoute,
     private localeService: BsLocaleService,
     public dialog: MatDialog,
      private gigaaaservice:GigaaaApiService,private messageservie:MessageService,
@@ -357,6 +359,22 @@ export class DashboardComponent implements OnInit {
       })
 
      }
+   ngAfterViewInit(): void {
+    this.route.params.subscribe(data=>{
+          let nameofDash=data.id.charAt(0).toUpperCase() + data.id.slice(1);
+          this.getlistofdashboard(nameofDash);
+          this.listofdashboard.forEach(element=>{
+            if(element.name==nameofDash)
+            {
+              element.status=true;
+            }
+            else{
+              element.status=false;
+            }
+          })
+      })
+  
+  }
 
     // get inetervise data for calls / chat / visitors 
     // call the endpoint functions
@@ -365,12 +383,12 @@ export class DashboardComponent implements OnInit {
       if(this.selectedtabs=="Calls")
       {          
 
-        if(this.idsoflanguages1.length==6 && this.idsof_countries1.length==249)
+        if(this.idsoflanguages1.length==this.lang.length && this.idsof_countries1.length==249)
         {
           this.getcallcharts(this.charttimeslot1,[],[],0,this.datefrom_call,this.dateto_call);
           this.getcallstats(this.charttimeslot1,[],[],this.datefrom_call,this.dateto_call);
         }
-        else if(this.idsoflanguages1.length==6)
+        else if(this.idsoflanguages1.length==this.lang.length)
         {
           this.getcallcharts(this.charttimeslot1,[],this.idsof_countries1,0,this.datefrom_call,this.dateto_call);
           this.getcallstats(this.charttimeslot1,[],this.idsof_countries1,this.datefrom_call,this.dateto_call);
@@ -391,12 +409,12 @@ export class DashboardComponent implements OnInit {
       }
       else if(this.selectedtabs=="Visitors")
       {
-        if(this.idsoflanguages3.length==6 && this.idsof_countries3.length==249)
+        if(this.idsoflanguages3.length==this.lang.length && this.idsof_countries3.length==249)
         {          
           this.getuser_and_call_chart("Visitors",this.datefrom_visitor,this.dateto_visitor,[],[],0,this.charttimeslot3);
           this.getVisitorTotalCard(this.charttimeslot3,[],[],this.datefrom_visitor,this.dateto_visitor);
         }
-        else if(this.idsoflanguages3.length==6)
+        else if(this.idsoflanguages3.length==this.lang.length)
         {
           this.getuser_and_call_chart("Visitors",this.datefrom_visitor,this.dateto_visitor,[],this.idsof_countries3,0,this.charttimeslot3);
           this.getVisitorTotalCard(this.charttimeslot3,[],this.idsof_countries3,this.datefrom_visitor,this.dateto_visitor);
@@ -416,14 +434,14 @@ export class DashboardComponent implements OnInit {
       }
       else if(this.selectedtabs=="Users")
       {
-        if(this.idsoflanguages2.length==6 && this.idsof_countries2.length==249)
+        if(this.idsoflanguages2.length==this.lang.length && this.idsof_countries2.length==249)
         {
           this.getuser_and_call_chart("Users",this.datefrom_user,this.dateto_user,[],[],0,this.charttimeslot2);
           this.getUserTotalCard(this.charttimeslot2,[],[],this.datefrom_user,this.dateto_user);
 
 
         }
-        else if(this.idsoflanguages2.length==6)
+        else if(this.idsoflanguages2.length==this.lang.length)
         {
           this.getuser_and_call_chart("Users",this.datefrom_user,this.dateto_user,[],this.idsof_countries2,0,this.charttimeslot2);
           this.getUserTotalCard(this.charttimeslot2,[],this.idsof_countries2,this.datefrom_user,this.dateto_user);
@@ -455,7 +473,7 @@ export class DashboardComponent implements OnInit {
     }
      getlistofdashboard(val)
      {
-       
+      console.log(val)
        this.selectedtabs=val
        if(val=="Calls")
        {
@@ -464,6 +482,12 @@ export class DashboardComponent implements OnInit {
          this.showvisitordashboard=true;
          this.showticketsdashboard=true
          this.showuserdashboard=true;
+         if(this.starting_flag2==0)
+         {
+           this.callFunctionCharts();
+           this.starting_flag2=1
+         }
+         this.router.navigate(['dashboard','calls'])
        }
        else if(val=="Chats"){
         this.showcallsdashboard=true;
@@ -471,6 +495,7 @@ export class DashboardComponent implements OnInit {
         this.showvisitordashboard=true;
         this.showticketsdashboard=true;
         this.showuserdashboard=true;
+        this.router.navigate(['dashboard','chats'])
 
 
        }
@@ -489,7 +514,8 @@ export class DashboardComponent implements OnInit {
           this.callFunctionCharts();
           this.starting_flag=1
         }
-        
+        this.router.navigate(['dashboard','visitors'])
+
        }
        else if(val=="Tickets")
        {
@@ -501,8 +527,8 @@ export class DashboardComponent implements OnInit {
         
 
 
-    this.createtickettypechart();
-    this.createprioritticketchart();
+        this.createtickettypechart();
+        this.createprioritticketchart();
        }
        else if(val=="Users")
        {
@@ -516,7 +542,8 @@ export class DashboardComponent implements OnInit {
           this.callFunctionCharts();
           this.starting_flag1=1;
         }
-     
+        this.router.navigate(['dashboard','users'])
+
       
        }
       this.selecteddashboard=val;
@@ -747,13 +774,13 @@ export class DashboardComponent implements OnInit {
     if(signal!=1)
     {
     
-      this.showselectednumberoflanguages(this.selectedtabs,"All Selected")
-      this.getcallcharts("this_week",[],[],1000,this.datefrom_call,this.dateto_call);
-      this.getUserTotalCard("this_week",[],[],this.datefrom_user,this.dateto_user);
-      this.getVisitorTotalCard("this_week",[],[],this.datefrom_visitor,this.dateto_visitor);
-      this.getcallstats("this_week",[],[],this.datefrom_call,this.dateto_call);
+       this.showselectednumberoflanguages(this.selectedtabs,"All Selected")
+      // this.getcallcharts("this_week",[],[],1000,this.datefrom_call,this.dateto_call);
+      // this.getUserTotalCard("this_week",[],[],this.datefrom_user,this.dateto_user);
+      // this.getVisitorTotalCard("this_week",[],[],this.datefrom_visitor,this.dateto_visitor);
+      // this.getcallstats("this_week",[],[],this.datefrom_call,this.dateto_call);
   
- 
+      this.callFunctionCharts()
     }
  
   }
@@ -788,7 +815,8 @@ export class DashboardComponent implements OnInit {
  
     }
      ngOnInit(): void {
-      this.getlistofdashboard("Calls");
+     
+     
       this.onDateChange([this.ranges[2].value[0],this.ranges[2].value[1]],"Calls",0)
       this.onDateChange([this.ranges[2].value[0],this.ranges[2].value[1]],"Users",0)
       this.onDateChange([this.ranges[2].value[0],this.ranges[2].value[1]],"Visitors",0)

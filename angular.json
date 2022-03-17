@@ -23,6 +23,7 @@
               "src/assets"
             ],
             "styles": [
+             
               "node_modules/ngx-bootstrap/datepicker/bs-datepicker.css",
               "node_modules/bootstrap/dist/css/bootstrap.min.css",
               "node_modules/@angular/material/prebuilt-themes/pink-bluegrey.css",
@@ -48,7 +49,7 @@
               "fileReplacements": [
                 {
                   "replace": "src/environments/environment.ts",
-                  "with": "src/environments/environment.prod.ts"
+                  "with": "src/environments/environment.gigaaa.link.prod.ts"
                 }
               ],
               "optimization": true,

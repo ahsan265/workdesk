@@ -4,10 +4,10 @@
   </div> -->
   <div class="tabspanel" style="z-index: 1; border-bottom: 1px solid #E1E1EA;">
      
-            <div class="tabsitem" ><a [ngClass]="{ active: isActive('incoming') }" (click)="getpanalview('incoming');"   class="itemoftabs" >Incoming <span class="numberofcalls">{{size_incoming_call}}</span> </a></div>
-            <div  class="tabsitem"  ><a [ngClass]="{ active: isActive('outgoing') }" (click)="getpanalview('outgoing')"   class="itemoftabs">Ongoing <span class="numberofcalls">{{size_ougoing_call}}</span></a></div>
-            <div  class="tabsitem"  ><a [ngClass]="{ active: isActive('missed') }"  (click)="getpanalview('missed')"  class="itemoftabs">Missed</a></div>
-            <div  class="tabsitem last"  ><a [ngClass]="{ active: isActive('answered') }" (click)="getpanalview('answered')"   class="itemoftabs">Answered</a></div>
+            <div class="tabsitem" ><a  routerLink="/calls/incoming"  routerLinkActive="active"  [routerLinkActiveOptions]="{exact:true}"     class="itemoftabs" >Incoming <span class="numberofcalls">{{size_incoming_call}}</span> </a></div>
+            <div  class="tabsitem"  ><a routerLink="/calls/ongoing"  routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}"      class="itemoftabs">Ongoing <span class="numberofcalls">{{size_ougoing_call}}</span></a></div>
+            <div  class="tabsitem"  ><a routerLink="/calls/missed" routerLinkActive="active"  [routerLinkActiveOptions]="{exact:true}"      class="itemoftabs">Missed</a></div>
+            <div  class="tabsitem last"  ><a  routerLink="/calls/answered" routerLinkActive="active"  [routerLinkActiveOptions]="{exact:true}"     class="itemoftabs">Answered</a></div>
   </div>
   <div class="callsarea">
   <div [hidden]="!incoming">

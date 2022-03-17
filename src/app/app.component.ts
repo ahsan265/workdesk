@@ -58,7 +58,7 @@ websites=[{text:"Partnership",url:['https://partnerships.gigaaa.com/'],image:'..
       iconUrl: this.dashboardIcon,
       activeIconUrl: this.activedashboardIcon,
       name: 'Dashboard',
-      routeUrl: ['/dashboard'],
+      routeUrl: ['dashboard','calls'],
       dropdown: false,
       isLink: true
 
@@ -67,7 +67,7 @@ websites=[{text:"Partnership",url:['https://partnerships.gigaaa.com/'],image:'..
       iconUrl: this.callIcon,
       activeIconUrl: this.activeCallIcon,
       name: 'Calls',
-      routeUrl: ['/calls'],
+      routeUrl: ['calls','incoming'],
       dropdown: false,
       isLink: true
 

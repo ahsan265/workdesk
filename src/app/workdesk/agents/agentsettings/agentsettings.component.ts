@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
+import { Router } from '@angular/router';
 import { GigaaaApiService } from 'src/app/service/gigaaaapi.service';
 import { gigaaasocketapi } from 'src/app/service/gigaaasocketapi.service';
 import { MessageService } from 'src/app/service/messege.service';
@@ -31,7 +32,11 @@ agentprofilepic:any;
 idsoflanguages=[];
  isadmin:boolean = true;
 
-  constructor(private gigaaaapi:GigaaaApiService, private message:MessageService,private sharedres:sharedres_service,public dialog: MatDialog) { }
+  constructor(private gigaaaapi:GigaaaApiService, 
+    private message:MessageService,
+    private sharedres:sharedres_service,
+    private router:Router,
+    public dialog: MatDialog) { }
  lang=[]
 form = new FormGroup({
   
@@ -169,8 +174,9 @@ form = new FormGroup({
       this.sharedres.getrefreshagentlist(1);
       this.getalllanguage(false);
       this.isadmin=undefined;
-
      this.sharedres.getagentsettingview("teams");
+     this.router.navigate(['agents']);
+
    }
 
    deleteagent() {

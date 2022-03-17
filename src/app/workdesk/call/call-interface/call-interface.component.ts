@@ -115,23 +115,29 @@ hasVideoparam={width:226,height:144};
               this.peerconnection.addTrack(track,this.localstream);
               this.localVideo.nativeElement.srcObject=this.localstream;
               this.localVideo1.nativeElement.srcObject=this.localstream;
-            });
-         
-         }
+             });
+             }
           catch (e) {
           console.log(e);
             }
-         
         }
+
             ngOnDestroy(): void {
             this.destroyed$.next();
             this.destroyed$.complete();
-          }
+            }
 
           ngOnInit(): void {
-            this.webrtcservice.callUserSocket(this.data.call_uuid);
-            this.addIncomingCallHandler();
-  
+            const callstat=JSON.parse(localStorage.getItem("call_info"))
+            if(callstat==null)
+            {
+              this.webrtcservice.callUserSocket(this.data.call_uuid,"","");
+            }
+            else 
+            {
+              this.webrtcservice.callUserSocket(this.data.call_uuid,callstat?.user_id,callstat?.is_refreshed);
+            }
+          this.addIncomingCallHandler();
           this.showUserInformation()
           interval(1000).subscribe(() => {
             if (!this.changeDetector['destroyed']) {
@@ -159,10 +165,18 @@ hasVideoparam={width:226,height:144};
           {
           
               try{
-
+                if(!this.localstream)
+                {
+                  await this.requestmediadevices(this.webrtcmediacontraints);
+                }
+                if(!this.peerconnection)
+                {
+                 await this.createPeerConnection()
+                }
                 const offer:RTCSessionDescriptionInit=await this.peerconnection.createOffer(this.webrtcmediacontraints_user);
                 await this.peerconnection.setLocalDescription(offer);
                  this.localoffer=offer;
+              //   this.getLastOfferforUser(offer);
                  console.log(this.localoffer)
               }
               catch(err){
@@ -259,15 +273,19 @@ hasVideoparam={width:226,height:144};
         data:event.candidate});
       }
     }
-    private handleIceConnectionStateChangeEvent=(event:Event)=>{
+    private handleIceConnectionStateChangeEvent=async (event:Event)=>{
       console.log(event)
       switch(this.peerconnection.iceConnectionState)
       {
-          case "closed":
-          case "failed":
-          case "disconnected":
-            this.hangupCall();
-          break;
+        case "closed":
+        this.hangupCall();
+        break;
+        case "failed":
+        case "disconnected":
+       this.peerconnection=null;
+       await this.createPeerConnection();
+       this.getcallTypeforPagereload();
+        break;
       }
     }
     private handleSignalingStatetChangeEvent=(event:Event)=>{
@@ -275,8 +293,10 @@ hasVideoparam={width:226,height:144};
 
       switch(this.peerconnection.signalingState)
       {
-          case "closed":
-          this.hangupCall();
+           case "closed":
+            this.hangupCall();
+        // this.peerconnection=null
+        // this.getcallTypeforPagereload();
           break;
       }
     }
@@ -295,15 +315,15 @@ hasVideoparam={width:226,height:144};
   addIncomingCallHandler()
   {
     this.webrtcservice.callobject$.subscribe(async (msg:any)=>{
-   
+      let callstat= await JSON.parse(localStorage.getItem("call_info"));
+
       switch(msg.type)
       {
-
           case "offer":
-            console.log(msg.data)
             if(msg.data!=undefined)
             {
-            await  this.handleOfferMessage(msg.data);
+            // this.getLastOfferforofpeer(msg.data)
+              await  this.handleOfferMessage(msg.data);
             }
           break;
           case "answer":
@@ -313,21 +333,39 @@ hasVideoparam={width:226,height:144};
           this.hanndleHangupMessage(msg.data);
           break;  
           case "ice-candidate":
-            console.log(msg)
+          console.log(msg)
           this.handleIceCandidateMessage(msg.data);
           break;
           case "user_id":
           this.userid=msg.id;
-          localStorage.setItem("call_info",JSON.stringify({user_id:this.userid,is_refresh:false}));
-          await this.createOfferForPeer(); 
+         
+          if(callstat?.is_refreshed==true)
+          {
+          this.webrtcservice.sendDataforCall(callstat?.user_devices_info)
+          }
+          else{
+            localStorage.setItem("call_info",JSON.stringify({user_id:this.userid,is_refreshed:false}));
+            await this.createOfferForPeer(); 
+          }
           break;
           case "accept":
+            console.log("accepts")
+         
           this.peerUserid=msg.user_id;
-          this.senduserInformation();   
-          this.webrtcservice.sendDataforCall({user_id:this.peerUserid,data:this.localoffer, type: "offer" })
-          this.callstart=true;
-          this.callstarttime=new Date().getTime();
-          localStorage.setItem("call_info",JSON.stringify({user_id:this.userid,is_refresh:false}));
+          if(callstat?.is_refreshed==true)
+          {    
+                this.getcallTypeforPagereload();
+          }
+          else{
+           
+            this.webrtcservice.sendDataforCall({ type: "offer",user_id:this.peerUserid,data:this.localoffer});
+            this.callstart=true;
+            this.callstarttime=new Date().getTime();
+            console.log(callstat.is_refreshed)
+          callstat['is_refreshed']=true;
+          localStorage.setItem("call_info",JSON.stringify(callstat));
+          this.senduserInformation(); 
+          }
           break;
           case "peer_data":
           this.getPeerDataInformation(msg.data);
@@ -356,6 +394,7 @@ hasVideoparam={width:226,height:144};
     }).then(() => {
       this.webrtcservice.sendDataforCall({type:"answer",data:this.peerconnection.localDescription});
     }).catch(err=>{
+      console.log(err)
     });
 
   }
@@ -371,8 +410,10 @@ hasVideoparam={width:226,height:144};
   
   private async  handleIceCandidateMessage(data:RTCIceCandidate): Promise<void>
   { 
-    if (data) {
+    console.log(data)
+    if (data.candidate) {
      await  this.peerconnection.addIceCandidate(new RTCIceCandidate(data)).catch(err=>{
+       console.log(err)
     });
   }
   }
@@ -380,6 +421,7 @@ hasVideoparam={width:226,height:144};
   // hang up the call ()
   hangupCall()
   {
+    localStorage.removeItem("call_info");
     this.localstream.getTracks().forEach(track=>{
       track.stop();
     })
@@ -510,6 +552,7 @@ hasVideoparam={width:226,height:144};
       private async  startvideoCall() :Promise<void>
       {          
         this.webrtcservice.sendDataforCall({"type": "update_peer", "user_id":this.userid,"data":{"is_camera_on": true, "is_microphone_on":true, "is_shared_screen":false, "first_name":  this.userFirstName,"last_name":  this.userLastName, "img_url":this.userPicture}})
+        this.setUserInfo({"type": "update_peer","user_id":this.userid,"data":{"is_camera_on": true, "is_microphone_on":true, "is_shared_screen":false, "first_name":  this.userFirstName,"last_name":  this.userLastName, "img_url":this.userPicture}})
         this.localstream.getVideoTracks().forEach(track => {
           track.enabled=true;
         }); 
@@ -531,7 +574,9 @@ hasVideoparam={width:226,height:144};
           await this.peerconnection.setLocalDescription(offer).catch(err=>{
             console.log(err)
           })
-          this.webrtcservice.sendDataforCall({user_id:this.peerUserid,data:offer, type: "offer" })
+          this.localoffer=offer;
+          this.getLastOfferforUser(this.localoffer);
+          this.webrtcservice.sendDataforCall({type: "offer",user_id:this.peerUserid,data:offer  })
         })
       
       }
@@ -539,6 +584,8 @@ hasVideoparam={width:226,height:144};
           {      
             //  this.localstream.getVideoTracks()[0].enabled=false;   
             this.webrtcservice.sendDataforCall({"type": "update_peer", "user_id":this.userid,"data":{"is_camera_on": false, "is_microphone_on":true, "is_shared_screen":false, "first_name":  this.userFirstName,"last_name":  this.userLastName, "img_url":this.userPicture}})
+            this.setUserInfo({"type": "update_peer","user_id":this.userid,"data":{"is_camera_on": false, "is_microphone_on":true, "is_shared_screen":false, "first_name":  this.userFirstName,"last_name":  this.userLastName, "img_url":this.userPicture}})
+
             this.localstream.getVideoTracks().forEach(track => {
             track.enabled=false;
             });   
@@ -560,7 +607,9 @@ hasVideoparam={width:226,height:144};
               await this.peerconnection.setLocalDescription(offer).catch(err=>{
                 console.log(err)
               });
-              this.webrtcservice.sendDataforCall({user_id:this.peerUserid,data:offer, type:"offer" });
+              this.localoffer=offer;
+              this.getLastOfferforUser(this.localoffer);
+              this.webrtcservice.sendDataforCall({ type:"offer" ,user_id:this.peerUserid,data:offer});
                 })
                   }
 
@@ -651,11 +700,12 @@ hasVideoparam={width:226,height:144};
         this.userLastName=user.profile.last_name;
         this.userPicture=user.agent_images['original'];
          this.webrtcservice.sendDataforCall({"type": "update_peer", "user_id":this.userid,"data":{"is_camera_on": false, "is_microphone_on":true, "is_shared_screen":false, "first_name":  this.userFirstName,"last_name":  this.userLastName, "img_url":this.userPicture}})
-       }
+       this.setUserInfo({"type": "update_peer","user_id":this.userid,"data":{"is_camera_on": false, "is_microphone_on":true, "is_shared_screen":false, "first_name":  this.userFirstName,"last_name":  this.userLastName, "img_url":this.userPicture}})
+        }
+
        // get peer data information
        getPeerDataInformation(data:any)
        {
-         console.log(data)
         this.peerFirstname=data.first_name;
         this.peerLastname=data.last_name;
         this.peerPicture=data.img_url;
@@ -683,6 +733,7 @@ hasVideoparam={width:226,height:144};
           this.dialogRef.removePanelClass('callinterface-form-container');
           this.dialogRef.addPanelClass('maximizeVideocallinterface');
         }
+       // this.setPeerInfo(data)
 
        }
        // screen share to other peer
@@ -702,12 +753,15 @@ hasVideoparam={width:226,height:144};
                   {
                  //   this.pausevideoCall();
                     this.webrtcservice.sendDataforCall({"type": "update_peer", "user_id":this.userid,"data":{"is_camera_on": false, "is_microphone_on":true, "is_shared_screen":false, "first_name":  this.userFirstName,"last_name":  this.userLastName, "img_url":this.userPicture}})
+                    this.setUserInfo({"type": "update_peer","user_id":this.userid,"data":{"is_camera_on": false, "is_microphone_on":true, "is_shared_screen":false, "first_name":  this.userFirstName,"last_name":  this.userLastName, "img_url":this.userPicture}})
+
                   }
                   else if(this.camerabtn==false)
                   {
                     this.startvideoCall();
                     this.webrtcservice.sendDataforCall({"type": "update_peer", "user_id":this.userid,"data":{"is_camera_on": true, "is_microphone_on":true, "is_shared_screen":false, "first_name":  this.userFirstName,"last_name":  this.userLastName, "img_url":this.userPicture}})
-  
+                    this.setUserInfo({"type": "update_peer","user_id":this.userid,"data":{"is_camera_on": true, "is_microphone_on":true, "is_shared_screen":false, "first_name":  this.userFirstName,"last_name":  this.userLastName, "img_url":this.userPicture}})
+
                   }
                 })
 
@@ -721,6 +775,8 @@ hasVideoparam={width:226,height:144};
                   const localAudio= audiostream.getAudioTracks()[0];
                   const videotrack= stream.getVideoTracks()[0];
                   this.webrtcservice.sendDataforCall({"type": "update_peer", "user_id":this.userid,"data":{"is_camera_on": true, "is_microphone_on":true, "is_shared_screen":true, "first_name":  this.userFirstName,"last_name":  this.userLastName, "img_url":this.userPicture}})
+                  this.setUserInfo({"type": "update_peer","user_id":this.userid,"data":{"is_camera_on": true, "is_microphone_on":true, "is_shared_screen":true, "first_name":  this.userFirstName,"last_name":  this.userLastName, "img_url":this.userPicture}})
+
                   this.sharescreen=new MediaStream([videotrack,localAudio])
                   this.localVideo1.nativeElement.srcObject=undefined;
                   this.localVideo.nativeElement.srcObject=undefined;
@@ -737,7 +793,9 @@ hasVideoparam={width:226,height:144};
                   iceRestart:true
                   });
                   await this.peerconnection.setLocalDescription(offer);
-                  this.webrtcservice.sendDataforCall({user_id:this.peerUserid,data:offer, type: "offer" });
+                  this.localoffer=offer;
+                  this.getLastOfferforUser(this.localoffer);
+                  this.webrtcservice.sendDataforCall({type: "offer" ,user_id:this.peerUserid,data:offer });
     
                   
                   })
@@ -756,13 +814,14 @@ hasVideoparam={width:226,height:144};
                 {
                   this.startvideoCall();
                   this.webrtcservice.sendDataforCall({"type": "update_peer", "user_id":this.userid,"data":{"is_camera_on": true, "is_microphone_on":true, "is_shared_screen":false, "first_name":  this.userFirstName,"last_name":  this.userLastName, "img_url":this.userPicture}})
-
+                  this.setUserInfo({"type": "update_peer","user_id":this.userid,"data":{"is_camera_on": true, "is_microphone_on":true, "is_shared_screen":false, "first_name":  this.userFirstName,"last_name":  this.userLastName, "img_url":this.userPicture}})
 
                 }
                 else if(this.camerabtn==true)
                 {
                   this.pausevideoCall();
                   this.webrtcservice.sendDataforCall({"type": "update_peer", "user_id":this.userid,"data":{"is_camera_on": false, "is_microphone_on":true, "is_shared_screen":false, "first_name":  this.userFirstName,"last_name":  this.userLastName, "img_url":this.userPicture}})
+                  this.setUserInfo({"type": "update_peer","user_id":this.userid,"data":{"is_camera_on": false, "is_microphone_on":true, "is_shared_screen":false, "first_name":  this.userFirstName,"last_name":  this.userLastName, "img_url":this.userPicture}})
 
                 }
 
@@ -770,5 +829,66 @@ hasVideoparam={width:226,height:144};
           
 
         }
+   
+        // set user info
+        setUserInfo(data:any)
+        {          
+          console.log(data)
+          let callstat=JSON.parse(localStorage.getItem("call_info"));
+          callstat['user_devices_info']=data;
+          localStorage.setItem("call_info",JSON.stringify(callstat));
+
+        }
+        // get last offer for user
+        getLastOfferforUser(data:any)
+        {          
+          console.log(data)
+          let callstat=JSON.parse(localStorage.getItem("call_info"));
+          callstat['user_last_offer']=data;
+          localStorage.setItem("call_info",JSON.stringify(callstat));
+
+        }
+    
+ 
+         //refres state of calls
+        private async getcallTypeforPagereload():Promise<void>
+         {
+          let callstat=JSON.parse(localStorage.getItem("call_info"));
+          if(callstat.user_devices_info?.data.is_camera_on==true)
+          {
+            this.camerabtncheck(true)
+
+          }
+          else if(callstat.user_devices_info?.data.is_camera_on==false)
+          {
+            this.camerabtncheck(false)
+
+          }
+          else if(callstat.user_devices_info?.data.is_camera_on==true&&callstat.user_devices_info?.data.is_shared_screen==true)
+          {
+            this.screensharebtncheck(true);
+          }
+          else{
+            this.camerabtncheck(false)
+
+          }
+         }
+
+      //  private async  setDevicesForRefresh():Promise<void>
+      //    {
+      //     const callstat=JSON.parse(localStorage.getItem("call_info"));
+      //     if(callstat.user_devices_info.data.is_camera_on==true)
+      //     {
+      //       this.camerabtncheck(true)
+      //     }
+      //     else if(callstat.user_devices_info.data.is_camera_on==false)
+      //     {
+      //       await  this.pausevideoCall();
+      //     }
+      //     else if(callstat.user_devices_info.data.is_camera_on==true&&callstat.user_devices_info.data.is_shared_screen==true)
+      //     {
+      //       await   this.screenShare(true);
+      //     }
+      //    }
 
 }

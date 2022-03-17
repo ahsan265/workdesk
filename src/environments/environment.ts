@@ -39,7 +39,7 @@ export const environment = {
   accounts_callback_url: 'http://localhost:4202',
   accounts_client_id: 8,
   // 
-  prod_url_cs:"https://gigaaa-customer-support.azurewebsites.net",
+  prod_url_cs:"https://nlu-test.gigaaa.link",  /* https://gigaaa-customer-support.azurewebsites.net */
   prod_url_workdesk:"https://gigaaa-backend.azurewebsites.net",
   prod_anlytics:"https://gigaaa-analytics.azurewebsites.net",
   //
