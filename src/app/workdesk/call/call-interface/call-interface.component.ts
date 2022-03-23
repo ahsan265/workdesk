@@ -659,8 +659,8 @@ hasVideoparam={width:226,height:144};
             this.localVideo1.nativeElement.srcObject= undefined;
             this.localVideo1.nativeElement.srcObject=this.localstream;
             this.localVideo.nativeElement.srcObject=this.localstream;
-            this.localstream=new MediaStream([videotrack[0]])
-           // this.localstream.addTrack(videotrack[0]);
+            // this.localstream=new MediaStream([videotrack[0]])
+            this.localstream.addTrack(videotrack[0]);
             this.localstream.getTracks().forEach(track=>{
               this.peerconnection.addTrack(track,this.localstream);
             })
