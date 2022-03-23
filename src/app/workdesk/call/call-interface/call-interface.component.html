@@ -13,12 +13,14 @@
 <p  class="username">{{peerFirstname}} {{peerLastname}}</p>
 </div>  
   <div class="minimizeiconpanel">
-  <svg style="height: 20px; cursor: pointer;" class="miniicon"  *ngIf="hideContant" style="cursor: pointer;margin-bottom: 15px;" (click)="miniMizetheScreen(hideContant)" width="12" height="2" viewBox="0 0 12 2" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <svg style="height: 20px; cursor: pointer;" class="miniicon"  *ngIf="hideContant" style="cursor: pointer;margin-bottom: 2px;" (click)="miniMizetheScreen(hideContant)" width="12" height="2" viewBox="0 0 12 2" fill="none" xmlns="http://www.w3.org/2000/svg">
   <path d="M11.8204 1.82031H0.179749V0.179688H11.8204V1.82031Z" fill="white"/>
   </svg>
   </div>
 
-
+<div class="signalindicator">
+  <img [src]="callQualityIndicator" alt="" srcset="">
+</div>
   <div class="maxiconforvideo"   *ngIf="!hideContant" style="float: right;
   cursor: pointer;
   height: 50px;
@@ -34,7 +36,7 @@
 
 
 
-<div class="callarea desktop">
+ <div class="callarea desktop">
   <div class="dragarea " [ngStyle]="{'width':(splitscreen==true ) ? '50%' : '100%'}" >
         <div style="display: block;
         z-index: 1001;
@@ -43,10 +45,10 @@
         <img (click)="splitScreen(splitscreen)"   class="spliticon" [src]="splitIcon" alt="">
         </div>
         <div  [cdkDragFreeDragPosition]="dragPosition"  [hidden]="splitscreen" [ngStyle]="{'background': (camerabtn==true) ? '#2B3A51' : '#000000'}" cdkDragBoundary=".dragarea" class="loggedUsercamera" cdkDrag>
-        <p *ngIf="camerabtn" class="capitalinitials">{{firstuserFirstName}}{{firstuserLastName}}</p>
-                  <video  id="localVideo"  aria-valuemin="0" aria-valuemax="100" #localVideo [autoplay]='true' [muted]="true"  class="localcamera"  style="height: 143px;
-                  width: 223px;
-                  border-radius: 4px;" [hidden]="camerabtn" ></video>
+         <p *ngIf="camerabtn" class="capitalinitials">{{firstuserFirstName}}{{firstuserLastName}}</p>
+                  <video  id="localVideo"  aria-valuemin="0" aria-valuemax="100" #localVideo [autoplay]='true' [muted]="true"  class="localcamera"  
+                  style="border-radius: 4px;
+                  object-fit: cover;" [hidden]="camerabtn" ></video>
               <p  *ngIf="camerabtn" class="camerapersonname">{{userFirstName}} (me)</p> 
               <div class="splitscreen" [ngStyle]="{'display': (splitscreen==true) ? 'none' : 'block'}" >
                 <img (click)="splitScreen(splitscreen)" class="spliticon"   [src]="unsplitIcon" alt="">

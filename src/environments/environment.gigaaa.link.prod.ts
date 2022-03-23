@@ -16,7 +16,9 @@ export const environment = {
     prod_anlytics:"https://kub-dev.gigaaa.link/analytics",
     //
     websocket_url:"wss://kub-dev.gigaaa.link/websockets",
-      // 
+      //
     logged_user:'https://kub-dev.gigaaa.link/v1/api/v1',
+    currentUser: 'https://kub-dev.gigaaa.link/users/me'
+
   };
   

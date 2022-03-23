@@ -2271,7 +2271,7 @@ body .bs-datepicker-container  .bs-datepicker-body   tbody tr:nth-child(even){
     }
     .minimizecallinterface .maximizeicon{
         float: right!important;
-        margin-top: 10px!important;
+        margin-top: 16px!important;
         height: 20px!important;
         margin-right: 16px!important;
         cursor: pointer!important;
@@ -2320,6 +2320,14 @@ body .bs-datepicker-container  .bs-datepicker-body   tbody tr:nth-child(even){
         border-top-left-radius: 4px;
 
     }
+    .maximizeVideocallinterface .signalindicator
+    {
+        top: 15px;
+    }
+    .minimizecallinterface .signalindicator
+    {
+        top: 15px;
+    }
     .maximizeVideocallinterface .maxiconforvideo
     {    float: right!important;
         cursor: pointer!important;
@@ -2331,7 +2339,7 @@ body .bs-datepicker-container  .bs-datepicker-body   tbody tr:nth-child(even){
         position: relative!important;
         right: 0px !important;
         top: -50px;
-        padding-top: 10px !important;
+        padding-top: 15px !important;
         padding-right: 15px!important;
         border-top-right-radius: 4px;
 
@@ -2577,7 +2585,7 @@ body .bs-datepicker-container  .bs-datepicker-body   tbody tr:nth-child(even){
     top: 0px!important;
     height: 100%!important;
     right: 0!important;
-    object-fit: cover!important;
+    object-fit: fill!important;
     position: absolute!important;
 }
 .maximizeVideocallinterface .splitvidepremote{

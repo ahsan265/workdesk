@@ -47,7 +47,7 @@ export class GigaaaApiService  {
 
 
 getCurrentUser(token):Observable<User> {
-  return this.http.get<User>(`${this.API_URL}/current-user`, {
+  return this.http.get<User>(`${environment.currentUser}`, {
     headers: {
       'Content-Type': 'application/json',
       'Accept': 'application/json',
@@ -122,7 +122,7 @@ getCurrentUser(token):Observable<User> {
        throw (err);
      });
    }
-
+  // not required now 
    public   getallagents(accesstoken:string,subsid:string,intid:string,show_active:number,show_invited:number,show_inactive:number,languages:any)
    {
      const httpOptions: any = {
@@ -134,10 +134,9 @@ getCurrentUser(token):Observable<User> {
      })
    };
     return this.http.get(this.workdeskurl_cs+"/private/agents?show_active="+show_active+"&show_invited="+show_invited+"&show_inactive="+show_inactive+"&languages="+languages+"&organization="+subsid+"&integration="+intid,httpOptions)
-
     }
 
-
+    // not in my use
     public   getallstats(accesstoken:string,subsid:string,intid:string)
     {   const httpOptions: any = {
 
@@ -150,7 +149,7 @@ getCurrentUser(token):Observable<User> {
      return  this.http.get(this.workdeskurl_cs+"/statistics?subscription="+subsid+"&integration="+intid,httpOptions)
 
      }
-
+     // not in my use
      public   getalllistofqueueagent(accesstoken:string,orgid:string,intid:string)
      {   const httpOptions: any = {
 
@@ -164,7 +163,7 @@ getCurrentUser(token):Observable<User> {
       return  this.http.get(this.workdeskurl_cs+"queue?organization="+orgid+"&integration="+intid+"&languages=",httpOptions)
 
       }
-
+      // not in my use
       public   getagentinforusingid(accesstoken:string,subsid:string ,id:number)
       {   const httpOptions: any = {
 
@@ -205,7 +204,7 @@ getCurrentUser(token):Observable<User> {
         });
 
         }
-
+   // not in my use     
    public  async assignrole(accesstoken:string,subsid:string,addrole:assignrole): Promise<any>
    {   const httpOptions: any = {
         method: 'POST',
@@ -235,7 +234,7 @@ getCurrentUser(token):Observable<User> {
          throw (err);
        });
      }
-     //  logged inagent upload pic
+     //  logged in agent upload pic
      public   uploaduserprofilepic(accesstoken:string,subsid:string,intgid:string,file: File)
      {   const httpOptions: any = {
           method: 'POST',
@@ -263,16 +262,18 @@ getCurrentUser(token):Observable<User> {
        formdata.append("image",file);
        return  this.http.post(this.workdeskurl_cs+"/private/agents/image?organization="+orgid+"&integration="+intgid+"&agent="+uuid,formdata,httpOptions);
        }
-    public  async editagent(accesstoken:string,subsid:string,id:number,addrole:any): Promise<any>
-   {   const httpOptions: any = {
+    // not in my use
+   public  async editagent(accesstoken:string,subsid:string,id:number,addrole:any): Promise<any>
+   {   
+       const httpOptions: any = {
         method: 'PUT',
         headers: new HttpHeaders({
        'Content-Type': 'application/json',
        'Accept': 'application/json',
        'Authorization': `Bearer ${accesstoken}`
-     })
-   };
-    return await this.http.put(this.workdeskurl_cs+"/customer-support/agents/"+id+"?subscription="+subsid,addrole,httpOptions).toPromise()
+      })
+      };
+      return await this.http.put(this.workdeskurl_cs+"/customer-support/agents/"+id+"?subscription="+subsid,addrole,httpOptions).toPromise()
       .catch((err) => {
         throw (err);
       });
@@ -337,7 +338,7 @@ getCurrentUser(token):Observable<User> {
              });
            }
 
-//post refeeral code for agents invited
+    //post refeeral code for agents invited
            public  async sendinvitationcode(accesstoken:string,agentdata:any): Promise<any>
            {   const httpOptions: any = {
                 headers: new HttpHeaders({
@@ -352,9 +353,9 @@ getCurrentUser(token):Observable<User> {
               });
             }
 
-    // delete agents
-    public async  deleteagent(accesstoken:string,orgid:string,intid:string,agentuuid:any): Promise<any>
-        {
+         // delete agents
+         public async  deleteagent(accesstoken:string,orgid:string,intid:string,agentuuid:any): Promise<any>
+          {
           const httpOptions: any = {
             headers: new HttpHeaders({
            'Content-Type': 'application/json',

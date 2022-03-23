@@ -326,7 +326,7 @@ onGetLoggedUser(user: User) {
   if (user) {
     if(user!=null )
     { 
-      this.authService.userRestriction(user.api_token);
+    //  this.authService.userRestriction(user.api_token);
       this.authService.getOrganizationId(user.api_token);
    
     }

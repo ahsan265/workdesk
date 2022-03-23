@@ -18,4 +18,7 @@ export const environment = {
     websocket_url:"wss://websockets.gigaaa.com",
 
     logged_user:'https://api.gconsole.io/v1/api/v1',
+    currentUser: 'https://api.gconsole.io/api/v1/current-user'
+
+
 };

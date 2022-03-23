@@ -238,11 +238,10 @@ span{
     position: unset;
   }
   .imagepanelmobile{
-    height: 685px;
+    height: 560px;
     width: 100%;
     display: block;
     position: absolute;
-    /* margin-right: 118px; */
     top: 55px;
     text-align: center;
     background-image: url(../../../assets/workdesk.png);
