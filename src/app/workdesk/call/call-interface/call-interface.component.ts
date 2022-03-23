@@ -612,6 +612,15 @@ hasVideoparam={width:226,height:144};
           this.dialogRef.removePanelClass(['maximizeVideocallinterface','minimizecallinterface']);
           this.dialogRef.addPanelClass('callinterface-form-container');
         }
+        if(this.peerscreenView==true)
+        {
+          this.renderer.setStyle(this.remotevideo.nativeElement, "display", "none");
+
+        }
+        else{
+          this.renderer.setStyle(this.remotevideo.nativeElement, "display", "block");
+
+        }
         }
    
       private async  startvideoCall() :Promise<void>
