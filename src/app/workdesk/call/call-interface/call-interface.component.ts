@@ -196,9 +196,10 @@ hasVideoparam={width:226,height:144};
                   await this.peerconnection.setLocalDescription(offer).catch(err=>{
                     console.log(err)
                   });
-                  this.localoffer=offer;
-                  console.log(this.localoffer);
+                  console.log(offer);
                   this.getLastOfferforUser(this.localoffer);
+                  this.webrtcservice.sendDataforCall({ type: "offer",user_id:this.peerUserid,data:offer});
+                 
                   })
                  
              
@@ -400,7 +401,7 @@ hasVideoparam={width:226,height:144};
           }
           else{
             localStorage.setItem("call_info",JSON.stringify({user_id:this.userid,is_refreshed:false}));
-            await this.createOfferForPeer(); 
+           
            
           }
           break;
@@ -420,7 +421,7 @@ hasVideoparam={width:226,height:144};
              this.callstarttime=callstat?.last_duration;
              }
              else{
-            this.webrtcservice.sendDataforCall({ type: "offer",user_id:this.peerUserid,data:this.localoffer});
+              await this.createOfferForPeer(); 
             this.senduserInformation();
             this.callstart=true;
             this.callstarttime=new Date().getTime();
@@ -500,6 +501,7 @@ hasVideoparam={width:226,height:144};
               track.stop();
             })
           }
+          this.peerconnection.close();
           this.webrtcservice.sendDataforCall({type:"hangup",data:""});
           this.closeVideoCall();
         }
@@ -589,6 +591,7 @@ hasVideoparam={width:226,height:144};
           if(this.camerabtn==false || this.peercamera==true)
           {
             this.dialogRef.addPanelClass('maximizeVideocallinterface');
+            this.renderer.setStyle(this.remotevideo.nativeElement, "display", "none");
             this.hidecamera=false;
           }
           else 
@@ -661,10 +664,7 @@ hasVideoparam={width:226,height:144};
             this.localVideo.nativeElement.srcObject=this.localstream;
             // this.localstream=new MediaStream([videotrack[0]])
             this.localstream.addTrack(videotrack[0]);
-            this.localstream.getTracks().forEach(track=>{
-              this.peerconnection.addTrack(track,this.localstream);
-            })
-            this.peerconnection.addTrack(videotrack[0],this.localstream);
+              this.peerconnection.addTrack(videotrack[0],this.localstream);
             }).then(async ()=>{
                 const offer:RTCSessionDescriptionInit=await this.peerconnection.createOffer({
                 offerToReceiveAudio:true,
@@ -790,6 +790,7 @@ hasVideoparam={width:226,height:144};
         if(this.peerscreenView==true)
         {
           this.renderer.setStyle(this.remotevideo.nativeElement, "object-fit", "revert");
+          
         }
         else 
         {
