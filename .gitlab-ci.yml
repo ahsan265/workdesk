@@ -21,10 +21,10 @@ variables:
     PROJECT_PATH: "$CI_PROJECT_DIR"
     APP_OUTPUT_PATH: "$CI_PROJECT_DIR"
 
-build-push-link-job:       # This job runs in the build stage, which runs first.
+build-push-deploy-job:       # This job runs in the build stage, which runs first.
     stage: build-push-deploy
     only:
-        - develop
+        - master
     image: docker:20.10.9-alpine3.14
     services:
         - docker:dind
@@ -38,16 +38,14 @@ build-push-link-job:       # This job runs in the build stage, which runs first.
         - npm config set @gigaaa:registry https://gitlab.gigaaa.com/api/v4/projects/59/packages/npm/
         - npm config set -- '//gitlab.gigaaa.com/api/v4/projects/59/packages/npm/:_authToken' "$NPM_TOKEN"
         - npm install
-        - ng build -c gigaaalink
+        - ng build -c production
         - cd $APP_OUTPUT_PATH
-        - docker build --tag coreacr.azurecr.io/workdesk:azuredev .
-        - docker push coreacr.azurecr.io/workdesk:azuredev
-rollout-link-job:
+        - docker build --tag coreacr.azurecr.io/workdesk:gconsole .
+        - docker push coreacr.azurecr.io/workdesk:gconsole
+rollout-job:
     stage: rollout
-    only:
-      - develop
     variables:
       DEPLOYMENT: workdesk
     trigger:
       project: development/k8s-agent
-      branch: develop
+      branch: master

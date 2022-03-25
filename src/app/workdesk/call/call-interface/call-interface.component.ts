@@ -61,6 +61,10 @@ hasVideoparam={width:226,height:144};
       
   @ViewChild ('remoteVideo')  remotevideo: ElementRef;
   @ViewChild ('remoteVideo1')  remotevideo1: ElementRef;
+  @ViewChild ('textforscreen') textforscreen:ElementRef;
+  @ViewChild ('usercamera') usercamera:ElementRef;
+  @ViewChild ('callcontrol') callcontrol:ElementRef;
+
 
  showUserRemoveVideo:boolean;
   dragPosition = {x: 0, y: 0};
@@ -99,6 +103,9 @@ hasVideoparam={width:226,height:144};
  mediaDevices = navigator.mediaDevices as any;
  startstats:any;
  callQualityIndicator:any;
+
+ ismousemove:boolean=true;
+
       constructor(private changeDetector: ChangeDetectorRef,
      public dialogRef: MatDialogRef<CallInterfaceComponent>,
      private webrtcservice:webrtcsocket,
@@ -126,7 +133,7 @@ hasVideoparam={width:226,height:144};
           catch (e) {
           console.log(e);
             }
-        }
+           }
 
             ngOnDestroy(): void {
             this.destroyed$.next();
@@ -153,6 +160,34 @@ hasVideoparam={width:226,height:144};
            this.changeDetector.detectChanges();
           // this.CallDuration()
          
+        }
+
+        @HostListener('document:mousemove', ['$event'])
+        onMouseDown(event) {
+          let  timeout;
+          if(this.peerscreenView==true)
+          {
+            this.renderer.setStyle(this.usercamera.nativeElement, "visibility", "visible");
+            this.renderer.setStyle(this.usercamera.nativeElement, "animation-delay", "0.4s");
+            this.renderer.setStyle(this.callcontrol.nativeElement, "visibility", "visible");
+            this.renderer.setStyle(this.callcontrol.nativeElement, "animation-delay", "0.4s");
+          }
+       
+          clearTimeout(timeout);
+
+          timeout= setTimeout(()=>{
+            this.mouseStopped();
+          },5000);
+        }        
+        mouseStopped()
+        {
+          if(this.peerscreenView==true)
+          { 
+            this.renderer.setStyle(this.usercamera.nativeElement, "visibility", "hidden");
+            this.renderer.setStyle(this.usercamera.nativeElement, "animation-delay", "0.4s");
+            this.renderer.setStyle(this.callcontrol.nativeElement, "visibility", "hidden");
+            this.renderer.setStyle(this.callcontrol.nativeElement, "animation-delay", "0.4s");
+          }
         }
        
         showUserInformation()
@@ -309,7 +344,7 @@ hasVideoparam={width:226,height:144};
     private handIceCandidateEvent=(event:RTCPeerConnectionIceEvent)=>
     {
       console.log(event)
-      if(event.candidate)
+      if(event.candidate!=null)
       {
         if(event.candidate.type=='relay')
         {
@@ -416,7 +451,7 @@ hasVideoparam={width:226,height:144};
               await this.createPeerConnection()
             }
              await this.getcallTypeforPagereload();
-             this.getPeerDataInformation(callstat?.peer_devices_info);
+             this.getPeerDataInformation(callstat?.peer_devices_info.data);
              this.callstart=true;
              this.callstarttime=callstat?.last_duration;
              }
@@ -467,8 +502,9 @@ hasVideoparam={width:226,height:144};
         }
         private async handleAnswereMessage(data:RTCSessionDescriptionInit): Promise<void>
         { 
-          await   this.peerconnection.setRemoteDescription(new RTCSessionDescription(data)).catch(err=>{
-            console.log(err)
+          console.log(data)
+          await this.peerconnection.setRemoteDescription(new RTCSessionDescription(data)).catch(err=>{
+          console.log(err)
           })
         }
 
@@ -600,7 +636,8 @@ hasVideoparam={width:226,height:144};
           }
            this.unsplitIcon='../../../../assets/assets_workdesk/split_icon12.svg';
            this.splitIcon='../../../../assets/assets_workdesk/smallscreen_icon12.svg'
-
+          
+           this.hideScreen(this.peerscreenView);
         }
         else{
           this.unsplitIcon='../../../../assets/assets_workdesk/split_icon14.svg';
@@ -611,16 +648,10 @@ hasVideoparam={width:226,height:144};
           this.changePosition();
           this.dialogRef.removePanelClass(['maximizeVideocallinterface','minimizecallinterface']);
           this.dialogRef.addPanelClass('callinterface-form-container');
+          this.hideScreen(false);
         }
-        if(this.peerscreenView==true)
-        {
-          this.renderer.setStyle(this.remotevideo.nativeElement, "display", "none");
-
-        }
-        else{
-          this.renderer.setStyle(this.remotevideo.nativeElement, "display", "block");
-
-        }
+        
+     
         }
    
       private async  startvideoCall() :Promise<void>
@@ -811,9 +842,27 @@ hasVideoparam={width:226,height:144};
           this.dialogRef.removePanelClass('minimizecallinterface');
           this.dialogRef.removePanelClass('callinterface-form-container');
           this.dialogRef.addPanelClass('maximizeVideocallinterface');
+          this.hideScreen(this.peerscreenView);
+          if(this.peerscreenView==true)
+          {
+            this.hideScreen(this.peerscreenView);
+          }
         }
+       
         this.peerdeviceinfo(data);
-
+        if(this.peerscreenView!=false)
+        {
+          this.renderer.setStyle(this.usercamera.nativeElement, "visibility", "hidden");
+          this.renderer.setStyle(this.usercamera.nativeElement, "animation-delay", "0.4s");
+          this.renderer.setStyle(this.callcontrol.nativeElement, "visibility", "hidden");
+          this.renderer.setStyle(this.callcontrol.nativeElement, "animation-delay", "0.4s");
+        }
+        else{
+          this.renderer.setStyle(this.usercamera.nativeElement, "visibility", "visible");
+          this.renderer.setStyle(this.usercamera.nativeElement, "animation-delay", "0.4s");
+          this.renderer.setStyle(this.callcontrol.nativeElement, "visibility", "visible");
+          this.renderer.setStyle(this.callcontrol.nativeElement, "animation-delay", "0.4s");
+        }
        }
        // screen share to other peer
 
@@ -1004,5 +1053,22 @@ hasVideoparam={width:226,height:144};
               })
            }
          }
+          // hide the screeen share 
+          hideScreen(val)
+          {
+            console.log(val)
+            if(val==true)
+            {
+              this.renderer.setStyle(this.remotevideo.nativeElement, "visibility", "hidden");
+              this.renderer.setStyle(this.textforscreen.nativeElement, "display", "block");
 
+    
+            }
+            else if(val==false)
+            {
+              this.renderer.setStyle(this.remotevideo.nativeElement, "visibility", "visible");
+              this.renderer.setStyle(this.textforscreen.nativeElement, "display", "none");
+
+            }
+          }
 }

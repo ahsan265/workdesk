@@ -37,14 +37,14 @@
 
 
  <div class="callarea desktop">
-  <div class="dragarea " [ngStyle]="{'width':(splitscreen==true ) ? '50%' : '100%'}" >
+  <div  class="dragarea " [ngStyle]="{'width':(splitscreen==true ) ? '50%' : '100%'}" >
         <div style="display: block;
         z-index: 1001;
         position: absolute;
         right: 51%;" [ngClass]="splitscreen==true? 'unsplit' : ' splitscreen'"   [ngStyle]="{'display': (splitscreen==true) ? 'block' : 'none'}">
         <img (click)="splitScreen(splitscreen)"   class="spliticon" [src]="splitIcon" alt="">
         </div>
-        <div  [cdkDragFreeDragPosition]="dragPosition"  [hidden]="splitscreen" [ngStyle]="{'background': (camerabtn==true) ? '#2B3A51' : '#000000'}" cdkDragBoundary=".dragarea" class="loggedUsercamera" cdkDrag>
+        <div #usercamera id="usercamera"  [cdkDragFreeDragPosition]="dragPosition"  [hidden]="splitscreen" [ngStyle]="{'background': (camerabtn==true) ? '#2B3A51' : '#000000'}" cdkDragBoundary=".dragarea" class="loggedUsercamera" cdkDrag>
          <p *ngIf="camerabtn" class="capitalinitials">{{firstuserFirstName}}{{firstuserLastName}}</p>
                   <video  id="localVideo"  aria-valuemin="0" aria-valuemax="100" #localVideo [autoplay]='true' [muted]="true"  class="localcamera"  
                   style="border-radius: 4px;
@@ -158,13 +158,15 @@
         position: absolute;
         display: block;"  ></video> -->
       </div>
-
+      <div #textforscreen id="textforscreen" class="sharescreenmsg">
+        <p class="sharescrntext">Switch to maximize mode to see the screen share.</p>
+      </div>
   </div>
 </div>
       
-<div class="callcontrolpanel" >
+<div class="callcontrolpanel"id="callcontrol" #callcontrol >
    
-  <div class="callcontrol"  [ngStyle]="{'background': (hideContant==false) ? '#162741' : 'rgba(22, 39, 65, 0.73);'}">
+  <div id="callcontrol" #callcontrol class="callcontrol"  [ngStyle]="{'background': (hideContant==false) ? '#162741' : 'rgba(22, 39, 65, 0.73);'}">
       
       <div class="callcontrolicons">
           <div class="callicons" [ngStyle]="{'background': (micbtn==true) ? 'rgba(255, 255, 255, 0.1)' : '#1C54DB'}"  (click)=" micebtncheck(micbtn)"   >

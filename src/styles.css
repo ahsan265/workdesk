@@ -2597,6 +2597,9 @@ body .bs-datepicker-container  .bs-datepicker-body   tbody tr:nth-child(even){
     object-fit: cover!important;
     position: absolute!important;
 }
+/* .maximizeVideocallinterface .sharescreenmsg{
+    display: block !important;
+} */
 .maximizeVideocallinterface .unsplit {
     top: 0px !important;
 }
