@@ -1,4 +1,4 @@
-<div class="minimizearea" style="height: 100%;"  [cdkDragDisabled]="is_dragable" 
+<div id="dragarea" #dragarea class="minimizearea" style="height: 100%;"  [cdkDragDisabled]="is_dragable" 
     cdkDrag  cdkDragBoundary=".main" 
     [cdkDragFreeDragPosition]="dragPosition"  cdkDragHandle >
 <div class="callinterface" >
@@ -37,7 +37,7 @@
 
 
  <div class="callarea desktop">
-  <div  class="dragarea " [ngStyle]="{'width':(splitscreen==true ) ? '50%' : '100%'}" >
+  <div   class="dragarea " [ngStyle]="{'width':(splitscreen==true ) ? '50%' : '100%'}" >
         <div style="display: block;
         z-index: 1001;
         position: absolute;
@@ -164,12 +164,48 @@
   </div>
 </div>
       
-<div class="callcontrolpanel"id="callcontrol" #callcontrol >
-   
+<div class="callcontrolpanel">
+
   <div id="callcontrol" #callcontrol class="callcontrol"  [ngStyle]="{'background': (hideContant==false) ? '#162741' : 'rgba(22, 39, 65, 0.73);'}">
-      
-      <div class="callcontrolicons">
-          <div class="callicons" [ngStyle]="{'background': (micbtn==true) ? 'rgba(255, 255, 255, 0.1)' : '#1C54DB'}"  (click)=" micebtncheck(micbtn)"   >
+   <!-- popup for switching devices -->
+    <div class="deviceswitcherpanel" id="switchpanel" #switchpanel>
+      <div class="deviceswitcher">
+        <div class="switcherheaderpanel">
+         <img class=" sw_heading_img" height="10" width="10" src="../../../../assets/assets_workdesk/microphone_icon.svg" alt=""> <p class="sw_heading_text">Microphones</p> 
+       </div>
+       <ul class="deviceslist">
+        <li class="deviceitem" *ngFor="let devc of inputMicrophone;" (click)="selectMicrophone(devc)">
+          <img [ngStyle]=" {'visibility': (devc.selected==true) ? 'visible' : 'hidden'}" height="10" width="10"  class="sw_img" src="../../../../assets/assets_workdesk/green_check_icon.svg" alt="">
+          <p class="devicename">{{devc.data.label}}</p>
+          <div class="voicelevels">
+            <div class="voicebars" *ngFor="let bar of getArray(8);">
+              
+            </div>
+          </div>
+        </li>
+        </ul>
+      </div>
+      <div class="deviceswitcher">
+        <div class="switcherheaderpanel">
+          <img class="sw_heading_img" src="../../../../assets/assets_workdesk/speakers_icon.svg" alt=""> <p class="sw_heading_text">Speakers</p> 
+       </div>
+       <ul class="deviceslist">
+        <li  class="deviceitem" *ngFor="let devc of outputSpeaker;" (click)="selectSpeaker(devc)">
+          <img  [ngStyle]=" {'visibility': (devc.selected==true) ? 'visible' : 'hidden'}" class="sw_img" src="../../../../assets/assets_workdesk/green_check_icon.svg" alt="">
+          <p class="devicename speaker">{{devc.data.label}}</p>
+        </li>
+        </ul>
+      </div>
+    </div>  
+      <div id="callcontrol" #callcontrol class="callcontrol" class="callcontrolicons">
+          <div class="miccontrolbtnpanel" (click)="showswitcher(showSwitcher)" [ngStyle]="{'background': (showSwitcher==true) ? 'rgba(255, 255, 255, 0.1)' : '#1C54DB'}">
+            <img style="width: fit-content;
+            position: absolute;
+            transition-duration: 0.4s;
+            margin: 5px 4px;
+            text-align: center;"  [ngStyle]="{'transform': (showSwitcher==true) ? 'rotatex(0deg)' : 'rotatex(180deg)'}" src="../../../../assets/assets_workdesk/small_arrow.svg" alt="">
+          </div> 
+        <div class="callicons" [ngStyle]="{'background': (micbtn==true) ? 'rgba(255, 255, 255, 0.1)' : '#1C54DB'}"  (click)=" micebtncheck(micbtn)"   >
            <img  class="caIcon"  height="30" width="30" [src]="micIcon" alt="" >
           </div>
            
@@ -180,10 +216,10 @@
     
           <div class="callicons" style="margin-right: 0px;" [ngStyle]="{'background': (screensharebtn==true) ? 'rgba(255, 255, 255, 0.1)' : '#1C54DB'}" (click)="screensharebtncheck(screensharebtn)"  >
             <img   class="caIcon" height="30" width="30" style="display: block;
-          " src="../../../../assets/assets_workdesk/sharing.svg" alt="">
+" src="../../../../assets/assets_workdesk/sharing.svg" alt="">
           </div>
       </div>
-      <div class="calltime_drop">
+      <div id="callcontrol" #callcontrol class="callcontrol" class="calltime_drop">
           <p class="calltime">{{showtime()}}</p>
           <div class="callicon_drop" (click)=" hangupCall()">
             <img  class="hangicon" src="../../../../assets/assets_workdesk/endcall.svg" alt="">

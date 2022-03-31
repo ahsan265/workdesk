@@ -57,13 +57,15 @@ hasVideoparam={width:226,height:144};
 
   @ViewChild ('localVideo')  localVideo: ElementRef;
   @ViewChild ('localVideo1')  localVideo1: ElementRef;
-
+  @ViewChild ('dragarea')  dragarea: ElementRef;
       
   @ViewChild ('remoteVideo')  remotevideo: ElementRef;
   @ViewChild ('remoteVideo1')  remotevideo1: ElementRef;
   @ViewChild ('textforscreen') textforscreen:ElementRef;
   @ViewChild ('usercamera') usercamera:ElementRef;
   @ViewChild ('callcontrol') callcontrol:ElementRef;
+
+  @ViewChild ('switchpanel') switchpanel:ElementRef;
 
 
  showUserRemoveVideo:boolean;
@@ -106,6 +108,12 @@ hasVideoparam={width:226,height:144};
 
  ismousemove:boolean=true;
 
+ inputMicrophone=[];
+ outputSpeaker=[];
+ inputDeviceid:any;
+ outputDeviceid:any;
+ showSwitcher:boolean=true;
+
       constructor(private changeDetector: ChangeDetectorRef,
      public dialogRef: MatDialogRef<CallInterfaceComponent>,
      private webrtcservice:webrtcsocket,
@@ -114,12 +122,20 @@ hasVideoparam={width:226,height:144};
         private message:MessageService) 
         { 
           this.callQualityIndicator='../../../../assets/assets_workdesk/red.svg'
+          this.showListofDevices();
+          this.detectDevices();
+
+          // this.renderer.listen(this.dragarea.nativeElement, 'click', e=>{
+          //   this.showSwitcher=true;
+          //   this.renderer.setStyle(this.switchpanel.nativeElement, "display", "none");
+          // })
         }
         // request video and audio 
         private async requestmediadevices(val:any): Promise<void>
         {
           try {
           this.localstream=await navigator.mediaDevices.getUserMedia(val)
+          console.log( this.localstream)
           this.localstream.getTracks().forEach(track => {
             track.enabled=true
           }); 
@@ -141,6 +157,8 @@ hasVideoparam={width:226,height:144};
             }
 
           ngOnInit(): void {
+            this.showUserInformation();
+            this.addIncomingCallHandler();
             const callstat=JSON.parse(localStorage.getItem("call_info"))
             if(callstat==null)
             {
@@ -150,8 +168,7 @@ hasVideoparam={width:226,height:144};
             {
               this.webrtcservice.callUserSocket(this.data.call_uuid,callstat?.user_id,callstat?.is_refreshed);
             }
-          this.addIncomingCallHandler();
-          this.showUserInformation()
+         
           interval(1000).subscribe(() => {
             if (!this.changeDetector['destroyed']) {
               this.changeDetector.detectChanges();
@@ -165,28 +182,58 @@ hasVideoparam={width:226,height:144};
         @HostListener('document:mousemove', ['$event'])
         onMouseDown(event) {
           let  timeout;
-          if(this.peerscreenView==true)
-          {
-            this.renderer.setStyle(this.usercamera.nativeElement, "visibility", "visible");
-            this.renderer.setStyle(this.usercamera.nativeElement, "animation-delay", "0.4s");
-            this.renderer.setStyle(this.callcontrol.nativeElement, "visibility", "visible");
-            this.renderer.setStyle(this.callcontrol.nativeElement, "animation-delay", "0.4s");
-          }
-       
-          clearTimeout(timeout);
-
-          timeout= setTimeout(()=>{
-            this.mouseStopped();
-          },5000);
+          this.renderer.listen(this.dragarea.nativeElement, 'mousemove', e => {
+            if(this.peerscreenView==true)
+            {            
+              this.renderer.setStyle(this.usercamera.nativeElement, "z-index", "2");
+              this.renderer.setStyle(this.usercamera.nativeElement, "display", "flex");
+              this.renderer.setStyle(this.usercamera.nativeElement, "transform", "translatex(-150%)");
+              this.renderer.setStyle(this.usercamera.nativeElement, "transform", "unset");
+              this.renderer.setStyle(this.usercamera.nativeElement, "transition", "0.5s");
+             // this.renderer.setStyle(this.usercamera.nativeElement, "transition", "all 0.3s");
+             this.renderer.setStyle(this.callcontrol.nativeElement, "z-index", "2");
+              this.renderer.setStyle(this.callcontrol.nativeElement, "display", "inline-block");
+              this.renderer.setStyle(this.callcontrol.nativeElement, "transform", "translatey(150%)");
+              this.renderer.setStyle(this.callcontrol.nativeElement, "transform", "unset");
+              this.renderer.setStyle(this.callcontrol.nativeElement, "transition", "0.5s");
+             // this.renderer.setStyle(this.callcontrol.nativeElement, "transition", "all 0.3s");
+            }
+            clearTimeout(timeout);
+            timeout= setTimeout(()=>{
+              this.mouseStopped();
+            },5000);
+          });
+          
         }        
         mouseStopped()
         {
           if(this.peerscreenView==true)
           { 
-            this.renderer.setStyle(this.usercamera.nativeElement, "visibility", "hidden");
-            this.renderer.setStyle(this.usercamera.nativeElement, "animation-delay", "0.4s");
-            this.renderer.setStyle(this.callcontrol.nativeElement, "visibility", "hidden");
-            this.renderer.setStyle(this.callcontrol.nativeElement, "animation-delay", "0.4s");
+            this.renderer.setStyle(this.usercamera.nativeElement, "display", "flex");
+            if(this.hideContant==false)
+            {
+              this.renderer.setStyle(this.usercamera.nativeElement, "transform", "translatex(0%)");
+
+            }
+            else{
+              this.renderer.setStyle(this.usercamera.nativeElement, "transform", "translatex(-150%)");
+            }
+            this.renderer.setStyle(this.usercamera.nativeElement, "z-index", "-1");
+            this.renderer.setStyle(this.usercamera.nativeElement, "transition", "0.5s");
+            this.renderer.setStyle(this.callcontrol.nativeElement, "display", "inline-block");
+            if(this.hideContant==false)
+            {
+              this.renderer.setStyle(this.callcontrol.nativeElement, "transform", "translatey(0%)");
+
+            }
+            else{
+              this.renderer.setStyle(this.callcontrol.nativeElement, "transform", "translatey(150%)");
+
+            }
+            this.renderer.setStyle(this.callcontrol.nativeElement, "z-index", "-1");
+            this.renderer.setStyle(this.callcontrol.nativeElement, "transition", "0.5s");
+
+            //this.renderer.setStyle(this.callcontrol.nativeElement, "transition", "all 0.3s");
           }
         }
        
@@ -195,7 +242,8 @@ hasVideoparam={width:226,height:144};
           const user = JSON.parse(localStorage.getItem('gigaaa-user'));
           this.userFirstName=user.profile.first_name;
           this.userLastName=user.profile.last_name;
-          this.userPicture=user.agent_images['96'];
+         // this.userPicture=user.agent_images['96'];
+            this.userPicture=user.avatar_url;
           this.firstuserFirstName= this.userFirstName.toUpperCase().charAt(0);
           this.firstuserLastName= this.userLastName.toUpperCase().charAt(0)
 
@@ -232,7 +280,7 @@ hasVideoparam={width:226,height:144};
                     console.log(err)
                   });
                   console.log(offer);
-                  this.getLastOfferforUser(this.localoffer);
+               //   this.getLastOfferforUser(this.localoffer);
                   this.webrtcservice.sendDataforCall({ type: "offer",user_id:this.peerUserid,data:offer});
                  
                   })
@@ -271,24 +319,44 @@ hasVideoparam={width:226,height:144};
             {
               urls: 'stun:stun.l.google.com:19302',
             },
-            {
-              urls: "stun:openrelay.metered.ca:80",
-            },
-            {
-              urls: 'turn:openrelay.metered.ca:80',  // A TURN server
-              username: 'openrelayproject',
-              credential: 'openrelayproject',
-            },
-            {
-              urls: "turn:openrelay.metered.ca:443",
-              username: "openrelayproject",
-              credential: "openrelayproject",
-            },
-            {
-              urls: "turn:openrelay.metered.ca:443?transport=tcp",
-              username: "openrelayproject",
-              credential: "openrelayproject",
-            },
+            // {
+            //   urls: "stun:openrelay.metered.ca:80",
+            // },
+            // {
+            //   urls: 'turn:openrelay.metered.ca:80',  // A TURN server
+            //   username: 'openrelayproject',
+            //   credential: 'openrelayproject',
+            // },
+            // {
+            //   urls: "turn:openrelay.metered.ca:443",
+            //   username: "openrelayproject",
+            //   credential: "openrelayproject",
+            // },
+            // {
+            //   urls: "turns:openrelay.metered.ca:443",
+            //   username: "openrelayproject",
+            //   credential: "openrelayproject",
+            // },
+            // {
+            //   urls: "turn:openrelay.metered.ca:443?transport=tcp",
+            //   username: "openrelayproject",
+            //   credential: "openrelayproject",
+            // },
+              {
+                urls: "turn:turn.gigaaa.com:3478",
+                username: "username",
+                credential: "password",
+              },
+              {
+                urls: "turn:turn.gigaaa.com:3478?transport=tcp ",
+                username: "username",
+                credential: "password",
+              },
+              {
+                urls: "turns:turn.gigaaa.com:3478?transport=tcp ",
+                username: "username",
+                credential: "password",
+              },
            
         ],
         iceTransportPolicy:'all',
@@ -400,7 +468,8 @@ hasVideoparam={width:226,height:144};
    
       ngAfterViewInit(): void {
         this.requestmediadevices(this.webrtcmediacontraints);
-        this.createPeerConnection()
+        this.createPeerConnection();
+
 
       }
   // add incoming call handler
@@ -409,8 +478,8 @@ hasVideoparam={width:226,height:144};
         this.webrtcservice.callobject$.subscribe(async (msg:any)=>{
           let callstat= await JSON.parse(localStorage.getItem("call_info"));
 
-      switch(msg.type)
-      {
+        switch(msg.type)
+        {
           case "offer":
             console.log(msg.data)
             if(msg.data!=undefined)
@@ -430,34 +499,33 @@ hasVideoparam={width:226,height:144};
           break;
           case "user_id":
           this.userid=msg.id;
-          if(callstat?.is_refreshed==true)
+          if(callstat?.is_refreshed!=true)
           {
-          this.webrtcservice.sendDataforCall(callstat?.user_devices_info)
+            localStorage.setItem("call_info",JSON.stringify({user_id:this.userid,is_refreshed:false}));
+            this.saveuserFirstinformation();
           }
           else{
-            localStorage.setItem("call_info",JSON.stringify({user_id:this.userid,is_refreshed:false}));
-           
-           
+            this.webrtcservice.sendDataforCall({"type": "update_peer", "user_id":this.userid,"data":callstat?.user_devices_info.data})
           }
           break;
           case "accept":
-          console.log("accepts")
-          this.peerUserid=msg.user_id;
-     
-          if(callstat?.is_refreshed==true)
-          { 
+      
+              this.peerUserid=msg.user_id;
+            if(callstat?.is_refreshed==true)
+            {  
             if(!this.peerconnection)
             {
-              await this.createPeerConnection()
+                await this.createPeerConnection()
             }
              await this.getcallTypeforPagereload();
-             this.getPeerDataInformation(callstat?.peer_devices_info.data);
+             this.getPeerDataInformation(callstat?.peer_devices_info);
              this.callstart=true;
              this.callstarttime=callstat?.last_duration;
              }
              else{
-              await this.createOfferForPeer(); 
-            this.senduserInformation();
+               console.log("userinfor")
+           this.senduserInformation();
+            await this.createOfferForPeer(); 
             this.callstart=true;
             this.callstarttime=new Date().getTime();
             callstat['last_duration']=this.callstarttime;
@@ -470,6 +538,7 @@ hasVideoparam={width:226,height:144};
          
           break;
           case "peer_data":
+            console.log(msg)
           this.getPeerDataInformation(msg.data);
           
           break;
@@ -627,8 +696,8 @@ hasVideoparam={width:226,height:144};
           if(this.camerabtn==false || this.peercamera==true)
           {
             this.dialogRef.addPanelClass('maximizeVideocallinterface');
-            this.renderer.setStyle(this.remotevideo.nativeElement, "display", "none");
             this.hidecamera=false;
+        
           }
           else 
           { this.dialogRef.addPanelClass('minimizecallinterface');
@@ -649,6 +718,7 @@ hasVideoparam={width:226,height:144};
           this.dialogRef.removePanelClass(['maximizeVideocallinterface','minimizecallinterface']);
           this.dialogRef.addPanelClass('callinterface-form-container');
           this.hideScreen(false);
+
         }
         
      
@@ -682,7 +752,7 @@ hasVideoparam={width:226,height:144};
             console.log(err)
           })
          // this.localoffer=offer;
-          this.getLastOfferforUser(offer);
+        //  this.getLastOfferforUser(offer);
           this.webrtcservice.sendDataforCall({type: "offer",user_id:this.peerUserid,data:offer  });
 
         })
@@ -715,8 +785,9 @@ hasVideoparam={width:226,height:144};
                 console.log(err)
               });
             //  this.localoffer=offer;
-              this.getLastOfferforUser(offer);
+             
               this.webrtcservice.sendDataforCall({ type:"offer" ,user_id:this.peerUserid,data:offer});
+             // this.getLastOfferforUser(offer);
                 })
              }
 
@@ -803,12 +874,23 @@ hasVideoparam={width:226,height:144};
        // send user information 
        senduserInformation()
        {
+        
         const user = JSON.parse(localStorage.getItem('gigaaa-user'));
         this.userFirstName=user.profile.first_name;
         this.userLastName=user.profile.last_name;
-        this.userPicture=user.agent_images['original'];
-         this.webrtcservice.sendDataforCall({"type": "update_peer", "user_id":this.userid,"data":{"is_camera_on": false, "is_microphone_on":true, "is_shared_screen":false, "first_name":  this.userFirstName,"last_name":  this.userLastName, "img_url":this.userPicture}})
-       this.setUserInfo({"type": "update_peer","user_id":this.userid,"data":{"is_camera_on": false, "is_microphone_on":true, "is_shared_screen":false, "first_name":  this.userFirstName,"last_name":  this.userLastName, "img_url":this.userPicture}})
+        this.userPicture=user.avatar_url;
+        this.userPicture=user.avatar_url;
+        this.webrtcservice.sendDataforCall({"type": "update_peer", "user_id":this.userid,"data":{"is_camera_on": false, "is_microphone_on":true, "is_shared_screen":false, "first_name":  this.userFirstName,"last_name":  this.userLastName, "img_url":this.userPicture}})
+        }
+        saveuserFirstinformation()
+        {
+          const user = JSON.parse(localStorage.getItem('gigaaa-user'));
+        this.userFirstName=user.profile.first_name;
+        this.userLastName=user.profile.last_name;
+        this.userPicture=user.avatar_url;
+        this.userPicture=user.avatar_url;
+        console.log(this.userFirstName,this.userLastName);
+        this.setUserInfo({"type": "update_peer","user_id":this.userid,"data":{"is_camera_on": false, "is_microphone_on":true, "is_shared_screen":false, "first_name":  this.userFirstName,"last_name":  this.userLastName, "img_url":this.userPicture}})
         }
 
        // get peer data information
@@ -819,10 +901,10 @@ hasVideoparam={width:226,height:144};
         this.peerLastname=data.last_name;
         this.peerPicture=data.img_url;
         this.peercamera=data.is_camera_on;
-        if(data.is_shared_screen==true)
-        { 
-          this.peercamera=data.is_shared_screen;
-        }
+        // if(data.is_shared_screen==true)
+        // { 
+        //   this.peercamera=data.is_shared_screen;
+        // }
         this.peerscreenView=data.is_shared_screen;
      
         this.peerFirstnameinitials= this.peerFirstname.toUpperCase().charAt(0);
@@ -842,26 +924,35 @@ hasVideoparam={width:226,height:144};
           this.dialogRef.removePanelClass('minimizecallinterface');
           this.dialogRef.removePanelClass('callinterface-form-container');
           this.dialogRef.addPanelClass('maximizeVideocallinterface');
-          this.hideScreen(this.peerscreenView);
-          if(this.peerscreenView==true)
-          {
+          this.renderer.setStyle(this.remotevideo.nativeElement, "display", "block");
+
+        //  this.hideScreen(this.peerscreenView);
+          console.log("hello")
             this.hideScreen(this.peerscreenView);
-          }
+      
+
         }
        
         this.peerdeviceinfo(data);
         if(this.peerscreenView!=false)
         {
-          this.renderer.setStyle(this.usercamera.nativeElement, "visibility", "hidden");
-          this.renderer.setStyle(this.usercamera.nativeElement, "animation-delay", "0.4s");
-          this.renderer.setStyle(this.callcontrol.nativeElement, "visibility", "hidden");
-          this.renderer.setStyle(this.callcontrol.nativeElement, "animation-delay", "0.4s");
+          this.renderer.setStyle(this.usercamera.nativeElement, "display", "none");
+         // this.renderer.setStyle(this.usercamera.nativeElement, "animation-delay", "0.4s");
+          this.renderer.setStyle(this.callcontrol.nativeElement, "display", "none");
+         // this.renderer.setStyle(this.callcontrol.nativeElement, "animation-delay", "0.4s");
         }
         else{
-          this.renderer.setStyle(this.usercamera.nativeElement, "visibility", "visible");
-          this.renderer.setStyle(this.usercamera.nativeElement, "animation-delay", "0.4s");
-          this.renderer.setStyle(this.callcontrol.nativeElement, "visibility", "visible");
-          this.renderer.setStyle(this.callcontrol.nativeElement, "animation-delay", "0.4s");
+        this.renderer.setStyle(this.usercamera.nativeElement, "z-index", "2");
+        this.renderer.setStyle(this.usercamera.nativeElement, "display", "flex");
+        this.renderer.setStyle(this.usercamera.nativeElement, "transform", "unset");
+        this.renderer.setStyle(this.usercamera.nativeElement, "transform", "unset");
+        this.renderer.setStyle(this.usercamera.nativeElement, "transition", "0.3s");
+       // this.renderer.setStyle(this.usercamera.nativeElement, "transition", "all 0.3s");
+       this.renderer.setStyle(this.callcontrol.nativeElement, "z-index", "2");
+        this.renderer.setStyle(this.callcontrol.nativeElement, "display", "inline-block");
+        this.renderer.setStyle(this.callcontrol.nativeElement, "transform", "unset");
+        this.renderer.setStyle(this.callcontrol.nativeElement, "transform", "unset");
+        this.renderer.setStyle(this.callcontrol.nativeElement, "transition", "0.3s");
         }
        }
        // screen share to other peer
@@ -873,7 +964,7 @@ hasVideoparam={width:226,height:144};
           if(val==true)
           {
            
-              this.mediaDevices.getDisplayMedia({video: true}).then(stream=>{
+              this.mediaDevices.getDisplayMedia({video:true}).then(stream=>{
                 this.screensharebtn=false;
                 stream.getTracks()[0].addEventListener('ended',()=>{
                   this.screensharebtn=true;
@@ -922,7 +1013,7 @@ hasVideoparam={width:226,height:144};
                   });
                   await this.peerconnection.setLocalDescription(offer);
                 //  this.localoffer=offer;
-                  this.getLastOfferforUser(this.localoffer);
+                 // this.getLastOfferforUser(this.localoffer);
                   this.webrtcservice.sendDataforCall({type: "offer" ,user_id:this.peerUserid,data:offer });
                   })
                 })
@@ -955,7 +1046,9 @@ hasVideoparam={width:226,height:144};
           console.log(data)
           let callstat=JSON.parse(localStorage.getItem("call_info"));
           callstat['user_devices_info']=data;
+          console.log(callstat)
           localStorage.setItem("call_info",JSON.stringify(callstat));
+          
 
         }
         // set peer device info
@@ -1009,7 +1102,7 @@ hasVideoparam={width:226,height:144};
                   console.log(err)
                 });
                // this.localoffer=offer;
-                this.getLastOfferforUser(this.localoffer);
+               // this.getLastOfferforUser(this.localoffer);
                 this.webrtcservice.sendDataforCall({ type:"offer" ,user_id:this.peerUserid,data:offer});
 
                   })
@@ -1067,8 +1160,188 @@ hasVideoparam={width:226,height:144};
             else if(val==false)
             {
               this.renderer.setStyle(this.remotevideo.nativeElement, "visibility", "visible");
+            //  this.renderer.setStyle(this.remotevideo.nativeElement, "visibility", "block");
               this.renderer.setStyle(this.textforscreen.nativeElement, "display", "none");
-
             }
           }
+
+          getArray(number:any)
+          {
+            return Array(number);
+          }
+          // select microphone options 
+          async selectMicrophone(Val)
+          {
+            console.log(Val)
+            let updateddata=this.setDefaultDevice(this.inputMicrophone,Val.data.label);
+            this.inputMicrophone=updateddata;
+            if (this.localstream) {
+              this.localstream.getTracks().forEach(track => {
+                track.stop();
+              });
+            }
+          
+            this.inputDeviceid=Val.data.deviceId;
+            let constraint={audio:{ deviceId: {exact: this.inputDeviceid}},video:this.hasVideoparam};
+            await navigator.mediaDevices.getUserMedia(constraint).then(stream=>{
+             this.localstream=stream;
+             this.localVideo.nativeElement.setSinkId=undefined;
+             this.localVideo1.nativeElement.srcObject=undefined;
+             this.localVideo.nativeElement.srcObject=stream;
+             this.localVideo1.nativeElement.srcObject=stream;
+
+           }).catch(err=>{
+             console.log(err)
+           })
+     
+         this.getcallTypeforPagereload();
+          }
+          // select speaker options 
+          async selectSpeaker(Val)
+          {
+            console.log(Val)
+            this.outputDeviceid=Val.deviceId;
+            let constraint={audio:{ deviceId: {exact: this.inputDeviceid}},video:{ deviceId: {exact: this.outputDeviceid}}};
+            let updateddata=this.setDefaultDevice(this.outputSpeaker,Val.data.label);
+            this.outputSpeaker=updateddata;
+        //  await  navigator.mediaDevices.getUserMedia(constraint)
+          }
+
+          setDefaultDevice(devices:Array<any>,selecteddeviceid:any)
+          {
+            let devicesData=[];
+            devices.forEach(element => {
+              if(element.selected==true)
+              {
+                element.selected=false
+              }
+              if(element.data.label==selecteddeviceid)
+              {
+                element.selected=true;
+                devicesData.push(element);
+              }
+              else{
+                devicesData.push(element);
+              }
+            });
+            console.log(devicesData);
+            return devicesData;
+          }
+          // show the list of devices input output 
+          showListofDevices()
+          {
+            let inputDevice=[];
+            let outputDevice=[];
+            navigator.mediaDevices.enumerateDevices().then(devices=>{
+              devices.forEach(device=>{
+              if(device.kind== "audioinput")
+              {
+                if(device.deviceId=="default")
+                {
+                  inputDevice.push({data:device,selected:true});
+                }
+                else{
+                  inputDevice.push({data:device,selected:false});
+                }
+              }
+              else if(device.kind=="audiooutput")
+              {
+                if(device.deviceId=="default")
+                {
+                  outputDevice.push({data:device,selected:true});
+
+                }
+                else{
+                  outputDevice.push({data:device,selected:false});
+                }
+
+              }
+           
+              })
+            })
+            this.inputMicrophone=inputDevice;
+            this.outputSpeaker=outputDevice;
+          }
+          // detect devices 
+          detectDevices()
+          {  
+            navigator.mediaDevices.addEventListener('devicechange', () => {
+              this.showListofDevices();
+              setInterval(()=>{
+                this.showMicroPhoneLevels();
+              },1000)
+            })
+          }
+          // show microphone levels 
+          showMicroPhoneLevels()
+          {  
+            let volumeCallback = null;
+            let volumeInterval = null;
+            navigator.mediaDevices.getUserMedia({
+              audio: true,
+            })
+              .then(function(stream) {
+                const audioContext = new AudioContext();
+                const analyser = audioContext.createAnalyser();
+                const audioSource = audioContext.createMediaStreamSource(stream);
+               // const scriptProcessor = audioContext.createScriptProcessor(2048, 1, 1);
+               analyser.fftSize = 512;
+               analyser.minDecibels = -127;
+               analyser.maxDecibels = 0;
+               analyser.smoothingTimeConstant = 0.4;
+               audioSource.connect(analyser);
+               const volumes = new Uint8Array(analyser.frequencyBinCount);
+
+                 analyser.getByteFrequencyData(volumes);
+                 let volumeSum = 0;
+                 for(const volume of volumes)
+                   volumeSum += volume;
+                 const averageVolume = volumeSum / volumes.length;
+                 // Value range: 127 = analyser.maxDecibels - analyser.minDecibels;
+                // volumeVisualizer.style.setProperty('--volume', (averageVolume * 100 / 127) + '%');
+                console.log(averageVolume)
+                   this.showColoronBars(averageVolume * 100 / 127);
+            
+              })
+              .catch(err=>{
+                console.log(err)
+              })
+          }
+          // show color pids 
+        
+            showColoronBars(vol) {
+              
+              const allPids = [document.querySelectorAll('.voicebars') as unknown as HTMLElement];
+              const numberOfPidsToColor = Math.round(vol / 8);
+              const pidsToColor = allPids.slice(0, numberOfPidsToColor);
+              for (const pid of allPids) {
+                pid.style.backgroundColor = "#e6e7e8";
+              }
+              for (const pid of pidsToColor) {
+                // console.log(pid[i]);
+                pid.style.backgroundColor = "#69ce2b";
+              }
+             
+
+
+            }
+            showswitcher(val)
+            {
+              if(val==true)
+              {
+                this.showSwitcher=false;
+                this.renderer.setStyle(this.switchpanel.nativeElement, "display", "block");
+              }
+              else if(val==false)
+              {                
+                this.showSwitcher=true;
+                this.renderer.setStyle(this.switchpanel.nativeElement, "display", "none");
+              }
+             
+
+             
+            }
+
+            
+         
 }

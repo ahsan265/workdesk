@@ -11,7 +11,7 @@ export const environment = {
   accounts_callback_url: 'https://workdeskdev.gigaaa.com',
   accounts_client_id: 12,
   //
-  prod_url_cs:"https://nlu-test.gigaaa.link",
+  prod_url_cs:"https://gigaaa-customer-support.azurewebsites.net",
   prod_url_workdesk:"https://gigaaa-backend.azurewebsites.net",
   prod_anlytics:"https://gigaaa-analytics.azurewebsites.net",
 

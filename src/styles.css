@@ -2359,8 +2359,8 @@ body .bs-datepicker-container  .bs-datepicker-body   tbody tr:nth-child(even){
         width: 112px !important;
     }
     .maximizeVideocallinterface .loggedUsercamera .localcamera{
-        height: 70px !important;
-        width: 110px !important;
+        height: 71px !important;
+        width: 113px !important;
         object-fit: cover;
         margin: 0 auto;
         border-radius: 4px !important;
@@ -2438,7 +2438,7 @@ body .bs-datepicker-container  .bs-datepicker-body   tbody tr:nth-child(even){
     left: 0!important;
     width: 50%!important;
     height: 275px!important;
-    border-bottom-left-radius: 4px!important;
+    /* border-bottom-left-radius: 4px!important; */
     object-fit: cover!important;
     position: absolute!important;
   }
@@ -3095,7 +3095,7 @@ body .bs-datepicker-container  .bs-datepicker-body   tbody tr:nth-child(even){
     } 
     .callinterface-form-container .localcamera{
         height: 180px !important;
-        width: 138px !important;
+        width: 140px !important;
         object-fit: cover;
     }
     .userimagebig.desktop{

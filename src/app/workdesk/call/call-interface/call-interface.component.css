@@ -97,6 +97,8 @@ color: #FFFFFF;
     text-align: center;
     z-index: 2;
     position: relative;
+    transition: 0.3s;
+    transform: unset;
 }
 
 .callcontrolicons{
@@ -324,6 +326,129 @@ letter-spacing: 0.02em;
 color: #162741;
 
 }
+#localVideo{
+    width:226px;
+    height:144px
+  }
+  .miccontrolbtnpanel{
+    height: 14px;
+    width: 14px;
+    background: #1C54DB;
+    border-radius: 50%;
+    position: absolute;
+    right: 200px;
+    top: 3px;
+    cursor: pointer;
+    transition-duration: 0.3s;
+    
+  }
+  .miccontrolbtnpanel:hover{
+      background: #173C96 !important;
+  }
+  .deviceswitcher{
+    width: 293px;
+    height: 150px;
+    background: #2B3A51;
+    box-shadow: 3px 3px 10px rgb(0 0 0 / 23%);
+    border-radius: 4px;
+    margin-bottom: 8px;
+   padding: 0px;
+  }
+  .deviceswitcherpanel{
+    background: transparent;
+    position: absolute;
+    height: fit-content;
+    right: 60px;
+    bottom: 54px;
+    display: none;
+  }
+  .switcherheaderpanel{
+    display: block;
+    text-align: left;
+    padding-left: 10px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+  }
+  .sw_heading_img{
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+  }
+  .sw_img{
+    display: inline-block;
+    width: 10px;
+    height: 10px; 
+  }
+  .sw_heading_text{
+      display: inline-block;
+      font-family: 'Roboto';
+      font-style: normal;
+      font-weight: 500;
+      font-size: 16px;
+      line-height: 125%;
+      letter-spacing: 0.02em;
+      color: #FFFFFF;
+      margin-left: 12px;
+  }
+  .deviceslist{
+    list-style: none;
+    height: 105px;
+    overflow-y: scroll;
+    overflow-x: hidden;
+    scroll-behavior: smooth;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    display: inline-block;
+    padding: 0px;
+    text-align: left;
+    width: 100%;
+
+  }
+  .deviceslist::-webkit-scrollbar{
+      display: none;
+  }
+  .devicename{
+    font-family: 'Roboto';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 13px;
+    line-height: 35px;
+    vertical-align: middle;
+    margin-left: 12px;
+    width: 175px;
+    letter-spacing: 0.02em;
+    display: inline-block;
+    color: #FFFFFF;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  }
+  .devicename.speaker{
+      width: 225px;
+  }
+.voicelevels{
+    display: inline-block;
+    width: 65px;
+    height: 20px;
+    text-align: right;
+    line-height: 32px;
+    vertical-align: middle;
+}
+.voicebars{
+    width: 4.45px;
+    height: 20px;
+    background: #76CB09;
+    display: inline-block;
+    margin-left: 2px;
+}
+.deviceitem{
+    padding-left: 14px;
+    cursor: pointer;
+}
+.deviceitem:hover{
+    transition: 0.4s;
+    background: #243247;
+}
 @media (max-width: 768px){
     .callarea.desktop{
         display: block;
@@ -340,5 +465,8 @@ color: #162741;
     width: 35px;
     height: 35px;
     margin: 7px;
+  }
+  .signalindicator{
+      top: 12px;
   }
 }

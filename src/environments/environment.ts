@@ -42,7 +42,7 @@ export const environment = {
   accounts_callback_url: 'http://localhost:4202',
   accounts_client_id: 8,
   // 
-  prod_url_cs:"https://nlu-test.gigaaa.link",  /* https://gigaaa-customer-support.azurewebsites.net */
+  prod_url_cs:"https://gigaaa-customer-support.azurewebsites.net",  /* https://gigaaa-customer-support.azurewebsites.net */
   prod_url_workdesk:"https://gigaaa-backend.azurewebsites.net",
   prod_anlytics:"https://gigaaa-analytics.azurewebsites.net",
   //
@@ -50,8 +50,6 @@ export const environment = {
 
   logged_user:'https://api.gconsole.io/v1/api/v1',
   currentUser: 'https://api.gigaaa.link/api/v1/current-user'
-
-
 };
 
 // kub endpont 
@@ -75,7 +73,7 @@ export const environment = {
 //   websocket_url:"wss://kub-dev.gigaaa.link/websockets",
 //     // 
 //   logged_user:'https://kub-dev.gigaaa.link/v1/api/v1',
-   //  currentUser: 'https://kub-dev.gigaaa.link/users/me'
+//   currentUser: 'https://kub-dev.gigaaa.link/users/me'
 
 // };
 
