@@ -55,8 +55,8 @@ hasVideoparam={width:226,height:144};
   sharescreen:MediaStream;
   peerconnection:RTCPeerConnection;
 
-  @ViewChild ('localVideo')  localVideo: ElementRef;
-  @ViewChild ('localVideo1')  localVideo1: ElementRef;
+  @ViewChild ('localVideo')  localVideo: ElementRef<HTMLMediaElement>;
+  @ViewChild ('localVideo1')  localVideo1: ElementRef<HTMLMediaElement>;
   @ViewChild ('dragarea')  dragarea: ElementRef;
       
   @ViewChild ('remoteVideo')  remotevideo: ElementRef;
@@ -1185,10 +1185,11 @@ hasVideoparam={width:226,height:144};
              let constraint={audio:{  deviceId :this.inputDeviceid ? { exact : this.inputDeviceid } : undefined },video:this.hasVideoparam};
              await navigator.mediaDevices.getUserMedia(constraint).then(stream=>{
              this.localstream=stream;
-             this.localVideo.nativeElement.setSinkId=undefined;
+             this.localVideo.nativeElement.srcObject=undefined;
              this.localVideo1.nativeElement.srcObject=undefined;
              this.localVideo.nativeElement.srcObject=stream;
              this.localVideo1.nativeElement.srcObject=stream;
+         
 
        
            }).catch(err=>{
@@ -1276,12 +1277,12 @@ hasVideoparam={width:226,height:144};
                   let constraint={audio:{  deviceId :device.deviceId ? { exact : device.deviceId } : undefined },video:this.hasVideoparam};
                   await navigator.mediaDevices.getUserMedia(constraint).then(stream=>{
                     this.localstream=stream;
-                    this.localVideo.nativeElement.setSinkId=undefined;
+                    this.localVideo.nativeElement.srcObject=undefined;
                     this.localVideo1.nativeElement.srcObject=undefined;
                     this.localVideo.nativeElement.srcObject=stream;
                     this.localVideo1.nativeElement.srcObject=stream;
-                    
-          
+               
+            
                   })
                  
                 }
@@ -1331,10 +1332,11 @@ hasVideoparam={width:226,height:144};
             })
               .then((stream)=> {
                 const audioContext = new AudioContext();
+                
                 const analyser = audioContext.createAnalyser();
                 const microphone = audioContext.createMediaStreamSource(stream);
                 const scriptProcessor = audioContext.createScriptProcessor(2048, 1, 1);
-            
+               
                 analyser.smoothingTimeConstant = 0.8;
                 analyser.fftSize = 1024;
             
