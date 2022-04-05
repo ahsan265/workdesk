@@ -324,12 +324,13 @@ span{
   }
   .iconslist.last{
       margin-right: 0px;
+      margin-left: 9%;
   }
   .footer-columns.mfirst{
       margin-left: 9%;
   }   
   .footer-columns{
-     width: 45%;
+     width: 100%;
       margin-right: 0px;
   }
   .footer-columns.last{

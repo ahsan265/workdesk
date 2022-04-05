@@ -16,7 +16,7 @@ import { BreakpointObserver, BreakpointState } from '@angular/cdk/layout';
 import { trace } from 'console';
 import { getTime } from 'ngx-bootstrap/chronos/utils/date-getters';
 import { agentsocketapi } from 'src/app/service/agentsocketapi';
-import { publish } from 'rxjs/operators';
+import { min, publish } from 'rxjs/operators';
 import { ThemeService } from 'ng2-charts';
 import { async } from '@angular/core/testing';
 import { Stream } from 'stream';
@@ -66,6 +66,7 @@ hasVideoparam={width:226,height:144};
   @ViewChild ('callcontrol') callcontrol:ElementRef;
 
   @ViewChild ('switchpanel') switchpanel:ElementRef;
+  @ViewChild ('tooltip') tooltip:ElementRef;
 
 
  showUserRemoveVideo:boolean;
@@ -113,6 +114,8 @@ hasVideoparam={width:226,height:144};
  inputDeviceid:any;
  outputDeviceid:any;
  showSwitcher:boolean=true;
+ showtooltiptext:any;
+ remotetrackEvent:any;
 
       constructor(private changeDetector: ChangeDetectorRef,
      public dialogRef: MatDialogRef<CallInterfaceComponent>,
@@ -319,29 +322,26 @@ hasVideoparam={width:226,height:144};
             {
               urls: 'stun:stun.l.google.com:19302',
             },
-            // {
-            //   urls: "stun:openrelay.metered.ca:80",
-            // },
-            // {
-            //   urls: 'turn:openrelay.metered.ca:80',  // A TURN server
-            //   username: 'openrelayproject',
-            //   credential: 'openrelayproject',
-            // },
-            // {
-            //   urls: "turn:openrelay.metered.ca:443",
-            //   username: "openrelayproject",
-            //   credential: "openrelayproject",
-            // },
-            // {
-            //   urls: "turns:openrelay.metered.ca:443",
-            //   username: "openrelayproject",
-            //   credential: "openrelayproject",
-            // },
-            // {
-            //   urls: "turn:openrelay.metered.ca:443?transport=tcp",
-            //   username: "openrelayproject",
-            //   credential: "openrelayproject",
-            // },
+            {
+              urls: 'turn:openrelay.metered.ca:80',  // A TURN server
+              username: 'openrelayproject',
+              credential: 'openrelayproject',
+            },
+            {
+              urls: "turn:turn.gigaaa.com:80 ",
+              username: "username",
+              credential: "password",
+            },
+            {
+              urls: "turn:turn.gigaaa.com:443 ",
+              username: "username",
+              credential: "password",
+            },
+            {
+              urls: "turn:turn.gigaaa.com:443?transport=tcp ",
+              username: "username",
+              credential: "password",
+            },
               {
                 urls: "turn:turn.gigaaa.com:3478",
                 username: "username",
@@ -462,6 +462,7 @@ hasVideoparam={width:226,height:144};
     }
       private handleTrackEvent=(event:RTCTrackEvent)=>{
         console.log(event)
+        this.remotetrackEvent=event;
           this.remotevideo.nativeElement.srcObject= event.streams[0];
       }
   
@@ -1172,41 +1173,64 @@ hasVideoparam={width:226,height:144};
           // select microphone options 
           async selectMicrophone(Val)
           {
-            console.log(Val)
-            let updateddata=this.setDefaultDevice(this.inputMicrophone,Val.data.label);
-            this.inputMicrophone=updateddata;
             if (this.localstream) {
               this.localstream.getTracks().forEach(track => {
                 track.stop();
               });
             }
-          
+            let updateddata=this.setDefaultDevice(this.inputMicrophone,Val.data.label);
+            this.inputMicrophone=updateddata;
+            this.showMicroPhoneLevels(Val.data.deviceId);
             this.inputDeviceid=Val.data.deviceId;
-            let constraint={audio:{ deviceId: {exact: this.inputDeviceid}},video:this.hasVideoparam};
-            await navigator.mediaDevices.getUserMedia(constraint).then(stream=>{
+             let constraint={audio:{  deviceId :this.inputDeviceid ? { exact : this.inputDeviceid } : undefined },video:this.hasVideoparam};
+             await navigator.mediaDevices.getUserMedia(constraint).then(stream=>{
              this.localstream=stream;
              this.localVideo.nativeElement.setSinkId=undefined;
              this.localVideo1.nativeElement.srcObject=undefined;
              this.localVideo.nativeElement.srcObject=stream;
              this.localVideo1.nativeElement.srcObject=stream;
 
+       
            }).catch(err=>{
              console.log(err)
            })
+          
      
          this.getcallTypeforPagereload();
           }
           // select speaker options 
           async selectSpeaker(Val)
           {
-            console.log(Val)
             this.outputDeviceid=Val.deviceId;
-            let constraint={audio:{ deviceId: {exact: this.inputDeviceid}},video:{ deviceId: {exact: this.outputDeviceid}}};
+            let constraint={audio:{ deviceId: {exact: this.inputDeviceid}}};
             let updateddata=this.setDefaultDevice(this.outputSpeaker,Val.data.label);
             this.outputSpeaker=updateddata;
-        //  await  navigator.mediaDevices.getUserMedia(constraint)
+           await  navigator.mediaDevices.getUserMedia(constraint)
+       
+            //this.remotevideo.nativeElement.setSinkId(this.outputDeviceid);
+            this.remotetrackEvent
+            this.attachSinkId(this.remotevideo,this.outputDeviceid)
           }
 
+          attachSinkId(element, sinkId) {
+            if (typeof element.sinkId !== 'undefined') {
+              element.nativeElement.setSinkId(sinkId)
+                  .then(() => {
+                    console.log(`Success, audio output device attached: ${sinkId}`);
+                  })
+                  .catch(error => {
+                    let errorMessage = error;
+                    if (error.name === 'SecurityError') {
+                      errorMessage = `You need to use HTTPS for selecting audio output device: ${error}`;
+                    }
+                    console.error(errorMessage);
+                    // Jump back to first output device in the list as it's the default.
+                   // audioOutputSelect.selectedIndex = 0;
+                  });
+            } else {
+              console.warn('Browser does not support output device selection.');
+            }
+          }
           setDefaultDevice(devices:Array<any>,selecteddeviceid:any)
           {
             let devicesData=[];
@@ -1228,17 +1252,38 @@ hasVideoparam={width:226,height:144};
             return devicesData;
           }
           // show the list of devices input output 
-          showListofDevices()
+       private async showListofDevices()
           {
+
             let inputDevice=[];
             let outputDevice=[];
-            navigator.mediaDevices.enumerateDevices().then(devices=>{
-              devices.forEach(device=>{
+            let devicename;
+            navigator.mediaDevices.enumerateDevices().then( devices=>{
+              console.log(devices)
+              devices.forEach(async device=>{
               if(device.kind== "audioinput")
               {
                 if(device.deviceId=="default")
                 {
+                  devicename=device.label;
                   inputDevice.push({data:device,selected:true});
+                  if (this.localstream) {
+                    this.localstream.getTracks().forEach(track => {
+                      track.stop();
+                    });
+                  }
+                  this.showMicroPhoneLevels(device.deviceId);
+                  let constraint={audio:{  deviceId :device.deviceId ? { exact : device.deviceId } : undefined },video:this.hasVideoparam};
+                  await navigator.mediaDevices.getUserMedia(constraint).then(stream=>{
+                    this.localstream=stream;
+                    this.localVideo.nativeElement.setSinkId=undefined;
+                    this.localVideo1.nativeElement.srcObject=undefined;
+                    this.localVideo.nativeElement.srcObject=stream;
+                    this.localVideo1.nativeElement.srcObject=stream;
+                    
+          
+                  })
+                 
                 }
                 else{
                   inputDevice.push({data:device,selected:false});
@@ -1249,6 +1294,7 @@ hasVideoparam={width:226,height:144};
                 if(device.deviceId=="default")
                 {
                   outputDevice.push({data:device,selected:true});
+                 // this.showMicroPhoneLevels(device.deviceId);
 
                 }
                 else{
@@ -1258,73 +1304,80 @@ hasVideoparam={width:226,height:144};
               }
            
               })
+
             })
-            this.inputMicrophone=inputDevice;
+          this.inputMicrophone=inputDevice;
             this.outputSpeaker=outputDevice;
+  
+          
           }
           // detect devices 
-          detectDevices()
+       private async   detectDevices():Promise<void>
           {  
-            navigator.mediaDevices.addEventListener('devicechange', () => {
-              this.showListofDevices();
-              setInterval(()=>{
-                this.showMicroPhoneLevels();
-              },1000)
+            navigator.mediaDevices.addEventListener('devicechange', async () => {
+          await    this.showListofDevices();
+            
+               
+           
             })
           }
           // show microphone levels 
-          showMicroPhoneLevels()
+          showMicroPhoneLevels(mic_name)
           {  
-            let volumeCallback = null;
-            let volumeInterval = null;
+           
+            let avgsound;
             navigator.mediaDevices.getUserMedia({
               audio: true,
             })
-              .then(function(stream) {
+              .then((stream)=> {
                 const audioContext = new AudioContext();
                 const analyser = audioContext.createAnalyser();
-                const audioSource = audioContext.createMediaStreamSource(stream);
-               // const scriptProcessor = audioContext.createScriptProcessor(2048, 1, 1);
-               analyser.fftSize = 512;
-               analyser.minDecibels = -127;
-               analyser.maxDecibels = 0;
-               analyser.smoothingTimeConstant = 0.4;
-               audioSource.connect(analyser);
-               const volumes = new Uint8Array(analyser.frequencyBinCount);
-
-                 analyser.getByteFrequencyData(volumes);
-                 let volumeSum = 0;
-                 for(const volume of volumes)
-                   volumeSum += volume;
-                 const averageVolume = volumeSum / volumes.length;
-                 // Value range: 127 = analyser.maxDecibels - analyser.minDecibels;
-                // volumeVisualizer.style.setProperty('--volume', (averageVolume * 100 / 127) + '%');
-                console.log(averageVolume)
-                   this.showColoronBars(averageVolume * 100 / 127);
+                const microphone = audioContext.createMediaStreamSource(stream);
+                const scriptProcessor = audioContext.createScriptProcessor(2048, 1, 1);
             
+                analyser.smoothingTimeConstant = 0.8;
+                analyser.fftSize = 1024;
+            
+                microphone.connect(analyser);
+                analyser.connect(scriptProcessor);
+                scriptProcessor.connect(audioContext.destination);
+                scriptProcessor.onaudioprocess = ()=> {
+                  const array = new Uint8Array(analyser.frequencyBinCount);
+                  analyser.getByteFrequencyData(array);
+                  const arraySum = array.reduce((a, value) => a + value, 0);
+                  const average = arraySum / array.length;
+                  avgsound=Math.round(average)
+                  this.showcoloronbars(avgsound,mic_name);
+                };
               })
-              .catch(err=>{
-                console.log(err)
-              })
+              .catch((err) =>{
+                console.log(err);
+              });
+            
           }
           // show color pids 
-        
-            showColoronBars(vol) {
-              
-              const allPids = [document.querySelectorAll('.voicebars') as unknown as HTMLElement];
-              const numberOfPidsToColor = Math.round(vol / 8);
-              const pidsToColor = allPids.slice(0, numberOfPidsToColor);
-              for (const pid of allPids) {
-                pid.style.backgroundColor = "#e6e7e8";
-              }
-              for (const pid of pidsToColor) {
-                // console.log(pid[i]);
-                pid.style.backgroundColor = "#69ce2b";
-              }
-             
-
-
-            }
+          showcoloronbars(avgsound,mic_name)
+          {
+              const allPids =Array.from(document.querySelectorAll(".voicebars"+mic_name) as unknown as Array<HTMLElement>)
+                const numberOfPidsToColor = Math.round(avgsound / 10);
+            
+                const pidsToColor = allPids.slice(0, numberOfPidsToColor);
+                for (const pid of allPids) {
+                    pid.style.backgroundColor = "#3A4559";
+                }
+                for (const pid of pidsToColor) {
+                  pid.style.backgroundColor = "#76CB09";
+                }
+            
+                this.inputDeviceid=mic_name
+           
+          }
+          removethepreviousclasses()
+          {
+            // const allPids =Array.from(document.querySelectorAll(".voicebars"+this.inputDeviceid) as unknown as Array<HTMLElement>)
+            // allPids.map(node => node.parentNode.removeChild(node))
+          }
+       
             showswitcher(val)
             {
               if(val==true)
@@ -1342,6 +1395,14 @@ hasVideoparam={width:226,height:144};
              
             }
 
-            
+            // show tooltip on devices 
+            showtooltip(val)
+            {
+              this.showtooltiptext=val
+            }
+            // hide tooltip ond devices 
+            hidetooltip(val){
+              this.showtooltiptext=""
+            }
          
 }

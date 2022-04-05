@@ -3089,9 +3089,10 @@ body .bs-datepicker-container  .bs-datepicker-body   tbody tr:nth-child(even){
         padding-top: 9px !important;
     }
     .callinterface-form-container .loggedUsercamera{
-        height: 180px !important;
-        width: 140px!important;
-        bottom: 80px;
+    height: 180px !important;
+    width: 140px!important;
+    top: 50px;
+    left: 0px !important;
     } 
     .callinterface-form-container .localcamera{
         height: 180px !important;
@@ -3121,6 +3122,7 @@ body .bs-datepicker-container  .bs-datepicker-body   tbody tr:nth-child(even){
     }
     .callinterface-form-container .callcontrol{
         bottom: 26px !important;
+       
     }
     .maximizeVideocallinterface.callinterface-form-container .callcontrol {
         bottom: 9px !important;
