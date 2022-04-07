@@ -55,12 +55,12 @@ hasVideoparam={width:226,height:144};
   sharescreen:MediaStream;
   peerconnection:RTCPeerConnection;
 
-  @ViewChild ('localVideo')  localVideo: ElementRef<HTMLMediaElement>;
-  @ViewChild ('localVideo1')  localVideo1: ElementRef<HTMLMediaElement>;
+  @ViewChild ('localVideo')  localVideo: ElementRef<any>;
+  @ViewChild ('localVideo1')  localVideo1: ElementRef<any>;
   @ViewChild ('dragarea')  dragarea: ElementRef;
       
-  @ViewChild ('remoteVideo')  remotevideo: ElementRef;
-  @ViewChild ('remoteVideo1')  remotevideo1: ElementRef;
+  @ViewChild ('remoteVideo')  remotevideo: ElementRef<HTMLMediaElement>;
+  @ViewChild ('remoteVideo1')  remotevideo1: ElementRef<HTMLMediaElement>;
   @ViewChild ('textforscreen') textforscreen:ElementRef;
   @ViewChild ('usercamera') usercamera:ElementRef;
   @ViewChild ('callcontrol') callcontrol:ElementRef;
@@ -125,7 +125,7 @@ hasVideoparam={width:226,height:144};
         private message:MessageService) 
         { 
           this.callQualityIndicator='../../../../assets/assets_workdesk/red.svg'
-          this.showListofDevices();
+        
           this.detectDevices();
 
           // this.renderer.listen(this.dragarea.nativeElement, 'click', e=>{
@@ -138,15 +138,14 @@ hasVideoparam={width:226,height:144};
         {
           try {
           this.localstream=await navigator.mediaDevices.getUserMedia(val)
-          console.log( this.localstream)
-          this.localstream.getTracks().forEach(track => {
+          this.localstream.getAudioTracks().forEach(track => {
             track.enabled=true
           }); 
-           this.localstream.getTracks().forEach(track => {
-             track.enabled=false
-           }); 
+          
            this.localVideo.nativeElement.srcObject = undefined;
            this.localVideo1.nativeElement.srcObject = undefined;
+           this.localVideo.nativeElement.srcObject=this.localstream; 
+           this.localVideo1.nativeElement.srcObject=this.localstream; 
 
              }
           catch (e) {
@@ -461,16 +460,17 @@ hasVideoparam={width:226,height:144};
       }
     }
       private handleTrackEvent=(event:RTCTrackEvent)=>{
-        console.log(event)
-        this.remotetrackEvent=event;
-          this.remotevideo.nativeElement.srcObject= event.streams[0];
+          this.remotetrackEvent=event;
+          this.remotevideo.nativeElement.srcObject= event.streams[0]; 
+          
       }
   
    
       ngAfterViewInit(): void {
+        this.showListofDevices(0);
         this.requestmediadevices(this.webrtcmediacontraints);
         this.createPeerConnection();
-
+       
 
       }
   // add incoming call handler
@@ -608,6 +608,7 @@ hasVideoparam={width:226,height:144};
             })
           }
           this.peerconnection.close();
+          this.peerconnection=null;
           this.webrtcservice.sendDataforCall({type:"hangup",data:""});
           this.closeVideoCall();
         }
@@ -1171,49 +1172,55 @@ hasVideoparam={width:226,height:144};
             return Array(number);
           }
           // select microphone options 
-          async selectMicrophone(Val)
+          async selectMicrophone(Val,isLoad)
           {
+            console.log(this.localstream)
             if (this.localstream) {
               this.localstream.getTracks().forEach(track => {
-                track.stop();
+                track.enabled=true
               });
             }
-            let updateddata=this.setDefaultDevice(this.inputMicrophone,Val.data.label);
-            this.inputMicrophone=updateddata;
-            this.showMicroPhoneLevels(Val.data.deviceId);
-            this.inputDeviceid=Val.data.deviceId;
+           
+           
+            this.inputDeviceid = Val.data.deviceId
              let constraint={audio:{  deviceId :this.inputDeviceid ? { exact : this.inputDeviceid } : undefined },video:this.hasVideoparam};
-             await navigator.mediaDevices.getUserMedia(constraint).then(stream=>{
+             await navigator.mediaDevices.getUserMedia(constraint).then(async stream=>{
+             this.showMicroPhoneLevels(Val.data.deviceId,stream);
+             let audiotrk=    stream.getAudioTracks()[0];
+            let audioupdt=this.peerconnection.getSenders().find(trk=>{
+              return trk.track.kind==audiotrk.kind;
+             })
+        
+            if(isLoad==1)
+            { let updateddata=this.setDefaultDevice(this.inputMicrophone,Val.data.label);
+              this.inputMicrophone=updateddata;
+             audioupdt.replaceTrack(audiotrk);
+            }
              this.localstream=stream;
              this.localVideo.nativeElement.srcObject=undefined;
              this.localVideo1.nativeElement.srcObject=undefined;
              this.localVideo.nativeElement.srcObject=stream;
              this.localVideo1.nativeElement.srcObject=stream;
-         
-
-       
-           }).catch(err=>{
+           await  navigator.mediaDevices.enumerateDevices();
+            }).catch(err=>{
              console.log(err)
            })
           
-     
-         this.getcallTypeforPagereload();
           }
           // select speaker options 
           async selectSpeaker(Val)
           {
-            this.outputDeviceid=Val.deviceId;
-            let constraint={audio:{ deviceId: {exact: this.inputDeviceid}}};
+            this.outputDeviceid=Val.data.deviceId;
             let updateddata=this.setDefaultDevice(this.outputSpeaker,Val.data.label);
             this.outputSpeaker=updateddata;
-           await  navigator.mediaDevices.getUserMedia(constraint)
-       
-            //this.remotevideo.nativeElement.setSinkId(this.outputDeviceid);
-            this.remotetrackEvent
-            this.attachSinkId(this.remotevideo,this.outputDeviceid)
+            navigator.mediaDevices.getUserMedia({audio:true})
+            const audio = <HTMLMediaElement & { setSinkId (deviceId: string): void }> new Audio();
+          audio.setSinkId(this.outputDeviceid);
+         
           }
-
+         
           attachSinkId(element, sinkId) {
+            
             if (typeof element.sinkId !== 'undefined') {
               element.nativeElement.setSinkId(sinkId)
                   .then(() => {
@@ -1225,8 +1232,6 @@ hasVideoparam={width:226,height:144};
                       errorMessage = `You need to use HTTPS for selecting audio output device: ${error}`;
                     }
                     console.error(errorMessage);
-                    // Jump back to first output device in the list as it's the default.
-                   // audioOutputSelect.selectedIndex = 0;
                   });
             } else {
               console.warn('Browser does not support output device selection.');
@@ -1253,7 +1258,7 @@ hasVideoparam={width:226,height:144};
             return devicesData;
           }
           // show the list of devices input output 
-       private async showListofDevices()
+       private async showListofDevices(isload:any)
           {
 
             let inputDevice=[];
@@ -1273,17 +1278,8 @@ hasVideoparam={width:226,height:144};
                       track.stop();
                     });
                   }
-                  this.showMicroPhoneLevels(device.deviceId);
-                  let constraint={audio:{  deviceId :device.deviceId ? { exact : device.deviceId } : undefined },video:this.hasVideoparam};
-                  await navigator.mediaDevices.getUserMedia(constraint).then(stream=>{
-                    this.localstream=stream;
-                    this.localVideo.nativeElement.srcObject=undefined;
-                    this.localVideo1.nativeElement.srcObject=undefined;
-                    this.localVideo.nativeElement.srcObject=stream;
-                    this.localVideo1.nativeElement.srcObject=stream;
-               
-            
-                  })
+              
+                  await this.selectMicrophone({data:device,selected:true},isload)
                  
                 }
                 else{
@@ -1316,21 +1312,19 @@ hasVideoparam={width:226,height:144};
        private async   detectDevices():Promise<void>
           {  
             navigator.mediaDevices.addEventListener('devicechange', async () => {
-          await    this.showListofDevices();
+          await    this.showListofDevices(1);
             
                
            
             })
           }
           // show microphone levels 
-          showMicroPhoneLevels(mic_name)
+          showMicroPhoneLevels(mic_name, stream)
           {  
            
             let avgsound;
-            navigator.mediaDevices.getUserMedia({
-              audio: true,
-            })
-              .then((stream)=> {
+         
+                const ad= new Audio()
                 const audioContext = new AudioContext();
                 
                 const analyser = audioContext.createAnalyser();
@@ -1351,10 +1345,8 @@ hasVideoparam={width:226,height:144};
                   avgsound=Math.round(average)
                   this.showcoloronbars(avgsound,mic_name);
                 };
-              })
-              .catch((err) =>{
-                console.log(err);
-              });
+             
+            
             
           }
           // show color pids 
@@ -1374,11 +1366,7 @@ hasVideoparam={width:226,height:144};
                 this.inputDeviceid=mic_name
            
           }
-          removethepreviousclasses()
-          {
-            // const allPids =Array.from(document.querySelectorAll(".voicebars"+this.inputDeviceid) as unknown as Array<HTMLElement>)
-            // allPids.map(node => node.parentNode.removeChild(node))
-          }
+     
        
             showswitcher(val)
             {

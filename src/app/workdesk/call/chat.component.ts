@@ -571,11 +571,11 @@ return ("0" + minutes).slice(-2) + ":" + ("0" +seconds).slice(-2);
       // const callstat=JSON.parse(localStorage.getItem("call_info"))
       // if(callstat?.is_refreshed==true)
       // {
-      //   let data= {"call_uuid": "fdjksfhkjdsfhkdsjfhksdjhbaah",callstat};
+      //   let data= {"call_uuid": "fdjksfhkjdsfhkdsjfhksdjhbaahraqq",callstat};
       //   this.openCallInterface(data);
       // }
       // else{
-      //   let data= {"call_uuid": "fdjksfhkjdsfhkdsjfhksdjhbaah",callstat};
+      //   let data= {"call_uuid": "fdjksfhkjdsfhkdsjfhksdjhbaahraqq",callstat};
       //   this.openCallInterface(data);
       // }
     }

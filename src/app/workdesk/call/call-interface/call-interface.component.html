@@ -176,14 +176,17 @@
         <div class="switcherheaderpanel">
          <img class=" sw_heading_img" height="10" width="10" src="../../../../assets/assets_workdesk/microphone_icon.svg" alt=""> <p class="sw_heading_text">Microphones</p> 
        </div>
+       <div class="devicescroll">
+
+      
        <ul class="deviceslist">
         
-        <li (mouseover)="showtooltip(devc.data.label)"  (mouseout) ="hidetooltip(devc.data.label)"  class="deviceitem" *ngFor="let devc of inputMicrophone;let i=index" (click)="selectMicrophone(devc)">
-          <div class="tooltippanel" id="tooltip" #tooltip>
-            <p class="tooltiptext">{{showtooltiptext}}</p>
-         </div>
+        <li   class="deviceitem" *ngFor="let devc of inputMicrophone;let i=index">
+          <!-- <div class="tooltippanel" id="tooltip" #tooltip>
+            <p   class="tooltiptext">{{showtooltiptext}}</p>
+         </div> -->
           <img [ngStyle]=" {'visibility': (devc.selected==true) ? 'visible' : 'hidden'}" height="10" width="10"  class="sw_img" src="../../../../assets/assets_workdesk/green_check_icon.svg" alt="">
-          <p class="devicename">{{devc.data.label}}</p>
+          <p (click)="selectMicrophone(devc,1)" class="devicename">{{devc.data.label}}</p>
           <div  *ngIf="devc.selected==false"  class="voicelevels" [attr.id]="i" >
             <div   class="voicebars" *ngFor="let bar of getArray(8); " >
             </div>
@@ -193,21 +196,24 @@
             </div>
           </div>
         </li>
-        </ul>
+        </ul> </div>
       </div>
       <div class="deviceswitcher mobile">
         <div class="switcherheaderpanel">
           <img class="sw_heading_img" src="../../../../assets/assets_workdesk/speakers_icon.svg" alt=""> <p class="sw_heading_text">Speakers</p> 
        </div>
+       <div class="devicescroll">
+
+     
        <ul class="deviceslist">
-        <li  (mouseover)="showtooltip(devc.data.label)"  (mouseout) ="hidetooltip(devc.data.label)"  class="deviceitem" *ngFor="let devc of outputSpeaker;" (click)="selectSpeaker(devc)">
-          <div class="tooltippanel" id="tooltip" #tooltip>
+        <li   class="deviceitem" *ngFor="let devc of outputSpeaker;">
+          <!-- <div class="tooltippanel" id="tooltip" #tooltip>
             <p class="tooltiptext">{{showtooltiptext}}</p>
-         </div>
+         </div> -->
           <img  [ngStyle]=" {'visibility': (devc.selected==true) ? 'visible' : 'hidden'}" class="sw_img" src="../../../../assets/assets_workdesk/green_check_icon.svg" alt="">
-          <p class="devicename speaker">{{devc.data.label}}</p>
+          <p  (click)="selectSpeaker(devc)" class="devicename speaker">{{devc.data.label}}</p>
         </li>
-        </ul>
+        </ul>  </div>
       </div>
     </div>  
       <div id="callcontrol" #callcontrol class="callcontrol" class="callcontrolicons">

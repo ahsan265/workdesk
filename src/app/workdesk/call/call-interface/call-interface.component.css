@@ -369,7 +369,39 @@ color: #162741;
     padding-left: 10px;
     padding-top: 10px;
     padding-bottom: 10px;
+    box-shadow: 0px 1px 4px rgb(0 0 0 / 25%);
   }
+  .devicescroll{
+    height: 100px;
+    overflow-y: auto;
+    right: 19px;
+    margin-top: 4px;
+    bottom: 8px;
+    width: calc(100% - 7px);
+  }
+  .devicescroll::-webkit-scrollbar{
+    width: 4px;
+    height: 105px;
+    background: transparent;
+    border-radius: 8px;
+    scrollbar-width:thin;
+    -moz-border-radius: 8px;
+    -webkit-border-radius: 8px;
+
+}
+.devicescroll::-webkit-scrollbar-thumb {
+    background: #7A828E;
+    border: 0.5px solid rgba(255, 255, 255, 0.4);
+    box-sizing: border-box;
+    border-radius: 6px;
+    background-clip: padding-box;
+    width: 4px;
+    height: 62px;
+}
+.devicescroll::-webkit-scrollbar-track{
+  padding: 18px;
+  width: 4px;
+}
   .sw_heading_img{
     display: inline-block;
     width: 20px;
@@ -394,8 +426,6 @@ color: #162741;
   .deviceslist{
     list-style: none;
     height: 105px;
-    overflow-y: scroll;
-    overflow-x: hidden;
     scroll-behavior: smooth;
     text-overflow: ellipsis;
     white-space: nowrap;
@@ -447,6 +477,7 @@ color: #162741;
     padding-left: 14px;
     cursor: pointer;
     position: relative;
+    width: calc(100% - 4px);
 }
 .deviceitem:hover{
     transition: 0.4s;
