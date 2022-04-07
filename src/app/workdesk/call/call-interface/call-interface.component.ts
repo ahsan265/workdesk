@@ -138,10 +138,9 @@ hasVideoparam={width:226,height:144};
         {
           try {
           this.localstream=await navigator.mediaDevices.getUserMedia(val)
-          this.localstream.getAudioTracks().forEach(track => {
+          this.localstream.getTracks().forEach(track => {
             track.enabled=true
           }); 
-          
            this.localVideo.nativeElement.srcObject = undefined;
            this.localVideo1.nativeElement.srcObject = undefined;
            this.localVideo.nativeElement.srcObject=this.localstream; 
@@ -262,6 +261,7 @@ hasVideoparam={width:226,height:144};
                //   await this.pausevideoCall();
                  navigator.mediaDevices.getUserMedia({audio:true,video:false}).then((stream)=>{
                  this.localstream=stream;
+                 console.log(this.localstream);
                 const videotrack=stream.getAudioTracks();
                 this.localVideo.nativeElement.srcObject = undefined;
                 this.localVideo1.nativeElement.srcObject= undefined;
@@ -460,6 +460,7 @@ hasVideoparam={width:226,height:144};
       }
     }
       private handleTrackEvent=(event:RTCTrackEvent)=>{
+        console.log(event);
           this.remotetrackEvent=event;
           this.remotevideo.nativeElement.srcObject= event.streams[0]; 
           
@@ -1173,39 +1174,59 @@ hasVideoparam={width:226,height:144};
           }
           // select microphone options 
           async selectMicrophone(Val,isLoad)
-          {
-            console.log(this.localstream)
-            if (this.localstream) {
-              this.localstream.getTracks().forEach(track => {
-                track.enabled=true
-              });
-            }
-           
-           
+          {   let audiotrk;
             this.inputDeviceid = Val.data.deviceId
-             let constraint={audio:{  deviceId :this.inputDeviceid ? { exact : this.inputDeviceid } : undefined },video:this.hasVideoparam};
-             await navigator.mediaDevices.getUserMedia(constraint).then(async stream=>{
-             this.showMicroPhoneLevels(Val.data.deviceId,stream);
-             let audiotrk=    stream.getAudioTracks()[0];
-            let audioupdt=this.peerconnection.getSenders().find(trk=>{
-              return trk.track.kind==audiotrk.kind;
-             })
-        
             if(isLoad==1)
-            { let updateddata=this.setDefaultDevice(this.inputMicrophone,Val.data.label);
-              this.inputMicrophone=updateddata;
-             audioupdt.replaceTrack(audiotrk);
-            }
+            {
+
+          
+             let constraint={audio:{  deviceId :this.inputDeviceid ? { exact : this.inputDeviceid } : undefined },video:this.hasVideoparam};
+             if (this.localstream) {
+              this.localstream.getAudioTracks().forEach(track => {
+                track.stop()
+              });
+             }
+          
+
+             await navigator.mediaDevices.getUserMedia(constraint).then(async stream=>{
+              this.showMicroPhoneLevels(Val.data.deviceId,stream);
+              let audiotrk=    stream.getAudioTracks()[0];
+             let videotrk=    stream.getVideoTracks()[0];
+           
+             this.localstream=new MediaStream([videotrk,audiotrk])
+
+             let updateddata=this.setDefaultDevice(this.inputMicrophone,Val.data.label);
+              await  navigator.mediaDevices.enumerateDevices();
+            
+               this.inputMicrophone=updateddata;
+             
              this.localstream=stream;
              this.localVideo.nativeElement.srcObject=undefined;
              this.localVideo1.nativeElement.srcObject=undefined;
              this.localVideo.nativeElement.srcObject=stream;
              this.localVideo1.nativeElement.srcObject=stream;
-           await  navigator.mediaDevices.enumerateDevices();
-            }).catch(err=>{
-             console.log(err)
-           })
-          
+             this.localstream.getTracks().forEach(track=>{
+              this.peerconnection.addTrack(track,this.localstream);
+            })
+            let audioupdt=this.peerconnection.getSenders().find(trk=>{
+              return trk.track.kind=='audio';
+             })
+            // audioupdt.replaceTrack(audiotrk);
+            }).then(async ()=>{
+              const offer:RTCSessionDescriptionInit=await this.peerconnection.createOffer({
+              offerToReceiveAudio:true,
+              offerToReceiveVideo:true,
+              iceRestart:true
+            });
+            await this.peerconnection.setLocalDescription(offer).catch(err=>{
+              console.log(err)
+            });
+        
+            this.webrtcservice.sendDataforCall({ type:"offer" ,user_id:this.peerUserid,data:offer});
+           
+              })
+            }
+
           }
           // select speaker options 
           async selectSpeaker(Val)
@@ -1219,24 +1240,7 @@ hasVideoparam={width:226,height:144};
          
           }
          
-          attachSinkId(element, sinkId) {
-            
-            if (typeof element.sinkId !== 'undefined') {
-              element.nativeElement.setSinkId(sinkId)
-                  .then(() => {
-                    console.log(`Success, audio output device attached: ${sinkId}`);
-                  })
-                  .catch(error => {
-                    let errorMessage = error;
-                    if (error.name === 'SecurityError') {
-                      errorMessage = `You need to use HTTPS for selecting audio output device: ${error}`;
-                    }
-                    console.error(errorMessage);
-                  });
-            } else {
-              console.warn('Browser does not support output device selection.');
-            }
-          }
+ 
           setDefaultDevice(devices:Array<any>,selecteddeviceid:any)
           {
             let devicesData=[];
@@ -1312,6 +1316,7 @@ hasVideoparam={width:226,height:144};
        private async   detectDevices():Promise<void>
           {  
             navigator.mediaDevices.addEventListener('devicechange', async () => {
+              console.log("device change")
           await    this.showListofDevices(1);
             
                
