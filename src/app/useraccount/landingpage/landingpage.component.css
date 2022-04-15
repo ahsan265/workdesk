@@ -237,13 +237,15 @@ span{
   }
   .imagepanel{
     position: unset;
+    width: 100%;
+    margin: 0px;
   }
   .imagepanelmobile{
     height: 560px;
     width: 100%;
     display: block;
     position: absolute;
-    top: 55px;
+    top: 0px;
     text-align: center;
     background-image: url(../../../assets/workdesk.png);
     background-repeat: no-repeat;
@@ -255,13 +257,13 @@ span{
     width: 100%;
     position: relative;
     margin-left: 0px;
-    top: 448px;
+    top: 400px;
     height: 685px;
 }
   .icon-image{
       margin: 0px;
       margin: 0 auto;
-      margin-top: 32px;
+      margin-top: 22px;
 
   }
   .gigaaa-topbar{
@@ -324,10 +326,11 @@ span{
   }
   .iconslist.last{
       margin-right: 0px;
-      margin-left: 9%;
+      margin-left: 0%;
   }
   .footer-columns.mfirst{
-      margin-left: 9%;
+      margin-left: 0%;
+      padding-left: 10%;
   }   
   .footer-columns{
      width: 100%;
@@ -335,6 +338,7 @@ span{
   }
   .footer-columns.last{
       margin-right: 0px;
+      margin-left: 8.6%;
   }
   .socialpacks{
       display:block;
@@ -348,6 +352,7 @@ span{
   margin-right: 9%;
   margin-left: 9%;
   margin-top: 18px;
+  margin-bottom: 50px;
   }
   .gigaaa-policy-text.priv{
       margin-right: 0px;

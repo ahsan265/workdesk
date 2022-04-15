@@ -1,6 +1,9 @@
 <div id="dragarea" #dragarea class="minimizearea" style="height: 100%;"  [cdkDragDisabled]="is_dragable" 
     cdkDrag  cdkDragBoundary=".main" 
     [cdkDragFreeDragPosition]="dragPosition"  cdkDragHandle >
+    <div #textforscreen id="textforscreen" class="sharescreenmsg">
+    <img src="../../../../assets/assets_workdesk/screen_share_on_icon_1.svg" alt="" srcset="" class="sharescreeniconheader">  <p class="sharescrntext">Maximize to preview screen share</p>
+    </div>
 <div class="callinterface" >
   <div class="userinformation">
     <div class="headerimagepanel" style="border: 1px solid rgba(255, 255, 255, 0.4);height: 34px; width: 34px; border-radius: 50%; background: #2B3A51; display: inline-block;">
@@ -123,10 +126,11 @@
 
       <div [ngStyle]="{'display': (camerabtn==false) ? 'block' : 'none'}">
         <video class="videllocal" [hidden]="!splitscreen" [muted]="true"  height="100%" width="100%"  id="localVideo1" #localVideo1 [autoplay]='true'   style="top: 80px;
-        left: 0;
+        left: 0px;
         width: 50%;
-        height: 100vh;
-        object-fit: cover;
+        height: calc(100% - 80px);
+        object-fit: revert;
+        transform: scaleX(1);
         position: absolute;"></video>
       </div>
 
@@ -158,9 +162,7 @@
         position: absolute;
         display: block;"  ></video> -->
       </div>
-      <div #textforscreen id="textforscreen" class="sharescreenmsg">
-        <p class="sharescrntext">Switch to maximize mode to see the screen share.</p>
-      </div>
+    
   </div>
 </div>
       
