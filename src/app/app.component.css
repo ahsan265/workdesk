@@ -153,4 +153,7 @@ input:checked + .slider:before {
   .mainContainer {
     display: block;
   }
+  .consoleWrap{
+    padding-bottom: 100px;
+  }
 }
