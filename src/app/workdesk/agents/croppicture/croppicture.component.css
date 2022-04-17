@@ -312,7 +312,9 @@ box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.19);
       line-height:50px;
       align-items: center;
       letter-spacing: 0.02em;
-      text-align: center;
+      width: 100%;
+      text-align: left;
+      padding-left: 26px;
       color: #162741;
     }
     .cancelbtnpanel{

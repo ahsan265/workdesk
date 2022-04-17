@@ -233,6 +233,7 @@ color: #292F58;
   box-shadow: 4px 4px 17px -3px rgba(0, 0, 0, 0.14);
   border-radius: 4px;
   top: 0px;
+
 }
 .inner::-webkit-scrollbar{
     width: 8px;
@@ -498,6 +499,7 @@ color: #FFFFFF;
     font-weight: normal;
     font-size: 16px;
     line-height: 160%;
+    margin-right: 20px;
     align-items: center;
     text-align: center;
     letter-spacing: 0.02em;
@@ -543,7 +545,7 @@ color: #FFFFFF;
     margin: 0px;
     width: 100% !important;
     display: block !important;
-    height: 150px;
+    height: 65px;
   }
   .langdropdown{
     margin-left: 0px;
@@ -555,7 +557,7 @@ color: #FFFFFF;
 
   .addnewagentrowpanel{
     padding: 0px;
-    width: 100%;
+    width: fit-content;
   }
   .sendinvitationpanel{
     padding: 0px;
@@ -587,14 +589,42 @@ color: #616B7B;
     width: 100%; 
     background: #D0D0DE; 
     height: 1px; 
-    margin-bottom: 24px;
+    margin-bottom: 0px;
     margin-top: 24px;
       }
   .sendinvitepanel{
     padding: 0px;
     margin-top: 24px;
+    bottom: 0;
+    width: 100%;
+    margin-bottom: 30px;
   }
 .form_input{
   margin-bottom: 24px;
 }
+  .cancelpanel{
+    text-align: left !important;
+  }
+  .rightpanel{
+    text-align: right !important;
+  }
+  form{
+    overflow-y: scroll;
+  }
+  form::-webkit-scrollbar{
+    display: none;
+  }
+  .deletepanel:first-child{
+    display: none;
+  }
+  .addnewagent{
+    font-size: 16px;
+  }
+  .arryitem{
+    height: 235px;
+    margin-top: 20px;
+  }
+  .dropdown-menu{
+    left: 5px  !important;
+  }
 }

@@ -748,6 +748,9 @@
     color: #7D8696;
   }
    @media (max-width: 768px){
+       .mainheading{
+           display: none;
+       }
     .switchpanel{
         display: initial;
         width: 20%;

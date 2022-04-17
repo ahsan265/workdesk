@@ -1840,7 +1840,6 @@ input:checked+.slider:before {
     opacity: 1;
     width: 302px;
     height: 413px;
-    height: fit-content;
     overflow-x: hidden;
     overflow-y: hidden;
     vertical-align: middle;
@@ -2092,7 +2091,6 @@ body .bs-datepicker-container  .bs-datepicker-body   tbody tr:nth-child(even){
     opacity: 1;
     width: 302px;
     height: 413px;
-    height: fit-content;
     overflow-x: hidden;
     overflow-y: hidden;
     vertical-align: middle;
