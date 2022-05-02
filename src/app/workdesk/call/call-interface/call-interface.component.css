@@ -9,6 +9,7 @@ padding: 24px;
 video {
     -webkit-transform: scaleX(-1);
     transform: scaleX(-1);
+
   }
   video#remoteVideo{
     -webkit-transform: scaleX(1);
@@ -25,6 +26,7 @@ video {
     text-align: right;
     position: fixed;
     padding-right: 20px;
+    
 }
 .userimage{
     width: 34px;
@@ -183,7 +185,7 @@ border-radius: 50%;
     cursor: move;
     display: flex;
     left: 0;
-    z-index: 12;
+    z-index:2;
     justify-content: center;
     align-items: center;
     text-align: center;
@@ -236,6 +238,8 @@ border-radius: 50%;
     height: 35px;
     right: 0;
     margin: 7px;
+    transition: 0.3s;
+
  }
  .unsplit{
     top: 94px;
@@ -246,10 +250,11 @@ border-radius: 50%;
     height: 35px;
     right: 0;
     margin: 7px;  
+    transition: 0.3s;
+
  }
  .splitscreen:hover ,.unsplit:hover{
     background: #173b96;
-    transition: 0.4s;
  }
 .camerasplitinfo{
     width: 50%;
@@ -297,7 +302,7 @@ border-radius: 50%;
 }
 .signalindicator{
     position: fixed;
-    right: 55px;
+    right: 50px;
     display: inline-block;
     z-index: 1;
 }
@@ -351,7 +356,8 @@ color: #FFFFFF;
   }
   .deviceswitcher{
     width: 293px;
-    height: 150px;
+    max-height: 150px;
+    min-height: 55px;
     background: #2B3A51;
     box-shadow: 3px 3px 10px rgb(0 0 0 / 23%);
     border-radius: 4px;
@@ -381,30 +387,27 @@ color: #FFFFFF;
     right: 19px;
     margin-top: 4px;
     bottom: 8px;
-    width: calc(100% - 7px);
+    width: calc(100% - 0px);
+    overflow-y: overlay;
   }
   .devicescroll::-webkit-scrollbar{
-    width: 4px;
+    width: 12px;
     height: 105px;
-    background: transparent;
-    border-radius: 8px;
-    scrollbar-width:thin;
-    -moz-border-radius: 8px;
-    -webkit-border-radius: 8px;
 
 }
 .devicescroll::-webkit-scrollbar-thumb {
-    background: #7A828E;
-    border: 0.5px solid rgba(255, 255, 255, 0.4);
+    background-color: #7A828E;
+    border: 4px solid rgba(255, 255, 255, 0);
     box-sizing: border-box;
     border-radius: 6px;
     background-clip: padding-box;
-    width: 4px;
-    height: 62px;
+    width: 8px;
+    height: 32px;
 }
 .devicescroll::-webkit-scrollbar-track{
   padding: 18px;
-  width: 4px;
+  width: 12px;
+  background: transparent
 }
   .sw_heading_img{
     display: inline-block;
@@ -464,24 +467,24 @@ color: #FFFFFF;
   }
 .voicelevels{
     display: inline-block;
-    width: 65px;
+    width: 60px;
     height: 20px;
     text-align: right;
     line-height: 32px;
     vertical-align: middle;
 }
 .voicebars{
-    width: 4.45px;
+    width: 5px;
     height: 20px;
     background: #3A4559;
     display: inline-block;
-    margin-left: 2px;
+    margin-left: 3px;
 }
 .deviceitem{
     padding-left: 14px;
     cursor: pointer;
     position: relative;
-    width: calc(100% - 4px);
+    width: calc(100% - 0px);
 }
 .deviceitem:hover{
     transition: 0.4s;
@@ -525,18 +528,143 @@ color: #FFFFFF;
     bottom: 0;
     top: 30px;
   }
-
+  .normalmode{
+      display: none;
+  }
+  video#localVideo1
+  {
+      transform: scaleX(1);
+  }
+  .mobiletimerpanel{
+    display: none;
+    width: 80px;
+    position: relative;
+    height: 50px;
+    vertical-align: inherit;
+    right: 45px;
+  }
+  .flipcamerapanelsplit{
+      display: none;
+  }
+  .flipcamerapanel.desktop{
+      display: none;
+  }
 @media (max-width: 768px){
+     .flipcamerapanelsplit{
+        border-radius: 50%;
+        background: rgba(22, 39, 65, 0.75);
+        top: 55%;
+        position: absolute;
+        width: 35px;
+        height: 35px;
+        right: 45px;
+        margin: 12px;
+        z-index: 1;
+    }
+    .flipcamera{
+        margin-top: 9px; 
+        cursor: pointer;
+    }
+    .flipcamerapanel{
+    border-radius: 50%;
+    background: rgba(22, 39, 65, 0.75);
+    top: 0;
+    position: absolute;
+    width: 35px;
+    height: 35px;
+    right: 0;
+    margin: 7px;
+    }
+    .mobiletimerpanel{
+        display: inline-block;
+    }
+    video#localVideo1
+    {
+        transform: scaleX(-1);
+    }
+    .calltime{
+        display: none;
+    }
+    .callicons  img.caIcon:hover
+    {
+        background: none;
+    }
+    .voicelevels{
+        width: 20%;
+        padding-right: 0px;
+    }
+    .devicename{
+        width: 70%;
+    }
+    .miccontrolbtnpanel{
+        right: 70%;
+        height: 25px;
+        width: 25px;
+    }
+    .arrowiconpopup{
+        margin: 10px -3px !important;
+    }
+    .hangicon{
+        margin-top: 18px;
+    }
+ .normalmode{
+        font-family: "Roboto",sans-serif;
+        font-style: normal;
+        font-weight: normal;
+        font-size: 12px;
+        line-height: 28px;
+        display: inline-block;
+        align-items: center;
+        letter-spacing: 0.02em;
+        color: #FFFFFF;
+        padding-left: 5px;
+        padding-right: 7px;
+    }
+    .calltime_drop{
+        width: 25%;
+        border-radius: 0px;
+        background: none;
+        margin-bottom: 50px;
+        margin-left: 0px;
+    }
+    .callicon_drop{
+        height: 50px;
+        width: 50px;
+    }
+    .callcontrolpanel{
+        height: 90px;
+       
+
+    }
+    .callcontrolicons{
+        width: 75%;
+        text-align: center;
+        height: 90px;
+        margin-top: 6px;
+    }
+    .caIcon
+    {
+        height: 40px;
+        width: 40px;
+        margin: 4px;
+    }
+    .callicons{
+        height: 50px;
+        width: 50px;
+        margin-right: 5%;
+        margin-left: 5%;
+    }
     .deviceswitcher.mobile{
         display: none;
     }
     .deviceswitcher{
-        width: 295px;
+        width: 100%;
     }
     .deviceswitcherpanel{
         right: 0px;
-        width: 109%;
+        width: 100%;
         z-index: 13;
+        bottom: 85px;
     }
     .callarea.desktop{
         display: block;
@@ -546,15 +674,54 @@ color: #FFFFFF;
         display: block;
     }
   .unsplit{
-    top: 52.5%;
+    top: 55%;
     border-radius: 50%;
     background: rgba(22, 39, 65, 0.75);
     position: absolute;
     width: 35px;
     height: 35px;
-    margin: 10px;
+    margin: 12px;
   }
   .signalindicator{
       top: 15px;
   }
+  .dragarea{
+      width: 100% !important;
+  }
+  /* .dragarea{
+    width: 100%!important;
+    height: calc(100% - 0px) !important;
+}
+  .maximizeVideocallinterface .dragarea{
+    width: 50%!important;
+}  */
+.devicescroll::-webkit-scrollbar{
+    display: none;
+}
+.devicescroll{
+    width: 100%;
+}
+.deviceitem{
+    width: 100%;
+}
+.loggedUsercamera{
+    left: unset;
+    right: 0px;
+    width: 140px;
+    height: 164px;
+    margin: 12px;
+}
+.callcontrol{
+    bottom:0px ;
+    border-radius: 0px ;
+    width: 100% ;
+    height: 90px ;
+    background: rgb(22, 39, 65) !important;
+}
+.camerapersonname{
+    display: none;
+}
+.splitscreen:hover ,.unsplit:hover{
+background: none;
+}
 }

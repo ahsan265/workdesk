@@ -13,7 +13,7 @@ import { retry } from 'rxjs/operators';
 import { MaincomponentComponent } from './maincomponent/maincomponent.component';
 
 const routes: Routes = [
-  {path:'',component:LandingpageComponent,},
+  { path:'',component:LandingpageComponent,},
   { path: "logout", component: LogoutComponent },
 
   {

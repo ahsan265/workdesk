@@ -1,5 +1,5 @@
 import { Component, OnChanges, OnInit, SimpleChanges } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { CookieService } from 'ngx-cookie-service';
 import { ReplaySubject } from 'rxjs';
 import { environment } from 'src/environments/environment';
@@ -109,16 +109,9 @@ websites=[{text:"Partnership",url:['https://partnerships.gigaaa.com/'],image:'..
     private route:ActivatedRoute,
     private headerService: GigaaaHeaderService
   ) { router.initialNavigation();
-    // this.authService.user.subscribe(r=>{
-    //   let user= r;
-    //   console.log(user)
-    //   if(user!=null)
-    //   {
-    //     this.authService.getOrganizationId(user.api_token);
-    //     this.authService.getinvitationToken(user.api_token); 
-    //   }
-    // })
-  // show restriction model
+
+
+     
     this.share_res.ShowrestrictedUserSubject.subscribe(data=>{
       if(data==true)
       {
@@ -143,21 +136,25 @@ websites=[{text:"Partnership",url:['https://partnerships.gigaaa.com/'],image:'..
             localStorage.setItem('user-status', JSON.stringify(res));
           })
            this.lastuserintegration="Select integration";
-           this.route.url
-           .subscribe(params => {
+           this.route.queryParams.
+           subscribe(params => {
             let loc=window.location;
-          let path= loc.pathname.replace("/", "");
-         
+            let path= loc.pathname.replace("/", "");
+            this.url= window.location.href;
+            let locID = this.url.split('/');
             if(path=="callback")
             {
               this.pageTitle="Dashboard";
            
             }
-        
+            if(locID[3]=="")
+            {
+              this.pageTitle="Dashboard";
+            }
             else 
             {
-              this.url= window.location.href;
-              let locID = this.url.split('/');
+            
+              console.log(locID)
               this.pageTitle=locID[3].charAt(0).toUpperCase() + locID[3].slice(1);
             }
           });

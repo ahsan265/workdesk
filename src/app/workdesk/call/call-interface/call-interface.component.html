@@ -1,4 +1,4 @@
-<div id="dragarea" #dragarea class="minimizearea" style="height: 100%;"  [cdkDragDisabled]="is_dragable" 
+<div  class="minimizearea" style="height: 100%;"  [cdkDragDisabled]="is_dragable" 
     cdkDrag  cdkDragBoundary=".main" 
     [cdkDragFreeDragPosition]="dragPosition"  cdkDragHandle >
     <div #textforscreen id="textforscreen" class="sharescreenmsg">
@@ -16,14 +16,15 @@
 <p  class="username">{{peerFirstname}} {{peerLastname}}</p>
 </div>  
   <div class="minimizeiconpanel">
+    <div class="mobiletimerpanel">
+      <p class=" normalmode">{{showtime()}}</p>
+    </div>
   <svg style="height: 20px; cursor: pointer;" class="miniicon"  *ngIf="hideContant" style="cursor: pointer;margin-bottom: 2px;" (click)="miniMizetheScreen(hideContant)" width="12" height="2" viewBox="0 0 12 2" fill="none" xmlns="http://www.w3.org/2000/svg">
   <path d="M11.8204 1.82031H0.179749V0.179688H11.8204V1.82031Z" fill="white"/>
   </svg>
+  <div class="signalindicator">
+    <img [src]="callQualityIndicator" alt="" srcset="">
   </div>
-
-<div class="signalindicator">
-  <img [src]="callQualityIndicator" alt="" srcset="">
-</div>
   <div class="maxiconforvideo"   *ngIf="!hideContant" style="float: right;
   cursor: pointer;
   height: 50px;
@@ -34,27 +35,37 @@
     <path d="M17.5 13.8594V2.14062H2.5V13.8594H17.5ZM17.5 0.5C17.9427 0.5 18.3333 0.669271 18.6719 1.00781C19.0104 1.34635 19.1797 1.73698 19.1797 2.17969V13.8203C19.1797 14.263 19.0104 14.6536 18.6719 14.9922C18.3333 15.3307 17.9427 15.5 17.5 15.5H2.5C2.05729 15.5 1.66667 15.3307 1.32812 14.9922C0.989583 14.6536 0.820312 14.263 0.820312 13.8203V2.17969C0.820312 1.73698 0.989583 1.34635 1.32812 1.00781C1.66667 0.669271 2.05729 0.5 2.5 0.5H17.5ZM5.82031 5.5V8H4.17969V3.82031H8.32031V5.5H5.82031ZM15.8203 8V12.1797H11.6797V10.5H14.1797V8H15.8203Z" fill="white"/>
   </svg>
   </div>
+  </div>
+  
+
+ 
 
 </div>
 
 
 
  <div class="callarea desktop">
-  <div   class="dragarea " [ngStyle]="{'width':(splitscreen==true ) ? '50%' : '100%'}" >
-        <div style="display: block;
+  <div id="dragarea" #dragarea   class="dragarea " [ngStyle]="{'width':(splitscreen==true ) ? '50%' : '100%'}" >
+        <div  (click)="splitScreen(splitscreen)" style="display: block;
         z-index: 1001;
         position: absolute;
         right: 51%;" [ngClass]="splitscreen==true? 'unsplit' : ' splitscreen'"   [ngStyle]="{'display': (splitscreen==true) ? 'block' : 'none'}">
-        <img (click)="splitScreen(splitscreen)"   class="spliticon" [src]="splitIcon" alt="">
+        <img   class="spliticon" [src]="splitIcon" alt="">
+        </div>
+        <div class="flipcamerapanelsplit" [ngStyle]="{'display': (camerabtn==false  && splitscreen==true && ismobile==true) ? 'block' : 'none'}">
+          <img  (click)="flipCamera(cameraViewName)" class="flipcamera"   src="../../../../assets/Rectangle 459.svg" alt="">
         </div>
         <div #usercamera id="usercamera"  [cdkDragFreeDragPosition]="dragPosition"  [hidden]="splitscreen" [ngStyle]="{'background': (camerabtn==true) ? '#2B3A51' : '#000000'}" cdkDragBoundary=".dragarea" class="loggedUsercamera" cdkDrag>
          <p *ngIf="camerabtn" class="capitalinitials">{{firstuserFirstName}}{{firstuserLastName}}</p>
-                  <video  id="localVideo"  aria-valuemin="0" aria-valuemax="100" #localVideo [autoplay]='true' [muted]="true"  class="localcamera"  
+                  <video type='video/mp4'  id="localVideo"  aria-valuemin="0" aria-valuemax="100" #localVideo [autoplay]='true' playsInline  [muted]="true"  class="localcamera"  
                   style="border-radius: 4px;
                   object-fit: cover;" [hidden]="camerabtn" ></video>
               <p  *ngIf="camerabtn" class="camerapersonname">{{userFirstName}} (me)</p> 
-              <div class="splitscreen" [ngStyle]="{'display': (splitscreen==true) ? 'none' : 'block'}" >
-                <img (click)="splitScreen(splitscreen)" class="spliticon"   [src]="unsplitIcon" alt="">
+              <div  (click)="splitScreen(splitscreen)" class="splitscreen" [ngStyle]="{'display': (splitscreen==true) ? 'none' : 'block'}" >
+                <img  class="spliticon"   [src]="unsplitIcon" alt="">
+              </div>
+              <div class="flipcamerapanel" [ngStyle]="{'display': (camerabtn==true || ismobile==false) ? 'none' : 'block'}">
+                <img   (click)="flipCamera(cameraViewName)" class="flipcamera"   src="../../../../assets/Rectangle 459.svg" alt="">
               </div>
           </div>
           <div  class="userimagepanel local desktop"   [ngStyle]="{'display': (splitscreen==true) ? 'none' : 'block'}" style="width: 200px;
@@ -87,7 +98,7 @@
             top: 45%;" class="capitalinitials">{{firstuserFirstName}}{{firstuserLastName}}</p>
           </div>
 
-       <div class="mobilecallerinformationpanel" style="position: relative;" [ngStyle]="{'top':(splitscreen==true ) ? '60%' : '20%'}">
+       <div #mobileremoveview id="mobileremoveview" class="mobilecallerinformationpanel" style="position: relative;" [ngStyle]="{'top':(splitscreen==true ) ? '60%' : 'calc(55% - 90px)'}">
         <div [ngStyle]="{'display': (splitscreen==true) ?  'block' : 'none '}"   class="userimagepanel local mobile"   *ngIf="!hidecamera"style="width: 200px;
         height: 200px;
         margin: 0 auto;
@@ -102,6 +113,8 @@
                 margin: 0 auto;
                 vertical-align: middle;
                 top: 45%;" class="capitalinitials" >{{firstuserFirstName}}{{firstuserLastName}}</p>
+                       
+
         </div>
        <!-- for splitedscreen  mobile -->
         <div   [ngStyle]="{'display': (splitscreen==true) ? 'none' : 'block'}"   class="userimagepanel local mobile"   *ngIf="!hidecamera"style="width: 200px;
@@ -125,16 +138,15 @@
       <!-- <img  [ngStyle]="{'top':(splitscreen==true ) ? '58%' : '20%'}" *ngIf="!hidecamera" height="200" width="200" class="userimagebig local" src="../../../../assets/picface.jpeg" alt=""> -->
 
       <div [ngStyle]="{'display': (camerabtn==false) ? 'block' : 'none'}">
-        <video class="videllocal" [hidden]="!splitscreen" [muted]="true"  height="100%" width="100%"  id="localVideo1" #localVideo1 [autoplay]='true'   style="top: 80px;
+        <video    aria-valuemin="0" aria-valuemax="100" class="videllocal"  [ngStyle]="{'object-fit': (peercamera==true) ? 'revert' : 'cover'}" [hidden]="!splitscreen" [muted]="true"  height="100%" width="100%"  id="localVideo1" #localVideo1 [autoplay]='true' playsInline  type='video/mp4'  style="top: 80px;
         left: 0px;
         width: 50%;
         height: calc(100% - 80px);
-        object-fit: revert;
-        transform: scaleX(1);
-        position: absolute;"></video>
+        position: absolute;">
+      </video>
       </div>
 
-        <video  [ngClass]="splitscreen==true? 'splitvidepremote' : 'unspplitvideo'"  [ngStyle]="{'display': (peercamera==true) ? 'block' : 'none'}"     id="remoteVideo" 
+        <video   [ngClass]="splitscreen==true? 'splitvidepremote' : 'unspplitvideo'"  [ngStyle]="{'display': (peercamera==true) ? 'block' : 'none'}"     id="remoteVideo" 
         #remoteVideo [autoplay]='true'    [muted]="false" ></video>
 
       <div   class="camerasplitinfo" [ngStyle]=" {'display': (splitscreen==true) ? 'block' : 'none'}">
@@ -153,6 +165,7 @@
         <!-- <img [hidden]="this.peerPicture==null" height="200" width="200" class="userimagebig remote" [src]="this.peerPicture" alt=""> -->
        
         </div>
+        
         <!-- <video class="remoteVideo"   #remoteVideo   id="remoteVideo" 
         style="top: 0px;
         left: 0px;
@@ -183,7 +196,7 @@
       
        <ul class="deviceslist">
         
-        <li   class="deviceitem" *ngFor="let devc of inputMicrophone;let i=index">
+        <li   class="deviceitem" *ngFor="let devc of inputMicrophone;let i=index;"  [ngStyle]=" {'background': (devc.selected==true) ? '#243247' : 'unset'}">
           <!-- <div class="tooltippanel" id="tooltip" #tooltip>
             <p   class="tooltiptext">{{showtooltiptext}}</p>
          </div> -->
@@ -208,7 +221,7 @@
 
      
        <ul class="deviceslist">
-        <li   class="deviceitem" *ngFor="let devc of outputSpeaker;">
+        <li   class="deviceitem" *ngFor="let devc of outputSpeaker;" [ngStyle]=" {'background': (devc.selected==true) ? '#243247' : 'unset'}">
           <!-- <div class="tooltippanel" id="tooltip" #tooltip>
             <p class="tooltiptext">{{showtooltiptext}}</p>
          </div> -->
@@ -220,7 +233,7 @@
     </div>  
       <div id="callcontrol" #callcontrol class="callcontrol" class="callcontrolicons">
           <div class="miccontrolbtnpanel" (click)="showswitcher(showSwitcher)" [ngStyle]="{'background': (showSwitcher==true) ? 'rgba(255, 255, 255, 0.1)' : '#1C54DB'}">
-            <img style="width: fit-content;
+            <img class="arrowiconpopup" style="width: fit-content;
             position: absolute;
             transition-duration: 0.4s;
             margin: 5px 4px;
