@@ -847,8 +847,44 @@ gettimeduration(val)
 {
   this.getElapsedTime(val)
   let myDate = new Date(val);
- let  time =  ("0" + myDate.getHours()).slice(-2) + ":" + ("0" +myDate.getMinutes()).slice(-2)
-return time;
+ 
+  let  time =("0" + myDate.getHours()).slice(-2) + ":" + ("0" +myDate.getMinutes()).slice(-2)
+  return time;
+}
+
+gettimedurationformissedandanswered(val,seletedrange)
+{
+ console.log(seletedrange)
+  const monthNames = ["January", "February", "March", "April", "May", "June",
+"July", "August", "September", "October", "November", "December"];
+  const Days=['Mon',	'Tue'	,'Wed',	'Thu'	,'Fri',	'Sat',	'Sun']
+  this.getElapsedTime(val)
+  let myDate = new Date(val);
+  if(seletedrange=="Today"|| seletedrange=="Yesterday")
+  {
+    let  time = ("0" + myDate.getHours()).slice(-2) + ":" + ("0" +myDate.getMinutes()).slice(-2)
+    return time;
+  }
+  else if(seletedrange=="This month" || seletedrange=="Last month")
+  {
+    let  time =monthNames[myDate.getMonth()] +'\xa0'+  myDate.getDate() ;
+    return time;
+  }
+  else if(seletedrange=="This week" || seletedrange=="Last week")
+  {
+    let  time =monthNames[myDate.getMonth()] +'\xa0'+  myDate.getDate() ;
+    return time;
+  }
+  else if(seletedrange=="This year" || seletedrange=="Last year")
+  {
+    let  time =monthNames[myDate.getMonth()] +'\xa0'+  myDate.getDate() ;
+    return time;
+  }
+  else if(seletedrange=="custom"){
+    let  time = ("0" + myDate.getHours()).slice(-2) + ":" + ("0" +myDate.getMinutes()).slice(-2)
+    return time;
+  }
+ 
 }
 
 // dial call
@@ -1805,6 +1841,7 @@ this.allselectedcall2=status;
 
        if(tabsname=="missed_date")
        {
+        this.selectedtab_missed="custom";
         this.rangeSelected1= dateStart+ " -"+ dateEnd;
         this.datepreviewstart=dateStart;
          this.datepreviewend=dateEnd;
@@ -1816,6 +1853,7 @@ this.allselectedcall2=status;
       }
        else if(tabsname=="finished_date")
        {
+        this.selectedtab_finished="custom";
         this.rangeSelected2= dateStart+ " -"+ dateEnd;
         this.datepreviewstart1=dateStart;
         this.datepreviewend1=dateEnd;

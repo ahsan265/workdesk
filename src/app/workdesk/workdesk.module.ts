@@ -43,6 +43,7 @@ import { webrtcsocket } from '../service/webrtcsocket';
 import { CarouselModule } from 'ngx-bootstrap/carousel';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { notAvailable } from './Datapipes/NotAvailablepipe';
+import { gettimecalculatorlong } from './Datapipes/timecalcultationLong';
 
 
 @NgModule({
@@ -64,6 +65,7 @@ import { notAvailable } from './Datapipes/NotAvailablepipe';
       getbrowserpipes,
       getdevicepipes,
       getospipes,
+      gettimecalculatorlong,
       getcalltypepipes,
       getcalltypetextpipes,
       getcapitalletter,

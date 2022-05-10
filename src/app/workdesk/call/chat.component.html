@@ -407,7 +407,9 @@
                <td class="calltype">
                 <img src="{{data?.is_video|call_type}}"  style="margin-right: 17px;" alt=""> {{data?.is_video|call_type_text}}
                 </td>
-                <td style="text-align: center;">{{gettimeduration(data?.missed_at)}}</td>
+                <td style="text-align: center;">{{data?.missed_at | timecalculatorlong :this.selectedtab_missed 
+                
+                }}</td>
                 <td style="text-align: center;">{{calculatetime(data?.wait_time)}}</td>
                 <td class="reason"> 
                {{getreasonformissedcall(data?.reason)}}
@@ -595,7 +597,7 @@
               <td>
                 <img src="{{data?.is_video|call_type}}"  style="margin-right: 6px;" alt=""> {{data?.is_video|call_type_text}}
                 </td>
-                <td style="text-align: center;">{{gettimeduration(data?.call_started_at)}}</td>
+                <td style="text-align: center;">{{data?.call_started_at|timecalculatorlong :this.selectedtab_finished}}</td>
               <td style="padding-left: 60px;"> 
                 <img class="agentpic" height="36p" width="36" src="{{data?.agent.images[96] | getpicture}}" alt="">
               <div style="width: 100px;
@@ -624,7 +626,7 @@
                 <p class="agentusername">{{data?.name}}</p>
               </div>
               <div class="durationpanel" style="width: 20%;">
-                <p class="callmissedat" style="font-weight: 600;">{{gettimeduration(data?.call_started_at)}}</p>
+                <p class="callmissedat" style="font-weight: 600;">{{data?.call_started_at | timecalculatorlong :this.selectedtab_finished}}</p>
               </div>
               <div class="calltypepanel"style="width: 10%;">
                 <img height="16" width="16" src="{{data?.is_video|call_type}}" alt="" srcset="">

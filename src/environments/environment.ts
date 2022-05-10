@@ -13,7 +13,6 @@
 //   //
 //   accounts_callback_url: 'http://localhost:4202',
 //   accounts_client_id: 8,
-
 //   //
 //   prod_url_cs:"https://api.gconsole.io/cs",
 //   prod_url_workdesk:"https://api.gconsole.io/v2",
@@ -22,9 +21,7 @@
 //   websocket_url:"wss://api.gconsole.io/websockets",
 //   // 
 //   logged_user:'https://api.gconsole.io/v1/api/v1',
-//    currentUser: 'https://api.gigaaa.link/api/v1/current-user'
-
-
+//   currentUser: 'https://api.gconsole.io/v1/api/v1/current-user'
 
 // };
 
