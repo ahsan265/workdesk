@@ -138,7 +138,7 @@
       <!-- <img  [ngStyle]="{'top':(splitscreen==true ) ? '58%' : '20%'}" *ngIf="!hidecamera" height="200" width="200" class="userimagebig local" src="../../../../assets/picface.jpeg" alt=""> -->
 
       <div [ngStyle]="{'display': (camerabtn==false) ? 'block' : 'none'}">
-        <video    aria-valuemin="0" aria-valuemax="100" class="videllocal"  [ngStyle]="{'object-fit': (peercamera==true) ? 'revert' : 'cover'}" [hidden]="!splitscreen" [muted]="true"  height="100%" width="100%"  id="localVideo1" #localVideo1 [autoplay]='true' playsInline  type='video/mp4'  style="top: 80px;
+        <video    aria-valuemin="0" aria-valuemax="100" class="videllocal"  [ngStyle]="{'object-fit': (peerscreenView==true) ? 'revert' : 'cover'}" [hidden]="!splitscreen" [muted]="true"  height="100%" width="100%"  id="localVideo1" #localVideo1 [autoplay]='true' playsInline  type='video/mp4'  style="top: 80px;
         left: 0px;
         width: 50%;
         height: calc(100% - 80px);

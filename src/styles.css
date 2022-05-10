@@ -2592,8 +2592,9 @@ body .bs-datepicker-container  .bs-datepicker-body   tbody tr:nth-child(even){
     margin: 0px!important;
     top: 0px!important;
     height: 100%!important;
+    left: 0 !important;
     right: 0!important;
-    object-fit: fill!important;
+    object-fit: cover!important;
     position: absolute!important;
 }
 .maximizeVideocallinterface .splitvidepremote{

@@ -75,7 +75,7 @@ export class CallInterfaceComponent implements OnInit,AfterViewInit,OnDestroy  {
   hasEchoCancellation=false;
   webrtcmediacontraints={
   audio:true,
-  video:true
+  video:false
 }
 hasVideoparam={width:226,height:144};
  webrtcmediacontraints_user={
@@ -140,7 +140,8 @@ hasVideoparam={width:226,height:144};
  peercamera:boolean=false;
  peerscreenView:boolean=false;
  remoteVideosrc:any;
- mediaDevices = navigator.mediaDevices as any;
+ mediaDevices = navigator.mediaDevices as  any;
+mediadevice
  startstats:any;
  callQualityIndicator:any;
 
@@ -182,23 +183,15 @@ hasVideoparam={width:226,height:144};
         // request video and audio 
         private async requestmediadevices(val:any): Promise<void>
         {
-          try {
-          this.localstream=await   this.mediaDevices.getUserMedia(val)
-          // this.localstream.getAudioTracks().forEach(track => {
-          //   track.enabled=true;
-          // });
-          this.localstream.getVideoTracks().forEach(track => {
-            track.enabled=false;
-            track.stop();
-          });
-        
-          //this.showListofDevices(1);
+          const callstat=JSON.parse(localStorage.getItem("call_info"))
 
-           this.localVideo.nativeElement.srcObject = undefined;
-           this.localVideo1.nativeElement.srcObject = undefined;
-           this.localVideo.nativeElement.srcObject=this.localstream; 
-           this.localVideo1.nativeElement.srcObject=this.localstream; 
-           const callstat=JSON.parse(localStorage.getItem("call_info"))
+          try {
+          
+              this.localstream=await   this.mediaDevices.getUserMedia(val)
+            //   this.localstream.getVideoTracks().forEach(track => {
+            //    track.stop();
+            //  });
+           
             if(callstat?.is_refreshed==false)
             {
            await   this.showListofDevices(1);
@@ -378,24 +371,25 @@ hasVideoparam={width:226,height:144};
 
         // send offer to user  and call 
            private async createOfferForPeer():Promise <void>
-                 {
+           {
                 if(!this.peerconnection)
                 {
                  await this.createPeerConnection()
                 }
 
-              await  this.mediaDevices.getUserMedia({audio:true,video:false}).then((stream)=>{
-                 this.localstream=stream;
-                const videotrack=stream.getAudioTracks();
+                await  this.mediaDevices.getUserMedia({audio:true,video:true}).then((stream)=>{
+                this.localstream=stream;
+                const audiotrack=stream.getAudioTracks();
+                stream.getVideoTracks()[0].stop();
                 this.localVideo.nativeElement.srcObject = undefined;
                 this.localVideo1.nativeElement.srcObject= undefined;
                 this.localVideo1.nativeElement.srcObject=this.localstream;
                 this.localVideo.nativeElement.srcObject=this.localstream;
-                this.localstream=new MediaStream([videotrack[0]])
-              //  this.localstream.addTrack(videotrack[0]);
-              this.localstream.getTracks().forEach(track=>{
-                this.peerconnection.addTrack(track,this.localstream);
-              })
+                this.localstream=new MediaStream([audiotrack[0]]);
+                //  this.localstream.addTrack(videotrack[0]);
+                this.localstream.getTracks().forEach(track=>{
+                  this.peerconnection.addTrack(track,this.localstream);
+                })
                 }).then(async ()=>{
                     const offer:RTCSessionDescriptionInit=await this.peerconnection.createOffer({
                     offerToReceiveAudio:true,
@@ -443,7 +437,7 @@ hasVideoparam={width:226,height:144};
           iceServers:this.iceserversConfigs,
         iceTransportPolicy:'all',
         iceCandidatePoolSize:2,
-        rtcpMuxPolicy:'require'
+        rtcpMuxPolicy:'require',
       } )
       this.message.setSuccessMessage("Peer connection");
       this.eventHandlerforpeer();
@@ -508,17 +502,17 @@ hasVideoparam={width:226,height:144};
       switch(this.peerconnection.iceConnectionState)
       {
         case "closed":
-          this.peerconnection.close()
-          this.peerconnection=null;
-          await this.createPeerConnection();
-          this.getcallTypeforPagereload();
+        this.peerconnection.close()
+        this.peerconnection=null;
+        await this.createPeerConnection();
+        await this.getcallTypeforPagereload();
         break;
         case "failed":
         case "disconnected":
         this.peerconnection.close()
-       this.peerconnection=null;
-       await this.createPeerConnection();
-       this.getcallTypeforPagereload();
+        this.peerconnection=null;
+        await this.createPeerConnection();
+        await this.getcallTypeforPagereload();
         break;
       }
     }
@@ -548,7 +542,6 @@ hasVideoparam={width:226,height:144};
   
    
       ngAfterViewInit(): void {
-
         this.requestmediadevices(this.webrtcmediacontraints);
         this.createPeerConnection();
         this.onclick();
@@ -566,6 +559,7 @@ hasVideoparam={width:226,height:144};
         switch(msg.type)
         {
           case "offer":
+            console.log(msg.data)
             if(msg.data!=undefined)
             {
               await  this.handleOfferMessage(msg.data);
@@ -640,17 +634,23 @@ hasVideoparam={width:226,height:144};
             // message handler 
             private async  handleOfferMessage (msg:RTCSessionDescriptionInit): Promise<void>
             {
+            
             await  this.peerconnection.setRemoteDescription(new RTCSessionDescription(msg)).then(async ()=>{
-            this.localVideo.nativeElement.srcObject=this.localstream;
+          
             }).then(async () => {
             // Build SDP for answer message
             return await this.peerconnection.createAnswer();
             }).then(async (answer) => {
             // Set local SDP
+            console.log(answer)
             await this.peerconnection.setLocalDescription(answer);
-            this.webrtcservice.sendDataforCall({type:"answer",data:this.peerconnection.localDescription});
+           
+            }).then(()=>{
+              this.webrtcservice.sendDataforCall({type:"answer",data:this.peerconnection.localDescription});
             }).catch(err=>{
             console.log(err)
+        
+          
             });
 
             }
@@ -859,42 +859,55 @@ hasVideoparam={width:226,height:144};
       {                 
         
 
-        if(this.localstream)
-        {
-          this.localstream.getVideoTracks().forEach(track=>{
-              track.stop();
-          })
-         }     
+        // if(this.localstream.getVideoTracks()[0]!=undefined)
+        //  {
+        //    this.localstream.getVideoTracks()[0].stop();
+        //  } 
+          if(this.ismobile==true)
+          {
+            this.cameraViewName="user";
+          }
             this.webrtcservice.sendDataforCall({"type": "update_peer", "user_id":this.userid,"data":{"is_camera_on": true, "is_microphone_on":true, "is_shared_screen":false, "first_name":  this.userFirstName,"last_name":  this.userLastName, "img_url":this.userPicture,"is_mobile":this.ismobile}})
             this.setUserInfo({"type": "update_peer","user_id":this.userid,"data":{"is_camera_on": true, "is_microphone_on":true, "is_shared_screen":false, "first_name":  this.userFirstName,"last_name":  this.userLastName, "img_url":this.userPicture,"is_mobile":this.ismobile}})
         // this.webrtcmediacontraints.video=this.hasVideoparam; 
-       await  this.mediaDevices.getUserMedia({video:this.hasVideoparam}).then((stream)=>{
-          // this.localstream=stream;
-          
-          const videotrack=stream.getVideoTracks();
-          const audiotrack=this.localstream.getAudioTracks();
-           //  audiotrack=this.localstream.getAudioTracks();
+       await  navigator.mediaDevices.getUserMedia({video:this.hasVideoparam}).then((stream)=>{
+            //this.localstream=stream;
+            const videotrack=stream.getVideoTracks();
+            const audiotrack=this.localstream.getAudioTracks();
+            this.localstream.addTrack(videotrack[0]);
+          //  this.localstream.addTrack(audiotrack[0]);
             this.localVideo.nativeElement.srcObject = undefined;
             this.localVideo1.nativeElement.srcObject= undefined;
             this.localVideo1.nativeElement.srcObject= stream
             this.localVideo.nativeElement.srcObject= stream;
-           // this.localstream=stream;
-            this.peerconnection.addTrack(videotrack[0],this.localstream);
+           // const streamvid=new MediaStream([videotrack[0],audiotrack[0]])
             const audio=this.peerconnection.getSenders().find(data=>{
               return data.track?.kind=="audio";
-            })
-            console.log(audio)
-            if(audio!=undefined)
+            });
+            if(audio==undefined)
             {
-              this.peerconnection.removeTrack(audio)
+              this.peerconnection.addTrack(audiotrack[0],this.localstream);
             }
-            this.peerconnection.addTrack(audiotrack[0],this.localstream);
+            const video=this.peerconnection.getSenders().find(data=>{
+              return data.track?.kind=="video";
+            });
+            if(video==undefined)
+            {
+              this.peerconnection.addTrack(videotrack[0],this.localstream);
+            }
+            else{
+            this.peerconnection.removeTrack(video);
+            this.peerconnection.addTrack(videotrack[0],this.localstream);
+            }
+           
+           
           }).then(async ()=>{
           const offer:RTCSessionDescriptionInit=await this.peerconnection.createOffer({
             offerToReceiveAudio:true,
             offerToReceiveVideo:true,
             iceRestart:true
           });
+  
           await this.peerconnection.setLocalDescription(offer).catch(err=>{
             console.log(err)
           })
@@ -906,21 +919,18 @@ hasVideoparam={width:226,height:144};
        
         
       }
-          private async   pausevideoCall() :Promise<void>
-          {  
+     private async   pausevideoCall() :Promise<void>
+     {  
 
             this.webrtcservice.sendDataforCall({"type": "update_peer", "user_id":this.userid,"data":{"is_camera_on": false, "is_microphone_on":true, "is_shared_screen":false, "first_name":  this.userFirstName,"last_name":  this.userLastName, "img_url":this.userPicture,"is_mobile":this.ismobile}})
             this.setUserInfo({"type": "update_peer","user_id":this.userid,"data":{"is_camera_on": false, "is_microphone_on":true, "is_shared_screen":false, "first_name":  this.userFirstName,"last_name":  this.userLastName, "img_url":this.userPicture,"is_mobile":this.ismobile}})
-          if(this.localstream)
-          {
-            this.localstream.getVideoTracks().forEach(track=>{
-              track.enabled=false;
-              track.stop();
-            })
-          }
+         if(this.localstream.getVideoTracks()[0]!=undefined)
+         {
+           this.localstream.getVideoTracks()[0].stop();
+         }
       // this.webrtcmediacontraints.video=false; 
-      await   this.mediaDevices.getUserMedia({audio:true,video:false}).then((stream)=>{
-      //this.localstream=stream;
+      await navigator.mediaDevices.getUserMedia({audio:true,video:false}).then((stream)=>{
+      this.localstream=stream;
       let videotrack=stream.getAudioTracks();
       videotrack=stream.getAudioTracks();
       videotrack=this.localstream.getAudioTracks();
@@ -928,8 +938,8 @@ hasVideoparam={width:226,height:144};
       this.localVideo1.nativeElement.srcObject= undefined;
       this.localVideo1.nativeElement.srcObject=this.localstream;
       this.localVideo.nativeElement.srcObject=this.localstream;
-       this.localstream=new MediaStream([videotrack[0]])
-    //  this.localstream.addTrack(videotrack[0]);
+     //  this.localstream=new MediaStream([videotrack[0]])
+       this.localstream.addTrack(videotrack[0]);
         this.peerconnection.addTrack(videotrack[0],this.localstream);
       }).then(async ()=>{
           const offer:RTCSessionDescriptionInit=await this.peerconnection.createOffer({
@@ -1291,53 +1301,47 @@ hasVideoparam={width:226,height:144};
         }
     
  
-         //refres state of calls
-        private async getcallTypeforPagereload():Promise<void>
-         {
-          let callstat=JSON.parse(localStorage.getItem("call_info"));
-          if(callstat.user_devices_info?.data.is_camera_on==true&&callstat.user_devices_info?.data.is_shared_screen==false)
+          // refres state of calls
+          private async getcallTypeforPagereload():Promise<void>
           {
-            this.camerabtncheck(true)
-
-          }
-          else if(callstat.user_devices_info?.data.is_camera_on==true&&callstat.user_devices_info?.data.is_shared_screen==true)
-          { 
-            
-         
-          if(this.sharescreen)
-          {
-            this.sharescreen.getTracks().forEach(track=>{
-              this.peerconnection.addTrack(track, this.sharescreen);
-            })
-            const offer:RTCSessionDescriptionInit=await this.peerconnection.createOffer({
-            offerToReceiveAudio:true,
-            offerToReceiveVideo:true,
-            iceRestart:true
-            });
-            await this.peerconnection.setLocalDescription(offer);
-            this.webrtcservice.sendDataforCall({type: "offer" ,user_id:this.peerUserid,data:offer });
-          }
-          else{
+              let callstat=JSON.parse(localStorage.getItem("call_info"));
+              if(callstat.user_devices_info?.data.is_camera_on==true&&callstat.user_devices_info?.data.is_shared_screen==false)
+              {
+                this.camerabtncheck(true);
+              }
+              else if(callstat.user_devices_info?.data.is_camera_on==true&&callstat.user_devices_info?.data.is_shared_screen==true)
+              {
+              if(this.sharescreen)
+              {
+              this.sharescreen.getTracks().forEach(track=>{
+                this.peerconnection.addTrack(track, this.sharescreen);
+              });
+              const offer:RTCSessionDescriptionInit=await this.peerconnection.createOffer({
+              offerToReceiveAudio:true,
+              offerToReceiveVideo:true,
+              iceRestart:true
+              });
+              await this.peerconnection.setLocalDescription(offer);
+              this.webrtcservice.sendDataforCall({type:"offer",user_id:this.peerUserid,data:offer });
+            }
+            else{
               this.camerabtncheck(false);
-
-          }
+            }
         
-          }
+           }
            else if(callstat.user_devices_info?.data.is_camera_on==false&&callstat.user_devices_info?.data.is_shared_screen==false)
-          {
+           {
+            console.log("option",3)
             this.camerabtncheck(false)
-    
-          }
-          
-          
+           }
          }
+
          // restore last used device ()
-         
          restoreLastUsedDevices(val)
          {
-          let callstat=JSON.parse(localStorage.getItem("call_info"));
-          if(callstat.is_refreshed==true)
-          {
+            let callstat=JSON.parse(localStorage.getItem("call_info"));
+            if(callstat.is_refreshed==true)
+            {
             if(val==1)
             {
               this.selectMicrophone(callstat?.user_last_mic,1);
@@ -1430,10 +1434,12 @@ hasVideoparam={width:226,height:144};
                track.stop()
              });
             }
+            
             await this.mediaDevices.getUserMedia(constraint).then(async stream=>{
              this.showMicroPhoneLevels(micename, stream);
            navigator.mediaDevices.ondevicechange=null
            let audiotrk=    stream.getAudioTracks()[0];
+           this.localstream.addTrack(audiotrk)
            this.localstream=stream
            let audioupdt=this.peerconnection.getSenders().find(trk=>{
              return trk.track.kind==audiotrk.kind;
@@ -1672,7 +1678,6 @@ hasVideoparam={width:226,height:144};
                  return trk.track.kind=="video";
                 }
                })
-               console.log(audioupdt)
                cameraName=audioupdt.track.label;
                console.log("camera_name",cameraName)
               await  navigator.mediaDevices.enumerateDevices().then(devices=>{
@@ -1700,7 +1705,7 @@ hasVideoparam={width:226,height:144};
                         this.localVideo1.nativeElement.srcObject=stream;
                        let videotrk=  stream.getVideoTracks()[0];
                        // this.localstream.addTrack(videotrk);
-                     // this.localstream=new MediaStream([videotrk])
+                      // this.localstream=new MediaStream([videotrk])
 
                       
                         this.peerconnection.removeTrack(audioupdt)
