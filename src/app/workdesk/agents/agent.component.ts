@@ -156,9 +156,9 @@ export class AgentComponent implements OnInit,AfterViewInit {
   }
   // get agents details live
   getagentdetailslive(){
-   this.agentsocketgigaaaapi.getagetnlist$.subscribe(data=>{
     var updateagentdata;
-    updateagentdata =data;
+   this.agentsocketgigaaaapi.getagetnlist$.subscribe(data=>{
+      updateagentdata =data;
     var count=0;
      updateagentdata.forEach(element => {
        if(element.email==this.getsettingforloggedinagent())
@@ -244,8 +244,10 @@ export class AgentComponent implements OnInit,AfterViewInit {
        var subsid=getdata.subscription_id.subsid.uuid
     
         this.gigaaaapi.getallagents(accesstoken,subsid,intid,parma1,param2,param3,lang).subscribe(data=>{
+
            var updateagentdata;
-           updateagentdata =data;
+            updateagentdata =data;
+         
             updateagentdata.forEach(element => {
               if(element.email==this.getsettingforloggedinagent())
               {

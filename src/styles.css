@@ -2620,9 +2620,8 @@ body .bs-datepicker-container  .bs-datepicker-body   tbody tr:nth-child(even){
         width: 100%!important;
         margin: 0px!important;
         top: 50px!important;
-        height: 100%!important;
+        height:calc(100% - 50px)!important;
         right: 0!important;
-        object-fit: cover!important;
         position: absolute!important;
     }
     .splitvidepremote {
@@ -2634,7 +2633,6 @@ body .bs-datepicker-container  .bs-datepicker-body   tbody tr:nth-child(even){
         float: right!important;
         z-index: 1!important;
         position: absolute!important;
-        object-fit: cover!important;
     }
     /* .maximizeVideocallinterface .splitvidepremote{
         width: 50%!important;
@@ -3366,5 +3364,8 @@ body .bs-datepicker-container  .bs-datepicker-body   tbody tr:nth-child(even){
     }
     .minimizecallinterface .normalmode{
         line-height: 54.5px  !important;
+    }
+    .minimizecallinterface .sharescreenmsg{
+        border-radius: 0px !important;
     }
 }

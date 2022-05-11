@@ -141,12 +141,10 @@ hasVideoparam={width:226,height:144};
  peerscreenView:boolean=false;
  remoteVideosrc:any;
  mediaDevices = navigator.mediaDevices as  any;
-mediadevice
+ mediadevice
  startstats:any;
  callQualityIndicator:any;
-
  ismousemove:boolean=true;
-
  inputMicrophone:Array<any>;
  outputSpeaker:Array<any>;
  videoInputDevice:Array<any>;
@@ -155,7 +153,6 @@ mediadevice
  showSwitcher:boolean=true;
  showtooltiptext:any;
  remotetrackEvent:MediaStream;
-
  lastuserdSpeaker:any;
  lasyuserspearkerID:any
  lastUsercameraId:any;
@@ -163,7 +160,7 @@ mediadevice
  ismobile:boolean=false;
  remote:boolean;
 
-      constructor(private changeDetector: ChangeDetectorRef,
+     constructor(private changeDetector: ChangeDetectorRef,
      public dialogRef: MatDialogRef<CallInterfaceComponent>,
      private webrtcservice:webrtcsocket,
      @Inject(MAT_DIALOG_DATA) public data,
@@ -183,7 +180,7 @@ mediadevice
         // request video and audio 
         private async requestmediadevices(val:any): Promise<void>
         {
-          const callstat=JSON.parse(localStorage.getItem("call_info"))
+         
 
           try {
           
@@ -191,8 +188,8 @@ mediadevice
             //   this.localstream.getVideoTracks().forEach(track => {
             //    track.stop();
             //  });
-           
-            if(callstat?.is_refreshed==false)
+            const callstat=JSON.parse(localStorage.getItem("call_info"))
+            if(callstat?.is_refreshed!=true)
             {
            await   this.showListofDevices(1);
             }
@@ -200,14 +197,11 @@ mediadevice
            await  this.showListofDevices(0).finally(()=>{
               this.restoreLastUsedDevices(1);
              })
-             
-            }
-
+             }
              }
           catch (e) {
             }
-          
-           }
+            }
 
             ngOnDestroy(): void {
             this.destroyed$.next();
@@ -266,7 +260,7 @@ mediadevice
         }        
         mouseStopped()
         {
-          if(this.peerscreenView==true)
+          if(this.peerscreenView==true && this.ismobile==false)
           { 
             this.renderer.setStyle(this.usercamera.nativeElement, "display", "flex");
             if(this.hideContant==false)
@@ -363,7 +357,7 @@ mediadevice
           this.userFirstName=user.profile.first_name;
           this.userLastName=user.profile.last_name;
          // this.userPicture=user.agent_images['96'];
-            this.userPicture=user.avatar_url;
+          this.userPicture=user.avatar_url;
           this.firstuserFirstName= this.userFirstName.toUpperCase().charAt(0);
           this.firstuserLastName= this.userLastName.toUpperCase().charAt(0)
 
@@ -741,6 +735,7 @@ mediadevice
 
         camerabtncheck(val:any)
         {
+          console.log(val)
           if(this.screensharebtn==true)
           {
             if(val==true)
@@ -777,13 +772,21 @@ mediadevice
                 {
                   this.dialogRef.removePanelClass('maximizeVideocallinterface');
                   this.dialogRef.addPanelClass('minimizecallinterface');
-             
+                  console.log("minimize")
+                }
+                if(this.peerscreenView==true)
+                {
+                  
+                  this.dialogRef.removePanelClass('maximizeVideocallinterface');
+                  this.dialogRef.addPanelClass('minimizecallinterface');
+                  if(this.ismobile==false)
+                  {
+                    this.peercamera=false;
+                  }
+                 
                 }
                  
-                  if(this.peerscreenView==true)
-                  {
-                    this.peercamera=true;
-                  }
+                 
                 
               }
             }
@@ -820,7 +823,7 @@ mediadevice
           else if(this.camerabtn==false && this.ismobile==false)
           {
             this.dialogRef.addPanelClass('maximizeVideocallinterface');
-            
+         
           
           }
           else 
@@ -836,7 +839,10 @@ mediadevice
            this.splitIcon='../../../../assets/assets_workdesk/smallscreen_icon12.svg'
           
            this.hideScreen(this.peerscreenView);
-        
+           if(this.peerscreenView==true)
+           {
+             this.peercamera=false;
+           }
           
         }
         else{
@@ -849,6 +855,10 @@ mediadevice
           this.dialogRef.removePanelClass(['maximizeVideocallinterface','minimizecallinterface']);
           this.dialogRef.addPanelClass('callinterface-form-container');
           this.hideScreen(false);
+          if(this.peerscreenView==true)
+          {
+            this.peercamera=true;
+          }
        
         }
         
@@ -1131,8 +1141,15 @@ mediadevice
         this.peerLastnameinitials= this.peerLastname.toUpperCase().charAt(0);
         if(this.peerscreenView==true)
         {
-          this.renderer.setStyle(this.remotevideo.nativeElement, "object-fit", "revert");
           this.hideScreen(this.peerscreenView);
+          this.peercamera=this.peerscreenView;
+          if(this.ismobile==true)
+          {
+            this.sharescreenviewformobile(this.peerscreenView,this.splitscreen);
+          }
+          else{
+            this.renderer.setStyle(this.remotevideo.nativeElement, "object-fit", "revert");
+          }
         }
         else 
         {
@@ -1146,12 +1163,12 @@ mediadevice
         }
 
         this.peerdeviceinfo(data);
-        if(this.peerscreenView!=false)
+        if(this.peerscreenView!=false && this.ismobile==false)
         {
           this.renderer.setStyle(this.usercamera.nativeElement, "display", "none");
           this.renderer.setStyle(this.callcontrol.nativeElement, "display", "none");
         }
-        else{
+        else {
         this.renderer.setStyle(this.usercamera.nativeElement, "z-index", "2");
         this.renderer.setStyle(this.usercamera.nativeElement, "display", "flex");
         this.renderer.setStyle(this.usercamera.nativeElement, "transform", "unset");
@@ -1391,7 +1408,7 @@ mediadevice
             console.log(val)
             if(val==true)
             {
-              this.peercamera=true;
+            
               // this.renderer.setStyle(this.remotevideo.nativeElement, "visibility", "v");
               this.renderer.setStyle(this.textforscreen.nativeElement, "display", "block");
 
@@ -1399,6 +1416,7 @@ mediadevice
             }
             else if(val==false)
             {
+             
               this.renderer.setStyle(this.remotevideo.nativeElement, "visibility", "visible");
             //  this.renderer.setStyle(this.remotevideo.nativeElement, "visibility", "block");
               this.renderer.setStyle(this.textforscreen.nativeElement, "display", "none");
@@ -1767,6 +1785,20 @@ mediadevice
                 this.renderer.setStyle(this.localVideo1.nativeElement, "object-fit", "cover");
 
               }
+            }
+
+            // mobile filter 
+            sharescreenviewformobile(sharescreen,issplit)
+            {
+              if(sharescreen==true && issplit==true)
+              {
+                this.renderer.setStyle(this.remotevideo.nativeElement, "object-fit", "contain");
+              }
+              else if(sharescreen==true && issplit==false)
+              {
+                this.renderer.setStyle(this.remotevideo.nativeElement, "object-fit", "revert");
+              }
+
             }
          
 }
