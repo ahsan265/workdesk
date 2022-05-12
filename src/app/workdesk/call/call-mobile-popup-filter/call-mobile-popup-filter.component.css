@@ -3,6 +3,11 @@
     width: 100%;
 
 }
+a[aria-expanded=true] > .arrowdownicon1 {
+
+    transform: rotate(180deg);
+    transition: 0.4s;
+    }
 .filterpanel{
     display: inherit;
     width: 100%;
@@ -313,6 +318,7 @@ input[type="checkbox"]  {
         margin-top: 22px;
         cursor: pointer;
         color: #292F58;
+        transition: 0.4s;
     
     }
     .applybtnpanel{

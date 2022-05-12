@@ -123,6 +123,10 @@ color: #7D8696;
     background: none;
   
   }
+  a[aria-expanded=true] > .tagiconnn  {
+    transform: rotate(180deg);
+    transition: 0.4s;
+    }
   .dropdown.menu > li > a{
     font-family: "Roboto",sans-serif;
   font-style: normal;
@@ -176,10 +180,10 @@ color: #7D8696;
   float: right;
   line-height: 34px;
   display: block;
-  margin-top: 0px;
+  margin-top: 14px;
   margin-right: 12px;
-  height: 12px;
-  width: 7px;   
+   
+  transition: 0.4s;
 }
 .tagiconnn:hover
 {

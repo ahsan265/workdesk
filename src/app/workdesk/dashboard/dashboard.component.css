@@ -454,6 +454,7 @@
        margin-top: 14px;
        cursor: pointer;
        color: #292F58;
+       transition: 0.4s;
    
    }
    .arrowdownicon{
@@ -464,6 +465,8 @@
        margin-top: 14px;
        cursor: pointer;
        color: #292F58;
+       transition: 0.4s;
+
    
    }
    .arrowdownicon:hover{
@@ -743,6 +746,15 @@
     color: #7D8696;
     box-shadow: none;
 
+}
+a[aria-expanded=true] > .arrowdownicon1 {
+
+transform: rotate(180deg);
+transition: 0.4s;
+}
+div[aria-expanded=true] > .arrowdownicon{
+    transform: rotate(180deg);
+    transition: 0.4s;  
 }
 ::placeholder {
     color: #7D8696;

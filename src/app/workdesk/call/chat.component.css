@@ -57,6 +57,16 @@ tr:last-child td
   width: 75%;
   text-align: right;
 }
+a[aria-expanded=true] > .arrowdownicon {
+
+  transform: rotate(180deg);
+  transition: 0.4s;
+  }
+
+  div[aria-expanded=true] > .arrowdownicon{
+    transform: rotate(180deg);
+    transition: 0.4s;  
+}
 .dropdown.languages{
   width: 185.55px;
   height: 34px;
@@ -163,7 +173,7 @@ margin-top: 12px;
       margin-top: 14px;
       cursor: pointer;
       color: #292F58;
-  
+      transition: 0.4s;
   }
     .arrowdownicon:hover{
       color:  #A6A8BA;

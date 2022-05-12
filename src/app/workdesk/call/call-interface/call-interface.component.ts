@@ -180,22 +180,16 @@ hasVideoparam={width:226,height:144};
         // request video and audio 
         private async requestmediadevices(val:any): Promise<void>
         {
-         
+          const callstat=JSON.parse(localStorage.getItem("call_info"))
+
 
           try {
-          
-              this.localstream=await   this.mediaDevices.getUserMedia(val)
-            //   this.localstream.getVideoTracks().forEach(track => {
-            //    track.stop();
-            //  });
-            const callstat=JSON.parse(localStorage.getItem("call_info"))
-            if(callstat?.is_refreshed!=true)
-            {
-           await   this.showListofDevices(1);
-            }
-            else if(callstat?.is_refreshed==true){
+         
+            this.localstream=await   this.mediaDevices.getUserMedia(val)
+            if(callstat?.is_refreshed==true){
            await  this.showListofDevices(0).finally(()=>{
               this.restoreLastUsedDevices(1);
+              console.log("hello")
              })
              }
              }
@@ -209,8 +203,9 @@ hasVideoparam={width:226,height:144};
             }
 
           ngOnInit(): void {
-            this.showUserInformation();
             this.addIncomingCallHandler();
+            this.showUserInformation();
+           
             const callstat=JSON.parse(localStorage.getItem("call_info"))
             if(callstat==null)
             {
@@ -536,12 +531,12 @@ hasVideoparam={width:226,height:144};
   
    
       ngAfterViewInit(): void {
-        this.requestmediadevices(this.webrtcmediacontraints);
+      
         this.createPeerConnection();
         this.onclick();
         this.ontouchevetn();
-        this. ontouchmove();
-    
+        this.ontouchmove();
+        this.requestmediadevices(this.webrtcmediacontraints);
 
       }
   // add incoming call handler
@@ -574,6 +569,8 @@ hasVideoparam={width:226,height:144};
           {
             localStorage.setItem("call_info",JSON.stringify({user_id:this.userid,is_refreshed:false}));
             this.saveuserFirstinformation();
+           await   this.showListofDevices(1);
+           
           }
           else{
             this.webrtcservice.sendDataforCall({"type": "update_peer", "user_id":this.userid,"data":callstat?.user_devices_info.data})
@@ -588,8 +585,9 @@ hasVideoparam={width:226,height:144};
             {
                 await this.createPeerConnection()
             }
-             await this.getcallTypeforPagereload();
+            
              this.getPeerDataInformation(callstat?.peer_devices_info);
+             await this.getcallTypeforPagereload();
             //  if(callstat.peer_devices_info.data.is_shared_screen==true)
             //  {
             //    await  this.handleOfferMessage(callstat?.peer_last_offer);
@@ -608,14 +606,10 @@ hasVideoparam={width:226,height:144};
             localStorage.setItem("call_info",JSON.stringify(callstat));
             
           }
-        
-         
           break;
           case "peer_data":
-          console.log(msg)
           console.log(msg.data)
           this.getPeerDataInformation(msg.data);
-          
           break;
           default:
           console.log("Unknow Message :"+msg.type);    
@@ -1048,19 +1042,19 @@ hasVideoparam={width:226,height:144};
       startAudio()
       { 
         this.localstream.getAudioTracks()[0].enabled=true;
-      if(this.sharescreen!=undefined)
-      {
-        this.sharescreen.getAudioTracks()[0].enabled=true;
-      }
+      // if(this.sharescreen!=undefined)
+      // {
+      //   this.sharescreen.getAudioTracks()[0].enabled=true;
+      // }
       }
       
       pauseAudio()
       {
         this.localstream.getAudioTracks()[0].enabled=false;
-        if(this.sharescreen!=undefined)
-        {
-          this.sharescreen.getAudioTracks()[0].enabled=false;
-        }
+        // if(this.sharescreen!=undefined)
+        // {
+        //   this.sharescreen.getAudioTracks()[0].enabled=false;
+        // }
       }
 
 
@@ -1209,6 +1203,7 @@ hasVideoparam={width:226,height:144};
            
               this.mediaDevices.getDisplayMedia({video:true}).then(stream=>{
                 this.screensharebtn=false;
+                this.sharescreen=stream;
                 stream.getTracks()[0].addEventListener('ended',()=>{
                   this.toggleViewForSharescree(false);
 
@@ -1236,22 +1231,36 @@ hasVideoparam={width:226,height:144};
                   this.webrtcservice.sendDataforCall({"type": "update_peer", "user_id":this.userid,"data":{"is_camera_on": false, "is_microphone_on":true, "is_shared_screen":true, "first_name":  this.userFirstName,"last_name":  this.userLastName, "img_url":this.userPicture,"is_mobile":this.ismobile}})
                 }
                 
-                this.mediaDevices.getUserMedia({audio:true}).then(audiostream=>{
+                
                   this.toggleViewForSharescree(true);
-                  const localAudio= audiostream.getAudioTracks()[0];
+                  const localAudio= this.localstream.getAudioTracks()[0];
                   const videotrack= stream.getVideoTracks()[0];
+                  console.log(localAudio)
                   this.webrtcservice.sendDataforCall({"type": "update_peer", "user_id":this.userid,"data":{"is_camera_on": false, "is_microphone_on":true, "is_shared_screen":true, "first_name":  this.userFirstName,"last_name":  this.userLastName, "img_url":this.userPicture,"is_mobile":this.ismobile}})
                   this.setUserInfo({"type": "update_peer","user_id":this.userid,"data":{"is_camera_on": true, "is_microphone_on":true, "is_shared_screen":true, "first_name":  this.userFirstName,"last_name":  this.userLastName, "img_url":this.userPicture,"is_mobile":this.ismobile}})
                   this.renderer.setStyle(this.localVideo1.nativeElement, "transform", "scaleX(1)");
-                  this.sharescreen=new MediaStream([videotrack,localAudio])
+                 // this.sharescreen=stream
+                 stream.addTrack(localAudio);
                   this.localVideo1.nativeElement.srcObject=undefined;
                   this.localVideo.nativeElement.srcObject=undefined;
-                  this.localVideo1.nativeElement.srcObject= this.sharescreen;
-                  this.localVideo.nativeElement.srcObject= this.sharescreen;
-                  this.sharescreen.getTracks().forEach(track=>{
-                    this.peerconnection.addTrack(track, this.sharescreen);
+                  this.localVideo1.nativeElement.srcObject= stream;
+                  this.localVideo.nativeElement.srcObject= stream;
+                 
+                  const audio=this.peerconnection.getSenders().find(data=>{
+                    if(data?.track!=null)
+                    {
+                      return data.track?.kind=="audio";
+                    }
+                   
+                   
                   })
-                  
+             
+                
+                 this.peerconnection.addTrack(videotrack, stream);
+                  this.peerconnection.removeTrack(audio)
+                  this.peerconnection.addTrack(localAudio, stream);
+           
+
                   }).then(async ()=>{
                   const offer:RTCSessionDescriptionInit=await this.peerconnection.createOffer({
                   offerToReceiveAudio:true,
@@ -1261,7 +1270,6 @@ hasVideoparam={width:226,height:144};
                   await this.peerconnection.setLocalDescription(offer);
                   this.webrtcservice.sendDataforCall({type: "offer" ,user_id:this.peerUserid,data:offer });
                   })
-                })
                 
               }
               else 
@@ -1430,9 +1438,10 @@ hasVideoparam={width:226,height:144};
           // select microphone options 
           async selectMicrophone(Val,isLoad)
           {  
+          
                 console.log(Val)  
             this.inputDeviceid = Val.data.deviceId;
-            await  navigator.mediaDevices.enumerateDevices();
+         //   await  navigator.mediaDevices.enumerateDevices();
             let updateddata=this.setDefaultDevice(this.inputMicrophone,Val.data.label);
             this.inputMicrophone=updateddata;
             if(isLoad==1)
@@ -1456,16 +1465,24 @@ hasVideoparam={width:226,height:144};
             await this.mediaDevices.getUserMedia(constraint).then(async stream=>{
              this.showMicroPhoneLevels(micename, stream);
            navigator.mediaDevices.ondevicechange=null
-           let audiotrk=    stream.getAudioTracks()[0];
+           let audiotrk=stream.getAudioTracks()[0];
+          // audiotrk=this.localstream.getAudioTracks()[0];
            this.localstream.addTrack(audiotrk)
-           this.localstream=stream
+           this.localstream=stream;
+      
            let audioupdt=this.peerconnection.getSenders().find(trk=>{
-             return trk.track.kind==audiotrk.kind;
+             return trk.track.kind==="audio";
             })
-
+            if(this.micbtn==true)
+            {
+              stream.getAudioTracks()[0].enabled=false;
+            }
+            console.log(audioupdt)
+          
+              audioupdt.replaceTrack(audiotrk);
+          
+           
             
-            audioupdt.replaceTrack(audiotrk);
-
            }).catch(err=>{
              console.log(err)
            })
@@ -1513,7 +1530,7 @@ hasVideoparam={width:226,height:144};
          
  
           setDefaultDevice(devices:Array<any>,selecteddeviceid:any)
-          {
+          { 
             console.log("before",devices)
             let devicesData=[];
              devices.forEach(element => {
@@ -1553,7 +1570,7 @@ hasVideoparam={width:226,height:144};
                 // await  this.selectSpeaker({data:device,selected:true},1);
                 this.lasyuserspearkerID={data:device,selected:true}
                 let callstat=JSON.parse(localStorage.getItem("call_info"));
-                  if(callstat.is_refreshed!=true)
+                  if(callstat?.is_refreshed==false)
                   {
                     this.getLastUsedSpeaker(this.lasyuserspearkerID);
                   }
@@ -1577,19 +1594,7 @@ hasVideoparam={width:226,height:144};
                 return data.data.kind == "audioinput";
               })
               console.log(micdata)
-                // let speakerdata=   alldevices.filter(data=>{
-                //   return   data.kind=="audiooutput"
-                //   })
-                // let cameradata =alldevices.filter(data=>{
-                // return   data.kind=="videoinput"
-                //   })
-
-                  let callstat=JSON.parse(localStorage.getItem("call_info"));
-                  if(callstat.is_refreshed==false)
-                  {                
-                    this.selectMicrophone({data:micdata.data,selected:true},isload)
-                  //  this.getLastUsedMicrophone({data:micdata,selected:true});
-                  }
+              this.selectMicrophone(micdata,isload)
             })
              
            
