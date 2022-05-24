@@ -19,7 +19,7 @@ import { MessageService } from "./messege.service";
    public async callUserSocket(calluuid,userid,is_refresh):Promise <any>
     {
       console.log(calluuid,userid,is_refresh)
-        let  url=this.websocket_url+"/gigaaa-webrtc?call_uuid="+calluuid+"&user_id="+userid+"&is_refreshed="+is_refresh;
+        let  url=this.websocket_url+"/cs/webrtc?call_uuid="+calluuid+"&peer_id="+userid+"&is_refreshed="+is_refresh;
         this.ws = new WebSocket(url);
         this.ws.onopen=(e)=>{
           this.message.setErrorMessage("conection :"+ e.type);

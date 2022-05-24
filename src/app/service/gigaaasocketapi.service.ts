@@ -56,7 +56,7 @@ callsocketapi_by_selecting_intgid()
    if(accesstoken!=null&&uuid!=null&&integrationid!=null)
      {
 
-      var  url=this.websocket_url+"/customer-support/queue?organization="+uuid+"&integration="+integrationid+"&token="+accesstoken;
+      var  url=this.websocket_url+"/cs/queue?organization="+uuid+"&integration="+integrationid+"&token="+accesstoken;
      this.ws = new WebSocket(url);
 
      this.ws.onopen=(e)=>{

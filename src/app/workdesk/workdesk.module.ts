@@ -44,6 +44,7 @@ import { CarouselModule } from 'ngx-bootstrap/carousel';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { notAvailable } from './Datapipes/NotAvailablepipe';
 import { gettimecalculatorlong } from './Datapipes/timecalcultationLong';
+import { ShowbarsComponent } from './showbars/showbars.component';
 
 
 @NgModule({
@@ -71,7 +72,8 @@ import { gettimecalculatorlong } from './Datapipes/timecalcultationLong';
       getcapitalletter,
       CallMobilePopupFilterComponent,
       CallInterfaceComponent,
-      notAvailable
+      notAvailable,
+      ShowbarsComponent
       ],
   imports: [CarouselModule.forRoot(),Ng2SearchPipeModule,ImageCropperModule,
     BsDatepickerModule.forRoot(),

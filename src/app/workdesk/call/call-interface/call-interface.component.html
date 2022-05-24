@@ -47,7 +47,7 @@
  <div class="callarea desktop">
   <div id="dragarea" #dragarea   class="dragarea " [ngStyle]="{'width':(splitscreen==true ) ? '50%' : '100%'}" >
         <div  (click)="splitScreen(splitscreen)" style="display: block;
-        z-index: 1001;
+        z-index: 1;
         position: absolute;
         right: 51%;" [ngClass]="splitscreen==true? 'unsplit' : ' splitscreen'"   [ngStyle]="{'display': (splitscreen==true) ? 'block' : 'none'}">
         <img   class="spliticon" [src]="splitIcon" alt="">
@@ -138,7 +138,7 @@
       <!-- <img  [ngStyle]="{'top':(splitscreen==true ) ? '58%' : '20%'}" *ngIf="!hidecamera" height="200" width="200" class="userimagebig local" src="../../../../assets/picface.jpeg" alt=""> -->
 
       <div [ngStyle]="{'display': (camerabtn==false) ? 'block' : 'none'}">
-        <video    aria-valuemin="0" aria-valuemax="100" class="videllocal"  [ngStyle]="{'object-fit': (peerscreenView==true) ? 'revert' : 'cover'}" [hidden]="!splitscreen" [muted]="true"  height="100%" width="100%"  id="localVideo1" #localVideo1 [autoplay]='true' playsInline  type='video/mp4'  style="top: 80px;
+        <video    class="videllocal"  [ngStyle]="{'object-fit': (peerscreenView==true) ? 'revert' : 'cover'}" [hidden]="!splitscreen" [muted]="true"  height="100%" width="100%"  id="localVideo1" #localVideo1 [autoplay]='true' playsInline  type='video/mp4'  style="top: 80px;
         left: 0px;
         width: 50%;
         height: calc(100% - 80px);
@@ -147,7 +147,7 @@
       </div>
 
         <video   [ngClass]="splitscreen==true? 'splitvidepremote' : 'unspplitvideo'"  [ngStyle]="{'display': (peercamera==true) ? 'block' : 'none'}"     id="remoteVideo" 
-        #remoteVideo [autoplay]='true'    [muted]="false" ></video>
+        #remoteVideo [autoplay]='true'  playsInline   [muted]="false" ></video>
 
       <div   class="camerasplitinfo" [ngStyle]=" {'display': (splitscreen==true) ? 'block' : 'none'}">
         <div class="userimagepanel" *ngIf="!hidecamera"  style="width: 200px;
@@ -202,14 +202,17 @@
          </div> -->
           <img [ngStyle]=" {'visibility': (devc.selected==true) ? 'visible' : 'hidden'}" height="10" width="10"  class="sw_img" src="../../../../assets/assets_workdesk/green_check_icon.svg" alt="">
           <p (click)="selectMicrophone(devc,1)" class="devicename">{{devc.data.label}}</p>
-          <div  *ngIf="devc.selected==false"  class="voicelevels" [attr.id]="i" >
+          <!-- <div  *ngIf="devc.selected==false"  class="voicelevels" [attr.id]="i" >
             <div   class="voicebars" *ngFor="let bar of getArray(8); " >
             </div>
           </div>
           <div  *ngIf="devc.selected==true"  class="voicelevels" [attr.id]="i" >
             <div  [ngClass]="'voicebars'+devc.data.deviceId" class="voicebars" *ngFor="let bar of getArray(8); " >
             </div>
-          </div>
+          </div> -->
+          <app-showbars *ngIf="devc.selected==true" [active]="devc.selected==true" [numberofbar]="this.numberOfbittobeColor "></app-showbars>
+          <app-showbars *ngIf="devc.selected==false"  [numberofbar]="this.numberOfbittobeColor "></app-showbars>
+
         </li>
         </ul> </div>
       </div>
@@ -248,7 +251,7 @@
 
           </div>
     
-          <div class="callicons" style="margin-right: 0px;" [ngStyle]="{'background': (screensharebtn==true) ? 'rgba(255, 255, 255, 0.1)' : '#1C54DB'}" (click)="screensharebtncheck(screensharebtn)"  >
+          <div class="callicons screen" style="margin-right: 0px;" [ngStyle]="{'background': (screensharebtn==true) ? 'rgba(255, 255, 255, 0.1)' : '#1C54DB'}" (click)="screensharebtncheck(screensharebtn)"  >
             <img   class="caIcon" height="30" width="30" style="display: block;
 " src="../../../../assets/assets_workdesk/sharing.svg" alt="">
           </div>

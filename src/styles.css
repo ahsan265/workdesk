@@ -2629,7 +2629,7 @@ body .bs-datepicker-container  .bs-datepicker-body   tbody tr:nth-child(even){
         margin: 0px!important;
         top: 50px!important;
         right: 0!important;
-        height: 45vh!important;
+        height:calc(50% - 25px) !important;
         float: right!important;
         z-index: 1!important;
         position: absolute!important;
@@ -3166,7 +3166,7 @@ body .bs-datepicker-container  .bs-datepicker-body   tbody tr:nth-child(even){
       
      .callarea .camerasplitinfo {
          width: 100% !important;
-         height:calc(50% - 24.5px) !important;
+         height:calc(50% - 25px) !important;
          top: 49px;
      }
      .userimagebig.local{
@@ -3187,7 +3187,7 @@ body .bs-datepicker-container  .bs-datepicker-body   tbody tr:nth-child(even){
   #localVideo1{
     width: 100%!important;
     top: unset !important;
-    height: calc(50% - 24.5px) !important;
+    height: calc(50% - 25px) !important;
     bottom: 0px !important;
     position: absolute !important;
     object-fit: cover !important;
@@ -3302,9 +3302,9 @@ body .bs-datepicker-container  .bs-datepicker-body   tbody tr:nth-child(even){
     }
     .minimizecallinterface .callicons{
         width: 50px !important;
-        height: 50px !important;
-        margin-right: 3%!important;
-        margin-left: 7%!important;
+    height: 50px !important;
+    margin-right: 12%!important;
+    margin-left: 14%!important;
     }
     .minimizecallinterface .calltime_drop{
         width: 25% !important;

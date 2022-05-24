@@ -43,7 +43,7 @@ export const environment = {
   prod_url_workdesk:"https://gigaaa-backend.azurewebsites.net",
   prod_anlytics:"https://gigaaa-analytics.azurewebsites.net",
   //
-  websocket_url:"wss://kub-dev.gigaaa.link/websockets",
+  websocket_url:"wss://kub-dev.gigaaa.link/websockets", /*  wss://kub-dev.gigaaa.link/websockets */
 
   logged_user:'https://api.gconsole.io/v1/api/v1',
   currentUser: 'https://api.gigaaa.link/api/v1/current-user'

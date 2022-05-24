@@ -5,7 +5,6 @@ import { Pipe, PipeTransform } from '@angular/core';
 })
 export class gettimecalculatorlong implements PipeTransform{
   transform(value: any,slot:any) {
-    console.log(value,slot)
     return this.gettimedurationformissedandanswered(value,slot);
   }
 
