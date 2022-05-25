@@ -568,16 +568,16 @@ return ("0" + minutes).slice(-2) + ":" + ("0" +seconds).slice(-2);
       this.missed=false;
       this.answered=false;
       this.selectedtabs="ongoing";
-      const callstat=JSON.parse(localStorage.getItem("call_info"))
-      if(callstat?.is_refreshed==true)
-      {
-        let data= {"call_uuid": "djkfhsdk090111211201119413910611",callstat};
-        this.openCallInterface(data);
-      }
-      else{
-        let data= {"call_uuid": "djkfhsdk090111211201119413910611",callstat};
-        this.openCallInterface(data);
-      }
+      // const callstat=JSON.parse(localStorage.getItem("call_info"))
+      // if(callstat?.is_refreshed==true)
+      // {
+      //   let data= {"call_uuid": "djkfhsdk090111211201119413910611",callstat};
+      //   this.openCallInterface(data);
+      // }
+      // else{
+      //   let data= {"call_uuid": "djkfhsdk090111211201119413910611",callstat};
+      //   this.openCallInterface(data);
+      // }
     }
     else if(val=="missed")
     {
