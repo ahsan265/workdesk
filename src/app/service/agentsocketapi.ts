@@ -47,7 +47,7 @@ import { sharedres_service } from "./sharedres.service";
 
           if(loggedinuser_uuid?.uuid!=null&&uuid!=null&&integrationid!=null)
             { 
-                  let  url=this.websocket_url+"/cs/agents?organization="+uuid+"&integration="+integrationid+"&agent="+loggedinuser_uuid?.uuid;
+                  let  url=this.websocket_url+"/agents?organization="+uuid+"&integration="+integrationid+"&agent="+loggedinuser_uuid?.uuid;
                   this.ws = new WebSocket(url);
                     this.ws.onopen=(e)=>{
                      

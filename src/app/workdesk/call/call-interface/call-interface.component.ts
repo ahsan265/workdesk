@@ -49,27 +49,69 @@ export class CallInterfaceComponent implements OnInit,AfterViewInit,OnDestroy  {
       credential: "password",
     },
 
+    {
+      urls: "turn:turn.gigaaa.com:443?transport=tcp ",
+      username: "username",
+      credential: "password",
+    },
+      {
+        urls: "turn:turn.gigaaa.com:3478",
+        username: "username",
+        credential: "password",
+      },
+      {
+        urls: "turn:turn.gigaaa.com:3478?transport=tcp ",
+        username: "username",
+        credential: "password",
+      },
+      {
+        urls: "turns:turn.gigaaa.com:3478?transport=tcp ",
+        username: "username",
+        credential: "password",
+      },
+
+      
+   
+]
+
+iceserversConfigsfirefox=[
+  {
+    urls: 'stun:stun.l.google.com:19302',
+  },
+  // {
+  //   urls: "turn:turn.gigaaa.com:80",
+  //   username: "username",
+  //   credential: "password",
+  // },
+  // {
+  //   urls: "turn:turn.gigaaa.com:443",
+  //   username: "username",
+  //   credential: "password",
+  // },
+
+  // {
+  //   urls: "turn:turn.gigaaa.com:443?transport=tcp ",
+  //   username: "username",
+  //   credential: "password",
+  // },
+  //   {
+  //     urls: "turn:turn.gigaaa.com:3478",
+  //     username: "username",
+  //     credential: "password",
+  //   },
     // {
-    //   urls: "turn:turn.gigaaa.com:443?transport=tcp ",
+    //   urls: "turn:turn.gigaaa.com:3478?transport=tcp ",
     //   username: "username",
     //   credential: "password",
     // },
-    //   {
-    //     urls: "turn:turn.gigaaa.com:3478",
-    //     username: "username",
-    //     credential: "password",
-    //   },
-    //   {
-    //     urls: "turn:turn.gigaaa.com:3478?transport=tcp ",
-    //     username: "username",
-    //     credential: "password",
-    //   },
-    //   {
-    //     urls: "turns:turn.gigaaa.com:3478?transport=tcp ",
-    //     username: "username",
-    //     credential: "password",
-    //   },
-   
+    {
+      urls: "turns:turn.gigaaa.com:3478?transport=tcp ",
+      username: "username",
+      credential: "password",
+    },
+    
+    
+ 
 ]
   private destroyed$ = new Subject();
 
@@ -173,12 +215,6 @@ numberOfbittobeColor:any;
           this.ismobile= a.includes("Mobile");
           this.callQualityIndicator='../../../../assets/assets_workdesk/red.svg'
           this.detectDevices();
-        let w = window.innerWidth;
-     
-          console.log("width",w);
-          
-          
-
         }
         // request video and audio 
         private async requestmediadevices(val:any): Promise<void>
@@ -210,7 +246,6 @@ numberOfbittobeColor:any;
             }
 
           ngOnInit(): void {
-       
             this.addIncomingCallHandler();
             this.showUserInformation();
            
@@ -236,11 +271,11 @@ numberOfbittobeColor:any;
 
         @HostListener('document:mousemove', ['$event'],)
         onMouseDown(event) {
-         
+          if(this.peerscreenView==true&&this.ismobile==false)
+          { 
           let  timeout;
           this.renderer.listen(this.dragarea.nativeElement, 'mousemove', e => {
-            if(this.peerscreenView==true&&this.ismobile==false)
-            {       
+                  
               this.renderer.setStyle(this.usercamera.nativeElement, "z-index", "2");
               this.renderer.setStyle(this.usercamera.nativeElement, "display", "flex");
               this.renderer.setStyle(this.usercamera.nativeElement, "transform", "translatex(-150%)");
@@ -253,13 +288,13 @@ numberOfbittobeColor:any;
               this.renderer.setStyle(this.callcontrol.nativeElement, "transform", "unset");
               this.renderer.setStyle(this.callcontrol.nativeElement, "transition", "0.5s");
              // this.renderer.setStyle(this.callcontrol.nativeElement, "transition", "all 0.3s");
-            }
+            
             clearTimeout(timeout);
             timeout= setTimeout(()=>{
               this.mouseStopped();
             },3000);
           });
-          
+        }
         }        
         mouseStopped()
         {
@@ -307,45 +342,45 @@ numberOfbittobeColor:any;
         }
 
         ontouchevetn() {
+          if(this.ismobile==true)
+          { 
+       
           this.dragarea.nativeElement.addEventListener( 'touchstart', e => {    
-            if(this.ismobile==true)
-            {    
               this.showControlOntouchevent()
-            }
-          });
+           });
+        }
         } 
         
         ontouchmove() {
           let  timeout;
-          this.dragarea.nativeElement.addEventListener( 'touchend', e => {
-            if(this.ismobile==true)
+          if(this.ismobile==true)
             {  
+          this.dragarea.nativeElement.addEventListener( 'touchend', e => {
+            
               clearTimeout(timeout);
               timeout= setTimeout(()=>{
                 this.touchstopped();
               },3000);
 
-          }
+         
           });
-          
+        }
         } 
         // @HostListener('body:click', ['$event'],)
         onclick() {
          
           let  timeout;
           var isloaded=1;
-         this.dragarea.nativeElement.addEventListener( 'touchstart', e => {
-            if(this.ismobile==true&&isloaded==1)
-            {  
+          if(this.ismobile==true && isloaded==1)
+          {      console.log("hello ")
+              this.dragarea.nativeElement.addEventListener( 'touchstart', e => {
               clearTimeout(timeout);
               timeout= setTimeout(()=>{
-                this.touchstopped();
-                isloaded=0;
+              this.touchstopped();
+              isloaded=0;
               },500);
-
+              });
           }
-          });
-          
         } 
 
         // show touch event on controls 
@@ -437,12 +472,18 @@ numberOfbittobeColor:any;
     // create peer fucntion 
    private  async  createPeerConnection(): Promise<void>
     {
-
+      let browsername;
+      if(this.detectBrowserName()=="firefox"){
+        browsername=this.iceserversConfigsfirefox;
+      }
+      else{
+        browsername=this.iceserversConfigs ;
+      }
     this.peerconnection= new RTCPeerConnection({
      
-          iceServers:this.iceserversConfigs,
+          iceServers:browsername,
         iceTransportPolicy:'all',
-        iceCandidatePoolSize:2,
+        iceCandidatePoolSize:10,
         rtcpMuxPolicy:'require',
       } )
       this.message.setSuccessMessage("Peer connection");
@@ -556,8 +597,8 @@ numberOfbittobeColor:any;
           this.createPeerConnection();
         }
         this.onclick();
-        this.ontouchevetn();
-        this.ontouchmove();
+         this.ontouchevetn();
+         this.ontouchmove();
         this.requestmediadevices(this.webrtcmediacontraints);
 
       }
@@ -874,7 +915,7 @@ numberOfbittobeColor:any;
       private async  startvideoCall() :Promise<void>
       {                 
         
-
+ 
          
           if(this.ismobile==true)
           {
@@ -1717,7 +1758,7 @@ numberOfbittobeColor:any;
         private async   selectSpeaker(Val):Promise<void>
           { 
             
-            
+          
             if(this.remotetrackEvent)
             {
               this.getLastUsedSpeaker(Val);
@@ -1881,8 +1922,9 @@ numberOfbittobeColor:any;
           showcoloronbars(avgsound,mic_name)
           {
               //const allPids =Array.from(document.querySelectorAll(".voicebars"+mic_name) as unknown as Array<HTMLElement>)
-              this.numberOfbittobeColor = Math.round(avgsound / 2);
-                // const pidsToColor = allPids.slice(0, numberOfPidsToColor);
+            //  let  output = [];
+            this.numberOfbittobeColor = Math.round(avgsound / 2);
+             // this.numberOfPidsToColor = slice(0, numberOfPidsToColor);
                 // for (const pid of allPids) {
                 //     pid.style.backgroundColor = "#3A4559";
                 // }
@@ -1891,7 +1933,8 @@ numberOfbittobeColor:any;
                 // }
             
                 // this.inputDeviceid=mic_name
-           
+
+        
           }
      
        

@@ -13,24 +13,10 @@ export class ShowbarsComponent implements OnInit {
   constructor(private render:Renderer2) { }
 
   ngOnInit(): void {
-    console.log(this.numberofbar);
+    console.log(this.numberofbar)
   }
   getArray(number:any)
   {
     return Array(number);
   }
-  calculateNumber()
-  {
-    this.render.setStyle(this.bars.nativeElement,'background',"")
-
-  //   for (const pid of this.bars) {
-  //     pid.style.backgroundColor = "#3A4559";
-  //     this.render.setStyle(this.bars.nativeElement,'background',"")
-  // }
-
-  //  pid.style.backgroundColor = "#76CB09";
-    this.render.setStyle(this.bars.nativeElement,'background',"")
-
-  }
-
 }

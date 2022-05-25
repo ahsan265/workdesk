@@ -481,7 +481,7 @@ export class DashboardComponent implements OnInit ,AfterViewInit{
          this.showuserdashboard=true;
          if(this.starting_flag2==0)
          {
-           this.callFunctionCharts();
+          // this.callFunctionCharts();
            this.starting_flag2=1
          }
          this.router.navigate(['dashboard','calls'])
@@ -1894,7 +1894,8 @@ createoschart()
   getcallstats(timeslot:any,languagesid:Array<any>,countryids:Array<any>,datefrom:String,dateto:String)
   {
     try
-    {this.vsForTimeLable_calls= this.setVsFunctionForcards(timeslot);
+    {
+      this.vsForTimeLable_calls= this.setVsFunctionForcards(timeslot);
       const getdata = JSON.parse(localStorage.getItem('gigaaa-user'))
       var accesstoken=getdata?.api_token;
       var orgid=getdata?.subscription_id?.subsid?.uuid
