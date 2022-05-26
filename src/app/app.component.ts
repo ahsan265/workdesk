@@ -238,7 +238,7 @@ showonlinetatus(value:boolean){
         this.integration=data;
        
         this.integration.forEach(element => {
-          if(element.last_used===true)
+          if(element.last_used==true)
           {       
             localStorage.setItem('intgid', JSON.stringify({int_id:element.uuid,name:element.name}));
             this.lastuserintegration=element.name;
@@ -269,7 +269,7 @@ showonlinetatus(value:boolean){
 getagentlistOnload()
 {
       this.sharedres.showagentListonloadSubject.subscribe(data=>{
-        console.log(data)
+    
       if(data==1)
       {
       this.getintegrationlist()

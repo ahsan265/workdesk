@@ -389,6 +389,7 @@ color: #FFFFFF;
     bottom: 8px;
     width: calc(100% - 0px);
     overflow-y: overlay;
+    scrollbar-width: thin;
   }
   .devicescroll::-webkit-scrollbar{
     width: 12px;

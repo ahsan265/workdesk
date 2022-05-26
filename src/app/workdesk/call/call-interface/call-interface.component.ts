@@ -1823,6 +1823,7 @@ numberOfbittobeColor:any;
             let videoInputDevice=[];
             let alldevices=[];
          await   navigator.mediaDevices.enumerateDevices().then( devices=>{
+          console.log("output",devices)
               alldevices=devices;
               devices.forEach(async device=>{
               if(device.kind== "audioinput")
@@ -1856,6 +1857,7 @@ numberOfbittobeColor:any;
               })
             this.inputMicrophone=inputDevice;
             this.outputSpeaker=outputDevice;
+           
             }).finally( ()=>{
               let micdata= inputDevice.find(data => {
                 return data.data.kind == "audioinput";
