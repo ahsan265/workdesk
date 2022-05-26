@@ -176,7 +176,7 @@ getCurrentUser(token):Observable<User> {
        return  this.http.get(this.workdeskurl_cs+"/queue/"+id+"?subscription="+subsid,httpOptions)
 
        }
-       public   getallintegration(accesstoken:string,uuid:string)
+       public  async   getallintegration(accesstoken:string,uuid:string):Promise<any>
        {   const httpOptions: any = {
 
          headers: new HttpHeaders({
@@ -185,7 +185,10 @@ getCurrentUser(token):Observable<User> {
            'Authorization': `Bearer ${accesstoken}`
          })
        };
-        return  this.http.get(this.workdeskurl_cs+"/private/integrations?organization="+uuid,httpOptions)
+       return await  this.http.get(this.workdeskurl_cs+"/private/integrations?organization="+uuid,httpOptions).toPromise()
+       .catch((err) => {
+         throw (err);
+       });
 
         }
         public async updatelastusedintegration(accesstoken:string,uuid:string,integrationbody:any)

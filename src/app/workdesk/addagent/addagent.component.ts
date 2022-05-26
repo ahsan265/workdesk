@@ -88,7 +88,7 @@ export class AddagentComponent implements OnInit {
      const getdata = JSON.parse(localStorage.getItem('gigaaa-subscription'))
      var accesstoken=getdata.access_token;
      var subsid=getdata.subscription_id.subsid.uuid
-     this.gigaaaapi.getallintegration(accesstoken,"").subscribe(data=>{
+     this.gigaaaapi.getallintegration(accesstoken,"").then(data=>{
      this.integration=data;
      this.intgg=this.integration[0].name;
      })

@@ -227,41 +227,35 @@ showonlinetatus(value:boolean){
  
  }
     // get last used integration
-     getintegrationlist()
+   private async  getintegrationlist()
        { 
           try {
         const getdata = JSON.parse(localStorage.getItem('gigaaa-user'))
         var accesstoken=getdata.api_token;
         var uuid=getdata.subscription_id.subsid.uuid;
-        this.apiService.getallintegration(accesstoken,uuid).subscribe(data=>{
-        console.log(data)
+       await this.apiService.getallintegration(accesstoken,uuid).then(async data=>{
         this.integration=data;
-       
         this.integration.forEach(element => {
           if(element.last_used==true)
           {       
             localStorage.setItem('intgid', JSON.stringify({int_id:element.uuid,name:element.name}));
             this.lastuserintegration=element.name;
-
-          }
-        },err=>{
-          this.messegeService.setErrorMessage(err.error.error);
-        });
-        let updatearr = this.integration.map((item, i) => Object.assign(item,{ routeUrl: ['/intents']}));
-          let update_integration_list = updatearr;
-        this.sidebarData.forEach(element => {
+            console.log(this.lastUseIntegration)
+            let updatearr = this.integration.map((item, i) => Object.assign(item,{ routeUrl: ['/intents']}));
+         this.sidebarData.forEach(element => {
           if(element.dropdown==true)
           {
-            element.dropdownItems=update_integration_list;
+            element.dropdownItems=updatearr;
             element.name=this.lastuserintegration;
           }
         });
-      
+          }
         });
-
+        }).then(()=>{
+          
+        })
         } catch (error) {
           //this.messegeService.setErrorMessage(error);
-
         }
 
         }

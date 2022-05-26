@@ -58,7 +58,7 @@ export class EditformComponent implements OnInit {
     const getdata = JSON.parse(localStorage.getItem('gigaaa-user'))
     var accesstoken=getdata.api_token;
     var subsid=getdata.subscription_id.subsid.uuid
-     this.gigaaaapi.getallintegration(accesstoken,"").subscribe(data=>{
+     this.gigaaaapi.getallintegration(accesstoken,"").then(data=>{
        this.allintegration=data
      this.integration=data;
      console.log(data);

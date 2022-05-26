@@ -81,7 +81,7 @@ export class AuthService implements CanActivate {
     private async  getallintegrationlist(token:any,orgid:any):Promise<any>
       {          
       try {
-      this.gigaaaApiService.getallintegration(token,orgid).subscribe(data=>{
+      this.gigaaaApiService.getallintegration(token,orgid).then(data=>{
       this.integration=data;
       if(this.integration.length!=0)
       {
