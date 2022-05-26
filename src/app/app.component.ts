@@ -142,16 +142,17 @@ websites=[{text:"Partnership",url:['https://partnerships.gigaaa.com/'],image:'..
             let path= loc.pathname.replace("/", "");
             this.url= window.location.href;
             let locID = this.url.split('/');
+            console.log(path)
             if(path=="callback")
             {
               this.pageTitle="Dashboard";
            
             }
-            if(locID[3]=="")
+            else  if(locID[3]=="")
             {
               this.pageTitle="Dashboard";
             }
-            else 
+            else if (locID[3]!="callback")
             {
             
               console.log(locID)
