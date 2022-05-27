@@ -189,8 +189,8 @@ numberOfbittobeColor:any;
  startstats:any;
  callQualityIndicator:any;
  ismousemove:boolean=true;
- inputMicrophone:Array<any>;
- outputSpeaker:Array<any>;
+ inputMicrophone:Array<any>=[];
+ outputSpeaker:Array<any>=[];
  videoInputDevice:Array<any>;
  inputDeviceid:any;
  outputDeviceid:any;
@@ -370,16 +370,22 @@ numberOfbittobeColor:any;
         onclick() {
          
           let  timeout;
-          var isloaded=1;
-          if(this.ismobile==true && isloaded==1)
-          {      console.log("hello ")
+        
+          if(this.ismobile==true)
+          {     
+              var isloaded=1;
               this.dragarea.nativeElement.addEventListener( 'touchstart', e => {
+                if(isloaded==1){
               clearTimeout(timeout);
               timeout= setTimeout(()=>{
               this.touchstopped();
               isloaded=0;
               },500);
+            }
               });
+            
+              
+
           }
         } 
 
@@ -914,7 +920,12 @@ numberOfbittobeColor:any;
    
       private async  startvideoCall() :Promise<void>
       {                 
-        
+          if(this.localstream.getVideoTracks()[0]!=undefined)
+          {
+            this.localstream.getVideoTracks().forEach(track=>{
+              track.stop();
+            })
+          }
  
          
           if(this.ismobile==true)
@@ -931,7 +942,7 @@ numberOfbittobeColor:any;
             const audiotrack=this.localstream.getAudioTracks();
             this.localstream.addTrack(videotrack[0]);
             this.localstream.addTrack(audiotrack[0]);
-            
+             
             this.localVideo.nativeElement.srcObject = undefined;
             this.localVideo1.nativeElement.srcObject= undefined;
             this.localVideo1.nativeElement.srcObject= stream
@@ -940,13 +951,13 @@ numberOfbittobeColor:any;
             const audio=this.peerconnection.getSenders().find(data=>{
               return data.track?.kind=="audio";
             });
-            if(audio==undefined)
-            {
-              this.peerconnection.addTrack(audiotrack[0]);
-            }
-            else{
-              audio.replaceTrack(audiotrack[0])
-            }
+            // if(audio==undefined)
+            // {
+            //   this.peerconnection.addTrack(audiotrack[0]);
+            // }
+            // else{
+            //   audio.replaceTrack(audiotrack[0])
+            // }
             const video=this.peerconnection.getSenders().find(data=>{
               return data.track?.kind=="video";
             });
@@ -1443,12 +1454,17 @@ numberOfbittobeColor:any;
           // refres state of calls
           private async getcallTypeforPagereload():Promise<void>
           {
-              let callstat=JSON.parse(localStorage.getItem("call_info"));
+             // this.camerabtncheck(true);
+             if(this.localstream)
+             {
+               this.localstream.getTracks().forEach(track=>{
+                 track.stop()
+               })
+             }  
+            let callstat=JSON.parse(localStorage.getItem("call_info"));
               if(callstat.user_devices_info?.data.is_camera_on==true&&callstat.user_devices_info?.data.is_shared_screen==false)
               {
-
-                  // this.camerabtncheck(true);
-                   this.camerabtn=false;
+               this.camerabtn=false;
                this.webrtcservice.sendDataforCall({"type": "update_peer", "user_id":this.userid,"data":{"is_camera_on": true, "is_microphone_on":true, "is_shared_screen":false, "first_name":  this.userFirstName,"last_name":  this.userLastName, "img_url":this.userPicture,"is_mobile":this.ismobile}})
                this.setUserInfo({"type": "update_peer","user_id":this.userid,"data":{"is_camera_on": true, "is_microphone_on":true, "is_shared_screen":false, "first_name":  this.userFirstName,"last_name":  this.userLastName, "img_url":this.userPicture,"is_mobile":this.ismobile}})
                  await  this.mediaDevices.getUserMedia({audio:true,video:true}).then((stream)=>{
@@ -1729,27 +1745,25 @@ numberOfbittobeColor:any;
             await this.mediaDevices.getUserMedia(constraint).then(async stream=>{
              this.showMicroPhoneLevels(micename, stream);
            navigator.mediaDevices.ondevicechange=null
-           let audiotrk=stream.getAudioTracks()[0];
+           const audiotrk=stream.getAudioTracks()[0];
           // audiotrk=this.localstream.getAudioTracks()[0];
           // this.localstream.addTrack(audiotrk)
-           this.localstream=stream;
-              if(this.peerconnection)
-              {
-           let audioupdt=this.peerconnection.getSenders().find(trk=>{
+         //  this.localstream=stream;
+            if(this.peerconnection)
+            { console.log("changess")
+             let audioupdt=this.peerconnection.getSenders().find(trk=>{
              return trk.track.kind==="audio";
             })
             if(this.micbtn==true)
             {
               stream.getAudioTracks()[0].enabled=false;
             }
-            console.log(audioupdt)
             if(audioupdt!=undefined)
             {
-              
               audioupdt.replaceTrack(audiotrk);
               this.localstream.addTrack(audiotrk)
             }
-          }
+            }
            }).catch(err=>{
              console.log(err)
            })
@@ -1763,15 +1777,12 @@ numberOfbittobeColor:any;
             {
               this.getLastUsedSpeaker(Val);
               let updateddata=this.setDefaultDevice(this.outputSpeaker,Val.data.label);
-             this.remotevideo.nativeElement.volume=0;
+              this.remotevideo.nativeElement.volume=0;
               if(this.remotevideo.nativeElement.children.length>0)
-              {
-                console.log("volume down")
+              {  this.remotevideo.nativeElement.volume=0;
                 this.remotevideo.nativeElement.removeChild(this.remotevideo.nativeElement.children[0])
               }
-           
               this.outputDeviceid=Val.data.deviceId;
-              
               let  mediaStream = this.remotetrackEvent;
               let  test_audio_context1 = new AudioContext();
               let webaudio_source1 = test_audio_context1.createMediaStreamSource(mediaStream);
@@ -1781,17 +1792,10 @@ numberOfbittobeColor:any;
               test_output_audio1.srcObject  = webaudio_ms1.stream;
               test_output_audio1.play();
               test_output_audio1.setSinkId(this.outputDeviceid);
-              //this.remotevideo.nativeElement.replaceWith(test_output_audio1);
-            
               this.remotevideo.nativeElement.appendChild(test_output_audio1);
-              console.log("child nodes",this.remotevideo.nativeElement.children.length)
-              
                this.lastuserdSpeaker=test_output_audio1;
-         
               this.outputSpeaker=updateddata;
-
             }
-            await  navigator.mediaDevices.enumerateDevices();
          
           }
          

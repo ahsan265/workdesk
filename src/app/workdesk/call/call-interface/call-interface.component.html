@@ -57,7 +57,7 @@
         </div>
         <div #usercamera id="usercamera"  [cdkDragFreeDragPosition]="dragPosition"  [hidden]="splitscreen" [ngStyle]="{'background': (camerabtn==true) ? '#2B3A51' : '#000000'}" cdkDragBoundary=".dragarea" class="loggedUsercamera" cdkDrag>
          <p *ngIf="camerabtn" class="capitalinitials">{{firstuserFirstName}}{{firstuserLastName}}</p>
-                  <video type='video/mp4'  id="localVideo"  aria-valuemin="0" aria-valuemax="100" #localVideo [autoplay]='true' playsInline  [muted]="true"  class="localcamera"  
+                  <video type='video/mp4'  id="localVideo"   #localVideo [autoplay]='true' playsInline  [muted]="true"  class="localcamera"  
                   style="border-radius: 4px;
                   object-fit: cover;" [hidden]="camerabtn" ></video>
               <p  *ngIf="camerabtn" class="camerapersonname">{{userFirstName}} (me)</p> 
@@ -216,7 +216,7 @@
         </li>
         </ul> </div>
       </div>
-      <div class="deviceswitcher mobile">
+      <div class="deviceswitcher mobile" *ngIf="this.outputSpeaker.length!=0">
         <div class="switcherheaderpanel">
           <img class="sw_heading_img" src="../../../../assets/assets_workdesk/speakers_icon.svg" alt=""> <p class="sw_heading_text">Speakers</p> 
        </div>
