@@ -1320,7 +1320,7 @@ search(term:string,column:any) {
       nameofcalltype.push(element.name.toLowerCase());
      })
     // this.totalsizeofcalltype="All Selected";
-     this.selectednumbercalls(this.selectedtabs,"All")
+     this.selectednumbercalls(this.selectedtabs,"Call type")
 
     // this.allselectedcall=true;
      this.selectedtabholdcalltype(this.selectedtabs,true)
