@@ -196,7 +196,7 @@
       
        <ul class="deviceslist">
         
-        <li   class="deviceitem" *ngFor="let devc of inputMicrophone;let i=index;"  [ngStyle]=" {'background': (devc.selected==true) ? '#243247' : 'unset'}">
+        <li   class="deviceitem" *ngFor="let devc of inputMicrophone;let i=index;"  [ngStyle]=" {'background': (devc.selected==true) ? '#243247' : ''}">
           <!-- <div class="tooltippanel" id="tooltip" #tooltip>
             <p   class="tooltiptext">{{showtooltiptext}}</p>
          </div> -->
@@ -224,7 +224,7 @@
 
      
        <ul class="deviceslist">
-        <li   class="deviceitem" *ngFor="let devc of outputSpeaker;" [ngStyle]=" {'background': (devc.selected==true) ? '#243247' : 'unset'}">
+        <li   class="deviceitem" *ngFor="let devc of outputSpeaker;" [ngStyle]=" {'background': (devc.selected==true) ? '#243247' : ''}">
           <!-- <div class="tooltippanel" id="tooltip" #tooltip>
             <p class="tooltiptext">{{showtooltiptext}}</p>
          </div> -->

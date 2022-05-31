@@ -16,13 +16,13 @@ import { MessageService } from "./messege.service";
     {
        this.callobject$=this.callsubject.asObservable().pipe();  
     }
-   public async callUserSocket(calluuid,userid,is_refresh):Promise <any>
+   public async callUserSocket(calluuid,userid,is_refresh,browser_name):Promise <any>
     {
       console.log(calluuid,userid,is_refresh)
-        let  url=this.websocket_url+"/webrtc?call_uuid="+calluuid+"&peer_id="+userid+"&is_refreshed="+is_refresh;
+        let  url=this.websocket_url+"/webrtc?call_uuid="+calluuid+"&peer_id="+userid+"&is_refreshed="+is_refresh+"&browser_name="+browser_name;
         this.ws = new WebSocket(url);
         this.ws.onopen=(e)=>{
-          this.message.setErrorMessage("conection :"+ e.type);
+          this.message.setErrorMessage("Waiting for other user to join.");
         }
         // recieve data and send it to required place
         this.ws.onmessage=async (e)=>{

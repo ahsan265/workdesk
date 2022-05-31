@@ -249,11 +249,11 @@ selectlanguageonebyone(e,id)
        this.id_soflanguages.push(id);
        if(this.id_soflanguages.length==this.lang.length)
        {
-        this.selectedlanguages="All Selected";
+        this.selectedlanguages="All";
         this.allselectedtag=true;
        }
        else{
-        this.selectedlanguages=this.id_soflanguages.length +"\xa0"+"Selected";
+        this.selectedlanguages=this.id_soflanguages.length;
        }
      }
      else if(e==false)
@@ -265,10 +265,10 @@ selectlanguageonebyone(e,id)
       
       if(this.id_soflanguages.length==0)
       {
-       this.selectedlanguages="Not Selected";
+       this.selectedlanguages="None";
       }
       else{
-       this.selectedlanguages=this.id_soflanguages.length +"\xa0"+"Selected";
+       this.selectedlanguages=this.id_soflanguages.length;
        this.allselectedtag=false;
       }
  
@@ -456,10 +456,10 @@ selectlanguageonebyone(e,id)
        this.lang[index].status=true;
       
     });
-      this.selectedlanguages=this.id_soflanguages.length +"\xa0"+"Selected";
+      this.selectedlanguages=this.id_soflanguages.length;
        if(this.id_soflanguages.length==this.lang.length)
        {
-           this.selectedlanguages="All Selected"
+           this.selectedlanguages="All"
            this.allselectedtag=true;
        }
  

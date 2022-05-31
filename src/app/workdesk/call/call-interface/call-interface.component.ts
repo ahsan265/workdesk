@@ -39,21 +39,20 @@ export class CallInterfaceComponent implements OnInit,AfterViewInit,OnDestroy  {
       urls: 'stun:stun.l.google.com:19302',
     },
     {
-      urls: "turn:turn.gigaaa.com:80",
-      username: "username",
-      credential: "password",
-    },
+        urls: "turn:turn.gigaaa.com:80",
+        username: "username",
+        credential: "password",
+     },
     {
       urls: "turn:turn.gigaaa.com:443",
       username: "username",
       credential: "password",
     },
-
-    {
-      urls: "turn:turn.gigaaa.com:443?transport=tcp ",
-      username: "username",
-      credential: "password",
-    },
+      {
+        urls: "turn:turn.gigaaa.com:443?transport=tcp ",
+        username: "username",
+        credential: "password",
+      },
       {
         urls: "turn:turn.gigaaa.com:3478",
         username: "username",
@@ -68,50 +67,19 @@ export class CallInterfaceComponent implements OnInit,AfterViewInit,OnDestroy  {
         urls: "turns:turn.gigaaa.com:3478?transport=tcp ",
         username: "username",
         credential: "password",
-      },
-
-      
+      }
    
 ]
 
 iceserversConfigsfirefox=[
-  {
-    urls: 'stun:stun.l.google.com:19302',
-  },
-  // {
-  //   urls: "turn:turn.gigaaa.com:80",
-  //   username: "username",
-  //   credential: "password",
-  // },
-  // {
-  //   urls: "turn:turn.gigaaa.com:443",
-  //   username: "username",
-  //   credential: "password",
-  // },
-
-  // {
-  //   urls: "turn:turn.gigaaa.com:443?transport=tcp ",
-  //   username: "username",
-  //   credential: "password",
-  // },
-  //   {
-  //     urls: "turn:turn.gigaaa.com:3478",
-  //     username: "username",
-  //     credential: "password",
-  //   },
-    // {
-    //   urls: "turn:turn.gigaaa.com:3478?transport=tcp ",
-    //   username: "username",
-    //   credential: "password",
-    // },
     {
-      urls: "turns:turn.gigaaa.com:3478?transport=tcp ",
+      urls: 'stun:stun.l.google.com:19302',
+    },
+    {
+      urls: "turns:turn.gigaaa.com:80",
       username: "username",
       credential: "password",
     },
-    
-    
- 
 ]
   private destroyed$ = new Subject();
 
@@ -220,16 +188,10 @@ numberOfbittobeColor:any;
         private async requestmediadevices(val:any): Promise<void>
         {
           const callstat=JSON.parse(localStorage.getItem("call_info"))
-
-
           try {
-         
             this.localstream=await   this.mediaDevices.getUserMedia(val)
-  
-          
             this.localVideo.nativeElement.srcObject=this.localstream;
             this.localVideo1.nativeElement.srcObject=this.localstream;
-            
             if(callstat?.is_refreshed==true){
            await  this.showListofDevices(0).finally(()=>{
               this.restoreLastUsedDevices(1);
@@ -252,11 +214,11 @@ numberOfbittobeColor:any;
             const callstat=JSON.parse(localStorage.getItem("call_info"))
             if(callstat==null)
             {
-              this.webrtcservice.callUserSocket(this.data.call_uuid,"","");
+              this.webrtcservice.callUserSocket(this.data.call_uuid,"","",this.detectBrowserName());
             }
             else 
             {
-              this.webrtcservice.callUserSocket(this.data.call_uuid,callstat?.user_id,callstat?.is_refreshed);
+              this.webrtcservice.callUserSocket(this.data.call_uuid,callstat?.user_id,callstat?.is_refreshed,this.detectBrowserName());
             }
          
           interval(1000).subscribe(() => {
@@ -296,8 +258,8 @@ numberOfbittobeColor:any;
           });
         }
         }        
-        mouseStopped()
-        {
+          mouseStopped()
+          {
           if(this.peerscreenView==true && this.ismobile==false)
           { 
             this.renderer.setStyle(this.usercamera.nativeElement, "display", "flex");
@@ -324,7 +286,6 @@ numberOfbittobeColor:any;
             this.renderer.setStyle(this.callcontrol.nativeElement, "z-index", "-1");
             this.renderer.setStyle(this.callcontrol.nativeElement, "transition", "0.5s");
 
-            //this.renderer.setStyle(this.callcontrol.nativeElement, "transition", "all 0.3s");
           }
         }
         touchstopped()
@@ -334,7 +295,6 @@ numberOfbittobeColor:any;
            this.renderer.setStyle(this.callcontrol.nativeElement, "bottom", "-100px");
             this.renderer.setStyle(this.callcontrol.nativeElement, "opacity", "0");
             this.renderer.setStyle(this.callcontrol.nativeElement, "animation", " fade 3s linear");
-           // this.renderer.setStyle(this.callcontrol.nativeElement, "transition", "all 0.3s");
            this.renderer.setStyle(this.usercamera.nativeElement, "right", "-100px");
            this.renderer.setStyle(this.usercamera.nativeElement, "opacity", "0");
            this.renderer.setStyle(this.usercamera.nativeElement, "animation", " fade 3s linear");
@@ -476,8 +436,9 @@ numberOfbittobeColor:any;
       }
     }
     // create peer fucntion 
-   private  async  createPeerConnection(): Promise<void>
+    private  async  createPeerConnection(): Promise<void>
     {
+      console.log("peer connectt")
       let browsername;
       if(this.detectBrowserName()=="firefox"){
         browsername=this.iceserversConfigsfirefox;
@@ -485,18 +446,26 @@ numberOfbittobeColor:any;
       else{
         browsername=this.iceserversConfigs ;
       }
-    this.peerconnection= new RTCPeerConnection({
-     
-          iceServers:browsername,
+        this.peerconnection= new RTCPeerConnection({
+        iceServers:browsername,
         iceTransportPolicy:'all',
-        iceCandidatePoolSize:10,
+        iceCandidatePoolSize:2,
         rtcpMuxPolicy:'require',
       } )
-      this.message.setSuccessMessage("Peer connection");
+ 
       this.eventHandlerforpeer();
           // this.startstats=  setInterval(()=>{
           // this.indicatorfunction(this.peerconnection,this.localstream.getTracks()[0]);
           //   },10000)
+          const callstat=JSON.parse(localStorage.getItem('call_info'))
+          const userdata=JSON.parse(localStorage.getItem('gigaaa-user'))
+          if(callstat?.is_refreshed!=true)
+          {
+           this.message.setSuccessMessage(userdata?.profile.first_name+" joined call");
+          }
+          else{
+            this.message.setSuccessMessage(callstat?.peer_devices_info.first_name+" is back");
+          }
     
     }
     
@@ -622,6 +591,7 @@ numberOfbittobeColor:any;
             {
               await  this.handleOfferMessage(msg.data);
             }
+          
           break;
           case "answer":
           this.handleAnswereMessage(msg.data);
@@ -650,8 +620,13 @@ numberOfbittobeColor:any;
             {  
               console.log("accepet")
               this.getPeerDataInformation(callstat?.peer_devices_info);
-             await this.createPeerConnection();
-             await this.getcallTypeforPagereload();
+              if(!this.peerconnection)
+              {
+                await this.createPeerConnection()
+              }
+               
+                await this.getcallTypeforPagereload();
+           
              this.callstart=true;
              this.callstarttime=callstat?.last_duration;
              }
@@ -1095,7 +1070,7 @@ numberOfbittobeColor:any;
                 this.changePosition();
                 if(this.peerscreenView==true)
                 {
-                  this.renderer.setStyle(this.remotevideo.nativeElement, "top", "80px");
+                  this.renderer.setStyle(this.remotevideo.nativeElement, "top", "78px");
                 }
                 this.getCameraViewofMobile(this.ismobile,this.remote,this.peercamera);
 
@@ -1105,7 +1080,7 @@ numberOfbittobeColor:any;
                 this.splitscreen=true;
                 if(this.peerscreenView==true)
                 {
-                  this.renderer.setStyle(this.remotevideo.nativeElement, "top", "50px");
+                  this.renderer.setStyle(this.remotevideo.nativeElement, "top", "78px");
 
 
                 }
@@ -1307,13 +1282,13 @@ numberOfbittobeColor:any;
                   this.toggleViewForSharescree(true);
                   const localAudio= this.localstream.getAudioTracks()[0];
                   const videotrack= stream.getVideoTracks()[0];
-                  this.sharescreen.addTrack(localAudio)
-               
+                  this.sharescreen.addTrack(localAudio);
+                  this.sharescreen.addTrack(videotrack);
                   if(this.micbtn==true)
                   {
                     localAudio.enabled=false;
                   }
-                  this.webrtcservice.sendDataforCall({"type": "update_peer", "user_id":this.userid,"data":{"is_camera_on": false, "is_microphone_on":true, "is_shared_screen":true, "first_name":  this.userFirstName,"last_name":  this.userLastName, "img_url":this.userPicture,"is_mobile":this.ismobile}})
+                  this.webrtcservice.sendDataforCall({"type": "update_peer", "user_id":this.userid,"data":{"is_camera_on": true, "is_microphone_on":true, "is_shared_screen":true, "first_name":  this.userFirstName,"last_name":  this.userLastName, "img_url":this.userPicture,"is_mobile":this.ismobile}})
                   this.setUserInfo({"type": "update_peer","user_id":this.userid,"data":{"is_camera_on": true, "is_microphone_on":true, "is_shared_screen":true, "first_name":  this.userFirstName,"last_name":  this.userLastName, "img_url":this.userPicture,"is_mobile":this.ismobile}})
                   this.renderer.setStyle(this.localVideo1.nativeElement, "transform", "scaleX(1)");
            
@@ -1322,6 +1297,7 @@ numberOfbittobeColor:any;
                   this.localVideo1.nativeElement.srcObject= stream;
                   this.localVideo.nativeElement.srcObject= stream;
                   this.localstream.addTrack(videotrack);
+                  
                  // this.sharescreen=stream
                   const audio=this.peerconnection.getSenders().find(data=>{
                     if(data.track!=null)
@@ -1455,20 +1431,21 @@ numberOfbittobeColor:any;
           private async getcallTypeforPagereload():Promise<void>
           {
              // this.camerabtncheck(true);
-             if(this.localstream)
-             {
-               this.localstream.getTracks().forEach(track=>{
-                 track.stop()
-               })
-             }  
+          
             let callstat=JSON.parse(localStorage.getItem("call_info"));
               if(callstat.user_devices_info?.data.is_camera_on==true&&callstat.user_devices_info?.data.is_shared_screen==false)
               {
+                if(this.localstream)
+                {
+                  this.localstream.getVideoTracks().forEach(track=>{
+                    track.stop()
+                  })
+                }  
                this.camerabtn=false;
                this.webrtcservice.sendDataforCall({"type": "update_peer", "user_id":this.userid,"data":{"is_camera_on": true, "is_microphone_on":true, "is_shared_screen":false, "first_name":  this.userFirstName,"last_name":  this.userLastName, "img_url":this.userPicture,"is_mobile":this.ismobile}})
                this.setUserInfo({"type": "update_peer","user_id":this.userid,"data":{"is_camera_on": true, "is_microphone_on":true, "is_shared_screen":false, "first_name":  this.userFirstName,"last_name":  this.userLastName, "img_url":this.userPicture,"is_mobile":this.ismobile}})
                  await  this.mediaDevices.getUserMedia({audio:true,video:true}).then((stream)=>{
-                  this.localstream=stream;
+                 this.localstream=stream;
                   const audiotrack=stream.getAudioTracks()[0];
                   const videotrack=stream.getVideoTracks()[0];
                   this.localstream.addTrack(videotrack);
@@ -1488,6 +1465,7 @@ numberOfbittobeColor:any;
                       return data.track.kind=="audio"
                     }
                   })
+                  
                   if(audio==undefined)
                   {
                     this.peerconnection.addTrack(audiotrack,this.localstream);
@@ -1503,7 +1481,7 @@ numberOfbittobeColor:any;
                       return data.track.kind=="video";
                     }
                   })
-                  if(audio==undefined)
+                  if(video==undefined)
                   {
                     this.peerconnection.addTrack(videotrack,this.localstream);
 
@@ -1539,6 +1517,7 @@ numberOfbittobeColor:any;
               offerToReceiveVideo:true,
               iceRestart:true
               });
+              
               await this.peerconnection.setLocalDescription(offer);
               this.webrtcservice.sendDataforCall({type:"offer",peer_id:this.peerUserid,data:offer });
             }
@@ -1769,11 +1748,11 @@ numberOfbittobeColor:any;
            })
           }
           // select speaker options 
-        private async   selectSpeaker(Val):Promise<void>
+      selectSpeaker(Val)
           { 
             
           
-            if(this.remotetrackEvent)
+            if(this.remotetrackEvent && Val!=undefined)
             {
               this.getLastUsedSpeaker(Val);
               let updateddata=this.setDefaultDevice(this.outputSpeaker,Val.data.label);
@@ -2089,5 +2068,6 @@ numberOfbittobeColor:any;
               }
 
             }
+         
          
 }

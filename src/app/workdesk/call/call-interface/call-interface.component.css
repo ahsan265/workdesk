@@ -278,7 +278,7 @@ border-radius: 50%;
     margin: 0px;
     top: 80px;
     right: 0;
-    height: 100vh;
+    height: calc(100% - 78px);
     float: right;
     z-index: 1;
     position: absolute;
@@ -389,7 +389,7 @@ color: #FFFFFF;
     bottom: 8px;
     width: calc(100% - 0px);
     overflow-y: overlay;
-    scrollbar-width: thin;
+    scrollbar-width: none;
   }
   .devicescroll::-webkit-scrollbar{
     width: 12px;
@@ -447,6 +447,7 @@ color: #FFFFFF;
   .deviceslist::-webkit-scrollbar{
       display: none;
   }
+
   .devicename{
     font-family: 'Roboto';
     font-style: normal;
@@ -455,6 +456,7 @@ color: #FFFFFF;
     line-height: 35px;
     vertical-align: middle;
     margin-left: 12px;
+    margin-right: 12px;
     width: 175px;
     letter-spacing: 0.02em;
     display: inline-block;
@@ -466,6 +468,7 @@ color: #FFFFFF;
   .devicename.speaker{
       width: 225px;
   }
+
 .voicelevels{
     display: inline-block;
     width: 60px;
@@ -534,7 +537,7 @@ color: #FFFFFF;
   }
   video#localVideo1
   {
-      transform: scaleX(1);
+      transform: scaleX(-1);
   }
   .mobiletimerpanel{
     display: none;

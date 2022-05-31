@@ -496,14 +496,14 @@ return ("0" + minutes).slice(-2) + ":" + ("0" +seconds).slice(-2);
     this.selectedtabholdcalltype("missed",true);
     this.selectedtabholdcalltype("finished",true);
 
-    this.showselectednumberoflanguages("incoming","All Selected");
-    this.showselectednumberoflanguages("ongoing","All Selected");
-    this.showselectednumberoflanguages("missed","All Selected");
-    this.showselectednumberoflanguages("finished","All Selected");
-    this.selectednumbercalls("incoming","All Selected");
-    this.selectednumbercalls("ongoing","All Selected");
-    this.selectednumbercalls("missed","All Selected");
-    this.selectednumbercalls("finished","All Selected");
+    this.showselectednumberoflanguages("incoming","All");
+    this.showselectednumberoflanguages("ongoing","All");
+    this.showselectednumberoflanguages("missed","All");
+    this.showselectednumberoflanguages("finished","All");
+    this.selectednumbercalls("incoming","All");
+    this.selectednumbercalls("ongoing","All");
+    this.selectednumbercalls("missed","All");
+    this.selectednumbercalls("finished","All");
     this.getlllangugaes();
     this.getmobileSeachFilterData();
     this.getmobileLanguagesFilterData();
@@ -568,16 +568,16 @@ return ("0" + minutes).slice(-2) + ":" + ("0" +seconds).slice(-2);
       this.missed=false;
       this.answered=false;
       this.selectedtabs="ongoing";
-      // const callstat=JSON.parse(localStorage.getItem("call_info"))
-      // if(callstat?.is_refreshed==true)
-      // {
-      //   let data= {"call_uuid": "djkfhsdk09011121120111941391061103",callstat};
-      //   this.openCallInterface(data);
-      // }
-      // else{
-      //   let data= {"call_uuid": "djkfhsdk09011121120111941391061103",callstat};
-      //   this.openCallInterface(data);
-      // }
+      const callstat=JSON.parse(localStorage.getItem("call_info"))
+      if(callstat?.is_refreshed==true)
+      {
+        let data= {"call_uuid": "djkfhsdk88",callstat};
+        this.openCallInterface(data);
+      }
+      else{
+        let data= {"call_uuid": "djkfhsdk88",callstat};
+        this.openCallInterface(data);
+      }
     }
     else if(val=="missed")
     {
@@ -1054,10 +1054,10 @@ search(term:string,column:any) {
 
 
 
-    this.showselectednumberoflanguages(this.selectedtabs,this.lang.length +"\xa0"+"Selected")
+    this.showselectednumberoflanguages(this.selectedtabs,this.lang.length )
       if(this.lang.length==this.lang.length)
       {
-          this.showselectednumberoflanguages(this.selectedtabs,"All Selected")
+          this.showselectednumberoflanguages(this.selectedtabs,"All")
           this.selectedtabhold(this.selectedtabs,true)
       }
 
@@ -1071,7 +1071,7 @@ search(term:string,column:any) {
       }
 
       });
-      this.showselectednumberoflanguages(this.selectedtabs,"Not Selected")
+      this.showselectednumberoflanguages(this.selectedtabs,"None")
       this.selectedtabhold(this.selectedtabs,false)
 
 
@@ -1147,13 +1147,13 @@ search(term:string,column:any) {
        this.idsoflanguages1.push(id);
        if(this.idsoflanguages1.length==this.lang.length)
        {
-        this.showselectednumberoflanguages(this.selectedtabs,"All Selected")
+        this.showselectednumberoflanguages(this.selectedtabs,"All")
 
         this.selectedtabhold(this.selectedtabs,true)
 
        }
        else{
-        this.showselectednumberoflanguages(this.selectedtabs,this.idsoflanguages1.length +"\xa0"+"Selected")
+        this.showselectednumberoflanguages(this.selectedtabs,this.idsoflanguages1.length)
        }
        this.gigaaasocketapi.sendfilterparams({"tab":this.selectedtabs,"languages":this.idsoflanguages1,"call_type":this.idsofcalltype1});
 
@@ -1168,10 +1168,10 @@ search(term:string,column:any) {
       }
       if(this.idsoflanguages1.length==0)
       {
-       this.showselectednumberoflanguages(this.selectedtabs,"Not Selected")
+       this.showselectednumberoflanguages(this.selectedtabs,"None")
       }
       else{
-       this.showselectednumberoflanguages(this.selectedtabs,this.idsoflanguages1.length +"\xa0"+"Selected")
+       this.showselectednumberoflanguages(this.selectedtabs,this.idsoflanguages1.length )
        this.selectedtabhold(this.selectedtabs,false)
       }
       this.gigaaasocketapi.sendfilterparams({"tab":this.selectedtabs,"languages":this.idsoflanguages1,"call_type":this.idsofcalltype1});
@@ -1188,11 +1188,11 @@ search(term:string,column:any) {
      this.idsoflanguages2.push(id);
      if(this.idsoflanguages2.length==this.lang.length)
      {
-      this.showselectednumberoflanguages(this.selectedtabs,"All Selected")
+      this.showselectednumberoflanguages(this.selectedtabs,"All")
       this.selectedtabhold(this.selectedtabs,true)
      }
      else{
-      this.showselectednumberoflanguages(this.selectedtabs,this.idsoflanguages2.length +"\xa0"+"Selected")
+      this.showselectednumberoflanguages(this.selectedtabs,this.idsoflanguages2.length)
 
      }
      this.gigaaasocketapi.sendfilterparams({"tab":this.selectedtabs,"languages":this.idsoflanguages2,"call_type":this.idsofcalltype2});
@@ -1209,10 +1209,10 @@ search(term:string,column:any) {
 
     if(this.idsoflanguages2.length==0)
     {
-     this.showselectednumberoflanguages(this.selectedtabs,"Not Selected")
+     this.showselectednumberoflanguages(this.selectedtabs,"None")
     }
     else{
-     this.showselectednumberoflanguages(this.selectedtabs,this.idsoflanguages2.length +"\xa0"+"Selected")
+     this.showselectednumberoflanguages(this.selectedtabs,this.idsoflanguages2.length )
      this.selectedtabhold(this.selectedtabs,false)
     }
     this.gigaaasocketapi.sendfilterparams({"tab":this.selectedtabs,"languages":this.idsoflanguages2,"call_type":this.idsofcalltype2});
@@ -1229,11 +1229,11 @@ search(term:string,column:any) {
        this.idsoflanguages3.push(id);
        if(this.idsoflanguages3.length==this.lang.length)
        {
-        this.showselectednumberoflanguages(this.selectedtabs,"All Selected")
+        this.showselectednumberoflanguages(this.selectedtabs,"All")
         this.selectedtabhold(this.selectedtabs,true)
        }
        else{
-        this.showselectednumberoflanguages(this.selectedtabs,this.idsoflanguages3.length +"\xa0"+"Selected")
+        this.showselectednumberoflanguages(this.selectedtabs,this.idsoflanguages3.length)
 
        }
        this.gigaaasocketapi.sendfilterparams({"tab":this.selectedtabs,"languages":this.idsoflanguages3,"call_type":this.idsofcalltype3});
@@ -1251,10 +1251,10 @@ search(term:string,column:any) {
 
       if(this.idsoflanguages3.length==0)
       {
-       this.showselectednumberoflanguages(this.selectedtabs,"Not Selected")
+       this.showselectednumberoflanguages(this.selectedtabs,"None")
       }
       else{
-       this.showselectednumberoflanguages(this.selectedtabs,this.idsoflanguages3.length +"\xa0"+"Selected")
+       this.showselectednumberoflanguages(this.selectedtabs,this.idsoflanguages3.length)
        this.selectedtabhold(this.selectedtabs,false)
       }
       this.gigaaasocketapi.sendfilterparams({"tab":this.selectedtabs,"languages":this.idsoflanguages3,"call_type":this.idsofcalltype3});
@@ -1271,11 +1271,11 @@ search(term:string,column:any) {
        this.idsoflanguages4.push(id);
        if(this.idsoflanguages4.length==this.lang.length)
        {
-        this.showselectednumberoflanguages(this.selectedtabs,"All Selected")
+        this.showselectednumberoflanguages(this.selectedtabs,"All")
         this.selectedtabhold(this.selectedtabs,true)
        }
        else{
-        this.showselectednumberoflanguages(this.selectedtabs,this.idsoflanguages4.length +"\xa0"+"Selected")
+        this.showselectednumberoflanguages(this.selectedtabs,this.idsoflanguages4.length )
        }
        this.gigaaasocketapi.sendfilterparams({"tab":this.selectedtabs,"languages":this.idsoflanguages4,"call_type":this.idsofcalltype4});
 
@@ -1291,10 +1291,10 @@ search(term:string,column:any) {
 
       if(this.idsoflanguages4.length==0)
       {
-       this.showselectednumberoflanguages(this.selectedtabs,"Not Selected")
+       this.showselectednumberoflanguages(this.selectedtabs,"None")
       }
       else{
-       this.showselectednumberoflanguages(this.selectedtabs,this.idsoflanguages4.length +"\xa0"+"Selected")
+       this.showselectednumberoflanguages(this.selectedtabs,this.idsoflanguages4.length)
 
        this.selectedtabhold(this.selectedtabs,false)
 
@@ -1320,7 +1320,7 @@ search(term:string,column:any) {
       nameofcalltype.push(element.name.toLowerCase());
      })
     // this.totalsizeofcalltype="All Selected";
-     this.selectednumbercalls(this.selectedtabs,"All Selected")
+     this.selectednumbercalls(this.selectedtabs,"All")
 
     // this.allselectedcall=true;
      this.selectedtabholdcalltype(this.selectedtabs,true)
@@ -1337,7 +1337,7 @@ search(term:string,column:any) {
 
      })
      //this.totalsizeofcalltype="Not Selected";
-     this.selectednumbercalls(this.selectedtabs,"Not Selected")
+     this.selectednumbercalls(this.selectedtabs,"None")
     // this.allselectedcall=false;
      this.selectedtabholdcalltype(this.selectedtabs,false);
 
@@ -1415,7 +1415,7 @@ search(term:string,column:any) {
       if( this.idsofcalltype1.length==2)
      {
      // this.totalsizeofcalltype="All Selected";
-      this.selectednumbercalls(this.selectedtabs,"All Selected")
+      this.selectednumbercalls(this.selectedtabs,"Call type")
 
      // this.allselectedcall=true;
       this.selectedtabholdcalltype(this.selectedtabs,true);
@@ -1444,7 +1444,7 @@ search(term:string,column:any) {
    if( this.idsofcalltype1.length==0)
     {
      // this.totalsizeofcalltype="Not Selected";
-      this.selectednumbercalls(this.selectedtabs,"Not Selected")
+      this.selectednumbercalls(this.selectedtabs,"None")
     }
     else
     {
@@ -1467,7 +1467,7 @@ search(term:string,column:any) {
       if( this.idsofcalltype2.length==2)
      {
      // this.totalsizeofcalltype="All Selected";
-      this.selectednumbercalls(this.selectedtabs,"All Selected")
+      this.selectednumbercalls(this.selectedtabs,"Call type")
 
      // this.allselectedcall=true;
       this.selectedtabholdcalltype(this.selectedtabs,true);
@@ -1496,7 +1496,7 @@ search(term:string,column:any) {
    if( this.idsofcalltype2.length==0)
     {
      // this.totalsizeofcalltype="Not Selected";
-      this.selectednumbercalls(this.selectedtabs,"Not Selected")
+      this.selectednumbercalls(this.selectedtabs,"None")
     }
     else
     {
@@ -1518,7 +1518,7 @@ search(term:string,column:any) {
     if( this.idsofcalltype3.length==2)
    {
    // this.totalsizeofcalltype="All Selected";
-    this.selectednumbercalls(this.selectedtabs,"All Selected")
+    this.selectednumbercalls(this.selectedtabs,"Call type")
 
    // this.allselectedcall=true;
     this.selectedtabholdcalltype(this.selectedtabs,true);
@@ -1547,7 +1547,7 @@ else if(e==false)
  if( this.idsofcalltype3.length==0)
   {
    // this.totalsizeofcalltype="Not Selected";
-    this.selectednumbercalls(this.selectedtabs,"Not Selected")
+    this.selectednumbercalls(this.selectedtabs,"None")
   }
   else
   {
@@ -1569,7 +1569,7 @@ else if(e==false)
     if( this.idsofcalltype4.length==2)
    {
    // this.totalsizeofcalltype="All Selected";
-    this.selectednumbercalls(this.selectedtabs,"All Selected")
+    this.selectednumbercalls(this.selectedtabs,"Call type")
 
    // this.allselectedcall=true;
     this.selectedtabholdcalltype(this.selectedtabs,true);
@@ -1598,7 +1598,7 @@ else if(e==false)
  if( this.idsofcalltype4.length==0)
   {
    // this.totalsizeofcalltype="Not Selected";
-    this.selectednumbercalls(this.selectedtabs,"Not Selected")
+    this.selectednumbercalls(this.selectedtabs,"None")
   }
   else
   {

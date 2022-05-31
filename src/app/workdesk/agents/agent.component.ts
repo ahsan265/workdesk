@@ -373,7 +373,7 @@ isagentonline(val,val1){
 
   selectusertype(e,val,status)
   { 
-  
+  console.log(e,val)
     this.selectedusername=val;
   if(e==true&& val=="Show all")
   {
@@ -413,8 +413,8 @@ isagentonline(val,val1){
     this.agentsocketgigaaaapi.send_agentsparam_status(0,0,1,this.id_soflanguages)
     }
     this.active_agents=0;
-    this.inactive_agents=0;
-    this.invited_agents=1;
+    this.inactive_agents=1;
+    this.invited_agents=0;
   }
   else if(e==true&& val=="Invited")
   {this.allagentmsg="There is no Invited Agents yet";
@@ -424,8 +424,8 @@ isagentonline(val,val1){
     this.agentsocketgigaaaapi.send_agentsparam_status(1,0,0,this.id_soflanguages)
     }
     this.active_agents=0;
-    this.inactive_agents=1;
-    this.invited_agents=0;
+    this.inactive_agents=0;
+    this.invited_agents=1;
   }
   $('li.user').on('click', function () {
     var isActive = $('#accordian',).toggleClass('is-active');
@@ -539,6 +539,19 @@ getagentname(val)
  }
 
   }
+  // get image opacity level
+  getinvitedagentsOpacity(invited,inactive,active)
+  {
+ if(invited==true&&inactive==false&&active==false)
+ {
+  return 0.5;
+
+ }
+ else{
+ return false;
+ }
+
+  }
   // get full name
   getfullname(invited,inactive,active,first_name,last_name)
   {
@@ -626,10 +639,10 @@ return false;
       });
 
       
-      this.selectedlanguages=this.lang.length +"\xa0"+"Selected";
+      this.selectedlanguages=this.lang.length;
         if(this.lang.length==this.lang.length)
         {
-            this.selectedlanguages="All Selected"
+            this.selectedlanguages="All"
             this.allselectedtag=true;
            if(this.all_agent!=null)
            {
@@ -649,7 +662,7 @@ return false;
         }
   
         });
-        this.selectedlanguages="Not Selected";
+        this.selectedlanguages="None";
         this.allselectedtag=false;
         if(this.id_soflanguages.length!=0)
         {
@@ -673,18 +686,18 @@ return false;
        this.id_soflanguages.push(id);
        if(this.id_soflanguages.length==this.lang.length)
        {
-        this.selectedlanguages="All Selected";
+        this.selectedlanguages="All";
         this.allselectedtag=true;
        }
        else{
-        this.selectedlanguages=this.id_soflanguages.length +"\xa0"+"Selected";
+        this.selectedlanguages=this.id_soflanguages.length;
 
        }
        if(this.id_soflanguages.length!=null)
     {
      // this.updateagentprofile()
    //  this.getallagents(intid?.int_id,this.active_agents, this.inactive_agents,this.invited_agents,this.id_soflanguages);
-     this.agentsocketgigaaaapi.send_agentsparam_status(this.active_agents,this.inactive_agents,this.invited_agents,this.id_soflanguages)
+     this.agentsocketgigaaaapi.send_agentsparam_status(this.invited_agents,this.active_agents,this.inactive_agents,this.id_soflanguages)
 
     }
      }
@@ -695,19 +708,19 @@ return false;
         this.id_soflanguages.splice(index, 1);
       //  this.updateagentprofile()
      // this.getallagents(intid?.int_id,this.active_agents, this.inactive_agents,this.invited_agents,this.id_soflanguages);
-      this.agentsocketgigaaaapi.send_agentsparam_status(this.active_agents,this.inactive_agents,this.invited_agents,this.id_soflanguages)
+      this.agentsocketgigaaaapi.send_agentsparam_status(this.invited_agents,this.active_agents,this.inactive_agents,this.id_soflanguages)
 
       }
       
       if(this.id_soflanguages.length==0)
       {
-       this.selectedlanguages="Not Selected";
+       this.selectedlanguages="None";
      //  this.getallagents(intid?.int_id,this.active_agents, this.inactive_agents,this.invited_agents,this.id_soflanguages);
-       this.agentsocketgigaaaapi.send_agentsparam_status(this.active_agents,this.inactive_agents,this.invited_agents,this.id_soflanguages)
+       this.agentsocketgigaaaapi.send_agentsparam_status(this.invited_agents,this.active_agents,this.inactive_agents,this.id_soflanguages)
 
       }
       else{
-       this.selectedlanguages=this.id_soflanguages.length +"\xa0"+"Selected";
+       this.selectedlanguages=this.id_soflanguages.length;
        this.allselectedtag=false;
       }
  
@@ -729,12 +742,10 @@ return false;
         if(obj['display_name']!=null)
         {
           return obj['display_name'].toLowerCase().includes(term.toLowerCase())||obj['email'].toLowerCase().includes(term.toLowerCase());
-
         }
         else  if(obj['display_name']==null)
         {
           return obj['email'].toLowerCase().includes(term.toLowerCase());
-
         }
       })
       this.all_agent=result;
@@ -743,20 +754,19 @@ return false;
       {
         this.all_agent=this.tobefilteragent;
         this.totalnumberofagent=this.tobefilteragent['length'];
-
       }
     }
  
  // open mobile filter for agents page
  openmobilefilterpopup()
  {
-   this.dialog.open(MobilefiltersforagentsComponent,{
+    this.dialog.open(MobilefiltersforagentsComponent,{
      data:{languages:this.langaugesfrommobilefilter,search_item:this.searchquerymobilefilter},
      hasBackdrop:true,
      panelClass:"mobilefilter-form-container",
      backdropClass:"backdropBackgroundPopups",
      disableClose:true,
-   });
+    });
  }
 
           // get agents by languages using mobile filter
@@ -783,10 +793,10 @@ return false;
 
          
          
-     this.selectedlanguages=this.id_soflanguages.length +"\xa0"+"Selected";
+     this.selectedlanguages=this.id_soflanguages.length;
       if(this.id_soflanguages.length==6)
       {
-          this.selectedlanguages="All Selected"
+          this.selectedlanguages="All"
           this.allselectedtag=true;
       }
 

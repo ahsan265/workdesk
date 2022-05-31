@@ -86,10 +86,10 @@ form = new FormGroup({
        udpatedlang.push({name:element.name,status:true,id:element.id})
        this.idsoflanguages.push(element.id)
     });
-    this.selectedlanguages=this.lang.length +"\xa0"+"Selected";
+    this.selectedlanguages=this.lang.length;
       if(this.lang.length==6)
       {
-          this.selectedlanguages="All Selected"
+          this.selectedlanguages="All"
           this.allselectedtag=true;
        //   this.updateagentprofile()
         this.sharedres.getrefreshagentlist(1);
@@ -105,11 +105,11 @@ form = new FormGroup({
       }
 
       });
-      this.selectedlanguages="Not Selected";
+      this.selectedlanguages="None";
       this.allselectedtag=false;
       if(this.idsoflanguages.length!=0)
       { 
-        this.selectedlanguages="Not Selected";
+        this.selectedlanguages="None";
 
   
       }
@@ -125,11 +125,11 @@ form = new FormGroup({
        this.idsoflanguages.push(id);
        if(this.idsoflanguages.length==this.lang.length)
        {
-        this.selectedlanguages="All Selected";
+        this.selectedlanguages="All";
         this.allselectedtag=true;
        }
        else{
-        this.selectedlanguages=this.idsoflanguages.length +"\xa0"+"Selected";
+        this.selectedlanguages=this.idsoflanguages.length;
 
        }
        if(this.idsoflanguages.length!=null)
@@ -150,11 +150,11 @@ form = new FormGroup({
       
       if(this.idsoflanguages.length==0)
       {
-       this.selectedlanguages="Not Selected";
+       this.selectedlanguages="None";
 
       }
       else{
-       this.selectedlanguages=this.idsoflanguages.length +"\xa0"+"Selected";
+       this.selectedlanguages=this.idsoflanguages.length;
        this.allselectedtag=false;
       }
  
@@ -354,10 +354,10 @@ form = new FormGroup({
           this.lang[index].status=true;
          
        });
-     this.selectedlanguages=this.idsoflanguages.length +"\xa0"+"Selected";
+     this.selectedlanguages=this.idsoflanguages.length;
       if(this.idsoflanguages.length==this.lang.length)
       {
-          this.selectedlanguages="All Selected"
+          this.selectedlanguages="All"
           this.allselectedtag=true;
       }
 

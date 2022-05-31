@@ -66,11 +66,11 @@ form: FormGroup;
     if(status==true)
     {
       this.selected_lang_ids.push(id);
-      this.number_of_lang=this.selected_lang_ids.length+"\xa0"+"Selected"
+      this.number_of_lang=this.selected_lang_ids.length;
       this.number_of_lang=this.number_of_lang.slice()
      if(this.selected_lang_ids.length==this.lang.length)
      {
-      this.number_of_lang="Selected All";
+      this.number_of_lang="All";
       this.selectalllangstat=true
      }
     }
@@ -79,10 +79,10 @@ form: FormGroup;
       if (index !== -1) {
         this.selected_lang_ids.splice(index, 1);
       }
-      this.number_of_lang=this.selected_lang_ids.length+"\xa0"+"Selected"
+      this.number_of_lang=this.selected_lang_ids.length;
       if(this.selected_lang_ids.length==0)
       {
-        this.number_of_lang="No Selected"
+        this.number_of_lang="None"
         this.selectalllangstat=false
       }
 
@@ -104,7 +104,7 @@ form: FormGroup;
    });
    if(this.selected_lang_ids.length==this.lang.length)
    {
-     this.number_of_lang="Selected All"
+     this.number_of_lang="All"
      this.selectalllangstat=true;
    }
   }
@@ -121,7 +121,7 @@ form: FormGroup;
  });
  if(this.selected_lang_ids.length==0)
  {
-   this.number_of_lang="No Selected"
+   this.number_of_lang="None"
    this.selectalllangstat=false;
 
  }
@@ -218,7 +218,7 @@ removeandaddlang(e,empIndex:number,langindex:number,id) {
   if(e.target.checked===true)
   {
     this.getlangselect(empIndex).push(new FormControl(id))
-    this.selectednumber=this.getlangselect(empIndex).length+"\xa0"+"Selected"
+    this.selectednumber=this.getlangselect(empIndex).length;
 
   }
   else if(e.target.checked===false){
@@ -277,16 +277,16 @@ checkhowmanyselected(val)
 {
     if(val==0)
     {
-      return "Not selected"
+      return "None"
     }
     else if(val<this.lang.length)
     {
-      return val+"\xa0"+"Selected"
+      return val;
 
     }
 
     else{
-      return "All Selected"
+      return "All"
 
     }
 }

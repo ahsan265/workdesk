@@ -238,10 +238,10 @@ showselectedpanel(val)
       this.lang[index].status=true;
      
     });
-     this.languageselected=this.id_soflanguages.length +"\xa0"+"Selected";
+     this.languageselected=this.id_soflanguages.length;
       if(this.id_soflanguages.length==this.lang.length)
       {
-          this.languageselected="All Selected"
+          this.languageselected="All"
           this.allselectedtag=true;
       }
 
@@ -255,10 +255,10 @@ showselectedpanel(val)
        this.countrylist[index].status=true;
       
     });
-      this.countrySelected=this.id_sofcountries.length +"\xa0"+"Selected";
+      this.countrySelected=this.id_sofcountries.length;
        if(this.id_sofcountries.length==249)
        {
-           this.countrySelected="All Selected"
+           this.countrySelected="All"
           //  this.allselectedtag=true;
        }
  
@@ -274,10 +274,10 @@ showselectedpanel(val)
       this.id_soflanguages.push(id);
       if(this.id_soflanguages.length==this.lang.length)
       {
-        this.languageselected="All Selected"
+        this.languageselected="All"
       }
       else{
-        this.languageselected=this.id_soflanguages.length +"\xa0"+"Selected"
+        this.languageselected=this.id_soflanguages.length;
       }
 
     }
@@ -291,10 +291,10 @@ showselectedpanel(val)
      }
      if(this.id_soflanguages.length==0)
      {
-      this.languageselected="Not Selected";
+      this.languageselected="None";
      }
      else{
-      this.languageselected=this.id_soflanguages.length +"\xa0"+"Selected"
+      this.languageselected=this.id_soflanguages.length;
     }
 
 
@@ -309,11 +309,11 @@ showselectedpanel(val)
        this.id_sofcountries.push(id);
        if(this.id_sofcountries.length==249)
        {
-        this.countrySelected="All Selected"
+        this.countrySelected="All"
         this.countryallChecked=true;
       }
        else{
-        this.countrySelected=this.id_sofcountries.length +"\xa0"+"Selected";
+        this.countrySelected=this.id_sofcountries.length;
        }
    
   
@@ -328,12 +328,12 @@ showselectedpanel(val)
       }
       if(this.id_sofcountries.length==0)
       {
-        this.countrySelected="Not Selected";
+        this.countrySelected="None";
        
 
       }
       else{
-        this.countrySelected=this.id_sofcountries.length +"\xa0"+"Selected";
+        this.countrySelected=this.id_sofcountries.length;
       }
       this.countryallChecked=false;
     }
@@ -689,10 +689,10 @@ showselectedpanel(val)
         this.countrylist=udpatedcountry;
         this.id_sofcountries=countryid;
     
-        this.countrySelected=countryid.length +"\xa0"+"Selected";
+        this.countrySelected=countryid.length ;
           if(countryid.length==249)
           {
-            this.countrySelected="All Selected";
+            this.countrySelected="All";
               this.countryallChecked=true;
           }
     
@@ -709,7 +709,7 @@ showselectedpanel(val)
           this.countrylist=udpatedcountry;
           this.id_sofcountries=countryid;
           this.countryallChecked=false;
-          this.countrySelected="Not Selected";
+          this.countrySelected="None";
           checked=false;
   
     

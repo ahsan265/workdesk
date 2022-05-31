@@ -576,9 +576,9 @@ export class DashboardComponent implements OnInit ,AfterViewInit{
          this.getallcountriesshow("Calls",true,0)
          this.getallcountriesshow("Users",true,0)
          this.getallcountriesshow("Tickets",true,0)
-         this.showselectedNumberofcountries("Calls","All Selected")
-         this.showselectedNumberofcountries("Users","All Selected")
-         this.showselectedNumberofcountries("Tickets","All Selected")
+         this.showselectedNumberofcountries("Calls","All")
+         this.showselectedNumberofcountries("Users","All")
+         this.showselectedNumberofcountries("Tickets","All")
 
       }
       catch(err){
@@ -611,10 +611,10 @@ export class DashboardComponent implements OnInit ,AfterViewInit{
       this.countrylist=udpatedcountry;
   
   
-      this.showselectedNumberofcountries(this.selectedtabs,countryid.length +"\xa0"+"Selected")
+      this.showselectedNumberofcountries(this.selectedtabs,countryid.length)
         if(countryid.length==249)
         {
-            this.showselectedNumberofcountries(this.selectedtabs,"All Selected")
+            this.showselectedNumberofcountries(this.selectedtabs,"All")
             checked=true;
         }
   
@@ -629,7 +629,7 @@ export class DashboardComponent implements OnInit ,AfterViewInit{
   
         });
         this.countrylist=udpatedcountry;
-        this.showselectedNumberofcountries(this.selectedtabs,"Not Selected")
+        this.showselectedNumberofcountries(this.selectedtabs,"None")
         checked=false;
 
   
@@ -708,9 +708,9 @@ export class DashboardComponent implements OnInit ,AfterViewInit{
           this.getalllanguage(true,"Calls",0);
           this.getalllanguage(true,"Users",0);
           this.getalllanguage(true,"Visitors",0);
-          this.showselectednumberoflanguages("Calls","All Selected")
-          this.showselectednumberoflanguages("Users","All Selected")
-          this.showselectednumberoflanguages("Tickets","All Selected")
+          this.showselectednumberoflanguages("Calls","All")
+          this.showselectednumberoflanguages("Users","All")
+          this.showselectednumberoflanguages("Tickets","All")
 
       }
       catch(err){
@@ -740,10 +740,10 @@ export class DashboardComponent implements OnInit ,AfterViewInit{
  
  
  
-        this.showselectednumberoflanguages(this.selectedtabs,this.lang.length +"\xa0"+"Selected")
+        this.showselectednumberoflanguages(this.selectedtabs,this.lang.length)
        if(this.lang.length==7)
        {
-           this.showselectednumberoflanguages(this.selectedtabs,"All Selected")
+           this.showselectednumberoflanguages(this.selectedtabs,"All")
 
        }
  
@@ -757,7 +757,7 @@ export class DashboardComponent implements OnInit ,AfterViewInit{
        }
  
        });
-       this.showselectednumberoflanguages(this.selectedtabs,"Not Selected")
+       this.showselectednumberoflanguages(this.selectedtabs,"None")
  
    }
  
@@ -771,7 +771,7 @@ export class DashboardComponent implements OnInit ,AfterViewInit{
     if(signal!=1)
     {
     
-       this.showselectednumberoflanguages(this.selectedtabs,"All Selected")
+       this.showselectednumberoflanguages(this.selectedtabs,"All")
       // this.getcallcharts("this_week",[],[],1000,this.datefrom_call,this.dateto_call);
       // this.getUserTotalCard("this_week",[],[],this.datefrom_user,this.dateto_user);
       // this.getVisitorTotalCard("this_week",[],[],this.datefrom_visitor,this.dateto_visitor);
@@ -789,7 +789,7 @@ export class DashboardComponent implements OnInit ,AfterViewInit{
  
   if(signal!=1)
     {
-      this.showselectednumberoflanguages(this.selectedtabs,"All Selected")
+      this.showselectednumberoflanguages(this.selectedtabs,"All")
  
     }
  
@@ -802,7 +802,7 @@ export class DashboardComponent implements OnInit ,AfterViewInit{
  
     if(signal!=1)
     {
-      this.showselectednumberoflanguages(this.selectedtabs,"All Selected")
+      this.showselectednumberoflanguages(this.selectedtabs,"All")
  
     }
  
@@ -2600,12 +2600,12 @@ createoschart()
      this.idsof_countries1.push(id);
      if(this.idsof_countries1.length==249)
      {
-      this.showselectedNumberofcountries(this.selectedtabs,"All Selected")
+      this.showselectedNumberofcountries(this.selectedtabs,"All")
      this.callchecked=true;
      this.callFunctionCharts();
      }
      else{
-      this.showselectedNumberofcountries(this.selectedtabs,this.idsof_countries1.length +"\xa0"+"Selected")
+      this.showselectedNumberofcountries(this.selectedtabs,this.idsof_countries1.length)
      }
 
    }
@@ -2619,10 +2619,10 @@ createoschart()
     }
     if(this.idsof_countries1.length==0)
     {
-     this.showselectedNumberofcountries(this.selectedtabs,"Not Selected")
+     this.showselectedNumberofcountries(this.selectedtabs,"None")
     }
     else{
-     this.showselectedNumberofcountries(this.selectedtabs,this.idsof_countries1.length +"\xa0"+"Selected")
+     this.showselectedNumberofcountries(this.selectedtabs,this.idsof_countries1.length)
     }
     this.callchecked=false;
 
@@ -2639,12 +2639,12 @@ createoschart()
    this.idsof_countries2.push(id);
    if(this.idsof_countries2.length==249)
    {
-    this.showselectedNumberofcountries(this.selectedtabs,"All Selected");
+    this.showselectedNumberofcountries(this.selectedtabs,"All");
     this.userchecked=true;
   this.callFunctionCharts();
    }
    else{
-    this.showselectedNumberofcountries(this.selectedtabs,this.idsof_countries2.length +"\xa0"+"Selected")
+    this.showselectedNumberofcountries(this.selectedtabs,this.idsof_countries2.length)
 
    }
 
@@ -2660,10 +2660,10 @@ createoschart()
 
   if(this.idsof_countries2.length==0)
   {
-  this.showselectedNumberofcountries(this.selectedtabs,"Not Selected")
+  this.showselectedNumberofcountries(this.selectedtabs,"None")
   }
   else{
-   this.showselectedNumberofcountries(this.selectedtabs,this.idsof_countries2.length +"\xa0"+"Selected")
+   this.showselectedNumberofcountries(this.selectedtabs,this.idsof_countries2.length)
   }
   this.userchecked=false;
   this.callFunctionCharts();
@@ -2679,12 +2679,12 @@ createoschart()
      this.idsof_countries3.push(id);
      if(this.idsof_countries3.length==249)
      {
-      this.showselectedNumberofcountries(this.selectedtabs,"All Selected");
+      this.showselectedNumberofcountries(this.selectedtabs,"All");
       this.visitorchecked=true;
       this.callFunctionCharts();
     }
      else{
-      this.showselectedNumberofcountries(this.selectedtabs,this.idsof_countries3.length +"\xa0"+"Selected")
+      this.showselectedNumberofcountries(this.selectedtabs,this.idsof_countries3.length)
      }
     }
    else if(e==false)
@@ -2699,10 +2699,10 @@ createoschart()
 
     if(this.idsof_countries3.length==0)
     {
-     this.showselectedNumberofcountries(this.selectedtabs,"Not Selected")
+     this.showselectedNumberofcountries(this.selectedtabs,"None")
     }
     else{
-     this.showselectedNumberofcountries(this.selectedtabs,this.idsof_countries3.length +"\xa0"+"Selected")
+     this.showselectedNumberofcountries(this.selectedtabs,this.idsof_countries3.length)
     }
     this.visitorchecked=false;
     this.callFunctionCharts();
@@ -2721,12 +2721,12 @@ createoschart()
         this.idsoflanguages1.push(id);
         if(this.idsoflanguages1.length==this.lang.length)
         {
-         this.showselectednumberoflanguages(this.selectedtabs,"All Selected")
+         this.showselectednumberoflanguages(this.selectedtabs,"All")
         // this.getcallcharts(this.charttimeslot1,[],this.idsof_countries1,1000);
         this.callFunctionCharts();
         }
         else{
-         this.showselectednumberoflanguages(this.selectedtabs,this.idsoflanguages1.length +"\xa0"+"Selected")
+         this.showselectednumberoflanguages(this.selectedtabs,this.idsoflanguages1.length)
         }
  
       }
@@ -2740,10 +2740,10 @@ createoschart()
        }
        if(this.idsoflanguages1.length==0)
        {
-        this.showselectednumberoflanguages(this.selectedtabs,"Not Selected")
+        this.showselectednumberoflanguages(this.selectedtabs,"None")
        }
        else{
-        this.showselectednumberoflanguages(this.selectedtabs,this.idsoflanguages1.length +"\xa0"+"Selected")
+        this.showselectednumberoflanguages(this.selectedtabs,this.idsoflanguages1.length)
        }
        //this.getcallcharts(this.charttimeslot1,this.idsoflanguages1,this.idsof_countries1,1000);
        this.callFunctionCharts();
@@ -2760,12 +2760,12 @@ createoschart()
       this.idsoflanguages2.push(id);
       if(this.idsoflanguages2.length==this.lang.length)
       {
-       this.showselectednumberoflanguages(this.selectedtabs,"All Selected")
+       this.showselectednumberoflanguages(this.selectedtabs,"All")
       // this.getuser_and_call_chart("Users",this.datefrom_user,this.dateto_user,[],this.idsof_countries2,1000);
       this.callFunctionCharts();
       }
       else{
-       this.showselectednumberoflanguages(this.selectedtabs,this.idsoflanguages2.length +"\xa0"+"Selected")
+       this.showselectednumberoflanguages(this.selectedtabs,this.idsoflanguages2.length)
  
       }
 
@@ -2782,10 +2782,10 @@ createoschart()
  
      if(this.idsoflanguages2.length==0)
      {
-     this.showselectednumberoflanguages(this.selectedtabs,"Not Selected")
+     this.showselectednumberoflanguages(this.selectedtabs,"None")
      }
      else{
-      this.showselectednumberoflanguages(this.selectedtabs,this.idsoflanguages2.length +"\xa0"+"Selected")
+      this.showselectednumberoflanguages(this.selectedtabs,this.idsoflanguages2.length)
      }
     // this.getuser_and_call_chart("Users",this.datefrom_user,this.dateto_user,this.idsoflanguages2,this.idsof_countries2,1000);
     this.callFunctionCharts();
@@ -2802,12 +2802,12 @@ createoschart()
         this.idsoflanguages3.push(id);
         if(this.idsoflanguages3.length==this.lang.length)
         {
-          this.showselectednumberoflanguages(this.selectedtabs,"All Selected")
+          this.showselectednumberoflanguages(this.selectedtabs,"All")
          // this.getuser_and_call_chart("Visitors",this.datefrom_visitor,this.dateto_visitor,[],this.idsof_countries3,1000);
          this.callFunctionCharts();
         }
         else{
-         this.showselectednumberoflanguages(this.selectedtabs,this.idsoflanguages3.length +"\xa0"+"Selected")
+         this.showselectednumberoflanguages(this.selectedtabs,this.idsoflanguages3.length)
         }
       }
       else if(e==false)
@@ -2822,10 +2822,10 @@ createoschart()
  
        if(this.idsoflanguages3.length==0)
        {
-        this.showselectednumberoflanguages(this.selectedtabs,"Not Selected")
+        this.showselectednumberoflanguages(this.selectedtabs,"None")
        }
        else{
-        this.showselectednumberoflanguages(this.selectedtabs,this.idsoflanguages3.length +"\xa0"+"Selected")
+        this.showselectednumberoflanguages(this.selectedtabs,this.idsoflanguages3.length)
        }
       // this.getuser_and_call_chart("Visitors",this.datefrom_visitor,this.dateto_visitor,this.idsoflanguages3,this.idsof_countries3,1000);
       this.callFunctionCharts();
