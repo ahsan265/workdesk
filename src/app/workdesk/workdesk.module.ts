@@ -77,6 +77,7 @@ import { ShowbarsComponent } from './showbars/showbars.component';
       ],
   imports: [CarouselModule.forRoot(),Ng2SearchPipeModule,ImageCropperModule,
     BsDatepickerModule.forRoot(),
+    BrowserAnimationsModule,
     ChartsModule,
     CommonModule,
     FormsModule,

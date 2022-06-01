@@ -78,7 +78,7 @@ getCurrentUser(token):Observable<User> {
         'Authorization': `Bearer ${accesstoken}`
       })
     };
-    return this.http.get(this.gigaabackendUlr+'/public/countries', httpOptions).toPromise();
+    return this.http.get(this.gigaabackendUlr+'/statics/public/countries', httpOptions).toPromise();
   }
 
   public getAllLanguages(accesstoken: string,orgid:string,intid:string): Promise<any> {
@@ -108,7 +108,8 @@ getCurrentUser(token):Observable<User> {
 
 
   public  async getsubsid(accesstoken:any)
-  {   const httpOptions: any = {
+  {   
+    const httpOptions: any = {
 
     headers: new HttpHeaders({
       'Content-Type': 'application/json',
@@ -117,7 +118,7 @@ getCurrentUser(token):Observable<User> {
     })
   };
    
-   return await this.http.get(this.gigaabackendUlr+"/organization",httpOptions).toPromise()
+   return await this.http.get(this.gigaabackendUlr+"/organizations/private/last-used",httpOptions).toPromise()
      .catch((err) => {
        throw (err);
      });
@@ -176,8 +177,10 @@ getCurrentUser(token):Observable<User> {
        return  this.http.get(this.workdeskurl_cs+"/queue/"+id+"?subscription="+subsid,httpOptions)
 
        }
-       public  async   getallintegration(accesstoken:string,uuid:string):Promise<any>
-       {   const httpOptions: any = {
+       public async  getallintegration(accesstoken:string,uuid:string): Promise<any>
+       {   
+     
+        const httpOptions: any = {
 
          headers: new HttpHeaders({
            'Content-Type': 'application/json',
@@ -185,10 +188,10 @@ getCurrentUser(token):Observable<User> {
            'Authorization': `Bearer ${accesstoken}`
          })
        };
-       return await  this.http.get(this.workdeskurl_cs+"/private/integrations?organization="+uuid,httpOptions).toPromise()
-       .catch((err) => {
-         throw (err);
-       });
+        return  this.http.get(this.workdeskurl_cs+"/private/integrations?organization="+uuid,httpOptions).toPromise()
+        .catch((err) => {
+          throw (err);
+        });
 
         }
         public async updatelastusedintegration(accesstoken:string,uuid:string,integrationbody:any)
@@ -467,7 +470,7 @@ getCurrentUser(token):Observable<User> {
                   })
                   };
 
-                 return  this.http.get(this.workdeskanalytics+"/private/cs/aggregates?organization="+orgid+"&integration="+intid+"&time="+time+"&languages="+languages+"&countries="+countries+"&date_from="+date_from+"&date_to="+date_to,httpOptions)
+                 return  this.http.get(this.workdeskanalytics+"/private/aggregates?organization="+orgid+"&integration="+intid+"&time="+time+"&languages="+languages+"&countries="+countries+"&date_from="+date_from+"&date_to="+date_to,httpOptions)
                  }
 
                   // get user line graphs
@@ -507,7 +510,7 @@ getCurrentUser(token):Observable<User> {
                  })
                  };
 
-                return await this.http.get(this.workdeskurl_cs+"/private/integration/agent?organization="+orgid+"&integration="+intid,httpOptions).toPromise()
+                return await this.http.get(this.workdeskurl_cs+"/private/agent?organization="+orgid+"&integration="+intid,httpOptions).toPromise()
                 .catch((err) => {
                   throw (err);
                 });

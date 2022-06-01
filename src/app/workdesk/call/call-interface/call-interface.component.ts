@@ -556,6 +556,7 @@ numberOfbittobeColor:any;
         this.getLastOfferforpeer(event.streams[0]);
         this.remotetrackEvent= event.streams[0]; 
         this.remotevideo.nativeElement.srcObject= event.streams[0]; 
+        this.PeerVoiceIndicatior(event.streams[0])
         if(this.ismobile==false)
         {
         this.restoreLastUsedDevices(0);   
@@ -1900,7 +1901,27 @@ numberOfbittobeColor:any;
          
                 }
              
-            
+            // create peer voice indicator 
+          private  async PeerVoiceIndicatior(stream):Promise<any>
+            {
+              let audioContext = new AudioContext()
+              await audioContext.audioWorklet.addModule('/assets/vumeter.js')
+              let microphone = audioContext.createMediaStreamSource(stream)
+              const node = new AudioWorkletNode(audioContext, 'vumeter');
+              microphone.connect(node).connect(audioContext.destination)
+  
+              node.port.onmessage=((event)=>{
+                let _volume = 0
+                let _sensibility = 5
+                if (event.data.volume)
+                {
+                  _volume = event.data.volume;
+                    let avg= _volume*100;
+                  console.log("peer_voice",avg)
+  
+                }
+              })
+            }
               
          
           // show color pids 
