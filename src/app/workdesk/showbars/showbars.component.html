@@ -1,8 +1,0 @@
-<!-- <div   class="voicelevels" [attr.id]="i" >
-    <div   class="voicebars" *ngFor="let bar of getArray(8); " >
-    </div>
-  </div> -->
-  <div   class="voicelevels"  >
-    <div [ngStyle]="{'background': (i < numberofbar && active==true) ? '#76CB09' : '#3A4559'}" class="voicebars" id="bars" #bars class="voicebars" *ngFor="let bar of getArray(8);let i=index; " >
-    </div>
-  </div>

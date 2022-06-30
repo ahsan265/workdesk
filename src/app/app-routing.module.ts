@@ -1,55 +1,26 @@
-import { APP_INITIALIZER, NgModule } from '@angular/core';
-import { Routes, RouterModule, RouterLink, Router } from '@angular/router';
-import { GigaaaApiService } from './service/gigaaaapi.service';
-import { MessageService } from './service/messege.service';
-import { UserloginserviceService } from './service/userloginservice.service';
-import { AuthService } from './service/auth.service';
-import { LandingpageComponent } from './useraccount/landingpage/landingpage.component';
-import { AppComponent } from './app.component';
-import { CallbackComponent, LogoutComponent } from '@gigaaa/gigaaa-components';
-import { BehaviorSubject, ReplaySubject } from 'rxjs';
-import { User } from './model/User';
-import { retry } from 'rxjs/operators';
-import { MaincomponentComponent } from './maincomponent/maincomponent.component';
+import { NgModule } from '@angular/core';
+import { RouterModule, Routes } from '@angular/router';
+import { AgentsComponent } from './agents/agents.component';
+import { AnsweredComponent } from './calls/answered/answered.component';
+import { CallsComponent } from './calls/calls.component';
+import { IncomingComponent } from './calls/incoming/incoming.component';
+import { MissedComponent } from './calls/missed/missed.component';
+import { OngoingComponent } from './calls/ongoing/ongoing.component';
+import { DashboardComponent } from './dashboard/dashboard.component';
 
 const routes: Routes = [
-  { path:'',component:LandingpageComponent,},
-  { path: "logout", component: LogoutComponent },
-
-  {
-    path: '',
-    children: [
-      {
-        path: '',
-        loadChildren: () =>
-          import('./workdesk/workdesk.module').then(
-            (module) => module.WorkdeskModule
-          ),
-      },
-    ],
-    canActivate: [AuthService],
-  
-  },
-  { path: "callback", component: CallbackComponent },
-
-
+  { path: 'dashboard', component: DashboardComponent },
+  { path: 'calls', component: CallsComponent, children: [
+    { path: 'incoming', component: IncomingComponent },
+    { path: 'ongoing', component: OngoingComponent },
+    { path: 'missed', component: MissedComponent },
+    { path: 'answered', component: AnsweredComponent },
+  ] },
+  { path: 'agents', component: AgentsComponent },
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes,{ relativeLinkResolution: 'legacy',initialNavigation: 'disabled'})],
-  exports: [RouterModule],
-  providers: [
-    AuthService,
-    GigaaaApiService,
-    MessageService,
-  ],
+  imports: [RouterModule.forRoot(routes)],
+  exports: [RouterModule]
 })
-export class AppRoutingModule {
-
-
-
-}
-
-
-
-
+export class AppRoutingModule { }
