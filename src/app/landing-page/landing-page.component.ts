@@ -1,4 +1,8 @@
+/* eslint-disable no-unused-vars */
 import { Component, OnInit } from '@angular/core';
+import { AuthService } from '../services/auth.service';
+import { GigaaaHeaderService } from '@gigaaa/gigaaa-components';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-landing-page',
@@ -6,8 +10,19 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./landing-page.component.scss']
 })
 export class LandingPageComponent implements OnInit {
-  constructor() {}
+  constructor(
+    private headerService: GigaaaHeaderService,
+    private authService: AuthService,
+    private router: Router
+  ) {}
+
   ngOnInit(): void {
-    throw new Error('Method not implemented.');
+    if (this.authService.isLoggedIn()) {
+      this.router.navigate(['/dashboard']);
+    }
+  }
+
+  login() {
+    this.headerService.login();
   }
 }

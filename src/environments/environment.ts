@@ -3,7 +3,19 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  production: false
+  production: false,
+  apiUrl: 'https://api.gigaaa.link/api/v1',
+  backendApi: 'https://api.gconsole.io/v2',
+  analyticsApi: 'https://kub-dev.gigaaa.link/v2/analytics',
+  oauth_url: 'https://accounts.gconsole.io/oauth',
+  redirect_uri: 'http://localhost:4202/callback',
+  uri: 'http://localhost:4202/',
+  login: 'https://accounts.gconsole.io/oauth/token',
+  client_id: 2,
+  accounts_client_id: 8,
+  accounts_url: 'https://accounts.gconsole.io/oauth',
+  accounts_callback_url: 'http://localhost:4202',
+  currentUser: 'https://api.gconsole.io/v1/api/v1/current-user'
 };
 
 /*

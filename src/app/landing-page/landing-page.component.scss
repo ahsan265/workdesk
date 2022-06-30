@@ -1,0 +1,128 @@
+.header {
+  max-height: 80px;
+  display: flex;
+  align-items: center;
+  padding: 10px 36px;
+}
+
+.logoWrap {
+  width: 50%;
+  display: flex;
+  align-items: center;
+  height: fit-content;
+}
+
+.logo {
+  width: 20%;
+  max-height: 50px;
+  margin-right: 5px;
+}
+
+.LangingWrap {
+  padding: 70px 95px;
+  background: #f5f6fb;
+  display: flex;
+}
+
+.leftWrap {
+  width: 50%;
+  display: flex;
+  align-items: center;
+}
+
+.left {
+  display: grid;
+}
+
+.title {
+  font-style: normal;
+  font-weight: 500;
+  font-size: 1.063em;
+  line-height: 305.19%;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  color: #162741;
+}
+
+.text {
+  margin-top: 12px;
+  margin-bottom: 30px;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 2.018em;
+  line-height: 112.69%;
+  letter-spacing: 0.02em;
+  color: #162741;
+  width: 85%;
+}
+
+.loginButton {
+  text-decoration: none;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  padding: 8.05369px;
+  width: 240px;
+  height: 55.57px;
+  background: #1c54db;
+  border-radius: 41px;
+  border: none;
+  cursor: pointer;
+
+  font-style: normal;
+  font-weight: normal;
+  font-size: 1.51em;
+  line-height: 120%;
+  letter-spacing: 0.02em;
+  color: #ffffff;
+}
+
+.rightWrap {
+  width: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@media only screen and (max-width: 768px) {
+  .logo {
+    width: 20%;
+  }
+
+  svg {
+    width: 80%;
+    height: auto;
+  }
+
+  .LangingWrap {
+    display: flex;
+    flex-flow: column-reverse;
+    padding: 0;
+    width: 100%;
+  }
+
+  .leftWrap {
+    width: 100%;
+  }
+
+  .left {
+    justify-items: center;
+    padding-bottom: 30px;
+    margin-bottom: 0 !important;
+  }
+
+  .text {
+    text-align: center;
+  }
+
+  .loginButton {
+    width: 140px;
+    height: 25.57px;
+  }
+
+  .rightWrap {
+    width: 100%;
+    padding: 40px 0;
+  }
+}
