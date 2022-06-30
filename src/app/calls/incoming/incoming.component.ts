@@ -6,10 +6,8 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./incoming.component.scss']
 })
 export class IncomingComponent implements OnInit {
-
-  constructor() { }
-
+  constructor() {}
   ngOnInit(): void {
+    throw new Error('Method not implemented.');
   }
-
 }
