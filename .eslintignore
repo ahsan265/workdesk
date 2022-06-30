@@ -6,4 +6,4 @@ karma.conf.js
 commitlint.config.js
 **/*.spec.ts
 test.ts
-styles.scss
+**/*.scss

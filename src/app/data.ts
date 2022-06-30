@@ -1,10 +1,5 @@
 const websites = [
   {
-    text: 'Partnership',
-    url: ['https://partnerships.gigaaa.com/'],
-    image: '../assets/images/sidebar/partnership.svg'
-  },
-  {
     text: 'Analytics',
     url: ['https://analytics.gconsole.io/'],
     image: '../assets/images/sidebar/analytics.svg'
