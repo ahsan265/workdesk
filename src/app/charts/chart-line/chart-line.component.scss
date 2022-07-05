@@ -1,0 +1,22 @@
+.chart-container {
+  position: relative;
+  height: -webkit-fill-available;
+  width: 100%;
+}
+
+canvas {
+  height: 300px;
+  width: 100% !important;
+}
+
+.noData {
+  position: absolute;
+  top: 30%;
+  left: 45%;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 12px;
+  line-height: 160%;
+  letter-spacing: 0.02em;
+  color: rgba(22, 39, 65, 0.8);
+}

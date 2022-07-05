@@ -23,6 +23,7 @@
     "@angular/platform-browser-dynamic": "~12.1.0",
     "@angular/router": "~12.1.0",
     "@gigaaa/gigaaa-components": "0.0.332",
+    "chart.js": "^3.8.0",
     "crypto-js": "^4.1.1",
     "ngx-cookie-service": "^14.0.1",
     "ngx-pagination": "^5.1.1",

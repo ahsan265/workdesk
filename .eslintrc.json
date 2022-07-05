@@ -1,5 +1,10 @@
 {
   "root": true,
+  //Setup to disable console.log error and localstorage
+  "globals": {
+    "localStorage": true,
+    "fetch": true
+  },
   "ignorePatterns": [
     "projects/**/*"
   ],

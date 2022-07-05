@@ -13,6 +13,10 @@ import { AppRoutingModule } from './app-routing.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { BrowserModule } from '@angular/platform-browser';
 import { CallsComponent } from './calls/calls.component';
+import { ChartBarComponent } from './charts/chart-bar/chart-bar.component';
+import { ChartDoughnutComponent } from './charts/chart-doughnut/chart-doughnut.component';
+import { ChartLineComponent } from './charts/chart-line/chart-line.component';
+import { ChartWrapperComponent } from './components/chart-wrapper/chart-wrapper.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { FooterComponent } from './footer/footer.component';
 import { IncomingComponent } from './calls/incoming/incoming.component';
@@ -36,7 +40,11 @@ import { environment } from 'src/environments/environment';
     MissedComponent,
     AnsweredComponent,
     FooterComponent,
-    MainComponent
+    MainComponent,
+    ChartBarComponent,
+    ChartLineComponent,
+    ChartDoughnutComponent,
+    ChartWrapperComponent
   ],
   imports: [
     BrowserModule,

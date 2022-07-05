@@ -1,0 +1,107 @@
+.wrapper {
+  max-height: 400px;
+  min-height: 316px;
+  width: 100%;
+  border: 1px solid rgba(208, 208, 222, 0.6);
+  box-sizing: border-box;
+  border-radius: 7px;
+}
+
+.legend {
+  height: 40px;
+  border-bottom: 1px solid rgba(208, 208, 222, 0.6);
+  display: flex;
+  align-items: center;
+  padding: 0 23px;
+}
+
+.title {
+  font-style: normal;
+  font-weight: 500;
+  font-size: 0.75em;
+  line-height: 180%;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  color: #16274199;
+}
+
+.chartWrapper {
+  width: 100%;
+  padding: 30px;
+  box-sizing: border-box;
+}
+
+.chartWrapperData {
+  display: flex;
+  justify-content: space-between;
+}
+
+.contentWrapperData {
+  width: 30%;
+}
+
+.dataWrapper {
+  width: 60%;
+  height: fit-content;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.dataWrapperSmaller {
+  display: block;
+}
+
+.data {
+  display: flex;
+  margin-bottom: 10px;
+  width: 132px;
+}
+
+.circle {
+  width: 15px;
+  height: 15px;
+  min-width: 15px !important;
+  min-height: 15px !important;
+  border-radius: 50%;
+  margin-top: 3px;
+}
+
+.dataSpan {
+  margin-left: 10px;
+}
+
+.name {
+  font-style: normal;
+  font-weight: normal;
+  font-size: 0.9em;
+  line-height: 160%;
+  letter-spacing: 0.02em;
+  color: rgba(22, 39, 65, 0.8);
+}
+
+.percent {
+  font-style: normal;
+  font-weight: 500;
+  font-size: 1.125em;
+  line-height: 160%;
+  letter-spacing: 0.02em;
+  color: #162741;
+}
+
+.leftData {
+  width: 50%;
+}
+
+.rightData {
+  width: 50%;
+}
+
+.splitedDataWrapper {
+  display: flex;
+}
+
+@media only screen and (max-width: 400px) {
+  .name {
+    font-size: 0.6em;
+  }
+}

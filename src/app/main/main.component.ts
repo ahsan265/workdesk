@@ -1,8 +1,11 @@
+/* eslint-disable @angular-eslint/no-empty-lifecycle-method */
+/* eslint-disable no-undef */
 /* eslint-disable no-unused-vars */
 import { Component, Inject, OnInit } from '@angular/core';
 import { icons, sidebarData, websites } from '../data';
 import { AuthService } from '../services/auth.service';
 import { GigaaaHeaderService } from '@gigaaa/gigaaa-components';
+import { ReplaySubject } from 'rxjs';
 import { environment } from 'src/environments/environment';
 
 @Component({
@@ -11,13 +14,13 @@ import { environment } from 'src/environments/environment';
   styleUrls: ['./main.component.scss']
 })
 export class MainComponent implements OnInit {
-  pageTitle: string = 'workdesk';
+  pageTitle: string = 'Dashboard';
   slideOpened: boolean = false;
   oauthUrl = `${environment.oauth_url}`;
   redirectUri = `${environment.oauth_url}/logout?continue=${environment.uri}logout`;
-  statusonline: any;
-  sendUserStatus: any;
-  showModal: any;
+  statusOnline: boolean = false;
+  sendUserStatus = new ReplaySubject(1);
+  showModal: boolean = false;
 
   websites = websites;
   icons = icons;
@@ -28,47 +31,38 @@ export class MainComponent implements OnInit {
     @Inject('GigaaaHeaderService') private headerService: GigaaaHeaderService
   ) {}
 
-  ngOnInit() {
-    let user = this.authService.getLoggedUser();
-  }
+  ngOnInit() {}
 
   onNoLoggedUsers(event: any) {
-    // eslint-disable-next-line no-undef
     console.log(event);
   }
 
   onGetLoggedUser(event: any) {
-    // eslint-disable-next-line no-undef
-    console.log(event);
+    // User restriction
   }
 
-  isSlideOpened(event: any) {
-    // eslint-disable-next-line no-undef
-    console.log(event);
+  isSlideOpened(slideOpened: boolean) {
+    this.slideOpened = slideOpened;
   }
 
   getSelectedDropdownItem(event: any) {
-    // eslint-disable-next-line no-undef
     console.log(event);
+    // For sidebar dropdown
   }
 
-  setonlinestatus(event: any) {
-    // eslint-disable-next-line no-undef
-    console.log(event);
-  }
+  setOnlineStatus(event: boolean): void {}
 
-  addNewRouteName(event: any) {
-    // eslint-disable-next-line no-undef
-    console.log(event);
+  addNewRouteName(event: string): string {
+    return (this.pageTitle = event);
   }
 
   isSidebarOpen(event: any) {
-    // eslint-disable-next-line no-undef
     console.log(event);
   }
 
   onCancelButtonClicked(event: any) {
-    // eslint-disable-next-line no-undef
-    console.log(event);
+    if (event) {
+      this.showModal = false;
+    }
   }
 }
