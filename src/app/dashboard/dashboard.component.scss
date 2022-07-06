@@ -1,0 +1,19 @@
+.cardWrapper {
+  display: flex;
+  justify-content: space-between;
+}
+
+.card {
+  width: 33%;
+}
+
+@media only screen and (max-width: 1000px) {
+  .cardWrapper {
+    display: block;
+  }
+
+  .card {
+    width: 100%;
+    margin-bottom: 20px;
+  }
+}

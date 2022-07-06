@@ -1,0 +1,74 @@
+.cardWrap {
+  display: flex;
+  align-items: center;
+  border: 1px solid rgba(208, 208, 222, 0.6);
+  box-sizing: border-box;
+  border-radius: 7px;
+  padding: 20px;
+}
+
+.cardImage {
+  width: 44px;
+  height: 44px;
+  left: 19px;
+  top: 22px;
+  background: #ededf6;
+  border-radius: 31px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 17px;
+}
+
+.cardTimeSpan {
+  font-style: normal;
+  font-weight: 500;
+  font-size: 1.125em;
+  line-height: 160%;
+  display: flex;
+  align-items: center;
+  letter-spacing: 0.02em;
+  color: #162741;
+}
+
+.cardTitleSpan {
+  font-style: normal;
+  font-weight: 500;
+  font-size: 0.75em;
+  line-height: 125.5%;
+  display: flex;
+  align-items: center;
+  letter-spacing: 0.02em;
+  text-transform: capitalize;
+  color: rgba(22, 39, 65, 0.6);
+}
+
+.weekResult {
+  font-style: normal;
+  font-weight: 500;
+  font-size: 0.75em;
+  color: #162741;
+}
+
+.cardWeekResult {
+  display: flex;
+  align-items: center;
+  height: 10px;
+}
+
+.arrowImg {
+  margin-right: 6px;
+}
+
+@media only screen and (max-width: 800px) {
+  .cardWrap {
+    width: 100%;
+    max-width: none;
+    justify-content: flex-start;
+    padding: 20px;
+  }
+
+  .cardImage {
+    margin-right: 17px;
+  }
+}

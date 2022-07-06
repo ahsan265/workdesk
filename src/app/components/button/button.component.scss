@@ -1,0 +1,24 @@
+.button {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  padding: 0 14px;
+  gap: 10px;
+  border: none;
+  border-radius: 3px;
+  min-height: 35px;
+}
+
+img {
+  max-width: 20px;
+}
+
+.buttonText {
+  font-style: normal;
+  font-weight: 500;
+  font-size: 12px;
+  display: flex;
+  align-items: center;
+  letter-spacing: 0.02em;
+}

@@ -1,0 +1,19 @@
+<button
+  class="button"
+  (click)="onClick()"
+  [ngStyle]="
+    buttonData.active
+      ? { 'background-color': buttonData.backgroundColor, cursor: 'pointer' }
+      : { 'background-color': '#ECECF3', cursor: 'not-allowed' }
+  "
+>
+  <img *ngIf="buttonData.icon" [src]="buttonData.icon" alt="" />
+  <p
+    class="buttonText"
+    [ngStyle]="
+      buttonData.active ? { color: buttonData.textColor } : { color: '#A4A4A4' }
+    "
+  >
+    {{ buttonData.title }}
+  </p>
+</button>

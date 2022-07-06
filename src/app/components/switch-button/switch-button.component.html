@@ -1,0 +1,16 @@
+<label class="switch">
+  <input
+    type="checkbox"
+    (change)="onClick()"
+    [checked]="!this.switchButtonData.buttonChecked"
+  />
+  <span
+    class="slider round"
+    (change)="onClick()"
+    [style.background-color]="
+      !this.switchButtonData.buttonChecked
+        ? this.switchButtonData.firstColor
+        : this.switchButtonData.secondColor
+    "
+  ></span>
+</label>

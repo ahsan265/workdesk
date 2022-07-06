@@ -1,4 +1,28 @@
-<p>dashboard works!</p>
-<app-chart-wrapper [showLegend]="false" [chartData]="this.chartBarData">
-  <app-chart-bar #count></app-chart-bar>
-</app-chart-wrapper>
+<div class="cardWrapper">
+  <div class="card" *ngIf="cardDataTotalVisitors">
+    <app-card [cardData]="cardDataTotalVisitors"></app-card>
+  </div>
+  <div class="card" *ngIf="cardDataTotalVisitors">
+    <app-card [cardData]="cardDataTotalVisitors"></app-card>
+  </div>
+  <div class="card" *ngIf="cardDataTotalVisitors">
+    <app-card [cardData]="cardDataTotalVisitors"></app-card>
+  </div>
+</div>
+<app-switch-button
+  [switchButtonData]="switchButtonData"
+  (switchButtonValue)="onGetSwitchButtonValue($event)"
+>
+</app-switch-button>
+
+<app-button
+  (buttonOutput)="onGetButtonOutput($event)"
+  [buttonData]="buttonData"
+></app-button>
+
+<app-input-field
+  (sendInputValue)="onGetInputValue($event)"
+  [inputData]="inputData"
+></app-input-field>
+
+<app-search-input-field></app-search-input-field>
