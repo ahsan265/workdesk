@@ -1,0 +1,65 @@
+.modalWrapper {
+  background: rgba(0, 0, 0, 0.3);
+  z-index: 999999;
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.modal {
+  background: #ffffff;
+  box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.23);
+  border-radius: 4px;
+  padding: 30px;
+  box-sizing: border-box;
+  position: relative;
+  display: grid;
+  align-content: space-between;
+}
+
+.closeButton {
+  position: absolute;
+  top: 30px;
+  right: 30px;
+  cursor: pointer;
+}
+
+.xButton {
+  cursor: pointer;
+}
+
+.titleWrapper {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.title {
+  display: grid;
+  justify-items: center;
+}
+
+.titleSpan {
+  font-style: normal;
+  font-weight: 500;
+  font-size: 18px;
+  line-height: 22px;
+  align-items: center;
+  letter-spacing: 0.02em;
+  color: #162741;
+}
+
+.buttonWrapper {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.buttonWrapperOneButton {
+  margin-left: auto;
+}

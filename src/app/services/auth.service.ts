@@ -1,4 +1,3 @@
-/* eslint-disable no-undef */
 import { BehaviorSubject } from 'rxjs';
 import { CanActivate } from '@angular/router';
 import { Injectable } from '@angular/core';

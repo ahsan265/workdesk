@@ -1,4 +1,3 @@
-/* eslint-disable no-undef */
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { InputData } from '../../models/input';
 

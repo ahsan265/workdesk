@@ -1,5 +1,5 @@
-/* eslint-disable @angular-eslint/no-empty-lifecycle-method */
 /* eslint-disable no-undef */
+/* eslint-disable @angular-eslint/no-empty-lifecycle-method */
 /* eslint-disable no-unused-vars */
 import { Component, Inject, OnInit } from '@angular/core';
 import { icons, sidebarData, websites } from '../data';

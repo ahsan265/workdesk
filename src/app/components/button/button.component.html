@@ -3,7 +3,11 @@
   (click)="onClick()"
   [ngStyle]="
     buttonData.active
-      ? { 'background-color': buttonData.backgroundColor, cursor: 'pointer' }
+      ? {
+          'background-color': buttonData.backgroundColor,
+          cursor: 'pointer',
+          border: buttonData.borderColor
+        }
       : { 'background-color': '#ECECF3', cursor: 'not-allowed' }
   "
 >

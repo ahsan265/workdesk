@@ -57,3 +57,41 @@
   >
   </app-multi-select-dropdown>
 </div>
+
+<app-modal-wrapper
+  (submitButtonOutput)="onGetSubmitButtonOutput($event)"
+  (closeModal)="onCloseModal($event)"
+  [modalData]="modalData"
+  *ngIf="this.openModal"
+>
+  <div class="modalContent">
+    <app-input-field
+      (sendInputValue)="onGetInputValue($event)"
+      [inputData]="inputData"
+    ></app-input-field>
+    <app-input-field
+      (sendInputValue)="onGetInputValue($event)"
+      [inputData]="inputData"
+    ></app-input-field>
+  </div>
+  <div class="modalContent">
+    <app-input-field
+      (sendInputValue)="onGetInputValue($event)"
+      [inputData]="inputData"
+    ></app-input-field>
+    <app-input-field
+      (sendInputValue)="onGetInputValue($event)"
+      [inputData]="inputData"
+    ></app-input-field>
+  </div>
+  <div class="modalContent">
+    <app-input-field
+      (sendInputValue)="onGetInputValue($event)"
+      [inputData]="inputData"
+    ></app-input-field>
+    <app-input-field
+      (sendInputValue)="onGetInputValue($event)"
+      [inputData]="inputData"
+    ></app-input-field>
+  </div>
+</app-modal-wrapper>

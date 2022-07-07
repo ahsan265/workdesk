@@ -3,6 +3,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { Button } from '../models/button';
 import { Card } from '../models/card';
 import { InputData } from '../models/input';
+import { Modal } from '../models/modal';
 import { MultiSelect } from '../models/multiSelect';
 import { OneSelect } from '../models/oneSelect';
 import { SearchInput } from '../models/searchInput';
@@ -34,6 +35,7 @@ export class DashboardComponent implements OnInit {
     title: 'BlueButton',
     icon: '../assets/images/sidebar/agents.svg',
     backgroundColor: '#1C54DB',
+    borderColor: 'none',
     textColor: 'white',
     active: true
   };
@@ -91,6 +93,28 @@ export class DashboardComponent implements OnInit {
     ]
   };
 
+  modalData: Modal = {
+    title: 'Naslov',
+    // image: '../assets/images/sidebar/agents.svg',
+    onlyOneButton: false,
+    buttonOne: {
+      title: 'Cancel',
+      backgroundColor: 'white',
+      borderColor: '1px solid rgba(208,208,222,.6)',
+      textColor: '#162741',
+      active: true
+    },
+    buttonTwo: {
+      title: 'Save',
+      backgroundColor: '#1C54DB',
+      borderColor: 'none',
+      textColor: 'white',
+      active: true
+    },
+    width: '500px',
+    height: '400px'
+  };
+
   constructor() {}
   ngOnInit(): void {
     this.chartBarData = [
@@ -114,8 +138,11 @@ export class DashboardComponent implements OnInit {
     console.log(event);
   }
 
+  openModal: boolean = false;
+
   onGetButtonOutput(event: any) {
     console.log(event);
+    this.openModal = true;
   }
 
   onGetInputValue(event: any) {
@@ -132,5 +159,17 @@ export class DashboardComponent implements OnInit {
 
   onGetMultiSelectOutput(event: any) {
     console.log(event);
+  }
+
+  onCloseModal(event: any) {
+    if (event) {
+      this.openModal = false;
+    }
+  }
+
+  onGetSubmitButtonOutput(event: boolean) {
+    if (event) {
+      this.openModal = false;
+    }
   }
 }
