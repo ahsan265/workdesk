@@ -8,8 +8,9 @@ describe('ChartDoughnutComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ChartDoughnutComponent]
-    }).compileComponents();
+    declarations: [ChartDoughnutComponent],
+    teardown: { destroyAfterEach: false }
+}).compileComponents();
   });
 
   beforeEach(() => {

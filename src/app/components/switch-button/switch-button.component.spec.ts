@@ -8,8 +8,9 @@ describe('SwitchButtonComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [SwitchButtonComponent]
-    }).compileComponents();
+    declarations: [SwitchButtonComponent],
+    teardown: { destroyAfterEach: false }
+}).compileComponents();
   });
 
   beforeEach(() => {

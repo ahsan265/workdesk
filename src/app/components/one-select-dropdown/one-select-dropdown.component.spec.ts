@@ -8,8 +8,9 @@ describe('OneSelectDropdownComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [OneSelectDropdownComponent]
-    }).compileComponents();
+    declarations: [OneSelectDropdownComponent],
+    teardown: { destroyAfterEach: false }
+}).compileComponents();
   });
 
   beforeEach(() => {

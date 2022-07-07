@@ -8,8 +8,9 @@ describe('ChartLineComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ChartLineComponent]
-    }).compileComponents();
+    declarations: [ChartLineComponent],
+    teardown: { destroyAfterEach: false }
+}).compileComponents();
   });
 
   beforeEach(() => {

@@ -8,8 +8,9 @@ describe('ModalWrapperComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ModalWrapperComponent]
-    }).compileComponents();
+    declarations: [ModalWrapperComponent],
+    teardown: { destroyAfterEach: false }
+}).compileComponents();
   });
 
   beforeEach(() => {

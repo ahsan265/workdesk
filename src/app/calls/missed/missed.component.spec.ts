@@ -8,8 +8,9 @@ describe('MissedComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [MissedComponent]
-    }).compileComponents();
+    declarations: [MissedComponent],
+    teardown: { destroyAfterEach: false }
+}).compileComponents();
   });
 
   beforeEach(() => {
