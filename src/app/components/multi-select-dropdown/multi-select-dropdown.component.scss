@@ -1,0 +1,144 @@
+.dropdownWrapper {
+  position: relative;
+}
+
+.selectDropdown {
+  background: white;
+  border: 1px solid rgba(208, 208, 222, 0.6);
+  width: 100%;
+  height: 35px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 10px;
+  box-sizing: border-box;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.dropdownIconOpened {
+  transform: rotate(180deg);
+  transition: 0.4s;
+}
+
+.dropdown {
+  background: #ffffff;
+  border: 1px solid rgba(208, 208, 222, 0.6);
+  box-sizing: border-box;
+  box-shadow: 4px 4px 17px -3px #00000024;
+  border-radius: 4px;
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 120%;
+}
+
+::ng-deep .dropdown .searchWrap .searchLabel {
+  border: none;
+}
+
+.searchWrapper {
+  padding: 5px 5px 0 5px;
+}
+
+.selectAll {
+  padding: 0 5px;
+  border-bottom: 1px solid #e3e3eb;
+}
+
+ul {
+  padding: 5px;
+  margin: 0;
+  border-radius: 4px;
+  max-height: 225px;
+  overflow-y: scroll;
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+  padding: 0;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #ededf0;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #616b7b;
+  border-radius: 8px;
+}
+
+li {
+  list-style: none;
+}
+
+li:hover {
+  transition: all 0.3s ease-in;
+  background-color: #ededf6;
+}
+
+span {
+  font-style: normal;
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 160%;
+  display: flex;
+  align-items: center;
+  letter-spacing: 0.02em;
+  color: #162741cc;
+}
+
+.inputeSelectItem {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  height: 34px;
+  cursor: pointer;
+}
+
+.checkbox {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+}
+
+.checkmark {
+  width: 16px;
+  height: 16px;
+  min-width: 16px;
+  min-height: 16px;
+  border: 1px solid rgba(22, 39, 65, 0.25);
+  box-sizing: border-box;
+  margin: 0 10px;
+}
+
+.inputeSelectItem input:checked ~ .checkmark {
+  background-color: #1c54db;
+  background-image: url('../../../assets/images/dropdown/checkmart_white.svg');
+  background-repeat: no-repeat;
+  background-position: center;
+  border: none;
+}
+
+.title {
+  width: 80%;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 0.75em;
+  line-height: 160%;
+  letter-spacing: 0.02em;
+  color: #162741;
+}
+
+.clear {
+  font-style: normal;
+  font-weight: 500;
+  font-size: 12px;
+  height: inherit;
+  margin-right: 22px;
+  letter-spacing: 0.02em;
+  color: #1c54db;
+  cursor: pointer;
+}

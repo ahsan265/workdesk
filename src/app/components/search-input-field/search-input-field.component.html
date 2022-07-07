@@ -14,10 +14,8 @@
       />
     </svg>
     <input
-      [(ngModel)]="search"
-      (ngModelChange)="onChange($event)"
-      #searchField
-      placeholder="placeholder"
+      [(ngModel)]="searchInputData.searchText"
+      [placeholder]="searchInputData.placeholder"
       class="searchInput"
       type="text"
     />

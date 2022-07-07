@@ -1,0 +1,106 @@
+.dropdownWrapper {
+  position: relative;
+}
+
+.selectDropdown {
+  background: #ededf6;
+  border: none;
+  width: 100%;
+  height: 35px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 10px;
+  box-sizing: border-box;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.dropdownIconOpened {
+  transform: rotate(180deg);
+  transition: 0.4s;
+}
+
+.dropdown {
+  background: #ffffff;
+  border: 1px solid rgba(208, 208, 222, 0.6);
+  box-sizing: border-box;
+  box-shadow: 4px 4px 17px -3px #00000024;
+  border-radius: 4px;
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 120%;
+  padding: 5px;
+}
+
+ul {
+  padding: 0;
+  margin: 0;
+  border-radius: 4px;
+}
+
+ul:hover {
+  transition: all 0.3s ease-in;
+  background-color: #ededf6;
+}
+
+li {
+  list-style: none;
+}
+
+span {
+  font-style: normal;
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 160%;
+  display: flex;
+  align-items: center;
+  letter-spacing: 0.02em;
+  color: rgba(22, 39, 65, 0.8);
+}
+
+.inputeSelectItem {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  height: 34px;
+  cursor: pointer;
+}
+
+.checkbox {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+}
+
+.checkmark {
+  width: 16px;
+  height: 16px;
+  border: 1px solid rgba(22, 39, 65, 0.25);
+  box-sizing: border-box;
+  border-radius: 50%;
+  margin: 0 10px;
+}
+
+.inputeSelectItem input:checked ~ .checkmark {
+  background-color: #1c54db;
+  background-image: url('../../../assets/images/dropdown/checkmart_white.svg');
+  background-repeat: no-repeat;
+  background-position: center;
+  border: none;
+}
+
+.title {
+  width: 80%;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 0.75em;
+  line-height: 160%;
+  letter-spacing: 0.02em;
+  color: rgba(22, 39, 65, 0.6);
+}
+
+.titleChecked {
+  color: #162741;
+}

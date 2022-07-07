@@ -20,6 +20,7 @@ import { ChartDoughnutComponent } from './charts/chart-doughnut/chart-doughnut.c
 import { ChartLineComponent } from './charts/chart-line/chart-line.component';
 import { ChartWrapperComponent } from './components/chart-wrapper/chart-wrapper.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
+import { FilterPipe } from './pipes/filter.pipe';
 import { FooterComponent } from './footer/footer.component';
 import { FormsModule } from '@angular/forms';
 import { IncomingComponent } from './calls/incoming/incoming.component';
@@ -61,7 +62,8 @@ import { environment } from 'src/environments/environment';
     SwitchButtonComponent,
     ModalWrapperComponent,
     OneSelectDropdownComponent,
-    MultiSelectDropdownComponent
+    MultiSelectDropdownComponent,
+    FilterPipe
   ],
   imports: [
     BrowserModule,

@@ -9,20 +9,51 @@
     <app-card [cardData]="cardDataTotalVisitors"></app-card>
   </div>
 </div>
+<hr />
 <app-switch-button
   [switchButtonData]="switchButtonData"
   (switchButtonValue)="onGetSwitchButtonValue($event)"
 >
 </app-switch-button>
+<hr />
+<div class="dropdownWrapper">
+  <app-one-select-dropdown
+    (oneSelectOutput)="onGetOneSelectOutput($event)"
+    [oneSelectData]="onSelectData"
+  >
+  </app-one-select-dropdown>
+</div>
+<hr />
 
 <app-button
   (buttonOutput)="onGetButtonOutput($event)"
   [buttonData]="buttonData"
 ></app-button>
+<hr />
 
 <app-input-field
   (sendInputValue)="onGetInputValue($event)"
   [inputData]="inputData"
 ></app-input-field>
+<hr />
 
-<app-search-input-field></app-search-input-field>
+<app-search-input-field
+  [searchInputData]="searchInputData"
+></app-search-input-field>
+
+<!-- <ul *ngFor="let data of dataForSearch | appFilter: searchInputData.searchText">
+  <li>
+    <span>{{data.name}}</span>
+    <span>{{data.lastName}}</span>
+  </li>
+</ul> -->
+
+<hr />
+
+<div class="dropdownWrapper">
+  <app-multi-select-dropdown
+    (multiSelectOutput)="onGetMultiSelectOutput($event)"
+    [multiSelectData]="multiSelectData"
+  >
+  </app-multi-select-dropdown>
+</div>

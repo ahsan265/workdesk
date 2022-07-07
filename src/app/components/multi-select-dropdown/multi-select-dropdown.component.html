@@ -1,1 +1,54 @@
-<p>multi-select-dropdown works!</p>
+<div #dropdown class="dropdownWrapper">
+  <div class="selectDropdown" (click)="onOpenDropdown()">
+    <span>Language</span>
+    <svg
+      [ngClass]="showDropdown ? 'dropdownIconOpened' : 'dropdownIcon'"
+      width="10"
+      height="6"
+      viewBox="0 0 10 6"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path
+        d="M1.55469 0.371094L5 3.81641L8.44531 0.371094L9.5 1.42578L5 5.92578L0.5 1.42578L1.55469 0.371094Z"
+        fill="#162741"
+      />
+    </svg>
+  </div>
+  <div class="dropdown" *ngIf="showDropdown">
+    <div class="searchWrapper">
+      <app-search-input-field
+        [searchInputData]="searchInputData"
+      ></app-search-input-field>
+    </div>
+    <div class="selectAll">
+      <a (click)="onSelectAll()">
+        <label class="inputeSelectItem" for="">
+          <input class="checkbox" type="checkbox" [checked]="selectedAll" />
+          <span class="checkmark"></span>
+          <span class="title"> Select All </span>
+          <span (click)="onClear(); $event.stopPropagation()" class="clear">
+            Clear
+          </span>
+        </label>
+      </a>
+    </div>
+    <ul>
+      <li
+        (click)="onChooseItem(item)"
+        *ngFor="
+          let item of multiSelectData.data
+            | appFilter: searchInputData.searchText
+        "
+      >
+        <label class="inputeSelectItem" for="">
+          <input class="checkbox" type="checkbox" [checked]="item.selected" />
+          <span class="checkmark"></span>
+          <span class="title">
+            {{ item.name }}
+          </span>
+        </label>
+      </li>
+    </ul>
+  </div>
+</div>
