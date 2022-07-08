@@ -1,97 +1,66 @@
-<div class="cardWrapper">
-  <div class="card" *ngIf="cardDataTotalVisitors">
-    <app-card [cardData]="cardDataTotalVisitors"></app-card>
+<div class="dashboardWrapper">
+  <div class="filterWrapper">
+    <div class="leftFilter">
+      <app-one-select-dropdown [oneSelectData]="oneSelectData"></app-one-select-dropdown>
+    </div>
+    <div class="rightFilter">
+      <div class="multiSelectWrapper">
+        <app-multi-select-dropdown [multiSelectData]="countries">
+        </app-multi-select-dropdown>
+      </div>
+      <div class="multiSelectWrapper">
+        <app-multi-select-dropdown [multiSelectData]="languauges">
+        </app-multi-select-dropdown>
+      </div>
+      <div class="multiSelectWrapper">
+        <app-multi-select-dropdown [multiSelectData]="languauges">
+        </app-multi-select-dropdown>
+      </div>
+    </div>
   </div>
-  <div class="card" *ngIf="cardDataTotalVisitors">
-    <app-card [cardData]="cardDataTotalVisitors"></app-card>
+
+  <div class="cardWrapper">
+    <div class="card">
+      <app-card [cardData]="cardDataTotalVisitors"></app-card>
+    </div>
+    <div class="card">
+      <app-card [cardData]="cardDataTotalVisitors"></app-card>
+    </div>
+    <div class="card">
+      <app-card [cardData]="cardDataTotalVisitors"></app-card>
+    </div>
   </div>
-  <div class="card" *ngIf="cardDataTotalVisitors">
-    <app-card [cardData]="cardDataTotalVisitors"></app-card>
+
+  <div class="chartWrapper">
+    <div class="titleWrap">
+      <span>Incoming</span>
+    </div>
+    <div class="chart">
+      <canvas baseChart [data]="barChartData" [options]="barChartOptions" [plugins]="barChartPlugins"
+        [type]="barChartType">
+      </canvas>
+    </div>
+  </div>
+
+  <div class="chartWrapper">
+    <div class="titleWrap">
+      <span>Incoming</span>
+    </div>
+    <div class="chart">
+      <canvas baseChart [data]="barChartData" [options]="barChartOptions" [plugins]="barChartPlugins"
+        [type]="barChartType">
+      </canvas>
+    </div>
+  </div>
+
+  <div class="chartWrapper">
+    <div class="titleWrap">
+      <span>Incoming</span>
+    </div>
+    <div class="chart">
+      <canvas baseChart [data]="barChartData" [options]="barChartOptions" [plugins]="barChartPlugins"
+        [type]="barChartType">
+      </canvas>
+    </div>
   </div>
 </div>
-<hr />
-<app-switch-button
-  [switchButtonData]="switchButtonData"
-  (switchButtonValue)="onGetSwitchButtonValue($event)"
->
-</app-switch-button>
-<hr />
-<div class="dropdownWrapper">
-  <app-one-select-dropdown
-    (oneSelectOutput)="onGetOneSelectOutput($event)"
-    [oneSelectData]="onSelectData"
-  >
-  </app-one-select-dropdown>
-</div>
-<hr />
-
-<app-button
-  (buttonOutput)="onGetButtonOutput($event)"
-  [buttonData]="buttonData"
-></app-button>
-<hr />
-
-<app-input-field
-  (sendInputValue)="onGetInputValue($event)"
-  [inputData]="inputData"
-></app-input-field>
-<hr />
-
-<app-search-input-field
-  [searchInputData]="searchInputData"
-></app-search-input-field>
-
-<!-- <ul *ngFor="let data of dataForSearch | appFilter: searchInputData.searchText">
-  <li>
-    <span>{{data.name}}</span>
-    <span>{{data.lastName}}</span>
-  </li>
-</ul> -->
-
-<hr />
-
-<div class="dropdownWrapper">
-  <app-multi-select-dropdown
-    (multiSelectOutput)="onGetMultiSelectOutput($event)"
-    [multiSelectData]="multiSelectData"
-  >
-  </app-multi-select-dropdown>
-</div>
-
-<app-modal-wrapper
-  (submitButtonOutput)="onGetSubmitButtonOutput($event)"
-  (closeModal)="onCloseModal($event)"
-  [modalData]="modalData"
-  *ngIf="this.openModal"
->
-  <div class="modalContent">
-    <app-input-field
-      (sendInputValue)="onGetInputValue($event)"
-      [inputData]="inputData"
-    ></app-input-field>
-    <app-input-field
-      (sendInputValue)="onGetInputValue($event)"
-      [inputData]="inputData"
-    ></app-input-field>
-  </div>
-  <div class="modalContent">
-    <app-input-field
-      (sendInputValue)="onGetInputValue($event)"
-      [inputData]="inputData"
-    ></app-input-field>
-    <app-input-field
-      (sendInputValue)="onGetInputValue($event)"
-      [inputData]="inputData"
-    ></app-input-field>
-  </div>
-  <div class="modalContent">
-    <app-input-field
-      (sendInputValue)="onGetInputValue($event)"
-      [inputData]="inputData"
-    ></app-input-field>
-    <app-input-field
-      (sendInputValue)="onGetInputValue($event)"
-      [inputData]="inputData"
-    ></app-input-field>
-  </div>
-</app-modal-wrapper>

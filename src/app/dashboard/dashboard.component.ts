@@ -1,175 +1,67 @@
 /* eslint-disable no-undef */
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { Button } from '../models/button';
-import { Card } from '../models/card';
-import { InputData } from '../models/input';
-import { Modal } from '../models/modal';
-import { MultiSelect } from '../models/multiSelect';
-import { OneSelect } from '../models/oneSelect';
-import { SearchInput } from '../models/searchInput';
-import { SwitchButton } from '../models/switchButton';
+import { ChartConfiguration, ChartData, ChartType } from 'chart.js';
+import { Component, ViewChild } from '@angular/core';
+import {
+  cardDataTotalVisitors,
+  countries,
+  languauges,
+  oneSelectData
+} from './dashboardData';
+import { BaseChartDirective } from 'ng2-charts';
+import DataLabelsPlugin from 'chartjs-plugin-datalabels';
 
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.scss']
 })
-export class DashboardComponent implements OnInit {
-  @ViewChild('count') count!: any;
-  chartBarData: any = [[], [], []];
+export class DashboardComponent {
+  oneSelectData = oneSelectData;
+  countries = countries;
+  languauges = languauges;
+  cardDataTotalVisitors = cardDataTotalVisitors;
 
-  cardDataTotalVisitors: Card = {
-    icon: '../../../../assets/images/visitors/visitorsTotal.svg',
-    title: 'Total Visitors',
-    color: '#EDEDF6',
-    mainResult: '15'
+  @ViewChild(BaseChartDirective) chart: BaseChartDirective | undefined;
+
+  public barChartOptions: ChartConfiguration['options'] = {
+    responsive: true,
+    maintainAspectRatio: false,
+    scales: {
+      xAxes: {
+        display: true,
+        grid: {
+          display: false
+        }
+      },
+      yAxes: {
+        grid: {
+          drawBorder: false
+        }
+      }
+    },
+    plugins: {
+      legend: {
+        display: false
+      },
+      datalabels: {
+        display: false
+      }
+    }
   };
+  public barChartType: ChartType = 'bar';
+  public barChartPlugins = [DataLabelsPlugin];
 
-  switchButtonData: SwitchButton = {
-    firstColor: 'red',
-    secondColor: 'blue',
-    buttonChecked: false
-  };
-
-  buttonData: Button = {
-    title: 'BlueButton',
-    icon: '../assets/images/sidebar/agents.svg',
-    backgroundColor: '#1C54DB',
-    borderColor: 'none',
-    textColor: 'white',
-    active: true
-  };
-
-  inputData: InputData = {
-    value: '',
-    placeholder: 'nesto'
-  };
-
-  searchInputData: SearchInput = {
-    placeholder: 'search items',
-    searchText: ''
-  };
-
-  searchText = '';
-
-  dataForSearch: any[] = [
-    { name: 'Srdjan', id: 1, lastName: 'Marinkovic' },
-    { name: 'Ivana', id: 1, lastName: 'Marinkovic' },
-    { name: 'Dragan', id: 1, lastName: 'Marinkovic' },
-    { name: 'Dragica', id: 1, lastName: 'Marinkovic' },
-    { name: 'Nikola', id: 1, lastName: 'Narancic' }
-  ];
-
-  onSelectData: OneSelect[] = [
-    { id: 1, name: 'Show all', selected: true },
-    { id: 2, name: 'Active', selected: false },
-    { id: 3, name: 'Inactive', selected: false },
-    { id: 4, name: 'Invited', selected: false }
-  ];
-
-  multiSelectData: MultiSelect = {
-    showSelectAll: true,
-    showSearchBar: true,
-    data: [
-      { id: 1, name: 'Show all', selected: false },
-      { id: 2, name: 'Active', selected: false },
-      { id: 3, name: 'Inactive', selected: false },
-      { id: 4, name: 'Invited', selected: false },
-      { id: 5, name: 'Inactive', selected: false },
-      { id: 6, name: 'Inactive', selected: false },
-      { id: 7, name: 'Inactive', selected: false },
-      { id: 8, name: 'Inactive', selected: false },
-      { id: 9, name: 'Inactive', selected: false },
-      { id: 10, name: 'Inactive', selected: false },
-      { id: 11, name: 'Inactive', selected: false },
-      { id: 12, name: 'Inactive', selected: false },
-      { id: 13, name: 'Inactive', selected: false },
-      { id: 14, name: 'Inactive', selected: false },
-      { id: 15, name: 'Inactive', selected: false },
-      { id: 16, name: 'Inactive', selected: false },
-      { id: 17, name: 'Inactive', selected: false },
-      { id: 18, name: 'Inactive', selected: false },
-      { id: 19, name: 'Inactive', selected: false }
+  public barChartData: ChartData<'bar'> = {
+    labels: ['2006', '2007', '2008', '2009', '2010', '2011', '2012'],
+    datasets: [
+      {
+        data: [65, 59, 80, 81, 56, 55, 40],
+        backgroundColor: ['#1C54DB'],
+        hoverBackgroundColor: ['#1C54DB'],
+        borderRadius: 10
+      }
     ]
   };
 
-  modalData: Modal = {
-    title: 'Naslov',
-    // image: '../assets/images/sidebar/agents.svg',
-    onlyOneButton: false,
-    buttonOne: {
-      title: 'Cancel',
-      backgroundColor: 'white',
-      borderColor: '1px solid rgba(208,208,222,.6)',
-      textColor: '#162741',
-      active: true
-    },
-    buttonTwo: {
-      title: 'Save',
-      backgroundColor: '#1C54DB',
-      borderColor: 'none',
-      textColor: 'white',
-      active: true
-    },
-    width: '500px',
-    height: '400px'
-  };
-
   constructor() {}
-  ngOnInit(): void {
-    this.chartBarData = [
-      [56, 47, 55, 42, 0, 0, 0],
-      [
-        '#1C54DB',
-        '#1C54DB',
-        '#1C54DB',
-        '#1C54DB',
-        '#1C54DB',
-        '#1C54DB',
-        '#1C54DB'
-      ],
-      ['Jun 27', 'Jun 28', 'Jun 29', 'Jun 30', 'Jul 1', 'Jul 2', 'Jul 3']
-    ];
-    console.log(this.chartBarData);
-    this.count?.data.next(this.chartBarData);
-  }
-
-  onGetSwitchButtonValue(event: any) {
-    console.log(event);
-  }
-
-  openModal: boolean = false;
-
-  onGetButtonOutput(event: any) {
-    console.log(event);
-    this.openModal = true;
-  }
-
-  onGetInputValue(event: any) {
-    console.log(event.target.value);
-  }
-
-  sendFilteredItems(event: any) {
-    console.log(event);
-  }
-
-  onGetOneSelectOutput(event: OneSelect) {
-    console.log(event.name);
-  }
-
-  onGetMultiSelectOutput(event: any) {
-    console.log(event);
-  }
-
-  onCloseModal(event: any) {
-    if (event) {
-      this.openModal = false;
-    }
-  }
-
-  onGetSubmitButtonOutput(event: boolean) {
-    if (event) {
-      this.openModal = false;
-    }
-  }
 }
