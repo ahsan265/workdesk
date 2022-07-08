@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { callType, languauges, searchInputData } from './callsData';
 
 @Component({
   selector: 'app-calls',
@@ -6,6 +7,9 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./calls.component.scss']
 })
 export class CallsComponent implements OnInit {
+  callType = callType;
+  languauges = languauges;
+  searchInputData = searchInputData;
   constructor() {}
   ngOnInit(): void {
     throw new Error('Method not implemented.');

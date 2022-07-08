@@ -1,5 +1,6 @@
 import { CallbackComponent, LogoutComponent } from '@gigaaa/gigaaa-components';
 import { RouterModule, Routes } from '@angular/router';
+import { AgentSettingsComponent } from './agent-settings/agent-settings.component';
 import { AgentsComponent } from './agents/agents.component';
 import { AnsweredComponent } from './calls/answered/answered.component';
 import { AuthService } from './services/auth.service';
@@ -29,13 +30,15 @@ const routes: Routes = [
         path: 'calls',
         component: CallsComponent,
         children: [
+          { path: '', redirectTo: 'incoming', pathMatch: 'full' },
           { path: 'incoming', component: IncomingComponent },
           { path: 'ongoing', component: OngoingComponent },
           { path: 'missed', component: MissedComponent },
           { path: 'answered', component: AnsweredComponent }
         ]
       },
-      { path: 'agents', component: AgentsComponent }
+      { path: 'agents', component: AgentsComponent },
+      { path: 'agents/settings/:id', component: AgentSettingsComponent }
     ]
   },
   { path: 'callback', component: CallbackComponent },
