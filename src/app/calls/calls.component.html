@@ -1,12 +1,17 @@
 <div class="menuWrapper">
   <ul class="callsUl">
-    <li class="callsLi" [routerLinkActive]="['callsActive']"><a class="callsA" routerLink="incoming">Incoming</a>
+    <li class="callsLi" [routerLinkActive]="['callsActive']">
+      <a class="callsA" routerLink="incoming">Incoming</a>
     </li>
-    <li class="callsLi" [routerLinkActive]="['callsActive']"><a class="callsA" routerLink="ongoing">Ongoing</a>
+    <li class="callsLi" [routerLinkActive]="['callsActive']">
+      <a class="callsA" routerLink="ongoing">Ongoing</a>
     </li>
-    <li class="callsLi" [routerLinkActive]="['callsActive']"><a class="callsA" routerLink="missed">Missed</a>
+    <li class="callsLi" [routerLinkActive]="['callsActive']">
+      <a class="callsA" routerLink="missed">Missed</a>
     </li>
-    <li class="callsLi" [routerLinkActive]="['callsActive']"><a class="callsA" routerLink="answered">Answered</a></li>
+    <li class="callsLi" [routerLinkActive]="['callsActive']">
+      <a class="callsA" routerLink="answered">Answered</a>
+    </li>
   </ul>
 </div>
 <app-page-wrapper>
@@ -23,7 +28,9 @@
         </app-multi-select-dropdown>
       </div>
       <div class="multiSelectWrapper">
-        <app-search-input-field [searchInputData]="searchInputData"></app-search-input-field>
+        <app-search-input-field
+          [searchInputData]="searchInputData"
+        ></app-search-input-field>
       </div>
     </div>
   </div>

@@ -2,16 +2,19 @@
   <div class="imageWrapper section">
     <div class="image"></div>
     <div class="agentsData">
-      <div class="fullName">{{this.selectedAgent?.name}}</div>
-      <div class="email">{{this.selectedAgent?.agent}}</div>
+      <div class="fullName">{{ this.selectedAgent?.name }}</div>
+      <div class="email">{{ this.selectedAgent?.agent }}</div>
     </div>
   </div>
   <div class="profileWrapper section">
     <div class="profileName">Profile</div>
     <div class="inputField">
       <div *ngFor="let input of firstNameInput">
-        <div class="label">{{input.placeholder}}</div>
-        <app-input-field (sendInputValue)="onGetInputValue($event)" [inputData]="input"></app-input-field>
+        <div class="label">{{ input.placeholder }}</div>
+        <app-input-field
+          (sendInputValue)="onGetInputValue($event)"
+          [inputData]="input"
+        ></app-input-field>
       </div>
     </div>
   </div>
@@ -19,13 +22,7 @@
     <app-multi-select-dropdown [multiSelectData]="languauges">
     </app-multi-select-dropdown>
   </div>
-  <div class="administrativeRightsWrapper section">
-
-  </div>
-  <div class="passwordWrapper section">
-
-  </div>
-  <div class="buttonsWrapper section">
-
-  </div>
+  <div class="administrativeRightsWrapper section"></div>
+  <div class="passwordWrapper section"></div>
+  <div class="buttonsWrapper section"></div>
 </div>

@@ -68,17 +68,11 @@ const firstNameInput: InputData[] = [
     value: 'Last Name',
     placeholder: 'Last Name',
     fieldName: 'lastName'
-
   },
   {
     value: 'Agent Name',
     placeholder: 'Agent Name',
     fieldName: 'agentName'
-
   }
 ];
-export {
-  agents,
-  firstNameInput,
-  languauges
-};
+export { agents, firstNameInput, languauges };

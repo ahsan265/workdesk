@@ -12,7 +12,9 @@
         </app-multi-select-dropdown>
       </div>
       <div class="multiSelectWrapper callType">
-        <app-search-input-field [searchInputData]="searchInputData"></app-search-input-field>
+        <app-search-input-field
+          [searchInputData]="searchInputData"
+        ></app-search-input-field>
       </div>
       <div class="multiSelectWrapper">
         <app-button [buttonData]="buttonData"></app-button>
@@ -20,6 +22,9 @@
     </div>
   </div>
   <div class="tableWrapper">
-    <app-gigaaa-table [settings]="dataTableSettings" [records]="agents"></app-gigaaa-table>
+    <app-gigaaa-table
+      [settings]="dataTableSettings"
+      [records]="agents"
+    ></app-gigaaa-table>
   </div>
 </app-page-wrapper>

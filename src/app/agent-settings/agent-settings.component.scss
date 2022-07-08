@@ -1,7 +1,7 @@
 .agentSettingsWrapper {
   margin: 30px;
-  background: #FFFFFF;
-  border: 1px solid rgba(208, 208, 222, .6);
+  background: #ffffff;
+  border: 1px solid rgba(208, 208, 222, 0.6);
   box-sizing: border-box;
   border-radius: 7px;
   padding-left: 30px;
@@ -15,7 +15,7 @@
   padding: 30px 0;
   display: flex;
   align-items: center;
-  border-bottom: 1px solid #E3E3EB;
+  border-bottom: 1px solid #e3e3eb;
 }
 
 .section:last-child {
@@ -50,12 +50,12 @@
   color: #6a7585;
 }
 
-.inputField{
+.inputField {
   display: flex;
   justify-content: left;
 }
-.label{
-  font-family: "Roboto",sans-serif;
+.label {
+  font-family: 'Roboto', sans-serif;
   font-style: normal;
   font-weight: normal;
   font-size: 13px;
@@ -66,7 +66,7 @@
 }
 
 .profileName {
-  font-family: "Roboto",sans-serif;
+  font-family: 'Roboto', sans-serif;
   font-style: normal;
   font-weight: 500;
   font-size: 16px;
@@ -75,6 +75,6 @@
   line-height: 48.83px;
   display: inline-block;
   align-items: center;
-  letter-spacing: .02em;
+  letter-spacing: 0.02em;
   color: #162741;
 }
