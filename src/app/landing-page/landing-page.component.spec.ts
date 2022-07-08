@@ -8,9 +8,9 @@ describe('LandingPageComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-    declarations: [LandingPageComponent],
-    teardown: { destroyAfterEach: false }
-}).compileComponents();
+      declarations: [LandingPageComponent],
+      teardown: { destroyAfterEach: false }
+    }).compileComponents();
   });
 
   beforeEach(() => {

@@ -8,9 +8,9 @@ describe('OngoingComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-    declarations: [OngoingComponent],
-    teardown: { destroyAfterEach: false }
-}).compileComponents();
+      declarations: [OngoingComponent],
+      teardown: { destroyAfterEach: false }
+    }).compileComponents();
   });
 
   beforeEach(() => {

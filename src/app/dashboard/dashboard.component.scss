@@ -39,8 +39,8 @@
 }
 
 .chartWrapper {
-  background: #FFFFFF;
-  border: 1px solid rgba(208,208,222,.6);
+  background: #ffffff;
+  border: 1px solid rgba(208, 208, 222, 0.6);
   box-sizing: border-box;
   border-radius: 4px;
   margin-bottom: 20px;
@@ -53,7 +53,7 @@
   padding-left: 23px;
   display: flex;
   align-items: center;
-  border-bottom: 1px solid rgba(208,208,222,.6);
+  border-bottom: 1px solid rgba(208, 208, 222, 0.6);
 }
 
 .chart {
@@ -62,7 +62,7 @@
   height: 300px;
 
   canvas {
-    width: 100%!important;
+    width: 100% !important;
   }
 }
 

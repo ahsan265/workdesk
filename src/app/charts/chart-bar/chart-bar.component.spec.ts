@@ -8,9 +8,9 @@ describe('ChartBarComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-    declarations: [ChartBarComponent],
-    teardown: { destroyAfterEach: false }
-}).compileComponents();
+      declarations: [ChartBarComponent],
+      teardown: { destroyAfterEach: false }
+    }).compileComponents();
   });
 
   beforeEach(() => {
