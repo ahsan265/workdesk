@@ -1,4 +1,5 @@
 import { Button } from '../models/button';
+import { InputData } from '../models/input';
 import { MultiSelect } from '../models/multiSelect';
 import { OneSelect } from '../models/oneSelect';
 import { SearchInput } from '../models/searchInput';
@@ -77,6 +78,9 @@ const dataTableSettings: any[] = [
     expand: false
   }
 ];
+
+
+
 
 const agents = [
   {

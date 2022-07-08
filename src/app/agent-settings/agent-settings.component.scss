@@ -49,3 +49,32 @@
   align-items: center;
   color: #6a7585;
 }
+
+.inputField{
+  display: flex;
+  justify-content: left;
+}
+.label{
+  font-family: "Roboto",sans-serif;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 13px;
+  line-height: 23.4px;
+  display: flex;
+  align-items: center;
+  color: #6a7585;
+}
+
+.profileName {
+  font-family: "Roboto",sans-serif;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 16px;
+  width: 100%;
+  margin-top: 15px;
+  line-height: 48.83px;
+  display: inline-block;
+  align-items: center;
+  letter-spacing: .02em;
+  color: #162741;
+}
