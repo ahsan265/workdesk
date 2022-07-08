@@ -1,5 +1,7 @@
+import { Button } from '../models/button';
 import { InputData } from '../models/input';
 import { MultiSelect } from '../models/multiSelect';
+import { SwitchButton } from '../models/switchButton';
 
 const agents = [
   {
@@ -58,21 +60,54 @@ const languauges: MultiSelect = {
     { id: 7, name: 'Urdu', selected: false }
   ]
 };
-const firstNameInput: InputData[] = [
+
+const inputData: InputData[] = [
   {
-    value: 'First Name',
+    value: '',
     placeholder: 'First Name',
     fieldName: 'firstName'
   },
   {
-    value: 'Last Name',
+    value: '',
     placeholder: 'Last Name',
     fieldName: 'lastName'
   },
   {
-    value: 'Agent Name',
+    value: '',
     placeholder: 'Agent Name',
     fieldName: 'agentName'
   }
 ];
-export { agents, firstNameInput, languauges };
+
+const backButtonData: Button = {
+  title: 'Back',
+  // icon: '../assets/images/sidebar/agents.svg',
+  backgroundColor: '#EFEFEF',
+  borderColor: '#C3C7CC',
+  textColor: '#162741',
+  active: true
+};
+
+const saveButtonData: Button = {
+  title: 'Save',
+  // icon: '../assets/images/sidebar/agents.svg',
+  backgroundColor: '#1C54DB',
+  borderColor: 'none',
+  textColor: 'white',
+  active: true
+};
+
+const switchButtonData: SwitchButton = {
+  firstColor: '#1C54DB',
+  secondColor: '#C4C4C4',
+  buttonChecked: false
+};
+
+export {
+  agents,
+  inputData,
+  languauges,
+  backButtonData,
+  saveButtonData,
+  switchButtonData
+};

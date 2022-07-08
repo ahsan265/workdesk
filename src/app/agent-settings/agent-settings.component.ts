@@ -1,6 +1,14 @@
+/* eslint-disable no-undef */
 /* eslint-disable no-unused-vars */
 import { Component, OnInit } from '@angular/core';
-import { agents, firstNameInput, languauges } from './agent-settingData';
+import {
+  agents,
+  backButtonData,
+  inputData,
+  languauges,
+  saveButtonData,
+  switchButtonData
+} from './agent-settingData';
 import { ActivatedRoute } from '@angular/router';
 import { Agent } from '../models/agent';
 import { InputData } from '@gigaaa/gigaaa-components/lib/models/input';
@@ -14,8 +22,11 @@ export class AgentSettingsComponent implements OnInit {
   agentId!: number;
   agents: Agent[] = [];
   selectedAgent: Agent | undefined;
-  firstNameInput: InputData[] = firstNameInput;
+  inputData: InputData[] = inputData;
   languauges = languauges;
+  backButtonData = backButtonData;
+  saveButtonData = saveButtonData;
+  switchButtonData = switchButtonData;
   constructor(private activatedRoute: ActivatedRoute) {}
 
   ngOnInit(): void {
@@ -23,11 +34,25 @@ export class AgentSettingsComponent implements OnInit {
     this.getAgent();
   }
 
-  onGetInputValue(event: any) {}
+  onGetInputValue(event: any) {
+    console.log(event);
+  }
   getAgent(): Agent | undefined {
     this.agents = agents;
     return (this.selectedAgent = this.agents.find(
       (agent: Agent) => agent.id === this.agentId
     ));
+  }
+
+  onGetSwitchButtonValue(event: any) {
+    console.log(event);
+  }
+
+  onGetBackButtonOutput(event: any) {
+    console.log(event);
+  }
+
+  onGetSaveButtonOutput(event: any) {
+    console.log(event);
   }
 }

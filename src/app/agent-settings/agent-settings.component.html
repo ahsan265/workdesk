@@ -8,21 +8,50 @@
   </div>
   <div class="profileWrapper section">
     <div class="profileName">Profile</div>
-    <div class="inputField">
-      <div *ngFor="let input of firstNameInput">
-        <div class="label">{{ input.placeholder }}</div>
-        <app-input-field
-          (sendInputValue)="onGetInputValue($event)"
-          [inputData]="input"
-        ></app-input-field>
+    <div class="firstLastName">
+      <div class="inputWrapper">
+        <div class="label">First name</div>
+        <app-input-field (sendInputValue)="onGetInputValue($event)" [inputData]="inputData[0]"></app-input-field>
+      </div>
+      <div class="inputWrapper">
+        <div class="label">Last name</div>
+        <app-input-field (sendInputValue)="onGetInputValue($event)" [inputData]="inputData[1]"></app-input-field>
+      </div>
+    </div>
+    <div class="agentName">
+      <div class="label">Agent name</div>
+      <app-input-field (sendInputValue)="onGetInputValue($event)" [inputData]="inputData[2]"></app-input-field>
+    </div>
+
+  </div>
+  <div class="languageWrapper section">
+    <div class="profileName">Language
+      <div class="inputWrapper">
+        <div class="label">Select language(s) for this agent:</div>
+        <app-multi-select-dropdown [multiSelectData]="languauges">
+        </app-multi-select-dropdown>
       </div>
     </div>
   </div>
-  <div class="languageWrapper section">
-    <app-multi-select-dropdown [multiSelectData]="languauges">
-    </app-multi-select-dropdown>
+  <div class="administrativeRightsWrapper section">
+    <div class="profileName">Administrative Rights
+      <div class="inputWrapper switchWrapper">
+        <div class="label">Admins can add new agents and change settings.</div>
+        <app-switch-button [switchButtonData]="switchButtonData" (switchButtonValue)="onGetSwitchButtonValue($event)">
+        </app-switch-button>
+      </div>
+    </div>
   </div>
-  <div class="administrativeRightsWrapper section"></div>
-  <div class="passwordWrapper section"></div>
-  <div class="buttonsWrapper section"></div>
+  <div class="passwordWrapper section">
+    <div class="profileName">Password
+      <div class="inputWrapper">
+        <div class="label">Set password</div>
+        <app-input-field (sendInputValue)="onGetInputValue($event)" [inputData]="inputData[0]"></app-input-field>
+      </div>
+    </div>
+  </div>
+  <div class="buttonsWrapper section">
+    <app-button (buttonOutput)="onGetBackButtonOutput($event)" [buttonData]="backButtonData"></app-button>
+    <app-button (buttonOutput)="onGetSaveButtonOutput($event)" [buttonData]="saveButtonData"></app-button>
+  </div>
 </div>
