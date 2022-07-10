@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import {
   agents,
   buttonData,
@@ -6,6 +7,7 @@ import {
   oneSelect,
   searchInputData
 } from './agentsData';
+import { AuthService } from '../services/auth.service';
 import { Component } from '@angular/core';
 
 @Component({
@@ -21,5 +23,7 @@ export class AgentsComponent {
   dataTableSettings = dataTableSettings;
   agents = agents;
 
-  constructor() {}
+  constructor(private authService: AuthService) {
+    this.authService.pageTitle.next('Agents');
+  }
 }

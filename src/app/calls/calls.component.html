@@ -20,6 +20,7 @@
       <div class="multiSelectWrapper">
         <app-multi-select-dropdown [multiSelectData]="languauges">
         </app-multi-select-dropdown>
+        <app-calls-indicator [callsIndicatorData]="callsIndicatorData"></app-calls-indicator>
       </div>
     </div>
     <div class="rightFilter">
@@ -28,10 +29,9 @@
         </app-multi-select-dropdown>
       </div>
       <div class="multiSelectWrapper">
-        <app-search-input-field
-          [searchInputData]="searchInputData"
-        ></app-search-input-field>
+        <app-search-input-field [searchInputData]="searchInputData"></app-search-input-field>
       </div>
     </div>
   </div>
+  <router-outlet></router-outlet>
 </app-page-wrapper>

@@ -1,13 +1,13 @@
-import { Component, OnInit } from '@angular/core';
+import { agents, dataTableSettings } from './answeredData';
+import { Component } from '@angular/core';
 
 @Component({
   selector: 'app-answered',
   templateUrl: './answered.component.html',
   styleUrls: ['./answered.component.scss']
 })
-export class AnsweredComponent implements OnInit {
+export class AnsweredComponent {
+  dataTableSettings = dataTableSettings;
+  agents = agents;
   constructor() {}
-  ngOnInit(): void {
-    throw new Error('Method not implemented.');
-  }
 }

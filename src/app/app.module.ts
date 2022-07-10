@@ -40,6 +40,7 @@ import { NgxPaginationModule } from 'ngx-pagination';
 import { OngoingComponent } from './calls/ongoing/ongoing.component';
 import { PageWrapperComponent } from './components/page-wrapper/page-wrapper.component';
 import { environment } from 'src/environments/environment';
+import { CallsIndicatorComponent } from './components/calls-indicator/calls-indicator.component';
 
 @NgModule({
   declarations: [
@@ -59,7 +60,8 @@ import { environment } from 'src/environments/environment';
     ChartDoughnutComponent,
     FilterPipe,
     PageWrapperComponent,
-    AgentSettingsComponent
+    AgentSettingsComponent,
+    CallsIndicatorComponent
   ],
   imports: [
     BrowserModule,

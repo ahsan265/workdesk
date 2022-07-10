@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable no-undef */
 import { ChartConfiguration, ChartData, ChartType } from 'chart.js';
 import { Component, ViewChild } from '@angular/core';
@@ -7,6 +8,7 @@ import {
   languauges,
   oneSelectData
 } from './dashboardData';
+import { AuthService } from '../services/auth.service';
 import { BaseChartDirective } from 'ng2-charts';
 import DataLabelsPlugin from 'chartjs-plugin-datalabels';
 
@@ -63,5 +65,7 @@ export class DashboardComponent {
     ]
   };
 
-  constructor() {}
+  constructor(private authService: AuthService) {
+    this.authService.pageTitle.next('Dashboard');
+  }
 }

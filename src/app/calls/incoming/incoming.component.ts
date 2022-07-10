@@ -1,13 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 
 @Component({
   selector: 'app-incoming',
   templateUrl: './incoming.component.html',
   styleUrls: ['./incoming.component.scss']
 })
-export class IncomingComponent implements OnInit {
+export class IncomingComponent {
   constructor() {}
-  ngOnInit(): void {
-    throw new Error('Method not implemented.');
-  }
 }
