@@ -23,6 +23,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { BrowserModule } from '@angular/platform-browser';
 import { CallsComponent } from './calls/calls.component';
+import { CallsIndicatorComponent } from './components/calls-indicator/calls-indicator.component';
 import { ChartBarComponent } from './charts/chart-bar/chart-bar.component';
 import { ChartDoughnutComponent } from './charts/chart-doughnut/chart-doughnut.component';
 import { ChartLineComponent } from './charts/chart-line/chart-line.component';
@@ -40,7 +41,6 @@ import { NgxPaginationModule } from 'ngx-pagination';
 import { OngoingComponent } from './calls/ongoing/ongoing.component';
 import { PageWrapperComponent } from './components/page-wrapper/page-wrapper.component';
 import { environment } from 'src/environments/environment';
-import { CallsIndicatorComponent } from './components/calls-indicator/calls-indicator.component';
 
 @NgModule({
   declarations: [
@@ -93,4 +93,4 @@ import { CallsIndicatorComponent } from './components/calls-indicator/calls-indi
   ],
   bootstrap: [AppComponent]
 })
-export class AppModule {}
+export class AppModule { }

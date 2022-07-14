@@ -15,13 +15,8 @@ export class CallsComponent implements OnInit {
   callType = callType;
   languauges = languauges;
   searchInputData = searchInputData;
-  callsIndicatorData = {
-    text: '11 missed requests',
-    icon: '../assets/images/components/calls_count_missed.svg',
-    backgroundColor: '#F9EBEF',
-    borderColor: '1px solid #F4CAD6',
-    textColor: '#ff155a'
-  };
+  showIndicator = false;
+  callsIndicatorData = {};
   constructor(
     private authService: AuthService,
     private router: Router,
@@ -44,11 +39,25 @@ export class CallsComponent implements OnInit {
       )
       .subscribe((ttl: string) => {
         if (ttl === 'missed') {
-          console.log('Zelena');
+          this.showIndicator = true;
+          this.callsIndicatorData = {
+            text: '11 missed requests',
+            icon: '../assets/images/components/calls_count_missed.svg',
+            backgroundColor: '#F4CAD6',
+            borderColor: '1px solid #F4CAD6',
+            textColor: '#FF155A'
+          };
         } else if (ttl === 'answered') {
-          console.log('Crvena');
+          this.showIndicator = true;
+          this.callsIndicatorData = {
+            text: '11 missed requests',
+            icon: '../assets/images/components/calls_count_answered.svg',
+            backgroundColor: '#EBF6DD',
+            borderColor: '1px solid #C1E297',
+            textColor: '#76CB09'
+          };
         } else {
-          console.log('Nema');
+          this.showIndicator = false;
         }
       });
   }

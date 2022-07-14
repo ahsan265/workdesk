@@ -20,13 +20,13 @@
 
 .rightFilter {
   display: flex;
-  // justify-content: space-between;
+  justify-content: flex-end;
   width: 70%;
 }
 
 .multiSelectWrapper {
-  width: 26%;
-  margin-left: auto;
+  width: 200px;
+  margin-right: 10px;
 }
 
 .cardWrapper {

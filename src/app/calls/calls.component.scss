@@ -42,20 +42,28 @@
 }
 
 .leftFilter {
-  width: 30%;
+  display: flex;
+  width: 40%;
 }
 
 .rightFilter {
-  width: 70%;
+  width: 60%;
   display: flex;
   justify-content: flex-end;
 }
 
 .multiSelectWrapper {
-  max-width: 200px;
+  margin-right: 10px;
+  width: 185px;
 }
 
 .callType {
   width: 105px;
   margin-right: 10px;
 }
+// @media only screen and (max-width: 1000px) {
+
+// ::ng-deep .callsIndicatior{
+//   height: 35px;
+// }
+// }

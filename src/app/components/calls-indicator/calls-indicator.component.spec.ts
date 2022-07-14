@@ -8,9 +8,8 @@ describe('CallsIndicatorComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ CallsIndicatorComponent ]
-    })
-    .compileComponents();
+      declarations: [CallsIndicatorComponent]
+    }).compileComponents();
 
     fixture = TestBed.createComponent(CallsIndicatorComponent);
     component = fixture.componentInstance;
