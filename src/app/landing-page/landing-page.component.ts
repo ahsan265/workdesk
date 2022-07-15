@@ -12,7 +12,8 @@ import { Router } from '@angular/router';
 })
 export class LandingPageComponent implements OnInit {
   landingPageData: any = {
-    title: 'Automate your customer service and offer an elevated customer experience with gigaaa AI Customer Support solution',
+    title:
+      'Automate your customer service and offer an elevated customer experience with gigaaa AI Customer Support solution',
     text: 'Make every customer more satisfied by giving them the exact information they need, right when they need it.',
     image: '../../assets/images/landingPage/landing-page.svg',
     logo: '../../assets/images/sidebar/gigaaa_logo_1.svg'
