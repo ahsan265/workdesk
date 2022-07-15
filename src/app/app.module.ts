@@ -5,6 +5,7 @@ import {
   ChartWrapperModule,
   GigaaaHeaderModule,
   GigaaaHeaderService,
+  GigaaaLandingPageModule,
   GigaaaSidebarModule,
   GigaaaTableModule,
   InputFieldModule,
@@ -45,7 +46,6 @@ import { environment } from 'src/environments/environment';
 @NgModule({
   declarations: [
     AppComponent,
-    LandingPageComponent,
     DashboardComponent,
     CallsComponent,
     AgentsComponent,
@@ -61,7 +61,8 @@ import { environment } from 'src/environments/environment';
     FilterPipe,
     PageWrapperComponent,
     AgentSettingsComponent,
-    CallsIndicatorComponent
+    CallsIndicatorComponent,
+    LandingPageComponent
   ],
   imports: [
     BrowserModule,
@@ -80,6 +81,7 @@ import { environment } from 'src/environments/environment';
     OneSelectDropdownModule,
     SearchInputFieldModule,
     SwitchButtonModule,
+    GigaaaLandingPageModule,
     NgxPaginationModule,
     BrowserAnimationsModule,
     FormsModule,
