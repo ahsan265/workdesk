@@ -47,10 +47,14 @@ const languauges: MultiSelect = {
 };
 
 const cardDataTotalVisitors: Card = {
-  icon: '../../../../assets/images/visitors/visitorsTotal.svg',
+  icon: '../../assets/images/dropdown/checkmart_white.svg',
   title: 'Total Visitors',
   color: '#EDEDF6',
-  mainResult: '15'
+  mainResult: '15',
+  secondResultText: ' ide',
+  secondResultNumber: -123,
+  iconUp: '../../assets/images/cards/arrowUp.svg',
+  iconDown: '../../assets/images/cards/arrowDown.svg'
 };
 
 export { oneSelectData, countries, languauges, cardDataTotalVisitors };
