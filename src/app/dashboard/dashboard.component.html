@@ -1,0 +1,85 @@
+<div class="dashboardWrapper">
+  <app-page-wrapper>
+    <div class="filterWrapper">
+      <div class="leftFilter">
+        <app-one-select-dropdown
+          [oneSelectData]="oneSelectData"
+        ></app-one-select-dropdown>
+      </div>
+      <div class="rightFilter">
+        <div class="multiSelectWrapper">
+          <app-multi-select-dropdown [multiSelectData]="countries">
+          </app-multi-select-dropdown>
+        </div>
+        <div class="multiSelectWrapper">
+          <app-multi-select-dropdown [multiSelectData]="languauges">
+          </app-multi-select-dropdown>
+        </div>
+        <div class="multiSelectWrapper">
+          <app-multi-select-dropdown [multiSelectData]="languauges">
+          </app-multi-select-dropdown>
+        </div>
+      </div>
+    </div>
+
+    <div class="cardWrapper">
+      <div class="card">
+        <app-card [cardData]="cardDataTotalVisitors"></app-card>
+      </div>
+      <div class="card">
+        <app-card [cardData]="cardDataTotalVisitors"></app-card>
+      </div>
+      <div class="card">
+        <app-card [cardData]="cardDataTotalVisitors"></app-card>
+      </div>
+    </div>
+
+    <div class="chartWrapper">
+      <div class="titleWrap">
+        <span>Incoming</span>
+      </div>
+      <div class="chart">
+        <canvas
+          baseChart
+          [data]="barChartData"
+          [options]="barChartOptions"
+          [plugins]="barChartPlugins"
+          [type]="barChartType"
+        >
+        </canvas>
+      </div>
+    </div>
+
+    <div class="chartWrapper">
+      <div class="titleWrap">
+        <span>Incoming</span>
+      </div>
+      <div class="chart">
+        <canvas
+          baseChart
+          [data]="barChartData"
+          [options]="barChartOptions"
+          [plugins]="barChartPlugins"
+          [type]="barChartType"
+        >
+        </canvas>
+      </div>
+    </div>
+
+    <div class="chartWrapper">
+      <div class="titleWrap">
+        <span>Incoming</span>
+      </div>
+      <div class="chart">
+        <canvas
+          baseChart
+          [data]="barChartData"
+          [options]="barChartOptions"
+          [plugins]="barChartPlugins"
+          [type]="barChartType"
+        >
+        </canvas>
+      </div>
+    </div>
+  </app-page-wrapper>
+</div>

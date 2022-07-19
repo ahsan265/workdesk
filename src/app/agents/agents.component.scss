@@ -1,0 +1,32 @@
+.filterWrapper {
+  display: flex;
+  padding: 30px 0;
+}
+
+.leftFilter {
+  width: 30%;
+}
+
+.rightFilter {
+  width: 70%;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.multiSelectWrapper {
+  max-width: 200px;
+}
+
+.callType {
+  width: 150px;
+  margin-right: 10px;
+}
+
+::ng-deep .tableWrapper .tableWrap {
+  padding: 0 !important;
+}
+
+::ng-deep .tableWrapper .tableWrap .table thead tr th:first-child,
+::ng-deep .tableWrapper .tableWrap .table tbody tr td:first-child {
+  text-align: left !important;
+}

@@ -1,0 +1,49 @@
+<div class="menuWrapper">
+  <ul class="callsUl">
+    <li class="callsLi" [routerLinkActive]="['callsActive']">
+      <a class="callsA" routerLink="incoming">Incoming</a>
+    </li>
+    <li class="callsLi" [routerLinkActive]="['callsActive']">
+      <a class="callsA" routerLink="ongoing">Ongoing</a>
+    </li>
+    <li class="callsLi" [routerLinkActive]="['callsActive']">
+      <a class="callsA" routerLink="missed">Missed</a>
+    </li>
+    <li class="callsLi" [routerLinkActive]="['callsActive']">
+      <a class="callsA" routerLink="answered">Answered</a>
+    </li>
+  </ul>
+</div>
+<app-page-wrapper>
+  <div class="filterWrapper">
+    <div class="leftFilter">
+      <div class="multiSelectWrapper">
+        <app-multi-select-dropdown [multiSelectData]="languauges">
+        </app-multi-select-dropdown>
+      </div>
+      <div class="multiSelectWrapper">
+        <app-calls-indicator
+          *ngIf="showIndicator"
+          [callsIndicatorData]="callsIndicatorData"
+        >
+        </app-calls-indicator>
+      </div>
+    </div>
+    <div class="rightFilter">
+      <div class="multiSelectWrapper callType">
+        <app-multi-select-dropdown [multiSelectData]="callType">
+        </app-multi-select-dropdown>
+      </div>
+      <div class="multiSelectWrapper">
+        <app-multi-select-dropdown [multiSelectData]="languauges">
+        </app-multi-select-dropdown>
+      </div>
+      <div class="multiSelectWrapper">
+        <app-search-input-field
+          [searchInputData]="searchInputData"
+        ></app-search-input-field>
+      </div>
+    </div>
+  </div>
+  <router-outlet></router-outlet>
+</app-page-wrapper>

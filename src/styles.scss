@@ -1,0 +1,46 @@
+body,
+html {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-size: 100%;
+  font-family: 'Roboto', sans-serif;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p {
+  margin: 0;
+  font-weight: normal;
+}
+
+input {
+  outline: none;
+}
+
+// For Desktops
+@media only screen and (max-width: 1200px) and (min-width: 769px) {
+  body {
+    font-size: 80%;
+  }
+}
+
+// For Ipads,Tablets
+@media only screen and (max-width: 768px) {
+  body {
+    font-size: 80%;
+  }
+}
+
+// For Mobile Phones
+@media only screen and (max-width: 480px) {
+  body {
+    font-size: 60%;
+  }
+}

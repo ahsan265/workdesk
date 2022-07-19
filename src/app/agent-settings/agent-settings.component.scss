@@ -1,0 +1,106 @@
+.agentSettingsWrapper {
+  margin: 30px;
+  background: #ffffff;
+  border: 1px solid rgba(208, 208, 222, 0.6);
+  box-sizing: border-box;
+  border-radius: 7px;
+  padding: 0 30px;
+  height: -moz-fit-content;
+  height: fit-content;
+  margin-bottom: 130px;
+}
+
+.section {
+  padding: 30px 0;
+  display: flex;
+  align-items: center;
+  border-bottom: 1px solid #e3e3eb;
+}
+
+.section:last-child {
+  border-bottom: none;
+}
+
+.profileWrapper {
+  display: block;
+}
+
+.administrativeRightsWrapper {
+  padding-bottom: 0;
+}
+
+.buttonsWrapper {
+  width: 100%;
+  justify-content: space-between;
+}
+
+.image {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  border: 1px solid red;
+  margin-right: 30px;
+}
+
+.fullName {
+  font-style: normal;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 32.5px;
+  display: block;
+  align-items: center;
+  color: #162741;
+}
+
+.email {
+  font-style: normal;
+  font-weight: 500;
+  font-size: 13px;
+  line-height: 23.4px;
+  display: block;
+  align-items: center;
+  color: #6a7585;
+}
+
+.label {
+  font-style: normal;
+  font-weight: normal;
+  font-size: 13px;
+  line-height: 23.4px;
+  display: flex;
+  align-items: center;
+  color: #6a7585;
+  margin-bottom: 20px;
+}
+
+.profileName {
+  font-style: normal;
+  font-weight: 500;
+  font-size: 16px;
+  width: 100%;
+  line-height: 48.83px;
+  display: inline-block;
+  align-items: center;
+  letter-spacing: 0.02em;
+  color: #162741;
+}
+
+.firstLastName {
+  display: flex;
+  align-items: center;
+}
+
+.inputWrapper {
+  margin-right: 37px;
+  width: 100%;
+  max-width: 240px;
+  margin-bottom: 8px;
+}
+
+.switchWrapper {
+  margin-bottom: 0;
+}
+
+.agentName {
+  max-width: 240px;
+}

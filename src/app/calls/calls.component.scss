@@ -1,0 +1,69 @@
+.menuWrapper {
+  display: flex;
+  padding: 0 30px;
+  margin: 0;
+  border-bottom: 1px solid #d0d0de99;
+  background: #fafafd;
+}
+
+.callsUl {
+  display: flex;
+  padding: 0;
+  margin: 0;
+}
+
+.callsLi {
+  list-style: none;
+  margin-right: 22px;
+  padding: 6px 0;
+}
+
+.callsA {
+  text-decoration: none;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 1em;
+  align-items: center;
+  line-height: 160%;
+  letter-spacing: 0.02em;
+  color: rgba(22, 39, 65, 0.37);
+}
+
+.callsActive {
+  border-bottom: 2px solid #1c54db;
+  a {
+    color: #162741;
+  }
+}
+
+.filterWrapper {
+  display: flex;
+  padding: 30px 0;
+}
+
+.leftFilter {
+  display: flex;
+  width: 40%;
+}
+
+.rightFilter {
+  width: 60%;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.multiSelectWrapper {
+  margin-right: 10px;
+  width: 185px;
+}
+
+.callType {
+  width: 105px;
+  margin-right: 10px;
+}
+// @media only screen and (max-width: 1000px) {
+
+// ::ng-deep .callsIndicatior{
+//   height: 35px;
+// }
+// }

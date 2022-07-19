@@ -1,0 +1,83 @@
+::ng-deep .dashboardWrapper .wrapper {
+  height: fit-content;
+  padding-bottom: 100px;
+}
+
+.filterWrapper {
+  display: flex;
+  width: 100%;
+  padding: 30px 0;
+}
+
+::ng-deep .filterWrapper .rightFilter .dropdownWrapper,
+::ng-deep .filterWrapper .leftFilter .dropdownWrapper {
+  max-width: 200px;
+}
+
+.leftFilter {
+  width: 30%;
+}
+
+.rightFilter {
+  display: flex;
+  justify-content: flex-end;
+  width: 70%;
+}
+
+.multiSelectWrapper {
+  width: 200px;
+  margin-right: 10px;
+}
+
+.cardWrapper {
+  display: flex;
+  justify-content: space-between;
+}
+
+.card {
+  width: 33%;
+}
+
+.chartWrapper {
+  background: #ffffff;
+  border: 1px solid rgba(208, 208, 222, 0.6);
+  box-sizing: border-box;
+  border-radius: 4px;
+  margin-bottom: 20px;
+  margin-top: 50px;
+  height: 328px;
+}
+
+.titleWrap {
+  height: 48px;
+  padding-left: 23px;
+  display: flex;
+  align-items: center;
+  border-bottom: 1px solid rgba(208, 208, 222, 0.6);
+}
+
+.chart {
+  padding: 23px;
+  box-sizing: border-box;
+  height: 300px;
+
+  canvas {
+    width: 100% !important;
+  }
+}
+
+@media only screen and (max-width: 1000px) {
+  .cardWrapper {
+    display: block;
+  }
+
+  .card {
+    width: 100%;
+    margin-bottom: 20px;
+  }
+}
+
+.modalContent {
+  display: flex;
+  justify-content: space-around;
+}
