@@ -51,7 +51,7 @@ const cardDataTotalVisitors: Card = {
   title: 'Total Visitors',
   color: '#EDEDF6',
   mainResult: '15',
-  secondResultText: ' ide',
+  secondResultText: '%',
   secondResultNumber:-123,
   iconUp: '../../assets/images/cards/arrowUp.svg',
   iconDown: '../../assets/images/cards/arrowDown.svg'
