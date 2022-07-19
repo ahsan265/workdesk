@@ -4,5 +4,7 @@ export interface Card {
   color: string;
   mainResult: string;
   secondResultText?: string;
-  secondResultNumber?: string;
+  secondResultNumber: number;
+  iconUp?: string;
+  iconDown?: string;
 }

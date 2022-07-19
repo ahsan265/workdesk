@@ -1,7 +1,7 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable no-undef */
 import { ChartConfiguration, ChartData, ChartType } from 'chart.js';
-import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import {
   cardDataTotalVisitors,
   countries,
@@ -11,16 +11,13 @@ import {
 import { AuthService } from '../services/auth.service';
 import { BaseChartDirective } from 'ng2-charts';
 import DataLabelsPlugin from 'chartjs-plugin-datalabels';
-import { commonEps } from '../commonEps/commonEps';
-import { SharedServices } from '../services/shared.services';
-import { DashboardEps } from './dashboardEp';
 
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.scss']
 })
-export class DashboardComponent implements OnInit {
+export class DashboardComponent {
   oneSelectData = oneSelectData;
   countries = countries;
   languauges = languauges;
@@ -68,49 +65,7 @@ export class DashboardComponent implements OnInit {
     ]
   };
 
-  constructor(private authService: AuthService,
-    private commonEps:commonEps,
-    private sharedRes:SharedServices,
-    private dashboardEps:DashboardEps) {
+  constructor(private authService: AuthService) {
     this.authService.pageTitle.next('Dashboard');
-  
-    
-    
-  }
-  ngOnInit(): void {
-    this.commonEpsonLoad();
-    this.LoadCommonEPsonFirstLoad();
-
-  }
-
-  // call on route change 
-  commonEpsonLoad()
-  {
-    this.commonEps.getLocations().then(data=>{
-      this.countries=data;
-     })
-     this.commonEps.getLanguages().then(data=>{
-       this.languauges=data;
-     })
-     this.dashboardEps.GetCardCountUsers();
-  }
-  // load commonEps on first Load
- private  LoadCommonEPsonFirstLoad()
-  {
-    this.sharedRes.LoadcommonEpsubject.subscribe(trigerrVal=>{
-      if(trigerrVal==1)
-      { if( this.commonEps.getEpsParamLocal().project!=undefined) 
-        {
-        this.commonEps.getLocations().then(data=>{
-          this.countries=data;
-         })
-         this.commonEps.getLanguages().then(data=>{
-           this.languauges=data;
-         })
-         this.dashboardEps.GetCardCountUsers();
-      }
-    }
-    })
-  
   }
 }

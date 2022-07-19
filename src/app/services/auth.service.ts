@@ -2,7 +2,6 @@ import { BehaviorSubject, ReplaySubject } from 'rxjs';
 import { CanActivate } from '@angular/router';
 import { Injectable } from '@angular/core';
 import { User } from '../models/user';
-import { getOrganizationService } from './getOrganizationService';
 
 @Injectable({
   providedIn: 'root'
@@ -13,13 +12,11 @@ export class AuthService implements CanActivate {
   pageTitle = new ReplaySubject(1);
 
   constructor() {
-
     this.user = new BehaviorSubject(this.getLoggedUser());
-
   }
 
   public isLoggedIn(): boolean {
-    return !!localStorage.getItem('gigaaa-user')
+    return !!localStorage.getItem('gigaaa-user');
   }
 
   public getLoggedUser(): User {

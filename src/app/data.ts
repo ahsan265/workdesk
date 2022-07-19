@@ -26,7 +26,7 @@ const icons = {
 const sidebarData: any = [
   {
     iconUrl: icons.integrationIcon,
-    name: 'Select project',
+    name: 'Select integration',
     dropdownItems: [],
     dropdown: true,
     isLink: false
@@ -56,7 +56,5 @@ const sidebarData: any = [
     isLink: true
   }
 ];
-
-
 
 export { websites, icons, sidebarData };

@@ -42,8 +42,6 @@ import { NgxPaginationModule } from 'ngx-pagination';
 import { OngoingComponent } from './calls/ongoing/ongoing.component';
 import { PageWrapperComponent } from './components/page-wrapper/page-wrapper.component';
 import { environment } from 'src/environments/environment';
-import { GigaaaApiService } from './services/gigaaaApiService';
-import { AuthService } from './services/auth.service';
 
 @NgModule({
   declarations: [
@@ -93,8 +91,7 @@ import { AuthService } from './services/auth.service';
     {
       provide: 'GigaaaHeaderService',
       useClass: GigaaaHeaderService
-    },
-
+    }
   ],
   bootstrap: [AppComponent]
 })
