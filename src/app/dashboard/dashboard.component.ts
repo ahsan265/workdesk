@@ -11,6 +11,8 @@ import {
 import { AuthService } from '../services/auth.service';
 import { BaseChartDirective } from 'ng2-charts';
 import DataLabelsPlugin from 'chartjs-plugin-datalabels';
+import { commonEps } from '../commonEps/commonEps';
+import { SharedServices } from '../services/shared.services';
 
 @Component({
   selector: 'app-dashboard',
@@ -65,7 +67,34 @@ export class DashboardComponent {
     ]
   };
 
-  constructor(private authService: AuthService) {
+  constructor(private authService: AuthService,
+    private commonEps:commonEps,private sharedRes:SharedServices) {
     this.authService.pageTitle.next('Dashboard');
+    this.callRouteLoad();
+    this.getFirstLoad();
+  }
+
+  callRouteLoad()
+  {
+    this.commonEps.getLocations().then(data=>{
+      this.countries=data;
+    })
+    this.commonEps.getLanguages().then(data=>{
+      this.languauges=data;
+    })
+  }
+  getFirstLoad()
+  {
+    this.sharedRes.LoadcommonEpsubject.subscribe(data=>{
+      if(data==1)
+      {
+        this.commonEps.getLocations().then(data=>{
+          this.countries=data;
+        })
+        this.commonEps.getLanguages().then(data=>{
+          this.languauges=data;
+        })
+      }
+    })
   }
 }
