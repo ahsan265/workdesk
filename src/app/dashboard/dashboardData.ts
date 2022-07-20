@@ -48,11 +48,11 @@ const languauges: MultiSelect = {
 
 const cardDataTotalVisitors: Card = {
   icon: '../../assets/images/dropdown/checkmart_white.svg',
-  title: 'Total Visitors',
-  color: '#EDEDF6',
-  mainResult: '15',
-  secondResultText: '%',
-  secondResultNumber:-123,
+  title: '',
+  color: '#FFFFFF',
+  mainResult: '0',
+  secondResultText: '',
+  secondResultNumber: 0,
   iconUp: '../../assets/images/cards/arrowUp.svg',
   iconDown: '../../assets/images/cards/arrowDown.svg'
 };

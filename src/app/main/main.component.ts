@@ -8,7 +8,7 @@ import { AuthService } from '../services/auth.service';
 import { GigaaaHeaderService } from '@gigaaa/gigaaa-components';
 import { ReplaySubject } from 'rxjs';
 import { environment } from 'src/environments/environment';
-import { getOrganizationService } from '../services/getOrganizationService';
+import { getOrganizationService } from '../workdeskServices/organizationService/organization-service.service';
 
 @Component({
   selector: 'app-main',

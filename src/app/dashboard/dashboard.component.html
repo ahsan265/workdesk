@@ -8,11 +8,11 @@
       </div>
       <div class="rightFilter">
         <div class="multiSelectWrapper">
-          <app-multi-select-dropdown [multiSelectData]="countries">
+          <app-multi-select-dropdown [multiSelectData]="countries" (multiSelectOutput)="locationOutput($event)">
           </app-multi-select-dropdown>
         </div>
         <div class="multiSelectWrapper">
-          <app-multi-select-dropdown [multiSelectData]="languauges">
+          <app-multi-select-dropdown [multiSelectData]="languauges"  (multiSelectOutput)="languaugesOutput($event)">
           </app-multi-select-dropdown>
         </div>
         <div class="multiSelectWrapper">

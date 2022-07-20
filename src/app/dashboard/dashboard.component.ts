@@ -11,9 +11,12 @@ import {
 import { AuthService } from '../services/auth.service';
 import { BaseChartDirective } from 'ng2-charts';
 import DataLabelsPlugin from 'chartjs-plugin-datalabels';
-import { commonEps } from '../commonEps/commonEps';
-import { SharedServices } from '../services/shared.services';
-import { DashboardEps } from './dashboardEp';
+import { CommonEndpoints } from '../commonEndpoints/commonEndpoint';
+import { DashboardEps } from './dashboardService/dashboardEndpoint';
+import { MultiSelect } from '../models/multiSelect';
+import { SelectionModel, SelectionModelCountry } from '../models/selectionModel';
+import { SharedServices } from '../workdeskServices/sharedResourcesService/shared-resource-service.service';
+import { Card } from '../models/card';
 
 @Component({
   selector: 'app-dashboard',
@@ -27,6 +30,9 @@ export class DashboardComponent {
   incomingCardData = cardDataTotalVisitors;
   missedCardData = cardDataTotalVisitors;
   answeredCardData = cardDataTotalVisitors;
+
+  idOfLanguage: Array<any> = [];
+  idOfLocation: Array<any> = [];
 
   @ViewChild(BaseChartDirective) chart: BaseChartDirective | undefined;
 
@@ -71,49 +77,59 @@ export class DashboardComponent {
   };
 
   constructor(private authService: AuthService,
-    private commonEps:commonEps,private sharedRes:SharedServices,
-    private dashboardEps:DashboardEps) {
+    private commonEps: CommonEndpoints, private sharedRes: SharedServices,
+    private dashboardEps: DashboardEps) {
     this.authService.pageTitle.next('Dashboard');
     this.callRouteLoad();
     this.getFirstLoad();
-    this.dashboardEps.cardDataSubject.subscribe((data:any)=>{
-      this.incomingCardData=data?.incoming;
-      this.missedCardData=data?.missed;
-      this.answeredCardData=data?.answered;
-    })
-    
-    this.dashboardEps.chartDataSubject.subscribe((data:any)=>{
-      console.log(data)
-      this.barChartData=data?.incoming;
-    })
+    this.getCardsAndChartsData();
   }
 
-  callRouteLoad()
-  {
-    this.commonEps.getLocations().then(data=>{
-      this.countries=data;
+  getCardsAndChartsData() {
+    this.dashboardEps.cardDataSubject.subscribe((data: any) => {
+      this.incomingCardData = data?.incoming;
+      this.missedCardData = data?.missed;
+      this.answeredCardData = data?.answered;
     })
-    this.commonEps.getLanguages().then(data=>{
-      this.languauges=data;
+    this.dashboardEps.chartDataSubject.subscribe((data: any) => {
+      this.barChartData = data?.incoming;
     })
-    this.dashboardEps.getCarddata();
+  }
+  private async callRouteLoad(): Promise<void> {
+    if (this.commonEps.getEpsParamLocal().project != undefined) {
+      this.countries = await this.commonEps.getLocations();
+      this.languauges = await this.commonEps.getLanguages();
+      this.idOfLocation = this.commonEps.getIdsOfLocation();
+      this.idOfLanguage = this.commonEps.getIdsOfLanguage();
+      this.dashboardEps.getCarddata(this.commonEps.getIdsOfLanguage(), this.commonEps.getIdsOfLocation());
+      this.dashboardEps.getChartData(this.commonEps.getIdsOfLanguage(), this.commonEps.getIdsOfLocation());
+    }
+
 
   }
-  getFirstLoad()
-  {
-    this.sharedRes.LoadcommonEpsubject.subscribe(data=>{
-      if(data==1)
-      {
-        this.commonEps.getLocations().then(data=>{
-          this.countries=data;
-        })
-        this.commonEps.getLanguages().then(data=>{
-          this.languauges=data;
-          this.dashboardEps.getCarddata();
-          this.dashboardEps.getChartData();
-        })
-     
+  private getFirstLoad(): void {
+    this.sharedRes.LoadcommonEpsubject.subscribe(async data => {
+      if (data == 1) {
+        this.countries = await this.commonEps.getLocations();
+        this.languauges = await this.commonEps.getLanguages();
+        this.idOfLocation = this.commonEps.getIdsOfLocation();
+        this.idOfLanguage = this.commonEps.getIdsOfLanguage();
+        this.dashboardEps.getCarddata(this.idOfLanguage, this.idOfLocation);
+        this.dashboardEps.getChartData(this.idOfLanguage, this.idOfLocation);
       }
     })
+  }
+  public locationOutput(event: SelectionModelCountry) {
+    let selectedLcoationId = this.commonEps.getLocationSelected(event);
+    this.idOfLocation = selectedLcoationId;
+    this.dashboardEps.getCarddata(this.idOfLanguage, this.idOfLocation);
+    this.dashboardEps.getChartData(this.idOfLanguage, this.idOfLocation);
+
+  }
+  public languaugesOutput(event: SelectionModel) {
+    let selectLanguageId = this.commonEps.getLanguageSelected(event);
+    this.idOfLanguage = selectLanguageId;
+    this.dashboardEps.getCarddata(this.idOfLanguage, this.idOfLocation);
+    this.dashboardEps.getChartData(this.idOfLanguage, this.idOfLocation);
   }
 }
