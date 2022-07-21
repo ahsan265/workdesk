@@ -21,7 +21,7 @@ export class getOrganizationService {
   }
   // get organization for workdesk
   public getOrganization(token: string) {
-    this.gigaaaService.getorganization(token).then((data: any) => {
+    this.gigaaaService.getOrganization(token).then((data: any) => {
       const organz: Organization[] = data;
       organz.forEach(data => {
         if (data.last_used == true) {
@@ -58,19 +58,19 @@ export class getOrganizationService {
   }
 
   // get projects list 
-  public getProjectList(value: Project[]) {
+  public getProjectList(project: Project[]) {
     let lastUsedProject: any;
-    value.forEach((data: any) => {
+    project.forEach((data: any) => {
       if (data.last_used == true) {
         lastUsedProject = data.name;
         this.sidebarData.forEach((element: any) => {
           if (element.dropdown == true) {
-            element.dropdownItems = value;
+            element.dropdownItems = project;
             element.name = lastUsedProject;
           }
         });
       }
     })
-    return this.sidebarData
+    return this.sidebarData;
   }
 }

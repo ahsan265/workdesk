@@ -14,7 +14,7 @@ export class CommonEndpoints {
   languageArray: Array<any> = [];
   idsOfLanguages: Array<any> = [];
   idsOfLocations: Array<any> = [];
-  nullArray: MultiSelect = {
+  nullMultiSelect: MultiSelect = {
     title: "Language",
     showSelectAll: true,
     showSearchBar: true,
@@ -44,7 +44,7 @@ export class CommonEndpoints {
       return countryListArray;
     }
     else {
-      return this.nullArray;
+      return this.nullMultiSelect;
     }
   }
   // get list of languages()
@@ -63,7 +63,7 @@ export class CommonEndpoints {
       return languageListArray;
     }
     else {
-      return this.nullArray;
+      return this.nullMultiSelect;
     }
 
   }
@@ -72,12 +72,12 @@ export class CommonEndpoints {
   // get data token, organization , project from local storage 
   public getEpsParamLocal() {
     const newLocal = JSON.parse(localStorage.getItem('gigaaa-user') || '{}');
-    const organz = JSON.parse(localStorage.getItem('gigaaa-organz') || '{}');
+    const organization = JSON.parse(localStorage.getItem('gigaaa-organz') || '{}');
     const project = JSON.parse(localStorage.getItem('gigaaa-project') || '{}');
 
     return {
       token: newLocal.api_token,
-      organization: organz.uuid,
+      organization: organization.uuid,
       project: project.uuid
     }
   }

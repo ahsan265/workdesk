@@ -89,7 +89,7 @@ export class GigaaaApiService {
 
 
 
-  public async getorganization(accesstoken: string) {
+  public async getOrganization(accesstoken: string) {
     const httpOptions: any = {
 
       headers: new HttpHeaders({
