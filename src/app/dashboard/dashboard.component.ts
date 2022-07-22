@@ -12,11 +12,8 @@ import { AuthService } from '../services/auth.service';
 import { BaseChartDirective } from 'ng2-charts';
 import DataLabelsPlugin from 'chartjs-plugin-datalabels';
 import { CommonEndpoints } from '../commonEndpoints/commonEndpoint';
-import { DashboardEps } from './dashboardService/dashboardEndpoint';
-import { MultiSelect } from '../models/multiSelect';
-import { SelectionModel, SelectionModelCountry } from '../models/selectionModel';
 import { SharedServices } from '../workdeskServices/sharedResourcesService/shared-resource-service.service';
-import { Card } from '../models/card';
+import { DashboardEndpointService } from './dashboardService/dashboard-endpoint.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -78,7 +75,7 @@ export class DashboardComponent {
 
   constructor(private authService: AuthService,
     private commonEps: CommonEndpoints, private sharedRes: SharedServices,
-    private dashboardEps: DashboardEps) {
+    private dashboardEps: DashboardEndpointService) {
     this.authService.pageTitle.next('Dashboard');
     this.callRouteLoad();
     this.getFirstLoad();
@@ -119,16 +116,17 @@ export class DashboardComponent {
       }
     })
   }
-  public locationOutput(event: SelectionModelCountry) {
-    let selectedLcoationId = this.commonEps.getLocationSelected(event);
-    this.idOfLocation = selectedLcoationId;
+  public locationOutput(locationOutput: number[]) {
+    //let selectedLcoationId = this.commonEps.getLocationSelected(locationOutput);
+    this.idOfLocation = locationOutput;
     this.dashboardEps.getCarddata(this.idOfLanguage, this.idOfLocation);
     this.dashboardEps.getChartData(this.idOfLanguage, this.idOfLocation);
 
   }
-  public languaugesOutput(event: SelectionModel) {
-    let selectLanguageId = this.commonEps.getLanguageSelected(event);
-    this.idOfLanguage = selectLanguageId;
+  public languaugesOutput(languaugesOutput: number[]) {
+    console.log(languaugesOutput)
+    //  let selectLanguageId = this.commonEps.getLanguageSelected(languaugesOutput);
+    this.idOfLanguage = languaugesOutput;
     this.dashboardEps.getCarddata(this.idOfLanguage, this.idOfLocation);
     this.dashboardEps.getChartData(this.idOfLanguage, this.idOfLocation);
   }

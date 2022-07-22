@@ -1,13 +1,13 @@
 import { TestBed } from '@angular/core/testing';
 
-import { GigaaaApiServiceService } from './gigaaa-api-service.service';
+import { GigaaaApiService } from './gigaaa-api-service.service';
 
 describe('GigaaaApiServiceService', () => {
-  let service: GigaaaApiServiceService;
+  let service: GigaaaApiService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({});
-    service = TestBed.inject(GigaaaApiServiceService);
+    service = TestBed.inject(GigaaaApiService);
   });
 
   it('should be created', () => {

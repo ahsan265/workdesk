@@ -1,13 +1,13 @@
 import { TestBed } from '@angular/core/testing';
 
-import { SharedServices } from './shared-resource-service.service';
+import { AgentService } from './agent.service';
 
-describe('SharedResourceServiceService', () => {
-  let service: SharedServices;
+describe('AgentService', () => {
+  let service: AgentService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({});
-    service = TestBed.inject(SharedServices);
+    service = TestBed.inject(AgentService);
   });
 
   it('should be created', () => {

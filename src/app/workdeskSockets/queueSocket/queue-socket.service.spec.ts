@@ -1,13 +1,13 @@
 import { TestBed } from '@angular/core/testing';
 
-import { SharedServices } from './shared-resource-service.service';
+import { QueueSocketService } from './queue-socket.service';
 
-describe('SharedResourceServiceService', () => {
-  let service: SharedServices;
+describe('QueueSocketService', () => {
+  let service: QueueSocketService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({});
-    service = TestBed.inject(SharedServices);
+    service = TestBed.inject(QueueSocketService);
   });
 
   it('should be created', () => {

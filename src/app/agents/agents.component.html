@@ -2,13 +2,13 @@
   <div class="filterWrapper">
     <div class="leftFilter">
       <div class="multiSelectWrapper">
-        <app-one-select-dropdown [oneSelectData]="oneSelectData">
+        <app-one-select-dropdown [oneSelectData]="oneSelectData" (oneSelectOutput)="agentTypeOutput($event)">
         </app-one-select-dropdown>
       </div>
     </div>
     <div class="rightFilter">
       <div class="multiSelectWrapper callType">
-        <app-multi-select-dropdown [multiSelectData]="languauges">
+        <app-multi-select-dropdown [multiSelectData]="languauges" (multiSelectOutput)="langugaOutput($event)">
         </app-multi-select-dropdown>
       </div>
       <div class="multiSelectWrapper callType">
@@ -24,7 +24,6 @@
   <div class="tableWrapper">
     <app-gigaaa-table
       [settings]="dataTableSettings"
-      [records]="agents"
-    ></app-gigaaa-table>
+      [records]="agents"></app-gigaaa-table>
   </div>
 </app-page-wrapper>

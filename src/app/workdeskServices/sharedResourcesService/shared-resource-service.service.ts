@@ -5,7 +5,7 @@ import { Subject } from 'rxjs';
   providedIn: 'root'
 })
 export class SharedServices {
-  LoadcommonEpsubject = new Subject();
+ public LoadcommonEpsubject = new Subject();
 
   constructor() {
 

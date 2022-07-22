@@ -10,7 +10,7 @@ export class ChartsData {
   calculateChartData(ChartData: Array<any>) {
     let data: any = []
     ChartData.forEach(element => {
-      (element.count == null) ? data.push(0) : data.push(element.count);
+      (element.count === null) ? data.push(0) : data.push(element.count);
     });
     return data;
   }

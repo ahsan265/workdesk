@@ -9,6 +9,7 @@ import { GigaaaHeaderService } from '@gigaaa/gigaaa-components';
 import { ReplaySubject } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { getOrganizationService } from '../workdeskServices/organizationService/organization-service.service';
+import { AgentSocketService } from '../workdeskSockets/agentSocket/agent-socket.service';
 
 @Component({
   selector: 'app-main',
@@ -30,16 +31,19 @@ export class MainComponent implements OnInit {
 
   constructor(
     public authService: AuthService,
-    private router: Router,
-    private activatedRoute: ActivatedRoute,
-    private getOrganService:getOrganizationService,
+    private AgentSocketService: AgentSocketService,
+    private getOrganizationService: getOrganizationService,
     @Inject('GigaaaHeaderService') private headerService: GigaaaHeaderService
-  ) {}
+  ) { }
 
   ngOnInit() {
     this.authService.pageTitle.subscribe((res: any) => {
       this.pageTitle = res;
     });
+    this.AgentSocketService.AgentLiveStatus.subscribe((data: boolean) => {
+      this.statusOnline = data;
+    })
+
   }
 
   onNoLoggedUsers(event: any) {
@@ -47,10 +51,7 @@ export class MainComponent implements OnInit {
   }
 
   onGetLoggedUser(event: any) {
-    // User restriction
-    this.getOrganService.getOrganization(event?.api_token);
-
-
+    this.getOrganizationService.getOrganization(event?.api_token);
   }
 
   isSlideOpened(slideOpened: boolean) {
@@ -62,7 +63,9 @@ export class MainComponent implements OnInit {
     // For sidebar dropdown
   }
 
-  setOnlineStatus(event: boolean): void {}
+  setOnlineStatus(event: boolean): void {
+    this.AgentSocketService.setAgentOnlineStatus(event)
+  }
 
   addNewRouteName(event: string): string {
     return (this.pageTitle = event);

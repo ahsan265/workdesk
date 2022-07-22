@@ -25,6 +25,37 @@ const oneSelect: OneSelect[] = [
   { id: 4, name: 'Invited', selected: false }
 ];
 
+const selectedAgentType: any[] = [
+  {
+    name: 'Show all', options: {
+      active: 1,
+      inactive: 1,
+      invited: 1
+    }
+  },
+  {
+    name: 'Active', options: {
+      active: 1,
+      inactive: 0,
+      invited: 0
+    }
+  },
+  {
+    name: 'Inactive', options: {
+      active: 0,
+      inactive: 1,
+      invited: 0
+    }
+  },
+  {
+    name: 'Invited', options: {
+      active: 0,
+      inactive: 0,
+      invited: 1
+    }
+  }
+]
+
 const searchInputData: SearchInput = {
   placeholder: 'search items',
   searchText: ''
@@ -127,5 +158,6 @@ export {
   searchInputData,
   oneSelect,
   dataTableSettings,
-  agents
+  agents,
+  selectedAgentType
 };

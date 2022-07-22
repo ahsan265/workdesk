@@ -577,7 +577,7 @@ export class GigaaaApiService {
       `${this.workdeskurl_cs}` + "/private-project/organizations/last-used", httpOptions
     );
   }
-  public async getConnectionId(organization_uuid: any, integration_uuid: any, token: any): Promise<any> {
+  public async getConnectionId(token: string, organizationId: string, projectId: string): Promise<any> {
     const httpOptions: any = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
@@ -585,7 +585,7 @@ export class GigaaaApiService {
         'Authorization': `Bearer ${token}`
       }),
     };
-    return await this.http.get(`${this.gigaabackendUlr}/websockets/cs/private/organization/${organization_uuid}/project/${integration_uuid}/connection`, httpOptions).toPromise()
+    return await this.http.get(`${this.gigaabackendUlr}/websockets/cs/private/organization/${organizationId}/project/${projectId}/connection`, httpOptions).toPromise()
       .catch((err) => {
         throw (err);
       });
