@@ -34,8 +34,8 @@
         <app-multi-select-dropdown [multiSelectData]="callType">
         </app-multi-select-dropdown>
       </div>
-      <div class="multiSelectWrapper">
-        <app-multi-select-dropdown [multiSelectData]="languauges">
+      <div class="multiSelectWrapper" *ngIf="showCalender">
+        <app-multi-select-dropdown [multiSelectData]="languauges"  >
         </app-multi-select-dropdown>
       </div>
       <div class="multiSelectWrapper">

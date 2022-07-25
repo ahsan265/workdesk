@@ -1,7 +1,6 @@
 /* eslint-disable no-undef */
 /* eslint-disable @angular-eslint/no-empty-lifecycle-method */
 /* eslint-disable no-unused-vars */
-import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { Component, Inject, OnInit } from '@angular/core';
 import { icons, sidebarData, websites } from '../data';
 import { AuthService } from '../services/auth.service';
@@ -34,7 +33,7 @@ export class MainComponent implements OnInit {
     private AgentSocketService: AgentSocketService,
     private getOrganizationService: getOrganizationService,
     @Inject('GigaaaHeaderService') private headerService: GigaaaHeaderService
-  ) { }
+  ) {}
 
   ngOnInit() {
     this.authService.pageTitle.subscribe((res: any) => {
@@ -42,8 +41,7 @@ export class MainComponent implements OnInit {
     });
     this.AgentSocketService.AgentLiveStatus.subscribe((data: boolean) => {
       this.statusOnline = data;
-    })
-
+    });
   }
 
   onNoLoggedUsers(event: any) {
@@ -64,7 +62,7 @@ export class MainComponent implements OnInit {
   }
 
   setOnlineStatus(event: boolean): void {
-    this.AgentSocketService.setAgentOnlineStatus(event)
+    this.AgentSocketService.setAgentOnlineStatus(event);
   }
 
   addNewRouteName(event: string): string {

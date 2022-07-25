@@ -73,9 +73,12 @@ export class DashboardComponent {
     ]
   };
 
-  constructor(private authService: AuthService,
-    private commonEps: CommonEndpoints, private sharedRes: SharedServices,
-    private dashboardEps: DashboardEndpointService) {
+  constructor(
+    private authService: AuthService,
+    private commonEps: CommonEndpoints,
+    private sharedRes: SharedServices,
+    private dashboardEps: DashboardEndpointService
+  ) {
     this.authService.pageTitle.next('Dashboard');
     this.callRouteLoad();
     this.getFirstLoad();
@@ -87,10 +90,10 @@ export class DashboardComponent {
       this.incomingCardData = data?.incoming;
       this.missedCardData = data?.missed;
       this.answeredCardData = data?.answered;
-    })
+    });
     this.dashboardEps.chartDataSubject.subscribe((data: any) => {
       this.barChartData = data?.incoming;
-    })
+    });
   }
   private async callRouteLoad(): Promise<void> {
     if (this.commonEps.getEpsParamLocal().project != undefined) {
@@ -98,14 +101,18 @@ export class DashboardComponent {
       this.languauges = await this.commonEps.getLanguages();
       this.idOfLocation = this.commonEps.getIdsOfLocation();
       this.idOfLanguage = this.commonEps.getIdsOfLanguage();
-      this.dashboardEps.getCarddata(this.commonEps.getIdsOfLanguage(), this.commonEps.getIdsOfLocation());
-      this.dashboardEps.getChartData(this.commonEps.getIdsOfLanguage(), this.commonEps.getIdsOfLocation());
+      this.dashboardEps.getCarddata(
+        this.commonEps.getIdsOfLanguage(),
+        this.commonEps.getIdsOfLocation()
+      );
+      this.dashboardEps.getChartData(
+        this.commonEps.getIdsOfLanguage(),
+        this.commonEps.getIdsOfLocation()
+      );
     }
-
-
   }
   private getFirstLoad(): void {
-    this.sharedRes.LoadcommonEpsubject.subscribe(async data => {
+    this.sharedRes.LoadcommonEpsubject.subscribe(async (data) => {
       if (data == 1) {
         this.countries = await this.commonEps.getLocations();
         this.languauges = await this.commonEps.getLanguages();
@@ -114,17 +121,16 @@ export class DashboardComponent {
         this.dashboardEps.getCarddata(this.idOfLanguage, this.idOfLocation);
         this.dashboardEps.getChartData(this.idOfLanguage, this.idOfLocation);
       }
-    })
+    });
   }
   public locationOutput(locationOutput: number[]) {
     //let selectedLcoationId = this.commonEps.getLocationSelected(locationOutput);
     this.idOfLocation = locationOutput;
     this.dashboardEps.getCarddata(this.idOfLanguage, this.idOfLocation);
     this.dashboardEps.getChartData(this.idOfLanguage, this.idOfLocation);
-
   }
   public languaugesOutput(languaugesOutput: number[]) {
-    console.log(languaugesOutput)
+    console.log(languaugesOutput);
     //  let selectLanguageId = this.commonEps.getLanguageSelected(languaugesOutput);
     this.idOfLanguage = languaugesOutput;
     this.dashboardEps.getCarddata(this.idOfLanguage, this.idOfLocation);

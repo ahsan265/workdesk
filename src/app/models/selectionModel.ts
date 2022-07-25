@@ -1,5 +1,5 @@
-import { OneSelect } from "./oneSelect";
-import { SelectModelCountrySingle } from "./selectionModelCountry";
+import { OneSelect } from './oneSelect';
+import { SelectModelCountrySingle } from './selectionModelCountry';
 
 export interface SelectionModel {
   selectedAll: boolean;

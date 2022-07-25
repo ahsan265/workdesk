@@ -7,23 +7,27 @@ import { selectedAgentType } from '../agentsData';
   providedIn: 'root'
 })
 export class AgentService {
-
   constructor(private AgentSocketService: AgentSocketService) { }
   // send agent params from agent component using service
 
-  public sendAgentDefaultParameter(languages: number[], active: number, inactive: number, invited: number) {
+  public sendAgentDefaultParameter(
+    languages: number[],
+    active: number,
+    inactive: number,
+    invited: number
+  ) {
     this.AgentSocketService.sendAgentsParameter({
       active: active,
       inactive: inactive,
       invited: invited,
       languages: languages
-    })
+    });
   }
-  // caculate the agent type 
+  // caculate the agent type
   public getAgenttypeParameter(agentTypeSelected: OneSelect) {
-    const selectedType: any = selectedAgentType.find((typeSelected: any) => typeSelected.name === agentTypeSelected.name);
+    const selectedType: any = selectedAgentType.find(
+      (typeSelected: any) => typeSelected.name === agentTypeSelected.name
+    );
     return selectedType.options;
   }
-
-
 }

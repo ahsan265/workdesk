@@ -5,14 +5,12 @@ import { Subject } from 'rxjs';
   providedIn: 'root'
 })
 export class SharedServices {
- public LoadcommonEpsubject = new Subject();
+  public LoadcommonEpsubject = new Subject();
 
-  constructor() {
+  constructor() {}
 
-  }
-
-  // load common eps 
+  // load common eps
   loadCommonEps(val: number) {
-    this.LoadcommonEpsubject.next(val)
+    this.LoadcommonEpsubject.next(val);
   }
 }

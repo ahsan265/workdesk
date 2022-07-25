@@ -8,7 +8,6 @@ import { User } from 'src/app/models/user';
 @Injectable({
   providedIn: 'root'
 })
-
 export class GigaaaApiService {
   getagentdata$: Observable<any>;
   private agentdatasubject = new Subject<any>();
@@ -22,392 +21,648 @@ export class GigaaaApiService {
   private httpOptions: any = {
     headers: new HttpHeaders({
       'Content-Type': 'application/json',
-      'Accept': 'application/json'
+      Accept: 'application/json'
     })
   };
   constructor(private http: HttpClient, private authService: AuthService) {
     this.getagentdata$ = this.agentdatasubject.asObservable().pipe();
   }
 
-
   getCurrentUser(token: any): Observable<User> {
     return this.http.get<User>(`${environment.currentUser}`, {
       headers: {
         'Content-Type': 'application/json',
-        'Accept': 'application/json',
-        'Authorization': `Bearer ${token}`
+        Accept: 'application/json',
+        Authorization: `Bearer ${token}`
       }
-    })
+    });
   }
 
-
-  public async updatePassword(access_token: string, passwordPayload: any, USER_ID: any): Promise<any> {
+  public async updatePassword(
+    access_token: string,
+    passwordPayload: any,
+    USER_ID: any
+  ): Promise<any> {
     const httpOptions: any = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
-        'Accept': 'application/json',
-        'Authorization': `Bearer ${access_token}`
+        Accept: 'application/json',
+        Authorization: `Bearer ${access_token}`
       })
     };
-    return await this.http.put(this.userapiUrl + `/users/${USER_ID}`, passwordPayload, httpOptions).toPromise();
+    return await this.http
+      .put(this.userapiUrl + `/users/${USER_ID}`, passwordPayload, httpOptions)
+      .toPromise();
   }
 
   public getAllCountries(accesstoken: string): Promise<any> {
     const httpOptions: any = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
-        'Accept': 'application/json',
-        'Authorization': `Bearer ${accesstoken}`
+        Accept: 'application/json',
+        Authorization: `Bearer ${accesstoken}`
       })
     };
-    return this.http.get(this.gigaabackendUlr + '/statics/public/countries', httpOptions).toPromise();
+    return this.http
+      .get(this.gigaabackendUlr + '/statics/public/countries', httpOptions)
+      .toPromise();
   }
 
-  public getAllLanguages(accesstoken: any, orgid: any, intid: any): Promise<any> {
+  public getAllLanguages(
+    accesstoken: any,
+    orgid: any,
+    intid: any
+  ): Promise<any> {
     const httpOptions: any = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
-        'Accept': 'application/json',
-        'Authorization': `Bearer ${accesstoken}`
+        Accept: 'application/json',
+        Authorization: `Bearer ${accesstoken}`
       })
     };
-    return this.http.get(this.workdeskurl_cs + "/private-project/languages?organization=" + orgid + "&project=" + intid, httpOptions).toPromise();
+    return this.http
+      .get(
+        this.workdeskurl_cs +
+          '/private-project/languages?organization=' +
+          orgid +
+          '&project=' +
+          intid,
+        httpOptions
+      )
+      .toPromise();
   }
 
   public forgotPassword(email: string) {
     const httpOptions: any = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
-        'Accept': 'application/json',
+        Accept: 'application/json',
         'Cache-Control': 'no-cache'
       })
     };
     let body = { email };
 
-    return this.http.post(`https://gigaaa-core.westeurope.cloudapp.azure.com/password/email`, body, httpOptions);
+    return this.http.post(
+      `https://gigaaa-core.westeurope.cloudapp.azure.com/password/email`,
+      body,
+      httpOptions
+    );
   }
-
-
 
   public async getOrganization(accesstoken: string) {
     const httpOptions: any = {
-
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
-        'Accept': 'application/json,*/*',
-        'Authorization': `Bearer ${accesstoken}`
+        Accept: 'application/json,*/*',
+        Authorization: `Bearer ${accesstoken}`
       })
     };
 
-    return await this.http.get(this.workdeskurl_cs + "/private-project/organizations/last-used", httpOptions).toPromise()
+    return await this.http
+      .get(
+        this.workdeskurl_cs + '/private-project/organizations/last-used',
+        httpOptions
+      )
+      .toPromise()
       .catch((err) => {
-        throw (err);
+        throw err;
       });
   }
-  // not required now 
-  public getallagents(accesstoken: string, subsid: string, intid: string, show_active: number, show_invited: number, show_inactive: number, languages: any) {
+  // not required now
+  public getallagents(
+    accesstoken: string,
+    subsid: string,
+    intid: string,
+    show_active: number,
+    show_invited: number,
+    show_inactive: number,
+    languages: any
+  ) {
     const httpOptions: any = {
-
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
-        'Accept': 'application/json,*/*',
-        'Authorization': `Bearer ${accesstoken}`
+        Accept: 'application/json,*/*',
+        Authorization: `Bearer ${accesstoken}`
       })
     };
-    return this.http.get(this.workdeskurl_cs + "/private/agents?show_active=" + show_active + "&show_invited=" + show_invited + "&show_inactive=" + show_inactive + "&languages=" + languages + "&organization=" + subsid + "&integration=" + intid, httpOptions)
+    return this.http.get(
+      this.workdeskurl_cs +
+        '/private/agents?show_active=' +
+        show_active +
+        '&show_invited=' +
+        show_invited +
+        '&show_inactive=' +
+        show_inactive +
+        '&languages=' +
+        languages +
+        '&organization=' +
+        subsid +
+        '&integration=' +
+        intid,
+      httpOptions
+    );
   }
 
   // not in my use
   public getallstats(accesstoken: string, subsid: string, intid: string) {
     const httpOptions: any = {
-
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
-        'Accept': 'application/json,*/*',
-        'Authorization': `Bearer ${accesstoken}`
+        Accept: 'application/json,*/*',
+        Authorization: `Bearer ${accesstoken}`
       })
     };
-    return this.http.get(this.workdeskurl_cs + "/statistics?subscription=" + subsid + "&integration=" + intid, httpOptions)
-
+    return this.http.get(
+      this.workdeskurl_cs +
+        '/statistics?subscription=' +
+        subsid +
+        '&integration=' +
+        intid,
+      httpOptions
+    );
   }
   // not in my use
-  public getalllistofqueueagent(accesstoken: string, orgid: string, intid: string) {
+  public getalllistofqueueagent(
+    accesstoken: string,
+    orgid: string,
+    intid: string
+  ) {
     const httpOptions: any = {
-
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
-        'Accept': 'application/json',
-        'Authorization': `Bearer ${accesstoken}`
+        Accept: 'application/json',
+        Authorization: `Bearer ${accesstoken}`
       })
     };
 
-    return this.http.get(this.workdeskurl_cs + "queue?organization=" + orgid + "&integration=" + intid + "&languages=", httpOptions)
-
+    return this.http.get(
+      this.workdeskurl_cs +
+        'queue?organization=' +
+        orgid +
+        '&integration=' +
+        intid +
+        '&languages=',
+      httpOptions
+    );
   }
   // not in my use
   public getagentinforusingid(accesstoken: string, subsid: string, id: number) {
     const httpOptions: any = {
-
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
-        'Accept': 'application/json,*/*',
-        'Authorization': `Bearer ${accesstoken}`
+        Accept: 'application/json,*/*',
+        Authorization: `Bearer ${accesstoken}`
       })
     };
-    return this.http.get(this.workdeskurl_cs + "/queue/" + id + "?subscription=" + subsid, httpOptions)
-
+    return this.http.get(
+      this.workdeskurl_cs + '/queue/' + id + '?subscription=' + subsid,
+      httpOptions
+    );
   }
   public async getAllProject(accesstoken: string, uuid: string): Promise<any> {
-
     const httpOptions: any = {
-
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
-        'Accept': 'application/json',
-        'Authorization': `Bearer ${accesstoken}`
+        Accept: 'application/json',
+        Authorization: `Bearer ${accesstoken}`
       })
     };
-    return this.http.get(this.workdeskurl_cs + "/private-project/projects?organization=" + uuid, httpOptions).toPromise()
+    return this.http
+      .get(
+        this.workdeskurl_cs + '/private-project/projects?organization=' + uuid,
+        httpOptions
+      )
+      .toPromise()
       .catch((err) => {
-        throw (err);
+        throw err;
       });
-
   }
-  public async updatelastusedintegration(accesstoken: string, uuid: string, integrationbody: any) {
+  public async updatelastusedintegration(
+    accesstoken: string,
+    uuid: string,
+    integrationbody: any
+  ) {
     const httpOptions: any = {
-
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
-        'Accept': 'application/json',
-        'Authorization': `Bearer ${accesstoken}`
+        Accept: 'application/json',
+        Authorization: `Bearer ${accesstoken}`
       })
     };
-    return await this.http.put(this.workdeskurl_cs + "/private/integrations?organization=" + uuid, integrationbody, httpOptions).toPromise()
+    return await this.http
+      .put(
+        this.workdeskurl_cs + '/private/integrations?organization=' + uuid,
+        integrationbody,
+        httpOptions
+      )
+      .toPromise()
       .catch((err) => {
-        throw (err);
+        throw err;
       });
-
   }
-  // not in my use     
-  public async assignrole(accesstoken: string, subsid: string, addrole: any): Promise<any> {
+  // not in my use
+  public async assignrole(
+    accesstoken: string,
+    subsid: string,
+    addrole: any
+  ): Promise<any> {
     const httpOptions: any = {
       method: 'POST',
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
-        'Accept': 'application/json',
-        'Authorization': `Bearer ${accesstoken}`
+        Accept: 'application/json',
+        Authorization: `Bearer ${accesstoken}`
       })
     };
-    return await this.http.post(this.workdeskurl_cs + "/agents?subscription=" + subsid, addrole, httpOptions).toPromise()
+    return await this.http
+      .post(
+        this.workdeskurl_cs + '/agents?subscription=' + subsid,
+        addrole,
+        httpOptions
+      )
+      .toPromise()
       .catch((err) => {
-        throw (err);
+        throw err;
       });
   }
 
-  public async getcalltype(accesstoken: string, orguuid: string, intid: string, id: any): Promise<any> {
+  public async getcalltype(
+    accesstoken: string,
+    orguuid: string,
+    intid: string,
+    id: any
+  ): Promise<any> {
     const httpOptions: any = {
       method: 'POST',
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
-        'Accept': 'application/json',
-        'Authorization': `Bearer ${accesstoken}`
+        Accept: 'application/json',
+        Authorization: `Bearer ${accesstoken}`
       })
     };
-    return await this.http.post(this.workdeskurl_cs + "/private/start-call?organization=" + orguuid + "&project=" + intid, id, httpOptions).toPromise()
+    return await this.http
+      .post(
+        this.workdeskurl_cs +
+          '/private/start-call?organization=' +
+          orguuid +
+          '&project=' +
+          intid,
+        id,
+        httpOptions
+      )
+      .toPromise()
       .catch((err) => {
-        throw (err);
+        throw err;
       });
   }
   //  logged in agent upload pic
-  public uploaduserprofilepic(accesstoken: string, subsid: string, intgid: string, file: File) {
+  public uploaduserprofilepic(
+    accesstoken: string,
+    subsid: string,
+    intgid: string,
+    file: File
+  ) {
     const httpOptions: any = {
       method: 'POST',
       headers: new HttpHeaders({
-        'Authorization': `Bearer ${accesstoken}`
+        Authorization: `Bearer ${accesstoken}`
       }),
       reportProgress: true,
       observe: 'events'
     };
     var formdata = new FormData();
-    formdata.append("image", file);
-    return this.http.post(this.workdeskurl_cs + "/private/agents/image?organization=" + subsid + "&integration=" + intgid, formdata, httpOptions);
+    formdata.append('image', file);
+    return this.http.post(
+      this.workdeskurl_cs +
+        '/private/agents/image?organization=' +
+        subsid +
+        '&integration=' +
+        intgid,
+      formdata,
+      httpOptions
+    );
   }
   // agent upload pic by admin
-  public agentuploaduserprofilepic(accesstoken: string, orgid: string, intgid: String, uuid: string, file: File) {
+  public agentuploaduserprofilepic(
+    accesstoken: string,
+    orgid: string,
+    intgid: String,
+    uuid: string,
+    file: File
+  ) {
     const httpOptions: any = {
       method: 'POST',
       headers: new HttpHeaders({
-        'Authorization': `Bearer ${accesstoken}`
+        Authorization: `Bearer ${accesstoken}`
       }),
       reportProgress: true,
       observe: 'events'
     };
     var formdata = new FormData();
-    formdata.append("image", file);
-    return this.http.post(this.workdeskurl_cs + "/private/agents/image?organization=" + orgid + "&integration=" + intgid + "&agent=" + uuid, formdata, httpOptions);
+    formdata.append('image', file);
+    return this.http.post(
+      this.workdeskurl_cs +
+        '/private/agents/image?organization=' +
+        orgid +
+        '&integration=' +
+        intgid +
+        '&agent=' +
+        uuid,
+      formdata,
+      httpOptions
+    );
   }
   // not in my use
-  public async editagent(accesstoken: string, subsid: string, id: number, addrole: any): Promise<any> {
+  public async editagent(
+    accesstoken: string,
+    subsid: string,
+    id: number,
+    addrole: any
+  ): Promise<any> {
     const httpOptions: any = {
       method: 'PUT',
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
-        'Accept': 'application/json',
-        'Authorization': `Bearer ${accesstoken}`
+        Accept: 'application/json',
+        Authorization: `Bearer ${accesstoken}`
       })
     };
-    return await this.http.put(this.workdeskurl_cs + "/customer-support/agents/" + id + "?subscription=" + subsid, addrole, httpOptions).toPromise()
+    return await this.http
+      .put(
+        this.workdeskurl_cs +
+          '/customer-support/agents/' +
+          id +
+          '?subscription=' +
+          subsid,
+        addrole,
+        httpOptions
+      )
+      .toPromise()
       .catch((err) => {
-        throw (err);
+        throw err;
       });
   }
-
 
   //get visitors
   public getvisitorlist(accesstoken: string, orgid: string, intid: string) {
     const httpOptions: any = {
-
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
-        'Accept': 'application/json',
-        'Authorization': `Bearer ${accesstoken}`
+        Accept: 'application/json',
+        Authorization: `Bearer ${accesstoken}`
       })
     };
-    return this.http.get(this.gigaabackendUlr + "/workdesk/visitors?organization=" + orgid + "&integration=" + intid, httpOptions)
+    return this.http.get(
+      this.gigaabackendUlr +
+        '/workdesk/visitors?organization=' +
+        orgid +
+        '&integration=' +
+        intid,
+      httpOptions
+    );
   }
 
   //get visitors
   public getroleofagent(accesstoken: string, orgid: string, intid: string) {
     const httpOptions: any = {
-
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
-        'Accept': 'application/json',
-        'Authorization': `Bearer ${accesstoken}`
+        Accept: 'application/json',
+        Authorization: `Bearer ${accesstoken}`
       })
     };
-    return this.http.get(this.workdeskurl_cs + "/private-project/is-admin?organization=" + orgid + "&project=" + intid, httpOptions)
+    return this.http.get(
+      this.workdeskurl_cs +
+        '/private-project/is-admin?organization=' +
+        orgid +
+        '&project=' +
+        intid,
+      httpOptions
+    );
   }
-
 
   // get token for agents socket api
   public getsockettoken(accesstoken: string, orgid: string, intid: string) {
     const httpOptions: any = {
-
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
-        'Accept': 'application/json',
-        'Authorization': `Bearer ${accesstoken}`
+        Accept: 'application/json',
+        Authorization: `Bearer ${accesstoken}`
       })
     };
-    return this.http.get(this.workdeskurl_cs + "queue/websocket/access-token?organization=" + orgid + "&integration=" + intid, httpOptions)
+    return this.http.get(
+      this.workdeskurl_cs +
+        'queue/websocket/access-token?organization=' +
+        orgid +
+        '&integration=' +
+        intid,
+      httpOptions
+    );
   }
-
 
   // invite agent endpoint
 
-  public async getinviteagent(accesstoken: string, uuid: string, intid: string, agentdata: any): Promise<any> {
+  public async getinviteagent(
+    accesstoken: string,
+    uuid: string,
+    intid: string,
+    agentdata: any
+  ): Promise<any> {
     const httpOptions: any = {
       method: 'POST',
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
-        'Accept': 'application/json',
-        'Authorization': `Bearer ${accesstoken}`
+        Accept: 'application/json',
+        Authorization: `Bearer ${accesstoken}`
       })
     };
-    return await this.http.post(this.workdeskurl_cs + "/private/invitation?organization=" + uuid + "&integration=" + intid, agentdata, httpOptions).toPromise()
+    return await this.http
+      .post(
+        this.workdeskurl_cs +
+          '/private/invitation?organization=' +
+          uuid +
+          '&integration=' +
+          intid,
+        agentdata,
+        httpOptions
+      )
+      .toPromise()
       .catch((err) => {
-        throw (err);
+        throw err;
       });
   }
 
   //post refeeral code for agents invited
-  public async sendinvitationcode(accesstoken: string, agentdata: any): Promise<any> {
+  public async sendinvitationcode(
+    accesstoken: string,
+    agentdata: any
+  ): Promise<any> {
     const httpOptions: any = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
-        'Accept': 'application/json',
-        'Authorization': `Bearer ${accesstoken}`
+        Accept: 'application/json',
+        Authorization: `Bearer ${accesstoken}`
       })
     };
-    return await this.http.put(this.workdeskurl_cs + "/public/invitation/accept?code", agentdata, httpOptions).toPromise()
+    return await this.http
+      .put(
+        this.workdeskurl_cs + '/public/invitation/accept?code',
+        agentdata,
+        httpOptions
+      )
+      .toPromise()
       .catch((err) => {
-        throw (err);
+        throw err;
       });
   }
 
   // delete agents
-  public async deleteagent(accesstoken: string, orgid: string, intid: string, agentuuid: any): Promise<any> {
+  public async deleteagent(
+    accesstoken: string,
+    orgid: string,
+    intid: string,
+    agentuuid: any
+  ): Promise<any> {
     const httpOptions: any = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
-        'Accept': 'application/json',
-        'Authorization': `Bearer ${accesstoken}`
+        Accept: 'application/json',
+        Authorization: `Bearer ${accesstoken}`
       })
     };
-    return this.http.delete(this.workdeskurl_cs + "/private/agents/" + agentuuid + "?organization=" + orgid + "&integration=" + intid, httpOptions).toPromise()
+    return this.http
+      .delete(
+        this.workdeskurl_cs +
+          '/private/agents/' +
+          agentuuid +
+          '?organization=' +
+          orgid +
+          '&integration=' +
+          intid,
+        httpOptions
+      )
+      .toPromise()
       .catch((err) => {
-        throw (err);
+        throw err;
       });
   }
 
   // get agent online status
-  public getagentonlinestatus(accesstoken: string, orgid: string, intid: string) {
+  public getagentonlinestatus(
+    accesstoken: string,
+    orgid: string,
+    intid: string
+  ) {
     const httpOptions: any = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
-        'Accept': 'application/json',
-        'Authorization': `Bearer ${accesstoken}`
+        Accept: 'application/json',
+        Authorization: `Bearer ${accesstoken}`
       })
     };
-    return this.http.get(this.workdeskurl_cs + "/private/is-online?organization=" + orgid + "&integration=" + intid, httpOptions)
+    return this.http.get(
+      this.workdeskurl_cs +
+        '/private/is-online?organization=' +
+        orgid +
+        '&integration=' +
+        intid,
+      httpOptions
+    );
   }
   // set online status
-  public async putonlinestatus(accesstoken: string, orgid: string, intid: string, online: any): Promise<any> {
+  public async putonlinestatus(
+    accesstoken: string,
+    orgid: string,
+    intid: string,
+    online: any
+  ): Promise<any> {
     const httpOptions: any = {
       method: 'POST',
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
-        'Accept': 'application/json',
-        'Authorization': `Bearer ${accesstoken}`
+        Accept: 'application/json',
+        Authorization: `Bearer ${accesstoken}`
       })
     };
-    return await this.http.put(this.workdeskurl_cs + "/private/is-online?organization=" + orgid + "&integration=" + intid, online, httpOptions).toPromise()
+    return await this.http
+      .put(
+        this.workdeskurl_cs +
+          '/private/is-online?organization=' +
+          orgid +
+          '&integration=' +
+          intid,
+        online,
+        httpOptions
+      )
+      .toPromise()
       .catch((err) => {
-        throw (err);
+        throw err;
       });
   }
 
   // resend invitation
-  public async resendinvitation(accesstoken: string, orgid: string, intid: string, agentuuid: any): Promise<any> {
+  public async resendinvitation(
+    accesstoken: string,
+    orgid: string,
+    intid: string,
+    agentuuid: any
+  ): Promise<any> {
     const httpOptions: any = {
-
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
-        'Accept': 'application/json',
-        'Authorization': `Bearer ${accesstoken}`
+        Accept: 'application/json',
+        Authorization: `Bearer ${accesstoken}`
       })
     };
-    return await this.http.post(this.workdeskurl_cs + "/private/invitation/resend?agent=" + agentuuid + "&organization=" + orgid + "&integration=" + intid, {}, httpOptions).toPromise()
+    return await this.http
+      .post(
+        this.workdeskurl_cs +
+          '/private/invitation/resend?agent=' +
+          agentuuid +
+          '&organization=' +
+          orgid +
+          '&integration=' +
+          intid,
+        {},
+        httpOptions
+      )
+      .toPromise()
       .catch((err) => {
-        throw (err);
+        throw err;
       });
   }
 
   // update agent settings
 
-  public async updateagentsettings(accesstoken: string, orgid: string, intid: string, agentuuid: any, agentbody: any): Promise<any> {
+  public async updateagentsettings(
+    accesstoken: string,
+    orgid: string,
+    intid: string,
+    agentuuid: any,
+    agentbody: any
+  ): Promise<any> {
     const httpOptions: any = {
-
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
-        'Accept': 'application/json',
-        'Authorization': `Bearer ${accesstoken}`
+        Accept: 'application/json',
+        Authorization: `Bearer ${accesstoken}`
       })
     };
-    return await this.http.put(this.workdeskurl_cs + "/private/agents/" + agentuuid + "?organization=" + orgid + "&integration=" + intid, agentbody, httpOptions).toPromise()
+    return await this.http
+      .put(
+        this.workdeskurl_cs +
+          '/private/agents/' +
+          agentuuid +
+          '?organization=' +
+          orgid +
+          '&integration=' +
+          intid,
+        agentbody,
+        httpOptions
+      )
+      .toPromise()
       .catch((err) => {
-        throw (err);
+        throw err;
       });
   }
 
@@ -416,182 +671,443 @@ export class GigaaaApiService {
     const httpOptions: any = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
-        'Accept': 'application/json'
+        Accept: 'application/json'
       })
     };
-    return this.http.get(this.workdeskurl_cs + "/public/invitation?code=" + code, httpOptions)
+    return this.http.get(
+      this.workdeskurl_cs + '/public/invitation?code=' + code,
+      httpOptions
+    );
   }
   // get call stats
-  public getcallstatistics(accesstoken: string, orgid: string, intid: string, time: string, languages: Array<any>, countries: Array<any>) {
+  public getcallstatistics(
+    accesstoken: string,
+    orgid: string,
+    intid: string,
+    time: string,
+    languages: Array<any>,
+    countries: Array<any>
+  ) {
     const httpOptions: any = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
-        'Accept': 'application/json',
-        'Authorization': `Bearer ${accesstoken}`
+        Accept: 'application/json',
+        Authorization: `Bearer ${accesstoken}`
       })
     };
-    return this.http.get(this.workdeskanalytics + "/analytics/counts?organization=" + orgid + "&project=" + intid + "&time=" + time + "&languages=" + languages + "&countries=" + countries, httpOptions)
+    return this.http.get(
+      this.workdeskanalytics +
+        '/analytics/counts?organization=' +
+        orgid +
+        '&project=' +
+        intid +
+        '&time=' +
+        time +
+        '&languages=' +
+        languages +
+        '&countries=' +
+        countries,
+      httpOptions
+    );
   }
 
   // get call chart
-  public getcallchart(accesstoken: string, orgid: string, intid: string, time: string, languages: Array<any>, countries: Array<any>, date_from: string, date_to: string) {
+  public getcallchart(
+    accesstoken: string,
+    orgid: string,
+    intid: string,
+    time: string,
+    languages: Array<any>,
+    countries: Array<any>,
+    date_from: string,
+    date_to: string
+  ) {
     const httpOptions: any = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
-        'Accept': 'application/json',
-        'Authorization': `Bearer ${accesstoken}`
+        Accept: 'application/json',
+        Authorization: `Bearer ${accesstoken}`
       })
     };
 
-    return this.http.get(this.workdeskanalytics + "/analytics/aggregates?organization=" + orgid + "&project=" + intid + "&time=" + time + "&languages=" + languages + "&countries=" + countries + "&date_from=" + date_from + "&date_to=" + date_to, httpOptions)
+    return this.http.get(
+      this.workdeskanalytics +
+        '/analytics/aggregates?organization=' +
+        orgid +
+        '&project=' +
+        intid +
+        '&time=' +
+        time +
+        '&languages=' +
+        languages +
+        '&countries=' +
+        countries +
+        '&date_from=' +
+        date_from +
+        '&date_to=' +
+        date_to,
+      httpOptions
+    );
   }
 
   // get user line graphs
-  public getuserline_Graph_Cards_Data(accesstoken: string, orgid: string, intid: string, date_from: string, date_to: string, languages: Array<any>, countries: Array<any>, time: string) {
+  public getuserline_Graph_Cards_Data(
+    accesstoken: string,
+    orgid: string,
+    intid: string,
+    date_from: string,
+    date_to: string,
+    languages: Array<any>,
+    countries: Array<any>,
+    time: string
+  ) {
     const httpOptions: any = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
-        'Accept': 'application/json',
-        'Authorization': `Bearer ${accesstoken}`
+        Accept: 'application/json',
+        Authorization: `Bearer ${accesstoken}`
       })
     };
 
-    return this.http.get(this.workdeskanalytics + "/analytics/plugin/stats/users?organization=" + orgid + "&integration=" + intid + "&date_from=" + date_from + "&date_to=" + date_to + "&languages=" + languages + "&countries=" + countries + "&date_range=including" + "&time=" + time, httpOptions)
+    return this.http.get(
+      this.workdeskanalytics +
+        '/analytics/plugin/stats/users?organization=' +
+        orgid +
+        '&integration=' +
+        intid +
+        '&date_from=' +
+        date_from +
+        '&date_to=' +
+        date_to +
+        '&languages=' +
+        languages +
+        '&countries=' +
+        countries +
+        '&date_range=including' +
+        '&time=' +
+        time,
+      httpOptions
+    );
   }
   // get visitor line graphs
-  public getvisitor_Graph_cards_Data(accesstoken: string, orgid: string, intid: string, date_from: string, date_to: string, languages: Array<any>, countries: Array<any>, time: string) {
+  public getvisitor_Graph_cards_Data(
+    accesstoken: string,
+    orgid: string,
+    intid: string,
+    date_from: string,
+    date_to: string,
+    languages: Array<any>,
+    countries: Array<any>,
+    time: string
+  ) {
     const httpOptions: any = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
-        'Accept': 'application/json',
-        'Authorization': `Bearer ${accesstoken}`
+        Accept: 'application/json',
+        Authorization: `Bearer ${accesstoken}`
       })
     };
 
-    return this.http.get(this.workdeskanalytics + "/analytics/plugin/stats/visitors?organization=" + orgid + "&integration=" + intid + "&date_from=" + date_from + "&date_to=" + date_to + "&languages=" + languages + "&countries=" + countries + "&date_range=including" + "&time=" + time, httpOptions)
+    return this.http.get(
+      this.workdeskanalytics +
+        '/analytics/plugin/stats/visitors?organization=' +
+        orgid +
+        '&integration=' +
+        intid +
+        '&date_from=' +
+        date_from +
+        '&date_to=' +
+        date_to +
+        '&languages=' +
+        languages +
+        '&countries=' +
+        countries +
+        '&date_range=including' +
+        '&time=' +
+        time,
+      httpOptions
+    );
   }
   // get loggedin agent uuid
-  public async getloggedinagentuuid(accesstoken: string, orgid: string, intid: string): Promise<any> {
+  public async getloggedinagentuuid(
+    accesstoken: string,
+    orgid: string,
+    intid: string
+  ): Promise<any> {
     const httpOptions: any = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
-        'Accept': 'application/json',
-        'Authorization': `Bearer ${accesstoken}`
+        Accept: 'application/json',
+        Authorization: `Bearer ${accesstoken}`
       })
     };
 
-    return await this.http.get(this.workdeskurl_cs + "/private-project/agent?organization=" + orgid + "&project=" + intid, httpOptions).toPromise()
+    return await this.http
+      .get(
+        this.workdeskurl_cs +
+          '/private-project/agent?organization=' +
+          orgid +
+          '&project=' +
+          intid,
+        httpOptions
+      )
+      .toPromise()
       .catch((err) => {
-        throw (err);
+        throw err;
       });
   }
 
   // get user counts for cards
   // total
-  public getUserCountsTotal(accesstoken: string, orgid: string, intid: string, time: string, languages: Array<any>, countries: Array<any>) {
+  public getUserCountsTotal(
+    accesstoken: string,
+    orgid: string,
+    intid: string,
+    time: string,
+    languages: Array<any>,
+    countries: Array<any>
+  ) {
     const httpOptions: any = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
-        'Accept': 'application/json',
-        'Authorization': `Bearer ${accesstoken}`
+        Accept: 'application/json',
+        Authorization: `Bearer ${accesstoken}`
       })
     };
-    return this.http.get(this.workdeskanalytics + "/analytics/plugin/users/total?organization=" + orgid + "&integration=" + intid + "&time=" + time + "&languages=" + languages + "&countries=" + countries, httpOptions)
+    return this.http.get(
+      this.workdeskanalytics +
+        '/analytics/plugin/users/total?organization=' +
+        orgid +
+        '&integration=' +
+        intid +
+        '&time=' +
+        time +
+        '&languages=' +
+        languages +
+        '&countries=' +
+        countries,
+      httpOptions
+    );
   }
   // Unique
-  public getUserCountsUnique(accesstoken: string, orgid: string, intid: string, time: string, languages: Array<any>, countries: Array<any>) {
+  public getUserCountsUnique(
+    accesstoken: string,
+    orgid: string,
+    intid: string,
+    time: string,
+    languages: Array<any>,
+    countries: Array<any>
+  ) {
     const httpOptions: any = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
-        'Accept': 'application/json',
-        'Authorization': `Bearer ${accesstoken}`
+        Accept: 'application/json',
+        Authorization: `Bearer ${accesstoken}`
       })
     };
-    return this.http.get(this.workdeskanalytics + "/analytics/plugin/users/unique?organization=" + orgid + "&integration=" + intid + "&time=" + time + "&languages=" + languages + "&countries=" + countries, httpOptions)
+    return this.http.get(
+      this.workdeskanalytics +
+        '/analytics/plugin/users/unique?organization=' +
+        orgid +
+        '&integration=' +
+        intid +
+        '&time=' +
+        time +
+        '&languages=' +
+        languages +
+        '&countries=' +
+        countries,
+      httpOptions
+    );
   }
   // sessions
-  public getUserCountsSession(accesstoken: string, orgid: string, intid: string, time: string, languages: Array<any>, countries: Array<any>, date_from: string, date_to: String) {
+  public getUserCountsSession(
+    accesstoken: string,
+    orgid: string,
+    intid: string,
+    time: string,
+    languages: Array<any>,
+    countries: Array<any>,
+    date_from: string,
+    date_to: String
+  ) {
     const httpOptions: any = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
-        'Accept': 'application/json',
-        'Authorization': `Bearer ${accesstoken}`
+        Accept: 'application/json',
+        Authorization: `Bearer ${accesstoken}`
       })
     };
-    return this.http.get(this.workdeskanalytics + "/analytics/plugin/users/sessions?organization=" + orgid + "&integration=" + intid + "&time=" + time + "&languages=" + languages + "&countries=" + countries + "&date_from=" + date_from + "&date_to=" + date_to, httpOptions)
+    return this.http.get(
+      this.workdeskanalytics +
+        '/analytics/plugin/users/sessions?organization=' +
+        orgid +
+        '&integration=' +
+        intid +
+        '&time=' +
+        time +
+        '&languages=' +
+        languages +
+        '&countries=' +
+        countries +
+        '&date_from=' +
+        date_from +
+        '&date_to=' +
+        date_to,
+      httpOptions
+    );
   }
   /// get visitor counts for cards
-  public getVisitorCountsTotal(accesstoken: string, orgid: string, intid: string, time: string, languages: Array<any>, countries: Array<any>) {
+  public getVisitorCountsTotal(
+    accesstoken: string,
+    orgid: string,
+    intid: string,
+    time: string,
+    languages: Array<any>,
+    countries: Array<any>
+  ) {
     const httpOptions: any = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
-        'Accept': 'application/json',
-        'Authorization': `Bearer ${accesstoken}`
+        Accept: 'application/json',
+        Authorization: `Bearer ${accesstoken}`
       })
     };
-    return this.http.get(this.workdeskanalytics + "/analytics/plugin/visitors/total?organization=" + orgid + "&integration=" + intid + "&time=" + time + "&languages=" + languages + "&countries=" + countries, httpOptions)
+    return this.http.get(
+      this.workdeskanalytics +
+        '/analytics/plugin/visitors/total?organization=' +
+        orgid +
+        '&integration=' +
+        intid +
+        '&time=' +
+        time +
+        '&languages=' +
+        languages +
+        '&countries=' +
+        countries,
+      httpOptions
+    );
   }
   // Unique
-  public getVisitorCountsUnique(accesstoken: string, orgid: string, intid: string, time: string, languages: Array<any>, countries: Array<any>) {
+  public getVisitorCountsUnique(
+    accesstoken: string,
+    orgid: string,
+    intid: string,
+    time: string,
+    languages: Array<any>,
+    countries: Array<any>
+  ) {
     const httpOptions: any = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
-        'Accept': 'application/json',
-        'Authorization': `Bearer ${accesstoken}`
+        Accept: 'application/json',
+        Authorization: `Bearer ${accesstoken}`
       })
     };
-    return this.http.get(this.workdeskanalytics + "/analytics/plugin/visitors/unique?organization=" + orgid + "&integration=" + intid + "&time=" + time + "&languages=" + languages + "&countries=" + countries, httpOptions)
+    return this.http.get(
+      this.workdeskanalytics +
+        '/analytics/plugin/visitors/unique?organization=' +
+        orgid +
+        '&integration=' +
+        intid +
+        '&time=' +
+        time +
+        '&languages=' +
+        languages +
+        '&countries=' +
+        countries,
+      httpOptions
+    );
   }
   // sessions
-  public getVisitorCountsSession(accesstoken: string, orgid: string, intid: string, time: string, languages: Array<any>, countries: Array<any>, date_from: String, date_to: String) {
+  public getVisitorCountsSession(
+    accesstoken: string,
+    orgid: string,
+    intid: string,
+    time: string,
+    languages: Array<any>,
+    countries: Array<any>,
+    date_from: String,
+    date_to: String
+  ) {
     const httpOptions: any = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
-        'Accept': 'application/json',
-        'Authorization': `Bearer ${accesstoken}`
+        Accept: 'application/json',
+        Authorization: `Bearer ${accesstoken}`
       })
     };
-    return this.http.get(this.workdeskanalytics + "/analytics/plugin/visitors/sessions?organization=" + orgid + "&integration=" + intid + "&time=" + time + "&languages=" + languages + "&countries=" + countries + "&date_from=" + date_from + "&date_to=" + date_to, httpOptions)
+    return this.http.get(
+      this.workdeskanalytics +
+        '/analytics/plugin/visitors/sessions?organization=' +
+        orgid +
+        '&integration=' +
+        intid +
+        '&time=' +
+        time +
+        '&languages=' +
+        languages +
+        '&countries=' +
+        countries +
+        '&date_from=' +
+        date_from +
+        '&date_to=' +
+        date_to,
+      httpOptions
+    );
   }
-  public userRestriction(organization_uuid: any, integration_uuid: any, token: any) {
+  public userRestriction(
+    organization_uuid: any,
+    integration_uuid: any,
+    token: any
+  ) {
     const httpOptions: any = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
-        'Accept': 'application/json',
-        'Authorization': `Bearer ${token}`
+        Accept: 'application/json',
+        Authorization: `Bearer ${token}`
       }),
-      observe: 'response',
+      observe: 'response'
     };
-    return this.http.get(`${this.workdeskurl_cs}/private/allowed?organization=${organization_uuid}&integration=${integration_uuid}`, httpOptions)
+    return this.http.get(
+      `${this.workdeskurl_cs}/private/allowed?organization=${organization_uuid}&integration=${integration_uuid}`,
+      httpOptions
+    );
   }
 
   public getOrganizations(token: string): Observable<any> {
     const httpOptions: any = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
-        'Accept': 'application/json',
-        'Authorization': `Bearer ${token}`
+        Accept: 'application/json',
+        Authorization: `Bearer ${token}`
       })
     };
     return this.http.get<any>(
-      `${this.workdeskurl_cs}` + "/private-project/organizations/last-used", httpOptions
+      `${this.workdeskurl_cs}` + '/private-project/organizations/last-used',
+      httpOptions
     );
   }
-  public async getConnectionId(token: string, organizationId: string, projectId: string): Promise<any> {
+  public async getConnectionId(
+    token: string,
+    organizationId: string,
+    projectId: string
+  ): Promise<any> {
     const httpOptions: any = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
-        'Accept': 'application/json',
-        'Authorization': `Bearer ${token}`
-      }),
+        Accept: 'application/json',
+        Authorization: `Bearer ${token}`
+      })
     };
-    return await this.http.get(`${this.gigaabackendUlr}/websockets/cs/private/organization/${organizationId}/project/${projectId}/connection`, httpOptions).toPromise()
+    return await this.http
+      .get(
+        `${this.gigaabackendUlr}/websockets/cs/private/organization/${organizationId}/project/${projectId}/connection`,
+        httpOptions
+      )
+      .toPromise()
       .catch((err) => {
-        throw (err);
+        throw err;
       });
   }
 }
-
-
-
-

@@ -27,34 +27,38 @@ const oneSelect: OneSelect[] = [
 
 const selectedAgentType: any[] = [
   {
-    name: 'Show all', options: {
+    name: 'Show all',
+    options: {
       active: 1,
       inactive: 1,
       invited: 1
     }
   },
   {
-    name: 'Active', options: {
+    name: 'Active',
+    options: {
       active: 1,
       inactive: 0,
       invited: 0
     }
   },
   {
-    name: 'Inactive', options: {
+    name: 'Inactive',
+    options: {
       active: 0,
       inactive: 1,
       invited: 0
     }
   },
   {
-    name: 'Invited', options: {
+    name: 'Invited',
+    options: {
       active: 0,
       inactive: 0,
       invited: 1
     }
   }
-]
+];
 
 const searchInputData: SearchInput = {
   placeholder: 'search items',

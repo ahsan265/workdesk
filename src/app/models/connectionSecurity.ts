@@ -1,5 +1,4 @@
 export interface connectionSecurityModel {
-    connection: string;
-    user: number;
-  }
-  
+  connection: string;
+  user: number;
+}

@@ -1,4 +1,3 @@
-
 export interface Organization {
   id?: number;
   contact_email?: string;
@@ -7,12 +6,12 @@ export interface Organization {
   last_used?: boolean;
   name?: string;
   projects: Project[];
-  uuid: string
-  whmcs_id: string
+  uuid: string;
+  whmcs_id: string;
 }
 
 export interface Project {
-  last_used: boolean
-  uuid: string
-  organization_id: number
+  last_used: boolean;
+  uuid: string;
+  organization_id: number;
 }

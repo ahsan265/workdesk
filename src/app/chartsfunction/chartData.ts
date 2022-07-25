@@ -4,13 +4,11 @@ import { Injectable } from '@angular/core';
   providedIn: 'root'
 })
 export class ChartsData {
-  constructor() {
-
-  }
+  constructor() {}
   calculateChartData(ChartData: Array<any>) {
-    let data: any = []
-    ChartData.forEach(element => {
-      (element.count === null) ? data.push(0) : data.push(element.count);
+    let data: any = [];
+    ChartData.forEach((element) => {
+      element.count === null ? data.push(0) : data.push(element.count);
     });
     return data;
   }

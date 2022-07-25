@@ -7,7 +7,7 @@ export const environment = {
   apiUrl: 'https://kub-dev.gigaaa.link/v1/api/v1',
   backendApi: 'https://kub-dev.gigaaa.link/v2',
   analyticsApi: 'https://kub-dev.gigaaa.link/v2/analytics',
-  oauth_url: "https://accounts.gigaaa.link/oauth",
+  oauth_url: 'https://accounts.gigaaa.link/oauth',
   redirect_uri: 'http://localhost:4202/callback',
   uri: 'http://localhost:4202/',
   login: 'https://accounts.gigaaa.link/oauth/token',
@@ -16,14 +16,12 @@ export const environment = {
   accounts_url: 'https://accounts.gigaaa.link/oauth',
   accounts_callback_url: 'http://localhost:4202',
   currentUser: 'https://kub-dev.gigaaa.link/users/me',
-  prod_url_cs:"https://kub-dev.gigaaa.link/cs",
-  prod_url_workdesk:"https://kub-dev.gigaaa.link",
-  prod_anlytics:"https://kub-dev.gigaaa.link/cs/private-project",
-  websocket_url:"wss://kub-dev.gigaaa.link/websockets/cs",
-  logged_user:'https://kub-dev.gigaaa.link/v1/api/v1',
+  prod_url_cs: 'https://kub-dev.gigaaa.link/cs',
+  prod_url_workdesk: 'https://kub-dev.gigaaa.link',
+  prod_anlytics: 'https://kub-dev.gigaaa.link/cs/private-project',
+  websocket_url: 'wss://kub-dev.gigaaa.link/websockets/cs',
+  logged_user: 'https://kub-dev.gigaaa.link/v1/api/v1'
 };
-
-
 
 /*
  * For easier debugging in development mode, you can import the following file
