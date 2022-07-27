@@ -9,6 +9,7 @@ import { Subject } from 'rxjs';
 import { ChartsData } from 'src/app/chartsFunction/chartData';
 import { ChartLabel } from 'src/app/chartsFunction/chartLabel';
 import { CommonEndpoints } from 'src/app/commonEndpoints/commonEndpoint';
+import { CalendarService } from 'src/app/calendarService/calendar.service';
 import { GigaaaApiService } from 'src/app/workdeskServices/gigaaaApiService/gigaaa-api-service.service';
 
 @Injectable({
@@ -25,16 +26,17 @@ export class DashboardEndpointService {
     private GigaaaApiService: GigaaaApiService,
     private commoneps: CommonEndpoints,
     private chartLabel: ChartLabel,
-    private chartsData: ChartsData
+    private chartsData: ChartsData,
+    private calanderService:CalendarService
   ) {}
   // call the cards count endpoint for
-  public getCarddata(languages: Array<OneSelect>, location: Array<OneSelect>) {
+  public getCarddata(languages: Array<OneSelect>, location: Array<OneSelect>,selectedRange:string) {
     const epParams = this.commoneps.getEpsParamLocal();
     this.GigaaaApiService.getcallstatistics(
       epParams.token,
       epParams.organization,
       epParams.project,
-      'this_week',
+      selectedRange,
       languages,
       location
     ).subscribe((data: any) => {
@@ -51,13 +53,14 @@ export class DashboardEndpointService {
       const percencateAwnseredCard = this.getpercentagecalculated(
         data['answered'].increase
       );
+     const relatedDateRange= this.calanderService.getRelatedDateRange(selectedRange)
       // cards model data
       const incomingCardRes = this.fillDashboardCardData(
         this.icomingIcon,
         'Total Incoming',
         '#EDEDF6',
         incomingCard,
-        ' % vs Last week',
+        ' % vs '+relatedDateRange,
         percencateIncomingCard
       );
       const missedCardRes = this.fillDashboardCardData(
@@ -65,7 +68,7 @@ export class DashboardEndpointService {
         'Total Missed',
         '#F9EBEF',
         missedCard,
-        ' % vs Last week',
+        ' % vs '+relatedDateRange,
         percencateMissedCard
       );
       const answeredCardRes = this.fillDashboardCardData(
@@ -73,7 +76,7 @@ export class DashboardEndpointService {
         'Total Answered',
         '#EBF7DD',
         answeredCard,
-        ' % vs Last week',
+        ' % vs '+relatedDateRange,
         percencateAwnseredCard
       );
       const finalCardsData = {
@@ -122,31 +125,34 @@ export class DashboardEndpointService {
   public getChartData(
     languages: Array<OneSelect>,
     locations: Array<OneSelect>
+    ,selectedRange:string,
+    startDate:string,
+    endDate:string
   ) {
     const epParams = this.commoneps.getEpsParamLocal();
     this.GigaaaApiService.getcallchart(
       epParams.token,
       epParams.organization,
       epParams.project,
-      'this_week',
+      selectedRange,
       languages,
       locations,
-      '2022-07-18',
-      '2022-07-24'
+      startDate,
+      endDate
     ).subscribe((data: any) => {
       const incomingLabel = this.chartLabel.caculateChartLabels(
         data['incoming'],
-        'this_week',
+        selectedRange,
         data?.num_bars
       );
       const missedLabel = this.chartLabel.caculateChartLabels(
         data['missed'],
-        'this_week',
+        selectedRange,
         data?.num_bars
       );
       const answeredLabel = this.chartLabel.caculateChartLabels(
         data['answered'],
-        'this_week',
+        selectedRange,
         data?.num_bars
       );
 

@@ -27,19 +27,15 @@ export class GigaaaApiService {
     this.getagentdata$ = this.agentdatasubject.asObservable().pipe();
   }
   private getHeaders() {
-    return {
+    return new HttpHeaders({
       'Content-Type': 'application/json',
       Accept: 'application/json',
       Authorization: `Bearer ${this.authService.getLoggedUser()?.api_token}`
-    };
+    });
   }
-  getCurrentUser(token: any): Observable<User> {
+  getCurrentUser(): Observable<User> {
     return this.http.get<User>(`${environment.currentUser}`, {
-      headers: {
-        'Content-Type': 'application/json',
-        Accept: 'application/json',
-        Authorization: `Bearer ${token}`
-      }
+      headers: this.getHeaders()
     });
   }
 
@@ -82,15 +78,8 @@ export class GigaaaApiService {
   }
 
   public forgotPassword(email: string) {
-    const httpOptions: any = {
-      headers: new HttpHeaders({
-        'Content-Type': 'application/json',
-        Accept: 'application/json',
-        'Cache-Control': 'no-cache'
-      })
-    };
+    const httpOptions: any = this.getHeaders();
     let body = { email };
-
     return this.http.post(
       `https://gigaaa-core.westeurope.cloudapp.azure.com/password/email`,
       body,
@@ -106,7 +95,6 @@ export class GigaaaApiService {
         Authorization: `Bearer ${accesstoken}`
       })
     };
-
     return await this.http
       .get(
         this.workdeskurl_cs + '/private-project/organizations/last-used',
@@ -195,25 +183,19 @@ export class GigaaaApiService {
     );
   }
   // not in my use
-  public getagentinforusingid(accesstoken: string, subsid: string, id: number) {
-    const httpOptions: any = {
-      headers: new HttpHeaders({
-        'Content-Type': 'application/json',
-        Accept: 'application/json,*/*',
-        Authorization: `Bearer ${accesstoken}`
-      })
-    };
+  public getagentinforusingid(subsid: string, id: number) {
+    const httpOptions: any = this.getHeaders();;
     return this.http.get(
       this.workdeskurl_cs + '/queue/' + id + '?subscription=' + subsid,
       httpOptions
     );
   }
-  public async getAllProject(accesstoken: string, uuid: string): Promise<any> {
+  public async getAllProject(token: string, uuid: string): Promise<any> {
     const httpOptions: any = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
         Accept: 'application/json',
-        Authorization: `Bearer ${accesstoken}`
+        Authorization: `Bearer ${token}`
       })
     };
     return this.http
@@ -226,10 +208,10 @@ export class GigaaaApiService {
         throw err;
       });
   }
-  public async updatelastusedintegration(
+  public async updateLastUsediPorject(
     accesstoken: string,
     uuid: string,
-    integrationbody: any
+    porjectBody: any
   ) {
     const httpOptions: any = {
       headers: new HttpHeaders({
@@ -240,8 +222,8 @@ export class GigaaaApiService {
     };
     return await this.http
       .put(
-        this.workdeskurl_cs + '/private/integrations?organization=' + uuid,
-        integrationbody,
+        this.workdeskurl_cs + '/private/projects?organization=' + uuid,
+        porjectBody,
         httpOptions
       )
       .toPromise()

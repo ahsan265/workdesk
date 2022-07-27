@@ -27,6 +27,60 @@
 .multiSelectWrapper {
   width: 200px;
   margin-right: 10px;
+  position: relative;
+}
+
+.calendarLocationLanguage {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 11px;
+  background: #ffffff;
+  border: 1px solid rgba(208, 208, 222, 0.6);
+  box-sizing: border-box;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+::ng-deep .calendarLocationLanguage .md-drppicker {
+  right: 0 !important;
+  top: 120% !important;
+  left: auto !important;
+  width: max-content !important;
+}
+
+::ng-deep .calendarLocationLanguage .md-drppicker .ranges {
+  height: 371px;
+}
+
+.calendarSelectMenu {
+  height: 34px;
+  width: 100%;
+  cursor: pointer;
+
+  input {
+    cursor: pointer;
+    border: none;
+    width: 100%;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 160%;
+    display: flex;
+    align-items: center;
+    letter-spacing: .02em;
+    color: #162741cc;
+  }
+}
+
+.filterArrow {
+  margin-left: 10px;
+}
+
+.filterArrowRotate {
+  transform: rotate(180deg);
+  transition: all .3s;
 }
 
 .cardWrapper {

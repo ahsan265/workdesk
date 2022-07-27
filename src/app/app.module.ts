@@ -3,6 +3,7 @@ import {
   CallbackModule,
   CardModule,
   ChartWrapperModule,
+  GigaaaDatepicker,
   GigaaaHeaderModule,
   GigaaaHeaderService,
   GigaaaLandingPageModule,
@@ -77,6 +78,10 @@ import { environment } from 'src/environments/environment';
     ChartWrapperModule,
     InputFieldModule,
     ModalWrapperModule,
+    GigaaaDatepicker.forRoot({
+      applyLabel: 'Okay',
+      firstDay: 3
+    }),
     MultiSelectDropdownModule,
     OneSelectDropdownModule,
     SearchInputFieldModule,
@@ -95,4 +100,4 @@ import { environment } from 'src/environments/environment';
   ],
   bootstrap: [AppComponent]
 })
-export class AppModule {}
+export class AppModule { }

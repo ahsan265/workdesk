@@ -23,14 +23,13 @@ export class AgentSocketService {
   isSocketOpen: any;
   public AgentLiveStatus = new Subject<boolean>();
   public AgentList = new Subject<AgentList[]>();
-  constructor() {}
+  constructor() { }
 
   public callAgentSocketEndpoint() {
     const connectionId: connectionSecurityModel = JSON.parse(
       localStorage.getItem('connection-id') || '{}'
     );
-    let url =
-      this.websocket_url + '/agents?connection=' + connectionId.connection;
+    let url = this.websocket_url + '/agents?connection=' + connectionId.connection;
     this.socketStates(url);
   }
   private socketStates(url: string) {
@@ -48,8 +47,8 @@ export class AgentSocketService {
     this.ws.onmessage = (e) => {
       e.data != 'ping' ? this.getAgentList(JSON.parse(e.data)) : '';
     };
-    // this.ws.onclose = (e) => {};
-    // this.ws.onerror = (e) => {};
+    this.ws.onclose = (e) => { };
+    this.ws.onerror = (e) => { };
   }
   public sendAgentsParameter(AgentParameter: AgentParameter) {
     if (this.isSocketOpen === 1) {
@@ -98,6 +97,12 @@ export class AgentSocketService {
   private getLastUsedParams() {
     if (this.lastUsedParameter != {}) {
       this.sendAgentsParameter(this.lastUsedParameter);
+    }
+  }
+  // close the agent socket Connnection 
+  public closeAgentSocketConnection() {
+    if (this.ws?.OPEN == this.isSocketOpen) {
+      this.ws?.close();
     }
   }
 }

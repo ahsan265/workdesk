@@ -15,11 +15,11 @@ export class ConnectionSecurityService {
     private gigaaaApiService: GigaaaApiService,
     private AgentSocketService: AgentSocketService,
     private QueueSocketService: QueueSocketService
-  ) {}
+  ) { }
   public async createConnectionEndpoint(
     token: string,
     ogranizationId: string,
-    projectId: string
+    projectId: string,
   ) {
     const connection: connectionSecurityModel =
       await this.gigaaaApiService.getConnectionId(
@@ -28,7 +28,11 @@ export class ConnectionSecurityService {
         projectId
       );
     localStorage.setItem('connection-id', JSON.stringify(connection));
+    this.AgentSocketService.closeAgentSocketConnection();
+    this.QueueSocketService.closeQueueSocketConnection();
     this.AgentSocketService.callAgentSocketEndpoint();
     this.QueueSocketService.callQueueSocketEndpoint();
+
   }
+
 }

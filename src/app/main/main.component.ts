@@ -11,6 +11,8 @@ import { ReplaySubject } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { getOrganizationService } from '../workdeskServices/organizationService/organization-service.service';
 import { AgentSocketService } from '../workdeskSockets/agentSocket/agent-socket.service';
+import { GigaaaApiService } from '../workdeskServices/gigaaaApiService/gigaaa-api-service.service';
+import { CommonEndpoints } from '../commonEndpoints/commonEndpoint';
 
 @Component({
   selector: 'app-main',
@@ -34,8 +36,10 @@ export class MainComponent implements OnInit {
     public authService: AuthService,
     private AgentSocketService: AgentSocketService,
     private getOrganizationService: getOrganizationService,
-    @Inject('GigaaaHeaderService') private headerService: GigaaaHeaderService
-  ) {}
+    @Inject('GigaaaHeaderService') private headerService: GigaaaHeaderService,
+    private CommonEndpointService: CommonEndpoints,
+    private GigaaaApiService: GigaaaApiService
+  ) { }
 
   ngOnInit() {
     this.authService.pageTitle.subscribe((res: any) => {
@@ -51,7 +55,7 @@ export class MainComponent implements OnInit {
   }
 
   onGetLoggedUser(event: any) {
-    this.getOrganizationService.getOrganization(event?.api_token);
+    this.getOrganizationService.getOrganization(event.api_token);
   }
 
   isSlideOpened(slideOpened: boolean) {
@@ -59,8 +63,8 @@ export class MainComponent implements OnInit {
   }
 
   getSelectedDropdownItem(event: any) {
-    console.log(event);
-    // For sidebar dropdown
+    this.GigaaaApiService.updateLastUsediPorject(this.authService.user.value.api_token, this.CommonEndpointService.getEpsParamLocal().organization, { "project": event.uuid });
+    this.getOrganizationService.getOrganization(this.CommonEndpointService.getEpsParamLocal().token);
   }
 
   setOnlineStatus(event: boolean): void {

@@ -32,7 +32,7 @@ export class CommonEndpoints {
   constructor(private GigaaaApiService: GigaaaApiService) { }
   // get the list of countries
   public async getLocations(): Promise<MultiSelect> {
-    const countryList: SelectModelCountrySingle[] = await this.GigaaaApiService.getAllCountries();
+    const countryList: Country[] = await this.GigaaaApiService.getAllCountries();
     const countriesList: OneSelect[] = countryList.map((item: Country) => ({
       name: item.name,
       id: item.id,

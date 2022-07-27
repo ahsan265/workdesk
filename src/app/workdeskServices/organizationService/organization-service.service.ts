@@ -61,7 +61,7 @@ export class getOrganizationService {
         });
       })
       .catch((err: any) => {
-        //console.log(err);
+       // console.log(err);
       });
   }
 
@@ -78,7 +78,7 @@ export class getOrganizationService {
 
   // get projects list
   public getProjectList(project: Project[]) {
-    let lastUsedProject: any;
+    let lastUsedProject: string;
     project.forEach((data: any) => {
       if (data.last_used === true) {
         lastUsedProject = data.name;
