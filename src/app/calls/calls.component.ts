@@ -1,11 +1,14 @@
-/* eslint-disable no-undef */
 /* eslint-disable no-unused-vars */
+/* eslint-disable no-undef */
+/* eslint-disable sort-imports */
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 import { callType, languauges, searchInputData } from './callsData';
 import { filter, map } from 'rxjs/operators';
 import { AuthService } from '../services/auth.service';
 import { callsIndicatorData } from '../models/callIndicatorModel';
+import { CommonEndpoints } from '../commonEndpoints/commonEndpoint';
+import { CallsService } from './callService/calls.service';
 
 @Component({
   selector: 'app-calls',
@@ -19,15 +22,22 @@ export class CallsComponent implements OnInit {
   showIndicator = false;
   callsIndicatorData = {};
   showCalender = false;
+  selectedPage: string = "incoming";
+  languageIds: number[] = [];
+  callTypeName: string[] = [];
   constructor(
     private authService: AuthService,
     private router: Router,
-    private activatedRoute: ActivatedRoute
+    private activatedRoute: ActivatedRoute,
+    private CommonEndpoints: CommonEndpoints,
+    private CallsService: CallsService
   ) {
     this.authService.pageTitle.next('Calls');
   }
 
   ngOnInit() {
+
+    this.callInitialcall();
     this.router.events
       .pipe(
         filter((event) => event instanceof NavigationEnd),
@@ -39,7 +49,8 @@ export class CallsComponent implements OnInit {
           return child.snapshot.routeConfig.path;
         })
       )
-      .subscribe((ttl: string) => {
+      .subscribe(async (ttl: string) => {
+        this.selectedPage = ttl;
         if (ttl === 'missed') {
           this.showIndicator = true;
           const callIndicator: callsIndicatorData = {
@@ -62,10 +73,29 @@ export class CallsComponent implements OnInit {
           };
           this.callsIndicatorData = callIndicator;
           this.showCalender = true;
-        } else {
+        } else if (ttl === 'incoming') {
+
+        }
+        else if (ttl === 'ongoing') {
+
+        }
+        else {
           this.showIndicator = false;
           this.showCalender = false;
         }
       });
+  }
+
+  private async callInitialcall() {
+    this.languauges = await this.CommonEndpoints.getLanguages();
+  }
+  public languaugesOutput(languageOutput: number[]) {
+    this.languageIds = languageOutput;
+    this.CallsService.callQueueSocketByLanguageandCall(languageOutput, this.callTypeName, this.selectedPage)
+  }
+  public callOutput(callTypeOutput: any) {
+    const callType: string[] = this.CallsService.getCallTypeId(callTypeOutput);
+    this.callTypeName = callType;
+    this.CallsService.callQueueSocketByLanguageandCall(this.languageIds, callType, this.selectedPage)
   }
 }

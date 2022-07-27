@@ -1,3 +1,6 @@
+/* eslint-disable no-unused-vars */
+/* eslint-disable no-undef */
+/* eslint-disable sort-imports */
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { sidebarData } from 'src/app/data';
@@ -16,7 +19,7 @@ export class getOrganizationService {
 
   constructor(
     private gigaaaService: GigaaaApiService,
-    private sharedRes: SharedServices,
+    private SharedServices: SharedServices,
     private ConnectionSecurityService: ConnectionSecurityService
   ) {
     this.lastUsedOgranization = new BehaviorSubject(
@@ -51,14 +54,14 @@ export class getOrganizationService {
                     );
                   }
                 });
-                this.sharedRes.loadCommonEps(1);
+                this.SharedServices.loadCommonEps(1);
                 this.getProjectList(project);
               });
           }
         });
       })
-      .catch((err) => {
-        console.log(err);
+      .catch((err: any) => {
+        //console.log(err);
       });
   }
 

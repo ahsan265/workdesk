@@ -1,11 +1,14 @@
 /* eslint-disable no-unused-vars */
+/* eslint-disable no-undef */
+/* eslint-disable sort-imports */
 import {
+  agentModelData,
   agents,
   buttonData,
   dataTableSettings,
   languauges,
   oneSelect,
-  searchInputData,
+  searchInputData
 } from './agentsData';
 import { AuthService } from '../services/auth.service';
 import { Component, OnInit } from '@angular/core';
@@ -24,12 +27,13 @@ export class AgentsComponent implements OnInit {
   oneSelectData = oneSelect;
   buttonData = buttonData;
   dataTableSettings = dataTableSettings;
+  addAgentModelData = agentModelData;
   agents = agents;
   selectedLanguages: Array<number> = [];
   activeAgent: number = 1;
   inactiveAgent: number = 1;
   invitedAgent: number = 1;
-
+  showInviteModel: boolean = false;
   constructor(
     private authService: AuthService,
     private commonEndpoints: CommonEndpoints,
@@ -63,5 +67,8 @@ export class AgentsComponent implements OnInit {
       selectedType.inactive,
       selectedType.invited
     );
+  }
+  showInviteModal() {
+    this.showInviteModel = true;
   }
 }

@@ -1,4 +1,3 @@
-
 export interface QueueSocketparamter {
   call_type: string[];
   languages: number[];

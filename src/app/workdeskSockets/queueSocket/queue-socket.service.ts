@@ -1,9 +1,10 @@
+/* eslint-disable no-unused-vars */
+/* eslint-disable no-undef */
+/* eslint-disable sort-imports */
 import { Injectable } from '@angular/core';
 import { connectionSecurityModel } from 'src/app/models/connectionSecurity';
-import {
-  QueueDateRangeParam,
-  QueueSocketparamter
-} from 'src/app/models/QueueSocketModel';
+import { QueueDateRangeParam, QueueSocketparamter } from 'src/app/models/queueSocketModel';
+
 import { environment } from 'src/environments/environment';
 
 @Injectable({
@@ -38,7 +39,7 @@ export class QueueSocketService {
     this.ws.onerror = (e) => { };
   }
 
-  private sendQueueParameterr(QueueSocketparamter: QueueSocketparamter) {
+  public sendQueueParameter(QueueSocketparamter: QueueSocketparamter) {
     if (this.isSocketOpen === 1) {
       const queueParameterObject = JSON.stringify(QueueSocketparamter);
       this.ws?.send(queueParameterObject);
@@ -46,6 +47,7 @@ export class QueueSocketService {
   }
 
   public getQueueSocketList(QueueList: any) {
+    // console.log(QueueList);
   }
   public sendQueueDateParameter(QueueDateRangeParam: QueueDateRangeParam) {
     if (this.isSocketOpen === 1) {
@@ -55,9 +57,9 @@ export class QueueSocketService {
   }
 
   private SendDefaultParam() {
-    this.sendQueueParameterr({
-      call_type: ['audio', 'video'],
-      languages: [6, 56, 83, 131, 161, 175, 179],
+    this.sendQueueParameter({
+      call_type: [],
+      languages: [],
       tab: 'default'
     });
     this.sendQueueDateParameter({

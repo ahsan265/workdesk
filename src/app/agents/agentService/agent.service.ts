@@ -1,3 +1,6 @@
+/* eslint-disable no-unused-vars */
+/* eslint-disable no-undef */
+/* eslint-disable sort-imports */
 import { Injectable } from '@angular/core';
 import { OneSelect } from 'src/app/models/oneSelect';
 import { AgentSocketService } from 'src/app/workdeskSockets/agentSocket/agent-socket.service';
@@ -7,7 +10,7 @@ import { selectedAgentType } from '../agentsData';
   providedIn: 'root'
 })
 export class AgentService {
-  constructor(private AgentSocketService: AgentSocketService) { }
+  constructor(private AgentSocketService: AgentSocketService) {}
   // send agent params from agent component using service
 
   public sendAgentDefaultParameter(

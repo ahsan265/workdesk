@@ -1,3 +1,6 @@
+/* eslint-disable no-unused-vars */
+/* eslint-disable no-undef */
+/* eslint-disable sort-imports */
 import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs';
 import {
@@ -8,7 +11,6 @@ import {
   AgentParameter
 } from 'src/app/models/agentSocketModel';
 import { connectionSecurityModel } from 'src/app/models/connectionSecurity';
-import { SharedServices } from 'src/app/workdeskServices/sharedResourcesService/shared-resource-service.service';
 import { environment } from 'src/environments/environment';
 
 @Injectable({

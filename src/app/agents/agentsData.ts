@@ -156,6 +156,16 @@ const agents = [
   }
 ];
 
+const agentModelData = {
+  title: "INVITE HUMAN AGENT",
+  image: "",
+  onlyOneButton: true,
+  buttonOne: true,
+  buttonTwo: false,
+  width: '600px',
+  height: '600px',
+
+}
 export {
   languauges,
   buttonData,
@@ -163,5 +173,6 @@ export {
   oneSelect,
   dataTableSettings,
   agents,
-  selectedAgentType
+  selectedAgentType,
+  agentModelData
 };

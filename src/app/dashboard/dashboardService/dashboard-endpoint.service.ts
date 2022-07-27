@@ -1,3 +1,6 @@
+/* eslint-disable no-unused-vars */
+/* eslint-disable no-undef */
+/* eslint-disable sort-imports */
 import { Injectable } from '@angular/core';
 import { Card } from '@gigaaa/gigaaa-components/lib/models/card';
 import { OneSelect } from '@gigaaa/gigaaa-components/lib/models/oneSelect';

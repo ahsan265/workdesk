@@ -1,5 +1,6 @@
+/* eslint-disable no-unused-vars */
+/* eslint-disable no-undef */
 import { Injectable } from '@angular/core';
-import { Subject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'

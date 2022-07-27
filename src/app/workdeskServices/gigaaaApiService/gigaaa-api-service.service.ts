@@ -1,10 +1,13 @@
+/* eslint-disable no-unused-vars */
+/* eslint-disable no-undef */
+/* eslint-disable sort-imports */
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Subject } from 'rxjs';
 import { environment } from 'src/environments/environment';
-import { AuthService } from 'src/app/services/auth.service';
 import { User } from 'src/app/models/user';
+import { AuthService } from 'src/app/services/auth.service';
 @Injectable({
   providedIn: 'root'
 })
@@ -18,16 +21,18 @@ export class GigaaaApiService {
   private workdeskurl_cs = `${environment.prod_url_cs}`;
   private gigaabackendUlr = `${environment.prod_url_workdesk}`;
   private workdeskanalytics = `${environment.prod_anlytics}`;
-  private httpOptions: any = {
-    headers: new HttpHeaders({
-      'Content-Type': 'application/json',
-      Accept: 'application/json'
-    })
-  };
+
+
   constructor(private http: HttpClient, private authService: AuthService) {
     this.getagentdata$ = this.agentdatasubject.asObservable().pipe();
   }
-
+  private getHeaders() {
+    return {
+      'Content-Type': 'application/json',
+      Accept: 'application/json',
+      Authorization: `Bearer ${this.authService.getLoggedUser()?.api_token}`
+    };
+  }
   getCurrentUser(token: any): Observable<User> {
     return this.http.get<User>(`${environment.currentUser}`, {
       headers: {
@@ -55,38 +60,22 @@ export class GigaaaApiService {
       .toPromise();
   }
 
-  public getAllCountries(accesstoken: string): Promise<any> {
-    const httpOptions: any = {
-      headers: new HttpHeaders({
-        'Content-Type': 'application/json',
-        Accept: 'application/json',
-        Authorization: `Bearer ${accesstoken}`
-      })
-    };
+  public getAllCountries(): Promise<any> {
+    const httpOptions: any = this.getHeaders()
     return this.http
       .get(this.gigaabackendUlr + '/statics/public/countries', httpOptions)
       .toPromise();
   }
 
   public getAllLanguages(
-    accesstoken: any,
-    orgid: any,
-    intid: any
   ): Promise<any> {
-    const httpOptions: any = {
-      headers: new HttpHeaders({
-        'Content-Type': 'application/json',
-        Accept: 'application/json',
-        Authorization: `Bearer ${accesstoken}`
-      })
-    };
+    const httpOptions: any =
+      this.getHeaders();
+
     return this.http
       .get(
-        this.workdeskurl_cs +
-          '/private-project/languages?organization=' +
-          orgid +
-          '&project=' +
-          intid,
+        this.gigaabackendUlr +
+        '/statics/public/languages/officially-supported',
         httpOptions
       )
       .toPromise();
@@ -147,18 +136,18 @@ export class GigaaaApiService {
     };
     return this.http.get(
       this.workdeskurl_cs +
-        '/private/agents?show_active=' +
-        show_active +
-        '&show_invited=' +
-        show_invited +
-        '&show_inactive=' +
-        show_inactive +
-        '&languages=' +
-        languages +
-        '&organization=' +
-        subsid +
-        '&integration=' +
-        intid,
+      '/private/agents?show_active=' +
+      show_active +
+      '&show_invited=' +
+      show_invited +
+      '&show_inactive=' +
+      show_inactive +
+      '&languages=' +
+      languages +
+      '&organization=' +
+      subsid +
+      '&integration=' +
+      intid,
       httpOptions
     );
   }
@@ -174,10 +163,10 @@ export class GigaaaApiService {
     };
     return this.http.get(
       this.workdeskurl_cs +
-        '/statistics?subscription=' +
-        subsid +
-        '&integration=' +
-        intid,
+      '/statistics?subscription=' +
+      subsid +
+      '&integration=' +
+      intid,
       httpOptions
     );
   }
@@ -197,11 +186,11 @@ export class GigaaaApiService {
 
     return this.http.get(
       this.workdeskurl_cs +
-        'queue?organization=' +
-        orgid +
-        '&integration=' +
-        intid +
-        '&languages=',
+      'queue?organization=' +
+      orgid +
+      '&integration=' +
+      intid +
+      '&languages=',
       httpOptions
     );
   }
@@ -303,10 +292,10 @@ export class GigaaaApiService {
     return await this.http
       .post(
         this.workdeskurl_cs +
-          '/private/start-call?organization=' +
-          orguuid +
-          '&project=' +
-          intid,
+        '/private/start-call?organization=' +
+        orguuid +
+        '&project=' +
+        intid,
         id,
         httpOptions
       )
@@ -334,10 +323,10 @@ export class GigaaaApiService {
     formdata.append('image', file);
     return this.http.post(
       this.workdeskurl_cs +
-        '/private/agents/image?organization=' +
-        subsid +
-        '&integration=' +
-        intgid,
+      '/private/agents/image?organization=' +
+      subsid +
+      '&integration=' +
+      intgid,
       formdata,
       httpOptions
     );
@@ -362,12 +351,12 @@ export class GigaaaApiService {
     formdata.append('image', file);
     return this.http.post(
       this.workdeskurl_cs +
-        '/private/agents/image?organization=' +
-        orgid +
-        '&integration=' +
-        intgid +
-        '&agent=' +
-        uuid,
+      '/private/agents/image?organization=' +
+      orgid +
+      '&integration=' +
+      intgid +
+      '&agent=' +
+      uuid,
       formdata,
       httpOptions
     );
@@ -390,10 +379,10 @@ export class GigaaaApiService {
     return await this.http
       .put(
         this.workdeskurl_cs +
-          '/customer-support/agents/' +
-          id +
-          '?subscription=' +
-          subsid,
+        '/customer-support/agents/' +
+        id +
+        '?subscription=' +
+        subsid,
         addrole,
         httpOptions
       )
@@ -414,10 +403,10 @@ export class GigaaaApiService {
     };
     return this.http.get(
       this.gigaabackendUlr +
-        '/workdesk/visitors?organization=' +
-        orgid +
-        '&integration=' +
-        intid,
+      '/workdesk/visitors?organization=' +
+      orgid +
+      '&integration=' +
+      intid,
       httpOptions
     );
   }
@@ -433,10 +422,10 @@ export class GigaaaApiService {
     };
     return this.http.get(
       this.workdeskurl_cs +
-        '/private-project/is-admin?organization=' +
-        orgid +
-        '&project=' +
-        intid,
+      '/private-project/is-admin?organization=' +
+      orgid +
+      '&project=' +
+      intid,
       httpOptions
     );
   }
@@ -452,10 +441,10 @@ export class GigaaaApiService {
     };
     return this.http.get(
       this.workdeskurl_cs +
-        'queue/websocket/access-token?organization=' +
-        orgid +
-        '&integration=' +
-        intid,
+      'queue/websocket/access-token?organization=' +
+      orgid +
+      '&integration=' +
+      intid,
       httpOptions
     );
   }
@@ -479,10 +468,10 @@ export class GigaaaApiService {
     return await this.http
       .post(
         this.workdeskurl_cs +
-          '/private/invitation?organization=' +
-          uuid +
-          '&integration=' +
-          intid,
+        '/private/invitation?organization=' +
+        uuid +
+        '&integration=' +
+        intid,
         agentdata,
         httpOptions
       )
@@ -533,12 +522,12 @@ export class GigaaaApiService {
     return this.http
       .delete(
         this.workdeskurl_cs +
-          '/private/agents/' +
-          agentuuid +
-          '?organization=' +
-          orgid +
-          '&integration=' +
-          intid,
+        '/private/agents/' +
+        agentuuid +
+        '?organization=' +
+        orgid +
+        '&integration=' +
+        intid,
         httpOptions
       )
       .toPromise()
@@ -562,10 +551,10 @@ export class GigaaaApiService {
     };
     return this.http.get(
       this.workdeskurl_cs +
-        '/private/is-online?organization=' +
-        orgid +
-        '&integration=' +
-        intid,
+      '/private/is-online?organization=' +
+      orgid +
+      '&integration=' +
+      intid,
       httpOptions
     );
   }
@@ -587,10 +576,10 @@ export class GigaaaApiService {
     return await this.http
       .put(
         this.workdeskurl_cs +
-          '/private/is-online?organization=' +
-          orgid +
-          '&integration=' +
-          intid,
+        '/private/is-online?organization=' +
+        orgid +
+        '&integration=' +
+        intid,
         online,
         httpOptions
       )
@@ -617,12 +606,12 @@ export class GigaaaApiService {
     return await this.http
       .post(
         this.workdeskurl_cs +
-          '/private/invitation/resend?agent=' +
-          agentuuid +
-          '&organization=' +
-          orgid +
-          '&integration=' +
-          intid,
+        '/private/invitation/resend?agent=' +
+        agentuuid +
+        '&organization=' +
+        orgid +
+        '&integration=' +
+        intid,
         {},
         httpOptions
       )
@@ -651,12 +640,12 @@ export class GigaaaApiService {
     return await this.http
       .put(
         this.workdeskurl_cs +
-          '/private/agents/' +
-          agentuuid +
-          '?organization=' +
-          orgid +
-          '&integration=' +
-          intid,
+        '/private/agents/' +
+        agentuuid +
+        '?organization=' +
+        orgid +
+        '&integration=' +
+        intid,
         agentbody,
         httpOptions
       )
@@ -697,16 +686,16 @@ export class GigaaaApiService {
     };
     return this.http.get(
       this.workdeskanalytics +
-        '/analytics/counts?organization=' +
-        orgid +
-        '&project=' +
-        intid +
-        '&time=' +
-        time +
-        '&languages=' +
-        languages +
-        '&countries=' +
-        countries,
+      '/analytics/counts?organization=' +
+      orgid +
+      '&project=' +
+      intid +
+      '&time=' +
+      time +
+      '&languages=' +
+      languages +
+      '&countries=' +
+      countries,
       httpOptions
     );
   }
@@ -732,20 +721,20 @@ export class GigaaaApiService {
 
     return this.http.get(
       this.workdeskanalytics +
-        '/analytics/aggregates?organization=' +
-        orgid +
-        '&project=' +
-        intid +
-        '&time=' +
-        time +
-        '&languages=' +
-        languages +
-        '&countries=' +
-        countries +
-        '&date_from=' +
-        date_from +
-        '&date_to=' +
-        date_to,
+      '/analytics/aggregates?organization=' +
+      orgid +
+      '&project=' +
+      intid +
+      '&time=' +
+      time +
+      '&languages=' +
+      languages +
+      '&countries=' +
+      countries +
+      '&date_from=' +
+      date_from +
+      '&date_to=' +
+      date_to,
       httpOptions
     );
   }
@@ -771,21 +760,21 @@ export class GigaaaApiService {
 
     return this.http.get(
       this.workdeskanalytics +
-        '/analytics/plugin/stats/users?organization=' +
-        orgid +
-        '&integration=' +
-        intid +
-        '&date_from=' +
-        date_from +
-        '&date_to=' +
-        date_to +
-        '&languages=' +
-        languages +
-        '&countries=' +
-        countries +
-        '&date_range=including' +
-        '&time=' +
-        time,
+      '/analytics/plugin/stats/users?organization=' +
+      orgid +
+      '&integration=' +
+      intid +
+      '&date_from=' +
+      date_from +
+      '&date_to=' +
+      date_to +
+      '&languages=' +
+      languages +
+      '&countries=' +
+      countries +
+      '&date_range=including' +
+      '&time=' +
+      time,
       httpOptions
     );
   }
@@ -810,21 +799,21 @@ export class GigaaaApiService {
 
     return this.http.get(
       this.workdeskanalytics +
-        '/analytics/plugin/stats/visitors?organization=' +
-        orgid +
-        '&integration=' +
-        intid +
-        '&date_from=' +
-        date_from +
-        '&date_to=' +
-        date_to +
-        '&languages=' +
-        languages +
-        '&countries=' +
-        countries +
-        '&date_range=including' +
-        '&time=' +
-        time,
+      '/analytics/plugin/stats/visitors?organization=' +
+      orgid +
+      '&integration=' +
+      intid +
+      '&date_from=' +
+      date_from +
+      '&date_to=' +
+      date_to +
+      '&languages=' +
+      languages +
+      '&countries=' +
+      countries +
+      '&date_range=including' +
+      '&time=' +
+      time,
       httpOptions
     );
   }
@@ -845,10 +834,10 @@ export class GigaaaApiService {
     return await this.http
       .get(
         this.workdeskurl_cs +
-          '/private-project/agent?organization=' +
-          orgid +
-          '&project=' +
-          intid,
+        '/private-project/agent?organization=' +
+        orgid +
+        '&project=' +
+        intid,
         httpOptions
       )
       .toPromise()
@@ -876,16 +865,16 @@ export class GigaaaApiService {
     };
     return this.http.get(
       this.workdeskanalytics +
-        '/analytics/plugin/users/total?organization=' +
-        orgid +
-        '&integration=' +
-        intid +
-        '&time=' +
-        time +
-        '&languages=' +
-        languages +
-        '&countries=' +
-        countries,
+      '/analytics/plugin/users/total?organization=' +
+      orgid +
+      '&integration=' +
+      intid +
+      '&time=' +
+      time +
+      '&languages=' +
+      languages +
+      '&countries=' +
+      countries,
       httpOptions
     );
   }
@@ -907,16 +896,16 @@ export class GigaaaApiService {
     };
     return this.http.get(
       this.workdeskanalytics +
-        '/analytics/plugin/users/unique?organization=' +
-        orgid +
-        '&integration=' +
-        intid +
-        '&time=' +
-        time +
-        '&languages=' +
-        languages +
-        '&countries=' +
-        countries,
+      '/analytics/plugin/users/unique?organization=' +
+      orgid +
+      '&integration=' +
+      intid +
+      '&time=' +
+      time +
+      '&languages=' +
+      languages +
+      '&countries=' +
+      countries,
       httpOptions
     );
   }
@@ -940,20 +929,20 @@ export class GigaaaApiService {
     };
     return this.http.get(
       this.workdeskanalytics +
-        '/analytics/plugin/users/sessions?organization=' +
-        orgid +
-        '&integration=' +
-        intid +
-        '&time=' +
-        time +
-        '&languages=' +
-        languages +
-        '&countries=' +
-        countries +
-        '&date_from=' +
-        date_from +
-        '&date_to=' +
-        date_to,
+      '/analytics/plugin/users/sessions?organization=' +
+      orgid +
+      '&integration=' +
+      intid +
+      '&time=' +
+      time +
+      '&languages=' +
+      languages +
+      '&countries=' +
+      countries +
+      '&date_from=' +
+      date_from +
+      '&date_to=' +
+      date_to,
       httpOptions
     );
   }
@@ -975,16 +964,16 @@ export class GigaaaApiService {
     };
     return this.http.get(
       this.workdeskanalytics +
-        '/analytics/plugin/visitors/total?organization=' +
-        orgid +
-        '&integration=' +
-        intid +
-        '&time=' +
-        time +
-        '&languages=' +
-        languages +
-        '&countries=' +
-        countries,
+      '/analytics/plugin/visitors/total?organization=' +
+      orgid +
+      '&integration=' +
+      intid +
+      '&time=' +
+      time +
+      '&languages=' +
+      languages +
+      '&countries=' +
+      countries,
       httpOptions
     );
   }
@@ -1006,16 +995,16 @@ export class GigaaaApiService {
     };
     return this.http.get(
       this.workdeskanalytics +
-        '/analytics/plugin/visitors/unique?organization=' +
-        orgid +
-        '&integration=' +
-        intid +
-        '&time=' +
-        time +
-        '&languages=' +
-        languages +
-        '&countries=' +
-        countries,
+      '/analytics/plugin/visitors/unique?organization=' +
+      orgid +
+      '&integration=' +
+      intid +
+      '&time=' +
+      time +
+      '&languages=' +
+      languages +
+      '&countries=' +
+      countries,
       httpOptions
     );
   }
@@ -1039,20 +1028,20 @@ export class GigaaaApiService {
     };
     return this.http.get(
       this.workdeskanalytics +
-        '/analytics/plugin/visitors/sessions?organization=' +
-        orgid +
-        '&integration=' +
-        intid +
-        '&time=' +
-        time +
-        '&languages=' +
-        languages +
-        '&countries=' +
-        countries +
-        '&date_from=' +
-        date_from +
-        '&date_to=' +
-        date_to,
+      '/analytics/plugin/visitors/sessions?organization=' +
+      orgid +
+      '&integration=' +
+      intid +
+      '&time=' +
+      time +
+      '&languages=' +
+      languages +
+      '&countries=' +
+      countries +
+      '&date_from=' +
+      date_from +
+      '&date_to=' +
+      date_to,
       httpOptions
     );
   }

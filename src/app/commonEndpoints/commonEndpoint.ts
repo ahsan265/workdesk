@@ -1,10 +1,17 @@
-import { Injectable } from '@angular/core';
+/* eslint-disable no-unused-vars */
+/* eslint-disable no-undef */
+/* eslint-disable sort-imports */
+import { Injectable, IterableDiffers } from '@angular/core';
+import { Country } from '../models/country';
+import { language } from '../models/language';
+import { Languages } from '../models/languages';
 import { MultiSelect } from '../models/multiSelect';
 import { OneSelect } from '../models/oneSelect';
 import {
   SelectionModel,
   SelectionModelCountry
 } from '../models/selectionModel';
+import { SelectModelCountrySingle } from '../models/selectionModelCountry';
 import { GigaaaApiService } from '../workdeskServices/gigaaaApiService/gigaaa-api-service.service';
 
 @Injectable({
@@ -22,58 +29,50 @@ export class CommonEndpoints {
     showSearchBar: true,
     data: []
   };
-  constructor(private GigaaaApiService: GigaaaApiService) {}
+  constructor(private GigaaaApiService: GigaaaApiService) { }
   // get the list of countries
   public async getLocations(): Promise<MultiSelect> {
-    if (this.getEpsParamLocal().project != undefined) {
-      const countryList: SelectionModelCountry[] =
-        await this.GigaaaApiService.getAllCountries(
-          this.getEpsParamLocal().token
-        );
-      const countriesList = countryList.map((item: any) =>
-        Object.assign(item, { selected: false })
-      );
-      let sortedCountry = countriesList.sort((cOne: any, cTwo: any) => {
-        let countryOne = cOne.name;
-        let countryTwo = cTwo.name;
-        return countryOne < countryTwo ? -1 : countryOne > countryTwo ? 1 : 0;
-      });
-      this.countryArray = sortedCountry;
-      const countryListArray: MultiSelect = {
-        title: 'Location',
-        showSelectAll: true,
-        showSearchBar: true,
-        data: sortedCountry
-      };
-      return countryListArray;
-    } else {
-      return this.nullMultiSelect;
-    }
+    const countryList: SelectModelCountrySingle[] = await this.GigaaaApiService.getAllCountries();
+    const countriesList: OneSelect[] = countryList.map((item: Country) => ({
+      name: item.name,
+      id: item.id,
+      selected: false,
+    }));
+
+    let sortedCountry = countriesList.sort((cOne: OneSelect, cTwo: OneSelect) => {
+      let countryOne = cOne.name;
+      let countryTwo = cTwo.name;
+      return countryOne < countryTwo ? -1 : countryOne > countryTwo ? 1 : 0;
+    });
+    this.countryArray = sortedCountry;
+    const countryListArray: MultiSelect = {
+      title: 'Location',
+      showSelectAll: true,
+      showSearchBar: true,
+      data: sortedCountry
+    };
+    return countryListArray;
+
   }
   // get list of languages()
 
   public async getLanguages(): Promise<MultiSelect> {
-    if (this.getEpsParamLocal().project != undefined) {
-      const languages: OneSelect[] =
-        await this.GigaaaApiService.getAllLanguages(
-          this.getEpsParamLocal().token,
-          this.getEpsParamLocal().organization,
-          this.getEpsParamLocal().project
-        );
-      const languagesList = languages.map((item: any) =>
-        Object.assign(item, { selected: false })
-      );
-      this.languageArray = languagesList;
-      const languageListArray: MultiSelect = {
-        title: 'Language',
-        showSelectAll: true,
-        showSearchBar: true,
-        data: languagesList
-      };
-      return languageListArray;
-    } else {
-      return this.nullMultiSelect;
-    }
+
+    const languages: language[] = await this.GigaaaApiService.getAllLanguages();
+    const languageSelected: OneSelect[] = languages.map((item: language) => ({
+      name: item.name,
+      id: item.id,
+      selected: false,
+    }));
+    this.languageArray = languages;
+    const languageListArray: MultiSelect = {
+      title: 'Language',
+      showSelectAll: true,
+      showSearchBar: true,
+      data: languageSelected
+    };
+    return languageListArray;
+
   }
 
   // get data token, organization , project from local storage
@@ -149,4 +148,6 @@ export class CommonEndpoints {
     }
     return this.idsOfLocations;
   }
+
+
 }

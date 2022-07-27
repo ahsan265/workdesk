@@ -1,5 +1,6 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable no-undef */
+/* eslint-disable sort-imports */
 import { ChartConfiguration, ChartData, ChartType } from 'chart.js';
 import { Component, ViewChild } from '@angular/core';
 import {
@@ -96,11 +97,10 @@ export class DashboardComponent {
     });
   }
   private async callRouteLoad(): Promise<void> {
-    if (this.commonEps.getEpsParamLocal().project != undefined) {
+    
       this.countries = await this.commonEps.getLocations();
       this.languauges = await this.commonEps.getLanguages();
-      this.idOfLocation = this.commonEps.getIdsOfLocation();
-      this.idOfLanguage = this.commonEps.getIdsOfLanguage();
+      if (this.commonEps.getEpsParamLocal().project != undefined) {
       this.dashboardEps.getCarddata(
         this.commonEps.getIdsOfLanguage(),
         this.commonEps.getIdsOfLocation()
@@ -114,8 +114,6 @@ export class DashboardComponent {
   private getFirstLoad(): void {
     this.sharedRes.LoadcommonEpsubject.subscribe(async (data) => {
       if (data == 1) {
-        this.countries = await this.commonEps.getLocations();
-        this.languauges = await this.commonEps.getLanguages();
         this.idOfLocation = this.commonEps.getIdsOfLocation();
         this.idOfLanguage = this.commonEps.getIdsOfLanguage();
         this.dashboardEps.getCarddata(this.idOfLanguage, this.idOfLocation);
