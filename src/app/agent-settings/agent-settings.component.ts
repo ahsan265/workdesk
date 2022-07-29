@@ -12,6 +12,9 @@ import {
 import { ActivatedRoute } from '@angular/router';
 import { Agent } from '../models/agent';
 import { InputData } from '@gigaaa/gigaaa-components/lib/models/input';
+import { AuthService } from '../services/auth.service';
+import { AgentSocketService } from '../workdeskSockets/agentSocket/agent-socket.service';
+import { AgentList } from '../models/agentSocketModel';
 
 @Component({
   selector: 'app-agent-settings',
@@ -27,9 +30,11 @@ export class AgentSettingsComponent implements OnInit {
   backButtonData = backButtonData;
   saveButtonData = saveButtonData;
   switchButtonData = switchButtonData;
-  constructor(private activatedRoute: ActivatedRoute) {}
+  constructor(private activatedRoute: ActivatedRoute,private authService:AuthService,
+    private AgentSocketService:AgentSocketService) {}
 
   ngOnInit(): void {
+    this.authService.pageTitle.next('Settings');
     this.agentId = Number(this.activatedRoute.snapshot.params.id);
     this.getAgent();
   }
@@ -37,11 +42,10 @@ export class AgentSettingsComponent implements OnInit {
   onGetInputValue(event: any) {
     console.log(event);
   }
-  getAgent(): Agent | undefined {
-    this.agents = agents;
-    return (this.selectedAgent = this.agents.find(
-      (agent: Agent) => agent.id === this.agentId
-    ));
+  getAgent() {
+    // return (this.selectedAgent = this.agents.find(
+    //   (agent: Agent) => agent.id === this.agentId
+    // ));
   }
 
   onGetSwitchButtonValue(event: any) {

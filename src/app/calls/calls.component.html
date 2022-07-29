@@ -1,15 +1,15 @@
 <div class="menuWrapper">
   <ul class="callsUl">
-    <li class="callsLi" [routerLinkActive]="['active','callsActive']">
+    <li class="callsLi" [routerLinkActive]="['active', 'callsActive']">
       <a class="callsA" routerLink="incoming">Incoming</a>
     </li>
-    <li class="callsLi" [routerLinkActive]="['active','callsActive']">
+    <li class="callsLi" [routerLinkActive]="['active', 'callsActive']">
       <a class="callsA" routerLink="ongoing">Ongoing</a>
     </li>
-    <li class="callsLi" [routerLinkActive]="['active','callsActive']">
+    <li class="callsLi" [routerLinkActive]="['active', 'callsActive']">
       <a class="callsA" routerLink="missed">Missed</a>
     </li>
-    <li class="callsLi" [routerLinkActive]="['active','callsActive']">
+    <li class="callsLi" [routerLinkActive]="['active', 'callsActive']">
       <a class="callsA" routerLink="answered">Answered</a>
     </li>
   </ul>
@@ -18,17 +18,26 @@
   <div class="filterWrapper">
     <div class="leftFilter">
       <div class="multiSelectWrapper">
-        <app-multi-select-dropdown [multiSelectData]="languauges" (multiSelectOutput)="languaugesOutput($event)">
+        <app-multi-select-dropdown
+          [multiSelectData]="languauges"
+          (multiSelectOutput)="languaugesOutput($event)"
+        >
         </app-multi-select-dropdown>
       </div>
       <div class="multiSelectWrapper">
-        <app-calls-indicator *ngIf="showIndicator" [callsIndicatorData]="callsIndicatorData">
+        <app-calls-indicator
+          *ngIf="showIndicator"
+          [callsIndicatorData]="callsIndicatorData"
+        >
         </app-calls-indicator>
       </div>
     </div>
     <div class="rightFilter">
       <div class="multiSelectWrapper callType">
-        <app-multi-select-dropdown [multiSelectData]="callType" (multiSelectOutput)="callOutput($event)">
+        <app-multi-select-dropdown
+          [multiSelectData]="callType"
+          (multiSelectOutput)="callOutput($event)"
+        >
         </app-multi-select-dropdown>
       </div>
       <div class="multiSelectWrapper" *ngIf="showCalender">
@@ -36,7 +45,9 @@
         </app-multi-select-dropdown>
       </div>
       <div class="multiSelectWrapper">
-        <app-search-input-field [searchInputData]="searchInputData"></app-search-input-field>
+        <app-search-input-field
+          [searchInputData]="searchInputData"
+        ></app-search-input-field>
       </div>
     </div>
   </div>

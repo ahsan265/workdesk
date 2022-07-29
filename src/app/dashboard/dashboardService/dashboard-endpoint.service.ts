@@ -27,10 +27,14 @@ export class DashboardEndpointService {
     private commoneps: CommonEndpoints,
     private chartLabel: ChartLabel,
     private chartsData: ChartsData,
-    private calanderService:CalendarService
+    private calanderService: CalendarService
   ) {}
   // call the cards count endpoint for
-  public getCarddata(languages: Array<OneSelect>, location: Array<OneSelect>,selectedRange:string) {
+  public getCarddata(
+    languages: Array<OneSelect>,
+    location: Array<OneSelect>,
+    selectedRange: string
+  ) {
     const epParams = this.commoneps.getEpsParamLocal();
     this.GigaaaApiService.getcallstatistics(
       epParams.token,
@@ -53,14 +57,15 @@ export class DashboardEndpointService {
       const percencateAwnseredCard = this.getpercentagecalculated(
         data['answered'].increase
       );
-     const relatedDateRange= this.calanderService.getRelatedDateRange(selectedRange)
+      const relatedDateRange =
+        this.calanderService.getRelatedDateRange(selectedRange);
       // cards model data
       const incomingCardRes = this.fillDashboardCardData(
         this.icomingIcon,
         'Total Incoming',
         '#EDEDF6',
         incomingCard,
-        ' % vs '+relatedDateRange,
+        ' % vs ' + relatedDateRange,
         percencateIncomingCard
       );
       const missedCardRes = this.fillDashboardCardData(
@@ -68,7 +73,7 @@ export class DashboardEndpointService {
         'Total Missed',
         '#F9EBEF',
         missedCard,
-        ' % vs '+relatedDateRange,
+        ' % vs ' + relatedDateRange,
         percencateMissedCard
       );
       const answeredCardRes = this.fillDashboardCardData(
@@ -76,7 +81,7 @@ export class DashboardEndpointService {
         'Total Answered',
         '#EBF7DD',
         answeredCard,
-        ' % vs '+relatedDateRange,
+        ' % vs ' + relatedDateRange,
         percencateAwnseredCard
       );
       const finalCardsData = {
@@ -124,10 +129,10 @@ export class DashboardEndpointService {
   // call the charts  endpoint f
   public getChartData(
     languages: Array<OneSelect>,
-    locations: Array<OneSelect>
-    ,selectedRange:string,
-    startDate:string,
-    endDate:string
+    locations: Array<OneSelect>,
+    selectedRange: string,
+    startDate: string,
+    endDate: string
   ) {
     const epParams = this.commoneps.getEpsParamLocal();
     this.GigaaaApiService.getcallchart(

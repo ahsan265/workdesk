@@ -29,21 +29,24 @@ export class CommonEndpoints {
     showSearchBar: true,
     data: []
   };
-  constructor(private GigaaaApiService: GigaaaApiService) { }
+  constructor(private GigaaaApiService: GigaaaApiService) {}
   // get the list of countries
   public async getLocations(): Promise<MultiSelect> {
-    const countryList: Country[] = await this.GigaaaApiService.getAllCountries();
+    const countryList: Country[] =
+      await this.GigaaaApiService.getAllCountries();
     const countriesList: OneSelect[] = countryList.map((item: Country) => ({
       name: item.name,
       id: item.id,
-      selected: false,
+      selected: false
     }));
 
-    let sortedCountry = countriesList.sort((cOne: OneSelect, cTwo: OneSelect) => {
-      let countryOne = cOne.name;
-      let countryTwo = cTwo.name;
-      return countryOne < countryTwo ? -1 : countryOne > countryTwo ? 1 : 0;
-    });
+    let sortedCountry = countriesList.sort(
+      (cOne: OneSelect, cTwo: OneSelect) => {
+        let countryOne = cOne.name;
+        let countryTwo = cTwo.name;
+        return countryOne < countryTwo ? -1 : countryOne > countryTwo ? 1 : 0;
+      }
+    );
     this.countryArray = sortedCountry;
     const countryListArray: MultiSelect = {
       title: 'Location',
@@ -52,17 +55,15 @@ export class CommonEndpoints {
       data: sortedCountry
     };
     return countryListArray;
-
   }
   // get list of languages()
 
   public async getLanguages(): Promise<MultiSelect> {
-
     const languages: language[] = await this.GigaaaApiService.getAllLanguages();
     const languageSelected: OneSelect[] = languages.map((item: language) => ({
       name: item.name,
       id: item.id,
-      selected: false,
+      selected: false
     }));
     this.languageArray = languages;
     const languageListArray: MultiSelect = {
@@ -72,7 +73,6 @@ export class CommonEndpoints {
       data: languageSelected
     };
     return languageListArray;
-
   }
 
   // get data token, organization , project from local storage
@@ -148,6 +148,4 @@ export class CommonEndpoints {
     }
     return this.idsOfLocations;
   }
-
-
 }

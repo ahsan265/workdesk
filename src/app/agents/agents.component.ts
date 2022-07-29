@@ -15,6 +15,8 @@ import { Component, OnInit } from '@angular/core';
 import { CommonEndpoints } from '../commonEndpoints/commonEndpoint';
 import { OneSelect } from '../models/oneSelect';
 import { AgentService } from './agentService/agent.service';
+import { AgentSocketService } from '../workdeskSockets/agentSocket/agent-socket.service';
+import { AgentList } from '../models/agentSocketModel';
 
 @Component({
   selector: 'app-agents',
@@ -37,12 +39,14 @@ export class AgentsComponent implements OnInit {
   constructor(
     private authService: AuthService,
     private commonEndpoints: CommonEndpoints,
-    private AgentService: AgentService
+    private AgentService: AgentService,
+    private AgentSocketService:AgentSocketService
   ) {
     this.authService.pageTitle.next('Agents');
   }
   ngOnInit(): void {
     this.callCommonEndpoints();
+    this.getAgentList();
   }
   private async callCommonEndpoints() {
     this.languauges = await this.commonEndpoints.getLanguages();
@@ -70,5 +74,12 @@ export class AgentsComponent implements OnInit {
   }
   showInviteModal() {
     this.showInviteModel = true;
+  }
+
+  getAgentList()
+  {
+    this.AgentSocketService.AgentListSubject.subscribe((data:AgentList[])=>{
+      console.log(data)
+    })
   }
 }

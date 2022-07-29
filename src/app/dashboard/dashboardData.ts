@@ -80,5 +80,4 @@ const ranges: any = {
   ]
 };
 
-
-export { oneSelectData, countries, languauges, cardDataTotalVisitors ,ranges};
+export { oneSelectData, countries, languauges, cardDataTotalVisitors, ranges };

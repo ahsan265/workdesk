@@ -43,6 +43,7 @@ import { NgxPaginationModule } from 'ngx-pagination';
 import { OngoingComponent } from './calls/ongoing/ongoing.component';
 import { PageWrapperComponent } from './components/page-wrapper/page-wrapper.component';
 import { environment } from 'src/environments/environment';
+import { LinkExpireModalComponent } from './link-expire-modal/link-expire-modal.component';
 
 @NgModule({
   declarations: [
@@ -63,7 +64,8 @@ import { environment } from 'src/environments/environment';
     PageWrapperComponent,
     AgentSettingsComponent,
     CallsIndicatorComponent,
-    LandingPageComponent
+    LandingPageComponent,
+    LinkExpireModalComponent
   ],
   imports: [
     BrowserModule,
@@ -100,4 +102,4 @@ import { environment } from 'src/environments/environment';
   ],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {}

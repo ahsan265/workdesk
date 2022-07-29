@@ -6,6 +6,7 @@ import { BehaviorSubject } from 'rxjs';
 import { sidebarData } from 'src/app/data';
 import { Organization, Project } from 'src/app/models/organization';
 import { ConnectionSecurityService } from 'src/app/workdeskSockets/socketConnectionSecurity/connection-security.service';
+import { AgentInviteService } from '../agentInviteService/agent-invite.service';
 import { GigaaaApiService } from '../gigaaaApiService/gigaaa-api-service.service';
 import { SharedServices } from '../sharedResourcesService/shared-resource-service.service';
 
@@ -20,6 +21,7 @@ export class getOrganizationService {
   constructor(
     private gigaaaService: GigaaaApiService,
     private SharedServices: SharedServices,
+    private AgentinviteService: AgentInviteService,
     private ConnectionSecurityService: ConnectionSecurityService
   ) {
     this.lastUsedOgranization = new BehaviorSubject(
@@ -29,6 +31,7 @@ export class getOrganizationService {
   }
   // get organization for workdesk
   public getOrganization(token: string) {
+    this.AgentinviteService.sendtAgentInvitationCode();
     this.gigaaaService
       .getOrganization(token)
       .then((data: any) => {
@@ -61,7 +64,7 @@ export class getOrganizationService {
         });
       })
       .catch((err: any) => {
-       // console.log(err);
+        // console.log(err);
       });
   }
 

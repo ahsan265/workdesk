@@ -1,6 +1,6 @@
 export interface language {
-    code: string;
-    id: number;
-    locale: string
-    name: string;
+  code: string;
+  id: number;
+  locale: string;
+  name: string;
 }

@@ -1,4 +1,5 @@
-<gigaaa-landing-page
-  [landingPageData]="landingPageData"
-  (login)="onLogin($event)"
-></gigaaa-landing-page>
+<gigaaa-landing-page [landingPageData]="landingPageData" (login)="onLogin($event)"></gigaaa-landing-page>
+
+<app-modal-wrapper  *ngIf="showLinkExpireModal">
+    <app-link-expire-modal></app-link-expire-modal>
+</app-modal-wrapper>

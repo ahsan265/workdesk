@@ -6,7 +6,7 @@ import { Injectable } from '@angular/core';
   providedIn: 'root'
 })
 export class ChartLabel {
-  constructor() {}
+  constructor() { }
   caculateChartLabels(
     labelArray: Array<any>,
     range: string,
@@ -16,7 +16,6 @@ export class ChartLabel {
     labelArray.forEach((element) => {
       let date = new Date(element.date).toDateString();
       let update = date.substring(0, date.length - 4);
-
       if (numberofBars === 1) {
         label.push(update);
       } else if (numberofBars === 7) {

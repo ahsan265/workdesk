@@ -4,6 +4,7 @@ import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../services/auth.service';
 import { GigaaaHeaderService } from '@gigaaa/gigaaa-components';
 import { Router } from '@angular/router';
+import { AgentInviteService } from '../workdeskServices/agentInviteService/agent-invite.service';
 
 @Component({
   selector: 'app-landing-page',
@@ -11,6 +12,7 @@ import { Router } from '@angular/router';
   styleUrls: ['./landing-page.component.scss']
 })
 export class LandingPageComponent implements OnInit {
+  showLinkExpireModal: boolean = false;
   landingPageData: any = {
     title:
       'Automate your customer service and offer an elevated customer experience with gigaaa AI Customer Support solution',
@@ -22,18 +24,27 @@ export class LandingPageComponent implements OnInit {
   constructor(
     private router: Router,
     private authService: AuthService,
-    private headerService: GigaaaHeaderService
-  ) {}
+    private headerService: GigaaaHeaderService,
+    private AgentInviteService: AgentInviteService
+  ) { }
 
   ngOnInit(): void {
+    this.AgentInviteService.getInvitedAgentDetails();
     if (this.authService.isLoggedIn()) {
       this.router.navigate(['/dashboard']);
     }
+    this.AgentInviteService.agentInviteSubject.subscribe((data: boolean) => {
+      console.log(data)
+      this.showLinkExpireModal = data;
+    })
   }
 
   onLogin(event: boolean) {
     if (event) {
       this.headerService.login();
     }
+  }
+  showInviteModal() {
+    this.showLinkExpireModal = true;
   }
 }

@@ -13,6 +13,8 @@ import { getOrganizationService } from '../workdeskServices/organizationService/
 import { AgentSocketService } from '../workdeskSockets/agentSocket/agent-socket.service';
 import { GigaaaApiService } from '../workdeskServices/gigaaaApiService/gigaaa-api-service.service';
 import { CommonEndpoints } from '../commonEndpoints/commonEndpoint';
+import { AgentAction } from '../models/agentSocketModel';
+import { AgentInviteService } from '../workdeskServices/agentInviteService/agent-invite.service';
 
 @Component({
   selector: 'app-main',
@@ -27,18 +29,17 @@ export class MainComponent implements OnInit {
   statusOnline: boolean = false;
   sendUserStatus = new ReplaySubject(1);
   showModal: boolean = false;
-
   websites = websites;
   icons = icons;
   sidebarData = sidebarData;
-
   constructor(
     public authService: AuthService,
     private AgentSocketService: AgentSocketService,
     private getOrganizationService: getOrganizationService,
     @Inject('GigaaaHeaderService') private headerService: GigaaaHeaderService,
     private CommonEndpointService: CommonEndpoints,
-    private GigaaaApiService: GigaaaApiService
+    private GigaaaApiService: GigaaaApiService,
+    private AgentInviteService:AgentInviteService
   ) { }
 
   ngOnInit() {
@@ -48,6 +49,7 @@ export class MainComponent implements OnInit {
     this.AgentSocketService.AgentLiveStatus.subscribe((data: boolean) => {
       this.statusOnline = data;
     });
+   
   }
 
   onNoLoggedUsers(event: any) {
@@ -63,8 +65,14 @@ export class MainComponent implements OnInit {
   }
 
   getSelectedDropdownItem(event: any) {
-    this.GigaaaApiService.updateLastUsediPorject(this.authService.user.value.api_token, this.CommonEndpointService.getEpsParamLocal().organization, { "project": event.uuid });
-    this.getOrganizationService.getOrganization(this.CommonEndpointService.getEpsParamLocal().token);
+    this.GigaaaApiService.updateLastUsediPorject(
+      this.authService.user.value.api_token,
+      this.CommonEndpointService.getEpsParamLocal().organization,
+      { project: event.uuid }
+    );
+    this.getOrganizationService.getOrganization(
+      this.CommonEndpointService.getEpsParamLocal().token
+    );
   }
 
   setOnlineStatus(event: boolean): void {
@@ -84,4 +92,5 @@ export class MainComponent implements OnInit {
       this.showModal = false;
     }
   }
+
 }

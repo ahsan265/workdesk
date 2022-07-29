@@ -11,27 +11,29 @@ import { callType } from '../callsData';
   providedIn: 'root'
 })
 export class CallsService {
+  constructor(private QueueSocketService: QueueSocketService) {}
 
-  constructor(private QueueSocketService: QueueSocketService
+  public callQueueSocketByLanguageandCall(
+    languageId: number[],
+    callType: string[],
+    tabName: string
   ) {
-
-  }
-
-  public callQueueSocketByLanguageandCall(languageId: number[], callType: string[], tabName: string) {
     this.QueueSocketService.sendQueueParameter({
       call_type: callType,
       languages: languageId,
       tab: tabName
-    })
+    });
   }
 
   public getCallTypeId(ids: number[]) {
     let selectedCallType: any = [];
     const callTypeData = callType.data;
     ids.forEach((id: number) => {
-      const selectedType = callTypeData.find((data: OneSelect) => id == data.id)
+      const selectedType = callTypeData.find(
+        (data: OneSelect) => id == data.id
+      );
       selectedCallType.push(selectedType?.name.toLowerCase());
-    })
+    });
     return selectedCallType;
   }
 }

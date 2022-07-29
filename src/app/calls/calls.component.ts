@@ -22,7 +22,7 @@ export class CallsComponent implements OnInit {
   showIndicator = false;
   callsIndicatorData = {};
   showCalender = false;
-  selectedPage: string = "incoming";
+  selectedPage: string = 'incoming';
   languageIds: number[] = [];
   callTypeName: string[] = [];
   constructor(
@@ -36,7 +36,6 @@ export class CallsComponent implements OnInit {
   }
 
   ngOnInit() {
-
     this.callInitialcall();
     this.router.events
       .pipe(
@@ -74,12 +73,8 @@ export class CallsComponent implements OnInit {
           this.callsIndicatorData = callIndicator;
           this.showCalender = true;
         } else if (ttl === 'incoming') {
-
-        }
-        else if (ttl === 'ongoing') {
-
-        }
-        else {
+        } else if (ttl === 'ongoing') {
+        } else {
           this.showIndicator = false;
           this.showCalender = false;
         }
@@ -91,11 +86,19 @@ export class CallsComponent implements OnInit {
   }
   public languaugesOutput(languageOutput: number[]) {
     this.languageIds = languageOutput;
-    this.CallsService.callQueueSocketByLanguageandCall(languageOutput, this.callTypeName, this.selectedPage)
+    this.CallsService.callQueueSocketByLanguageandCall(
+      languageOutput,
+      this.callTypeName,
+      this.selectedPage
+    );
   }
   public callOutput(callTypeOutput: any) {
     const callType: string[] = this.CallsService.getCallTypeId(callTypeOutput);
     this.callTypeName = callType;
-    this.CallsService.callQueueSocketByLanguageandCall(this.languageIds, callType, this.selectedPage)
+    this.CallsService.callQueueSocketByLanguageandCall(
+      this.languageIds,
+      callType,
+      this.selectedPage
+    );
   }
 }

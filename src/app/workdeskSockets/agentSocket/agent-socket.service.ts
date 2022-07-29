@@ -2,7 +2,7 @@
 /* eslint-disable no-undef */
 /* eslint-disable sort-imports */
 import { Injectable } from '@angular/core';
-import { Subject } from 'rxjs';
+import { BehaviorSubject, Subject } from 'rxjs';
 import {
   AgentAction,
   AgentList,
@@ -22,14 +22,18 @@ export class AgentSocketService {
   ws: WebSocket | undefined;
   isSocketOpen: any;
   public AgentLiveStatus = new Subject<boolean>();
-  public AgentList = new Subject<AgentList[]>();
-  constructor() { }
+  public AgentListSubject = new Subject<AgentList[]>();
+
+  constructor() {
+
+  }
 
   public callAgentSocketEndpoint() {
     const connectionId: connectionSecurityModel = JSON.parse(
       localStorage.getItem('connection-id') || '{}'
     );
-    let url = this.websocket_url + '/agents?connection=' + connectionId.connection;
+    let url =
+      this.websocket_url + '/agents?connection=' + connectionId.connection;
     this.socketStates(url);
   }
   private socketStates(url: string) {
@@ -47,8 +51,8 @@ export class AgentSocketService {
     this.ws.onmessage = (e) => {
       e.data != 'ping' ? this.getAgentList(JSON.parse(e.data)) : '';
     };
-    this.ws.onclose = (e) => { };
-    this.ws.onerror = (e) => { };
+    this.ws.onclose = (e) => {};
+    this.ws.onerror = (e) => {};
   }
   public sendAgentsParameter(AgentParameter: AgentParameter) {
     if (this.isSocketOpen === 1) {
@@ -62,7 +66,7 @@ export class AgentSocketService {
     }
   }
   private getAgentList(AgentList: AgentList[]) {
-    this.AgentList.next(AgentList);
+    this.AgentListSubject.next(AgentList);
     this.getAgentOnlineStatus(AgentList);
   }
   private getAgentOnlineStatus(AgentList: AgentList[]) {
@@ -99,7 +103,7 @@ export class AgentSocketService {
       this.sendAgentsParameter(this.lastUsedParameter);
     }
   }
-  // close the agent socket Connnection 
+  // close the agent socket Connnection
   public closeAgentSocketConnection() {
     if (this.ws?.OPEN == this.isSocketOpen) {
       this.ws?.close();

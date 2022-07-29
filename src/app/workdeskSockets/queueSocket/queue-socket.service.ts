@@ -3,7 +3,10 @@
 /* eslint-disable sort-imports */
 import { Injectable } from '@angular/core';
 import { connectionSecurityModel } from 'src/app/models/connectionSecurity';
-import { QueueDateRangeParam, QueueSocketparamter } from 'src/app/models/queueSocketModel';
+import {
+  QueueDateRangeParam,
+  QueueSocketparamter
+} from 'src/app/models/queueSocketModel';
 
 import { environment } from 'src/environments/environment';
 
@@ -15,7 +18,7 @@ export class QueueSocketService {
   ws: WebSocket | undefined;
   isSocketOpen: any;
 
-  constructor() { }
+  constructor() {}
   public callQueueSocketEndpoint() {
     const connectionId: connectionSecurityModel = JSON.parse(
       localStorage.getItem('connection-id') || '{}'
@@ -35,8 +38,8 @@ export class QueueSocketService {
     this.ws.onmessage = (e) => {
       e.data != 'ping' ? this.getQueueSocketList(JSON.parse(e.data)) : '';
     };
-    this.ws.onclose = (e) => { };
-    this.ws.onerror = (e) => { };
+    this.ws.onclose = (e) => {};
+    this.ws.onerror = (e) => {};
   }
 
   public sendQueueParameter(QueueSocketparamter: QueueSocketparamter) {
@@ -73,7 +76,7 @@ export class QueueSocketService {
       tab: 'finished_date'
     });
   }
-  // close the agent socket Connnection 
+  // close the agent socket Connnection
   public closeQueueSocketConnection() {
     if (this.ws?.OPEN == this.isSocketOpen) {
       this.ws?.close();

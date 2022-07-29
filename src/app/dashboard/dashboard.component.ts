@@ -32,8 +32,8 @@ export class DashboardComponent {
   incomingCardData = cardDataTotalVisitors;
   missedCardData = cardDataTotalVisitors;
   answeredCardData = cardDataTotalVisitors;
-  startDate: string = "";
-  endDate: string = ""
+  startDate: string = '';
+  endDate: string = '';
 
   idOfLanguage: Array<any> = [];
   idOfLocation: Array<any> = [];
@@ -61,7 +61,6 @@ export class DashboardComponent {
   };
   alwaysShowCalendars: boolean;
   showCalendar: boolean = false;
-
 
   public barChartOptions: ChartConfiguration['options'] = {
     responsive: true,
@@ -119,7 +118,6 @@ export class DashboardComponent {
     });
   }
   private async callRouteLoad(): Promise<void> {
-
     this.countries = await this.commonEps.getLocations();
     this.languauges = await this.commonEps.getLanguages();
     if (this.commonEps.getEpsParamLocal().project != undefined) {
@@ -132,7 +130,8 @@ export class DashboardComponent {
         this.commonEps.getIdsOfLanguage(),
         this.commonEps.getIdsOfLocation(),
         this.aggregate,
-        this.startDate, this.endDate
+        this.startDate,
+        this.endDate
       );
     }
   }
@@ -141,20 +140,50 @@ export class DashboardComponent {
       if (data == 1) {
         this.idOfLocation = this.commonEps.getIdsOfLocation();
         this.idOfLanguage = this.commonEps.getIdsOfLanguage();
-        this.dashboardEps.getCarddata(this.idOfLanguage, this.idOfLocation, this.aggregate);
-        this.dashboardEps.getChartData(this.idOfLanguage, this.idOfLocation, this.aggregate, this.startDate, this.endDate);
+        this.dashboardEps.getCarddata(
+          this.idOfLanguage,
+          this.idOfLocation,
+          this.aggregate
+        );
+        this.dashboardEps.getChartData(
+          this.idOfLanguage,
+          this.idOfLocation,
+          this.aggregate,
+          this.startDate,
+          this.endDate
+        );
       }
     });
   }
   public locationOutput(locationOutput: number[]) {
     this.idOfLocation = locationOutput;
-    this.dashboardEps.getCarddata(this.idOfLanguage, this.idOfLocation, this.aggregate);
-    this.dashboardEps.getChartData(this.idOfLanguage, this.idOfLocation, this.aggregate, this.startDate, this.endDate);
+    this.dashboardEps.getCarddata(
+      this.idOfLanguage,
+      this.idOfLocation,
+      this.aggregate
+    );
+    this.dashboardEps.getChartData(
+      this.idOfLanguage,
+      this.idOfLocation,
+      this.aggregate,
+      this.startDate,
+      this.endDate
+    );
   }
   public languaugesOutput(languaugesOutput: number[]) {
     this.idOfLanguage = languaugesOutput;
-    this.dashboardEps.getCarddata(this.idOfLanguage, this.idOfLocation, this.aggregate);
-    this.dashboardEps.getChartData(this.idOfLanguage, this.idOfLocation, this.aggregate, this.startDate, this.endDate);
+    this.dashboardEps.getCarddata(
+      this.idOfLanguage,
+      this.idOfLocation,
+      this.aggregate
+    );
+    this.dashboardEps.getChartData(
+      this.idOfLanguage,
+      this.idOfLocation,
+      this.aggregate,
+      this.startDate,
+      this.endDate
+    );
   }
 
   change(event: any) {
@@ -175,23 +204,32 @@ export class DashboardComponent {
       if (compareArray.length === 8) {
         this.aggregate = 'custom';
       }
-
     }
-
   }
 
   rangeClicked(event: any) {
     this.aggregate =
-    event.label.charAt(0).toLowerCase() +
-    event.label.slice(1).replace(/ /g, '_');
-    this.startDate = this.calendarService.getDateRangeFormated(event.dates[0].$d);
+      event.label.charAt(0).toLowerCase() +
+      event.label.slice(1).replace(/ /g, '_');
+    this.startDate = this.calendarService.getDateRangeFormated(
+      event.dates[0].$d
+    );
     this.endDate = this.calendarService.getDateRangeFormated(event.dates[1].$d);
-    this.dashboardEps.getCarddata(this.idOfLanguage, this.idOfLocation, this.aggregate);
-    this.dashboardEps.getChartData(this.idOfLanguage, this.idOfLocation, this.aggregate, this.startDate, this.endDate);
+    this.dashboardEps.getCarddata(
+      this.idOfLanguage,
+      this.idOfLocation,
+      this.aggregate
+    );
+    this.dashboardEps.getChartData(
+      this.idOfLanguage,
+      this.idOfLocation,
+      this.aggregate,
+      this.startDate,
+      this.endDate
+    );
   }
 
   onOpenCalendar() {
     this.showCalendar = !this.showCalendar;
   }
-
 }

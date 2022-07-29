@@ -1,4 +1,4 @@
-export interface DateRange{
-    rangeSelected:string;
-    rangeVs?:string;
+export interface DateRange {
+  rangeSelected: string;
+  rangeVs?: string;
 }
