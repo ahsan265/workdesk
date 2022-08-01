@@ -26,7 +26,7 @@ export class LandingPageComponent implements OnInit {
     private authService: AuthService,
     private headerService: GigaaaHeaderService,
     private AgentInviteService: AgentInviteService
-  ) { }
+  ) {}
 
   ngOnInit(): void {
     this.AgentInviteService.getInvitedAgentDetails();
@@ -34,9 +34,9 @@ export class LandingPageComponent implements OnInit {
       this.router.navigate(['/dashboard']);
     }
     this.AgentInviteService.agentInviteSubject.subscribe((data: boolean) => {
-      console.log(data)
+      console.log(data);
       this.showLinkExpireModal = data;
-    })
+    });
   }
 
   onLogin(event: boolean) {

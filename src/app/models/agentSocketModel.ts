@@ -15,7 +15,7 @@ export interface AgentList {
   is_organization_admin: boolean;
   joined: boolean;
   languages: AgentLanguages[];
-  last_name: boolean;
+  last_name: string;
   num_chats: number;
   phone_number: string;
   role: string;

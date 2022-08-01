@@ -8,6 +8,8 @@ import { Subject } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { User } from 'src/app/models/user';
 import { AuthService } from 'src/app/services/auth.service';
+import { AgentSettings } from 'src/app/models/agentSettingsModel';
+import { AgentList } from 'src/app/models/agentSocketModel';
 @Injectable({
   providedIn: 'root'
 })
@@ -120,18 +122,18 @@ export class GigaaaApiService {
     };
     return this.http.get(
       this.workdeskurl_cs +
-        '/private/agents?show_active=' +
-        show_active +
-        '&show_invited=' +
-        show_invited +
-        '&show_inactive=' +
-        show_inactive +
-        '&languages=' +
-        languages +
-        '&organization=' +
-        subsid +
-        '&integration=' +
-        intid,
+      '/private/agents?show_active=' +
+      show_active +
+      '&show_invited=' +
+      show_invited +
+      '&show_inactive=' +
+      show_inactive +
+      '&languages=' +
+      languages +
+      '&organization=' +
+      subsid +
+      '&integration=' +
+      intid,
       httpOptions
     );
   }
@@ -147,10 +149,10 @@ export class GigaaaApiService {
     };
     return this.http.get(
       this.workdeskurl_cs +
-        '/statistics?subscription=' +
-        subsid +
-        '&integration=' +
-        intid,
+      '/statistics?subscription=' +
+      subsid +
+      '&integration=' +
+      intid,
       httpOptions
     );
   }
@@ -170,11 +172,11 @@ export class GigaaaApiService {
 
     return this.http.get(
       this.workdeskurl_cs +
-        'queue?organization=' +
-        orgid +
-        '&integration=' +
-        intid +
-        '&languages=',
+      'queue?organization=' +
+      orgid +
+      '&integration=' +
+      intid +
+      '&languages=',
       httpOptions
     );
   }
@@ -270,10 +272,10 @@ export class GigaaaApiService {
     return await this.http
       .post(
         this.workdeskurl_cs +
-          '/private/start-call?organization=' +
-          orguuid +
-          '&project=' +
-          intid,
+        '/private/start-call?organization=' +
+        orguuid +
+        '&project=' +
+        intid,
         id,
         httpOptions
       )
@@ -301,10 +303,10 @@ export class GigaaaApiService {
     formdata.append('image', file);
     return this.http.post(
       this.workdeskurl_cs +
-        '/private/agents/image?organization=' +
-        subsid +
-        '&integration=' +
-        intgid,
+      '/private/agents/image?organization=' +
+      subsid +
+      '&integration=' +
+      intgid,
       formdata,
       httpOptions
     );
@@ -329,12 +331,12 @@ export class GigaaaApiService {
     formdata.append('image', file);
     return this.http.post(
       this.workdeskurl_cs +
-        '/private/agents/image?organization=' +
-        orgid +
-        '&integration=' +
-        intgid +
-        '&agent=' +
-        uuid,
+      '/private/agents/image?organization=' +
+      orgid +
+      '&integration=' +
+      intgid +
+      '&agent=' +
+      uuid,
       formdata,
       httpOptions
     );
@@ -357,10 +359,10 @@ export class GigaaaApiService {
     return await this.http
       .put(
         this.workdeskurl_cs +
-          '/customer-support/agents/' +
-          id +
-          '?subscription=' +
-          subsid,
+        '/customer-support/agents/' +
+        id +
+        '?subscription=' +
+        subsid,
         addrole,
         httpOptions
       )
@@ -381,10 +383,10 @@ export class GigaaaApiService {
     };
     return this.http.get(
       this.gigaabackendUlr +
-        '/workdesk/visitors?organization=' +
-        orgid +
-        '&integration=' +
-        intid,
+      '/workdesk/visitors?organization=' +
+      orgid +
+      '&integration=' +
+      intid,
       httpOptions
     );
   }
@@ -400,10 +402,10 @@ export class GigaaaApiService {
     };
     return this.http.get(
       this.workdeskurl_cs +
-        '/private-project/is-admin?organization=' +
-        orgid +
-        '&project=' +
-        intid,
+      '/private-project/is-admin?organization=' +
+      orgid +
+      '&project=' +
+      intid,
       httpOptions
     );
   }
@@ -419,10 +421,10 @@ export class GigaaaApiService {
     };
     return this.http.get(
       this.workdeskurl_cs +
-        'queue/websocket/access-token?organization=' +
-        orgid +
-        '&integration=' +
-        intid,
+      'queue/websocket/access-token?organization=' +
+      orgid +
+      '&integration=' +
+      intid,
       httpOptions
     );
   }
@@ -446,10 +448,10 @@ export class GigaaaApiService {
     return await this.http
       .post(
         this.workdeskurl_cs +
-          '/private/invitation?organization=' +
-          uuid +
-          '&integration=' +
-          intid,
+        '/private/invitation?organization=' +
+        uuid +
+        '&integration=' +
+        intid,
         agentdata,
         httpOptions
       )
@@ -500,12 +502,12 @@ export class GigaaaApiService {
     return this.http
       .delete(
         this.workdeskurl_cs +
-          '/private/agents/' +
-          agentuuid +
-          '?organization=' +
-          orgid +
-          '&integration=' +
-          intid,
+        '/private/agents/' +
+        agentuuid +
+        '?organization=' +
+        orgid +
+        '&integration=' +
+        intid,
         httpOptions
       )
       .toPromise()
@@ -529,10 +531,10 @@ export class GigaaaApiService {
     };
     return this.http.get(
       this.workdeskurl_cs +
-        '/private/is-online?organization=' +
-        orgid +
-        '&integration=' +
-        intid,
+      '/private/is-online?organization=' +
+      orgid +
+      '&integration=' +
+      intid,
       httpOptions
     );
   }
@@ -554,10 +556,10 @@ export class GigaaaApiService {
     return await this.http
       .put(
         this.workdeskurl_cs +
-          '/private/is-online?organization=' +
-          orgid +
-          '&integration=' +
-          intid,
+        '/private/is-online?organization=' +
+        orgid +
+        '&integration=' +
+        intid,
         online,
         httpOptions
       )
@@ -584,12 +586,12 @@ export class GigaaaApiService {
     return await this.http
       .post(
         this.workdeskurl_cs +
-          '/private/invitation/resend?agent=' +
-          agentuuid +
-          '&organization=' +
-          orgid +
-          '&integration=' +
-          intid,
+        '/private/invitation/resend?agent=' +
+        agentuuid +
+        '&organization=' +
+        orgid +
+        '&integration=' +
+        intid,
         {},
         httpOptions
       )
@@ -601,36 +603,33 @@ export class GigaaaApiService {
 
   // update agent settings
 
-  public async updateagentsettings(
-    accesstoken: string,
-    orgid: string,
-    intid: string,
-    agentuuid: any,
-    agentbody: any
-  ): Promise<any> {
+  public async updateAgentSettings(
+    token: string,
+    organizationId: string,
+    projectId: string,
+    agentUuid: string,
+    agentBody: AgentSettings
+  ) {
     const httpOptions: any = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
         Accept: 'application/json',
-        Authorization: `Bearer ${accesstoken}`
+        Authorization: `Bearer ${token}`
       })
     };
     return await this.http
       .put(
         this.workdeskurl_cs +
-          '/private/agents/' +
-          agentuuid +
-          '?organization=' +
-          orgid +
-          '&integration=' +
-          intid,
-        agentbody,
+        '/private/agents/' +
+        agentUuid +
+        '?organization=' +
+        organizationId +
+        '&integration=' +
+        projectId,
+        agentBody,
         httpOptions
       )
-      .toPromise()
-      .catch((err) => {
-        throw err;
-      });
+
   }
 
   // get invitation status
@@ -664,16 +663,16 @@ export class GigaaaApiService {
     };
     return this.http.get(
       this.workdeskanalytics +
-        '/analytics/counts?organization=' +
-        orgid +
-        '&project=' +
-        intid +
-        '&time=' +
-        time +
-        '&languages=' +
-        languages +
-        '&countries=' +
-        countries,
+      '/analytics/counts?organization=' +
+      orgid +
+      '&project=' +
+      intid +
+      '&time=' +
+      time +
+      '&languages=' +
+      languages +
+      '&countries=' +
+      countries,
       httpOptions
     );
   }
@@ -699,20 +698,20 @@ export class GigaaaApiService {
 
     return this.http.get(
       this.workdeskanalytics +
-        '/analytics/aggregates?organization=' +
-        orgid +
-        '&project=' +
-        intid +
-        '&time=' +
-        time +
-        '&languages=' +
-        languages +
-        '&countries=' +
-        countries +
-        '&date_from=' +
-        date_from +
-        '&date_to=' +
-        date_to,
+      '/analytics/aggregates?organization=' +
+      orgid +
+      '&project=' +
+      intid +
+      '&time=' +
+      time +
+      '&languages=' +
+      languages +
+      '&countries=' +
+      countries +
+      '&date_from=' +
+      date_from +
+      '&date_to=' +
+      date_to,
       httpOptions
     );
   }
@@ -738,21 +737,21 @@ export class GigaaaApiService {
 
     return this.http.get(
       this.workdeskanalytics +
-        '/analytics/plugin/stats/users?organization=' +
-        orgid +
-        '&integration=' +
-        intid +
-        '&date_from=' +
-        date_from +
-        '&date_to=' +
-        date_to +
-        '&languages=' +
-        languages +
-        '&countries=' +
-        countries +
-        '&date_range=including' +
-        '&time=' +
-        time,
+      '/analytics/plugin/stats/users?organization=' +
+      orgid +
+      '&integration=' +
+      intid +
+      '&date_from=' +
+      date_from +
+      '&date_to=' +
+      date_to +
+      '&languages=' +
+      languages +
+      '&countries=' +
+      countries +
+      '&date_range=including' +
+      '&time=' +
+      time,
       httpOptions
     );
   }
@@ -777,21 +776,21 @@ export class GigaaaApiService {
 
     return this.http.get(
       this.workdeskanalytics +
-        '/analytics/plugin/stats/visitors?organization=' +
-        orgid +
-        '&integration=' +
-        intid +
-        '&date_from=' +
-        date_from +
-        '&date_to=' +
-        date_to +
-        '&languages=' +
-        languages +
-        '&countries=' +
-        countries +
-        '&date_range=including' +
-        '&time=' +
-        time,
+      '/analytics/plugin/stats/visitors?organization=' +
+      orgid +
+      '&integration=' +
+      intid +
+      '&date_from=' +
+      date_from +
+      '&date_to=' +
+      date_to +
+      '&languages=' +
+      languages +
+      '&countries=' +
+      countries +
+      '&date_range=including' +
+      '&time=' +
+      time,
       httpOptions
     );
   }
@@ -812,10 +811,10 @@ export class GigaaaApiService {
     return await this.http
       .get(
         this.workdeskurl_cs +
-          '/private-project/agent?organization=' +
-          orgid +
-          '&project=' +
-          intid,
+        '/private-project/agent?organization=' +
+        orgid +
+        '&project=' +
+        intid,
         httpOptions
       )
       .toPromise()
@@ -843,16 +842,16 @@ export class GigaaaApiService {
     };
     return this.http.get(
       this.workdeskanalytics +
-        '/analytics/plugin/users/total?organization=' +
-        orgid +
-        '&integration=' +
-        intid +
-        '&time=' +
-        time +
-        '&languages=' +
-        languages +
-        '&countries=' +
-        countries,
+      '/analytics/plugin/users/total?organization=' +
+      orgid +
+      '&integration=' +
+      intid +
+      '&time=' +
+      time +
+      '&languages=' +
+      languages +
+      '&countries=' +
+      countries,
       httpOptions
     );
   }
@@ -874,16 +873,16 @@ export class GigaaaApiService {
     };
     return this.http.get(
       this.workdeskanalytics +
-        '/analytics/plugin/users/unique?organization=' +
-        orgid +
-        '&integration=' +
-        intid +
-        '&time=' +
-        time +
-        '&languages=' +
-        languages +
-        '&countries=' +
-        countries,
+      '/analytics/plugin/users/unique?organization=' +
+      orgid +
+      '&integration=' +
+      intid +
+      '&time=' +
+      time +
+      '&languages=' +
+      languages +
+      '&countries=' +
+      countries,
       httpOptions
     );
   }
@@ -907,20 +906,20 @@ export class GigaaaApiService {
     };
     return this.http.get(
       this.workdeskanalytics +
-        '/analytics/plugin/users/sessions?organization=' +
-        orgid +
-        '&integration=' +
-        intid +
-        '&time=' +
-        time +
-        '&languages=' +
-        languages +
-        '&countries=' +
-        countries +
-        '&date_from=' +
-        date_from +
-        '&date_to=' +
-        date_to,
+      '/analytics/plugin/users/sessions?organization=' +
+      orgid +
+      '&integration=' +
+      intid +
+      '&time=' +
+      time +
+      '&languages=' +
+      languages +
+      '&countries=' +
+      countries +
+      '&date_from=' +
+      date_from +
+      '&date_to=' +
+      date_to,
       httpOptions
     );
   }
@@ -942,16 +941,16 @@ export class GigaaaApiService {
     };
     return this.http.get(
       this.workdeskanalytics +
-        '/analytics/plugin/visitors/total?organization=' +
-        orgid +
-        '&integration=' +
-        intid +
-        '&time=' +
-        time +
-        '&languages=' +
-        languages +
-        '&countries=' +
-        countries,
+      '/analytics/plugin/visitors/total?organization=' +
+      orgid +
+      '&integration=' +
+      intid +
+      '&time=' +
+      time +
+      '&languages=' +
+      languages +
+      '&countries=' +
+      countries,
       httpOptions
     );
   }
@@ -973,16 +972,16 @@ export class GigaaaApiService {
     };
     return this.http.get(
       this.workdeskanalytics +
-        '/analytics/plugin/visitors/unique?organization=' +
-        orgid +
-        '&integration=' +
-        intid +
-        '&time=' +
-        time +
-        '&languages=' +
-        languages +
-        '&countries=' +
-        countries,
+      '/analytics/plugin/visitors/unique?organization=' +
+      orgid +
+      '&integration=' +
+      intid +
+      '&time=' +
+      time +
+      '&languages=' +
+      languages +
+      '&countries=' +
+      countries,
       httpOptions
     );
   }
@@ -1006,20 +1005,20 @@ export class GigaaaApiService {
     };
     return this.http.get(
       this.workdeskanalytics +
-        '/analytics/plugin/visitors/sessions?organization=' +
-        orgid +
-        '&integration=' +
-        intid +
-        '&time=' +
-        time +
-        '&languages=' +
-        languages +
-        '&countries=' +
-        countries +
-        '&date_from=' +
-        date_from +
-        '&date_to=' +
-        date_to,
+      '/analytics/plugin/visitors/sessions?organization=' +
+      orgid +
+      '&integration=' +
+      intid +
+      '&time=' +
+      time +
+      '&languages=' +
+      languages +
+      '&countries=' +
+      countries +
+      '&date_from=' +
+      date_from +
+      '&date_to=' +
+      date_to,
       httpOptions
     );
   }
@@ -1051,7 +1050,7 @@ export class GigaaaApiService {
       })
     };
     return this.http.get<any>(
-      `${this.workdeskurl_cs}` + '/private-project/organizations/last-used',
+      `${this.workdeskurl_cs}/private-project/organizations/last-used`,
       httpOptions
     );
   }
@@ -1077,4 +1076,24 @@ export class GigaaaApiService {
         throw err;
       });
   }
+
+  public getSelectedAgentData(token: string, organizationId: string, projectId: string, agentUuid: string): Promise<any> {
+    const httpOptions: any = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        Accept: 'application/json',
+        Authorization: `Bearer ${token}`
+      })
+    }
+    return this.http.get<any>(
+      `${this.workdeskurl_cs}/private-project/agent-full?organization=${organizationId}&project=${projectId}&agent=${agentUuid}`,
+      httpOptions
+    ).toPromise()
+      .catch((err) => {
+        throw err;
+      });
+  }
+
+
+
 }

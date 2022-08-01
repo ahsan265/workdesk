@@ -11,7 +11,7 @@ import { selectedAgentType } from '../agentsData';
   providedIn: 'root'
 })
 export class AgentService {
-  constructor(private AgentSocketService: AgentSocketService) { }
+  constructor(private AgentSocketService: AgentSocketService) {}
   // send agent params from agent component using service
 
   public sendAgentDefaultParameter(
@@ -36,9 +36,9 @@ export class AgentService {
   }
 
   public getSelectedAgent(ListOfAgents: AgentList[], agentUuid: string) {
-    const selectedAgent:any = ListOfAgents.find((data: AgentList) => {
-      data.uuid == agentUuid
-    })
+    const selectedAgent: any = ListOfAgents.find((data: AgentList) => {
+      data.uuid == agentUuid;
+    });
     return selectedAgent;
   }
 }

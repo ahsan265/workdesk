@@ -12,6 +12,7 @@ import { MainComponent } from './main/main.component';
 import { MissedComponent } from './calls/missed/missed.component';
 import { NgModule } from '@angular/core';
 import { OngoingComponent } from './calls/ongoing/ongoing.component';
+import { AgentList } from './models/agentSocketModel';
 
 const routes: Routes = [
   { path: '', component: LandingPageComponent },
@@ -42,7 +43,7 @@ const routes: Routes = [
     ]
   },
   { path: 'callback', component: CallbackComponent },
-  { path: '**', redirectTo: '' }
+  // { path: '**', redirectTo: '' }
 ];
 
 @NgModule({
@@ -54,4 +55,4 @@ const routes: Routes = [
   ],
   exports: [RouterModule]
 })
-export class AppRoutingModule {}
+export class AppRoutingModule { }

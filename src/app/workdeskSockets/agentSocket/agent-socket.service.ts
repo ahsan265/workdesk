@@ -24,9 +24,7 @@ export class AgentSocketService {
   public AgentLiveStatus = new Subject<boolean>();
   public AgentListSubject = new Subject<AgentList[]>();
 
-  constructor() {
-
-  }
+  constructor() {}
 
   public callAgentSocketEndpoint() {
     const connectionId: connectionSecurityModel = JSON.parse(

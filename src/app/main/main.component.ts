@@ -39,8 +39,8 @@ export class MainComponent implements OnInit {
     @Inject('GigaaaHeaderService') private headerService: GigaaaHeaderService,
     private CommonEndpointService: CommonEndpoints,
     private GigaaaApiService: GigaaaApiService,
-    private AgentInviteService:AgentInviteService
-  ) { }
+    private AgentInviteService: AgentInviteService
+  ) {}
 
   ngOnInit() {
     this.authService.pageTitle.subscribe((res: any) => {
@@ -49,7 +49,6 @@ export class MainComponent implements OnInit {
     this.AgentSocketService.AgentLiveStatus.subscribe((data: boolean) => {
       this.statusOnline = data;
     });
-   
   }
 
   onNoLoggedUsers(event: any) {
@@ -92,5 +91,4 @@ export class MainComponent implements OnInit {
       this.showModal = false;
     }
   }
-
 }

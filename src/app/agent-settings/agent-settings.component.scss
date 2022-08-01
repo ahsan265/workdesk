@@ -12,9 +12,14 @@
 
 .section {
   padding: 30px 0;
-  display: flex;
+  display: block;
   align-items: center;
   border-bottom: 1px solid #e3e3eb;
+}
+
+.section.btn,
+.section.info {
+  display: flex;
 }
 
 .section:last-child {
@@ -27,6 +32,7 @@
 
 .administrativeRightsWrapper {
   padding-bottom: 0;
+  width: 100%;
 }
 
 .buttonsWrapper {
@@ -38,7 +44,6 @@
   width: 50px;
   height: 50px;
   border-radius: 50%;
-  border: 1px solid red;
   margin-right: 30px;
 }
 
@@ -93,9 +98,13 @@
 .inputWrapper {
   margin-right: 37px;
   width: 100%;
-  max-width: 240px;
   margin-bottom: 8px;
 }
+
+.inputWrapper.textField {
+  max-width: 240px;
+}
+
 
 .switchWrapper {
   margin-bottom: 0;
@@ -103,4 +112,62 @@
 
 .agentName {
   max-width: 240px;
+}
+
+.agentSettingsTextField {
+  text-align: left;
+  line-height: 24px;
+  height: 35px;
+  width: 240px;
+  box-shadow: none;
+  padding-left: 10px;
+  position: relative;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 12px;
+  line-height: 19.2px;
+  color: #162741;
+  border: 0;
+  outline: 0;
+  background: #FFFFFF;
+  border: 1px solid rgba(208, 208, 222, .6);
+  box-sizing: border-box;
+  border-radius: 4px;
+}
+
+.restrictedAdmin {
+  background: #EDF6F5;
+  border: 1px solid #D3E0E1;
+  border-radius: 4px;
+  padding-left: 30px;
+  padding-right: 30px;
+  height: 55px;
+  margin-bottom: 10px;
+}
+
+.messageForAdminRights {
+  font-family: 'Roboto', sans-serif;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 13px;
+  line-height: 53px;
+  letter-spacing: 0.02em;
+  color: #162741;
+}
+
+.openPasswordDialog {
+  font-size: 13px;
+  color: #1c54db;
+  line-height: 15px;
+  cursor: pointer;
+  display: inline-block;
+  padding-left: 12px;
+  position: relative;
+}
+
+.agentImage {
+  border-radius: 50%;
+  position: relative;
+  height: 50px;
+  width: 50px;
 }

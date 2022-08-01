@@ -32,7 +32,7 @@ import { ChartLineComponent } from './charts/chart-line/chart-line.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { FilterPipe } from './pipes/filter.pipe';
 import { FooterComponent } from './footer/footer.component';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { IncomingComponent } from './calls/incoming/incoming.component';
 import { LandingPageComponent } from './landing-page/landing-page.component';
 import { MainComponent } from './main/main.component';
@@ -68,6 +68,8 @@ import { LinkExpireModalComponent } from './link-expire-modal/link-expire-modal.
     LinkExpireModalComponent
   ],
   imports: [
+    FormsModule,
+    ReactiveFormsModule,     
     BrowserModule,
     AppRoutingModule,
     GigaaaSidebarModule,
