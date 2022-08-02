@@ -1,7 +1,7 @@
 <div class="agentSettingsWrapper">
   <div class="imageWrapper section info">
     <div class="image">
-      <img [src]="agentImage" alt="" class="agentImage">
+      <img [src]="agentImage" alt="" class="agentImage" />
     </div>
     <div class="agentsData">
       <div class="fullName">{{ this.selectedAgent?.display_name }}</div>
@@ -14,16 +14,16 @@
       <div class="firstLastName">
         <div class="inputWrapper textField">
           <div class="label">First name</div>
-          <input class="agentSettingsTextField" type="text" formControlName="first_name">
+          <input class="agentSettingsTextField" type="text" formControlName="first_name" />
         </div>
         <div class="inputWrapper textField">
           <div class="label">Last name</div>
-          <input class="agentSettingsTextField" type="text" formControlName="last_name">
+          <input class="agentSettingsTextField" type="text" formControlName="last_name" />
         </div>
       </div>
       <div class="agentName">
         <div class="label">Agent name</div>
-        <input class="agentSettingsTextField" type="text" formControlName="display_name">
+        <input class="agentSettingsTextField" type="text" formControlName="display_name" />
       </div>
     </div>
 
@@ -32,7 +32,7 @@
         Language
         <div class="inputWrapper textField">
           <div class="label">Select language(s) for this agent:</div>
-          <app-multi-select-dropdown [multiSelectData]="languauges">
+          <app-multi-select-dropdown [multiSelectData]="languauges" (multiSelectOutput)="languaugesOutput($event)">
           </app-multi-select-dropdown>
         </div>
       </div>
@@ -46,7 +46,9 @@
       <div class="profileName">
         Administrative Rights
         <div class="inputWrapper switchWrapper">
-          <div class="label">Admins can add new agents and change settings.</div>
+          <div class="label">
+            Admins can add new agents and change settings.
+          </div>
           <app-switch-button [switchButtonData]="switchButtonData" (switchButtonValue)="onGetSwitchButtonValue($event)">
           </app-switch-button>
         </div>
@@ -57,10 +59,8 @@
         Password
         <div class="inputWrapper">
           <div class="label">Set password</div>
-          <input class="agentSettingsTextField" type="password" placeholder="******">
-          <div class="openPasswordDialog">
-            Change
-          </div>
+          <input class="agentSettingsTextField" type="password" placeholder="******" />
+          <div class="openPasswordDialog">Change</div>
         </div>
       </div>
     </div>

@@ -43,7 +43,7 @@ import { NgxPaginationModule } from 'ngx-pagination';
 import { OngoingComponent } from './calls/ongoing/ongoing.component';
 import { PageWrapperComponent } from './components/page-wrapper/page-wrapper.component';
 import { environment } from 'src/environments/environment';
-import { LinkExpireModalComponent } from './link-expire-modal/link-expire-modal.component';
+import { linkExpireModalComponent } from './link-expire-modal/link-expire-modal.component';
 
 @NgModule({
   declarations: [
@@ -65,11 +65,11 @@ import { LinkExpireModalComponent } from './link-expire-modal/link-expire-modal.
     AgentSettingsComponent,
     CallsIndicatorComponent,
     LandingPageComponent,
-    LinkExpireModalComponent
+    linkExpireModalComponent
   ],
   imports: [
     FormsModule,
-    ReactiveFormsModule,     
+    ReactiveFormsModule,
     BrowserModule,
     AppRoutingModule,
     GigaaaSidebarModule,

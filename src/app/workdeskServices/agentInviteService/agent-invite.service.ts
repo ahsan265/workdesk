@@ -35,7 +35,6 @@ export class AgentInviteService {
         localStorage.setItem('gigaaa-invitation', JSON.stringify(code));
         this.GigaaaApiService.getinvitationdetails(code).subscribe(
           (data: any) => {
-            console.log(data);
             if (data != null) {
               if (data['already_used'] !== false) {
                 localStorage.removeItem('gigaaa-invitation');

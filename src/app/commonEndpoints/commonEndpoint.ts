@@ -2,6 +2,8 @@
 /* eslint-disable no-undef */
 /* eslint-disable sort-imports */
 import { Injectable, IterableDiffers } from '@angular/core';
+import { oneSelect } from '../agents/agentsData';
+import { AgentLanguages } from '../models/agentSocketModel';
 import { Country } from '../models/country';
 import { language } from '../models/language';
 import { Languages } from '../models/languages';
@@ -29,7 +31,7 @@ export class CommonEndpoints {
     showSearchBar: true,
     data: []
   };
-  constructor(private GigaaaApiService: GigaaaApiService) {}
+  constructor(private GigaaaApiService: GigaaaApiService) { }
   // get the list of countries
   public async getLocations(): Promise<MultiSelect> {
     const countryList: Country[] =
@@ -108,24 +110,35 @@ export class CommonEndpoints {
     return LanguageIds;
   }
 
-  // for selected languages using component function
-  public getLanguageSelected(selectedLanguage: SelectionModel): Array<any> {
-    if (selectedLanguage.selectedAll === false) {
-      if (selectedLanguage.item.selected === true) {
-        this.idsOfLanguages.push(selectedLanguage.item.id);
-      } else if (selectedLanguage.item.selected === false) {
-        let languageIndex = this.idsOfLanguages.indexOf(
-          selectedLanguage.item.id
-        );
-        if (languageIndex != -1) {
-          this.idsOfLanguages.splice(languageIndex, 1);
+  // for selected languages  ids using component function
+  public getLanguageSelectedIds(selectedLanguage: AgentLanguages[]): Array<number> {
+    var idOfLanguages: number[] = [];
+    selectedLanguage.forEach((language: AgentLanguages) => {
+      idOfLanguages.push(language.id)
+    })
+    return idOfLanguages;
+  }
+  // for selected languages checked
+  public selectedLanguageChecket(allLanguages:OneSelect[], selectedLanguage: AgentLanguages[]): MultiSelect {
+ 
+    selectedLanguage.forEach((languages: AgentLanguages) => {
+      allLanguages.forEach((lang: OneSelect) => {
+        if (lang.id === languages.id) {
+          lang.name = languages.name,
+            lang.id = languages.id,
+            lang.selected = true
         }
-      }
-    } else if (selectedLanguage.selectedAll === true) {
-      this.idsOfLanguages.splice(0, this.idsOfLanguages.length);
-      this.getIdsOfLanguage();
-    }
-    return this.idsOfLanguages;
+
+      })
+    })
+    const languageListArray: MultiSelect = {
+      title: 'Language',
+      showSelectAll: true,
+      showSearchBar: true,
+      data: allLanguages
+    };
+    return languageListArray;
+
   }
   // for selected location using component function
   public getLocationSelected(

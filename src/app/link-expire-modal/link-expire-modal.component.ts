@@ -5,7 +5,7 @@ import { Component, OnInit } from '@angular/core';
   templateUrl: './link-expire-modal.component.html',
   styleUrls: ['./link-expire-modal.component.scss']
 })
-export class LinkExpireModalComponent implements OnInit {
+export class linkExpireModalComponent implements OnInit {
   constructor() {}
 
   ngOnInit(): void {}

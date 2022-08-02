@@ -609,7 +609,8 @@ export class GigaaaApiService {
     projectId: string,
     agentUuid: string,
     agentBody: AgentSettings
-  ) {
+  ): Promise<any> {
+    console.log(agentBody)
     const httpOptions: any = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
@@ -617,19 +618,20 @@ export class GigaaaApiService {
         Authorization: `Bearer ${token}`
       })
     };
-    return await this.http
-      .put(
-        this.workdeskurl_cs +
-        '/private/agents/' +
-        agentUuid +
-        '?organization=' +
-        organizationId +
-        '&integration=' +
-        projectId,
-        agentBody,
-        httpOptions
-      )
-
+    return await this.http.put(
+      this.workdeskurl_cs +
+      '/private-project/agents/' +
+      agentUuid +
+      '?organization=' +
+      organizationId +
+      '&project=' +
+      projectId,
+      agentBody,
+      httpOptions
+    ).toPromise()
+      .catch((err) => {
+        throw (err);
+      });
   }
 
   // get invitation status
@@ -1077,23 +1079,27 @@ export class GigaaaApiService {
       });
   }
 
-  public getSelectedAgentData(token: string, organizationId: string, projectId: string, agentUuid: string): Promise<any> {
+  public getSelectedAgentData(
+    token: string,
+    organizationId: string,
+    projectId: string,
+    agentUuid: string
+  ): Promise<any> {
     const httpOptions: any = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
         Accept: 'application/json',
         Authorization: `Bearer ${token}`
       })
-    }
-    return this.http.get<any>(
-      `${this.workdeskurl_cs}/private-project/agent-full?organization=${organizationId}&project=${projectId}&agent=${agentUuid}`,
-      httpOptions
-    ).toPromise()
+    };
+    return this.http
+      .get<any>(
+        `${this.workdeskurl_cs}/private-project/agent-full?organization=${organizationId}&project=${projectId}&agent=${agentUuid}`,
+        httpOptions
+      )
+      .toPromise()
       .catch((err) => {
         throw err;
       });
   }
-
-
-
 }

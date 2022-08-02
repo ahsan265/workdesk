@@ -42,7 +42,7 @@ const routes: Routes = [
       { path: 'agents/settings/:id', component: AgentSettingsComponent }
     ]
   },
-  { path: 'callback', component: CallbackComponent },
+  { path: 'callback', component: CallbackComponent }
   // { path: '**', redirectTo: '' }
 ];
 
@@ -55,4 +55,4 @@ const routes: Routes = [
   ],
   exports: [RouterModule]
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {}

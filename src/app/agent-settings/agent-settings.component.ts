@@ -17,6 +17,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { AgentSettingService } from './agentSettingService/agent-setting.service';
 import { AgentList } from '../models/agentSocketModel';
 import { AgentSettings } from '../models/agentSettingsModel';
+import { CommonEndpoints } from '../commonEndpoints/commonEndpoint';
 
 @Component({
   selector: 'app-agent-settings',
@@ -24,7 +25,6 @@ import { AgentSettings } from '../models/agentSettingsModel';
   styleUrls: ['./agent-settings.component.scss']
 })
 export class AgentSettingsComponent implements OnInit {
-
   agentId!: string;
   agents: Agent[] = [];
   selectedAgent: AgentList | undefined;
@@ -33,7 +33,7 @@ export class AgentSettingsComponent implements OnInit {
   backButtonData = backButtonData;
   saveButtonData = saveButtonData;
   switchButtonData = switchButtonData;
-  isAgent:boolean=false;
+  isAgent: boolean = false;
   agentImage!: string;
   agentLanguages: number[] = [];
   agentSettingsForm = new FormGroup({
@@ -41,18 +41,17 @@ export class AgentSettingsComponent implements OnInit {
       Validators.required,
       Validators.pattern(/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/)
     ]),
-    first_name: new FormControl('', [
-      Validators.required,
-    ]),
-    last_name: new FormControl('', [
-      Validators.required,
-    ]),
-    display_name: new FormControl('', [
-      Validators.required,
-    ]),
+    first_name: new FormControl('', [Validators.required]),
+    last_name: new FormControl('', [Validators.required]),
+    display_name: new FormControl('', [Validators.required])
   });
-  constructor(private activatedRoute: ActivatedRoute, private authService: AuthService,
-    private agentSettingService: AgentSettingService, private router: Router) { }
+  constructor(
+    private activatedRoute: ActivatedRoute,
+    private authService: AuthService,
+    private agentSettingService: AgentSettingService,
+    private router: Router,
+    private CommonEndpoints: CommonEndpoints
+  ) { }
 
   async ngOnInit(): Promise<void> {
     this.authService.pageTitle.next('Settings');
@@ -69,50 +68,56 @@ export class AgentSettingsComponent implements OnInit {
   }
 
   onGetSwitchButtonValue(event: any) {
-    this.isAgent=!event;
+    this.isAgent = !event;
   }
 
   onGetBackButtonOutput(event: any) {
-    this.router.navigate(['agents'])
+    this.router.navigate(['agents']);
   }
 
   onGetSaveButtonOutput(event: any) {
-    console.log(event);
+    this.updateAgentDetails();
   }
   private async getAgentData() {
-    this.selectedAgent = await this.agentSettingService.sentAgentData(this.agentId);
+    this.selectedAgent = await this.agentSettingService.getAgentData(
+      this.agentId
+    );
+    this.agentImage = this.selectedAgent.images[96];
     this.agentSettingService.checkIsLoggedInAgent(this.selectedAgent.email);
-    this.setAgentData(this.selectedAgent);
-    const agentLanguages = this.agentSettingService.getLanguagesMaped(this.selectedAgent.languages);
+    const allLanguages = await this.CommonEndpoints.getLanguages();
+    const agentLanguages = this.CommonEndpoints.selectedLanguageChecket(allLanguages.data, this.selectedAgent.languages);
     this.languauges = agentLanguages;
+    this.setAgentData(this.selectedAgent);
   }
   public languaugesOutput(langaugesId: number[]) {
+    console.log(langaugesId)
     this.agentLanguages = langaugesId;
   }
 
-  public updateAgentInformation() {
-  }
 
   public setAgentData(agentData: AgentList) {
-    this.agentImage = agentData.images[96];
-    this.agentSettingsForm.patchValue({
-      first_name: agentData?.first_name,
-      last_name: agentData?.last_name,
-      display_name: agentData.display_name,
-    }, { emitEvent: false, onlySelf: true });
-
-    this.switchButtonData.buttonChecked = this.agentSettingService.isAdmin(agentData.role);
-
+    this.agentSettingsForm.patchValue(
+      {
+        first_name: agentData?.first_name,
+        last_name: agentData?.last_name,
+        display_name: agentData.display_name
+      },
+      { emitEvent: false, onlySelf: true }
+    );
+    this.agentLanguages = this.CommonEndpoints.getLanguageSelectedIds(agentData.languages);
+    this.isAgent = this.agentSettingService.isAdmin(
+      agentData.role
+    );
+    this.switchButtonData.buttonChecked = !this.isAgent;
   }
-  updateAgentDetails() {
+  public updateAgentDetails() {
     const agentSetting: AgentSettings = {
       display_name: this.agentSettingsForm.controls.display_name.value,
       language_ids: this.agentLanguages,
       first_name: this.agentSettingsForm.controls.first_name.value,
       last_name: this.agentSettingsForm.controls.last_name.value,
-      admin: this.isAgent,
-
-    }
-    this.agentSettingService.updateAgentSettings(agentSetting, this.agentId)
+      admin: this.isAgent
+    };
+    this.agentSettingService.updateAgentSettings(agentSetting, this.agentId);
   }
 }

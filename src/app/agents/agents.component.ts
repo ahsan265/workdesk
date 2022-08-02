@@ -77,16 +77,17 @@ export class AgentsComponent implements OnInit {
   }
   showInviteModal() {
     if (this.AgentList.length != 0) {
-      const selectedAgent: AgentList | undefined = this.AgentList.find((data: AgentList) => data.uuid === 'ed4f6baf-c7ad-480e-9fa7-ba48ff9d4347')
+      const selectedAgent: AgentList | undefined = this.AgentList.find(
+        (data: AgentList) =>
+          data.uuid === 'ed4f6baf-c7ad-480e-9fa7-ba48ff9d4347'
+      );
       this.router.navigate(['agents', 'settings', selectedAgent?.uuid]);
     }
   }
 
   getAgentList() {
-
     this.AgentSocketService.AgentListSubject.subscribe((data: AgentList[]) => {
       this.AgentList = data;
     });
   }
-
 }
