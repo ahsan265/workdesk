@@ -12,9 +12,9 @@ import { environment } from 'src/environments/environment';
 import { getOrganizationService } from '../workdeskServices/organizationService/organization-service.service';
 import { AgentSocketService } from '../workdeskSockets/agentSocket/agent-socket.service';
 import { GigaaaApiService } from '../workdeskServices/gigaaaApiService/gigaaa-api-service.service';
-import { CommonEndpoints } from '../commonEndpoints/commonEndpoint';
 import { AgentAction } from '../models/agentSocketModel';
 import { AgentInviteService } from '../workdeskServices/agentInviteService/agent-invite.service';
+import { CommonService } from '../workdeskServices/commonEndpoint/common.service';
 
 @Component({
   selector: 'app-main',
@@ -37,7 +37,7 @@ export class MainComponent implements OnInit {
     private AgentSocketService: AgentSocketService,
     private getOrganizationService: getOrganizationService,
     @Inject('GigaaaHeaderService') private headerService: GigaaaHeaderService,
-    private CommonEndpointService: CommonEndpoints,
+    private CommonService: CommonService,
     private GigaaaApiService: GigaaaApiService,
     private AgentInviteService: AgentInviteService
   ) {}
@@ -66,11 +66,11 @@ export class MainComponent implements OnInit {
   getSelectedDropdownItem(event: any) {
     this.GigaaaApiService.updateLastUsediPorject(
       this.authService.user.value.api_token,
-      this.CommonEndpointService.getEpsParamLocal().organization,
+      this.CommonService.getEpsParamLocal().organization,
       { project: event.uuid }
     );
     this.getOrganizationService.getOrganization(
-      this.CommonEndpointService.getEpsParamLocal().token
+      this.CommonService.getEpsParamLocal().token
     );
   }
 

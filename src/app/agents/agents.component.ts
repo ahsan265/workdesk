@@ -12,12 +12,12 @@ import {
 } from './agentsData';
 import { AuthService } from '../services/auth.service';
 import { Component, OnInit } from '@angular/core';
-import { CommonEndpoints } from '../commonEndpoints/commonEndpoint';
 import { OneSelect } from '../models/oneSelect';
 import { AgentService } from './agentService/agent.service';
 import { AgentSocketService } from '../workdeskSockets/agentSocket/agent-socket.service';
 import { AgentList } from '../models/agentSocketModel';
 import { Router } from '@angular/router';
+import { CommonService } from '../workdeskServices/commonEndpoint/common.service';
 
 @Component({
   selector: 'app-agents',
@@ -40,7 +40,7 @@ export class AgentsComponent implements OnInit {
   AgentList: AgentList[] = [];
   constructor(
     private authService: AuthService,
-    private commonEndpoints: CommonEndpoints,
+    private CommonService: CommonService,
     private AgentService: AgentService,
     private router: Router,
     private AgentSocketService: AgentSocketService
@@ -50,9 +50,10 @@ export class AgentsComponent implements OnInit {
   ngOnInit(): void {
     this.callCommonEndpoints();
     this.getAgentList();
+    this.AgentSocketService.getLastUsedParams();
   }
   private async callCommonEndpoints() {
-    this.languauges = await this.commonEndpoints.getLanguages();
+    this.languauges = await this.CommonService.getLanguages();
   }
   public langugaOutput(languaugesOutput: number[]) {
     this.selectedLanguages = languaugesOutput;

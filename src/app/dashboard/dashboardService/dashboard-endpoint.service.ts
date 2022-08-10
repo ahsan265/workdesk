@@ -8,9 +8,10 @@ import { ChartData } from 'chart.js';
 import { Subject } from 'rxjs';
 import { ChartsData } from 'src/app/chartsFunction/chartData';
 import { ChartLabel } from 'src/app/chartsFunction/chartLabel';
-import { CommonEndpoints } from 'src/app/commonEndpoints/commonEndpoint';
 import { CalendarService } from 'src/app/calendarService/calendar.service';
 import { GigaaaApiService } from 'src/app/workdeskServices/gigaaaApiService/gigaaa-api-service.service';
+import { MessageService } from 'src/app/workdeskServices/messageService/message.service';
+import { CommonService } from 'src/app/workdeskServices/commonEndpoint/common.service';
 
 @Injectable({
   providedIn: 'root'
@@ -24,10 +25,11 @@ export class DashboardEndpointService {
   chartDataSubject = new Subject();
   constructor(
     private GigaaaApiService: GigaaaApiService,
-    private commoneps: CommonEndpoints,
+    private CommonService: CommonService,
     private chartLabel: ChartLabel,
     private chartsData: ChartsData,
-    private calanderService: CalendarService
+    private calanderService: CalendarService,
+    private MessageService: MessageService
   ) {}
   // call the cards count endpoint for
   public getCarddata(
@@ -35,7 +37,7 @@ export class DashboardEndpointService {
     location: Array<OneSelect>,
     selectedRange: string
   ) {
-    const epParams = this.commoneps.getEpsParamLocal();
+    const epParams = this.CommonService.getEpsParamLocal();
     this.GigaaaApiService.getcallstatistics(
       epParams.token,
       epParams.organization,
@@ -43,54 +45,59 @@ export class DashboardEndpointService {
       selectedRange,
       languages,
       location
-    ).subscribe((data: any) => {
-      // cards data calcultation
-      const incomingCard = data['incoming'].count;
-      const percencateIncomingCard = this.getpercentagecalculated(
-        data['incoming'].increase
-      );
-      const missedCard = data['missed'].count;
-      const percencateMissedCard = this.getpercentagecalculated(
-        data['missed'].increase
-      );
-      const answeredCard = data['answered'].count;
-      const percencateAwnseredCard = this.getpercentagecalculated(
-        data['answered'].increase
-      );
-      const relatedDateRange =
-        this.calanderService.getRelatedDateRange(selectedRange);
-      // cards model data
-      const incomingCardRes = this.fillDashboardCardData(
-        this.icomingIcon,
-        'Total Incoming',
-        '#EDEDF6',
-        incomingCard,
-        ' % vs ' + relatedDateRange,
-        percencateIncomingCard
-      );
-      const missedCardRes = this.fillDashboardCardData(
-        this.missedIcon,
-        'Total Missed',
-        '#F9EBEF',
-        missedCard,
-        ' % vs ' + relatedDateRange,
-        percencateMissedCard
-      );
-      const answeredCardRes = this.fillDashboardCardData(
-        this.answeredIcon,
-        'Total Answered',
-        '#EBF7DD',
-        answeredCard,
-        ' % vs ' + relatedDateRange,
-        percencateAwnseredCard
-      );
-      const finalCardsData = {
-        incoming: incomingCardRes,
-        missed: missedCardRes,
-        answered: answeredCardRes
-      };
-      this.cardDataSubject.next(finalCardsData);
-    });
+    ).subscribe(
+      (data: any) => {
+        // cards data calcultation
+        const incomingCard = data['incoming'].count;
+        const percencateIncomingCard = this.getpercentagecalculated(
+          data['incoming'].increase
+        );
+        const missedCard = data['missed'].count;
+        const percencateMissedCard = this.getpercentagecalculated(
+          data['missed'].increase
+        );
+        const answeredCard = data['answered'].count;
+        const percencateAwnseredCard = this.getpercentagecalculated(
+          data['answered'].increase
+        );
+        const relatedDateRange =
+          this.calanderService.getRelatedDateRange(selectedRange);
+        // cards model data
+        const incomingCardRes = this.fillDashboardCardData(
+          this.icomingIcon,
+          'Total Incoming',
+          '#EDEDF6',
+          incomingCard,
+          ' % vs ' + relatedDateRange,
+          percencateIncomingCard
+        );
+        const missedCardRes = this.fillDashboardCardData(
+          this.missedIcon,
+          'Total Missed',
+          '#F9EBEF',
+          missedCard,
+          ' % vs ' + relatedDateRange,
+          percencateMissedCard
+        );
+        const answeredCardRes = this.fillDashboardCardData(
+          this.answeredIcon,
+          'Total Answered',
+          '#EBF7DD',
+          answeredCard,
+          ' % vs ' + relatedDateRange,
+          percencateAwnseredCard
+        );
+        const finalCardsData = {
+          incoming: incomingCardRes,
+          missed: missedCardRes,
+          answered: answeredCardRes
+        };
+        this.cardDataSubject.next(finalCardsData);
+      },
+      (err: any) => {
+        this.MessageService.setErrorMessage(err.error.error);
+      }
+    );
   }
 
   // calculate percencate of cards value
@@ -134,7 +141,7 @@ export class DashboardEndpointService {
     startDate: string,
     endDate: string
   ) {
-    const epParams = this.commoneps.getEpsParamLocal();
+    const epParams = this.CommonService.getEpsParamLocal();
     this.GigaaaApiService.getcallchart(
       epParams.token,
       epParams.organization,
@@ -144,46 +151,53 @@ export class DashboardEndpointService {
       locations,
       startDate,
       endDate
-    ).subscribe((data: any) => {
-      const incomingLabel = this.chartLabel.caculateChartLabels(
-        data['incoming'],
-        selectedRange,
-        data?.num_bars
-      );
-      const missedLabel = this.chartLabel.caculateChartLabels(
-        data['missed'],
-        selectedRange,
-        data?.num_bars
-      );
-      const answeredLabel = this.chartLabel.caculateChartLabels(
-        data['answered'],
-        selectedRange,
-        data?.num_bars
-      );
+    ).subscribe(
+      (data: any) => {
+        const incomingLabel = this.chartLabel.caculateChartLabels(
+          data['incoming'],
+          selectedRange,
+          data?.num_bars
+        );
+        const missedLabel = this.chartLabel.caculateChartLabels(
+          data['missed'],
+          selectedRange,
+          data?.num_bars
+        );
+        const answeredLabel = this.chartLabel.caculateChartLabels(
+          data['answered'],
+          selectedRange,
+          data?.num_bars
+        );
 
-      const incomingData = this.chartsData.calculateChartData(data['incoming']);
-      const imissedData = this.chartsData.calculateChartData(data['missed']);
-      const answeredData = this.chartsData.calculateChartData(data['missed']);
-      const incomingChartRes: ChartData<'bar'> = this.chartDataForm(
-        incomingData,
-        incomingLabel
-      );
-      const missedChartRes: ChartData<'bar'> = this.chartDataForm(
-        imissedData,
-        missedLabel
-      );
-      const answeredChartRes: ChartData<'bar'> = this.chartDataForm(
-        answeredData,
-        answeredLabel
-      );
+        const incomingData = this.chartsData.calculateChartData(
+          data['incoming']
+        );
+        const imissedData = this.chartsData.calculateChartData(data['missed']);
+        const answeredData = this.chartsData.calculateChartData(data['missed']);
+        const incomingChartRes: ChartData<'bar'> = this.chartDataForm(
+          incomingData,
+          incomingLabel
+        );
+        const missedChartRes: ChartData<'bar'> = this.chartDataForm(
+          imissedData,
+          missedLabel
+        );
+        const answeredChartRes: ChartData<'bar'> = this.chartDataForm(
+          answeredData,
+          answeredLabel
+        );
 
-      const groupChart = {
-        inmcoming: incomingChartRes,
-        missed: missedChartRes,
-        answered: answeredChartRes
-      };
-      this.chartDataSubject.next(groupChart);
-    });
+        const groupChart = {
+          inmcoming: incomingChartRes,
+          missed: missedChartRes,
+          answered: answeredChartRes
+        };
+        this.chartDataSubject.next(groupChart);
+      },
+      (err: any) => {
+        this.MessageService.setErrorMessage(err.error.error);
+      }
+    );
   }
 
   private chartDataForm(chartData: Array<any>, chartLebel: Array<any>) {

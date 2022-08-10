@@ -7,8 +7,8 @@ import { callType, languauges, searchInputData } from './callsData';
 import { filter, map } from 'rxjs/operators';
 import { AuthService } from '../services/auth.service';
 import { callsIndicatorData } from '../models/callIndicatorModel';
-import { CommonEndpoints } from '../commonEndpoints/commonEndpoint';
 import { CallsService } from './callService/calls.service';
+import { CommonService } from '../workdeskServices/commonEndpoint/common.service';
 
 @Component({
   selector: 'app-calls',
@@ -29,14 +29,14 @@ export class CallsComponent implements OnInit {
     private authService: AuthService,
     private router: Router,
     private activatedRoute: ActivatedRoute,
-    private CommonEndpoints: CommonEndpoints,
+    private CommonService: CommonService,
     private CallsService: CallsService
   ) {
     this.authService.pageTitle.next('Calls');
   }
 
   ngOnInit() {
-    this.callInitialcall();
+    this.callInitialEndpoints();
     this.router.events
       .pipe(
         filter((event) => event instanceof NavigationEnd),
@@ -81,8 +81,8 @@ export class CallsComponent implements OnInit {
       });
   }
 
-  private async callInitialcall() {
-    this.languauges = await this.CommonEndpoints.getLanguages();
+  private async callInitialEndpoints() {
+    this.languauges = await this.CommonService.getLanguages();
   }
   public languaugesOutput(languageOutput: number[]) {
     this.languageIds = languageOutput;

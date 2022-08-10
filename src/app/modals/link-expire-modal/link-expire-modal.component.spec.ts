@@ -1,17 +1,16 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
-import { LinkExpireModalComponent } from './link-expire-modal.component';
+import { linkExpireModalComponent } from './link-expire-modal.component';
 
 describe('LinkExpireModalComponent', () => {
-  let component: LinkExpireModalComponent;
-  let fixture: ComponentFixture<LinkExpireModalComponent>;
+  let component: linkExpireModalComponent;
+  let fixture: ComponentFixture<linkExpireModalComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [LinkExpireModalComponent]
+      declarations: [linkExpireModalComponent]
     }).compileComponents();
 
-    fixture = TestBed.createComponent(LinkExpireModalComponent);
+    fixture = TestBed.createComponent(linkExpireModalComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

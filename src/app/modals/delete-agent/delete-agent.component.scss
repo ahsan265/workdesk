@@ -1,0 +1,176 @@
+.deleteagentpanel {
+  padding-left: 30px;
+  padding-right: 30px;
+}
+
+.mainheadingpanel {
+  display: block;
+  width: 100%;
+}
+
+.headingpanel {
+  display: inline-block;
+  width: 80%;
+  text-align: left;
+}
+
+.closebtn {
+  margin-right: -11px;
+  margin-top: -11px;
+  width: 22px;
+  height: 22px;
+  color: #a8a8b9;
+  opacity: 1;
+}
+
+.closepanel {
+  display: inline-block;
+  width: 20%;
+  text-align: right;
+}
+
+.heading {
+  font-family: 'Roboto', sans-serif;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 19px;
+  text-align: left;
+  color: #162741;
+}
+
+.descroptionpanel {
+  display: block;
+  width: 100%;
+  text-align: left;
+  margin-top: 20px;
+}
+
+.descp {
+  font-family: 'Roboto', sans-serif;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 12px;
+  line-height: 14px;
+  display: flex;
+  align-items: left;
+  color: #616b7b;
+}
+
+.fullname {
+  font-family: 'Roboto', sans-serif;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 14px;
+  line-height: 24px;
+  /* identical to box height, or 171% */
+  align-items: center;
+  color: #292f58;
+}
+
+.roudnagentpic {
+  border-radius: 50%;
+}
+
+.agentname {
+  font-family: 'Roboto', sans-serif;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 50px;
+  display: inline-block;
+  align-items: center;
+  text-align: left;
+  color: #162741;
+}
+
+.agentinfopanel {
+  display: flex;
+  width: 100%;
+  margin-top: 30px;
+  margin-bottom: 30px;
+}
+
+.buttonpanel {
+  display: block;
+  width: 100%;
+  margin-top: 30px;
+}
+
+.yesbtnpanel {
+  display: inline-block;
+  width: 50%;
+  text-align: right;
+}
+
+.cancelbtnpanel {
+  display: inline-block;
+  width: 50%;
+  text-align: left;
+}
+
+.yes {
+  width: 114px;
+  height: 35px;
+  background: #1c54db;
+  border-radius: 4px;
+  border-radius: 4px;
+  font-family: 'Roboto', sans-serif;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 14px;
+  line-height: 16px;
+  align-items: center;
+  text-align: center;
+  color: #ffffff;
+}
+
+.cancel {
+  width: 83px;
+  height: 35px;
+  font-family: 'Roboto', sans-serif;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 14px;
+  line-height: 16px;
+  align-items: center;
+  text-align: center;
+  color: #162741;
+  background: #ffffff;
+  border: 1px solid rgba(208, 208, 222, 0.6);
+  box-sizing: border-box;
+  border-radius: 4px;
+}
+
+@media (max-width: 768px) {
+  .descp {
+    color: #162741;
+  }
+
+  .closepanel {
+    display: none;
+  }
+
+  .headingpanel {
+    width: 100%;
+  }
+
+  .cancelbtnpanel {
+    width: 40%;
+  }
+
+  .cancel {
+    width: 75%;
+    margin-right: 7px;
+    height: 45px;
+  }
+
+  .yes {
+    width: 100%;
+    height: 45px;
+  }
+
+  .yesbtnpanel {
+    width: 60%;
+  }
+}

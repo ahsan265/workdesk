@@ -12,6 +12,27 @@ import { AgentInviteService } from '../workdeskServices/agentInviteService/agent
   styleUrls: ['./landing-page.component.scss']
 })
 export class LandingPageComponent implements OnInit {
+  modalData = {
+    title: '',
+    // image: '../assets/images/sidebar/agents.svg',
+    onlyOneButton: false,
+    buttonOne: {
+      title: 'Cancel',
+      backgroundColor: 'white',
+      borderColor: '1px solid rgba(208,208,222,.6)',
+      textColor: '#162741',
+      active: false
+    },
+    buttonTwo: {
+      title: 'Save',
+      backgroundColor: '#1C54DB',
+      borderColor: 'none',
+      textColor: 'white',
+      active: true
+    },
+    width: '500px',
+    height: '400px'
+  };
   showLinkExpireModal: boolean = false;
   landingPageData: any = {
     title:
@@ -46,5 +67,10 @@ export class LandingPageComponent implements OnInit {
   }
   showInviteModal() {
     this.showLinkExpireModal = true;
+  }
+  onCloseModal(event: any) {
+    if (event) {
+      this.showLinkExpireModal = false;
+    }
   }
 }

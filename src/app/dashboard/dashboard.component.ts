@@ -13,12 +13,13 @@ import {
 import { AuthService } from '../services/auth.service';
 import { BaseChartDirective } from 'ng2-charts';
 import DataLabelsPlugin from 'chartjs-plugin-datalabels';
-import { CommonEndpoints } from '../commonEndpoints/commonEndpoint';
 import { SharedServices } from '../workdeskServices/sharedResourcesService/shared-resource-service.service';
 import { DashboardEndpointService } from './dashboardService/dashboard-endpoint.service';
 import { DaterangepickerDirective } from '@gigaaa/gigaaa-components';
 import * as dayjs from 'dayjs';
 import { CalendarService } from '../calendarService/calendar.service';
+import { CommonService } from '../workdeskServices/commonEndpoint/common.service';
+import { MessageService } from '../workdeskServices/messageService/message.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -94,10 +95,11 @@ export class DashboardComponent {
 
   constructor(
     private authService: AuthService,
-    private commonEps: CommonEndpoints,
+    private CommonService: CommonService,
     private sharedRes: SharedServices,
     private dashboardEps: DashboardEndpointService,
-    private calendarService: CalendarService
+    private calendarService: CalendarService,
+    private messageService: MessageService
   ) {
     this.authService.pageTitle.next('Dashboard');
     this.callRouteLoad();
@@ -118,17 +120,17 @@ export class DashboardComponent {
     });
   }
   private async callRouteLoad(): Promise<void> {
-    this.countries = await this.commonEps.getLocations();
-    this.languauges = await this.commonEps.getLanguages();
-    if (this.commonEps.getEpsParamLocal().project != undefined) {
+    this.countries = await this.CommonService.getLocations();
+    this.languauges = await this.CommonService.getLanguages();
+    if (this.CommonService.getEpsParamLocal().project != undefined) {
       this.dashboardEps.getCarddata(
-        this.commonEps.getIdsOfLanguage(),
-        this.commonEps.getIdsOfLocation(),
+        this.CommonService.getIdsOfLanguage(),
+        this.CommonService.getIdsOfLocation(),
         this.aggregate
       );
       this.dashboardEps.getChartData(
-        this.commonEps.getIdsOfLanguage(),
-        this.commonEps.getIdsOfLocation(),
+        this.CommonService.getIdsOfLanguage(),
+        this.CommonService.getIdsOfLocation(),
         this.aggregate,
         this.startDate,
         this.endDate
@@ -138,8 +140,8 @@ export class DashboardComponent {
   private getFirstLoad(): void {
     this.sharedRes.LoadcommonEpsubject.subscribe(async (data) => {
       if (data == 1) {
-        this.idOfLocation = this.commonEps.getIdsOfLocation();
-        this.idOfLanguage = this.commonEps.getIdsOfLanguage();
+        this.idOfLocation = this.CommonService.getIdsOfLocation();
+        this.idOfLanguage = this.CommonService.getIdsOfLanguage();
         this.dashboardEps.getCarddata(
           this.idOfLanguage,
           this.idOfLocation,

@@ -43,7 +43,11 @@ import { NgxPaginationModule } from 'ngx-pagination';
 import { OngoingComponent } from './calls/ongoing/ongoing.component';
 import { PageWrapperComponent } from './components/page-wrapper/page-wrapper.component';
 import { environment } from 'src/environments/environment';
-import { linkExpireModalComponent } from './link-expire-modal/link-expire-modal.component';
+import { linkExpireModalComponent } from './modals/link-expire-modal/link-expire-modal.component';
+import { ToastrModule } from 'ngx-toastr';
+import { UpdatePasswordComponent } from './modals/update-password/update-password.component';
+import { UploadImageComponent } from './modals/upload-image/upload-image.component';
+import { DeleteAgentComponent } from './modals/delete-agent/delete-agent.component';
 
 @NgModule({
   declarations: [
@@ -65,7 +69,10 @@ import { linkExpireModalComponent } from './link-expire-modal/link-expire-modal.
     AgentSettingsComponent,
     CallsIndicatorComponent,
     LandingPageComponent,
-    linkExpireModalComponent
+    linkExpireModalComponent,
+    UpdatePasswordComponent,
+    UploadImageComponent,
+    DeleteAgentComponent
   ],
   imports: [
     FormsModule,
@@ -74,6 +81,7 @@ import { linkExpireModalComponent } from './link-expire-modal/link-expire-modal.
     AppRoutingModule,
     GigaaaSidebarModule,
     GigaaaHeaderModule.forRoot(environment),
+    ToastrModule.forRoot(),
     GigaaaTableModule,
     CallbackModule,
     LogoutModule,

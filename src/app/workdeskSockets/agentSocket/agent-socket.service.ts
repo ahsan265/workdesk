@@ -96,7 +96,7 @@ export class AgentSocketService {
   }
 
   // get last used parameters
-  private getLastUsedParams() {
+  public getLastUsedParams() {
     if (this.lastUsedParameter != {}) {
       this.sendAgentsParameter(this.lastUsedParameter);
     }

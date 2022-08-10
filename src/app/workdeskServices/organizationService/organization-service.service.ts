@@ -8,6 +8,7 @@ import { Organization, Project } from 'src/app/models/organization';
 import { ConnectionSecurityService } from 'src/app/workdeskSockets/socketConnectionSecurity/connection-security.service';
 import { AgentInviteService } from '../agentInviteService/agent-invite.service';
 import { GigaaaApiService } from '../gigaaaApiService/gigaaa-api-service.service';
+import { MessageService } from '../messageService/message.service';
 import { SharedServices } from '../sharedResourcesService/shared-resource-service.service';
 
 @Injectable({
@@ -22,7 +23,8 @@ export class getOrganizationService {
     private gigaaaService: GigaaaApiService,
     private SharedServices: SharedServices,
     private AgentinviteService: AgentInviteService,
-    private ConnectionSecurityService: ConnectionSecurityService
+    private ConnectionSecurityService: ConnectionSecurityService,
+    private MessageService: MessageService
   ) {
     this.lastUsedOgranization = new BehaviorSubject(
       this.getLastUsedOrganizationId()
@@ -64,7 +66,7 @@ export class getOrganizationService {
         });
       })
       .catch((err: any) => {
-        // console.log(err);
+        this.MessageService.setErrorMessage(err.error.error);
       });
   }
 

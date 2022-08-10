@@ -1,0 +1,21 @@
+<ng-container>
+  <div class="descroptionpanel">
+    <p class="descp">
+      Deleting this agent will remove the agent from this project.
+    </p>
+  </div>
+  <div class="agentinfopanel">
+    <img
+      class="roudnagentpic"
+      [src]="agentData.images['96']"
+      height="50"
+      width="50"
+      alt=""
+    />
+    <div
+      style="vertical-align: middle; display: inline-block; margin-left: 16px"
+    >
+      <p class="agentname">{{ agentData.display_name }}</p>
+    </div>
+  </div>
+</ng-container>
