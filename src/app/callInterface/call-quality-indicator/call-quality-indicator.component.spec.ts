@@ -8,9 +8,8 @@ describe('CallQualityIndicatorComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ CallQualityIndicatorComponent ]
-    })
-    .compileComponents();
+      declarations: [CallQualityIndicatorComponent]
+    }).compileComponents();
 
     fixture = TestBed.createComponent(CallQualityIndicatorComponent);
     component = fixture.componentInstance;

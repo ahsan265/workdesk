@@ -40,7 +40,7 @@ const routes: Routes = [
         ]
       },
       { path: 'agents', component: AgentsComponent },
-      { path: 'agents/settings/:id', component: AgentSettingsComponent },
+      { path: 'agents/settings/:id', component: AgentSettingsComponent }
     ]
   },
   { path: 'callback', component: CallbackComponent },
@@ -58,4 +58,4 @@ const routes: Routes = [
   ],
   exports: [RouterModule]
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {}

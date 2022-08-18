@@ -7,24 +7,24 @@ import { Component, Input, OnInit } from '@angular/core';
 })
 export class CallQualityIndicatorComponent implements OnInit {
   @Input() callQualityValue: number = 0;
-  selectIconForIndicator: string = '../../../assets/images/callInterface/red.svg'
+  selectIconForIndicator: string =
+    '../../../assets/images/callInterface/red.svg';
 
   constructor() {
     if (this.callQualityValue === 0) {
-      this.selectIconForIndicator = '../../../assets/images/callInterface/green.svg'
-    }
-    else if (this.callQualityValue >= 0.001 && this.callQualityValue < 0.005) {
-      this.selectIconForIndicator = '../../../assets/images/callInterface/yellow.svg'
-    }
-    else if (this.callQualityValue > 0.005) {
-      this.selectIconForIndicator = '../../../assets/images/callInterface/red.svg'
+      this.selectIconForIndicator =
+        '../../../assets/images/callInterface/green.svg';
+    } else if (
+      this.callQualityValue >= 0.001 &&
+      this.callQualityValue < 0.005
+    ) {
+      this.selectIconForIndicator =
+        '../../../assets/images/callInterface/yellow.svg';
+    } else if (this.callQualityValue > 0.005) {
+      this.selectIconForIndicator =
+        '../../../assets/images/callInterface/red.svg';
     }
   }
 
-  ngOnInit(): void {
-
-  }
-
-
-
+  ngOnInit(): void {}
 }

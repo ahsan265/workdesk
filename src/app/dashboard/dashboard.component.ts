@@ -98,7 +98,7 @@ export class DashboardComponent {
     private CommonService: CommonService,
     private sharedRes: SharedServices,
     private dashboardEps: DashboardEndpointService,
-    private calendarService: CalendarService,
+    private calendarService: CalendarService
   ) {
     this.authService.pageTitle.next('Dashboard');
     this.callRouteLoad();

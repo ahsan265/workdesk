@@ -4,7 +4,6 @@ import { Component, OnInit } from '@angular/core';
 import {
   agentDefaultModalData,
   agentUploadImageModal,
-  agents,
   backButtonData,
   cancelInvitationButtonData,
   deleteAgentButtonData,

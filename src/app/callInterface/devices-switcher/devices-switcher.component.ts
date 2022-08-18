@@ -1,7 +1,8 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { devcieInformationModel, groupDeicesInformation, inputOuputdevices } from 'src/app/models/callInterfaceModel';
-import { DevicesInformationService } from 'src/app/workdeskServices/callInterfaceServices/devices/devices-information.service';
-import { inputDevices, outputDevice } from '../callsInterfaceData';
+import {
+  devcieInformationModel,
+  inputOuputdevices
+} from 'src/app/models/callInterfaceModel';
 
 @Component({
   selector: 'app-devices-switcher',
@@ -15,11 +16,8 @@ export class DevicesSwitcherComponent implements OnInit {
 
   constructor() { }
 
-  async ngOnInit() {
- 
-
-  }
+  async ngOnInit() { }
   getInputOutputDeviceInformation(event: inputOuputdevices) {
-    this.selectInputOutputDeviceInformation.emit(event)
+    this.selectInputOutputDeviceInformation.emit(event);
   }
 }

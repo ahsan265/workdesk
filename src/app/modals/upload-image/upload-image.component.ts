@@ -1,12 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import {
-  ImageTransform,
-} from 'ngx-image-cropper';
+import { ImageTransform } from 'ngx-image-cropper';
 
 @Component({
   selector: 'app-upload-image',
   templateUrl: './upload-image.component.html',
-  styleUrls: ['./upload-image.component.scss'],
+  styleUrls: ['./upload-image.component.scss']
 })
 export class UploadImageComponent implements OnInit {
   imageChangedEvent: any = '';
@@ -35,7 +33,7 @@ export class UploadImageComponent implements OnInit {
   progressbarvalue: any = 0;
   filesize: any;
   imageUploaded: any;
-  constructor() { }
+  constructor() {}
 
   ngOnInit(): void {
     this.uploadpicture = true;
@@ -43,9 +41,8 @@ export class UploadImageComponent implements OnInit {
     this.croppicture = false;
   }
   getImageOutput(event: File) {
-    this.getFile(event)
+    this.getFile(event);
   }
-
 
   bytesToSize(bytes: any) {
     const units = ['bytes', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'];
@@ -58,8 +55,7 @@ export class UploadImageComponent implements OnInit {
   }
   saveFiles(files: FileList) {
     if (files.length > 1) {
-
-      console.log(files[0].size, files[0].name, files[0].type);
+   //   console.log(files[0].size, files[0].name, files[0].type);
     }
   }
   // get picture tranisition
@@ -107,7 +103,7 @@ export class UploadImageComponent implements OnInit {
     reader.readAsDataURL(event);
     reader.onload = () => {
       this.imageUploaded = reader.result;
-    }
+    };
     this.loadpicture = true;
 
     setInterval(() => {
@@ -123,5 +119,4 @@ export class UploadImageComponent implements OnInit {
       }
     }, 50);
   }
-
 }

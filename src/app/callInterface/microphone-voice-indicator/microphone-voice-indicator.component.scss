@@ -1,20 +1,20 @@
 .voiceLevels {
-    display: inline-block;
-    width: 50.66px;
-    height: 35px;
-    text-align: left;
-    padding: 7px;
-    line-height: 35px;
+  display: inline-block;
+  width: 50.66px;
+  height: 35px;
+  text-align: left;
+  padding: 7px;
+  line-height: 35px;
 }
 
 .voiceBars {
-    width: 4.45px;
-    height: 20px;
-    background: #76CB09;
-    display: inline-flex;
-    margin-right: 1.5px;
+  width: 4.45px;
+  height: 20px;
+  background: #76cb09;
+  display: inline-flex;
+  margin-right: 1.5px;
 }
 
 .voiceBars:last-child {
-    margin-right: 0px;
+  margin-right: 0px;
 }

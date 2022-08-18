@@ -8,9 +8,8 @@ describe('CallingScreenComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ CallingScreenComponent ]
-    })
-    .compileComponents();
+      declarations: [CallingScreenComponent]
+    }).compileComponents();
 
     fixture = TestBed.createComponent(CallingScreenComponent);
     component = fixture.componentInstance;

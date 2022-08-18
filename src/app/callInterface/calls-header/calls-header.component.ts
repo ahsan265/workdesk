@@ -1,5 +1,8 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { agentOperationInformationModel, CallsHeaderModel } from 'src/app/models/callInterfaceModel';
+import {
+  CallsHeaderModel,
+  agentOperationInformationModel
+} from 'src/app/models/callInterfaceModel';
 import { maximizeHeaderData, minimizeHeaderData } from '../callsInterfaceData';
 
 @Component({
@@ -8,17 +11,16 @@ import { maximizeHeaderData, minimizeHeaderData } from '../callsInterfaceData';
   styleUrls: ['./calls-header.component.scss']
 })
 export class CallsHeaderComponent implements OnInit {
-  minimizeData = minimizeHeaderData
+  minimizeData = minimizeHeaderData;
   maximizeData = maximizeHeaderData;
-  @Input() agentOperationInformation!: agentOperationInformationModel
-  @Input() callsHeaderData!: CallsHeaderModel
-  @Input() isCameraOn!:boolean;
+  @Input() agentOperationInformation!: agentOperationInformationModel;
+  @Input() callsHeaderData!: CallsHeaderModel;
+  @Input() isCameraOn!: boolean;
   @Output() minmizeMaxmizeScreenOutput = new EventEmitter();
 
-  constructor() { }
-  ngOnInit(): void {
-  }
+  constructor() {}
+  ngOnInit(): void {}
   minmizeMaxmizeScreen(event: boolean) {
-    this.minmizeMaxmizeScreenOutput.emit(event)
+    this.minmizeMaxmizeScreenOutput.emit(event);
   }
 }

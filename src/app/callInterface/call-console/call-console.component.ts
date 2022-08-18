@@ -1,9 +1,20 @@
-import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
-import { Router } from '@angular/router';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { StreamingService } from 'src/app/workdeskServices/callInterfaceServices/stream/streaming.service';
 import { CallingScreenComponent } from '../calling-screen/calling-screen.component';
-import { agentOperationInformation, CallsHeaderData, cameraOnOffData, hangUpData, maxmizeScreenData, miceData, minimizeScreenData, minimizeScreenVideoData, peerMiniCameraDetails, peerUserInformationData, screenShareData, secondPeerUserInformationData } from '../callsInterfaceData';
+import {
+  CallsHeaderData,
+  agentOperationInformation,
+  cameraOnOffData,
+  hangUpData,
+  maxmizeScreenData,
+  miceData,
+  minimizeScreenData,
+  minimizeScreenVideoData,
+  peerMiniCameraDetails,
+  peerUserInformationData,
+  screenShareData,
+  secondPeerUserInformationData
+} from '../callsInterfaceData';
 import { OverlayService } from '../overLayService/overlay.service';
 
 @Component({
@@ -12,7 +23,10 @@ import { OverlayService } from '../overLayService/overlay.service';
   styleUrls: ['./call-console.component.scss']
 })
 export class CallConsoleComponent implements OnInit {
-  constructor(private callInterfaceOverlay: OverlayService, private StreamingService: StreamingService) { }
+  constructor(
+    private callInterfaceOverlay: OverlayService,
+    private StreamingService: StreamingService
+  ) {}
   CallsHeaderData = CallsHeaderData;
   miceData = miceData;
   cameraData = cameraOnOffData;
@@ -23,7 +37,7 @@ export class CallConsoleComponent implements OnInit {
   PeerMiniCameraScreen = peerMiniCameraDetails;
   agentOperationInformationData = agentOperationInformation;
   isSplit: boolean = false;
-  openDeviceSwitcher: boolean = false
+  openDeviceSwitcher: boolean = false;
   toogle: boolean = false;
   isMinimize: boolean = false;
   isVideoMinimize: boolean = false;
@@ -38,8 +52,9 @@ export class CallConsoleComponent implements OnInit {
     await this.StreamingService.startStream();
   }
   async seletecOutputForCamera(event: boolean) {
-    (event == true) ? this.stream.setStream(await this.StreamingService.startVideo()) :
-      this.StreamingService.stopVideo();
+    event == true
+      ? this.stream.setStream(await this.StreamingService.startVideo())
+      : this.StreamingService.stopVideo();
     this.cameraData.isSelected = event;
     this.isVideoMinimize = event;
   }
@@ -48,7 +63,7 @@ export class CallConsoleComponent implements OnInit {
   }
   splitScreen(event: boolean) {
     if (event) {
-      this.isSplit = event
+      this.isSplit = event;
       this.PeerMiniCameraScreen.showSplitIncon = !event;
     }
   }
@@ -57,21 +72,19 @@ export class CallConsoleComponent implements OnInit {
   }
   unSplitScreenOutput(event: boolean) {
     if (!event) {
-      this.isSplit = event
+      this.isSplit = event;
       this.PeerMiniCameraScreen.showSplitIncon = !event;
     }
-
   }
   seletecOutputForHangUpCall(event: boolean) {
     if (event) {
-      this.callInterfaceOverlay.close()
+      this.callInterfaceOverlay.close();
     }
   }
   openDeviceSwitcherOutput(event: boolean) {
     if (event) {
       this.openDeviceSwitcher = true;
     }
-
   }
   minmizeMaxmizeScreenOutput(event: boolean) {
     this.agentOperationInformationData.isMinimize = event;
@@ -81,13 +94,11 @@ export class CallConsoleComponent implements OnInit {
         this.minimize.height = '325px';
         this.agentOperationInformationData.IsVideoMinimize = true;
         this.PeerMiniCameraScreen.showInitals == true;
+      } else {
+        this.isMinimize = true;
       }
-      else {
-        this.isMinimize = true
-      }
-      this.toogle = true
-    }
-    else {
+      this.toogle = true;
+    } else {
       this.minimize.width = '255px';
       this.minimize.height = '99px';
       this.agentOperationInformationData.IsVideoMinimize = false;

@@ -1,65 +1,65 @@
 .callControlPanel {
-    width: 255px;
-    height: 56px;
-    background: rgba(22, 39, 65, 0.73);
-    box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.23);
-    border-radius: 51px;
-    text-align: center;
-    position: relative;
-    bottom: 38px;
+  width: 255px;
+  height: 56px;
+  background: rgba(22, 39, 65, 0.73);
+  box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.23);
+  border-radius: 51px;
+  text-align: center;
+  position: relative;
+  bottom: 38px;
 }
 
 .controlwrapper {
-    padding: 13px 0px 13px 0px;
-    height: 30px;
+  padding: 13px 0px 13px 0px;
+  height: 30px;
 }
 
 .controlIcon {
-    width: 30px;
-    height: 30px;
+  width: 30px;
+  height: 30px;
 
-    border-radius: 50%;
-    display: inline-flex;
-    margin-right: 14px;
-    cursor: pointer;
+  border-radius: 50%;
+  display: inline-flex;
+  margin-right: 14px;
+  cursor: pointer;
 }
 
 .deviceSwitcherIcon {
-    transition-duration: 0.4s;
-    margin: 5px 0;
-    text-align: center;
+  transition-duration: 0.4s;
+  margin: 5px 0;
+  text-align: center;
 }
 
 .controlIcon.hangUp {
-    margin-right: 5px;
+  margin-right: 5px;
 }
 
 .timerWithButtton {
-    width: 91.71px;
-    height: 30px;
-    background: rgba(255, 255, 255, 0.1);
-    border-radius: 35px;
-    display: inline-flex;
+  width: 91.71px;
+  height: 30px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 35px;
+  display: inline-flex;
 }
 
 .callDuration {
-    font-family: 'Roboto', sans-serif;
-    font-style: normal;
-    font-weight: 400;
-    font-size: 12px;
-    line-height: 18px;
-    display: inline-flex;
-    align-items: center;
-    letter-spacing: 0.02em;
-    color: #FFFFFF;
+  font-family: 'Roboto', sans-serif;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 18px;
+  display: inline-flex;
+  align-items: center;
+  letter-spacing: 0.02em;
+  color: #ffffff;
 }
 
 .deviceSwitcher {
-    position: absolute;
-    width: 14px;
-    height: 14px;
-    border-radius: 50%;
-    top: 3px;
-    right: 200px;
-    cursor: pointer;
+  position: absolute;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  top: 3px;
+  right: 200px;
+  cursor: pointer;
 }

@@ -1,9 +1,24 @@
-import { AfterViewInit, Component, ElementRef, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges, ViewChild } from '@angular/core';
-import { Observable } from 'rxjs';
+import {
+  Component,
+  ElementRef,
+  EventEmitter,
+  Input,
+  OnChanges,
+  OnInit,
+  Output,
+  SimpleChanges,
+  ViewChild
+} from '@angular/core';
 import { loaderAnimation } from 'src/app/animations/loaderAnimation';
 import { peerVoiceIndicator } from 'src/app/animations/peerinIdcators';
-import { agentOperationInformationModel, PeerInformationModel } from 'src/app/models/callInterfaceModel';
-import { peerNormalCallConnectedData, peerVideoCallConnectedData } from '../callsInterfaceData';
+import {
+  PeerInformationModel,
+  agentOperationInformationModel
+} from 'src/app/models/callInterfaceModel';
+import {
+  peerNormalCallConnectedData,
+  peerVideoCallConnectedData
+} from '../callsInterfaceData';
 
 @Component({
   selector: 'app-calling-screen',
@@ -12,7 +27,6 @@ import { peerNormalCallConnectedData, peerVideoCallConnectedData } from '../call
   animations: [peerVoiceIndicator, loaderAnimation]
 })
 export class CallingScreenComponent implements OnInit {
-
   miniMizeVideoData = peerVideoCallConnectedData;
   maxiMizeNormaData = peerNormalCallConnectedData;
   @Input() peerInformationdata!: PeerInformationModel;
@@ -28,16 +42,13 @@ export class CallingScreenComponent implements OnInit {
   isOpen = 0;
   disabled = true;
   color = 'default';
-  constructor() { }
+  constructor() {}
 
-
-  setStream(stream:MediaStream)
-  {
+  setStream(stream: MediaStream) {
     this.localVideo.nativeElement.srcObject = stream;
   }
-  ngOnInit(): void {
-  }
+  ngOnInit(): void {}
   UnslplitScreen($event: boolean) {
-    this.unSplitScreenOutput.emit($event)
+    this.unSplitScreenOutput.emit($event);
   }
 }

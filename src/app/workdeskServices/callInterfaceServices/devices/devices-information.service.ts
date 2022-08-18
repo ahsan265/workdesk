@@ -7,33 +7,28 @@ import { groupDeicesInformation } from 'src/app/models/callInterfaceModel';
   providedIn: 'root'
 })
 export class DevicesInformationService {
-  constructor() {
-  }
+  constructor() {}
 
   public async getAllDevice(): Promise<groupDeicesInformation> {
     const audioInput: InputDeviceInfo[] = [];
     const audioOutput: MediaDeviceInfo[] = [];
     const videoInput: InputDeviceInfo[] = [];
     await navigator.mediaDevices.enumerateDevices().then((device) => {
-      device.forEach(data => {
-        if (data.kind === "audioinput") {
-          audioInput.push(data)
-        }
-        else if (data.kind === 'audiooutput') {
+      device.forEach((data) => {
+        if (data.kind === 'audioinput') {
+          audioInput.push(data);
+        } else if (data.kind === 'audiooutput') {
           audioOutput.push(data);
-        }
-        else if (data.kind === 'videoinput') {
+        } else if (data.kind === 'videoinput') {
           videoInput.push(data);
         }
-      })
-
-    })
+      });
+    });
     const data: groupDeicesInformation = {
       audioInputDevices: audioInput,
       audioOutputDevice: audioOutput,
       videoInputDevices: videoInput
-    }
+    };
     return data;
   }
-
 }

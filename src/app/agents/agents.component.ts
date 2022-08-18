@@ -26,7 +26,6 @@ import { OverlayService } from '../callInterface/overLayService/overlay.service'
   styleUrls: ['./agents.component.scss']
 })
 export class AgentsComponent implements OnInit {
-   
   languauges = languauges;
   searchInputData = searchInputData;
   oneSelectData = oneSelect;
@@ -46,7 +45,7 @@ export class AgentsComponent implements OnInit {
     private AgentService: AgentService,
     private router: Router,
     private AgentSocketService: AgentSocketService,
-    private openCallInterface:OverlayService
+    private openCallInterface: OverlayService
   ) {
     this.authService.pageTitle.next('Agents');
   }
@@ -87,8 +86,7 @@ export class AgentsComponent implements OnInit {
     //   );
     //   this.router.navigate(['agents', 'settings', selectedAgent?.uuid]);
     // }
-    this.openCallInterface.open()
-    
+    this.openCallInterface.open();
   }
 
   getAgentList() {

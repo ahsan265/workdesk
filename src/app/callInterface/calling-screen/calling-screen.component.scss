@@ -1,101 +1,100 @@
 .callViewWrapperNormal {
-    display: flex;
-    background: #0C1524;
-    width: 50%;
-    top: inherit;
-    position: absolute;
-    right: 0;
-    height: 100%;
-
+  display: flex;
+  background: #0c1524;
+  width: 50%;
+  top: inherit;
+  position: absolute;
+  right: 0;
+  height: 100%;
 }
 
 .callViewWrapperSplit {
-    display: flex;
-    width: 100%;
-    top: inherit;
-    position: absolute;
-    background: #0E1D35;
-    overflow: hidden;
-    height: 100%;
+  display: flex;
+  width: 100%;
+  top: inherit;
+  position: absolute;
+  background: #0e1d35;
+  overflow: hidden;
+  height: 100%;
 }
 
 .peerDeviceInformation {
-    width: 198px;
-    height: 198px;
-    border-radius: 50%;
-    background: #2B3A51;
-    border: 1px solid rgba(255, 255, 255, 0.4);
-    position: relative;
-    text-align: center;
-    margin: 0 auto;
-    top: calc(50% - 160px);
+  width: 198px;
+  height: 198px;
+  border-radius: 50%;
+  background: #2b3a51;
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  position: relative;
+  text-align: center;
+  margin: 0 auto;
+  top: calc(50% - 160px);
 }
 
 .peerInitials {
-    font-family: "Roboto", sans-serif;
-    font-style: normal;
-    font-weight: 600;
-    font-size: 40px;
-    line-height: 37px;
-    width: 100%;
-    display: block;
-    align-items: center;
-    text-align: center;
-    margin: 0 auto;
-    letter-spacing: 0.02em;
-    position: absolute;
-    top: calc(50% - 18px);
-    color: #FFFFFF;
+  font-family: 'Roboto', sans-serif;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 40px;
+  line-height: 37px;
+  width: 100%;
+  display: block;
+  align-items: center;
+  text-align: center;
+  margin: 0 auto;
+  letter-spacing: 0.02em;
+  position: absolute;
+  top: calc(50% - 18px);
+  color: #ffffff;
 }
 
 .loaderAnimation {
-    width: 230px;
-    height: 230px;
-    position: absolute;
-    margin: 0px auto;
-    border-radius: 50%;
-    right: -1px;
-    left: -16px;
-    top: -16px;
-    border-top: 0px solid transparent;
-    background: transparent;
-    border-right: 7px solid #FF155A;
-    border-left: 0px solid transparent;
-    border-bottom: 10px solid transparent;
-    border-top-right-radius: 50%;
-    border-top-left-radius: 50%;
-    border-bottom-right-radius: 50%;
-    border-bottom-left-radius: 50%;
+  width: 230px;
+  height: 230px;
+  position: absolute;
+  margin: 0px auto;
+  border-radius: 50%;
+  right: -1px;
+  left: -16px;
+  top: -16px;
+  border-top: 0px solid transparent;
+  background: transparent;
+  border-right: 7px solid #ff155a;
+  border-left: 0px solid transparent;
+  border-bottom: 10px solid transparent;
+  border-top-right-radius: 50%;
+  border-top-left-radius: 50%;
+  border-bottom-right-radius: 50%;
+  border-bottom-left-radius: 50%;
 }
 
 .peerImage {
-    height: 201px;
-    width: 201px;
-    border-radius: 50%;
+  height: 201px;
+  width: 201px;
+  border-radius: 50%;
 }
 
 .peerWaitingImage {
-    height: 43px;
-    width: 48px;
-    margin: 0 auto;
-    position: relative;
-    top: calc(50% - 20px);
+  height: 43px;
+  width: 48px;
+  margin: 0 auto;
+  position: relative;
+  top: calc(50% - 20px);
 }
 
 .unSplit {
-    border-radius: 50%;
-    background: rgba(22, 39, 65, 0.75);
-    position: absolute;
-    width: 35px;
-    height: 35px;
-    right: 0;
-    margin: 9px;
-    transition: 0.3s;
-    cursor: pointer;
-    z-index: 1;
+  border-radius: 50%;
+  background: rgba(22, 39, 65, 0.75);
+  position: absolute;
+  width: 35px;
+  height: 35px;
+  right: 0;
+  margin: 9px;
+  transition: 0.3s;
+  cursor: pointer;
+  z-index: 1;
 }
 
 .unsplitVideoSrc {
-    position: absolute;
-    width: 100%;
+  position: absolute;
+  width: 100%;
 }

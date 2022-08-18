@@ -1,4 +1,4 @@
-import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-microphone-voice-indicator',
@@ -8,12 +8,10 @@ import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
 export class MicrophoneVoiceIndicatorComponent implements OnInit {
   @Input() voiceLevels!: number;
   @Input() active: any;
-  constructor() { }
+  constructor() {}
 
-  ngOnInit(): void {
-  }
-  getArray(number:any)
-  {
+  ngOnInit(): void {}
+  getArray(number: any) {
     return Array(number);
   }
 }

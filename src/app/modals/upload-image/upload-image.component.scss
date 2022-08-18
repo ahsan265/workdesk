@@ -57,35 +57,30 @@ button {
 #progressbar {
   height: 3px;
   width: calc(100% - 66px);
-  background-color: #1C54DB;
+  background-color: #1c54db;
   animation-name: prgb;
   animation-duration: 5s;
   border-radius: 3px;
   margin-top: 10px;
   margin-left: 33px;
   margin-right: 33px;
-
 }
 
 @keyframes prgb {
   0% {
     width: calc(0% - 66px);
-    ;
   }
 
   25% {
     width: calc(25% - 66px);
-    ;
   }
 
   50% {
     width: calc(50% - 66px);
-    ;
   }
 
   75% {
     width: calc(75% - 66px);
-    ;
   }
 
   100% {
@@ -341,7 +336,9 @@ mat-slider {
   background-color: #1c54db;
 }
 
-::ng-deep .mat-slider-min-value:not(.mat-slider-thumb-label-showing) .mat-slider-thumb {
+::ng-deep
+  .mat-slider-min-value:not(.mat-slider-thumb-label-showing)
+  .mat-slider-thumb {
   background-color: #d0d0de;
 }
 

@@ -8,9 +8,8 @@ describe('MiniCameraScreenComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ MiniCameraScreenComponent ]
-    })
-    .compileComponents();
+      declarations: [MiniCameraScreenComponent]
+    }).compileComponents();
 
     fixture = TestBed.createComponent(MiniCameraScreenComponent);
     component = fixture.componentInstance;

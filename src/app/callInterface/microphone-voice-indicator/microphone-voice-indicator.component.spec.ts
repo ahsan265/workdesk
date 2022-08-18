@@ -8,9 +8,8 @@ describe('MicrophoneVoiceIndicatorComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ MicrophoneVoiceIndicatorComponent ]
-    })
-    .compileComponents();
+      declarations: [MicrophoneVoiceIndicatorComponent]
+    }).compileComponents();
 
     fixture = TestBed.createComponent(MicrophoneVoiceIndicatorComponent);
     component = fixture.componentInstance;

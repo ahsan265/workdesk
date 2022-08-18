@@ -60,7 +60,7 @@ import { DevicesSwitcherComponent } from './callInterface/devices-switcher/devic
 import { MicrophoneVoiceIndicatorComponent } from './callInterface/microphone-voice-indicator/microphone-voice-indicator.component';
 import { CallControlsComponent } from './callInterface/call-controls/call-controls.component';
 import { CallQualityIndicatorComponent } from './callInterface/call-quality-indicator/call-quality-indicator.component';
-import {  OverlayModule, OverlayRef } from '@angular/cdk/overlay';
+import { OverlayModule, OverlayRef } from '@angular/cdk/overlay';
 
 @NgModule({
   declarations: [
@@ -129,7 +129,7 @@ import {  OverlayModule, OverlayRef } from '@angular/cdk/overlay';
     FormsModule,
     NgChartsModule,
     DragDropModule,
-    OverlayModule,
+    OverlayModule
   ],
   providers: [
     {
@@ -139,4 +139,4 @@ import {  OverlayModule, OverlayRef } from '@angular/cdk/overlay';
   ],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {}

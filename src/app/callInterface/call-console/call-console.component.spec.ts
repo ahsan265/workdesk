@@ -8,9 +8,8 @@ describe('CallConsoleComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ CallConsoleComponent ]
-    })
-    .compileComponents();
+      declarations: [CallConsoleComponent]
+    }).compileComponents();
 
     fixture = TestBed.createComponent(CallConsoleComponent);
     component = fixture.componentInstance;
