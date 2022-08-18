@@ -107,4 +107,11 @@ export class AgentSettingService {
     );
     this.MessageService.setSuccessMessage('Agent Invitation has been resent.');
   }
+  public updateAgentImage()
+  {
+    
+  }
+  public updateLoggedInUserImage(){
+    
+  }
 }

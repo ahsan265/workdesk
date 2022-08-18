@@ -1,0 +1,63 @@
+.callsHeader {
+    width: 100%;
+    height: 76px;
+    display: flex;
+    background: #162741;
+    box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.23);
+}
+
+.UserInformationPanel {
+    width: 50%;
+    display: flex;
+
+}
+
+.utilitiesPanel {
+    width: 50%;
+    text-align: right;
+
+}
+
+.headerImage {
+    display: inline-flex;
+    width: 33px;
+    height: 33px;
+    border-radius: 50%;
+    margin: 21px 30px 21px 30px;
+    border: 1px solid rgba(255, 255, 255, 0.4);
+}
+
+.userName {
+    display: inline-flex;
+    font-family: 'Roboto', sans-serif;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 125%;
+    align-items: center;
+    letter-spacing: 0.02em;
+    color: #FFFFFF;
+}
+
+.userImage {
+    border-radius: 50%;
+}
+
+.MinimizeInconPanel {
+    padding: 18px 15px 18px 0px;
+    width: fit-content;
+    display: inline-flex;
+    vertical-align: text-bottom;
+    cursor: pointer;
+}
+
+.MinimizeInconPanel svg {
+    height: 10px;
+}
+
+.internetQuality {
+    display: inline-flex;
+    width: fit-content;
+    padding: 31px 21px 30px 30px;
+    vertical-align: super;
+}

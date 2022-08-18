@@ -1,0 +1,50 @@
+<div class="deviceSwitcherWrapper">
+    <div class="deviceSwitcherPanel" style="margin-bottom: 4px;">
+        <div class="deviceHeaderPanel">
+            <img class="deviceIconHeading" [src]="inputDevicesData.devicePanelIcon" alt="">
+            <div class="deviceHeader">
+                {{inputDevicesData.title}}
+            </div>
+        </div>
+        <div class="deviceListWrapper">
+            <div [style.background]="(data.isSelected===true)? data.selectedbackgroundColor:''" class="deviceListItem"
+                (click)="getInputOutputDeviceInformation(data)" *ngFor="let data of inputDevicesData.devices">
+                <img [style.visibility]="(data.isSelected===true)? 'visible':'hidden'" class="deviceSelectedIcon"
+                    [src]="data.selectedIcon" alt="">
+                <div class="deviceName">
+                    {{data.name}}
+                </div>
+                <div style="width: 83px;
+                display: inline-flex;
+                float: right;">
+                    <app-microphone-voice-indicator [voiceLevels]="data.voiceLevels"></app-microphone-voice-indicator>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <div class="deviceSwitcherPanel">
+        <div class="deviceHeaderPanel">
+            <img style="padding: 13px;" class="deviceIconHeading" [src]="outputDevicesData.devicePanelIcon" alt="">
+            <div class="deviceHeader">
+                {{outputDevicesData.title}}
+            </div>
+        </div>
+        <div class="deviceListWrapper">
+            <div [style.background]="(data.isSelected===true)? data.selectedbackgroundColor:''" class="deviceListItem"
+                (click)="getInputOutputDeviceInformation(data)" *ngFor="let data of outputDevicesData.devices">
+                <img [style.visibility]="(data.isSelected===true)? 'visible':'hidden'" class="deviceSelectedIcon"
+                    [src]="data.selectedIcon" alt="">
+                <div class="deviceName">
+                    {{data.name}}
+                </div>
+                <!-- <div style="width: 83px;
+                display: inline-flex;
+                float: right;">
+                    <app-microphone-voice-indicator></app-microphone-voice-indicator>
+                </div> -->
+            </div>
+        </div>
+
+    </div>
+</div>

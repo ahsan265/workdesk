@@ -48,6 +48,19 @@ import { ToastrModule } from 'ngx-toastr';
 import { UpdatePasswordComponent } from './modals/update-password/update-password.component';
 import { UploadImageComponent } from './modals/upload-image/upload-image.component';
 import { DeleteAgentComponent } from './modals/delete-agent/delete-agent.component';
+import { ImageUploaderComponent } from './uploadImages/image-uploader/image-uploader.component';
+import { ImageCropperComponent } from './uploadImages/image-cropper/image-cropper.component';
+import { DragNDropDirective } from './uploadImages/imageDragDropUploadDirective';
+import { DragDropModule } from '@angular/cdk/drag-drop';
+import { CallConsoleComponent } from './callInterface/call-console/call-console.component';
+import { CallsHeaderComponent } from './callInterface/calls-header/calls-header.component';
+import { CallingScreenComponent } from './callInterface/calling-screen/calling-screen.component';
+import { MiniCameraScreenComponent } from './callInterface/mini-camera-screen/mini-camera-screen.component';
+import { DevicesSwitcherComponent } from './callInterface/devices-switcher/devices-switcher.component';
+import { MicrophoneVoiceIndicatorComponent } from './callInterface/microphone-voice-indicator/microphone-voice-indicator.component';
+import { CallControlsComponent } from './callInterface/call-controls/call-controls.component';
+import { CallQualityIndicatorComponent } from './callInterface/call-quality-indicator/call-quality-indicator.component';
+import {  OverlayModule, OverlayRef } from '@angular/cdk/overlay';
 
 @NgModule({
   declarations: [
@@ -72,9 +85,21 @@ import { DeleteAgentComponent } from './modals/delete-agent/delete-agent.compone
     linkExpireModalComponent,
     UpdatePasswordComponent,
     UploadImageComponent,
-    DeleteAgentComponent
+    DeleteAgentComponent,
+    ImageUploaderComponent,
+    ImageCropperComponent,
+    DragNDropDirective,
+    CallConsoleComponent,
+    CallsHeaderComponent,
+    CallingScreenComponent,
+    MiniCameraScreenComponent,
+    DevicesSwitcherComponent,
+    MicrophoneVoiceIndicatorComponent,
+    CallControlsComponent,
+    CallQualityIndicatorComponent
   ],
   imports: [
+    BrowserAnimationsModule,
     FormsModule,
     ReactiveFormsModule,
     BrowserModule,
@@ -102,7 +127,9 @@ import { DeleteAgentComponent } from './modals/delete-agent/delete-agent.compone
     NgxPaginationModule,
     BrowserAnimationsModule,
     FormsModule,
-    NgChartsModule
+    NgChartsModule,
+    DragDropModule,
+    OverlayModule,
   ],
   providers: [
     {
@@ -112,4 +139,4 @@ import { DeleteAgentComponent } from './modals/delete-agent/delete-agent.compone
   ],
   bootstrap: [AppComponent]
 })
-export class AppModule {}
+export class AppModule { }

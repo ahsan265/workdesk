@@ -1,0 +1,22 @@
+<div [ngStyle]="(agentOperationInformation.isMinimize)?minimizeMiniCameraScreenData:normalMiniCameraScreenData"
+    class="miniCameraScreen" *ngIf="PeerMiniCameraDetails.showSplitIncon">
+    <div [ngStyle]="(agentOperationInformation.isMinimize)?minimizeMiniCameraScreenInitialsData:normalMinimizeCameraScreenInitialsData"
+        *ngIf="PeerMiniCameraDetails.showInitals" class="peerMiniCameraInitials">
+        MA
+    </div>
+    <div [ngStyle]="(agentOperationInformation.isMinimize)?miniCameraFullNameData:normalMiniCameraFullNameData"
+        *ngIf="PeerMiniCameraDetails.showInitals" class="peerMiniCameraName">
+        {{PeerMiniCameraDetails.firstName}} (me)
+    </div>
+
+    <video *ngIf="PeerMiniCameraDetails.showCamera" class="miniVideoCamera"
+        [src]="PeerMiniCameraDetails.videoStream"></video>
+    <div [ngStyle]="(agentOperationInformation.isMinimize)?minimizeSplitIconData:normalSplitIconData"
+        (click)="splitScreen(PeerMiniCameraDetails.showSplitIncon)" class="splitScreenIcons">
+        <img [style.margin]="(agentOperationInformation.isMinimize)?'6px':'9px'" style="margin: 9px;"
+            src="../../../assets/images/callInterface/splitscreen.svg" alt="">
+    </div>
+    <div class="reventCameraIcon" *ngIf="PeerMiniCameraDetails.showRevertCamerIcon &&PeerMiniCameraDetails.isMobile ">
+        <img style="margin: 9px;" src="../../../assets/images/callInterface/revertcamera.svg" alt="">
+    </div>
+</div>

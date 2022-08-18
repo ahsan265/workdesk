@@ -1,0 +1,21 @@
+.callControlsWrapper {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    margin: 0 auto;
+    display: block;
+    text-align: -webkit-center;
+}
+
+.mainCallWrapper {
+    display: block;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    overflow: hidden;
+    z-index: 1;
+}
+
+.dragArea {
+    height: calc(100% - 180px);
+}

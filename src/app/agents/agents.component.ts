@@ -18,6 +18,7 @@ import { AgentSocketService } from '../workdeskSockets/agentSocket/agent-socket.
 import { AgentList } from '../models/agentSocketModel';
 import { Router } from '@angular/router';
 import { CommonService } from '../workdeskServices/commonEndpoint/common.service';
+import { OverlayService } from '../callInterface/overLayService/overlay.service';
 
 @Component({
   selector: 'app-agents',
@@ -25,6 +26,7 @@ import { CommonService } from '../workdeskServices/commonEndpoint/common.service
   styleUrls: ['./agents.component.scss']
 })
 export class AgentsComponent implements OnInit {
+   
   languauges = languauges;
   searchInputData = searchInputData;
   oneSelectData = oneSelect;
@@ -43,7 +45,8 @@ export class AgentsComponent implements OnInit {
     private CommonService: CommonService,
     private AgentService: AgentService,
     private router: Router,
-    private AgentSocketService: AgentSocketService
+    private AgentSocketService: AgentSocketService,
+    private openCallInterface:OverlayService
   ) {
     this.authService.pageTitle.next('Agents');
   }
@@ -77,13 +80,15 @@ export class AgentsComponent implements OnInit {
     );
   }
   showInviteModal() {
-    if (this.AgentList.length != 0) {
-      const selectedAgent: AgentList | undefined = this.AgentList.find(
-        (data: AgentList) =>
-          data.uuid === 'ed4f6baf-c7ad-480e-9fa7-ba48ff9d4347'
-      );
-      this.router.navigate(['agents', 'settings', selectedAgent?.uuid]);
-    }
+    // if (this.AgentList.length != 0) {
+    //   const selectedAgent: AgentList | undefined = this.AgentList.find(
+    //     (data: AgentList) =>
+    //       data.uuid === 'ed4f6baf-c7ad-480e-9fa7-ba48ff9d4347'
+    //   );
+    //   this.router.navigate(['agents', 'settings', selectedAgent?.uuid]);
+    // }
+    this.openCallInterface.open()
+    
   }
 
   getAgentList() {

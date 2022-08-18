@@ -37,7 +37,7 @@ const agentUploadImageModal: Modal = {
     active: true
   },
   buttonTwo: {
-    title: 'Delete agent',
+    title: 'Change',
     backgroundColor: '#1C54DB',
     borderColor: 'none',
     textColor: 'white',

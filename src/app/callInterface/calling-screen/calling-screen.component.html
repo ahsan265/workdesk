@@ -1,0 +1,43 @@
+<div
+    [ngStyle]="{'height': (agentOperationInformation.IsVideoMinimize==true) ? 'calc(100% - 50px)' : 'calc(100% - 78px)'}">
+    <div class="callViewWrapperSplit" [ngStyle]="{'width': (isSplit==true) ? '50%' : '100%'}">
+        <div *ngIf="isSplit" class="unSplit" (click)="UnslplitScreen(!isSplit)">
+            <img style="padding: 9px;" src="../../../assets/images/callInterface/smallscreen_icon14.svg" alt="">
+        </div>
+        <div [ngStyle]="(agentOperationInformation.IsVideoMinimize==true)? miniMizeVideoData:maxiMizeNormaData"
+            class="peerDeviceInformation" [@peerIndicator]="peerInformationdata.peerVoiceIndicatorValue">
+            <div class="peerInitials" *ngIf="peerInformationdata.showInitials"
+                [style.font-size]="(agentOperationInformation.IsVideoMinimize==true)? '24px':'40px'">
+                AP
+            </div>
+            <img *ngIf="peerInformationdata.showImage" class="peerImage" [src]="peerInformationdata.peerImage" alt="">
+            <img *ngIf="peerInformationdata.showWaitingIcon" class="peerWaitingImage"
+                [src]="peerInformationdata.waitingIcon" alt="">
+
+            <div [ngStyle]="{'display': (peerInformationdata.showLoaderAnimation==true) ? 'block' : 'none'}"
+                [@loaderAnimation]="color" class="loaderAnimation">
+            </div>
+        </div>
+        <video [hidden]="localVideo===undefined" [ngStyle]="{'object-fit':  (isSplit==true) ? 'cover' : ''}"
+            id="localVideo" #localVideo [autoplay]='true' playsInline type='video/mp4' class="unsplitVideoSrc"></video>
+    </div>
+    <div class="callViewWrapperNormal" *ngIf="isSplit">
+        <div [ngStyle]="(agentOperationInformation.IsVideoMinimize==true)? miniMizeVideoData:maxiMizeNormaData"
+            class="peerDeviceInformation" [@peerIndicator]="secondPeerInformationdata.peerVoiceIndicatorValue">
+            <div class="peerInitials" *ngIf="secondPeerInformationdata.showInitials"
+                [style.font-size]="(agentOperationInformation.IsVideoMinimize==true)? '24px':'40px'">
+                AP
+            </div>
+            <img *ngIf="secondPeerInformationdata.showImage" class="peerImage"
+                [src]="secondPeerInformationdata.peerImage" alt="">
+            <img *ngIf="secondPeerInformationdata.showWaitingIcon" class="peerWaitingImage"
+                [src]="secondPeerInformationdata.waitingIcon" alt="">
+
+            <div [ngStyle]="{'display': (secondPeerInformationdata.showLoaderAnimation==true) ? 'block' : 'none'}"
+                [@loaderAnimation]="color" class="loaderAnimation">
+            </div>
+        </div>
+        <video [ngStyle]="{'object-fit':  (isSplit==true) ? 'cover' : ''}" id="localVideo" #localVideo [autoplay]='true'
+            playsInline type='video/mp4' class="unsplitVideoSrc"></video>
+    </div>
+</div>
