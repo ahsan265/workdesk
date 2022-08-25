@@ -37,7 +37,7 @@ export class DashboardEndpointService {
     location: Array<OneSelect>,
     selectedRange: string
   ) {
-    const epParams = this.CommonService.getEpsParamLocal();
+    const epParams = this.CommonService.getEndpointsParamLocal();
     this.GigaaaApiService.getcallstatistics(
       epParams.token,
       epParams.organization,
@@ -141,7 +141,7 @@ export class DashboardEndpointService {
     startDate: string,
     endDate: string
   ) {
-    const epParams = this.CommonService.getEpsParamLocal();
+    const epParams = this.CommonService.getEndpointsParamLocal();
     this.GigaaaApiService.getcallchart(
       epParams.token,
       epParams.organization,

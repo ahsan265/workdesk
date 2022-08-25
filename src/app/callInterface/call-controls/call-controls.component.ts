@@ -1,10 +1,11 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
+import { dataTableSettings } from 'src/app/agents/agentsData';
 import {
   CallControlModel,
   agentOperationInformationModel,
   inputOuputdevices
 } from 'src/app/models/callInterfaceModel';
-import { DevicesInformationService } from 'src/app/workdeskServices/callInterfaceServices/devices/devices-information.service';
+import { DevicesInformationService } from 'src/app/workdeskServices/callInterfaceServices/devicesInformation/devices-information.service';
 import { StreamingService } from 'src/app/workdeskServices/callInterfaceServices/stream/streaming.service';
 import {
   inputDevices,
@@ -13,6 +14,7 @@ import {
   outputDevice,
   videoMinimizeControlData
 } from '../callsInterfaceData';
+import { MicrophoneVoiceIndicatorComponent } from '../microphone-voice-indicator/microphone-voice-indicator.component';
 
 @Component({
   selector: 'app-call-controls',
@@ -20,8 +22,8 @@ import {
   styleUrls: ['./call-controls.component.scss']
 })
 export class CallControlsComponent implements OnInit {
-  minimizeCallControl = minimizeCallControlData;
-  maximizeCallControl = maximizeCallControlData;
+  @Input() minimizeCallControl!: any;
+  @Input() maximizeCallControl!: any;
   videoMinimizeControlData = videoMinimizeControlData;
   inputDeviceData = inputDevices;
   outputDeviceData = outputDevice;
@@ -32,6 +34,7 @@ export class CallControlsComponent implements OnInit {
   @Input() timeText!: string;
   @Input() openDeviceSwitcher: boolean = false;
   @Input() agentOperationInformationData!: agentOperationInformationModel;
+  @Input() isMinimize!: boolean;
 
   @Output() seletecOutputForMicrophone = new EventEmitter();
   @Output() seletecOutputForCamera = new EventEmitter();
@@ -42,7 +45,9 @@ export class CallControlsComponent implements OnInit {
   constructor(
     private DevicesInformationService: DevicesInformationService,
     private StreamingService: StreamingService
-  ) {}
+  ) {
+
+  }
 
   async ngOnInit(): Promise<void> {
     const devices = await this.DevicesInformationService.getAllDevice();
@@ -51,7 +56,7 @@ export class CallControlsComponent implements OnInit {
       groupId: data.groupId,
       name: data.label,
       deviceType: data.kind,
-      isSelected: true,
+      isSelected: false,
       selectedbackgroundColor: '#243247',
       hoverColor: '',
       selectedIcon: '../../../assets/images/callInterface/green_check_icon.svg',
@@ -64,12 +69,15 @@ export class CallControlsComponent implements OnInit {
       groupId: data.groupId,
       name: data.label,
       deviceType: data.kind,
-      isSelected: true,
+      isSelected: false,
       selectedbackgroundColor: '#243247',
       hoverColor: '',
       selectedIcon: '../../../assets/images/callInterface/green_check_icon.svg',
       voiceLevels: 0
     }));
+    this.inputDeviceData.devices[0].isSelected = true;
+    this.outputDeviceData.devices[0].isSelected = true;
+
   }
   // on of microphone
   onOffMicrophone(event: boolean) {
@@ -101,11 +109,12 @@ export class CallControlsComponent implements OnInit {
   // get selected Device Information
   selectInputOutputDeviceInformation(event: inputOuputdevices) {
     if (event.deviceType === 'audioinput') {
-      this.inputDeviceData.devices.forEach((data) => {
+      this.inputDeviceData.devices.forEach(async (data) => {
         data.id === event.id
           ? (data.isSelected = true)
           : (data.isSelected = false);
       });
+
     } else if (event.deviceType === 'audiooutput') {
       this.outputDeviceData.devices.forEach((data) => {
         data.id === event.id
@@ -113,5 +122,11 @@ export class CallControlsComponent implements OnInit {
           : (data.isSelected = false);
       });
     }
+  }
+
+
+  setVideoMinimize() {
+    console.log("hello")
+    return videoMinimizeControlData;
   }
 }

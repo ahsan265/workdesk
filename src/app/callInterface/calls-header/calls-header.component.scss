@@ -59,3 +59,38 @@
   padding: 31px 21px 30px 30px;
   vertical-align: super;
 }
+
+.callsHeaderMobileTimer {
+  color: white;
+  font-size: 12px;
+  line-height: 50px;
+  display: none;
+  vertical-align: top;
+}
+
+// For Mobile Phones
+@media only screen and (max-width: 480px) {
+  .callsHeader {
+    height: 49px !important;
+  }
+
+  .callsHeaderMobileTimer {
+    display: inline-flex;
+  }
+
+  .MinimizeInconPanel {
+    padding: 18px 15px 15px 0px;
+  }
+
+  .userName {
+    font-size: 12px !important;
+  }
+
+  .headerImage {
+    margin: 8px 12px !important;
+  }
+
+  .internetQuality {
+    padding: 18px 12px 12px 12px !important;
+  }
+}

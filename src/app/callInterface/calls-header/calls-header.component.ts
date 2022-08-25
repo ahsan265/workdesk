@@ -3,6 +3,7 @@ import {
   CallsHeaderModel,
   agentOperationInformationModel
 } from 'src/app/models/callInterfaceModel';
+import { DevicesInformationService } from 'src/app/workdeskServices/callInterfaceServices/devicesInformation/devices-information.service';
 import { maximizeHeaderData, minimizeHeaderData } from '../callsInterfaceData';
 
 @Component({
@@ -18,9 +19,10 @@ export class CallsHeaderComponent implements OnInit {
   @Input() isCameraOn!: boolean;
   @Output() minmizeMaxmizeScreenOutput = new EventEmitter();
 
-  constructor() {}
-  ngOnInit(): void {}
+  constructor(private DevicesInformationService: DevicesInformationService) { }
+  ngOnInit(): void { }
   minmizeMaxmizeScreen(event: boolean) {
     this.minmizeMaxmizeScreenOutput.emit(event);
+
   }
 }

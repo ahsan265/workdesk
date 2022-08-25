@@ -12,7 +12,9 @@
   height: 144px;
   border-radius: 3px;
   margin: 0 auto;
-  background: black;
+  object-fit: cover;
+  z-index: 1;
+  position: absolute;
 }
 
 .peerMiniCameraName {
@@ -28,6 +30,7 @@
   text-align: center;
   letter-spacing: 0.02em;
   color: #ffffff;
+  z-index: 1;
 }
 
 .peerMiniCameraInitials {
@@ -43,6 +46,7 @@
   letter-spacing: 0.02em;
   color: #ffffff;
   width: 100%;
+  z-index: 1;
 }
 
 .splitScreenIcons {
@@ -56,6 +60,7 @@
   margin: 7px;
   transition: 0.3s;
   cursor: pointer;
+  z-index: 3;
 }
 
 .reventCameraIcon {
@@ -67,4 +72,24 @@
   height: 35px;
   right: 0;
   margin: 7px;
+}
+
+@media only screen and (max-width: 768px) {
+  .miniCameraScreen {
+    height: 164px !important;
+    width: 140px !important;
+  }
+
+  .miniVideoCamera {
+    height: 164px !important;
+    width: 140px !important;
+  }
+
+  .peerMiniCameraInitials {
+    bottom: 80px !important;
+  }
+
+  .peerMiniCameraName {
+    bottom: 44px !important;
+  }
 }

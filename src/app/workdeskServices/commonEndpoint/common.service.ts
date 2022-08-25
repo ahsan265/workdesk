@@ -29,7 +29,7 @@ export class CommonService {
   constructor(
     private GigaaaApiService: GigaaaApiService,
     private MessageService: MessageService
-  ) {}
+  ) { }
   // get the list of countries
   public async getLocations(): Promise<MultiSelect> {
     try {
@@ -87,17 +87,19 @@ export class CommonService {
   }
 
   // get data token, organization , project from local storage
-  public getEpsParamLocal() {
+  public getEndpointsParamLocal() {
     const newLocal = JSON.parse(localStorage.getItem('gigaaa-user') || '{}');
     const organization = JSON.parse(
       localStorage.getItem('gigaaa-organz') || '{}'
     );
     const project = JSON.parse(localStorage.getItem('gigaaa-project') || '{}');
+    const socketConnection = JSON.parse(localStorage.getItem('connection-id') || '{}');
 
     return {
       token: newLocal.api_token,
       organization: organization.uuid,
-      project: project.uuid
+      project: project.uuid,
+      connectionId: socketConnection.connection
     };
   }
   // get locations Id

@@ -97,4 +97,37 @@
 .unsplitVideoSrc {
   position: absolute;
   width: 100%;
+  height: inherit;
+  object-fit: cover;
+}
+
+@media only screen and (max-width: 480px) {
+  .peerDeviceInformation {
+    height: 120px !important;
+    width: 120px !important;
+  }
+
+  .callViewWrapperNormal {
+    height: calc(50% - 25px) !important;
+    width: 100% !important;
+    top: 50px;
+  }
+
+  .peerDeviceInformation {
+    top: calc(50% - 60px) !important;
+  }
+
+  .unsplitVideoSrc {
+    height: 100%;
+  }
+
+  .unSplit {
+    margin: 12px;
+  }
+
+  .callViewWrapperSplit {
+    bottom: 90px;
+  }
+
+
 }

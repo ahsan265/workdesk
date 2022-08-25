@@ -17,7 +17,7 @@ export class AgentSettingService {
     private GigaaaApiService: GigaaaApiService,
     private CommonService: CommonService,
     private MessageService: MessageService
-  ) {}
+  ) { }
 
   // get agentS Updated Data ()
   public async updateAgentSettings(
@@ -26,9 +26,9 @@ export class AgentSettingService {
   ) {
     try {
       await this.GigaaaApiService.updateAgentSettings(
-        this.CommonService.getEpsParamLocal().token,
-        this.CommonService.getEpsParamLocal().organization,
-        this.CommonService.getEpsParamLocal().project,
+        this.CommonService.getEndpointsParamLocal().token,
+        this.CommonService.getEndpointsParamLocal().organization,
+        this.CommonService.getEndpointsParamLocal().project,
         agentUuid,
         agentsetting
       );
@@ -39,9 +39,9 @@ export class AgentSettingService {
   }
   public async getAgentData(agentUuid: string): Promise<AgentList> {
     const agent: AgentList = await this.GigaaaApiService.getSelectedAgentData(
-      this.CommonService.getEpsParamLocal().token,
-      this.CommonService.getEpsParamLocal().organization,
-      this.CommonService.getEpsParamLocal().project,
+      this.CommonService.getEndpointsParamLocal().token,
+      this.CommonService.getEndpointsParamLocal().organization,
+      this.CommonService.getEndpointsParamLocal().project,
       agentUuid
     );
     return agent;
@@ -91,22 +91,22 @@ export class AgentSettingService {
   }
   public async deleteAgent(agentUuid: string) {
     await this.GigaaaApiService.deleteagent(
-      this.CommonService.getEpsParamLocal().token,
-      this.CommonService.getEpsParamLocal().organization,
-      this.CommonService.getEpsParamLocal().project,
+      this.CommonService.getEndpointsParamLocal().token,
+      this.CommonService.getEndpointsParamLocal().organization,
+      this.CommonService.getEndpointsParamLocal().project,
       agentUuid
     );
     this.MessageService.setSuccessMessage('Agent deleted successfully');
   }
   public async resendInvitation(agentUuid: string) {
     await this.GigaaaApiService.resendInvitation(
-      this.CommonService.getEpsParamLocal().token,
-      this.CommonService.getEpsParamLocal().organization,
-      this.CommonService.getEpsParamLocal().project,
+      this.CommonService.getEndpointsParamLocal().token,
+      this.CommonService.getEndpointsParamLocal().organization,
+      this.CommonService.getEndpointsParamLocal().project,
       agentUuid
     );
     this.MessageService.setSuccessMessage('Agent Invitation has been resent.');
   }
-  public updateAgentImage() {}
-  public updateLoggedInUserImage() {}
+  public updateAgentImage() { }
+  public updateLoggedInUserImage() { }
 }

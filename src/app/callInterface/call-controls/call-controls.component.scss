@@ -2,11 +2,11 @@
   width: 255px;
   height: 56px;
   background: rgba(22, 39, 65, 0.73);
-  box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.23);
+  box-shadow: 3px 3px 10px rgb(0 0 0 / 23%);
   border-radius: 51px;
   text-align: center;
   position: relative;
-  bottom: 38px;
+  bottom: 70px;
 }
 
 .controlwrapper {
@@ -62,4 +62,68 @@
   top: 3px;
   right: 200px;
   cursor: pointer;
+}
+
+@media only screen and (max-width: 768px) {
+  .hideScreenShare {
+    display: none;
+  }
+
+  body {
+    font-size: 80%;
+  }
+
+  .callControlPanel {
+    bottom: 0px !important;
+    width: 100% !important;
+    border-radius: unset;
+    height: 90px !important;
+  }
+
+  .controlwrapper {
+    height: 49px;
+    padding: 21px 0px 20px 0px;
+    background: rgb(22, 39, 65);
+  }
+
+  .timerWithButtton {
+    width: 50px;
+    height: 50px;
+  }
+
+  .callDuration {
+    display: none;
+  }
+
+  .deviceSwitcher {
+    right: calc(100% - 136px);
+    left: unset;
+    height: 25px;
+    width: 25px;
+  }
+
+  .controlIcon {
+    height: 50px;
+    width: 50px;
+    margin-right: 70px;
+  }
+
+  .controlIcon img {
+    height: 40px !important;
+    width: 40px !important;
+    padding: 4px;
+  }
+
+  .controlIcon.hangUp {
+    margin-right: 0px;
+
+  }
+
+  .hangIconMobile {
+    padding: 4px !important;
+  }
+
+  .deviceSwitcherIcon {
+    margin: 11px 0;
+  }
 }

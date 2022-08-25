@@ -25,11 +25,12 @@ export interface PeerInformationModel {
   showImage: boolean;
   showInitials: boolean;
   showWaitingIcon: boolean;
+  showVideo: boolean;
+  showShareScreen: boolean;
 }
 export interface PeerMiniCameraScreen {
   firstName?: string;
   lastName?: string;
-  videoStream: string;
   showCamera: boolean;
   showRevertCamerIcon: boolean;
   showInitals: boolean;
@@ -63,4 +64,16 @@ export interface groupDeicesInformation {
   audioInputDevices: InputDeviceInfo[];
   audioOutputDevice: MediaDeviceInfo[];
   videoInputDevices: InputDeviceInfo[];
+}
+
+export interface PeersCallsInformationModel {
+  display_name: string;
+  firstName: string;
+  lastName: string;
+  peerImage: string;
+  isCameraOn: boolean;
+  isMicrophoneOn: boolean;
+  isScreenShareOn: boolean;
+  peerId: string;
+  deviceType: boolean;
 }

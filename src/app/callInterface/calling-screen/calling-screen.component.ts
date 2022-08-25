@@ -15,6 +15,7 @@ import {
   PeerInformationModel,
   agentOperationInformationModel
 } from 'src/app/models/callInterfaceModel';
+import { DevicesInformationService } from 'src/app/workdeskServices/callInterfaceServices/devicesInformation/devices-information.service';
 import {
   peerNormalCallConnectedData,
   peerVideoCallConnectedData
@@ -39,16 +40,39 @@ export class CallingScreenComponent implements OnInit {
   @ViewChild('localVideo') localVideo!: ElementRef<HTMLMediaElement>;
   @Output() unSplitScreenOutput = new EventEmitter();
 
+  desktop = {
+    height: '100%',
+    width: '50%',
+    top: 'unset',
+    bottom: 'unset'
+
+  };
+  desktopNormal = {
+    height: '100%',
+    width: '100%',
+    top: 'unset',
+    bottom: 'unset'
+  }
+
   isOpen = 0;
   disabled = true;
   color = 'default';
-  constructor() {}
+  constructor(private Devices: DevicesInformationService) {
+    (this.Devices.getDeviceType() === true) ? this.desktop = { height: 'calc(50% - 24px)', width: '100%', top: 'unset', bottom: '0px' } :
+      this.desktopNormal = { height: '100%', width: '100%', top: 'unset', bottom: 'unset' }
+  }
 
   setStream(stream: MediaStream) {
+    this.localVideo.nativeElement.srcObject = null;
     this.localVideo.nativeElement.srcObject = stream;
   }
-  ngOnInit(): void {}
+  setRemoteStream(stream: MediaStream) {
+    this.remoteVideo.nativeElement.srcObject = null;
+    this.remoteVideo.nativeElement.srcObject = stream;
+  }
+  ngOnInit(): void { }
   UnslplitScreen($event: boolean) {
     this.unSplitScreenOutput.emit($event);
   }
+
 }

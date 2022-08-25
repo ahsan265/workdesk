@@ -59,7 +59,9 @@ const peerUserInformationData: PeerInformationModel = {
   showImage: false,
   showInitials: true,
   showLoaderAnimation: false,
-  showWaitingIcon: false
+  showWaitingIcon: false,
+  showVideo: false,
+  showShareScreen: false,
 };
 const secondPeerUserInformationData: PeerInformationModel = {
   firstName: 'Alex',
@@ -70,13 +72,14 @@ const secondPeerUserInformationData: PeerInformationModel = {
   showImage: false,
   showInitials: true,
   showLoaderAnimation: false,
-  showWaitingIcon: false
+  showWaitingIcon: false,
+  showVideo: false,
+  showShareScreen: false,
 };
 
 const peerMiniCameraDetails: PeerMiniCameraScreen = {
   firstName: 'Muhammad',
   lastName: 'Afzal',
-  videoStream: '',
   showCamera: false,
   showRevertCamerIcon: true,
   showInitals: true,
@@ -161,24 +164,27 @@ const allMinimize = {
   isMinimize: false
 };
 const minimizeCallControlData = {
-  height: '49px',
+  height: '50px',
   width: '255px',
   background: '#162741',
   'margin-bottom': '0px',
-  bottom: '1px'
+  bottom: '22px',
+  'border-radius': '1px'
+
 };
 
 const videoMinimizeControlData = {
-  height: '49px',
-  width: '255px',
-  background: '#162741',
-  'margin-bottom': '0px',
-  bottom: '20px'
+  'height': '55px',
+  'width': '255px',
+  'background': '#162741',
+  'margin-bottom': '10px',
+  'bottom': '20px',
+  'border-radius': '51px'
 };
 
 const maximizeCallControlData = {
   width: '255px',
-  height: '56px'
+  height: 'inherit'
 };
 
 // for calling screeen peers circles

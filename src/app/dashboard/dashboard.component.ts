@@ -121,7 +121,7 @@ export class DashboardComponent {
   private async callRouteLoad(): Promise<void> {
     this.countries = await this.CommonService.getLocations();
     this.languauges = await this.CommonService.getLanguages();
-    if (this.CommonService.getEpsParamLocal().project != undefined) {
+    if (this.CommonService.getEndpointsParamLocal().project != undefined) {
       this.dashboardEps.getCarddata(
         this.CommonService.getIdsOfLanguage(),
         this.CommonService.getIdsOfLocation(),

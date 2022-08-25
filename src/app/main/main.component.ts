@@ -66,11 +66,11 @@ export class MainComponent implements OnInit {
   getSelectedDropdownItem(event: any) {
     this.GigaaaApiService.updateLastUsediPorject(
       this.authService.user.value.api_token,
-      this.CommonService.getEpsParamLocal().organization,
+      this.CommonService.getEndpointsParamLocal().organization,
       { project: event.uuid }
     );
     this.getOrganizationService.getOrganization(
-      this.CommonService.getEpsParamLocal().token
+      this.CommonService.getEndpointsParamLocal().token
     );
   }
 

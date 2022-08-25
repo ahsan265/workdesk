@@ -105,3 +105,26 @@
   width: 12px;
   background: transparent;
 }
+
+// For Mobile Phones
+@media only screen and (max-width: 480px) {
+  .deviceSwitcherWrapper {
+    bottom: 92px;
+    border-radius: 0px;
+    width: 100%;
+    right: 0px;
+  }
+
+  .deviceSwitcherPanel {
+    border-radius: 0px;
+    width: 100%;
+  }
+
+  .deviceName {
+    width: 70%;
+  }
+
+  .speaker {
+    display: none;
+  }
+}

@@ -22,7 +22,7 @@ export class AgentInviteService {
     if (code != null) {
       let code_invite = { invitation_code: JSON.parse(code) };
       await this.GigaaaApiService.sendinvitationcode(
-        this.CommonService.getEpsParamLocal().token,
+        this.CommonService.getEndpointsParamLocal().token,
         code_invite
       )
         .finally(() => {

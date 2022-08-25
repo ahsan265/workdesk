@@ -1,6 +1,5 @@
 .callControlsWrapper {
   position: absolute;
-  bottom: 0;
   width: 100%;
   margin: 0 auto;
   display: block;
@@ -17,5 +16,17 @@
 }
 
 .dragArea {
-  height: calc(100% - 180px);
+  height: calc(100% - 78px);
+}
+
+@media only screen and (max-width: 480px) {
+  .dragArea {
+    height: calc(100% - 142px);
+  }
+
+  .mainCallWrapper {
+    width: 100% !important;
+    height: inherit;
+
+  }
 }
