@@ -19,10 +19,10 @@
   </div>
 
   <video [ngStyle]="
-  agentOperationInformation.isMinimize
-    ? minimizeMiniCameraScreenData
-    : normalMiniCameraScreenData
-" *ngIf="PeerMiniCameraDetails.showCamera" class="miniVideoCamera" #localVideo id="localVideo" [autoplay]="true"
+      agentOperationInformation.isMinimize
+        ? minimizeMiniCameraScreenData
+        : normalMiniCameraScreenData
+    " *ngIf="PeerMiniCameraDetails.showCamera" class="miniVideoCamera" #localVideo id="localVideo" [autoplay]="true"
     playsInline type="video/mp4" [muted]="true"></video>
   <div [ngStyle]="
       agentOperationInformation.isMinimize

@@ -17,7 +17,7 @@ export class AgentSettingService {
     private GigaaaApiService: GigaaaApiService,
     private CommonService: CommonService,
     private MessageService: MessageService
-  ) { }
+  ) {}
 
   // get agentS Updated Data ()
   public async updateAgentSettings(
@@ -107,6 +107,6 @@ export class AgentSettingService {
     );
     this.MessageService.setSuccessMessage('Agent Invitation has been resent.');
   }
-  public updateAgentImage() { }
-  public updateLoggedInUserImage() { }
+  public updateAgentImage() {}
+  public updateLoggedInUserImage() {}
 }

@@ -4,42 +4,38 @@
         ? 'calc(100% - 50px)'
         : 'calc(100% - 78px)'
   }">
-  <div class="callViewWrapperSplit" [ngStyle]="isSplit
-  ? desktop
-  : desktopNormal">
-    <div *ngIf="isSplit" class="unSplit" (click)="UnslplitScreen(!isSplit)">
-      <img style="padding: 9px" src="../../../assets/images/callInterface/smallscreen_icon14.svg" alt="" />
-    </div>
+  <div class="callViewWrapperSplit" [ngStyle]="isSplit ? desktop : desktopNormal"
+    [style.background]="isSplit? '#0C1524':'#0F1B2F'">
+
     <div [ngStyle]="
         agentOperationInformation.IsVideoMinimize === true
           ? miniMizeVideoData
           : maxiMizeNormaData
-      " class="peerDeviceInformation" [@peerIndicator]="peerInformationdata.peerVoiceIndicatorValue">
-      <div class="peerInitials" *ngIf="peerInformationdata.showInitials" [style.font-size]="
+      " class="peerDeviceInformation" id="peerIndicator" #peerIndicator>
+      <div class="peerInitials" *ngIf="secondPeerInformationdata.showInitials" [style.font-size]="
           agentOperationInformation.IsVideoMinimize === true ? '24px' : '40px'
         ">
-        AP
+        AI
       </div>
-      <img *ngIf="peerInformationdata.showImage" class="peerImage" [src]="peerInformationdata.peerImage" alt="" />
-      <img *ngIf="peerInformationdata.showWaitingIcon" class="peerWaitingImage" [src]="peerInformationdata.waitingIcon"
+      <img *ngIf="secondPeerInformationdata.showImage" class="peerImage" [src]="secondPeerInformationdata.peerImage"
         alt="" />
+      <img *ngIf="secondPeerInformationdata.showWaitingIcon" class="peerWaitingImage"
+        [src]="secondPeerInformationdata.waitingIcon" alt="" />
 
       <div [ngStyle]="{
           display:
-            peerInformationdata.showLoaderAnimation === true ? 'block' : 'none'
+          secondPeerInformationdata.showLoaderAnimation === true ? 'block' : 'none'
         }" [@loaderAnimation]="color" class="loaderAnimation"></div>
     </div>
-    <video [hidden]="!(peerInformationdata.showVideo && isSplit)"
-      [ngStyle]="{ 'object-fit':( isSplit === true && peerInformationdata.showShareScreen===true) ? 'contain' : 'cover' }"
-      id="localVideo" #localVideo [autoplay]="true" playsInline type="video/mp4" [muted]="true"
-      class="unsplitVideoSrc"></video>
+
   </div>
   <div class="callViewWrapperNormal" *ngIf="isSplit">
+
     <div [ngStyle]="
         agentOperationInformation.IsVideoMinimize === true
           ? miniMizeVideoData
           : maxiMizeNormaData
-      " class="peerDeviceInformation" [@peerIndicator]="secondPeerInformationdata.peerVoiceIndicatorValue">
+      " class="peerDeviceInformation">
       <div class="peerInitials" *ngIf="secondPeerInformationdata.showInitials" [style.font-size]="
           agentOperationInformation.IsVideoMinimize === true ? '24px' : '40px'
         ">
@@ -57,7 +53,22 @@
               : 'none'
         }" [@loaderAnimation]="color" class="loaderAnimation"></div>
     </div>
-    <video [ngStyle]="{ 'object-fit': isSplit === true ? 'cover' : '' }" id="remoteVideo" #remoteVideo [autoplay]="true"
-      playsInline type="video/mp4" class="unsplitVideoSrc"></video>
+
   </div>
+  <div *ngIf="isSplit" class="unSplit" (click)="UnslplitScreen(!isSplit)">
+    <img style="padding: 9px" src="../../../assets/images/callInterface/smallscreen_icon14.svg" alt="" />
+  </div>
+  <div [ngStyle]="{
+    height:
+      agentOperationInformation.IsVideoMinimize === true
+        ? 'calc(100% - 50px)'
+        : 'calc(100% - 78px)'
+  }">
+    <video style="left:0px;" [hidden]="!(peerInformationdata.showVideo && isSplit)" [ngStyle]="(isSplit)
+        ? remoteVideoObjectSplitNormal: remoteVideoObjectNormal" id="localVideo" #localVideo [autoplay]="true"
+      playsInline type="video/mp4" [muted]="true" class="unsplitVideoSrc localVideo"></video>
+    <video [ngStyle]="(isSplit) ? remoteVideoObjectSplitNormal : remoteVideoObjectNormal" id="remoteVideo" #remoteVideo
+      [autoplay]="true" [muted]="false" playsInline type="video/mp4" class="unsplitVideoSrc"></video>
+  </div>
+
 </div>

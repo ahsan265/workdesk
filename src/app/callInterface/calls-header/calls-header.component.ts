@@ -19,10 +19,9 @@ export class CallsHeaderComponent implements OnInit {
   @Input() isCameraOn!: boolean;
   @Output() minmizeMaxmizeScreenOutput = new EventEmitter();
 
-  constructor(private DevicesInformationService: DevicesInformationService) { }
-  ngOnInit(): void { }
+  constructor(private DevicesInformationService: DevicesInformationService) {}
+  ngOnInit(): void {}
   minmizeMaxmizeScreen(event: boolean) {
     this.minmizeMaxmizeScreenOutput.emit(event);
-
   }
 }

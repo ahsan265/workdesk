@@ -10,7 +10,8 @@ import {
 const CallsHeaderData: CallsHeaderModel = {
   agentImage: '../../../assets/images/callInterface/ahsan.jpg',
   isMinimize: true,
-  name: 'Ahsan Sheikh',
+  name: 'Anon anon',
+  initials:'AA',
   minimizeIcon: '../../../assets/images/callInterface/minimizeicon.svg',
   maximizeIcon: '../../../assets/images/callInterface/maximizeicon.svg'
 };
@@ -18,7 +19,6 @@ const miceData: CallControlModel = {
   buttonIconOn: '../../../assets/images/callInterface/microphone.svg',
   buttonIconOff: '../../../assets/images/callInterface/microphone_off.svg',
   backgroundColor: 'rgb(28, 84, 219)',
-  hoverColor: '',
   isSelected: true,
   showButton: true,
   selectedButtonColor: ''
@@ -27,7 +27,6 @@ const cameraOnOffData: CallControlModel = {
   buttonIconOn: '../../../assets/images/callInterface/video.svg',
   buttonIconOff: '../../../assets/images/callInterface/camera_off.svg',
   backgroundColor: 'rgb(28, 84, 219)',
-  hoverColor: '',
   isSelected: false,
   showButton: true,
   selectedButtonColor: 'rgb(28, 84, 219)'
@@ -36,7 +35,6 @@ const screenShareData: CallControlModel = {
   buttonIconOn: '../../../assets/images/callInterface/sharing.svg',
   buttonIconOff: '../../../assets/images/callInterface/sharing.svg',
   backgroundColor: 'rgb(28, 84, 219)',
-  hoverColor: '',
   isSelected: false,
   showButton: true,
   selectedButtonColor: 'rgb(28, 84, 219)'
@@ -45,12 +43,25 @@ const hangUpData: CallControlModel = {
   buttonIconOn: '../../../assets/images/callInterface/endcall.svg',
   buttonIconOff: '../../../assets/images/callInterface/endcall.svg',
   backgroundColor: '#FF155A',
-  hoverColor: '',
   isSelected: true,
   showButton: true,
   selectedButtonColor: '#FF155A'
 };
 const peerUserInformationData: PeerInformationModel = {
+  firstName: 'Anon',
+  lastName: 'Anon',
+  peerImage: '../../../assets/images/callInterface/ahsan.jpg',
+  waitingIcon: '../../../assets/images/callInterface/waiting_large.svg',
+  peerVoiceIndicatorValue: 0,
+  showImage: false,
+  showInitials: true,
+  showLoaderAnimation: false,
+  showWaitingIcon: false,
+  showVideo: false,
+  showShareScreen: false,
+  initials:'AA'
+};
+const secondPeerUserInformationData: PeerInformationModel = {
   firstName: 'Muhammad',
   lastName: 'Ahsan',
   peerImage: '../../../assets/images/callInterface/ahsan.jpg',
@@ -62,19 +73,7 @@ const peerUserInformationData: PeerInformationModel = {
   showWaitingIcon: false,
   showVideo: false,
   showShareScreen: false,
-};
-const secondPeerUserInformationData: PeerInformationModel = {
-  firstName: 'Alex',
-  lastName: 'Ivk',
-  peerImage: '../../../assets/images/callInterface/ahsan.jpg',
-  waitingIcon: '../../../assets/images/callInterface/waiting_large.svg',
-  peerVoiceIndicatorValue: 0,
-  showImage: false,
-  showInitials: true,
-  showLoaderAnimation: false,
-  showWaitingIcon: false,
-  showVideo: false,
-  showShareScreen: false,
+  initials:'AA'
 };
 
 const peerMiniCameraDetails: PeerMiniCameraScreen = {
@@ -170,15 +169,14 @@ const minimizeCallControlData = {
   'margin-bottom': '0px',
   bottom: '22px',
   'border-radius': '1px'
-
 };
 
 const videoMinimizeControlData = {
-  'height': '55px',
-  'width': '255px',
-  'background': '#162741',
+  height: '55px',
+  width: '255px',
+  background: '#162741',
   'margin-bottom': '10px',
-  'bottom': '20px',
+  bottom: '20px',
   'border-radius': '51px'
 };
 

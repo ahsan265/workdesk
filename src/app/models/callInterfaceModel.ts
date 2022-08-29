@@ -1,6 +1,7 @@
 export interface CallsHeaderModel {
   name: string;
   agentImage: string;
+  initials: string;
   minimizeIcon: string;
   maximizeIcon: string;
   isMinimize: boolean;
@@ -10,7 +11,6 @@ export interface CallControlModel {
   buttonIconOn: string;
   buttonIconOff: string;
   backgroundColor: string;
-  hoverColor: string;
   selectedButtonColor: string;
   isSelected: boolean;
   showButton: boolean;
@@ -27,6 +27,7 @@ export interface PeerInformationModel {
   showWaitingIcon: boolean;
   showVideo: boolean;
   showShareScreen: boolean;
+  initials: string;
 }
 export interface PeerMiniCameraScreen {
   firstName?: string;

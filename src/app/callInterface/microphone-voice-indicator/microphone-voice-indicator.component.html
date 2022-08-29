@@ -1,4 +1,10 @@
 <div class="voiceLevels">
-  <div [ngStyle]="{ background: (i < levels && active===true)  ? '#76CB09' : '#3A4559' }" class="voiceBars" id="bars"
-    *ngFor="let data of getArray(8); let i = index"></div>
+  <div
+    [ngStyle]="{
+      background: i < levels && active === true ? '#76CB09' : '#3A4559'
+    }"
+    class="voiceBars"
+    id="bars"
+    *ngFor="let data of getArray(8); let i = index"
+  ></div>
 </div>

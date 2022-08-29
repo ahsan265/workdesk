@@ -1,39 +1,56 @@
-<div class="callsHeader" [ngStyle]="agentOperationInformation.isMinimize ? minimizeData : maximizeData">
+<div
+  class="callsHeader"
+  [ngStyle]="agentOperationInformation.isMinimize ? minimizeData : maximizeData"
+>
   <div class="UserInformationPanel">
-    <div class="headerImage" [ngStyle]="
+    <div
+      class="headerImage"
+      [ngStyle]="
         agentOperationInformation.isMinimize
           ? minimizeData.imageData
           : maximizeData.imageData
-      ">
+      "
+    >
       <img class="userImage" [src]="callsHeaderData.agentImage" alt="" />
     </div>
-    <div class="userName" [ngStyle]="
+    <div
+      class="userName"
+      [ngStyle]="
         agentOperationInformation.isMinimize
           ? minimizeData.nameData
           : maximizeData.nameData
-      ">
+      "
+    >
       {{ callsHeaderData.name }}
     </div>
-
   </div>
   <div class="utilitiesPanel">
-    <div class="callsHeaderMobileTimer">
-      20m:30s
-    </div>
-    <div class="internetQuality" [ngStyle]="
+    <div class="callsHeaderMobileTimer">20m:30s</div>
+    <div
+      class="internetQuality"
+      [ngStyle]="
         agentOperationInformation.isMinimize
           ? minimizeData.internetIndicatorData
           : maximizeData.internetIndicatorData
-      ">
-      <app-call-quality-indicator [callQualityValue]="0.03"></app-call-quality-indicator>
+      "
+    >
+      <app-call-quality-indicator
+        [callQualityValue]="0.03"
+      ></app-call-quality-indicator>
     </div>
-    <div class="MinimizeInconPanel" *ngIf="callsHeaderData.isMinimize"
-      (click)="minmizeMaxmizeScreen(!agentOperationInformation.isMinimize)">
-      <img [src]="
+    <div
+      class="MinimizeInconPanel"
+      *ngIf="callsHeaderData.isMinimize"
+      (click)="minmizeMaxmizeScreen(!agentOperationInformation.isMinimize)"
+    >
+      <img
+        [src]="
           agentOperationInformation.isMinimize
             ? callsHeaderData.maximizeIcon
             : callsHeaderData.minimizeIcon
-        " alt="" />
+        "
+        alt=""
+      />
     </div>
   </div>
 </div>

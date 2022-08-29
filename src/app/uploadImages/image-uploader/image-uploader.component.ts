@@ -1,9 +1,4 @@
-import {
-  Component,
-  EventEmitter,
-  OnInit,
-  Output
-} from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 
 @Component({
   selector: 'app-image-uploader',
@@ -17,7 +12,7 @@ export class ImageUploaderComponent implements OnInit {
   ngOnInit(): void {}
   saveFiles(files: FileList) {
     if (files.length > 1) {
-     // console.log(files[0].size, files[0].name, files[0].type);
+      // console.log(files[0].size, files[0].name, files[0].type);
     }
   }
   fileChangeEvent(event: any): void {

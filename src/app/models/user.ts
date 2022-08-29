@@ -1,6 +1,7 @@
 import { Languages } from './languages';
 
 export interface Profile {
+  [x: string]: any;
   gender?: number;
   title?: any;
   first_name?: string;

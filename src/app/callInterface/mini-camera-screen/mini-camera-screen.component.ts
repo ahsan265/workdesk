@@ -1,4 +1,12 @@
-import { Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
+import {
+  Component,
+  ElementRef,
+  EventEmitter,
+  Input,
+  OnInit,
+  Output,
+  ViewChild
+} from '@angular/core';
 import {
   PeerMiniCameraScreen,
   agentOperationInformationModel
@@ -36,17 +44,16 @@ export class MiniCameraScreenComponent implements OnInit {
   @Output() splitScreenOutput = new EventEmitter();
   @ViewChild('localVideo') localVideo!: ElementRef<HTMLMediaElement>;
 
-  constructor() { }
+  constructor() {}
 
   ngOnInit(): void {
-    console.log()
   }
   // split screen
   splitScreen(event: boolean) {
     this.splitScreenOutput.emit(event);
   }
 
-  setMiniCameraSteam(stream: MediaStream | any) {
+  setMiniCameraSteam(stream: MediaStream) {
     this.localVideo.nativeElement.srcObject = null;
     this.localVideo.nativeElement.srcObject = stream;
   }

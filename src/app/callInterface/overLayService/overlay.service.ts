@@ -11,7 +11,7 @@ interface FilePreviewDialogConfig {
   providedIn: 'root'
 })
 export class OverlayService {
-  constructor(private overlay: Overlay) { }
+  constructor(private overlay: Overlay) {}
   DEFAULT_CONFIG: FilePreviewDialogConfig = {
     hasBackdrop: true,
     backdropClass: 'dark-backdrop',
@@ -49,5 +49,5 @@ export class OverlayService {
 
     return this.overlay.create(overlayConfig);
   }
-  close() { }
+  close() {}
 }

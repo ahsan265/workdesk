@@ -12,110 +12,148 @@ import { AuthService } from 'src/app/services/auth.service';
 export class CallsOperationService {
   peerUserId!: string;
   userId!: string;
-  constructor(private CallSocketService: CallSocketService,
+  constructor(
+    private CallSocketService: CallSocketService,
     private PeerConnectionService: PeerConnectionService,
     private StreamingService: StreamingService,
     private MessageService: MessageService,
     private AgentUserInformation: AgentUserInformation,
     private AuthService: AuthService
-  ) {
-  }
-
+  ) { }
 
   // add incoming call handler
   addIncomingCallHandler() {
-    const callsData = this.AgentUserInformation.getCallInformation();
-    this.CallSocketService.sendDataToInterface.subscribe(async (msg: any) => {
-      console.log(msg)
-      switch (msg.type) {
-        case "offer":
-          await this.handlOfferMessage(msg.data);
-          break;
-        case "answer":
-          this.handleAnswerMessage(msg.data);
-          break;
-        case "hangup":
-          this.hanndleHangupMessage(msg.data);
-          break;
-        case "ice-candidate":
-          this.handleIceCandidateMessage(msg.data);
-          break;
-        case "peer_id":
-          this.userId = msg.id;
-          this.AgentUserInformation.setRefreshStatus(this.userId, false);
-          this.AgentUserInformation.saveUserInformation(this.userId, false, true, false, this.AuthService.user.value)
-          //  this.CallSocketService.sendDataforCall({ "type": "update_peer", "user_id": msg.id, "data": callsData['user-information'] })
-          break;
-        case "accept":
-          this.peerUserId = msg.peer_id;
-          this.createOfferForPeer();
-          break;
-        case "peer_data":
-          break;
-        case "peer_notification":
-          this.MessageService.setInformationMessage(msg.data.msg);
-          break;
-        default:
+    // const callsData = this.AgentUserInformation.getCallInformation();
+    this.CallSocketService.sendDataToInterface.subscribe(
+      async (msg: any) => {
+        switch (msg.type) {
+          case 'offer':
+            await this.handlOfferMessage(msg.data);
+            break;
+          case 'answer':
+            this.handleAnswerMessage(msg.data);
+            break;
+          case 'hangup':
+            this.hanndleHangupMessage(msg.data);
+            break;
+          case 'ice-candidate':
+            this.handleIceCandidateMessage(msg.data);
+            break;
+          case 'peer_id':
+            this.userId = msg.id;
+            this.AgentUserInformation.setRefreshStatus(false);
+            this.AgentUserInformation.saveUserInformation(
+              this.userId,
+              false,
+              true,
+              false,
+              this.AuthService.user.value
+            );
+            const timer = new Date(Date.now());
+            this.AgentUserInformation.callJoiningTime(timer);
+            break;
+          case 'accept':
+            this.peerUserId = msg.peer_id;
+            setTimeout(() => {
+              this.StreamingService.sendFirstOffer(this.peerUserId, this.userId);
+            }, 500);
+            console.log(this.PeerConnectionService.peerConnection.getReceivers());
+            const startTime = new Date(Date.now());
+            this.AgentUserInformation.setRefreshStatus(true);
+            this.AgentUserInformation.setLastCallDuration(startTime)
+            this.AgentUserInformation.callJoiningTime(startTime);
+            break;
+          case 'peer_data':
+            console.log(msg.data)
+            break;
+          case 'peer_notification':
+            this.MessageService.setInformationMessage(msg.data.msg);
+            break;
+          default:
+        }
+      },
+      (error: any) => {
+        console.log(error);
       }
-    }, (error: any) => {
-      console.log(error)
-    })
+    );
   }
 
   // handle Offer messager After recieving offer from peer candidate.
-  private async handlOfferMessage(msg: RTCSessionDescriptionInit): Promise<void> {
-    await this.PeerConnectionService.peerConnection.setRemoteDescription(new RTCSessionDescription(msg)).then(async () => {
-    }).then(async () => {
-      // Build SDP for answer message
-      return await this.PeerConnectionService.peerConnection.createAnswer();
-    }).then(async (answer) => {
-      // Set local SDP
-      console.log(answer)
-      await this.PeerConnectionService.peerConnection.setLocalDescription(answer);
-    }).then(() => {
-      this.CallSocketService.sendDataforCall({ type: "answer", data: this.PeerConnectionService.peerConnection.localDescription });
-    }).catch((error: any) => {
-      console.log(error)
-    });
-
+  private async handlOfferMessage(
+    msg: RTCSessionDescriptionInit
+  ): Promise<void> {
+    await this.PeerConnectionService.peerConnection
+      .setRemoteDescription(new RTCSessionDescription(msg))
+      .then(async () => {
+        return await this.PeerConnectionService.peerConnection.createAnswer();
+      })
+      .then(async (answer) => {
+        await this.PeerConnectionService.peerConnection.setLocalDescription(
+          answer
+        );
+      })
+      .then(() => {
+        this.CallSocketService.sendDataforCall({
+          type: 'answer',
+          data: this.PeerConnectionService.peerConnection.localDescription
+        });
+      })
+      .catch((error: any) => {
+        console.log(error);
+      });
   }
 
-  // handle answer message 
-  private async handleAnswerMessage(data: RTCSessionDescriptionInit): Promise<void> {
-    await this.PeerConnectionService.peerConnection.setRemoteDescription(new RTCSessionDescription(data)).catch(async (error: any) => {
-      console.log(error)
-    })
+  // handle answer message
+  private async handleAnswerMessage(
+    data: RTCSessionDescriptionInit
+  ): Promise<void> {
+    await this.PeerConnectionService.peerConnection
+      .setRemoteDescription(new RTCSessionDescription(data))
+      .catch(async (error: any) => {
+        console.log(error);
+      });
   }
 
   // hang up call
   private hanndleHangupMessage(msg: any) {
-    this.StreamingService.closeStream();
+    this.StreamingService.hangUpCall();
   }
 
-  // handle ice Condate Messages 
-  private async handleIceCandidateMessage(data: RTCIceCandidate): Promise<void> {
-    if (data.candidate != "") {
-      await this.PeerConnectionService.peerConnection.addIceCandidate(data).catch((error: any) => {
-        console.log(error)
-      });
+  // handle ice Condate Messages
+  private async handleIceCandidateMessage(
+    data: RTCIceCandidate
+  ): Promise<void> {
+    if (data.candidate != undefined) {
+      await this.PeerConnectionService.peerConnection
+        .addIceCandidate(data)
+        .catch((error: any) => {
+          console.log(error);
+        });
     }
   }
-  // send first offer 
+  // send first offer
 
   private async createOfferForPeer(): Promise<void> {
-    await this.PeerConnectionService.createPeerConnection()
+    await this.PeerConnectionService.createPeerConnection();
     const streamData = this.StreamingService.localStream;
     const audioTrack = streamData.getAudioTracks()[0];
     streamData.addTrack(audioTrack);
     this.PeerConnectionService.peerConnection.addTrack(audioTrack, streamData);
-    const offer: RTCSessionDescriptionInit = await this.PeerConnectionService.peerConnection.createOffer({
-      offerToReceiveAudio: true,
-      offerToReceiveVideo: true,
-      iceRestart: true
-    })
-    await this.PeerConnectionService.peerConnection.setLocalDescription(offer).catch((err: any) => {
-      console.log(err)
+    const offer: RTCSessionDescriptionInit =
+      await this.PeerConnectionService.peerConnection.createOffer({
+        offerToReceiveAudio: true,
+        offerToReceiveVideo: true,
+        iceRestart: true
+      });
+    await this.PeerConnectionService.peerConnection
+      .setLocalDescription(offer)
+      .catch((error: any) => {
+        console.log(error);
+      });
+    this.CallSocketService.sendDataforCall({
+      type: 'offer',
+      peer_id: this.peerUserId,
+      data: offer
     });
-    this.CallSocketService.sendDataforCall({ type: "offer", peer_id: this.peerUserId, data: offer });
   }
 }

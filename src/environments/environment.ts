@@ -22,36 +22,36 @@ export const environment = {
   websocket_url: 'wss://api.gigaaa.link/websockets/cs',
   logged_user: 'https://api.gigaaa.link/v1/api/v1',
 
-  iceServerConfiguration : [
+  iceServerConfiguration: [
     {
-      urls: 'stun:stun.l.google.com:19302',
+      urls: 'stun:stun.l.google.com:19302'
     },
     {
-      urls: "turn:turn.gigaaa.com:80?transport=tcp",
-      username: "username",
-      credential: "password",
+      urls: 'turn:turn.gigaaa.com:80?transport=tcp',
+      username: 'username',
+      credential: 'password'
     },
     {
-      urls: "turns:turn.gigaaa.com:5349",
-      username: "username",
-      credential: "password",
+      urls: 'turns:turn.gigaaa.com:5349',
+      username: 'username',
+      credential: 'password'
     },
     {
-      urls: "turn:turn.gigaaa.com:3478",
-      username: "username",
-      credential: "password",
-    },
+      urls: 'turn:turn.gigaaa.com:3478',
+      username: 'username',
+      credential: 'password'
+    }
   ],
 
-  iceserversConfigsfirefox:[
+  iceserversConfigsfirefox: [
     {
-      urls: 'stun:stun.l.google.com:19302',
+      urls: 'stun:stun.l.google.com:19302'
     },
     {
-      urls: "turns:turn.gigaaa.com:5349",
-      username: "username",
-      credential: "password",
-    },
+      urls: 'turns:turn.gigaaa.com:5349',
+      username: 'username',
+      credential: 'password'
+    }
   ]
 };
 

@@ -1,10 +1,10 @@
 .callViewWrapperNormal {
   display: flex;
-  background: #0c1524;
+  background: #0e1d35;
   width: 50%;
   top: inherit;
   position: absolute;
-  right: 0;
+  left: 0;
   height: 100%;
 }
 
@@ -13,9 +13,10 @@
   width: 100%;
   top: inherit;
   position: absolute;
-  background: #0e1d35;
+  background: #0c1524;
   overflow: hidden;
   height: 100%;
+  right: 0;
 }
 
 .peerDeviceInformation {
@@ -28,6 +29,7 @@
   text-align: center;
   margin: 0 auto;
   top: calc(50% - 160px);
+  transition: 0.4s;
 }
 
 .peerInitials {
@@ -87,7 +89,7 @@
   position: absolute;
   width: 35px;
   height: 35px;
-  right: 0;
+  right: 50%;
   margin: 9px;
   transition: 0.3s;
   cursor: pointer;
@@ -99,6 +101,7 @@
   width: 100%;
   height: inherit;
   object-fit: cover;
+  right: 0;
 }
 
 @media only screen and (max-width: 480px) {
@@ -108,9 +111,9 @@
   }
 
   .callViewWrapperNormal {
-    height: calc(50% - 25px) !important;
+    height: calc(50% - 24px) !important;
     width: 100% !important;
-    top: 50px;
+    top: 49px;
   }
 
   .peerDeviceInformation {
@@ -121,13 +124,17 @@
     height: 100%;
   }
 
+  .unsplitVideoSrc.localVideo {
+    bottom: 0;
+  }
+
   .unSplit {
     margin: 12px;
+    top: calc(50% + 18.5px);
+    right: 0;
   }
 
   .callViewWrapperSplit {
     bottom: 90px;
   }
-
-
 }

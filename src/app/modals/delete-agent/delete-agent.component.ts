@@ -12,6 +12,6 @@ export class DeleteAgentComponent implements OnInit {
   constructor() {}
 
   ngOnInit(): void {
-    console.log(this.agentData);
+    //console.log(this.agentData);
   }
 }

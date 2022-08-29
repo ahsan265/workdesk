@@ -5,7 +5,7 @@ import { groupDeicesInformation } from 'src/app/models/callInterfaceModel';
   providedIn: 'root'
 })
 export class DevicesInformationService {
-  constructor() { }
+  constructor() {}
 
   public async getAllDevice(): Promise<groupDeicesInformation> {
     const audioInput: InputDeviceInfo[] = [];
@@ -31,7 +31,7 @@ export class DevicesInformationService {
   }
   // get browser Name
   public getBrowserName() {
-    let browserName = window.navigator.userAgent.toLowerCase()
+    let browserName = window.navigator.userAgent.toLowerCase();
     switch (true) {
       case browserName.indexOf('edge') > -1:
         return 'edge';
@@ -49,9 +49,9 @@ export class DevicesInformationService {
         return 'other';
     }
   }
-  // get device type 
+  // get device type
   public getDeviceType() {
     let deviceType = navigator.userAgent;
-    return deviceType.includes("Mobile");
+    return deviceType.includes('Mobile');
   }
 }

@@ -1,4 +1,11 @@
-import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  Input,
+  OnInit,
+  Output,
+  ViewChild
+} from '@angular/core';
 import { dataTableSettings } from 'src/app/agents/agentsData';
 import {
   CallControlModel,
@@ -45,9 +52,7 @@ export class CallControlsComponent implements OnInit {
   constructor(
     private DevicesInformationService: DevicesInformationService,
     private StreamingService: StreamingService
-  ) {
-
-  }
+  ) {}
 
   async ngOnInit(): Promise<void> {
     const devices = await this.DevicesInformationService.getAllDevice();
@@ -77,7 +82,6 @@ export class CallControlsComponent implements OnInit {
     }));
     this.inputDeviceData.devices[0].isSelected = true;
     this.outputDeviceData.devices[0].isSelected = true;
-
   }
   // on of microphone
   onOffMicrophone(event: boolean) {
@@ -114,7 +118,6 @@ export class CallControlsComponent implements OnInit {
           ? (data.isSelected = true)
           : (data.isSelected = false);
       });
-
     } else if (event.deviceType === 'audiooutput') {
       this.outputDeviceData.devices.forEach((data) => {
         data.id === event.id
@@ -124,9 +127,8 @@ export class CallControlsComponent implements OnInit {
     }
   }
 
-
   setVideoMinimize() {
-    console.log("hello")
+    console.log('hello');
     return videoMinimizeControlData;
   }
 }
