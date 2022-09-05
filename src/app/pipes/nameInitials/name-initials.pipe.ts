@@ -1,11 +1,9 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import { User } from 'src/app/models/user';
 
 @Pipe({
   name: 'nameInitials'
 })
 export class NameInitialsPipe implements PipeTransform {
-
   transform(value: any, ...args: any[]): any {
     return this.getNameInitials(value, args[0]);
   }
@@ -15,5 +13,4 @@ export class NameInitialsPipe implements PipeTransform {
     let secondNameInitials = lastName.toUpperCase().charAt(0);
     return firstNameInitials + secondNameInitials;
   }
-
 }

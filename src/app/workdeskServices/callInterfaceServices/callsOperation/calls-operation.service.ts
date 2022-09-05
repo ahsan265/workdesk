@@ -5,6 +5,8 @@ import { PeerConnectionService } from '../peerConnection/peer-connection.service
 import { StreamingService } from '../stream/streaming.service';
 import { AgentUserInformation } from 'src/app/workdeskServices/callInterfaceServices/agentUserInformation/agent-user-information.service';
 import { AuthService } from 'src/app/services/auth.service';
+import { PeersCallsInformationModel } from 'src/app/models/callInterfaceModel';
+import { Subject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -12,6 +14,9 @@ import { AuthService } from 'src/app/services/auth.service';
 export class CallsOperationService {
   peerUserId!: string;
   userId!: string;
+  sendPeerInformation = new Subject<PeersCallsInformationModel>()
+  startTimer = new Subject<boolean>();
+
   constructor(
     private CallSocketService: CallSocketService,
     private PeerConnectionService: PeerConnectionService,
@@ -23,48 +28,78 @@ export class CallsOperationService {
 
   // add incoming call handler
   addIncomingCallHandler() {
-    // const callsData = this.AgentUserInformation.getCallInformation();
+    const callsData = this.AgentUserInformation.getCallInformation();
     this.CallSocketService.sendDataToInterface.subscribe(
       async (msg: any) => {
         switch (msg.type) {
           case 'offer':
-            await this.handlOfferMessage(msg.data);
+            if (msg.data != undefined) {
+              await this.PeerConnectionService.handlOfferMessage(msg.data);
+            }
             break;
           case 'answer':
-            this.handleAnswerMessage(msg.data);
+            this.PeerConnectionService.handleAnswerMessage(msg.data);
             break;
           case 'hangup':
             this.hanndleHangupMessage(msg.data);
             break;
           case 'ice-candidate':
-            this.handleIceCandidateMessage(msg.data);
+            this.PeerConnectionService.handleIceCandidateMessage(msg.data);
             break;
           case 'peer_id':
-            this.userId = msg.id;
-            this.AgentUserInformation.setRefreshStatus(false);
-            this.AgentUserInformation.saveUserInformation(
-              this.userId,
-              false,
-              true,
-              false,
-              this.AuthService.user.value
-            );
-            const timer = new Date(Date.now());
-            this.AgentUserInformation.callJoiningTime(timer);
+            if (callsData.is_refreshed != true) {
+              this.userId = msg.id;
+              this.AgentUserInformation.setRefreshStatus(false);
+              this.AgentUserInformation.saveUserInformation(
+                this.userId,
+                false,
+                true,
+                false,
+                this.AuthService.user.value
+              );
+              const timer = new Date(Date.now());
+              this.AgentUserInformation.setLastCallDuration(timer)
+              // this.AgentUserInformation.callJoiningTime(timer);
+              this.startTimer.next(true);
+
+            }
             break;
           case 'accept':
             this.peerUserId = msg.peer_id;
-            setTimeout(() => {
-              this.StreamingService.sendFirstOffer(this.peerUserId, this.userId);
-            }, 500);
-            console.log(this.PeerConnectionService.peerConnection.getReceivers());
-            const startTime = new Date(Date.now());
-            this.AgentUserInformation.setRefreshStatus(true);
-            this.AgentUserInformation.setLastCallDuration(startTime)
-            this.AgentUserInformation.callJoiningTime(startTime);
+            if (callsData.is_refreshed != true) {
+              setTimeout(() => {
+                this.StreamingService.sendFirstOffer(
+                  this.peerUserId
+                );
+              }, 500);
+              this.AgentUserInformation.setRefreshStatus(true);
+              this.startTimer.next(true);
+            }
+            else {
+              this.sendPeerInformation.next(callsData.peer_information.data)
+              setTimeout(() => {
+                if (this.PeerConnectionService.peerConnection != null) {
+                  this.PeerConnectionService.peerConnection.close();
+                }
+                this.StreamingService.reloadOfferSend(this.peerUserId);
+              }, 500);
+              this.startTimer.next(true);
+            }
             break;
           case 'peer_data':
-            console.log(msg.data)
+            const peerData: PeersCallsInformationModel = {
+              deviceType: msg.data.is_mobile,
+              display_name: msg.data.display_name,
+              firstName: msg.data.first_name,
+              lastName: msg.data.last_name,
+              isCameraOn: msg.data.is_camera_on,
+              isMicrophoneOn: msg.data.is_microphone_on,
+              isScreenShareOn: msg.data.is_shared_screen,
+              peerId: msg.peer_id,
+              peerImage: msg.data.img_url,
+            }
+            this.AgentUserInformation.savePeerInformation(peerData);
+            this.sendPeerInformation.next(peerData)
             break;
           case 'peer_notification':
             this.MessageService.setInformationMessage(msg.data.msg);
@@ -78,82 +113,16 @@ export class CallsOperationService {
     );
   }
 
-  // handle Offer messager After recieving offer from peer candidate.
-  private async handlOfferMessage(
-    msg: RTCSessionDescriptionInit
-  ): Promise<void> {
-    await this.PeerConnectionService.peerConnection
-      .setRemoteDescription(new RTCSessionDescription(msg))
-      .then(async () => {
-        return await this.PeerConnectionService.peerConnection.createAnswer();
-      })
-      .then(async (answer) => {
-        await this.PeerConnectionService.peerConnection.setLocalDescription(
-          answer
-        );
-      })
-      .then(() => {
-        this.CallSocketService.sendDataforCall({
-          type: 'answer',
-          data: this.PeerConnectionService.peerConnection.localDescription
-        });
-      })
-      .catch((error: any) => {
-        console.log(error);
-      });
-  }
 
-  // handle answer message
-  private async handleAnswerMessage(
-    data: RTCSessionDescriptionInit
-  ): Promise<void> {
-    await this.PeerConnectionService.peerConnection
-      .setRemoteDescription(new RTCSessionDescription(data))
-      .catch(async (error: any) => {
-        console.log(error);
-      });
-  }
+
 
   // hang up call
   private hanndleHangupMessage(msg: any) {
     this.StreamingService.hangUpCall();
   }
 
-  // handle ice Condate Messages
-  private async handleIceCandidateMessage(
-    data: RTCIceCandidate
-  ): Promise<void> {
-    if (data.candidate != undefined) {
-      await this.PeerConnectionService.peerConnection
-        .addIceCandidate(data)
-        .catch((error: any) => {
-          console.log(error);
-        });
-    }
-  }
-  // send first offer
 
-  private async createOfferForPeer(): Promise<void> {
-    await this.PeerConnectionService.createPeerConnection();
-    const streamData = this.StreamingService.localStream;
-    const audioTrack = streamData.getAudioTracks()[0];
-    streamData.addTrack(audioTrack);
-    this.PeerConnectionService.peerConnection.addTrack(audioTrack, streamData);
-    const offer: RTCSessionDescriptionInit =
-      await this.PeerConnectionService.peerConnection.createOffer({
-        offerToReceiveAudio: true,
-        offerToReceiveVideo: true,
-        iceRestart: true
-      });
-    await this.PeerConnectionService.peerConnection
-      .setLocalDescription(offer)
-      .catch((error: any) => {
-        console.log(error);
-      });
-    this.CallSocketService.sendDataforCall({
-      type: 'offer',
-      peer_id: this.peerUserId,
-      data: offer
-    });
-  }
+
+
+
 }

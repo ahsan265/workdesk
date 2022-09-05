@@ -21,7 +21,7 @@ export class AgentUserInformation {
       lastNameInitial: lastNameInitial
     };
   }
-  //set Refresh Status 
+  //set Refresh Status
   public setRefreshStatus(status: boolean) {
     const data = this.getCallInformation();
     data['is_refreshed'] = status;
@@ -45,30 +45,44 @@ export class AgentUserInformation {
         is_shared_screen: isSharedScreenOn,
         first_name: user.profile.first_name,
         last_name: user.profile.last_name,
-        img_url: user.profile.image,
+        img_url: user.avatar_url,
         is_mobile: this.DevicesInformationService.getDeviceType()
       }
     };
     localStorage.setItem('call-information', JSON.stringify(data));
   }
+  // update camera status 
+  public updateCameraStatus(isCameraOn: boolean) {
+    const data = this.getCallInformation();
+    data.user_information.data.is_camera_on = isCameraOn;
+    localStorage.setItem('call-information', JSON.stringify(data));
+  }
+  // update  screen share stream status
+  public updateScreenShareStutus(isShareScreenOn: boolean) {
+    const data = this.getCallInformation();
+    data.user_information.data.is_shared_screen = isShareScreenOn;
+    localStorage.setItem('call-information', JSON.stringify(data));
+  }
   // save peer information
   public savePeerInformation(peersInformation: PeersCallsInformationModel) {
-    this.getCallInformation()['peer_information'] = {
+
+    const data = this.getCallInformation();
+    data['peer_information'] = {
       peer_id: peersInformation.peerId,
       data: {
         display_name: peersInformation.display_name,
-        is_camera_on: peersInformation.isCameraOn,
-        is_microphone_on: peersInformation.isMicrophoneOn,
-        is_shared_screen: peersInformation.isScreenShareOn,
-        first_name: peersInformation.firstName,
-        last_name: peersInformation.lastName,
-        img_url: peersInformation.peerImage,
-        is_mobile: peersInformation.deviceType
+        firstName: peersInformation.firstName,
+        lastName: peersInformation.lastName,
+        peerImage: peersInformation.peerImage,
+        isCameraOn: peersInformation.isCameraOn,
+        isMicrophoneOn: peersInformation.isMicrophoneOn,
+        isScreenShareOn: peersInformation.isScreenShareOn,
+        deviceType: peersInformation.deviceType
       }
     };
     localStorage.setItem(
       'call-information',
-      JSON.stringify(this.getCallInformation())
+      JSON.stringify(data)
     );
   }
   //set last Call Duration
@@ -79,9 +93,10 @@ export class AgentUserInformation {
   }
   // joinig waiting time duration
   callJoiningTime(joinigTime: Date) {
-
     let newday = new Date(joinigTime);
-    let totalSeconds = Math.floor((new Date().getTime() - newday.getTime()) / 1000);
+    let totalSeconds = Math.floor(
+      (new Date().getTime() - newday.getTime()) / 1000
+    );
 
     let hours = 0;
     let minutes = 0;
@@ -98,17 +113,19 @@ export class AgentUserInformation {
     }
 
     seconds = totalSeconds;
-    let countsec = 15
-    countsec -= totalSeconds
-    console.log(countsec, minutes)
-    return ("0" + minutes).slice(-2) + "m" + "  " + ("0" + countsec).slice(-2) + "s";
-
+    let countsec = 15;
+    countsec -= totalSeconds;
+    return (
+      ('0' + minutes).slice(-2) + 'm' + '  ' + ('0' + countsec).slice(-2) + 's'
+    );
   }
 
-  // call duration timer 
+  // call duration timer
   CallDuration(callStartTime: Date) {
     let newday = new Date(callStartTime);
-    let totalSeconds = Math.floor((new Date().getTime() - newday.getTime()) / 1000);
+    let totalSeconds = Math.floor(
+      (new Date().getTime() - newday.getTime()) / 1000
+    );
 
     let hours = 0;
     let minutes = 0;
@@ -125,7 +142,8 @@ export class AgentUserInformation {
     }
 
     seconds = totalSeconds;
-    return ("0" + minutes).slice(-2) + "m" + "  " + ("0" + seconds).slice(-2) + "s";
-
+    return (
+      ('0' + minutes).slice(-2) + 'm' + '  ' + ('0' + seconds).slice(-2) + 's'
+    );
   }
 }

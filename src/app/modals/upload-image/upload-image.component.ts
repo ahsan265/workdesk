@@ -33,7 +33,7 @@ export class UploadImageComponent implements OnInit {
   progressbarvalue: any = 0;
   filesize: any;
   imageUploaded: any;
-  constructor() {}
+  constructor() { }
 
   ngOnInit(): void {
     this.uploadpicture = true;

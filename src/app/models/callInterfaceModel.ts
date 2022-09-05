@@ -27,7 +27,6 @@ export interface PeerInformationModel {
   showWaitingIcon: boolean;
   showVideo: boolean;
   showShareScreen: boolean;
-  initials: string;
 }
 export interface PeerMiniCameraScreen {
   firstName?: string;

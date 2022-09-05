@@ -1,0 +1,25 @@
+.hanguppanel
+{
+    display: block;
+    height: 100vh;
+    width: 100%;
+}
+.gigaaLogo{
+    top: calc(50% - 137px);
+    margin: 0 auto;
+    position: relative;
+    text-align: center;
+    height: 274px;
+}  
+.hangmsg{
+margin-top: 25px;
+font-family: 'Roboto',sans-serif;
+font-style: normal;
+font-weight: 400;
+font-size: 15px;
+line-height: 22px;
+text-align: center;
+letter-spacing: 0.02em;
+color: rgba(22, 39, 65, 0.8);
+
+}

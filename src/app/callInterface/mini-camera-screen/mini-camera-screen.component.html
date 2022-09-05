@@ -1,4 +1,4 @@
-<div [ngStyle]="
+<div miniCameraVideoStream [ngStyle]="
     agentOperationInformation.isMinimize
       ? minimizeMiniCameraScreenData
       : normalMiniCameraScreenData
@@ -8,14 +8,14 @@
         ? minimizeMiniCameraScreenInitialsData
         : normalMinimizeCameraScreenInitialsData
     " *ngIf="PeerMiniCameraDetails.showInitals" class="peerMiniCameraInitials">
-    MA
+    {{this.firtName|nameInitials:this.lastName}}
   </div>
   <div [ngStyle]="
       agentOperationInformation.isMinimize
         ? miniCameraFullNameData
         : normalMiniCameraFullNameData
     " *ngIf="PeerMiniCameraDetails.showInitals" class="peerMiniCameraName">
-    {{ PeerMiniCameraDetails.firstName }} (me)
+    {{ this.firtName }} (me)
   </div>
 
   <video [ngStyle]="

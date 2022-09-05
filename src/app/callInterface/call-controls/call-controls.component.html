@@ -1,114 +1,68 @@
-<div
-  class="callControlPanel"
-  [ngStyle]="
+<div class="callControlPanel" [ngStyle]="
     agentOperationInformationData.isMinimize
       ? minimizeCallControl
       : maximizeCallControl
-  "
->
+  ">
   <div class="controlwrapper">
-    <app-devices-switcher
-      *ngIf="openDeviceSwitcher"
-      [inputDevicesData]="inputDeviceData"
-      [outputDevicesData]="outputDeviceData"
-      (selectInputOutputDeviceInformation)="
+    <app-devices-switcher *ngIf="openDeviceSwitcher" [inputDevicesData]="inputDeviceData"
+      [outputDevicesData]="outputDeviceData" (selectInputOutputDeviceInformation)="
         selectInputOutputDeviceInformation($event)
-      "
-    >
+      ">
     </app-devices-switcher>
-    <div
-      [style.background]="
+    <div [style.background]="
         openDeviceSwitcher === true ? '#1C54DB' : 'rgba(255, 255, 255, 0.1)'
-      "
-      (click)="openDeviceSwitcherPopup(!openDeviceSwitcher)"
-      class="deviceSwitcher"
-    >
-      <img
-        class="deviceSwitcherIcon"
-        [style.transform]="
+      " (click)="openDeviceSwitcherPopup(!openDeviceSwitcher)" class="deviceSwitcher">
+      <img class="deviceSwitcherIcon" [style.transform]="
           openDeviceSwitcher === true ? 'rotateX(180deg)' : 'rotateX(0deg)'
-        "
-        src="../../../assets/images/callInterface/small_arrow.svg"
-        alt=""
-      />
+        " src="../../../assets/images/callInterface/small_arrow.svg" alt="" />
     </div>
-    <div
-      class="controlIcon"
-      (click)="onOffMicrophone(!miceData.isSelected)"
-      [style.background]="
+    <div class="controlIcon" (click)="onOffMicrophone(!miceData.isSelected)" [style.background]="
         miceData.isSelected === true
           ? miceData.backgroundColor
           : 'rgba(255, 255, 255, 0.1)'
-      "
-    >
-      <img
-        [src]="
+      ">
+      <img [src]="
           miceData.isSelected === true
             ? miceData.buttonIconOn
             : miceData.buttonIconOff
-        "
-        alt=""
-      />
+        " alt="" />
     </div>
-    <div
-      class="controlIcon"
-      (click)="onOffCamera(!cameraData.isSelected)"
-      [style.background]="
+    <div class="controlIcon" (click)="onOffCamera(!cameraData.isSelected)" [style.background]="
         cameraData.isSelected === true
           ? cameraData.backgroundColor
           : 'rgba(255, 255, 255, 0.1)'
-      "
-    >
-      <img
-        [src]="
+      ">
+      <img [src]="
           cameraData.isSelected === true
             ? cameraData.buttonIconOn
             : cameraData.buttonIconOff
-        "
-        alt=""
-      />
+        " alt="" />
     </div>
-    <div
-      (click)="onOffScreenShare(!screenShareData.isSelected)"
-      [style.background]="
+    <div (click)="onOffScreenShare(!screenShareData.isSelected)" [style.background]="
         screenShareData.isSelected === true
           ? screenShareData.backgroundColor
           : 'rgba(255, 255, 255, 0.1)'
-      "
-      class="controlIcon hideScreenShare"
-    >
-      <img
-        [src]="
+      " class="controlIcon hideScreenShare">
+      <img [src]="
           screenShareData.isSelected === true
             ? screenShareData.buttonIconOn
             : screenShareData.buttonIconOff
-        "
-        alt=""
-      />
+        " alt="" />
     </div>
     <div class="timerWithButtton">
-      <div
-        (click)="hangUpcall(hangUpData.isSelected)"
-        [style.background]="
+      <div (click)="hangUpcall(hangUpData.isSelected)" [style.background]="
           hangUpData.isSelected === true
             ? hangUpData.backgroundColor
             : 'rgba(255, 255, 255, 0.1)'
-        "
-        class="controlIcon hangUp"
-      >
-        <img
-          class="hangIconMobile"
-          style="padding: 3px; margin: 0 auto; height: 24px; width: 24px"
-          [src]="
+        " class="controlIcon hangUp">
+        <img class="hangIconMobile" style="padding: 3px; margin: 0 auto; height: 24px; width: 24px" [src]="
             hangUpData.isSelected === true
               ? hangUpData.buttonIconOn
               : hangUpData.buttonIconOff
-          "
-          alt=""
-        />
+          " alt="" />
       </div>
       <div class="callDuration">
-        {{ timeText }}
+        {{ time }}
       </div>
     </div>
   </div>

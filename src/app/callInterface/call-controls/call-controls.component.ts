@@ -31,6 +31,7 @@ import { MicrophoneVoiceIndicatorComponent } from '../microphone-voice-indicator
 export class CallControlsComponent implements OnInit {
   @Input() minimizeCallControl!: any;
   @Input() maximizeCallControl!: any;
+  
   videoMinimizeControlData = videoMinimizeControlData;
   inputDeviceData = inputDevices;
   outputDeviceData = outputDevice;
@@ -38,7 +39,7 @@ export class CallControlsComponent implements OnInit {
   @Input() cameraData!: CallControlModel;
   @Input() screenShareData!: CallControlModel;
   @Input() hangUpData!: CallControlModel;
-  @Input() timeText!: string;
+  @Input() time!: string;
   @Input() openDeviceSwitcher: boolean = false;
   @Input() agentOperationInformationData!: agentOperationInformationModel;
   @Input() isMinimize!: boolean;

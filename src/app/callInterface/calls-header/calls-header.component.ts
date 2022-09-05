@@ -17,6 +17,7 @@ export class CallsHeaderComponent implements OnInit {
   @Input() agentOperationInformation!: agentOperationInformationModel;
   @Input() callsHeaderData!: CallsHeaderModel;
   @Input() isCameraOn!: boolean;
+  @Input() headerTimer!: string;
   @Output() minmizeMaxmizeScreenOutput = new EventEmitter();
 
   constructor(private DevicesInformationService: DevicesInformationService) {}

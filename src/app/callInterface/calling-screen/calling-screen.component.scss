@@ -70,8 +70,8 @@
 }
 
 .peerImage {
-  height: 201px;
-  width: 201px;
+  height: 198px;
+  width: 198px;
   border-radius: 50%;
 }
 
@@ -105,9 +105,19 @@
 }
 
 @media only screen and (max-width: 480px) {
+  .peerImage {
+    height: 121px !important;
+    width: 121px !important;
+  }
+
   .peerDeviceInformation {
     height: 120px !important;
     width: 120px !important;
+  }
+
+  .loaderAnimation {
+    height: 150px;
+    width: 150px;
   }
 
   .callViewWrapperNormal {

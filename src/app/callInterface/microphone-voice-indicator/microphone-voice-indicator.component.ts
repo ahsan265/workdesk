@@ -16,9 +16,9 @@ export class MicrophoneVoiceIndicatorComponent implements OnInit {
 
   @Input() levels!: number;
 
-  constructor() { }
+  constructor() {}
 
-  ngOnInit(): void { }
+  ngOnInit(): void {}
   getArray(number: any) {
     return Array(number);
   }

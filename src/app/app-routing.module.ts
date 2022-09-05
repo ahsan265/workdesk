@@ -13,6 +13,7 @@ import { MissedComponent } from './calls/missed/missed.component';
 import { NgModule } from '@angular/core';
 import { OngoingComponent } from './calls/ongoing/ongoing.component';
 import { CallConsoleComponent } from './callInterface/call-console/call-console.component';
+import { CustomerSupportComponent } from './customer-support/customer-support.component';
 
 const routes: Routes = [
   { path: '', component: LandingPageComponent },
@@ -43,7 +44,9 @@ const routes: Routes = [
     ]
   },
   { path: 'callback', component: CallbackComponent },
-  { path: 'calling', component: CallConsoleComponent }
+  { path: 'calling', component: CallConsoleComponent },
+  { path: 'customersupport', component: CustomerSupportComponent }
+
 
   // { path: '**', redirectTo: '' }
 ];

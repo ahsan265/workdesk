@@ -3,6 +3,7 @@ import { Subject } from 'rxjs';
 import { CallSocketService } from 'src/app/workdeskSockets/callSocket/call-socket.service';
 import { environment } from 'src/environments/environment';
 import { DevicesInformationService } from '../devicesInformation/devices-information.service';
+import { StreamingService } from '../stream/streaming.service';
 
 @Injectable({
   providedIn: 'root'
@@ -11,8 +12,7 @@ export class PeerConnectionService {
   peerConnection!: RTCPeerConnection;
   iceServersConfigurations = `${environment.iceServerConfiguration}`;
   remoteVideoSubject = new Subject<MediaStream>();
-  constructor(
-    private CallSocketService: CallSocketService
+  constructor(private CallSocketService: CallSocketService,
   ) { }
 
   public async createPeerConnection(): Promise<void> {
@@ -29,24 +29,24 @@ export class PeerConnectionService {
 
     let iceserversConfigs = [
       {
-        urls: 'stun:stun.l.google.com:19302',
+        urls: 'stun:stun.l.google.com:19302'
       },
       {
-        urls: "turn:turn.gigaaa.com:80?transport=tcp",
-        username: "username",
-        credential: "password",
+        urls: 'turn:turn.gigaaa.com:80?transport=tcp',
+        username: 'username',
+        credential: 'password'
       },
       {
-        urls: "turns:turn.gigaaa.com:5349",
-        username: "username",
-        credential: "password",
+        urls: 'turns:turn.gigaaa.com:5349',
+        username: 'username',
+        credential: 'password'
       },
       {
-        urls: "turn:turn.gigaaa.com:3478",
-        username: "username",
-        credential: "password",
-      },
-    ]
+        urls: 'turn:turn.gigaaa.com:3478',
+        username: 'username',
+        credential: 'password'
+      }
+    ];
     this.peerConnection = new RTCPeerConnection({
       iceServers: iceserversConfigs,
       iceTransportPolicy: 'all',
@@ -56,7 +56,7 @@ export class PeerConnectionService {
     this.eventHandlerforpeer();
   }
 
-  eventHandlerforpeer() {
+  private eventHandlerforpeer() {
     this.peerConnection.onicecandidate = this.handIceCandidateEvent;
     this.peerConnection.oniceconnectionstatechange =
       this.handleIceConnectionStateChangeEvent;
@@ -81,7 +81,6 @@ export class PeerConnectionService {
         this.peerConnection.close();
         await this.createPeerConnection();
         break;
-
       case 'failed':
       case 'disconnected':
         this.peerConnection.close();
@@ -99,7 +98,56 @@ export class PeerConnectionService {
   };
   // handle remote stream
   private handleTrackEvent = (event: RTCTrackEvent) => {
-    console.log(event.streams[0]);
     this.remoteVideoSubject.next(event.streams[0]);
   };
+
+
+  // handle Offer messager After recieving offer from peer candidate.
+  public async handlOfferMessage(
+    msg: RTCSessionDescriptionInit
+  ): Promise<void> {
+    await this.peerConnection
+      .setRemoteDescription(new RTCSessionDescription(msg))
+      .then(async () => {
+        return await this.peerConnection.createAnswer();
+      })
+      .then(async (answer) => {
+        await this.peerConnection.setLocalDescription(
+          answer
+        );
+      })
+      .then(() => {
+        this.CallSocketService.sendDataforCall({
+          type: 'answer',
+          data: this.peerConnection.localDescription
+        });
+      })
+      .catch((error: any) => {
+        console.log(error);
+      });
+    console.log(this.peerConnection.getReceivers())
+  }
+
+  // handle answer message
+  public async handleAnswerMessage(
+    data: RTCSessionDescriptionInit
+  ): Promise<void> {
+    await this.peerConnection
+      .setRemoteDescription(new RTCSessionDescription(data))
+      .catch(async (error: any) => {
+        console.log(error);
+      });
+  }
+  // handle ice Condate Messages
+  public async handleIceCandidateMessage(
+    data: RTCIceCandidate
+  ): Promise<void> {
+    if (data.candidate != null || undefined || '') {
+      await this.peerConnection
+        .addIceCandidate(data)
+        .catch((error: any) => {
+          console.log(error);
+        });
+    }
+  }
 }

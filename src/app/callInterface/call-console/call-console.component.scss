@@ -3,7 +3,12 @@
   width: 100%;
   margin: 0 auto;
   display: block;
-  text-align: -webkit-center;
+}
+
+.screeenShareRestrictionPanel {
+  width: 255px;
+  position: absolute;
+  top: -30px;
 }
 
 .mainCallWrapper {

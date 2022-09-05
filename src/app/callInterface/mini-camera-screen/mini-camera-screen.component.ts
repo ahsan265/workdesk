@@ -11,6 +11,8 @@ import {
   PeerMiniCameraScreen,
   agentOperationInformationModel
 } from 'src/app/models/callInterfaceModel';
+import { User } from 'src/app/models/user';
+import { CommonService } from 'src/app/workdeskServices/commonEndpoint/common.service';
 import {
   miniCameraFullName,
   minimizeMiniCameraScreen,
@@ -43,10 +45,13 @@ export class MiniCameraScreenComponent implements OnInit {
   normalMinimizeCameraScreenInitialsData = normalMinimizeCameraScreenInitials;
   @Output() splitScreenOutput = new EventEmitter();
   @ViewChild('localVideo') localVideo!: ElementRef<HTMLMediaElement>;
-
-  constructor() {}
-
+  constructor(private CommonService: CommonService) { }
+  firtName!: string;
+  lastName!: string;
   ngOnInit(): void {
+    const data: User = JSON.parse(localStorage.getItem('gigaaa-user') || '{}')
+    this.firtName = data.profile.first_name || '';
+    this.lastName = data.profile?.last_name || '';
   }
   // split screen
   splitScreen(event: boolean) {

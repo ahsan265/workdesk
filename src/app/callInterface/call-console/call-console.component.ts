@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { AgentUserInformation } from 'src/app/workdeskServices/callInterfaceServices/agentUserInformation/agent-user-information.service';
 import { CallsOperationService } from 'src/app/workdeskServices/callInterfaceServices/callsOperation/calls-operation.service';
 import { DevicesInformationService } from 'src/app/workdeskServices/callInterfaceServices/devicesInformation/devices-information.service';
@@ -22,7 +22,8 @@ import {
   peerMiniCameraDetails,
   peerUserInformationData,
   screenShareData,
-  secondPeerUserInformationData
+  secondPeerUserInformationData,
+  peerNormalImage
 } from '../callsInterfaceData';
 import { MicrophoneVoiceIndicatorComponent } from '../microphone-voice-indicator/microphone-voice-indicator.component';
 import { MiniCameraScreenComponent } from '../mini-camera-screen/mini-camera-screen.component';
@@ -31,7 +32,9 @@ import { OverlayService } from '../overLayService/overlay.service';
 @Component({
   selector: 'app-call-console',
   templateUrl: './call-console.component.html',
-  styleUrls: ['./call-console.component.scss']
+  styleUrls: ['./call-console.component.scss'],
+  changeDetection: ChangeDetectionStrategy.Default,
+
 })
 export class CallConsoleComponent implements OnInit {
   constructor(
@@ -41,7 +44,9 @@ export class CallConsoleComponent implements OnInit {
     private CallSocketService: CallSocketService,
     private CommonService: CommonService,
     private CallsOperationService: CallsOperationService,
-    private PeerConnectionService: PeerConnectionService
+    private PeerConnectionService: PeerConnectionService,
+    private AgentUserInformation: AgentUserInformation,
+    private ChangeDetectorRef: ChangeDetectorRef
   ) { }
   minimizeCallControl = minimizeCallControlData;
   maximizeCallControl = maximizeCallControlData;
@@ -65,32 +70,77 @@ export class CallConsoleComponent implements OnInit {
   minimizeVideoscreen = minimizeScreenVideoData;
   peerStream!: string;
   videoStream!: MediaStream;
+  callTimer: string = '00m:00s';
   @ViewChild('videoStream') stream!: CallingScreenComponent;
   @ViewChild('miniCameraVideoStream')
   miniCameraVideoStream!: MiniCameraScreenComponent;
   @ViewChild('selectedMicrophone')
   selectedMicophone!: MicrophoneVoiceIndicatorComponent;
+  @ViewChild('miniCameraScreen') miniCameraScreen!: ElementRef<HTMLMediaElement>;
+
   async ngOnInit() {
     await this.StreamingService.loadAudioandVideoResouce();
-    this.StreamingService.getLocalStream.subscribe(stream => {
+    this.StreamingService.getLocalStream.subscribe((stream) => {
       this.miniCameraVideoStream.setMiniCameraSteam(stream);
-    })
-    this.CallSocketService.dialCall(
-      's135dsadfdesdsadertedasdasdsdasdasdasdasdsadasdacvbc888dfsdfss7',
-      '',
-      false,
-      'chrome',
-      this.CommonService.getEndpointsParamLocal().connectionId
-    );
+    });
+    const user = this.AgentUserInformation.getCallInformation();
+    if (user.is_refreshed === true) {
+      this.CallSocketService.dialCall(
+        '23123121112111111111111111222211111111',
+        user.user_information.user_id,
+        true,
+        'chrome',
+        this.CommonService.getEndpointsParamLocal().connectionId
+      );
+      this.secondpeerUserInformationData.firstName = user.peer_information.data.first_name;
+      this.secondpeerUserInformationData.lastName = user.peer_information.data.last_name;
+      this.secondpeerUserInformationData.peerImage = user.peer_information.data.img_url;
+    }
+    else {
+      this.CallSocketService.dialCall(
+        '23123121112111111111111111222211111111',
+        '',
+        false,
+        'chrome',
+        this.CommonService.getEndpointsParamLocal().connectionId
+      );
+
+    }
+
     this.CallsOperationService.addIncomingCallHandler();
     this.StreamingService.stopScreenStream.subscribe((data) => {
       this.seletecOutputForScreenShare(data);
     });
     this.PeerConnectionService.remoteVideoSubject.subscribe((stream) => {
       this.stream.setRemoteStream(stream);
+    });
+
+    // for update calling screen data on evey thange 
+    this.CallsOperationService.sendPeerInformation.subscribe((peerData) => {
+      this.secondpeerUserInformationData.firstName = peerData.firstName;
+      this.secondpeerUserInformationData.lastName = peerData.lastName;
+      this.secondpeerUserInformationData.peerImage = peerData.peerImage;
+      this.secondpeerUserInformationData.showImage = true;
+      this.secondpeerUserInformationData.showInitials = false;
+      this.secondpeerUserInformationData.showLoaderAnimation = false;
+      // for header 
+      CallsHeaderData.name = peerData.firstName + " " + peerData.lastName;
+      CallsHeaderData.agentImage = peerData.peerImage;
     })
-
-
+    // showing timer 
+    const startTime = new Date(Date.now());
+    this.CallsOperationService.startTimer.subscribe(isStarted => {
+      if (isStarted) {
+        setInterval(() => {
+          (user.is_refreshed === true) ?
+            this.callTimer = this.AgentUserInformation.CallDuration(user.call_duration) :
+            this.callTimer = this.AgentUserInformation.callJoiningTime(startTime);
+        }, 1000)
+      }
+    })
+    this.cameraData.isSelected = user.user_information.data.is_camera_on;
+    this.isVideoMinimize = user.user_information.data.is_camera_on;
+    this.miceData.isSelected = user.user_information.data.is_microphone_on;
   }
   public async seletecOutputForCamera(event: boolean) {
     if (!this.screenShareData.isSelected) {
@@ -98,7 +148,7 @@ export class CallConsoleComponent implements OnInit {
         ? (this.PeerMiniCameraScreen.showCamera = true)
         : (this.PeerMiniCameraScreen.showCamera = false);
       if (event == true) {
-        this.videoStream = await this.StreamingService.startVideo();
+        this.videoStream = await this.StreamingService.startVideo(this.CallsOperationService.peerUserId);
         this.stream.setStream(this.videoStream);
         this.miniCameraVideoStream.setMiniCameraSteam(this.videoStream);
       } else {
@@ -137,7 +187,7 @@ export class CallConsoleComponent implements OnInit {
       this.PeerMiniCameraScreen.showCamera = true;
       this.peerUserInformationData.showVideo = true;
       this.peerUserInformationData.showShareScreen = true;
-      this.videoStream = await this.StreamingService.startScreenSharing();
+      this.videoStream = await this.StreamingService.startScreenSharing(this.CallsOperationService.peerUserId);
       this.stream.setStream(this.videoStream);
       this.miniCameraVideoStream.setMiniCameraSteam(this.videoStream);
       this.screenShareData.isSelected = event;
@@ -207,4 +257,7 @@ export class CallConsoleComponent implements OnInit {
       this.isMinimize = false;
     }
   }
+
+
+  
 }

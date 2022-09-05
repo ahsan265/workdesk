@@ -61,7 +61,10 @@ import { MicrophoneVoiceIndicatorComponent } from './callInterface/microphone-vo
 import { CallControlsComponent } from './callInterface/call-controls/call-controls.component';
 import { CallQualityIndicatorComponent } from './callInterface/call-quality-indicator/call-quality-indicator.component';
 import { OverlayModule } from '@angular/cdk/overlay';
-import { NameInitialsPipe } from './pipes/name-initials.pipe';
+import { NameInitialsPipe } from './pipes/nameInitials/name-initials.pipe';
+import { CustomerSupportComponent } from './customer-support/customer-support.component';
+import { ScreenShareRestrictionComponent } from './callInterface/screen-share-restriction/screen-share-restriction.component';
+import { peerMiniCameraAnimation } from './callInterface/callInterfaceDirectives/callInterfaceHideDirective';
 
 @NgModule({
   declarations: [
@@ -90,6 +93,7 @@ import { NameInitialsPipe } from './pipes/name-initials.pipe';
     ImageUploaderComponent,
     ImageCropperComponent,
     DragNDropDirective,
+    peerMiniCameraAnimation,
     CallConsoleComponent,
     CallsHeaderComponent,
     CallingScreenComponent,
@@ -98,7 +102,10 @@ import { NameInitialsPipe } from './pipes/name-initials.pipe';
     MicrophoneVoiceIndicatorComponent,
     CallControlsComponent,
     CallQualityIndicatorComponent,
-    NameInitialsPipe
+    NameInitialsPipe,
+    CustomerSupportComponent,
+    ScreenShareRestrictionComponent,
+   
   ],
   imports: [
     BrowserAnimationsModule,
@@ -141,4 +148,4 @@ import { NameInitialsPipe } from './pipes/name-initials.pipe';
   ],
   bootstrap: [AppComponent]
 })
-export class AppModule {}
+export class AppModule { }

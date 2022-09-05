@@ -8,10 +8,10 @@ import {
 } from '../models/callInterfaceModel';
 
 const CallsHeaderData: CallsHeaderModel = {
-  agentImage: '../../../assets/images/callInterface/ahsan.jpg',
+  agentImage: '../../../assets/images/callInterface/default_user.svg',
   isMinimize: true,
-  name: 'Anon anon',
-  initials:'AA',
+  name: 'Waiting for agent ...',
+  initials: 'AA',
   minimizeIcon: '../../../assets/images/callInterface/minimizeicon.svg',
   maximizeIcon: '../../../assets/images/callInterface/maximizeicon.svg'
 };
@@ -50,30 +50,28 @@ const hangUpData: CallControlModel = {
 const peerUserInformationData: PeerInformationModel = {
   firstName: 'Anon',
   lastName: 'Anon',
-  peerImage: '../../../assets/images/callInterface/ahsan.jpg',
+  peerImage: '../../../assets/images/callInterface/default_user.svg',
   waitingIcon: '../../../assets/images/callInterface/waiting_large.svg',
   peerVoiceIndicatorValue: 0,
-  showImage: false,
-  showInitials: true,
+  showImage: true,
+  showInitials: false,
   showLoaderAnimation: false,
   showWaitingIcon: false,
   showVideo: false,
   showShareScreen: false,
-  initials:'AA'
 };
 const secondPeerUserInformationData: PeerInformationModel = {
   firstName: 'Muhammad',
   lastName: 'Ahsan',
-  peerImage: '../../../assets/images/callInterface/ahsan.jpg',
+  peerImage: '../../../assets/images/callInterface/default_user.svg',
   waitingIcon: '../../../assets/images/callInterface/waiting_large.svg',
   peerVoiceIndicatorValue: 0,
-  showImage: false,
-  showInitials: true,
-  showLoaderAnimation: false,
+  showImage: true,
+  showInitials: false,
+  showLoaderAnimation: true,
   showWaitingIcon: false,
   showVideo: false,
   showShareScreen: false,
-  initials:'AA'
 };
 
 const peerMiniCameraDetails: PeerMiniCameraScreen = {
@@ -131,7 +129,7 @@ const minimizeHeaderData = {
     width: '30px',
     height: '30px',
     'border-radius': '50%',
-    margin: '11px 10px 10px 10px'
+    margin: '10px 10px 10px 10px'
   },
   nameData: {
     'font-size': '14px'
@@ -149,7 +147,7 @@ const maximizeHeaderData = {
     width: '33px',
     height: '33px',
     'border-radius': '50%',
-    margin: '21px 30px 21px 30px'
+    margin: '21px 22px 21px 30px'
   },
   nameData: {
     'font-size': '16px'
@@ -195,6 +193,15 @@ const peerNormalCallConnectedData = {
   height: '198px',
   width: '198px',
   top: 'calc(50% - 160px)'
+};
+const peerNormalImageNormal = {
+  height: '199px',
+  width: '198px',
+};
+
+const peerNormalImage = {
+  height: '90px',
+  width: '90px',
 };
 // for mini camera screeen on
 
@@ -269,5 +276,7 @@ export {
   normalMinimizeCameraScreenInitials,
   miniCameraFullName,
   normalMiniCameraFullName,
-  videoMinimizeControlData
+  videoMinimizeControlData,
+  peerNormalImage,
+  peerNormalImageNormal
 };
