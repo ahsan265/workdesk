@@ -1,3 +1,4 @@
+/* eslint-disable @angular-eslint/no-empty-lifecycle-method */
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 
 @Component({

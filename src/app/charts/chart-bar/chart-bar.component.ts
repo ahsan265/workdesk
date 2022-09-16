@@ -1,7 +1,7 @@
+/* eslint-disable sort-imports */
 import { AfterViewInit, Component, OnDestroy, ViewChild } from '@angular/core';
 import { Subject, Subscription } from 'rxjs';
-import Chart from 'chart.js/auto';
-import { ChartOptions } from 'chart.js';
+import { Chart, ChartOptions } from 'chart.js';
 
 @Component({
   selector: 'app-chart-bar',

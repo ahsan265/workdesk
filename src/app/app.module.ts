@@ -1,8 +1,9 @@
+/* eslint-disable sort-imports */
 import {
-  ButtonModule,
   CallbackModule,
   CardModule,
   ChartWrapperModule,
+  GigaaaButtonModule,
   GigaaaDatepicker,
   GigaaaHeaderModule,
   GigaaaHeaderService,
@@ -104,8 +105,7 @@ import { peerMiniCameraAnimation } from './callInterface/callInterfaceDirectives
     CallQualityIndicatorComponent,
     NameInitialsPipe,
     CustomerSupportComponent,
-    ScreenShareRestrictionComponent,
-   
+    ScreenShareRestrictionComponent
   ],
   imports: [
     BrowserAnimationsModule,
@@ -119,7 +119,7 @@ import { peerMiniCameraAnimation } from './callInterface/callInterfaceDirectives
     GigaaaTableModule,
     CallbackModule,
     LogoutModule,
-    ButtonModule,
+    GigaaaButtonModule,
     CardModule,
     ChartWrapperModule,
     InputFieldModule,
@@ -148,4 +148,4 @@ import { peerMiniCameraAnimation } from './callInterface/callInterfaceDirectives
   ],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {}

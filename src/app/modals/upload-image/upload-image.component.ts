@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 import { Component, OnInit } from '@angular/core';
 import { ImageTransform } from 'ngx-image-cropper';
 
@@ -33,7 +34,7 @@ export class UploadImageComponent implements OnInit {
   progressbarvalue: any = 0;
   filesize: any;
   imageUploaded: any;
-  constructor() { }
+  constructor() {}
 
   ngOnInit(): void {
     this.uploadpicture = true;

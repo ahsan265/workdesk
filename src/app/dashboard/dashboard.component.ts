@@ -15,7 +15,7 @@ import { BaseChartDirective } from 'ng2-charts';
 import DataLabelsPlugin from 'chartjs-plugin-datalabels';
 import { SharedServices } from '../workdeskServices/sharedResourcesService/shared-resource-service.service';
 import { DashboardEndpointService } from './dashboardService/dashboard-endpoint.service';
-import { DaterangepickerDirective } from '@gigaaa/gigaaa-components';
+import { GigaaaDaterangepickerDirective } from '@gigaaa/gigaaa-components';
 import * as dayjs from 'dayjs';
 import { CalendarService } from '../calendarService/calendar.service';
 import { CommonService } from '../workdeskServices/commonEndpoint/common.service';
@@ -40,9 +40,8 @@ export class DashboardComponent {
   idOfLocation: Array<any> = [];
 
   @ViewChild(BaseChartDirective) chart: BaseChartDirective | undefined;
-  @ViewChild(DaterangepickerDirective, { static: false }) pickerDirective:
-    | DaterangepickerDirective
-    | undefined;
+  @ViewChild(GigaaaDaterangepickerDirective, { static: false })
+  pickerDirective: GigaaaDaterangepickerDirective | undefined;
 
   @ViewChild('calendarDropdown') calendar: any = HTMLElement;
   @HostListener('document:click', ['$event'])

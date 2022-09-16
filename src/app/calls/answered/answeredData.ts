@@ -1,82 +1,127 @@
 const dataTableSettings: any[] = [
   {
-    primaryKey: 'agent',
-    header: 'AGENT',
-    width: 25,
-    isImage: false,
-    name: false,
-    isDropdown: false,
-    expand: false
-  },
-  {
-    primaryKey: 'name',
-    header: 'FULL NAME',
-    width: 25,
+    primaryKey: 'full_name',
+    header: 'FULL NAME & ID',
+    width: 15,
     isImage: false,
     name: true,
     isDropdown: false,
-    expand: false
+    expand: false,
+    editIcon: true,
+    checkmark: false,
+    isImageItem: false,
+    isUserItem: false
   },
   {
     primaryKey: 'language_id',
-    header: 'LANGUAGE',
-    width: 25,
+    header: 'USER INFO',
+    width: 15,
     isImage: true,
     name: false,
     isDropdown: false,
-    expand: false
+    expand: false,
+    editIcon: true,
+    checkmark: false,
+    isImageItem: false,
+    isUserItem: false
   },
   {
-    primaryKey: 'role',
-    header: 'ROLE',
-    width: 25,
+    primaryKey: 'call_type',
+    header: 'CALL TYPE',
+    width: 15,
     isImage: false,
     name: false,
     isDropdown: false,
-    expand: false
+    expand: false,
+    editIcon: true,
+    checkmark: false,
+    isImageItem: true,
+    isUserItem: false
+  },
+  {
+    primaryKey: 'called',
+    header: 'Called at',
+    width: 15,
+    isImage: false,
+    name: true,
+    isDropdown: false,
+    expand: false,
+    editIcon: true,
+    checkmark: false,
+    isImageItem: false,
+    isUserItem: false
+  },
+  {
+    primaryKey: 'agent_name',
+    header: 'agent name',
+    width: 15,
+    isImage: false,
+    name: false,
+    isDropdown: false,
+    expand: false,
+    editIcon: true,
+    checkmark: false,
+    isImageItem: true,
+    isUserItem: false
   }
 ];
 
 const agents = [
   {
     id: 1,
-    agent: 'srdjanmarinkovic31@gmail.com',
-    name: 'Srdjan Marinkovic',
-    role: 'Admin',
-    routeUrl: ['agents', 'settings', 1],
-    checked: false,
-    isDropdown: false,
-    language_id: [56, 175]
+    full_name: 'Srdjan Marinkovic',
+    language_id: [56, 175],
+    call_type: {
+      text: 'video',
+      image: '../../../assets/images/callInterface/video.svg'
+    },
+    called: '10:50',
+    agent_name: {
+      text: 'video',
+      image: '../../../assets/images/callInterface/user.png'
+    }
   },
   {
     id: 2,
-    agent: 'nikola@gmail.com',
-    name: 'Nikola Narancic',
-    role: 'Admin',
-    routeUrl: ['agents', 'settings', 2],
-    checked: false,
-    isDropdown: false,
-    language_id: [56]
+    full_name: 'Marko Marinkovic',
+    language_id: [56, 175],
+    call_type: {
+      text: 'video',
+      image: '../../../assets/images/callInterface/video.svg'
+    },
+    called: '10:50',
+    agent_name: {
+      text: 'video',
+      image: '../../../assets/images/callInterface/video.svg'
+    }
   },
   {
     id: 3,
-    agent: 'alex@gmail.com',
-    name: 'Alex Stefanovic',
-    role: 'Admin',
-    routeUrl: ['agents', 'settings', 3],
-    checked: false,
-    isDropdown: false,
-    language_id: [56, 83]
+    full_name: 'Zoran Mihajilovic',
+    language_id: [56, 175],
+    call_type: {
+      text: 'video',
+      image: '../../../assets/images/callInterface/video.svg'
+    },
+    called: '10:50',
+    agent_name: {
+      text: 'video',
+      image: '../../../assets/images/callInterface/video.svg'
+    }
   },
   {
     id: 4,
-    agent: 'muhamed@gmail.com',
-    name: 'Muhamed Ahsan',
-    role: 'Admin',
-    routeUrl: ['agents', 'settings', 4],
-    checked: false,
-    isDropdown: false,
-    language_id: [56, 175]
+    full_name: 'Test',
+    language_id: [56, 175],
+    call_type: {
+      text: 'video',
+      image: '../../../assets/images/callInterface/video.svg'
+    },
+    called: '10:50',
+    agent_name: {
+      text: 'video',
+      image: '../../../assets/images/callInterface/video.svg'
+    }
   }
 ];
 

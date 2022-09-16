@@ -76,13 +76,31 @@ const buttonData: Button = {
 
 const dataTableSettings: any[] = [
   {
+    primaryKey: 'checkmark',
+    header: '',
+    width: 10,
+    isImage: false,
+    name: true,
+    isDropdown: false,
+    canEdit: false,
+    expand: false,
+    editIcon: false,
+    checkmark: true,
+    isImageItem: false,
+    isUserItem: false
+  },
+  {
     primaryKey: 'agent',
     header: 'AGENT',
     width: 25,
     isImage: false,
     name: false,
     isDropdown: false,
-    expand: false
+    expand: false,
+    editIcon: true,
+    checkmark: false,
+    isImageItem: false,
+    isUserItem: true
   },
   {
     primaryKey: 'name',
@@ -91,7 +109,11 @@ const dataTableSettings: any[] = [
     isImage: false,
     name: true,
     isDropdown: false,
-    expand: false
+    expand: false,
+    editIcon: true,
+    checkmark: false,
+    isImageItem: false,
+    isUserItem: false
   },
   {
     primaryKey: 'language_id',
@@ -100,7 +122,11 @@ const dataTableSettings: any[] = [
     isImage: true,
     name: false,
     isDropdown: false,
-    expand: false
+    expand: false,
+    editIcon: true,
+    checkmark: false,
+    isImageItem: false,
+    isUserItem: false
   },
   {
     primaryKey: 'role',
@@ -109,7 +135,24 @@ const dataTableSettings: any[] = [
     isImage: false,
     name: false,
     isDropdown: false,
-    expand: false
+    expand: false,
+    editIcon: true,
+    checkmark: false,
+    isImageItem: false,
+    isUserItem: false
+  },
+  {
+    primaryKey: 'buttons',
+    header: '',
+    width: 15,
+    isImage: false,
+    name: false,
+    isDropdown: false,
+    canEdit: true,
+    editIcon: true,
+    checkmark: false,
+    isImageItem: false,
+    isUserItem: false
   }
 ];
 
@@ -122,7 +165,16 @@ const agents = [
     routeUrl: ['agents', 'settings', 1],
     checked: false,
     isDropdown: false,
-    language_id: [56, 175]
+    language_id: [56, 175],
+    editIcon: true,
+    canEdit: true,
+    invitation_accepted: true,
+    checkmark: true,
+    userItem: {
+      text: 'video',
+      image: '../../../assets/images/callInterface/user.png',
+      color: '#3EDE26'
+    }
   },
   {
     id: 2,
@@ -132,7 +184,16 @@ const agents = [
     routeUrl: ['agents', 'settings', 2],
     checked: false,
     isDropdown: false,
-    language_id: [56]
+    language_id: [56],
+    editIcon: true,
+    canEdit: true,
+    invitation_accepted: true,
+    checkmark: false,
+    userItem: {
+      text: 'video',
+      image: '../../../assets/images/callInterface/user.png',
+      color: '#FF155A'
+    }
   },
   {
     id: 3,
@@ -142,7 +203,16 @@ const agents = [
     routeUrl: ['agents', 'settings', 3],
     checked: false,
     isDropdown: false,
-    language_id: [56, 83]
+    language_id: [56, 83],
+    editIcon: true,
+    canEdit: true,
+    invitation_accepted: true,
+    checkmark: false,
+    userItem: {
+      text: 'video',
+      image: '../../../assets/images/callInterface/user.png',
+      color: '#FF155A'
+    }
   },
   {
     id: 4,
@@ -152,7 +222,16 @@ const agents = [
     routeUrl: ['agents', 'settings', 4],
     checked: false,
     isDropdown: false,
-    language_id: [56, 175]
+    language_id: [56, 175],
+    editIcon: true,
+    canEdit: true,
+    invitation_accepted: false,
+    checkmark: false,
+    userItem: {
+      text: 'video',
+      image: '../../../assets/images/callInterface/user.png',
+      color: '#FF155A'
+    }
   }
 ];
 

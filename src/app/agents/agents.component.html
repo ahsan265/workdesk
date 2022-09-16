@@ -2,39 +2,25 @@
   <div class="filterWrapper">
     <div class="leftFilter">
       <div class="multiSelectWrapper">
-        <app-one-select-dropdown
-          [oneSelectData]="oneSelectData"
-          (oneSelectOutput)="agentTypeOutput($event)"
-        >
+        <app-one-select-dropdown [oneSelectData]="oneSelectData" (oneSelectOutput)="agentTypeOutput($event)">
         </app-one-select-dropdown>
       </div>
     </div>
     <div class="rightFilter">
       <div class="multiSelectWrapper callType">
-        <app-multi-select-dropdown
-          [multiSelectData]="languauges"
-          (multiSelectOutput)="langugaOutput($event)"
-        >
+        <app-multi-select-dropdown [multiSelectData]="languauges" (multiSelectOutput)="langugaOutput($event)">
         </app-multi-select-dropdown>
       </div>
       <div class="multiSelectWrapper callType">
-        <app-search-input-field
-          [searchInputData]="searchInputData"
-        ></app-search-input-field>
+        <app-search-input-field [searchInputData]="searchInputData"></app-search-input-field>
       </div>
       <div class="multiSelectWrapper">
-        <app-button
-          (click)="showInviteModal()"
-          [buttonData]="buttonData"
-        ></app-button>
+        <gigaaa-button (click)="showInviteModal()" [buttonData]="buttonData"></gigaaa-button>
       </div>
     </div>
   </div>
   <div class="tableWrapper">
-    <app-gigaaa-table
-      [settings]="dataTableSettings"
-      [records]="agents"
-    ></app-gigaaa-table>
+    <app-gigaaa-table [settings]="dataTableSettings" [records]="agents"></app-gigaaa-table>
   </div>
 </app-page-wrapper>
 <app-modal-wrapper *ngIf="showInviteModel"></app-modal-wrapper>
