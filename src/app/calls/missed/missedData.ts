@@ -81,7 +81,7 @@ const dataTableSettings: any[] = [
 
 const agents = [
   {
-    id: 1,
+    id: "1",
     full_name: 'Srdjan Marinkovic',
     language_id: [56, 175],
     imageItem: {
@@ -93,7 +93,7 @@ const agents = [
     reason: 'Time-out'
   },
   {
-    id: 2,
+    id: "2",
     full_name: 'Marko Marinkovic',
     language_id: [56, 175],
     imageItem: {
@@ -105,7 +105,7 @@ const agents = [
     reason: 'Time-out'
   },
   {
-    id: 3,
+    id: "3",
     full_name: 'Zoran Mihajilovic',
     language_id: [56, 175],
     imageItem: {
@@ -117,7 +117,7 @@ const agents = [
     reason: 'Time-out'
   },
   {
-    id: 4,
+    id: "4",
     full_name: 'Test',
     language_id: [56, 175],
     imageItem: {

@@ -2,6 +2,8 @@
 /* eslint-disable no-undef */
 /* eslint-disable sort-imports */
 import { Injectable } from '@angular/core';
+import { Subject } from 'rxjs';
+import { CallsModel } from 'src/app/models/callModel';
 import { connectionSecurityModel } from 'src/app/models/connectionSecurity';
 import {
   QueueDateRangeParam,
@@ -17,6 +19,7 @@ export class QueueSocketService {
   protected websocket_url = `${environment.websocket_url}`;
   ws: WebSocket | undefined;
   isSocketOpen: any;
+  callDataSubject = new Subject<any>();
 
   constructor() {}
   public callQueueSocketEndpoint() {
@@ -49,8 +52,8 @@ export class QueueSocketService {
     }
   }
 
-  public getQueueSocketList(QueueList: any) {
-    // console.log(QueueList);
+  public getQueueSocketList(QueueList: CallsModel) {
+    this.callDataSubject.next(QueueList);
   }
   public sendQueueDateParameter(QueueDateRangeParam: QueueDateRangeParam) {
     if (this.isSocketOpen === 1) {
@@ -61,18 +64,18 @@ export class QueueSocketService {
 
   private SendDefaultParam() {
     this.sendQueueParameter({
-      call_type: [],
-      languages: [],
+      call_type: ['audio', 'video'],
+      languages: [6, 56, 83, 131, 161, 175, 179],
       tab: 'default'
     });
     this.sendQueueDateParameter({
-      end_date: '2022-07-25T23:59:59.000Z',
-      start_date: '2022-07-25T00:00:00.000Z',
-      tab: 'finished_date'
+      end_date: '2022-08-31T23:59:59.000Z',
+      start_date: '2022-08-01T00:00:00.000Z',
+      tab: 'missed_date'
     });
     this.sendQueueDateParameter({
-      end_date: '2022-07-25T23:59:59.000Z',
-      start_date: '2022-07-25T00:00:00.000Z',
+      end_date: '2022-08-31T23:59:59.000Z',
+      start_date: '2022-08-01T00:00:00.000Z',
       tab: 'finished_date'
     });
   }

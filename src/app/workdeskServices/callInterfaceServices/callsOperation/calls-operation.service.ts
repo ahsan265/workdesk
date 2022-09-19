@@ -7,6 +7,7 @@ import { AgentUserInformation } from 'src/app/workdeskServices/callInterfaceServ
 import { AuthService } from 'src/app/services/auth.service';
 import { PeersCallsInformationModel } from 'src/app/models/callInterfaceModel';
 import { Subject } from 'rxjs';
+import { CloseDialogOverlayRef } from 'src/app/callInterface/overLayService/closeDialogService';
 
 @Injectable({
   providedIn: 'root'
@@ -14,7 +15,7 @@ import { Subject } from 'rxjs';
 export class CallsOperationService {
   peerUserId!: string;
   userId!: string;
-  sendPeerInformation = new Subject<PeersCallsInformationModel>()
+  sendPeerInformation = new Subject<PeersCallsInformationModel>();
   startTimer = new Subject<boolean>();
 
   constructor(
@@ -23,7 +24,7 @@ export class CallsOperationService {
     private StreamingService: StreamingService,
     private MessageService: MessageService,
     private AgentUserInformation: AgentUserInformation,
-    private AuthService: AuthService
+    private AuthService: AuthService,
   ) { }
 
   // add incoming call handler
@@ -57,36 +58,32 @@ export class CallsOperationService {
                 false,
                 this.AuthService.user.value
               );
-              const timer = new Date(Date.now());
-              this.AgentUserInformation.setLastCallDuration(timer)
-              // this.AgentUserInformation.callJoiningTime(timer);
-              this.startTimer.next(true);
-
+             
             }
             break;
           case 'accept':
             this.peerUserId = msg.peer_id;
             if (callsData.is_refreshed != true) {
               setTimeout(() => {
-                this.StreamingService.sendFirstOffer(
-                  this.peerUserId
-                );
+                this.StreamingService.sendFirstOffer(this.peerUserId);
               }, 500);
+              const timer = new Date(Date.now());
+              this.AgentUserInformation.setLastCallDuration(timer);
               this.AgentUserInformation.setRefreshStatus(true);
               this.startTimer.next(true);
-            }
-            else {
-              this.sendPeerInformation.next(callsData.peer_information.data)
-              setTimeout(() => {
-                if (this.PeerConnectionService.peerConnection != null) {
+            } else {
+              this.sendPeerInformation.next(callsData.peer_information.data);
+                if (this.PeerConnectionService.peerConnection != undefined) {
                   this.PeerConnectionService.peerConnection.close();
+                  await this.PeerConnectionService.createPeerConnection();
                 }
                 this.StreamingService.reloadOfferSend(this.peerUserId);
-              }, 500);
+               // this.StreamingService.restoreLastUsedMicrophone();
               this.startTimer.next(true);
             }
             break;
           case 'peer_data':
+            console.log(msg.data)
             const peerData: PeersCallsInformationModel = {
               deviceType: msg.data.is_mobile,
               display_name: msg.data.display_name,
@@ -96,10 +93,10 @@ export class CallsOperationService {
               isMicrophoneOn: msg.data.is_microphone_on,
               isScreenShareOn: msg.data.is_shared_screen,
               peerId: msg.peer_id,
-              peerImage: msg.data.img_url,
-            }
+              peerImage: msg.data.img_url
+            };
             this.AgentUserInformation.savePeerInformation(peerData);
-            this.sendPeerInformation.next(peerData)
+            this.sendPeerInformation.next(peerData);
             break;
           case 'peer_notification':
             this.MessageService.setInformationMessage(msg.data.msg);
@@ -113,16 +110,8 @@ export class CallsOperationService {
     );
   }
 
-
-
-
   // hang up call
   private hanndleHangupMessage(msg: any) {
     this.StreamingService.hangUpCall();
   }
-
-
-
-
-
 }

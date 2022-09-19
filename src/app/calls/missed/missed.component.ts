@@ -1,5 +1,7 @@
 import { agents, dataTableSettings } from './missedData';
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
+import { MissedCallModel } from 'src/app/models/callModel';
+import { CallsService } from '../callService/calls.service';
 
 @Component({
   selector: 'app-missed',
@@ -9,5 +11,9 @@ import { Component } from '@angular/core';
 export class MissedComponent {
   dataTableSettings = dataTableSettings;
   agents = agents;
-  constructor() {}
+  constructor(private callservice: CallsService) {
+    this.callservice.sendDataToMissedTabsSubject.pipe().subscribe((data) => {
+      console.log(data);
+    });
+  }
 }

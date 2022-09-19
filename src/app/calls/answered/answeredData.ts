@@ -53,7 +53,7 @@ const dataTableSettings: any[] = [
   },
   {
     primaryKey: 'agent_name',
-    header: 'agent name',
+    header: 'Agent name',
     width: 15,
     isImage: false,
     name: false,
@@ -68,7 +68,7 @@ const dataTableSettings: any[] = [
 
 const agents = [
   {
-    id: 1,
+    id: "1",
     full_name: 'Srdjan Marinkovic',
     language_id: [56, 175],
     call_type: {
@@ -82,7 +82,7 @@ const agents = [
     }
   },
   {
-    id: 2,
+    id: "2",
     full_name: 'Marko Marinkovic',
     language_id: [56, 175],
     call_type: {
@@ -96,7 +96,7 @@ const agents = [
     }
   },
   {
-    id: 3,
+    id: "3",
     full_name: 'Zoran Mihajilovic',
     language_id: [56, 175],
     call_type: {
@@ -110,7 +110,7 @@ const agents = [
     }
   },
   {
-    id: 4,
+    id: "4",
     full_name: 'Test',
     language_id: [56, 175],
     call_type: {

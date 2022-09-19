@@ -41,4 +41,22 @@ export class AgentService {
     });
     return selectedAgent;
   }
+
+  public checkIsAgentOnline(is_available: boolean, is_online: boolean) {
+    return is_available === true && is_online === true ? '#3EDE26' : '#FF155A';
+  }
+
+  public getAgentFullName(
+    invited: boolean,
+    inactive: boolean,
+    active: boolean,
+    first_name: string,
+    last_name: string
+  ) {
+    if (invited == true && inactive == false && active == false) {
+      return 'Not joined yet';
+    } else {
+      return first_name + ' ' + last_name;
+    }
+  }
 }

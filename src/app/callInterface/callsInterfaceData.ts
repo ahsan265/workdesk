@@ -58,7 +58,7 @@ const peerUserInformationData: PeerInformationModel = {
   showLoaderAnimation: false,
   showWaitingIcon: false,
   showVideo: false,
-  showShareScreen: false,
+  showShareScreen: false
 };
 const secondPeerUserInformationData: PeerInformationModel = {
   firstName: 'Muhammad',
@@ -71,7 +71,7 @@ const secondPeerUserInformationData: PeerInformationModel = {
   showLoaderAnimation: true,
   showWaitingIcon: false,
   showVideo: false,
-  showShareScreen: false,
+  showShareScreen: false
 };
 
 const peerMiniCameraDetails: PeerMiniCameraScreen = {
@@ -165,7 +165,7 @@ const minimizeCallControlData = {
   width: '255px',
   background: '#162741',
   'margin-bottom': '0px',
-  bottom: '22px',
+  bottom: '70px',
   'border-radius': '1px'
 };
 
@@ -196,12 +196,12 @@ const peerNormalCallConnectedData = {
 };
 const peerNormalImageNormal = {
   height: '199px',
-  width: '198px',
+  width: '198px'
 };
 
 const peerNormalImage = {
   height: '90px',
-  width: '90px',
+  width: '90px'
 };
 // for mini camera screeen on
 

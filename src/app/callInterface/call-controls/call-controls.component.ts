@@ -12,6 +12,7 @@ import {
   agentOperationInformationModel,
   inputOuputdevices
 } from 'src/app/models/callInterfaceModel';
+import { AgentUserInformation } from 'src/app/workdeskServices/callInterfaceServices/agentUserInformation/agent-user-information.service';
 import { DevicesInformationService } from 'src/app/workdeskServices/callInterfaceServices/devicesInformation/devices-information.service';
 import { StreamingService } from 'src/app/workdeskServices/callInterfaceServices/stream/streaming.service';
 import {
@@ -31,7 +32,7 @@ import { MicrophoneVoiceIndicatorComponent } from '../microphone-voice-indicator
 export class CallControlsComponent implements OnInit {
   @Input() minimizeCallControl!: any;
   @Input() maximizeCallControl!: any;
-  
+
   videoMinimizeControlData = videoMinimizeControlData;
   inputDeviceData = inputDevices;
   outputDeviceData = outputDevice;
@@ -52,37 +53,17 @@ export class CallControlsComponent implements OnInit {
 
   constructor(
     private DevicesInformationService: DevicesInformationService,
-    private StreamingService: StreamingService
-  ) {}
+    private StreamingService: StreamingService,
+    private AgentUserInformation: AgentUserInformation
+  ) { }
 
   async ngOnInit(): Promise<void> {
-    const devices = await this.DevicesInformationService.getAllDevice();
-    this.inputDeviceData.devices = devices.audioInputDevices.map((data) => ({
-      id: data.deviceId,
-      groupId: data.groupId,
-      name: data.label,
-      deviceType: data.kind,
-      isSelected: false,
-      selectedbackgroundColor: '#243247',
-      hoverColor: '',
-      selectedIcon: '../../../assets/images/callInterface/green_check_icon.svg',
-      voiceLevels: 0
-    }));
-    // output device
-
-    this.outputDeviceData.devices = devices.audioOutputDevice.map((data) => ({
-      id: data.deviceId,
-      groupId: data.groupId,
-      name: data.label,
-      deviceType: data.kind,
-      isSelected: false,
-      selectedbackgroundColor: '#243247',
-      hoverColor: '',
-      selectedIcon: '../../../assets/images/callInterface/green_check_icon.svg',
-      voiceLevels: 0
-    }));
-    this.inputDeviceData.devices[0].isSelected = true;
-    this.outputDeviceData.devices[0].isSelected = true;
+    navigator.mediaDevices.addEventListener('devicechange', async () => {
+      await this.deviceData()
+      this.markLastUsedDevices();
+    })
+   await this.deviceData();
+    this.markLastUsedDevices()
   }
   // on of microphone
   onOffMicrophone(event: boolean) {
@@ -93,7 +74,6 @@ export class CallControlsComponent implements OnInit {
   }
   // on off camera
   onOffCamera(event: boolean) {
-    // (event === true) ? this.minimizeCallControl.bottom = '20px' : this.minimizeCallControl.bottom = "20px";
     this.seletecOutputForCamera.emit(event);
   }
   // on off screen share
@@ -132,4 +112,53 @@ export class CallControlsComponent implements OnInit {
     console.log('hello');
     return videoMinimizeControlData;
   }
+  async deviceData() {
+    const devices = await this.DevicesInformationService.getAllDevice();
+    this.inputDeviceData.devices = devices.audioInputDevices.map((data) => ({
+      id: data.deviceId,
+      groupId: data.groupId,
+      name: data.label,
+      deviceType: data.kind,
+      isSelected: false,
+      selectedbackgroundColor: '#243247',
+      hoverColor: '',
+      selectedIcon: '../../../assets/images/callInterface/green_check_icon.svg',
+      voiceLevels: 0
+    }));
+    // output device
+
+    this.outputDeviceData.devices = devices.audioOutputDevice.map((data) => ({
+      id: data.deviceId,
+      groupId: data.groupId,
+      name: data.label,
+      deviceType: data.kind,
+      isSelected: false,
+      selectedbackgroundColor: '#243247',
+      hoverColor: '',
+      selectedIcon: '../../../assets/images/callInterface/green_check_icon.svg',
+      voiceLevels: 0
+    }));
+  }
+  // mark last Used Devices 
+  private markLastUsedDevices()
+  {
+    const userInformation = this.AgentUserInformation.getCallInformation();
+    // for last used microphone
+    (userInformation.last_used_microphone === undefined) ?
+      this.inputDeviceData.devices[0].isSelected = true :
+      this.inputDeviceData.devices.find(data => {
+        if (data.id === userInformation.last_used_microphone.id) {
+          data.isSelected = true;
+        }
+      });
+    // for last used speaker
+    (userInformation.last_used_speaker === undefined) ?
+      this.outputDeviceData.devices[0].isSelected = true :
+      this.outputDeviceData.devices.filter(data => {
+        if (data.id === userInformation.last_used_speaker.id) {
+          data.isSelected = true;
+        }
+      })
+  }
+
 }

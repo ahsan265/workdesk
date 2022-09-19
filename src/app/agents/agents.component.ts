@@ -19,6 +19,7 @@ import { AgentList } from '../models/agentSocketModel';
 import { Router } from '@angular/router';
 import { CommonService } from '../workdeskServices/commonEndpoint/common.service';
 import { OverlayService } from '../callInterface/overLayService/overlay.service';
+import { AgentTableModel } from '../models/agent';
 
 @Component({
   selector: 'app-agents',
@@ -91,7 +92,36 @@ export class AgentsComponent implements OnInit {
 
   getAgentList() {
     this.AgentSocketService.AgentListSubject.subscribe((data: AgentList[]) => {
-      this.AgentList = data;
+      this.agents = data.map((AgentList: AgentList) => ({
+        id: AgentList.uuid,
+        agent: AgentList.email,
+        name: this.AgentService.getAgentFullName(
+          AgentList.invited,
+          AgentList.inactive,
+          AgentList.active,
+          AgentList.first_name,
+          AgentList.last_name
+        ),
+        role: AgentList.role,
+        routeUrl: ['agents', 'settings', AgentList.uuid],
+        checked: AgentList.inactive,
+        isDropdown: false,
+        language_id: this.CommonService.getLanguageSelectedIds(
+          AgentList.languages
+        ),
+        editIcon: true,
+        canEdit: true,
+        invitation_accepted: true,
+        checkmark: this.CommonService.checkLoggedInUser(AgentList.email),
+        userItem: {
+          text: AgentList.display_name,
+          image: AgentList.images['96'],
+          color: this.AgentService.checkIsAgentOnline(
+            AgentList.is_available,
+            AgentList.is_online
+          )
+        }
+      }));
     });
   }
 }

@@ -1,41 +1,78 @@
-<div miniCameraVideoStream [ngStyle]="
+<div
+  miniCameraVideoStream
+  [ngStyle]="
     agentOperationInformation.isMinimize
       ? minimizeMiniCameraScreenData
       : normalMiniCameraScreenData
-  " class="miniCameraScreen" [hidden]="!PeerMiniCameraDetails.showSplitIncon">
-  <div [ngStyle]="
+  "
+  class="miniCameraScreen"
+  [hidden]="!PeerMiniCameraDetails.showSplitIncon"
+>
+  <div
+    [ngStyle]="
       agentOperationInformation.isMinimize
         ? minimizeMiniCameraScreenInitialsData
         : normalMinimizeCameraScreenInitialsData
-    " *ngIf="PeerMiniCameraDetails.showInitals" class="peerMiniCameraInitials">
-    {{this.firtName|nameInitials:this.lastName}}
+    "
+    *ngIf="PeerMiniCameraDetails.showInitals"
+    class="peerMiniCameraInitials"
+  >
+    {{ this.firtName | nameInitials: this.lastName }}
   </div>
-  <div [ngStyle]="
+  <div
+    [ngStyle]="
       agentOperationInformation.isMinimize
         ? miniCameraFullNameData
         : normalMiniCameraFullNameData
-    " *ngIf="PeerMiniCameraDetails.showInitals" class="peerMiniCameraName">
+    "
+    *ngIf="PeerMiniCameraDetails.showInitals"
+    class="peerMiniCameraName"
+  >
     {{ this.firtName }} (me)
   </div>
 
-  <video [ngStyle]="
+  <video
+    [ngStyle]="
       agentOperationInformation.isMinimize
         ? minimizeMiniCameraScreenData
         : normalMiniCameraScreenData
-    " *ngIf="PeerMiniCameraDetails.showCamera" class="miniVideoCamera" #localVideo id="localVideo" [autoplay]="true"
-    playsInline type="video/mp4" [muted]="true"></video>
-  <div [ngStyle]="
+    "
+    *ngIf="PeerMiniCameraDetails.showCamera"
+    class="miniVideoCamera"
+    #localVideo
+    id="localVideo"
+    [autoplay]="true"
+    playsInline
+    type="video/mp4"
+    [muted]="true"
+  ></video>
+  <div
+    [ngStyle]="
       agentOperationInformation.isMinimize
         ? minimizeSplitIconData
         : normalSplitIconData
-    " (click)="splitScreen(PeerMiniCameraDetails.showSplitIncon)" class="splitScreenIcons">
-    <img [style.margin]="agentOperationInformation.isMinimize ? '6px' : '9px'" style="margin: 9px"
-      src="../../../assets/images/callInterface/splitscreen.svg" alt="" />
+    "
+    (click)="splitScreen(PeerMiniCameraDetails.showSplitIncon)"
+    class="splitScreenIcons"
+  >
+    <img
+      [style.margin]="agentOperationInformation.isMinimize ? '6px' : '9px'"
+      style="margin: 9px"
+      src="../../../assets/images/callInterface/splitscreen.svg"
+      alt=""
+    />
   </div>
-  <div class="reventCameraIcon" *ngIf="
+  <div
+    class="reventCameraIcon"
+    *ngIf="
       PeerMiniCameraDetails.showRevertCamerIcon &&
       PeerMiniCameraDetails.isMobile
-    ">
-    <img style="margin: 9px" src="../../../assets/images/callInterface/revertcamera.svg" alt="" />
+    "
+  >
+    <img
+      style="margin: 9px"
+      src="../../../assets/images/callInterface/revertcamera.svg"
+      alt=""
+    />
   </div>
 </div>

@@ -8,6 +8,7 @@ import { AgentLanguages } from 'src/app/models/agentSocketModel';
 import { Country } from 'src/app/models/country';
 import { language } from 'src/app/models/language';
 import { SelectionModelCountry } from 'src/app/models/selectionModel';
+import { AuthService } from 'src/app/services/auth.service';
 import { GigaaaApiService } from '../gigaaaApiService/gigaaa-api-service.service';
 import { MessageService } from '../messageService/message.service';
 
@@ -28,7 +29,8 @@ export class CommonService {
   };
   constructor(
     private GigaaaApiService: GigaaaApiService,
-    private MessageService: MessageService
+    private MessageService: MessageService,
+    private Authservice: AuthService
   ) {}
   // get the list of countries
   public async getLocations(): Promise<MultiSelect> {
@@ -85,7 +87,6 @@ export class CommonService {
     }
     return this.nullMultiSelect;
   }
-
   // get data token, organization , project from local storage
   public getEndpointsParamLocal() {
     const newLocal = JSON.parse(localStorage.getItem('gigaaa-user') || '{}');
@@ -175,5 +176,9 @@ export class CommonService {
       this.getIdsOfLocation();
     }
     return this.idsOfLocations;
+  }
+  // get loggedIn Agent
+  public checkLoggedInUser(email: string) {
+    return this.Authservice.getLoggedUser().email === email ? true : false;
   }
 }

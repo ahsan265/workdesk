@@ -12,13 +12,14 @@ export class PeerConnectionService {
   peerConnection!: RTCPeerConnection;
   iceServersConfigurations = `${environment.iceServerConfiguration}`;
   remoteVideoSubject = new Subject<MediaStream>();
-  constructor(private CallSocketService: CallSocketService,
-  ) { }
+  remoteStream!: MediaStream;
+  isRealoaded = new Subject<boolean>();
+  constructor(private CallSocketService: CallSocketService, private DevicesInformationService: DevicesInformationService) { }
 
   public async createPeerConnection(): Promise<void> {
-    let iceServerSelected = [
+    let forTurnsSupported = [
       {
-        urls: 'stun:stun.l.google.com:19302'
+        urls: 'stun:stun.l.google.link:19302'
       },
       {
         urls: 'turns:turn.gigaaa.com:5349',
@@ -29,29 +30,41 @@ export class PeerConnectionService {
 
     let iceserversConfigs = [
       {
-        urls: 'stun:stun.l.google.com:19302'
+        urls: 'stun:stun.l.google.link:19302'
       },
       {
-        urls: 'turn:turn.gigaaa.com:80?transport=tcp',
+        urls: 'turns:turn.gigaaa.link:80',
         username: 'username',
         credential: 'password'
       },
       {
-        urls: 'turns:turn.gigaaa.com:5349',
+        urls: 'turns:turn.gigaaa.link:443',
         username: 'username',
         credential: 'password'
       },
       {
-        urls: 'turn:turn.gigaaa.com:3478',
+        urls: 'turn:turn.gigaaa.link:5349',
+        username: 'username',
+        credential: 'password'
+      },
+      {
+        urls: 'turn:turn.gigaaa.link:3478',
         username: 'username',
         credential: 'password'
       }
     ];
+    let turnConfig = [];
+    if (this.DevicesInformationService.getBrowserName() === 'firefox') {
+      turnConfig = forTurnsSupported
+    }
+    else {
+      turnConfig = iceserversConfigs
+    }
     this.peerConnection = new RTCPeerConnection({
-      iceServers: iceserversConfigs,
+      iceServers: turnConfig,
       iceTransportPolicy: 'all',
       rtcpMuxPolicy: 'require',
-      iceCandidatePoolSize: 2
+      iceCandidatePoolSize: 10
     });
     this.eventHandlerforpeer();
   }
@@ -66,6 +79,7 @@ export class PeerConnectionService {
   }
   // handle ice candidate event Function
   private handIceCandidateEvent = (event: RTCPeerConnectionIceEvent) => {
+    console.log(event)
     if (event.candidate != null) {
       this.CallSocketService.sendDataforCall({
         type: 'ice-candidate',
@@ -80,11 +94,13 @@ export class PeerConnectionService {
       case 'closed':
         this.peerConnection.close();
         await this.createPeerConnection();
+        this.isRealoaded.next(true);
         break;
       case 'failed':
       case 'disconnected':
         this.peerConnection.close();
         await this.createPeerConnection();
+        this.isRealoaded.next(true);
         break;
     }
   };
@@ -93,14 +109,15 @@ export class PeerConnectionService {
       case 'closed':
         this.peerConnection.close();
         await this.createPeerConnection();
+        this.isRealoaded.next(true);
         break;
     }
   };
   // handle remote stream
   private handleTrackEvent = (event: RTCTrackEvent) => {
+    this.remoteStream = event.streams[0];
     this.remoteVideoSubject.next(event.streams[0]);
   };
-
 
   // handle Offer messager After recieving offer from peer candidate.
   public async handlOfferMessage(
@@ -112,9 +129,7 @@ export class PeerConnectionService {
         return await this.peerConnection.createAnswer();
       })
       .then(async (answer) => {
-        await this.peerConnection.setLocalDescription(
-          answer
-        );
+        await this.peerConnection.setLocalDescription(answer);
       })
       .then(() => {
         this.CallSocketService.sendDataforCall({
@@ -125,13 +140,14 @@ export class PeerConnectionService {
       .catch((error: any) => {
         console.log(error);
       });
-    console.log(this.peerConnection.getReceivers())
+    console.log(this.peerConnection.getReceivers());
   }
 
   // handle answer message
   public async handleAnswerMessage(
     data: RTCSessionDescriptionInit
   ): Promise<void> {
+    console.log(data)
     await this.peerConnection
       .setRemoteDescription(new RTCSessionDescription(data))
       .catch(async (error: any) => {
@@ -139,15 +155,11 @@ export class PeerConnectionService {
       });
   }
   // handle ice Condate Messages
-  public async handleIceCandidateMessage(
-    data: RTCIceCandidate
-  ): Promise<void> {
-    if (data.candidate != null || undefined || '') {
-      await this.peerConnection
-        .addIceCandidate(data)
-        .catch((error: any) => {
-          console.log(error);
-        });
+  public async handleIceCandidateMessage(data: RTCIceCandidate): Promise<void> {
+    if (data.candidate !== undefined || "" || null) {
+      await this.peerConnection.addIceCandidate(data).catch((error: any) => {
+        console.log(error);
+      });
     }
   }
 }

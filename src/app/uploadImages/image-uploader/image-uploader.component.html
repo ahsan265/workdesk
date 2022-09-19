@@ -1,12 +1,35 @@
-<div class="uploadarea" id="uploadArea" app-fileDragDrop (filesChangeEmiter)="dragImageUpload($event)">
+<div
+  class="uploadarea"
+  id="uploadArea"
+  app-fileDragDrop
+  (filesChangeEmiter)="dragImageUpload($event)"
+>
   <div class="uploadicon">
-    <svg width="24" height="20" viewBox="0 0 24 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <path d="M12 19.25L12 8.75" stroke="#162741" stroke-width="1.4" stroke-linecap="round" />
-      <path d="M8.5 11.25L11.2929 8.45711C11.6834 8.06658 12.3166 8.06658 12.7071 8.45711L15.5 11.25" stroke="#162741"
-        stroke-width="1.4" stroke-linecap="round" />
+    <svg
+      width="24"
+      height="20"
+      viewBox="0 0 24 20"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path
+        d="M12 19.25L12 8.75"
+        stroke="#162741"
+        stroke-width="1.4"
+        stroke-linecap="round"
+      />
+      <path
+        d="M8.5 11.25L11.2929 8.45711C11.6834 8.06658 12.3166 8.06658 12.7071 8.45711L15.5 11.25"
+        stroke="#162741"
+        stroke-width="1.4"
+        stroke-linecap="round"
+      />
       <path
         d="M15 14.75H18.413C20.6702 14.75 22.5 12.9202 22.5 10.663V10.663C22.5 8.40588 20.6702 6.57609 18.413 6.57609H18.1444C17.9726 6.57609 17.8333 6.4368 17.8333 6.26498V5.04167C17.8333 2.67145 15.9119 0.75 13.5417 0.75H13.1862C11.0123 0.75 9.25 2.51231 9.25 4.68623V4.68623C9.25 4.84151 9.12412 4.96739 8.96884 4.96739H6.39131C3.68991 4.96739 1.5 7.1573 1.5 9.8587V9.8587C1.5 12.5601 3.68991 14.75 6.39131 14.75H8.25"
-        stroke="#162741" stroke-width="1.4" stroke-linecap="round" />
+        stroke="#162741"
+        stroke-width="1.4"
+        stroke-linecap="round"
+      />
     </svg>
   </div>
   <div class="discriptionpanel">
@@ -14,7 +37,14 @@
     <p class="descp">or</p>
   </div>
   <div class="uploadbtnpanel">
-    <input [multiple]="false" id="upload" #file (change)="fileChangeEvent($event)" type="file" style="display: none" />
+    <input
+      [multiple]="false"
+      id="upload"
+      #file
+      (change)="fileChangeEvent($event)"
+      type="file"
+      style="display: none"
+    />
     <label for="upload" class="uploadbtn">Browse Files</label>
   </div>
 </div>

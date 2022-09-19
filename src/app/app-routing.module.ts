@@ -33,10 +33,14 @@ const routes: Routes = [
         component: CallsComponent,
         children: [
           { path: '', redirectTo: 'incoming', pathMatch: 'full' },
-          { path: 'incoming', component: IncomingComponent },
-          { path: 'ongoing', component: OngoingComponent },
-          { path: 'missed', component: MissedComponent },
-          { path: 'answered', component: AnsweredComponent }
+          { path: 'incoming', component: IncomingComponent, data: {} },
+          { path: 'ongoing', component: OngoingComponent, data: {} },
+          {
+            path: 'missed',
+            component: MissedComponent,
+            data: { missedData: '' }
+          },
+          { path: 'answered', component: AnsweredComponent, data: {} }
         ]
       },
       { path: 'agents', component: AgentsComponent },
@@ -46,7 +50,6 @@ const routes: Routes = [
   { path: 'callback', component: CallbackComponent },
   { path: 'calling', component: CallConsoleComponent },
   { path: 'customersupport', component: CustomerSupportComponent }
-
 
   // { path: '**', redirectTo: '' }
 ];

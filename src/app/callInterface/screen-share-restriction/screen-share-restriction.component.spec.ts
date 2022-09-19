@@ -8,9 +8,8 @@ describe('ScreenShareRestrictionComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ ScreenShareRestrictionComponent ]
-    })
-    .compileComponents();
+      declarations: [ScreenShareRestrictionComponent]
+    }).compileComponents();
 
     fixture = TestBed.createComponent(ScreenShareRestrictionComponent);
     component = fixture.componentInstance;

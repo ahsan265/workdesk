@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
-import { PeersCallsInformationModel } from 'src/app/models/callInterfaceModel';
+import { Subject } from 'rxjs';
+import { inputOuputdevices, PeersCallsInformationModel } from 'src/app/models/callInterfaceModel';
 import { User } from 'src/app/models/user';
 import { DevicesInformationService } from '../devicesInformation/devices-information.service';
 
@@ -7,6 +8,7 @@ import { DevicesInformationService } from '../devicesInformation/devices-informa
   providedIn: 'root'
 })
 export class AgentUserInformation {
+  selectedSpearkerSubject = new Subject<any>();
   constructor(private DevicesInformationService: DevicesInformationService) { }
 
   public getCallInformation() {
@@ -21,13 +23,26 @@ export class AgentUserInformation {
       lastNameInitial: lastNameInitial
     };
   }
+
+
+   //set Refresh Status
+   public setIsMinimize(status: boolean) {
+    const data = this.getCallInformation();
+    data['is_minimize'] = status;
+    localStorage.setItem('call-information', JSON.stringify(data));
+  }
   //set Refresh Status
   public setRefreshStatus(status: boolean) {
     const data = this.getCallInformation();
     data['is_refreshed'] = status;
     localStorage.setItem('call-information', JSON.stringify(data));
   }
-
+  //set mcrophone  Status
+  public setMicrophoneStatus(isMicrophoneOn: boolean) {
+    const data = this.getCallInformation();
+    data.user_information.data.is_microphone_on = isMicrophoneOn;
+    localStorage.setItem('call-information', JSON.stringify(data));
+  }
   // save user Information
   public saveUserInformation(
     userId: string,
@@ -51,7 +66,20 @@ export class AgentUserInformation {
     };
     localStorage.setItem('call-information', JSON.stringify(data));
   }
-  // update camera status 
+  // update last used microphone 
+  public updateLastUsedMicrophone(miceDetails: inputOuputdevices) {
+    const data = this.getCallInformation();
+    data['last_used_microphone'] = miceDetails;
+    localStorage.setItem('call-information', JSON.stringify(data));
+  }
+
+  // update last used microphone 
+  public updateLastUsedSpeaker(speakerDetails: inputOuputdevices) {
+    const data = this.getCallInformation();
+    data['last_used_speaker'] = speakerDetails;
+    localStorage.setItem('call-information', JSON.stringify(data));
+  }
+  // update camera status
   public updateCameraStatus(isCameraOn: boolean) {
     const data = this.getCallInformation();
     data.user_information.data.is_camera_on = isCameraOn;
@@ -65,7 +93,6 @@ export class AgentUserInformation {
   }
   // save peer information
   public savePeerInformation(peersInformation: PeersCallsInformationModel) {
-
     const data = this.getCallInformation();
     data['peer_information'] = {
       peer_id: peersInformation.peerId,
@@ -80,10 +107,7 @@ export class AgentUserInformation {
         deviceType: peersInformation.deviceType
       }
     };
-    localStorage.setItem(
-      'call-information',
-      JSON.stringify(data)
-    );
+    localStorage.setItem('call-information', JSON.stringify(data));
   }
   //set last Call Duration
   public setLastCallDuration(Duration: Date) {

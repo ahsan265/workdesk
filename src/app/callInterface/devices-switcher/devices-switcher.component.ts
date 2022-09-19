@@ -4,6 +4,8 @@ import {
   devcieInformationModel,
   inputOuputdevices
 } from 'src/app/models/callInterfaceModel';
+import { AgentUserInformation } from 'src/app/workdeskServices/callInterfaceServices/agentUserInformation/agent-user-information.service';
+import { PeerConnectionService } from 'src/app/workdeskServices/callInterfaceServices/peerConnection/peer-connection.service';
 import { StreamingService } from 'src/app/workdeskServices/callInterfaceServices/stream/streaming.service';
 
 @Component({
@@ -19,29 +21,52 @@ export class DevicesSwitcherComponent implements OnInit {
   voiceLevels!: Observable<number>;
   levels: number = 0;
 
-  constructor(private StreamingService: StreamingService) {}
+  constructor(private StreamingService: StreamingService,
+    private AgentUserInformation: AgentUserInformation,
+    private PeerConnectionService: PeerConnectionService) { }
 
   ngOnInit() {
-    this.getInputOutputDeviceInformation(this.inputDevicesData.devices[0]);
+    const userInformation = this.AgentUserInformation.getCallInformation()
+    if (userInformation.last_used_microphone === undefined) {
+      this.getInputOutputDeviceInformation(this.inputDevicesData.devices[0]);
+    }
+    else {
+      this.getInputOutputDeviceInformation(userInformation.last_used_microphone);
+    }
+    if (userInformation.last_used_speaker === undefined) {
+      this.getInputOutputDeviceInformation(this.outputDevicesData.devices[0]);
+    } else {
+      this.getInputOutputDeviceInformation(userInformation.last_used_speaker);
+    }
     setInterval(() => {
       this.levels += 0;
     }, 1000);
   }
   getInputOutputDeviceInformation(event: inputOuputdevices) {
     this.selectInputOutputDeviceInformation.emit(event);
-    this.showMicroPhoneLevels(event);
+    (event.deviceType === "audioinput") ?
+      this.showMicroPhoneLevels(event) :
+      this.AgentUserInformation.selectedSpearkerSubject.next(event);
+    (event.deviceType === "audioinput") ?
+      this.AgentUserInformation.updateLastUsedMicrophone(event) :
+      this.AgentUserInformation.updateLastUsedSpeaker(event);
+
   }
   // for switching between micriphones
   public async showMicroPhoneLevels(selectedMicrophone: inputOuputdevices) {
     try {
       let constraint = { audio: { deviceId: selectedMicrophone.id } };
       if (this.StreamingService.localStream) {
-        this.StreamingService.localStream.getAudioTracks().forEach((track) => {
-          track.enabled = true;
-        });
+        this.StreamingService.localStream.getAudioTracks().forEach(track=>{
+          track.stop()
+        })
       }
       navigator.mediaDevices.getUserMedia(constraint).then(async (stream) => {
+        const audio = this.PeerConnectionService.peerConnection.getSenders().find((audioTrack: any) => {
+          return audioTrack.track.kind === "audio";
+        })
         this.StreamingService.localStream.addTrack(stream.getAudioTracks()[0]);
+        audio?.replaceTrack(stream.getAudioTracks()[0]);
         const audioContext = new AudioContext();
         await audioContext.audioWorklet.addModule('assets/vumeter.js');
         let microphone = audioContext.createMediaStreamSource(stream);
@@ -61,31 +86,4 @@ export class DevicesSwitcherComponent implements OnInit {
     }
   }
 
-  // for switching between Speakers
-  private switchSpeakers(
-    selectedSpeakers: inputOuputdevices,
-    remoteStream: MediaStream
-  ) {
-    try {
-      // if (this.remotevideo.nativeElement.children.length > 0) {
-      //   this.remotevideo.nativeElement.volume = 0;
-      //   this.remotevideo.nativeElement.removeChild(this.remotevideo.nativeElement.children[0])
-      // }
-      // this.outputDeviceid = Val.data.deviceId;
-      // let mediaStream = this.remotetrackEvent;
-      let test_audio_context1 = new AudioContext();
-      let webaudio_source1 =
-        test_audio_context1.createMediaStreamSource(remoteStream);
-      let webaudio_ms1 = test_audio_context1.createMediaStreamDestination();
-      webaudio_source1.connect(webaudio_ms1);
-      let test_output_audio1 = <
-        HTMLMediaElement & { setSinkId(deviceId: string): void }
-      >new Audio();
-      test_output_audio1.srcObject = webaudio_ms1.stream;
-
-      test_output_audio1.setSinkId(selectedSpeakers.groupId);
-      //  this.remotevideo.nativeElement.appendChild(test_output_audio1);
-      test_output_audio1.play();
-    } catch (err: any) {}
-  }
 }

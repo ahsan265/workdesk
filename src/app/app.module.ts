@@ -66,6 +66,9 @@ import { NameInitialsPipe } from './pipes/nameInitials/name-initials.pipe';
 import { CustomerSupportComponent } from './customer-support/customer-support.component';
 import { ScreenShareRestrictionComponent } from './callInterface/screen-share-restriction/screen-share-restriction.component';
 import { peerMiniCameraAnimation } from './callInterface/callInterfaceDirectives/callInterfaceHideDirective';
+import { callInterfaceHideControlDirective } from './callInterface/callInterfaceDirectives/callInterfaceHideControlDirective';
+import { CloseDialogOverlayRef } from './callInterface/overLayService/closeDialogService';
+import { OverlayService } from './callInterface/overLayService/overlay.service';
 
 @NgModule({
   declarations: [
@@ -95,6 +98,7 @@ import { peerMiniCameraAnimation } from './callInterface/callInterfaceDirectives
     ImageCropperComponent,
     DragNDropDirective,
     peerMiniCameraAnimation,
+    callInterfaceHideControlDirective,
     CallConsoleComponent,
     CallsHeaderComponent,
     CallingScreenComponent,
@@ -144,7 +148,9 @@ import { peerMiniCameraAnimation } from './callInterface/callInterfaceDirectives
     {
       provide: 'GigaaaHeaderService',
       useClass: GigaaaHeaderService
-    }
+    },
+    OverlayService
+    
   ],
   bootstrap: [AppComponent]
 })

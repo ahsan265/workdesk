@@ -45,11 +45,11 @@ export class MiniCameraScreenComponent implements OnInit {
   normalMinimizeCameraScreenInitialsData = normalMinimizeCameraScreenInitials;
   @Output() splitScreenOutput = new EventEmitter();
   @ViewChild('localVideo') localVideo!: ElementRef<HTMLMediaElement>;
-  constructor(private CommonService: CommonService) { }
+  constructor(private CommonService: CommonService) {}
   firtName!: string;
   lastName!: string;
   ngOnInit(): void {
-    const data: User = JSON.parse(localStorage.getItem('gigaaa-user') || '{}')
+    const data: User = JSON.parse(localStorage.getItem('gigaaa-user') || '{}');
     this.firtName = data.profile.first_name || '';
     this.lastName = data.profile?.last_name || '';
   }
