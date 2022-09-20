@@ -68,9 +68,10 @@ export class CallsOperationService {
                 this.StreamingService.sendFirstOffer(this.peerUserId);
               }, 500);
               const timer = new Date(Date.now());
+              this.startTimer.next(true);
               this.AgentUserInformation.setLastCallDuration(timer);
               this.AgentUserInformation.setRefreshStatus(true);
-              this.startTimer.next(true);
+              
             } else {
               this.sendPeerInformation.next(callsData.peer_information.data);
                 if (this.PeerConnectionService.peerConnection != undefined) {
@@ -78,8 +79,8 @@ export class CallsOperationService {
                   await this.PeerConnectionService.createPeerConnection();
                 }
                 this.StreamingService.reloadOfferSend(this.peerUserId);
-               // this.StreamingService.restoreLastUsedMicrophone();
-              this.startTimer.next(true);
+                this.StreamingService.restoreLastUsedMicrophone();
+                this.startTimer.next(true);
             }
             break;
           case 'peer_data':

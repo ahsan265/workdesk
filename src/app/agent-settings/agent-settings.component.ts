@@ -26,6 +26,7 @@ import { CommonService } from '../workdeskServices/commonEndpoint/common.service
 import { MessageService } from '../workdeskServices/messageService/message.service';
 import { Modal } from '../models/modal';
 import { UpdatePasswordComponent } from '../modals/update-password/update-password.component';
+import { AgentService } from '../agents/agentService/agent.service';
 
 @Component({
   selector: 'app-agent-settings',
@@ -35,6 +36,8 @@ import { UpdatePasswordComponent } from '../modals/update-password/update-passwo
 export class AgentSettingsComponent implements OnInit {
   agentId!: string;
   adminAletMessage: string = '';
+  pendingStatusForLanguages: string = '';
+  pendingStatusForAdminRights: string = ""
   agents: Agent[] = [];
   agentUploadModalData = agentUploadImageModal;
   agentDefaultModalData = agentDefaultModalData;
@@ -57,6 +60,7 @@ export class AgentSettingsComponent implements OnInit {
   showImageUploadModal: boolean = false;
   showPasswordModal: boolean = false;
   showDeleteAgentModal: boolean = false;
+  disableAgentRights: boolean = false;
   agentSettingsForm = new FormGroup({
     email: new FormControl('', [
       Validators.required,
@@ -72,8 +76,9 @@ export class AgentSettingsComponent implements OnInit {
     private agentSettingService: AgentSettingService,
     private router: Router,
     private CommonService: CommonService,
-    private MessageService: MessageService
-  ) {}
+    private MessageService: MessageService,
+    private AgentService: AgentService
+  ) { }
 
   ngOnInit() {
     this.authService.pageTitle.next('Settings');
@@ -187,8 +192,8 @@ export class AgentSettingsComponent implements OnInit {
       this.agentSettingService.checkAgentIsInvited(agentData);
     this.agentSettingsForm.patchValue(
       {
-        first_name: agentNames?.first_name,
-        last_name: agentNames?.last_name,
+        first_name: agentData?.first_name,
+        last_name: agentData?.last_name,
         display_name: agentData.display_name
       },
       { emitEvent: false, onlySelf: true }
@@ -198,20 +203,33 @@ export class AgentSettingsComponent implements OnInit {
     );
     this.adminAletMessage =
       this.agentSettingService.checkAdminOrganizationOrNomral(
-        agentData.email,
+        agentData.is_organization_admin,
         agentData.role
       );
-    const isLoggedIn = this.agentSettingService.checkIsLoggedInAgent(
+
+    const isLoggedIn = this.AgentService.checkIsLoggedInAgent(
       agentData.email
     );
     this.isAdmin = this.agentSettingService.isAdmin(agentData.role);
-    isLoggedIn === true && this.isAdmin === true
-      ? (this.showDeleteAgentButton = false)
-      : (this.showDeleteAgentButton = true);
+    const isAgentAcceptInvitation = this.AgentService.setAgentInvitedProperty(agentData.invited, agentData.inactive, agentData.active);
+    if (isAgentAcceptInvitation === false) {
+      this.agentSettingsForm.controls["first_name"].disable();
+      this.agentSettingsForm.controls["last_name"].disable();
+      this.agentSettingsForm.controls["display_name"].disable();
+    }
+    if (isLoggedIn === true && this.isAdmin === true) {
+      this.showDeleteAgentButton = false
+    }
+    else if (isAgentAcceptInvitation === true) {
+      this.showDeleteAgentButton = true
+    }
+    this.pendingStatusForLanguages = this.agentSettingService.checkAgentStatusIsPendingLanguage(isAgentAcceptInvitation);
+    this.pendingStatusForAdminRights = this.agentSettingService.checkAgentStatusIsPendingAdminRights(isAgentAcceptInvitation);
     isLoggedIn === true
       ? (this.showPasswordSection = true)
       : (this.showPasswordSection = false);
     this.switchButtonData.buttonChecked = !this.isAdmin;
+
   }
   public updateAgentDetails() {
     const agentSetting: AgentSettings = {

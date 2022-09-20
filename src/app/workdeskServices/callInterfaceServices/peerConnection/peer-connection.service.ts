@@ -22,10 +22,10 @@ export class PeerConnectionService {
         urls: 'stun:stun.l.google.link:19302'
       },
       {
-        urls: 'turns:turn.gigaaa.com:5349',
+        urls: 'turns:turn.gigaaa.link:5349',
         username: 'username',
         credential: 'password'
-      }
+      },
     ];
 
     let iceserversConfigs = [
@@ -33,17 +33,17 @@ export class PeerConnectionService {
         urls: 'stun:stun.l.google.link:19302'
       },
       {
-        urls: 'turns:turn.gigaaa.link:80',
+        urls: 'turn:turn.gigaaa.link:80',
         username: 'username',
         credential: 'password'
       },
       {
-        urls: 'turns:turn.gigaaa.link:443',
+        urls: 'turn:turn.gigaaa.link:443',
         username: 'username',
         credential: 'password'
       },
       {
-        urls: 'turn:turn.gigaaa.link:5349',
+        urls: 'turns:turn.gigaaa.link:5349',
         username: 'username',
         credential: 'password'
       },
@@ -156,7 +156,7 @@ export class PeerConnectionService {
   }
   // handle ice Condate Messages
   public async handleIceCandidateMessage(data: RTCIceCandidate): Promise<void> {
-    if (data.candidate !== undefined || "" || null) {
+    if (data.candidate != undefined || "" || null) {
       await this.peerConnection.addIceCandidate(data).catch((error: any) => {
         console.log(error);
       });

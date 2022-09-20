@@ -94,7 +94,7 @@ export class CallConsoleComponent implements OnInit {
     const user = this.AgentUserInformation.getCallInformation();
     if (user.is_refreshed === true) {
       this.CallSocketService.dialCall(
-        '58df6da3-7b01-4080-979a-fc0365a6bc35',
+        '21b193c1-e09c-4e5a-91d8-556d0e340c21',
         user.user_information.user_id,
         true,
         this.DevicesInformationService.getBrowserName(),
@@ -112,7 +112,7 @@ export class CallConsoleComponent implements OnInit {
       // this.miceData.isSelected = user.user_information.data.is_microphone_on;
     } else {
       this.CallSocketService.dialCall(
-        '58df6da3-7b01-4080-979a-fc0365a6bc35',
+        '21b193c1-e09c-4e5a-91d8-556d0e340c21',
         '',
         false,
         this.DevicesInformationService.getBrowserName(),

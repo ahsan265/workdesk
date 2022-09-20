@@ -144,7 +144,7 @@ export class CallingScreenComponent implements OnInit {
     this.remoteVideo.nativeElement.srcObject = null;
     this.remoteVideo.nativeElement.srcObject = stream;
     this.remoteStream = stream;
-    this.playSelectedAudioOutput(user.last_used_speaker);
+   // this.playSelectedAudioOutput(user.last_used_speaker);
 
     this.PeerVoiceIndicatior(stream, 10);
   }

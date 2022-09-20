@@ -109,9 +109,9 @@ export class AgentsComponent implements OnInit {
         language_id: this.CommonService.getLanguageSelectedIds(
           AgentList.languages
         ),
-        editIcon: true,
+        editIcon: this.AgentService.disabledEditButton(AgentList.email, AgentList.is_organization_admin, AgentList.role),
         canEdit: true,
-        invitation_accepted: true,
+        invitation_accepted: this.AgentService.setAgentInvitedProperty(AgentList.invited, AgentList.inactive, AgentList.active),
         checkmark: this.CommonService.checkLoggedInUser(AgentList.email),
         userItem: {
           text: AgentList.display_name,

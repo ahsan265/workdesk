@@ -69,6 +69,7 @@ import { peerMiniCameraAnimation } from './callInterface/callInterfaceDirectives
 import { callInterfaceHideControlDirective } from './callInterface/callInterfaceDirectives/callInterfaceHideControlDirective';
 import { CloseDialogOverlayRef } from './callInterface/overLayService/closeDialogService';
 import { OverlayService } from './callInterface/overLayService/overlay.service';
+import { AddAgentComponent } from './add-agent/add-agent.component';
 
 @NgModule({
   declarations: [
@@ -109,7 +110,8 @@ import { OverlayService } from './callInterface/overLayService/overlay.service';
     CallQualityIndicatorComponent,
     NameInitialsPipe,
     CustomerSupportComponent,
-    ScreenShareRestrictionComponent
+    ScreenShareRestrictionComponent,
+    AddAgentComponent
   ],
   imports: [
     BrowserAnimationsModule,

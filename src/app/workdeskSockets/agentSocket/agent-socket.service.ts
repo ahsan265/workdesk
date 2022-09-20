@@ -12,6 +12,7 @@ import {
 } from 'src/app/models/agentSocketModel';
 import { connectionSecurityModel } from 'src/app/models/connectionSecurity';
 import { environment } from 'src/environments/environment';
+import { agentLoggedData } from './agentSocketData';
 
 @Injectable({
   providedIn: 'root'
@@ -23,8 +24,10 @@ export class AgentSocketService {
   isSocketOpen: any;
   public AgentLiveStatus = new Subject<boolean>();
   public AgentListSubject = new Subject<AgentList[]>();
-
-  constructor() {}
+  isOganizationAdminStatus: boolean = false;
+  isUserAgentOrAdmin: string = '';
+  constructor() {
+  }
 
   public callAgentSocketEndpoint() {
     const connectionId: connectionSecurityModel = JSON.parse(
@@ -49,8 +52,8 @@ export class AgentSocketService {
     this.ws.onmessage = (e) => {
       e.data != 'ping' ? this.getAgentList(JSON.parse(e.data)) : '';
     };
-    this.ws.onclose = (e) => {};
-    this.ws.onerror = (e) => {};
+    this.ws.onclose = (e) => { };
+    this.ws.onerror = (e) => { };
   }
   public sendAgentsParameter(AgentParameter: AgentParameter) {
     if (this.isSocketOpen === 1) {
@@ -72,9 +75,13 @@ export class AgentSocketService {
     const loggedInAgent = AgentList.find(
       (agent: AgentList) => agent.email === user.email
     );
+    loggedInAgent?.is_organization_admin === true ?
+      this.isOganizationAdminStatus = true : this.isOganizationAdminStatus = false;
+    loggedInAgent?.role === 'Admin' ? this.isUserAgentOrAdmin = 'Admin' : this.isUserAgentOrAdmin = 'Agent';
     loggedInAgent?.is_available === true && loggedInAgent?.is_online === true
       ? this.sendAgentOnlineStatus(true)
       : this.sendAgentOnlineStatus(false);
+
   }
   public setAgentOnlineStatus(isOnline: boolean) {
     const isAgentOnline: AgentOnlineStatus = {
@@ -94,7 +101,10 @@ export class AgentSocketService {
     this.AgentLiveStatus.next(isOnline);
     localStorage.setItem('agent-online-status', JSON.stringify(isOnline));
   }
-
+  // set organization Admin or not 
+  public getOrganizationAdminStatus() {
+    return { is_organization_admin: this.isOganizationAdminStatus, role: this.isUserAgentOrAdmin }
+  }
   // get last used parameters
   public getLastUsedParams() {
     if (this.lastUsedParameter != '{}') {

@@ -17,7 +17,7 @@ export class AgentSettingService {
     private GigaaaApiService: GigaaaApiService,
     private CommonService: CommonService,
     private MessageService: MessageService
-  ) {}
+  ) { }
 
   // get agentS Updated Data ()
   public async updateAgentSettings(
@@ -60,25 +60,34 @@ export class AgentSettingService {
     };
     return agentLanguages;
   }
-  // check is user admin or agent
-  public checkIsLoggedInAgent(agentEmail: string) {
-    const userInfo: User = JSON.parse(
-      localStorage.getItem('gigaaa-user') || '{}'
-    );
-    return userInfo.email === agentEmail ? true : false;
-  }
+
   public isAdmin(role: string) {
     return role === 'Admin' ? true : false;
   }
-  public checkAdminOrganizationOrNomral(email: string, role: string) {
-    const isLoggedIn: boolean = this.checkIsLoggedInAgent(email);
-    if (isLoggedIn === true) {
-      return role === 'Admin'
-        ? 'Organization admins cannot turn off administrative rights.'
-        : 'Agent cannot change administrative rights.';
-    } else {
+  public checkAdminOrganizationOrNomral(isOrganizationAdmin: boolean, role: string) {
+
+    if (isOrganizationAdmin === true && role === 'Admin') {
+      return 'Organization admins cannot turn off administrative rights.';
+    }
+    else if (isOrganizationAdmin === false && role === 'Admin') {
       return '';
     }
+    else {
+      return '';
+    }
+
+  }
+  // show pending agent message 
+  public checkAgentStatusIsPendingLanguage(isPending: boolean) {
+    return (isPending === false) ?
+      'Language(s) cannot be changed in pending status.' :
+      '';
+  }
+  // show Pending agent for Adming rights 
+  public checkAgentStatusIsPendingAdminRights(isPending: boolean) {
+    return (isPending === false) ?
+      'Administrative rights cannot be changed in pending status.' :
+      '';
   }
 
   public agentUserName(agentData: AgentList): any {
@@ -86,7 +95,7 @@ export class AgentSettingService {
       ? 'Not joined yet'
       : { first_name: agentData.first_name, last_name: agentData.last_name };
   }
-  public checkAgentIsInvited(agentData: AgentList): any {
+  public checkAgentIsInvited(agentData: AgentList): boolean {
     return agentData.invited === true ? true : false;
   }
   public async deleteAgent(agentUuid: string) {
@@ -107,6 +116,6 @@ export class AgentSettingService {
     );
     this.MessageService.setSuccessMessage('Agent Invitation has been resent.');
   }
-  public updateAgentImage() {}
-  public updateLoggedInUserImage() {}
+  public updateAgentImage() { }
+  public updateLoggedInUserImage() { }
 }
