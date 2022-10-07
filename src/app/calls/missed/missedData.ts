@@ -1,133 +1,186 @@
-const dataTableSettings: any[] = [
-  {
-    primaryKey: 'full_name',
-    header: 'FULL NAME & ID',
-    width: 15,
-    isImage: false,
-    name: true,
-    isDropdown: false,
-    expand: false,
-    editIcon: true,
-    checkmark: false,
-    isImageItem: false,
-    isUserItem: false
-  },
-  {
-    primaryKey: 'language_id',
-    header: 'USER INFO',
-    width: 15,
-    isImage: true,
-    name: false,
-    isDropdown: false,
-    expand: false,
-    editIcon: true,
-    checkmark: false,
-    isImageItem: false,
-    isUserItem: false
-  },
-  {
-    primaryKey: 'call_type',
-    header: 'CALL TYPE',
-    width: 15,
-    isImage: false,
-    name: false,
-    isDropdown: false,
-    expand: false,
-    editIcon: true,
-    checkmark: false,
-    isImageItem: true,
-    isUserItem: false
-  },
-  {
-    primaryKey: 'called',
-    header: 'Called at',
-    width: 15,
-    isImage: false,
-    name: true,
-    isDropdown: false,
-    expand: false,
-    editIcon: true,
-    checkmark: false,
-    isImageItem: false,
-    isUserItem: false
-  },
-  {
-    primaryKey: 'wait_time',
-    header: 'WAIT TIME',
-    width: 15,
-    isImage: false,
-    name: false,
-    isDropdown: false,
-    expand: false,
-    editIcon: true,
-    checkmark: false,
-    isImageItem: false,
-    isUserItem: false
-  },
-  {
-    primaryKey: 'reason',
-    header: 'Reason',
-    width: 15,
-    isImage: false,
-    name: false,
-    isDropdown: false,
-    expand: false,
-    editIcon: true,
-    checkmark: false,
-    isImageItem: false,
-    isUserItem: false
-  }
-];
+import { tableSettings } from "src/app/models/callModel";
 
-const agents = [
-  {
-    id: "1",
-    full_name: 'Srdjan Marinkovic',
-    language_id: [56, 175],
-    imageItem: {
-      text: 'video',
-      image: '../../../assets/images/callInterface/video.svg'
-    },
-    called: '10:50',
-    wait_time: '00:00',
-    reason: 'Time-out'
+const missedTableSetting: tableSettings = {
+  tableName: 'missed',
+  tableHeaders: [{
+    index: 0,
+    header: "User",
+    width: 20,
+    isHeaderImage: true,
+    showHeader: true,
+    isDropdown: false,
+    checkmark: true,
+    isImageItem: false,
+    isUserItem: false
   },
   {
-    id: "2",
-    full_name: 'Marko Marinkovic',
-    language_id: [56, 175],
-    imageItem: {
-      text: 'video',
-      image: '../../../assets/images/callInterface/video.svg'
-    },
-    called: '10:50',
-    wait_time: '00:00',
-    reason: 'Time-out'
+    index: 1,
+    header: "User id",
+    width: 10,
+    isHeaderImage: true,
+    showHeader: true,
+    isDropdown: false,
+    checkmark: true,
+    isImageItem: false,
+    isUserItem: false
   },
   {
-    id: "3",
-    full_name: 'Zoran Mihajilovic',
-    language_id: [56, 175],
-    imageItem: {
-      text: 'video',
-      image: '../../../assets/images/callInterface/video.svg'
-    },
-    called: '10:50',
-    wait_time: '00:00',
-    reason: 'Time-out'
+    index: 2,
+    header: "User Info",
+    width: 15,
+    isHeaderImage: true,
+    showHeader: true,
+    isDropdown: false,
+    checkmark: true,
+    isImageItem: false,
+    isUserItem: false
   },
   {
-    id: "4",
-    full_name: 'Test',
-    language_id: [56, 175],
-    imageItem: {
-      text: 'video',
-      image: '../../../assets/images/callInterface/video.svg'
-    },
-    called: '10:50',
-    wait_time: '00:00',
-    reason: 'Time-out'
-  }
-];
+    index: 3,
+    header: "Call Type",
+    width: 10,
+    isHeaderImage: true,
+    showHeader: true,
+    isDropdown: false,
+    checkmark: true,
+    isImageItem: false,
+    isUserItem: false
+  },
+  {
+    index: 4,
+    header: "Called at",
+    width: 15,
+    isHeaderImage: true,
+    showHeader: true,
+    isDropdown: false,
+    checkmark: true,
+    isImageItem: false,
+    isUserItem: false
+  },
+  {
+    index: 4,
+    header: "Wait Time",
+    width: 20,
+    isHeaderImage: true,
+    showHeader: true,
+    isDropdown: false,
+    checkmark: true,
+    isImageItem: false,
+    isUserItem: false
+  },
+  {
+    index: 4,
+    header: "Reason",
+    width: 10,
+    isHeaderImage: true,
+    showHeader: true,
+    isDropdown: false,
+    checkmark: true,
+    isImageItem: false,
+    isUserItem: false
+  }]
+}
+const answeredTablaSetting: tableSettings = {
+  tableName: 'answered',
+  tableHeaders: [{
+    index: 0,
+    header: "User",
+    width: 20,
+    isHeaderImage: true,
+    showHeader: true,
+    isDropdown: false,
+    checkmark: true,
+    isImageItem: false,
+    isUserItem: false
+  },
+  {
+    index: 1,
+    header: "User id",
+    width: 10,
+    isHeaderImage: true,
+    showHeader: true,
+    isDropdown: false,
+    checkmark: true,
+    isImageItem: false,
+    isUserItem: false
+  },
+  {
+    index: 2,
+    header: "User Info",
+    width: 15,
+    isHeaderImage: true,
+    showHeader: true,
+    isDropdown: false,
+    checkmark: true,
+    isImageItem: false,
+    isUserItem: false
+  },
+  {
+    index: 3,
+    header: "Call Type",
+    width: 20,
+    isHeaderImage: true,
+    showHeader: true,
+    isDropdown: false,
+    checkmark: true,
+    isImageItem: false,
+    isUserItem: false
+  },
+  {
+    index: 4,
+    header: "Called At",
+    width: 15,
+    isHeaderImage: true,
+    showHeader: true,
+    isDropdown: false,
+    checkmark: true,
+    isImageItem: false,
+    isUserItem: false
+  },
+  {
+    index: 4,
+    header: "Agent",
+    width: 20,
+    isHeaderImage: true,
+    showHeader: true,
+    isDropdown: false,
+    checkmark: true,
+    isImageItem: false,
+    isUserItem: false
+  }]
+}
+const missedCallData: any[] = [{
+  call_uuid: 'dshfjdgshfjfs',
+  utilites: [{ image: '../assets/images/language_flags/english.svg' }, { image: '../assets/images/language_flags/english.svg' }, { image: '../assets/images/language_flags/english.svg' }, { image: '../assets/images/language_flags/english.svg' }],
+  callType: { image: '../assets/images/audio.svg', text: 'Video' },
+  user_id: '314165465',
+  called_at: "564654",
+  wait_time: "5465465",
+  agent_name: "Ahsan",
+  resaon: "call drop",
+  user_details: { image: '../assets/images/user.png', text: 'Ahsan Sheikh' }
+},
+{
+  call_uuid: 'dshfjdgshfjfs',
+  utilites: [{ image: '../assets/images/language_flags/english.svg' }, { image: '../assets/images/language_flags/english.svg' }, { image: '../assets/images/language_flags/english.svg' }, { image: '../assets/images/language_flags/english.svg' }],
+  callType: { image: '../assets/images/audio.svg', text: 'Video' },
+  user_id: '314165465',
+  called_at: "564654",
+  wait_time: "5465465",
+  agent_name: "Ahsan",
+  resaon: "call drop",
+  user_details: { image: '../assets/images/user.png', text: 'Ahsan Sheikh' }
+},
+{
+  call_uuid: 'dshfjdgshfjfs',
+  utilites: [{ image: '../assets/images/language_flags/english.svg' }, { image: '../assets/images/language_flags/english.svg' }, { image: '../assets/images/language_flags/english.svg' }, { image: '../assets/images/language_flags/english.svg' }],
+  callType: { image: '../assets/images/audio.svg', text: 'Video' },
+  user_id: '314165465',
+  called_at: "564654",
+  wait_time: "5465465",
+  agent_name: "Ahsan",
+  resaon: "call drop",
+  user_details: { image: '../assets/images/user.png', text: 'Ahsan Sheikh' }
+}]
 
-export { dataTableSettings, agents };
+export { missedTableSetting, missedCallData, answeredTablaSetting };

@@ -5,7 +5,7 @@ import {
   agentModelData,
   agents,
   buttonData,
-  dataTableSettings,
+  agentTableSetting,
   languauges,
   oneSelect,
   searchInputData
@@ -19,7 +19,7 @@ import { AgentList } from '../models/agentSocketModel';
 import { Router } from '@angular/router';
 import { CommonService } from '../workdeskServices/commonEndpoint/common.service';
 import { OverlayService } from '../callInterface/overLayService/overlay.service';
-import { AgentTableModel } from '../models/agent';
+import { AgentModelTable } from '../models/callModel';
 
 @Component({
   selector: 'app-agents',
@@ -31,14 +31,14 @@ export class AgentsComponent implements OnInit {
   searchInputData = searchInputData;
   oneSelectData = oneSelect;
   buttonData = buttonData;
-  dataTableSettings = dataTableSettings;
+  tableSetting = agentTableSetting;
   addAgentModelData = agentModelData;
-  agents = agents;
+  agentdata: AgentModelTable[] = [];
   selectedLanguages: Array<number> = [];
   activeAgent: number = 1;
   inactiveAgent: number = 1;
   invitedAgent: number = 1;
-  showInviteModel: boolean = false;
+  showInviteModel: boolean = true;
   AgentList: AgentList[] = [];
   constructor(
     private authService: AuthService,
@@ -87,41 +87,68 @@ export class AgentsComponent implements OnInit {
     //   );
     //   this.router.navigate(['agents', 'settings', selectedAgent?.uuid]);
     // }
-    this.openCallInterface.open();
+    //this.openCallInterface.open();
+    this.showInviteModel === true
   }
 
   getAgentList() {
     this.AgentSocketService.AgentListSubject.subscribe((data: AgentList[]) => {
-      this.agents = data.map((AgentList: AgentList) => ({
-        id: AgentList.uuid,
-        agent: AgentList.email,
-        name: this.AgentService.getAgentFullName(
-          AgentList.invited,
-          AgentList.inactive,
-          AgentList.active,
-          AgentList.first_name,
-          AgentList.last_name
+      this.agentdata = data.map((AgentList: AgentList) => ({
+        // id: AgentList.uuid,
+        // agent: AgentList.email,
+        // name: this.AgentService.getAgentFullName(
+        //   AgentList.invited,
+        //   AgentList.inactive,
+        //   AgentList.active,
+        //   AgentList.first_name,
+        //   AgentList.last_name
+        // ),
+        // role: AgentList.role,
+        // routeUrl: ['agents', 'settings', AgentList.uuid],
+        // checked: AgentList.inactive,
+        // isDropdown: false,
+        // language_id: this.CommonService.getLanguagesWithFlags(
+        //   AgentList.languages
+        // ),
+        // editIcon: this.AgentService.disabledEditButton(AgentList.email, AgentList.is_organization_admin, AgentList.role),
+        // canEdit: true,
+        // invitation_accepted: this.AgentService.setAgentInvitedProperty(AgentList.invited, AgentList.inactive, AgentList.active),
+        // checkmark: this.CommonService.checkLoggedInUser(AgentList.email),
+        // userItem: {
+        //   text: AgentList.display_name,
+        //   image: AgentList.images['96'],
+        //   color: this.AgentService.checkIsAgentOnline(
+        //     AgentList.is_available,
+        //     AgentList.is_online
+        //   )
+        // }
+
+        /////////////////
+        uuid: AgentList.uuid,
+        activity_icon: "../assets/images/request_type/audio.svg",
+        agent_details: { image: AgentList.images['96'], text: AgentList.first_name + " " + AgentList.last_name },
+        agent_name: AgentList.display_name,
+        can_edit: this.AgentService.disabledEditButton(AgentList.email, AgentList.is_organization_admin, AgentList.role),
+        email: AgentList.email,
+        is_logged_in: this.CommonService.checkLoggedInUser(AgentList.email),
+        is_online_icon_color: this.AgentService.checkIsAgentOnline(
+          AgentList.is_available,
+          AgentList.is_online
         ),
         role: AgentList.role,
-        routeUrl: ['agents', 'settings', AgentList.uuid],
-        checked: AgentList.inactive,
-        isDropdown: false,
-        language_id: this.CommonService.getLanguageSelectedIds(
-          AgentList.languages
-        ),
-        editIcon: this.AgentService.disabledEditButton(AgentList.email, AgentList.is_organization_admin, AgentList.role),
-        canEdit: true,
+        show_edit: this.AgentService.disabledEditButton(AgentList.email, AgentList.is_organization_admin, AgentList.role),
+        utilites: this.AgentService.getLanguageFlagById(AgentList.languages),
         invitation_accepted: this.AgentService.setAgentInvitedProperty(AgentList.invited, AgentList.inactive, AgentList.active),
-        checkmark: this.CommonService.checkLoggedInUser(AgentList.email),
-        userItem: {
-          text: AgentList.display_name,
-          image: AgentList.images['96'],
-          color: this.AgentService.checkIsAgentOnline(
-            AgentList.is_available,
-            AgentList.is_online
-          )
-        }
+        is_organization_admin: AgentList.is_organization_admin,
+        loggedIn_user_icon: '../assets/images/tickSign.svg',
+        organization_admin_icon: '../assets/images/crown.svg',
+        edit_icon: '../assets/images/pencil.svg',
+        routeUrl: ['agents', 'settings', AgentList.uuid]
       }));
     });
+  }
+
+  getSettingsPage(event: string[]) {
+    this.router.navigate(event);
   }
 }

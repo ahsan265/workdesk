@@ -6,7 +6,6 @@ import {
   Output,
   ViewChild
 } from '@angular/core';
-import { dataTableSettings } from 'src/app/agents/agentsData';
 import {
   CallControlModel,
   agentOperationInformationModel,
@@ -62,7 +61,7 @@ export class CallControlsComponent implements OnInit {
       await this.deviceData()
       this.markLastUsedDevices();
     })
-   await this.deviceData();
+    await this.deviceData();
     this.markLastUsedDevices()
   }
   // on of microphone
@@ -126,22 +125,23 @@ export class CallControlsComponent implements OnInit {
       voiceLevels: 0
     }));
     // output device
+    if (this.DevicesInformationService.getBrowserName() != 'firefox') {
+      this.outputDeviceData.devices = devices.audioOutputDevice.map((data) => ({
+        id: data.deviceId,
+        groupId: data.groupId,
+        name: data.label,
+        deviceType: data.kind,
+        isSelected: false,
+        selectedbackgroundColor: '#243247',
+        hoverColor: '',
+        selectedIcon: '../../../assets/images/callInterface/green_check_icon.svg',
+        voiceLevels: 0
+      }));
+    }
 
-    this.outputDeviceData.devices = devices.audioOutputDevice.map((data) => ({
-      id: data.deviceId,
-      groupId: data.groupId,
-      name: data.label,
-      deviceType: data.kind,
-      isSelected: false,
-      selectedbackgroundColor: '#243247',
-      hoverColor: '',
-      selectedIcon: '../../../assets/images/callInterface/green_check_icon.svg',
-      voiceLevels: 0
-    }));
   }
   // mark last Used Devices 
-  private markLastUsedDevices()
-  {
+  private markLastUsedDevices() {
     const userInformation = this.AgentUserInformation.getCallInformation();
     // for last used microphone
     (userInformation.last_used_microphone === undefined) ?
@@ -152,13 +152,16 @@ export class CallControlsComponent implements OnInit {
         }
       });
     // for last used speaker
-    (userInformation.last_used_speaker === undefined) ?
-      this.outputDeviceData.devices[0].isSelected = true :
-      this.outputDeviceData.devices.filter(data => {
-        if (data.id === userInformation.last_used_speaker.id) {
-          data.isSelected = true;
-        }
-      })
+    if (this.DevicesInformationService.getBrowserName() != 'firefox') {
+      (userInformation.last_used_speaker === undefined) ?
+        this.outputDeviceData.devices[0].isSelected = true :
+        this.outputDeviceData.devices.filter(data => {
+          if (data.id === userInformation.last_used_speaker.id) {
+            data.isSelected = true;
+          }
+        })
+    }
+
   }
 
 }

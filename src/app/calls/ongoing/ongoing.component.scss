@@ -1,0 +1,9 @@
+::ng-deep .tableWrapper .tableWrap {
+    padding: 0 !important;
+  }
+  
+  ::ng-deep .tableWrapper .tableWrap .table thead tr th:first-child,
+  ::ng-deep .tableWrapper .tableWrap .table tbody tr td:first-child {
+    text-align: left !important;
+  }
+  

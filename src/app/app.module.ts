@@ -10,6 +10,7 @@ import {
   GigaaaLandingPageModule,
   GigaaaSidebarModule,
   GigaaaTableModule,
+  GigaaaTableWorkdeskModule,
   InputFieldModule,
   LogoutModule,
   ModalWrapperModule,
@@ -69,7 +70,8 @@ import { peerMiniCameraAnimation } from './callInterface/callInterfaceDirectives
 import { callInterfaceHideControlDirective } from './callInterface/callInterfaceDirectives/callInterfaceHideControlDirective';
 import { CloseDialogOverlayRef } from './callInterface/overLayService/closeDialogService';
 import { OverlayService } from './callInterface/overLayService/overlay.service';
-import { AddAgentComponent } from './add-agent/add-agent.component';
+import { AddAgentComponent } from './modals/add-agent/add-agent.component';
+import { AgentListingComponent } from './modals/add-agent/agent-listing/agent-listing.component';
 
 @NgModule({
   declarations: [
@@ -111,7 +113,8 @@ import { AddAgentComponent } from './add-agent/add-agent.component';
     NameInitialsPipe,
     CustomerSupportComponent,
     ScreenShareRestrictionComponent,
-    AddAgentComponent
+    AddAgentComponent,
+    AgentListingComponent
   ],
   imports: [
     BrowserAnimationsModule,
@@ -144,14 +147,15 @@ import { AddAgentComponent } from './add-agent/add-agent.component';
     FormsModule,
     NgChartsModule,
     DragDropModule,
-    OverlayModule
+    OverlayModule,
+    GigaaaTableWorkdeskModule
   ],
   providers: [
     {
       provide: 'GigaaaHeaderService',
       useClass: GigaaaHeaderService
     },
-    OverlayService
+    OverlayService,
     
   ],
   bootstrap: [AppComponent]

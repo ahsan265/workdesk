@@ -47,10 +47,20 @@ export class StreamingService {
   }
   // load  audio and video
   public async loadAudioandVideoResouce() {
+    let constraint
+    // const callDetail=this.AgentUserInformation.getCallInformation();
+    // if(callDetail.last_used_microphone!=null)
+    // {
+    //   constraint = { audio: true };
+    // }
+    // else{
+    //    constraint = { audio: { deviceId: callDetail.last_used_microphone.id } };
+    // }
     await navigator.mediaDevices
       .getUserMedia(this.mediaConstraint)
       .then((stream) => {
         this.localStream = stream;
+        // this.localStream.addTrack(stream.getAudioTracks()[0]);
         this.getLocalStream.next(stream);
       });
   }
@@ -67,7 +77,22 @@ export class StreamingService {
     }
     const audioTrack = this.localStream.getAudioTracks()[0];
     this.localStream.addTrack(audioTrack);
-    this.PeerConnectionService.peerConnection.addTrack(audioTrack, this.localStream);
+    const audio = this.PeerConnectionService.peerConnection
+      .getSenders()
+      .find((data: RTCRtpSender) => {
+        if (data.track != null) {
+          return data.track?.kind === 'audio';
+        } else {
+          return undefined;
+        }
+      });
+    if (audio === undefined) {
+      this.PeerConnectionService.peerConnection.addTrack(audioTrack, this.localStream);
+
+    }
+    else {
+      audio.replaceTrack(audioTrack);
+    }
     const offer: RTCSessionDescriptionInit =
       await this.PeerConnectionService.peerConnection.createOffer({
         offerToReceiveAudio: true,
@@ -84,6 +109,7 @@ export class StreamingService {
       peer_id: peerId,
       data: offer
     });
+    console.log(this.PeerConnectionService.peerConnection.getSenders())
   }
 
   // close the stream
@@ -157,6 +183,7 @@ export class StreamingService {
   }
   // start video call
   public async startVideo(peerId: string): Promise<MediaStream> {
+    let mediastream: any;
     if (this.PeerConnectionService.peerConnection === undefined) {
       await this.PeerConnectionService.createPeerConnection();
     }
@@ -167,56 +194,60 @@ export class StreamingService {
       user_id: userInformation.user_information.user_id,
       data: userInformation.user_information.data
     });
-    const stream = await navigator.mediaDevices.getUserMedia({ video: true });
-    this.getLocalStream.next(stream);
-    this.localStream.addTrack(stream.getVideoTracks()[0]);
-    const video = this.PeerConnectionService.peerConnection
-      .getSenders()
-      .find((data: RTCRtpSender) => {
-        if (data.track != undefined) {
-          return data.track?.kind === 'video';
-        } else {
-          return undefined;
-        }
-      });
+    await navigator.mediaDevices.getUserMedia({ video: true }).then(stream => {
+      mediastream = stream;
+      this.getLocalStream.next(stream);
+      const videoTrack = stream.getVideoTracks()[0];
+      videoTrack.enabled = true;
+      const audioTrack = this.localStream.getAudioTracks()[0]
+      this.localStream.addTrack(videoTrack)
+      this.localStream.addTrack(audioTrack)
+      const audio = this.PeerConnectionService.peerConnection
+        .getSenders()
+        .find((data: RTCRtpSender) => {
+          if (data.track != null) {
+            return data.track?.kind === 'audio';
+          } else {
+            return undefined;
+          }
+        });
+      const video = this.PeerConnectionService.peerConnection
+        .getSenders()
+        .find((data: RTCRtpSender) => {
+          if (data.track != null) {
+            return data.track?.kind === 'video';
+          } else {
+            return undefined;
+          }
+        });
 
-    const audio = this.PeerConnectionService.peerConnection
-      .getSenders()
-      .find((data: RTCRtpSender) => {
-        if (data.track != null) {
-          return data.track?.kind === 'audio';
-        } else {
-          return undefined;
-        }
-      });
-    (video === undefined)
-      ? this.PeerConnectionService.peerConnection.addTrack(
-        stream.getVideoTracks()[0],
-        this.localStream
-      )
-      : video.replaceTrack(stream.getVideoTracks()[0]);
-    (audio === undefined)
-      ? this.PeerConnectionService.peerConnection.addTrack(
-        this.localStream.getAudioTracks()[0], this.localStream
-      )
-      : audio.replaceTrack(this.localStream.getAudioTracks()[0]);
-    const offer: RTCSessionDescriptionInit =
-      await this.PeerConnectionService.peerConnection.createOffer({
-        offerToReceiveAudio: true,
-        offerToReceiveVideo: true,
-        iceRestart: true
-      });
-    await this.PeerConnectionService.peerConnection
-      .setLocalDescription(offer)
-      .catch((err: any) => {
-        console.log(err);
-      });
-    this.CallSocketService.sendDataforCall({
-      type: 'offer',
-      peer_id: peerId,
-      data: offer
-    });
-    return stream;
+      (audio === undefined) ?
+        this.PeerConnectionService.peerConnection.addTrack(audioTrack, this.localStream) :
+        audio.replaceTrack(audioTrack);
+      (video === undefined) ?
+        this.PeerConnectionService.peerConnection.addTrack(videoTrack, this.localStream) :
+        video.replaceTrack(videoTrack);
+    }).then(async () => {
+        const offer: RTCSessionDescriptionInit =
+          await this.PeerConnectionService.peerConnection.createOffer({
+            offerToReceiveAudio: true,
+            offerToReceiveVideo: true,
+            iceRestart: true
+          });
+        await this.PeerConnectionService.peerConnection
+          .setLocalDescription(offer)
+          .catch((err: any) => {
+            console.log(err);
+          });
+         
+        this.CallSocketService.sendDataforCall({
+          type: 'offer',
+          peer_id: peerId,
+          data: offer
+        });
+     
+    })
+    return mediastream;
   }
 
   // start screen sharing
@@ -293,7 +324,7 @@ export class StreamingService {
     localStorage.removeItem('call-information');
     this.CallSocketService.ws.close();
     this.router.navigate(['customersupport']);
-    //this.overlayService.close();
+    // this.overlayService.close();
   }
   private stopScreenShareByEvent(stream: MediaStream) {
     stream.getTracks()[0].addEventListener('ended', () => {
@@ -345,12 +376,12 @@ export class StreamingService {
         this.CallSocketService.sendDataforCall({ type: "offer", peer_id: peerId, data: offer });
       }
       else {
-        console.log("hellpo")
         this.AgentUserInformation.updateScreenShareStutus(false);
         this.sendFirstOffer(peerId);
       }
 
     }
+    this.restoreLastUsedMicrophone();
   }
 
   // detect devices 

@@ -1,4 +1,3 @@
-import { AgentTableModel } from '../models/agent';
 import { Button } from '../models/button';
 import { MultiSelect } from '../models/multiSelect';
 import { OneSelect } from '../models/oneSelect';
@@ -62,7 +61,7 @@ const selectedAgentType: any[] = [
 ];
 
 const searchInputData: SearchInput = {
-  placeholder: 'search items',
+  placeholder: 'Search items',
   searchText: ''
 };
 
@@ -75,89 +74,66 @@ const buttonData: Button = {
   active: true
 };
 
-const dataTableSettings: any[] = [
-  {
-    primaryKey: 'checkmark',
-    header: '',
-    width: 10,
-    isImage: false,
-    name: true,
-    isDropdown: false,
-    canEdit: false,
-    expand: false,
-    editIcon: false,
-    checkmark: true,
-    isImageItem: false,
-    isUserItem: false
+const agentTableSetting: any = {
+  tableName: 'agent',
+  tableHeaders: [{
+      index: 0,
+      header: "Agent",
+      width: 25,
+      isHeaderImage: true,
+      showHeader: true,
+      isDropdown: false,
+      checkmark: true,
+      isImageItem: false,
+      isUserItem: false
   },
   {
-    primaryKey: 'agent',
-    header: 'AGENT',
-    width: 25,
-    isImage: false,
-    name: false,
-    isDropdown: false,
-    expand: false,
-    editIcon: true,
-    checkmark: false,
-    isImageItem: false,
-    isUserItem: true
+      index: 1,
+      header: "Full Name",
+      width: 20,
+      isHeaderImage: true,
+      showHeader: true,
+      isDropdown: false,
+      checkmark: true,
+      isImageItem: false,
+      isUserItem: false
   },
   {
-    primaryKey: 'name',
-    header: 'FULL NAME',
-    width: 25,
-    isImage: false,
-    name: true,
-    isDropdown: false,
-    expand: false,
-    editIcon: true,
-    checkmark: false,
-    isImageItem: false,
-    isUserItem: false
+      index: 2,
+      header: "Language",
+      width: 20,
+      isHeaderImage: true,
+      showHeader: true,
+      isDropdown: false,
+      checkmark: true,
+      isImageItem: false,
+      isUserItem: false
   },
   {
-    primaryKey: 'language_id',
-    header: 'LANGUAGE',
-    width: 25,
-    isImage: true,
-    name: false,
-    isDropdown: false,
-    expand: false,
-    editIcon: true,
-    checkmark: false,
-    isImageItem: false,
-    isUserItem: false
+      index: 3,
+      header: "Role",
+      width: 20,
+      isHeaderImage: true,
+      showHeader: true,
+      isDropdown: false,
+      checkmark: true,
+      isImageItem: false,
+      isUserItem: false
   },
   {
-    primaryKey: 'role',
-    header: 'ROLE',
-    width: 25,
-    isImage: false,
-    name: false,
-    isDropdown: false,
-    expand: false,
-    editIcon: true,
-    checkmark: false,
-    isImageItem: false,
-    isUserItem: false
-  },
-  {
-    primaryKey: 'buttons',
-    header: '',
-    width: 15,
-    isImage: false,
-    name: false,
-    isDropdown: false,
-    canEdit: true,
-    editIcon: true,
-    checkmark: false,
-    isImageItem: false,
-    isUserItem: false
-  }
-];
+      index: 4,
+      header: "",
+      width: 20,
+      isHeaderImage: true,
+      showHeader: true,
+      isDropdown: false,
+      checkmark: true,
+      isImageItem: false,
+      isUserItem: false
+  }]
+}
 
-const agents: AgentTableModel[] = [
+const agents: any[] = [
   {
     id: '1',
     agent: 'srdjanmarinkovic31@gmail.com',
@@ -166,7 +142,7 @@ const agents: AgentTableModel[] = [
     routeUrl: ['agents', 'settings', '1'],
     checked: false,
     isDropdown: false,
-    language_id: [56, 175],
+    language_id: [{ id: 56, image: '/assets/images/Flags/english.svg' }, { id: 56, image: '/assets/images/Flags/english.svg' }],
     editIcon: true,
     canEdit: true,
     invitation_accepted: true,
@@ -185,7 +161,7 @@ const agents: AgentTableModel[] = [
     routeUrl: ['agents', 'settings', '2'],
     checked: false,
     isDropdown: false,
-    language_id: [56],
+    language_id: [{ id: 56, image: '/assets/images/Flags/english.svg' }, { id: 56, image: '/assets/images/Flags/english.svg' }],
     editIcon: true,
     canEdit: true,
     invitation_accepted: true,
@@ -204,7 +180,7 @@ const agents: AgentTableModel[] = [
     routeUrl: ['agents', 'settings', '3'],
     checked: false,
     isDropdown: false,
-    language_id: [56, 83],
+    language_id: [{ id: 56, image: '/assets/images/Flags/english.svg' }, { id: 56, image: '/assets/images/Flags/english.svg' }],
     editIcon: true,
     canEdit: true,
     invitation_accepted: true,
@@ -223,7 +199,7 @@ const agents: AgentTableModel[] = [
     routeUrl: ['agents', 'settings', '4'],
     checked: false,
     isDropdown: false,
-    language_id: [56, 175],
+    language_id: [{ id: 56, image: '/assets/images/Flags/english.svg' }, { id: 56, image: '/assets/images/Flags/english.svg' }],
     editIcon: true,
     canEdit: true,
     invitation_accepted: false,
@@ -242,15 +218,15 @@ const agentModelData = {
   onlyOneButton: true,
   buttonOne: true,
   buttonTwo: false,
-  width: '600px',
-  height: '600px'
+  width: '670px',
+  height: '385px'
 };
 export {
   languauges,
   buttonData,
   searchInputData,
   oneSelect,
-  dataTableSettings,
+  agentTableSetting,
   agents,
   selectedAgentType,
   agentModelData

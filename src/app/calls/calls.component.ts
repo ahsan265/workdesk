@@ -98,6 +98,7 @@ export class CallsComponent implements OnInit {
         })
       )
       .subscribe(async (title: string) => {
+        console.log(title)
         this.selectedPage = title;
         this.callSegmentSelection(title);
       });
@@ -107,6 +108,9 @@ export class CallsComponent implements OnInit {
       this.missedData = data.missed;
       this.awnseredData = data.finished;
       this.CallsService.sendDataToTabs(data.missed, 'missed');
+      this.CallsService.sendDataToTabs(data.finished, 'answered');
+      this.CallsService.sendDataToTabs(data.ongoing, 'ongoing');
+      this.CallsService.sendDataToTabs(data.incoming, 'incoming');
     });
   }
 

@@ -180,7 +180,7 @@ const resendInvitationButtonData: Button = {
 };
 const cancelInvitationButtonData: Button = {
   title: 'Cancel Invitation',
-  // icon: '../assets/images/components/deleteicon.svg',
+  icon: '../assets/images/delete.svg',
   backgroundColor: '#FFFFFF',
   borderColor: '1px solid rgba(208,208,222,.6)',
   textColor: '#162741',

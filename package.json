@@ -23,7 +23,7 @@
     "@angular/platform-browser": "^14.0.5",
     "@angular/platform-browser-dynamic": "^14.0.5",
     "@angular/router": "^14.0.5",
-    "@gigaaa/gigaaa-components": "0.1.125",
+    "@gigaaa/gigaaa-components": "0.1.142-ahsan",
     "chart.js": "^3.8.0",
     "chartjs-plugin-datalabels": "^2.0.0",
     "crypto-js": "^4.1.1",

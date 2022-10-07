@@ -5,7 +5,7 @@ import { Injectable } from '@angular/core';
   providedIn: 'root'
 })
 export class MessageService {
-  constructor(private toastrService: ToastrService) {}
+  constructor(private toastrService: ToastrService) { }
 
   public setSuccessMessage(message: string, position?: string): void {
     this.toastrService.success(message, '', {

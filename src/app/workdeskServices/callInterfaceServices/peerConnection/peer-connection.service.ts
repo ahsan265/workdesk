@@ -14,6 +14,9 @@ export class PeerConnectionService {
   remoteVideoSubject = new Subject<MediaStream>();
   remoteStream!: MediaStream;
   isRealoaded = new Subject<boolean>();
+  checkedRemoteSet: boolean = false;
+  candidates: any[] = [];
+
   constructor(private CallSocketService: CallSocketService, private DevicesInformationService: DevicesInformationService) { }
 
   public async createPeerConnection(): Promise<void> {
@@ -80,11 +83,13 @@ export class PeerConnectionService {
   // handle ice candidate event Function
   private handIceCandidateEvent = (event: RTCPeerConnectionIceEvent) => {
     console.log(event)
-    if (event.candidate != null) {
-      this.CallSocketService.sendDataforCall({
-        type: 'ice-candidate',
-        data: event.candidate
-      });
+    if (event.candidate !== null) {
+      if (event.candidate?.candidate != null && event.candidate?.candidate != undefined) {
+        this.CallSocketService.sendDataforCall({
+          type: 'ice-candidate',
+          data: event.candidate
+        });
+      }
     }
   };
 
@@ -128,38 +133,53 @@ export class PeerConnectionService {
       .then(async () => {
         return await this.peerConnection.createAnswer();
       })
-      .then(async (answer) => {
-        await this.peerConnection.setLocalDescription(answer);
-      })
+
       .then(() => {
         this.CallSocketService.sendDataforCall({
           type: 'answer',
           data: this.peerConnection.localDescription
         });
+
+      }).then(() => {
+        this.candidates.map(c => this.peerConnection.addIceCandidate(c));
       })
       .catch((error: any) => {
         console.log(error);
       });
     console.log(this.peerConnection.getReceivers());
+    this.checkedRemoteSet = true;
   }
 
   // handle answer message
   public async handleAnswerMessage(
     data: RTCSessionDescriptionInit
   ): Promise<void> {
-    console.log(data)
+
     await this.peerConnection
-      .setRemoteDescription(new RTCSessionDescription(data))
+      .setRemoteDescription(new RTCSessionDescription(data)).then(() => {
+        // if(this.candidates.length!=0)
+        // {
+        this.candidates.map(c => this.peerConnection.addIceCandidate(c));
+
+        // }
+      })
       .catch(async (error: any) => {
         console.log(error);
       });
   }
   // handle ice Condate Messages
   public async handleIceCandidateMessage(data: RTCIceCandidate): Promise<void> {
-    if (data.candidate != undefined || "" || null) {
-      await this.peerConnection.addIceCandidate(data).catch((error: any) => {
-        console.log(error);
-      });
+    if (this.checkedRemoteSet) {
+      if (data.candidate != undefined && data.candidate != null) {
+        await this.peerConnection
+          .addIceCandidate(data)
+          .catch((error: any) => {
+            console.log(error);
+          });
+      }
+    }
+    else {
+      this.candidates.push(data);
     }
   }
 }

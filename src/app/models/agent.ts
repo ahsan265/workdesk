@@ -9,24 +9,52 @@ export interface Agent {
   isDropdown: boolean;
   language_id: number[];
 }
-export interface AgentTableModel {
-  id: string;
-  agent: string;
-  name: string;
+
+export interface AgentModelTable {
+  uuid: string;
+  agent_details: ImageText;
+  email: string;
+  is_online_icon_color: string;
+  is_logged_in: boolean;
+  activity_icon: string;
+  agent_name: String;
+  utilites: UtlitiesIcon[];
   role: string;
-  routeUrl: [string, string, string];
-  checked: boolean;
-  isDropdown: boolean;
-  language_id: number[];
-  editIcon: boolean;
-  canEdit: boolean;
+  can_edit: boolean;
+  show_edit: boolean;
   invitation_accepted: boolean;
-  checkmark: boolean;
-  userItem: AgentCardInformation;
+  loggedIn_user_icon: string;
+  edit_icon: string;
+  routeUrl: string[],
+  organization_admin_icon: String;
+  is_organization_admin: boolean;
 }
 
+
+export interface UtlitiesIcon {
+  image: string;
+}
+export interface ImageText {
+  text: string;
+  image: string;
+}
 export interface AgentCardInformation {
   text: string;
   image: string;
   color: string;
+}
+
+export interface InviteAgentModel {
+  email: string;
+  role: string;
+  language_ids: number | [];
+}
+
+export interface InvitedAgentTableLanguage {
+  id: number;
+  image: string;
+}
+export interface InvitedAgentsModel {
+  email: string,
+  languages: number
 }

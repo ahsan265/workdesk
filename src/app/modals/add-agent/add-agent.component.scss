@@ -1,0 +1,50 @@
+.inviteAgentHeading {
+    font-family: 'Roboto', sans-serif;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 139%;
+    /* or 19px */
+
+    letter-spacing: 0.02em;
+
+    color: #616B7B;
+}
+
+.agentListingContainer {
+    display: block;
+    height: 300px;
+    position: relative;
+    overflow-x: hidden;
+    overflow-y: scroll;
+}
+
+.agentListingContainer::-webkit-scrollbar {
+    display: none;
+}
+
+.agentFieldsWrapper {
+    display: flex;
+    width: 100%;
+    margin-bottom: 20px;
+    margin-top: 20px;
+}
+
+.fieldData {
+    display: inline-flex;
+    width: 50%;
+}
+
+.fieldLabel {
+    font-family: 'Roboto', sans-serif;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 18px;
+    display: flex;
+    align-items: center;
+    letter-spacing: 0.02em;
+    color: #162741;
+    width: 260px;
+    padding-right: 30px;
+}

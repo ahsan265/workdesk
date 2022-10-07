@@ -34,7 +34,7 @@ export class CallsOperationService {
       async (msg: any) => {
         switch (msg.type) {
           case 'offer':
-            if (msg.data != undefined) {
+            if (msg.data !== undefined) {
               await this.PeerConnectionService.handlOfferMessage(msg.data);
             }
             break;
@@ -58,7 +58,9 @@ export class CallsOperationService {
                 false,
                 this.AuthService.user.value
               );
-             
+              const timer = new Date(Date.now());
+              this.startTimer.next(true);
+              this.AgentUserInformation.setLastCallDuration(timer);
             }
             break;
           case 'accept':
@@ -67,20 +69,19 @@ export class CallsOperationService {
               setTimeout(() => {
                 this.StreamingService.sendFirstOffer(this.peerUserId);
               }, 500);
-              const timer = new Date(Date.now());
-              this.startTimer.next(true);
-              this.AgentUserInformation.setLastCallDuration(timer);
+
               this.AgentUserInformation.setRefreshStatus(true);
-              
+
             } else {
               this.sendPeerInformation.next(callsData.peer_information.data);
-                if (this.PeerConnectionService.peerConnection != undefined) {
-                  this.PeerConnectionService.peerConnection.close();
-                  await this.PeerConnectionService.createPeerConnection();
-                }
+              //  this.PeerConnectionService.peerConnection.close();
+              // await this.PeerConnectionService.createPeerConnection();
+              // }
+              setTimeout(() => {
                 this.StreamingService.reloadOfferSend(this.peerUserId);
-                this.StreamingService.restoreLastUsedMicrophone();
-                this.startTimer.next(true);
+              }, 500);
+              // this.StreamingService.restoreLastUsedMicrophone();
+              this.startTimer.next(true);
             }
             break;
           case 'peer_data':

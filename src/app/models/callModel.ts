@@ -1,3 +1,20 @@
+export interface tableSettings {
+  tableName: string,
+  tableHeaders: tableHeading[]
+
+}
+export interface tableHeading {
+  index: number;
+  header: string;
+  width: number;
+  isHeaderImage: boolean;
+  showHeader: true;
+  isDropdown: false;
+  checkmark: true;
+  isImageItem: false;
+  isUserItem: false;
+}
+
 export interface IncomingCallModel {
   browser: string;
   call_uuid: string;
@@ -85,55 +102,84 @@ export interface CallsModel {
 
 
 /// for Tables Data Model
-export interface MissedCallTableModel {
-  id: string;
-  full_name: string;
-  language_id: number;
-  device_type: string;
-  browser_name: string;
-  os_name: string
-  imageItem: CallerNameAndImageModel;
-  called: string;
-  wait_time: string;
-  reason: string;
-}
-export interface AnsweredCallTableModel {
-  id: string;
-  full_name: string;
-  language_id: number;
-  device_type: string;
-  browser_name: string;
-  os_name: string
-  call_type: CallerNameAndImageModel;
-  called: string;
-  agent_name: CallerNameAndImageModel;
-}
-export interface IncomingCallTableModel {
-  id: string;
-  queue_no: number;
-  full_name: string;
-  language_id: number;
-  device_type: string;
-  browser_name: string;
-  os_name: string;
-  call_type: CallerNameAndImageModel;
-  wait_time: string;
-}
-export interface OngoingCallTableModel {
-  id: string;
-  full_name: string;
-  language_id: number;
-  device_type: string;
-  browser_name: string;
-  os_name: string;
-  call_type: CallerNameAndImageModel;
-  agent_name: CallerNameAndImageModel;
-  wait_time: string;
+export interface IncomingCallModelTable {
+  hashIcon: string;
+  call_uuid: string;
+  language_icon: string;
+  utilites: UtlitiesIcon[];
+  callType: ImageText
+  name: string;
+  user_id: string;
+  time: string;
+  userImage: string;
+  showUserImage: boolean;
+  callPickButton: string;
+  showCallButton: boolean;
 }
 
-export interface CallerNameAndImageModel {
+export interface OngoingCallModelTable {
+  user_details: ImageText;
+  utilites: UtlitiesIcon[];
+  callType: ImageText;
+  call_uuid: string;
+  duration: string;
+  agent_name: string;
+  user_id: string;
+  agent_details: ImageText;
+}
+
+export interface MissedCallModelTable {
+  user_details: ImageText;
+  utilites: UtlitiesIcon[];
+  callType: ImageText;
+  call_uuid: string;
+  wait_time: string;
+  called_at: string;
+  agent_name: string;
+  user_id: string;
+  resaon: string;
+}
+
+export interface AnsweredCallModelTable {
+  user_details: ImageText;
+  utilites: UtlitiesIcon[];
+  callType: ImageText;
+  call_uuid: string;
+  duration: string;
+  agent_name: string;
+  user_id: string;
+  agent_details: ImageText;
+}
+
+
+export interface AgentModelTable {
+  uuid: string;
+  agent_details: ImageText;
+  email: string;
+  is_online_icon_color: string;
+  is_logged_in: boolean;
+  activity_icon: string;
+  agent_name: String;
+  utilites: UtlitiesIcon[];
+  role: string;
+  can_edit: boolean;
+  show_edit: boolean;
+  invitation_accepted: boolean;
+  loggedIn_user_icon: string;
+  edit_icon: string;
+  routeUrl: string[],
+  organization_admin_icon: String;
+  is_organization_admin: boolean;
+}
+
+
+export interface UtlitiesIcon {
+  image: string;
+}
+export interface ImageText {
   text: string;
   image: string;
 }
+
 
 

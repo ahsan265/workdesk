@@ -18,7 +18,7 @@ export class CallQualityIndicatorComponent implements OnInit {
   indicatorfunction() {
     if (this.PeerConnectionService.remoteStream != undefined) {
       const track = this.PeerConnectionService.remoteStream.getAudioTracks()[0]
-      if (this.PeerConnectionService.peerConnection != null) {
+      if (this.PeerConnectionService.peerConnection.getSenders().length != 0) {
         this.PeerConnectionService.peerConnection.getStats(track).then((result) => {
           result.forEach(data => {
             if (data.type == "inbound-rtp") {

@@ -4,6 +4,7 @@
 import { Injectable } from '@angular/core';
 import { MultiSelect } from '@gigaaa/gigaaa-components/lib/models/multiSelect';
 import { OneSelect } from '@gigaaa/gigaaa-components/lib/models/oneSelect';
+import { InvitedAgentTableLanguage } from 'src/app/models/agent';
 import { AgentLanguages } from 'src/app/models/agentSocketModel';
 import { Country } from 'src/app/models/country';
 import { language } from 'src/app/models/language';
@@ -11,12 +12,14 @@ import { SelectionModelCountry } from 'src/app/models/selectionModel';
 import { AuthService } from 'src/app/services/auth.service';
 import { GigaaaApiService } from '../gigaaaApiService/gigaaa-api-service.service';
 import { MessageService } from '../messageService/message.service';
+import { FlagsData } from '../WorkdeskServicesData';
 
 @Injectable({
   providedIn: 'root'
 })
 export class CommonService {
   token: any;
+  flagsData = FlagsData;
   countryArray: Array<OneSelect> = [];
   languageArray: Array<OneSelect> = [];
   idsOfLanguages: Array<number> = [];
@@ -31,7 +34,7 @@ export class CommonService {
     private GigaaaApiService: GigaaaApiService,
     private MessageService: MessageService,
     private Authservice: AuthService
-  ) {}
+  ) { }
   // get the list of countries
   public async getLocations(): Promise<MultiSelect> {
     try {
@@ -128,11 +131,21 @@ export class CommonService {
   public getLanguageSelectedIds(
     selectedLanguage: AgentLanguages[]
   ): Array<number> {
-    var idOfLanguages: number[] = [];
+    let idOfLanguages: number[] = [];
     selectedLanguage.forEach((language: AgentLanguages) => {
       idOfLanguages.push(language.id);
     });
     return idOfLanguages;
+  }
+
+  // get languages Id and images  on for table in whole application
+  public getLanguagesWithFlags(selectedLanguage: AgentLanguages[]): Array<InvitedAgentTableLanguage> {
+    let InvitedAgentTableLanguage: InvitedAgentTableLanguage[] = [];
+
+    selectedLanguage.forEach((language: AgentLanguages) => {
+      InvitedAgentTableLanguage.push({ id: language.id, image: this.getLanguageFlags(language.id) });
+    });
+    return InvitedAgentTableLanguage;
   }
   // for selected languages checked
   public selectedLanguageChecket(
@@ -180,5 +193,83 @@ export class CommonService {
   // get loggedIn Agent
   public checkLoggedInUser(email: string) {
     return this.Authservice.getLoggedUser().email === email ? true : false;
+  }
+
+  // get language flags 
+  public getLanguageFlags(id: number): string {
+    switch (id) {
+      case 83:
+        return '../assets/images/Flags/german.svg';
+      case 161:
+        return '../assets/images/Flags/spain.svg';
+      case 175:
+        return '../assets/images/Flags/turkish.svg';
+      case 56:
+        return '../assets/images/Flags/us_flag.svg';
+      case 179:
+        return '../assets/images/Flags/Flag_of_Pakistan.svg';
+      case 131:
+        return '../assets/images/Flags/russian.svg';
+      case 6:
+        return '../assets/images/Flags/arabic.svg';
+      default:
+        return '';
+    }
+  }
+  // get browser Information 
+  // get pictures
+  public getBrowserFlag(browserName: string) {
+    switch (browserName) {
+      case 'Chrome':
+        return '../../../assets/images/browsers/chrome.svg';
+      case 'Firefox':
+        return '../../../assets/images/browsers/firefox.svg';
+      case 'Safari':
+        return '../../../assets/images/browsers/safari.svg';
+      case 'Opera':
+        return '../../../assets/images/browsers/opera.svg';
+      case 'Opera Touch':
+        return '../../../assets/images/browsers/opera.svg""';
+      case 'edge':
+        return '../../../assets/images/browsers/default_browser_icon.svg';
+      case null:
+        return '../../../assets/images/browsers/default_browser_icon.svg';
+      default:
+        return '../../../assets/images/browsers/default_browser_icon.svg';
+    }
+  }
+
+  // get physical device 
+  public getDeviceType(val: boolean): string {
+    return (val == true) ? "../../../assets/images/device/desktop.svg" :
+      "../../../assets/images/device/mobile.svg ";
+  }
+
+  // get operating system 
+
+  public getOperatingSystem(os: string) {
+    switch (os) {
+      case 'macOS':
+        return '../../../assets/images/os/apple.svg';
+      case 'iOS':
+        return '../../../assets/images/os/apple.svg';
+      case 'Windows':
+        return '../../../assets/images/os/Windows.svg';
+      case 'Android':
+        return '../../../assets/images/os/android.svg';
+      case 'Linux':
+        return '../../../assets/images/os/linux.svg';
+      case null:
+        return '../../../assets/images/os/Windows.svg';
+      default:
+        return '../../../assets/images/os/Windows.svg';
+    }
+
+  }
+  /// get conversation type 
+  public getConversationType(conversation: boolean): string {
+    return conversation === false ?
+      "../../../assets/images/request_type/audio.svg" :
+      "../../../assets/images/request_type/video.svg";
   }
 }

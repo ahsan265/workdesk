@@ -171,6 +171,7 @@ export class DashboardComponent {
     );
   }
   public languaugesOutput(languaugesOutput: number[]) {
+    console.log(languaugesOutput)
     this.idOfLanguage = languaugesOutput;
     this.dashboardEps.getCarddata(
       this.idOfLanguage,
