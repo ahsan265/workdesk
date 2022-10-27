@@ -8,6 +8,11 @@ import {
   Renderer2,
   ViewChild
 } from '@angular/core';
+import { base64ToFile } from 'ngx-image-cropper';
+import { CommonService } from 'src/app/workdeskServices/commonEndpoint/common.service';
+import { GigaaaApiService } from 'src/app/workdeskServices/gigaaaApiService/gigaaa-api-service.service';
+import { MessageService } from 'src/app/workdeskServices/messageService/message.service';
+import { SharedServices } from 'src/app/workdeskServices/sharedResourcesService/shared-resource-service.service';
 
 @Component({
   selector: 'app-image-cropper',
@@ -22,8 +27,8 @@ export class ImageCropperComponent implements OnInit {
   @Input() CanvasHeight!: number;
   @Input() CanvasWidth!: number;
   @Output() selected = new EventEmitter();
-  width = 150;
-  height = 150;
+  width = 200;
+  height = 200;
   color = '#505962b5';
 
   taggedItem = '';
@@ -52,11 +57,15 @@ export class ImageCropperComponent implements OnInit {
   private context!: CanvasRenderingContext2D;
   private layer1CanvasElement: any;
 
-  constructor(private renderer: Renderer2) {}
+  constructor(private renderer: Renderer2,
+    private GigaaaApiService: GigaaaApiService,
+    private CommonService: CommonService,
+    private MessageService: MessageService,
+    private SharedServices: SharedServices) { }
 
-  imageLoad() {
+  imageLoad(image: string) {
     this.image = new Image();
-    this.image.src = this.imageView;
+    this.image.src = image;
     this.image.onload = () => {
       this.originalImageWidth = this.image.width;
       this.originalImageHeight = this.image.height;
@@ -74,7 +83,6 @@ export class ImageCropperComponent implements OnInit {
   }
 
   showImage() {
-    this.count++;
     this.layer1CanvasElement = this.layer1Canvas.nativeElement;
     this.context = this.layer1CanvasElement.getContext('2d');
     this.context.clearRect(0, 0, this.CanvasWidth, this.CanvasHeight);
@@ -92,7 +100,15 @@ export class ImageCropperComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.imageLoad();
+    this.imageLoad(this.imageView);
+    this.SharedServices.saveImageUpload.subscribe(data => {
+      if (data) {
+        this.cropImages();
+        let image = this.context.canvas.toDataURL();
+        const base64 = base64ToFile(image);
+        this.updateUserProfilePicture(base64)
+      }
+    })
   }
   zoomOut() {
     if (this.scale !== 1.0) {
@@ -107,9 +123,16 @@ export class ImageCropperComponent implements OnInit {
     }
   }
   dragEvent(event: MouseEvent) {
+
     this.renderer.listen(document, 'mouseup', (e) => {
+      console.log(e)
       this.initX = e.offsetX;
       this.initY = e.offsetY;
+      this.uniX = e.x;
+      this.uniY = e.y;
+      this.uniX2 = 0;
+      this.uniY2 = 0;
+
     });
   }
 
@@ -124,7 +147,7 @@ export class ImageCropperComponent implements OnInit {
   // }
   // crop image
   cropImages() {
-    this.context.drawImage(this.image, 0, 0, this.initX, this.initY);
+    this.context.drawImage(this.image, this.initX, this.initY, this.image.width, this.image.height, 0, 0, this.image.width, this.image.height);
     this.context.restore();
   }
 
@@ -133,20 +156,16 @@ export class ImageCropperComponent implements OnInit {
     const moveListener = this.renderer.listen(document, 'mousemove', (e) => {
       const diff = isNaN(pageX) ? 1 : e.pageX - pageX;
       const minSize = 10;
-
       if (
         (this.width + diff < minSize || this.height + diff < minSize) &&
         diff < 0
       ) {
         return;
       }
-
       this.width = this.width + diff;
       this.height = this.height + diff;
-
       pageX = e.pageX;
     });
-
     const upListener = this.renderer.listen(document, 'mouseup', (e) => {
       moveListener();
       upListener();
@@ -161,5 +180,28 @@ export class ImageCropperComponent implements OnInit {
   getWidth(length: any, ratio: any) {
     let width = length / Math.sqrt(1 / (Math.pow(ratio, 2) + 1));
     return Math.round(width);
+  }
+
+  public updateUserProfilePicture(file: any) {
+    this.GigaaaApiService.uploaduserprofilepic(this.CommonService.getEndpointsParamLocal().token, this.CommonService.getEndpointsParamLocal().organization, this.CommonService.getEndpointsParamLocal().project, file).subscribe((event: any) => {
+      if (event['type'] === 4) {
+        this.MessageService.setSuccessMessage("Profile picture updated");
+        this.SharedServices.updateAgentImage(event['body']['96'])
+        this.SharedServices.closeImageDialog(false);
+      }
+    }, (err: any) => {
+      this.MessageService.setErrorMessage(err.error.error)
+    })
+  }
+  public agentupdateuserprofilepic(file: any, uuid: any) {
+    this.GigaaaApiService.agentuploaduserprofilepic(this.CommonService.getEndpointsParamLocal().token, this.CommonService.getEndpointsParamLocal().organization, this.CommonService.getEndpointsParamLocal().project, uuid, file).subscribe((event: any) => {
+      if (event['type'] === 4) {
+        this.MessageService.setSuccessMessage("Agent profile picture updated");
+        this.SharedServices.updateAgentImage(event['body']['96'])
+        this.SharedServices.closeImageDialog(false);
+      }
+    }, (err: any) => {
+      this.MessageService.setErrorMessage(err.error.error)
+    })
   }
 }

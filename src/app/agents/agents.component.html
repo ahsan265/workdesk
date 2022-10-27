@@ -1,7 +1,7 @@
 <app-page-wrapper>
   <div class="filterWrapper">
     <div class="leftFilter">
-      <div class="multiSelectWrapper">
+      <div class="multiSelectWrapper activity">
         <app-one-select-dropdown [oneSelectData]="oneSelectData" (oneSelectOutput)="agentTypeOutput($event)">
         </app-one-select-dropdown>
       </div>
@@ -20,10 +20,12 @@
     </div>
   </div>
   <div class="tableWrapper">
-    <gigaaa-workdesk-table [tableData]="agentdata" [tableSettings]="tableSetting" (agentSetting)="getSettingsPage($event)">
-    </gigaaa-workdesk-table>  </div>
+    <gigaaa-workdesk-table [tableData]="agentdata" [tableSettings]="tableSetting"
+      (agentSetting)="getSettingsPage($event)">
+    </gigaaa-workdesk-table>
+  </div>
 </app-page-wrapper>
 
-<app-modal-wrapper [modalData]="addAgentModelData" *ngIf="!showInviteModel">
-  <app-add-agent ></app-add-agent>
+<app-modal-wrapper (closeModal)="onCloseAgentInvite($event)" [modalData]="addAgentModelData" *ngIf="showInviteModel">
+  <app-add-agent></app-add-agent>
 </app-modal-wrapper>

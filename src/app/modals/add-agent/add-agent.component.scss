@@ -1,14 +1,18 @@
+::ng-deep .titleWrapper .titleSpan {
+    font-weight: 600;
+}
+
+
 .inviteAgentHeading {
-    font-family: 'Roboto', sans-serif;
+    font-family: "Roboto", sans-serif;
     font-style: normal;
-    font-weight: 400;
-    font-size: 14px;
+    font-weight: 500;
+    font-size: 13px;
     line-height: 139%;
-    /* or 19px */
-
     letter-spacing: 0.02em;
-
-    color: #616B7B;
+    margin-top: 20px;
+    color: #616b7b;
+    width: 100%;
 }
 
 .agentListingContainer {

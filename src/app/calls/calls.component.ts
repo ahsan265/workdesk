@@ -22,6 +22,7 @@ import {
   OngoingCallModel
 } from '../models/callModel';
 import { MissedComponent } from './missed/missed.component';
+import { ThemeService } from 'ng2-charts';
 
 @Component({
   selector: 'app-calls',
@@ -36,7 +37,7 @@ export class CallsComponent implements OnInit {
   showIndicator = false;
   callsIndicatorData = {};
   showCalender = false;
-  selectedPage: string = 'incoming';
+  selectedPage!: string;
   languageIds: number[] = [];
   callTypeName: string[] = [];
   startDate: string = '';
@@ -83,6 +84,7 @@ export class CallsComponent implements OnInit {
     this.route.url.subscribe(() => {
       const tabName: string =
         this.route.snapshot.firstChild?.routeConfig?.path || '';
+        this.selectedPage=tabName
       this.callSegmentSelection(tabName);
     });
     this.callInitialEndpoints();
@@ -98,7 +100,6 @@ export class CallsComponent implements OnInit {
         })
       )
       .subscribe(async (title: string) => {
-        console.log(title)
         this.selectedPage = title;
         this.callSegmentSelection(title);
       });
@@ -111,6 +112,7 @@ export class CallsComponent implements OnInit {
       this.CallsService.sendDataToTabs(data.finished, 'answered');
       this.CallsService.sendDataToTabs(data.ongoing, 'ongoing');
       this.CallsService.sendDataToTabs(data.incoming, 'incoming');
+      this.callSegmentSelection(this.selectedPage);
     });
   }
 
@@ -169,12 +171,13 @@ export class CallsComponent implements OnInit {
   }
 
   callSegmentSelection(title: string) {
+   
     if (title === 'missed') {
       this.showIndicator = true;
       const callIndicator: callsIndicatorData = {
-        text: '11 missed requests',
+        text: this.missedData.length + ' missed requests',
         icon: '../assets/images/components/calls_count_missed.svg',
-        backgroundColor: '#F4CAD6',
+        backgroundColor: '#F9EBEF',
         borderColor: '1px solid #F4CAD6',
         textColor: '#FF155A'
       };
@@ -184,7 +187,7 @@ export class CallsComponent implements OnInit {
     } else if (title === 'answered') {
       this.showIndicator = true;
       const callIndicator: callsIndicatorData = {
-        text: '11 missed requests',
+        text: this.awnseredData.length + ' answered requests',
         icon: '../assets/images/components/calls_count_answered.svg',
         backgroundColor: '#EBF6DD',
         borderColor: '1px solid #C1E297',

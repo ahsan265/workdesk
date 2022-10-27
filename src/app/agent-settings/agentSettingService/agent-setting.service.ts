@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { Router } from '@angular/router';
 import { AgentSettings } from 'src/app/models/agentSettingsModel';
 import { AgentLanguages, AgentList } from 'src/app/models/agentSocketModel';
 import { MultiSelect } from 'src/app/models/multiSelect';
@@ -16,7 +17,8 @@ export class AgentSettingService {
   constructor(
     private GigaaaApiService: GigaaaApiService,
     private CommonService: CommonService,
-    private MessageService: MessageService
+    private MessageService: MessageService,
+    private Router: Router
   ) { }
 
   // get agentS Updated Data ()
@@ -106,6 +108,8 @@ export class AgentSettingService {
       agentUuid
     );
     this.MessageService.setSuccessMessage('Agent deleted successfully');
+    this.Router.navigate(['agents']);
+
   }
   public async resendInvitation(agentUuid: string) {
     await this.GigaaaApiService.resendInvitation(
@@ -118,4 +122,9 @@ export class AgentSettingService {
   }
   public updateAgentImage() { }
   public updateLoggedInUserImage() { }
+
+  public async UpdatePassword(data: any, id: number) {
+    await this.GigaaaApiService.updatePassword(this.CommonService.getEndpointsParamLocal().token, data, id)
+    this.MessageService.setSuccessMessage("Password Updated Successfully");
+  }
 }

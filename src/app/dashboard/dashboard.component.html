@@ -1,38 +1,43 @@
-<div class="dashboardWrapper">
-  <app-page-wrapper>
-    <div class="filterWrapper">
-      <div class="leftFilter">
-        <app-one-select-dropdown [oneSelectData]="oneSelectData"></app-one-select-dropdown>
-      </div>
-      <div class="rightFilter">
-        <div class="multiSelectWrapper">
-          <app-multi-select-dropdown [multiSelectData]="countries" (multiSelectOutput)="locationOutput($event)">
-          </app-multi-select-dropdown>
-        </div>
-        <div class="multiSelectWrapper">
-          <app-multi-select-dropdown [multiSelectData]="languauges" (multiSelectOutput)="languaugesOutput($event)">
-          </app-multi-select-dropdown>
-        </div>
-        <div class="multiSelectWrapper" #calendarDropdown>
-          <div class="calendarLocationLanguage calendarSelectMenu" (click)="onOpenCalendar()">
-            <input (change)="change($event)" (rangeClicked)="rangeClicked($event)" type="text" placeholder="Choose date"
-              GigaaaDatepicker [(ngModel)]="selected" [showCustomRangeLabel]="false" [alwaysShowCalendars]="true"
-              [ranges]="ranges" [linkedCalendars]="true" [showRangeLabelOnInput]="true" class="calendarInput" [locale]="{
+<div class="filterWrapper" scroll>
+  <div class="leftFilter">
+    <app-one-select-dropdown [oneSelectData]="oneSelectData"></app-one-select-dropdown>
+  </div>
+  <div class="rightFilter">
+    <div class="multiSelectWrapper">
+      <app-multi-select-dropdown [multiSelectData]="countries" (multiSelectOutput)="locationOutput($event)">
+      </app-multi-select-dropdown>
+    </div>
+    <div class="multiSelectWrapper">
+      <app-multi-select-dropdown [multiSelectData]="languauges" (multiSelectOutput)="languaugesOutput($event)">
+      </app-multi-select-dropdown>
+    </div>
+    <div class="multiSelectWrapper" #calendarDropdown>
+      <div class="calendarLocationLanguage calendarSelectMenu" (click)="onOpenCalendar()">
+        <input (change)="change($event)" (rangeClicked)="rangeClicked($event)" type="text" placeholder="Choose date"
+          GigaaaDatepicker [(ngModel)]="selected" [showCustomRangeLabel]="false" [alwaysShowCalendars]="true"
+          [ranges]="ranges" [linkedCalendars]="true" [showRangeLabelOnInput]="true" class="calendarInput" [locale]="{
                 applyLabel: 'Apply',
                 format: 'DD-MM-YYYY',
                 firstDay: 1,
                 customRangeLabel: 'Custom range'
               }" [showCancel]="true" startKey="startDate" endKey="endDate" />
-            <svg [ngClass]="showCalendar ? 'filterArrowRotate' : 'filterArrow'" class="filterArrow" width="10"
-              height="7" viewBox="0 0 10 7" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M1.55469 0.871094L5 4.31641L8.44531 0.871094L9.5 1.92578L5 6.42578L0.5 1.92578L1.55469 0.871094Z"
-                fill="#162741" />
-            </svg>
-          </div>
-        </div>
+        <svg [ngClass]="showCalendar ? 'filterArrowRotate' : 'filterArrow'" class="filterArrow" width="10" height="7"
+          viewBox="0 0 10 7" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M1.55469 0.871094L5 4.31641L8.44531 0.871094L9.5 1.92578L5 6.42578L0.5 1.92578L1.55469 0.871094Z"
+            fill="#162741" />
+        </svg>
       </div>
     </div>
+  </div>
 
+</div>
+
+
+<div class="dashboardWrapper">
+  <div class="dashboardSection">
+    <p class="dashboardHeading">Calls</p>
+  </div>
+  <app-page-wrapper>
     <div class="cardWrapper">
       <div class="card">
         <app-card [cardData]="incomingCardData"></app-card>
@@ -50,7 +55,7 @@
         <span>Incoming</span>
       </div>
       <div class="chart">
-        <canvas baseChart [data]="barChartData" [options]="barChartOptions" [plugins]="barChartPlugins"
+        <canvas baseChart [data]="barChartData[0]" [options]="barChartOptions" [plugins]="barChartPlugins"
           [type]="barChartType">
         </canvas>
       </div>
@@ -62,7 +67,7 @@
         <span>Missed</span>
       </div>
       <div class="chart">
-        <canvas baseChart [data]="barChartData" [options]="barChartOptions" [plugins]="barChartPlugins"
+        <canvas baseChart [data]="barChartData[1]" [options]="barChartOptions" [plugins]="barChartPlugins"
           [type]="barChartType">
         </canvas>
       </div>
@@ -73,7 +78,7 @@
         <span>Answered</span>
       </div>
       <div class="chart">
-        <canvas baseChart [data]="barChartData" [options]="barChartOptions" [plugins]="barChartPlugins"
+        <canvas baseChart [data]="barChartData[2]" [options]="barChartOptions" [plugins]="barChartPlugins"
           [type]="barChartType">
         </canvas>
       </div>

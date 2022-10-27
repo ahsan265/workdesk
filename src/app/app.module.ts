@@ -72,6 +72,8 @@ import { CloseDialogOverlayRef } from './callInterface/overLayService/closeDialo
 import { OverlayService } from './callInterface/overLayService/overlay.service';
 import { AddAgentComponent } from './modals/add-agent/add-agent.component';
 import { AgentListingComponent } from './modals/add-agent/agent-listing/agent-listing.component';
+import { scrollStageDirective } from './directives/scrollDirective';
+import { CountersComponent } from './components/counters/counters.component';
 
 @NgModule({
   declarations: [
@@ -102,6 +104,7 @@ import { AgentListingComponent } from './modals/add-agent/agent-listing/agent-li
     DragNDropDirective,
     peerMiniCameraAnimation,
     callInterfaceHideControlDirective,
+    scrollStageDirective,
     CallConsoleComponent,
     CallsHeaderComponent,
     CallingScreenComponent,
@@ -114,7 +117,8 @@ import { AgentListingComponent } from './modals/add-agent/agent-listing/agent-li
     CustomerSupportComponent,
     ScreenShareRestrictionComponent,
     AddAgentComponent,
-    AgentListingComponent
+    AgentListingComponent,
+    CountersComponent
   ],
   imports: [
     BrowserAnimationsModule,

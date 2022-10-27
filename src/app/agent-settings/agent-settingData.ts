@@ -47,7 +47,7 @@ const agentUploadImageModal: Modal = {
   height: 'fit-content'
 };
 const updatePasswordModal: Modal = {
-  title: 'Reset password.',
+  title: 'Reset password',
   // image: '../assets/images/sidebar/agents.svg',
   onlyOneButton: false,
   buttonOne: {
@@ -163,7 +163,7 @@ const saveButtonData: Button = {
 
 const deleteAgentButtonData: Button = {
   title: 'Delete agent',
-  // icon: '../assets/images/components/deleteicon.svg',
+   icon: '../assets/images/components/deleteicon.svg',
   backgroundColor: '#FFFFFF',
   borderColor: '1px solid rgba(208,208,222,.6)',
   textColor: '#162741',
@@ -180,7 +180,7 @@ const resendInvitationButtonData: Button = {
 };
 const cancelInvitationButtonData: Button = {
   title: 'Cancel Invitation',
-  icon: '../assets/images/delete.svg',
+  // icon: '../assets/images/delete.svg',
   backgroundColor: '#FFFFFF',
   borderColor: '1px solid rgba(208,208,222,.6)',
   textColor: '#162741',

@@ -129,8 +129,8 @@ button {
 }
 
 .resize {
-  height: 150px;
-  width: 150px;
+  height: 200px;
+  width: 200px;
   background: #f0ffff3d;
   border-radius: 50%;
 }
@@ -331,9 +331,7 @@ mat-slider {
   background-color: #1c54db;
 }
 
-::ng-deep
-  .mat-slider-min-value:not(.mat-slider-thumb-label-showing)
-  .mat-slider-thumb {
+::ng-deep .mat-slider-min-value:not(.mat-slider-thumb-label-showing) .mat-slider-thumb {
   background-color: #d0d0de;
 }
 

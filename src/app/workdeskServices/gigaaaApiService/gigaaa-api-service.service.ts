@@ -288,8 +288,8 @@ export class GigaaaApiService {
   //  logged in agent upload pic
   public uploaduserprofilepic(
     accesstoken: string,
-    subsid: string,
-    intgid: string,
+    organization: string,
+    project: string,
     file: File
   ) {
     const httpOptions: any = {
@@ -300,14 +300,14 @@ export class GigaaaApiService {
       reportProgress: true,
       observe: 'events'
     };
-    var formdata = new FormData();
+    const formdata = new FormData();
     formdata.append('image', file);
     return this.http.post(
       this.workdeskurl_cs +
       '/private/agents/image?organization=' +
-      subsid +
-      '&integration=' +
-      intgid,
+      organization +
+      '&project=' +
+      project,
       formdata,
       httpOptions
     );

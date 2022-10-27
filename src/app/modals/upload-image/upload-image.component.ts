@@ -1,6 +1,7 @@
 /* eslint-disable no-undef */
 import { Component, OnInit } from '@angular/core';
 import { ImageTransform } from 'ngx-image-cropper';
+import { SharedServices } from 'src/app/workdeskServices/sharedResourcesService/shared-resource-service.service';
 
 @Component({
   selector: 'app-upload-image',
@@ -34,14 +35,16 @@ export class UploadImageComponent implements OnInit {
   progressbarvalue: any = 0;
   filesize: any;
   imageUploaded: any;
-  constructor() {}
+  constructor(private SharedServices: SharedServices) { }
+  showSaveButton: boolean = false;
+  showCancelButton: boolean = true;
 
   ngOnInit(): void {
     this.uploadpicture = true;
     this.loadpicture = false;
     this.croppicture = false;
   }
-  getImageOutput(event: File) {
+  getImageOutput(event: any) {
     this.getFile(event);
   }
 
@@ -56,7 +59,7 @@ export class UploadImageComponent implements OnInit {
   }
   saveFiles(files: FileList) {
     if (files.length > 1) {
-      //   console.log(files[0].size, files[0].name, files[0].type);
+      console.log(files[0].size, files[0].name, files[0].type);
     }
   }
   // get picture tranisition
@@ -116,8 +119,22 @@ export class UploadImageComponent implements OnInit {
           this.uploadpicture = false;
           this.loadpicture = false;
           this.croppicture = true;
+          this.showCancelButton = false;
+          this.showSaveButton = true;
         }
       }
     }, 50);
   }
+
+
+  closeImageModal() {
+    this.SharedServices.closeImageDialog(false);
+  }
+
+  saveImageUpload() {
+    this.SharedServices.saveAgentImage(true);
+  }
+
+
+
 }

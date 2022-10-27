@@ -273,42 +273,13 @@ mat-slider {
   color: #162741;
 }
 
-::ng-deep .mat-progress-bar-fill::after {
-  background-color: #1c54db;
-}
 
-::ng-deep .mat-progress-bar-buffer {
-  background: #ededf6;
-}
-
-::ng-deep .mat-progress-bar {
-  border-radius: 3px;
-}
-
-::ng-deep .mat-slider-track-wrapper {
-  background-color: #c4c4c4;
-  border-radius: 4px;
-}
-
-::ng-deep .mat-slider-thumb {
-  border: 1px solid rgba(208, 208, 222, 0.6);
-  box-sizing: border-box;
-  box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.19);
-}
-
-::ng-deep .mat-accent .mat-slider-thumb {
-  background-color: #1c54db;
-}
-
-::ng-deep
-  .mat-slider-min-value:not(.mat-slider-thumb-label-showing)
-  .mat-slider-thumb {
-  background-color: #d0d0de;
-}
 
 .mobileversion {
   display: none;
 }
+
+
 
 @media (max-width: 768px) {
   .mobileversion {

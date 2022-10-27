@@ -19,14 +19,14 @@ const icons = {
   activeCallIcon: '../assets/images/sidebar/calls_active.svg',
   agentIcon: '../assets/images/sidebar/agents.svg',
   activeAgentIcon: '../assets/images/sidebar/agents_active.svg',
-  logo: '../assets/images/sidebar/gigaaa_logo_1.svg',
-  logoCollapsed: '../assets/images/sidebar/gigaaa_logo_2.svg'
+  logo: '../assets/images/sidebar/neo_long.svg',
+  logoCollapsed: '../assets/images/sidebar/neo_short.svg'
 };
 
 const sidebarData: any = [
   {
     iconUrl: icons.integrationIcon,
-    name: 'Select integration',
+    name: 'Select project',
     dropdownItems: [],
     dropdown: true,
     isLink: false

@@ -16,7 +16,6 @@ import {
 } from './agent-settingData';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Agent } from '../models/agent';
-import { InputData } from '@gigaaa/gigaaa-components/lib/models/input';
 import { AuthService } from '../services/auth.service';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { AgentSettingService } from './agentSettingService/agent-setting.service';
@@ -27,6 +26,7 @@ import { MessageService } from '../workdeskServices/messageService/message.servi
 import { Modal } from '../models/modal';
 import { UpdatePasswordComponent } from '../modals/update-password/update-password.component';
 import { AgentService } from '../agents/agentService/agent.service';
+import { SharedServices } from '../workdeskServices/sharedResourcesService/shared-resource-service.service';
 
 @Component({
   selector: 'app-agent-settings',
@@ -43,7 +43,7 @@ export class AgentSettingsComponent implements OnInit {
   agentDefaultModalData = agentDefaultModalData;
   passwordModalData = updatePasswordModal;
   selectedAgent!: AgentList;
-  inputData: InputData[] = inputData;
+  inputData: any[] = inputData;
   languauges = languauges;
   backButtonData = backButtonData;
   saveButtonData = saveButtonData;
@@ -61,6 +61,8 @@ export class AgentSettingsComponent implements OnInit {
   showPasswordModal: boolean = false;
   showDeleteAgentModal: boolean = false;
   disableAgentRights: boolean = false;
+  isDropdownEnabled: boolean = true;
+  isButtonDisabled: boolean = false;
   agentSettingsForm = new FormGroup({
     email: new FormControl('', [
       Validators.required,
@@ -77,7 +79,8 @@ export class AgentSettingsComponent implements OnInit {
     private router: Router,
     private CommonService: CommonService,
     private MessageService: MessageService,
-    private AgentService: AgentService
+    private AgentService: AgentService,
+    private SharedServices: SharedServices
   ) { }
 
   ngOnInit() {
@@ -85,6 +88,24 @@ export class AgentSettingsComponent implements OnInit {
     this.agentId = String(this.activatedRoute.snapshot.params.id);
     // this.getAgent();
     this.getAgentData();
+    // for closing image upload popup
+    this.SharedServices.closeImageUploadDialog.subscribe((data: boolean) => {
+      this.showImageUploadModal = data;
+    });
+    // for setting latest updated image 
+
+    this.SharedServices.setAgentImage.subscribe((data: string) => {
+      let timestamp = (new Date()).getTime();
+      this.agentImage = data + '?_=' + timestamp;
+    })
+
+    // closing passwordpopup
+    this.SharedServices.PasswordPopup.subscribe(data => {
+      if (data) {
+        this.showPasswordModal = false;
+        this.showDeleteAgentModal = false;
+      }
+    })
   }
 
   onGetInputValue(event: any) {
@@ -222,6 +243,10 @@ export class AgentSettingsComponent implements OnInit {
     }
     else if (isAgentAcceptInvitation === true) {
       this.showDeleteAgentButton = true
+    }
+    else if (isAgentAcceptInvitation === false) {
+      this.isDropdownEnabled = false;
+      this.isButtonDisabled = true;
     }
     this.pendingStatusForLanguages = this.agentSettingService.checkAgentStatusIsPendingLanguage(isAgentAcceptInvitation);
     this.pendingStatusForAdminRights = this.agentSettingService.checkAgentStatusIsPendingAdminRights(isAgentAcceptInvitation);

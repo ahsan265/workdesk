@@ -2,6 +2,10 @@ image-cropper {
   height: 50vh;
 }
 
+::ng-deep .titleSpan {
+  font-weight: 600 !important;
+}
+
 button {
   margin: 4px;
   background: #64dfdf;
@@ -64,6 +68,57 @@ button {
   margin-top: 10px;
   margin-left: 33px;
   margin-right: 33px;
+}
+
+.actionButtonWrapper {
+  width: 100%;
+  display: flex;
+}
+
+.savePanel {
+  width: 50%;
+}
+
+.cancelPanel {
+  width: 50%;
+  text-align: right;
+}
+
+.buttonSave {
+  width: 82px;
+  height: 35px;
+  right: 30px;
+  bottom: 30px;
+  background: #1C54DB;
+  border-radius: 4px;
+  outline: none;
+  border: none;
+  font-family: 'Roboto', sans-serif;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 16px;
+  color: #FFFFFF;
+  cursor: pointer;
+}
+
+.buttonCancel {
+  width: 83px;
+  height: 35px;
+  right: 481px;
+  bottom: 30px;
+  background: #FFFFFF;
+  border: 1px solid #E1E1EA;
+  border-radius: 4px;
+  outline: none;
+  color: #162741;
+  font-family: 'Roboto', sans-serif;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 16px;
+  cursor: pointer;
+
 }
 
 @keyframes prgb {
@@ -336,9 +391,7 @@ mat-slider {
   background-color: #1c54db;
 }
 
-::ng-deep
-  .mat-slider-min-value:not(.mat-slider-thumb-label-showing)
-  .mat-slider-thumb {
+::ng-deep .mat-slider-min-value:not(.mat-slider-thumb-label-showing) .mat-slider-thumb {
   background-color: #d0d0de;
 }
 

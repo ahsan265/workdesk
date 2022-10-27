@@ -13,6 +13,7 @@ export interface AgentList {
   is_in_chat: boolean;
   is_online: boolean;
   is_organization_admin: boolean;
+  is_organization_owner: boolean;
   joined: boolean;
   languages: AgentLanguages[];
   last_name: string;

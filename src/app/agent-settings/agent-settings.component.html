@@ -48,16 +48,17 @@
     </div>
 
     <div class="languageWrapper section">
-      <div class="restrictedAdmin" *ngIf="pendingStatusForLanguages !== ''">
+      <div class="restrictedAdmin language" *ngIf="pendingStatusForLanguages !== ''">
         <div class="messageForAdminRights">
           {{ this.pendingStatusForLanguages }}
         </div>
       </div>
-      <div class="profileName">
+      <div class="profileName ">
         Language
         <div class="inputWrapper textField">
           <div class="label">Select language(s) for this agent:</div>
-          <app-multi-select-dropdown [multiSelectData]="languauges" (multiSelectOutput)="languaugesOutput($event)">
+          <app-multi-select-dropdown [multiSelectData]="languauges" (multiSelectOutput)="languaugesOutput($event)"
+            [isDropdownEnabled]="isDropdownEnabled">
           </app-multi-select-dropdown>
         </div>
       </div>
@@ -68,14 +69,14 @@
           {{ this.adminAletMessage || this.pendingStatusForAdminRights}}
         </div>
       </div>
-      <div class="profileName">
+      <div class="profileName adminRight">
         Administrative Rights
         <div class="inputWrapper switchWrapper">
           <div class="label">
             Admins can add new agents and change settings.
           </div>
           <gigaaa-switch-button [switchButtonData]="switchButtonData"
-            (switchButtonValue)="onGetSwitchButtonValue($event)">
+            (switchButtonValue)="onGetSwitchButtonValue($event)" [isButtonDisabled]="isButtonDisabled">
           </gigaaa-switch-button>
         </div>
       </div>

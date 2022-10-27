@@ -65,18 +65,43 @@ export class DashboardComponent {
   public barChartOptions: ChartConfiguration['options'] = {
     responsive: true,
     maintainAspectRatio: false,
+    interaction: {
+      mode: 'index',
+    },
+
+    borderColor: 'none',
+    layout: {
+      padding: {
+        bottom: 24
+      }
+    },
+    hover: {
+      mode: 'index',
+      intersect: false,
+    },
     scales: {
+
       xAxes: {
         display: true,
         grid: {
           display: false
         }
+
       },
       yAxes: {
         grid: {
-          drawBorder: false
-        }
-      }
+          drawBorder: false,
+
+        },
+        ticks: {
+          display: true,
+          maxTicksLimit: 4,
+          padding: 14,
+
+
+        },
+      },
+
     },
     plugins: {
       legend: {
@@ -85,12 +110,13 @@ export class DashboardComponent {
       datalabels: {
         display: false
       }
-    }
+    },
+
   };
   public barChartType: ChartType = 'bar';
   public barChartPlugins = [DataLabelsPlugin];
 
-  public barChartData: any;
+  public barChartData!: ChartData<'bar'>[];
 
   constructor(
     private authService: AuthService,
@@ -112,9 +138,8 @@ export class DashboardComponent {
       this.missedCardData = data?.missed;
       this.answeredCardData = data?.answered;
     });
-    this.dashboardEps.chartDataSubject.subscribe((data: any) => {
-      this.barChartData = data?.incoming;
-      this.barChartOptions;
+    this.dashboardEps.chartDataSubject.subscribe((data: ChartData<'bar'>[]) => {
+      this.barChartData = data;
     });
   }
   private async callRouteLoad(): Promise<void> {

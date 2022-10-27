@@ -10,7 +10,6 @@
   max-width: 100%;
   width: 100%;
   max-height: 100vh;
-  border: 1px solid #d0d0de;
   border-left: none;
   box-sizing: border-box;
 }
@@ -18,7 +17,7 @@
 .workdeskWrap {
   width: 100%;
   height: 100vh;
-  background: #fafafd;
+  background: #FEFEFF;
   overflow: scroll;
 }
 
@@ -31,9 +30,7 @@
   scrollbar-width: none;
 }
 
-::ng-deep .headerAppWrapper .mainHeaderWrap .headerWrap .accountSettingsWrap {
-  min-width: 70px;
-}
+
 
 // Responsive
 @media only screen and (max-width: 480px) {

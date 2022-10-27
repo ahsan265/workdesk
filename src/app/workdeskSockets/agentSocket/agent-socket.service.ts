@@ -67,6 +67,8 @@ export class AgentSocketService {
     }
   }
   private getAgentList(AgentList: AgentList[]) {
+
+
     this.AgentListSubject.next(AgentList);
     this.getAgentOnlineStatus(AgentList);
   }

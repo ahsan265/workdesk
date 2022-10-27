@@ -5,5 +5,6 @@ export class CloseDialogOverlayRef {
 
   close(): void {
     this.overlayRef.dispose();
+    this.overlayRef.detach();
   }
 }

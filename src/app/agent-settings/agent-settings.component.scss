@@ -26,12 +26,18 @@
   display: flex;
 }
 
-.section:last-child {
-  border-bottom: none;
-}
 
 .profileWrapper {
   display: block;
+}
+
+.profileName.adminRight {
+  margin-top: 30px;
+  margin-bottom: 30px;
+}
+
+.languageWrapper.section {
+  padding-bottom: 0px;
 }
 
 .administrativeRightsWrapper {
@@ -85,10 +91,10 @@
 
 .profileName {
   font-style: normal;
-  font-weight: 500;
+  font-weight: 600;
   font-size: 16px;
   width: 100%;
-  line-height: 48.83px;
+  line-height: 18px;
   display: inline-block;
   align-items: center;
   letter-spacing: 0.02em;
@@ -103,11 +109,17 @@
 .inputWrapper {
   margin-right: 37px;
   width: 100%;
-  margin-bottom: 8px;
+  margin-bottom: 10px;
+}
+
+.restrictedAdmin.language {
+  margin-bottom: 30px;
 }
 
 .inputWrapper.textField {
   max-width: 240px;
+  margin-bottom: 30px;
+  margin-top: 10px;
 }
 
 .switchWrapper {
@@ -116,6 +128,7 @@
 
 .agentName {
   max-width: 240px;
+  margin-top: 15px;
 }
 
 .agentSettingsTextField {
@@ -146,7 +159,6 @@
   padding-left: 30px;
   padding-right: 30px;
   height: 55px;
-  margin-bottom: 10px;
 }
 
 .messageForAdminRights {
@@ -177,9 +189,9 @@
 }
 
 .agentActionButtonWrapper {
-  display: block;
-  text-align: right;
+  display: flex;
   width: 100%;
+  justify-content: right;
 }
 
 .actionButton {
@@ -216,9 +228,7 @@
   margin-top: 6px;
 }
 
-.agentActionButtonWrapper ::ng-deep .button {
-  display: unset !important;
-}
+
 
 // .deletePopupDimentions ::ng-deep .modal {
 //   min-height: 250px;

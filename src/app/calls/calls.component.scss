@@ -1,9 +1,22 @@
+::ng-deep .mainHeaderWrap .headerWrap {
+  border: none;
+}
+
 .menuWrapper {
   display: flex;
   padding: 0 30px;
-  margin: 0;
+  margin: -2px 0px 0px 0px;
   border-bottom: 1px solid #d0d0de99;
   background: #fafafd;
+  position: fixed;
+  width: 100%;
+}
+
+.inPageWrapper {
+  margin-top: 138px;
+  padding-left: 30px;
+  padding-right: 30px;
+  background: #FEFEFF;
 }
 
 .callsUl {
@@ -15,7 +28,15 @@
 .callsLi {
   list-style: none;
   margin-right: 22px;
-  padding: 6px 0;
+  padding: 4px 0;
+  width: fit-content;
+  display: flex;
+}
+
+.counterWrapper {
+  margin-left: 8px;
+  display: inline-block;
+  margin-top: 7px;
 }
 
 .callsA {
@@ -26,7 +47,12 @@
   align-items: center;
   line-height: 160%;
   letter-spacing: 0.02em;
-  color: rgba(22, 39, 65, 0.37);
+  color: #162741;
+}
+
+::ng-deep .filterWrapper>.leftFilter .dropdownWrapper .selectDropdown {
+  background: #EDEDF6 !important;
+  border: none;
 }
 
 .callsActive {
@@ -38,29 +64,42 @@
 }
 
 .filterWrapper {
-  display: flex;
   padding: 30px 0;
+  margin-top: 35px;
+  position: fixed;
+  width: 100%;
+  display: block;
+  background: #FEFEFF;
 }
 
 .leftFilter {
-  display: flex;
   width: 40%;
+  display: inline-block;
+  text-align: left;
+  padding-left: 30px;
 }
 
 .rightFilter {
-  width: 60%;
-  display: flex;
-  justify-content: flex-end;
+  width: calc(60% - 310px);
+  position: relative;
+  display: inline-block;
+  text-align: right;
 }
 
 .multiSelectWrapper {
   margin-right: 10px;
-  width: 185px;
+  width: 185.55px;
   position: relative;
+  display: inline-block;
+  vertical-align: bottom;
+}
+
+.multiSelectWrapper.search {
+  width: 245px;
 }
 
 .callType {
-  width: 105px;
+  width: 107px;
   margin-right: 10px;
 }
 

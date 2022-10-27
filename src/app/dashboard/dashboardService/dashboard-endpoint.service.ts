@@ -18,11 +18,11 @@ import { CommonService } from 'src/app/workdeskServices/commonEndpoint/common.se
 })
 export class DashboardEndpointService {
   icomingIcon = '../../assets/images/components/calls_incoming.svg';
-  missedIcon = '../../assets/images/components/calls_count_missed.svg';
-  answeredIcon = '../../assets/images/components/calls_count_answered.svg';
+  missedIcon = '../../assets/images/components/total_missed.svg';
+  answeredIcon = '../../assets/images/components/total_answered.svg';
 
   cardDataSubject = new Subject();
-  chartDataSubject = new Subject();
+  chartDataSubject = new Subject<ChartData<'bar'>[]>();
   constructor(
     private GigaaaApiService: GigaaaApiService,
     private CommonService: CommonService,
@@ -30,7 +30,7 @@ export class DashboardEndpointService {
     private chartsData: ChartsData,
     private calanderService: CalendarService,
     private MessageService: MessageService
-  ) {}
+  ) { }
   // call the cards count endpoint for
   public getCarddata(
     languages: Array<OneSelect>,
@@ -68,7 +68,7 @@ export class DashboardEndpointService {
           'Total Incoming',
           '#EDEDF6',
           incomingCard,
-          ' % vs ' + relatedDateRange,
+          relatedDateRange,
           percencateIncomingCard
         );
         const missedCardRes = this.fillDashboardCardData(
@@ -76,7 +76,7 @@ export class DashboardEndpointService {
           'Total Missed',
           '#F9EBEF',
           missedCard,
-          ' % vs ' + relatedDateRange,
+          relatedDateRange,
           percencateMissedCard
         );
         const answeredCardRes = this.fillDashboardCardData(
@@ -84,7 +84,7 @@ export class DashboardEndpointService {
           'Total Answered',
           '#EBF7DD',
           answeredCard,
-          ' % vs ' + relatedDateRange,
+          relatedDateRange,
           percencateAwnseredCard
         );
         const finalCardsData = {
@@ -120,15 +120,16 @@ export class DashboardEndpointService {
     secondResultText: string,
     secondResultNumber: number
   ) {
+
     const cardResult: Card = {
       icon: urls,
       title: title,
       color: color,
       mainResult: mainResult,
-      secondResultText: secondResultText,
-      secondResultNumber: secondResultNumber,
-      iconUp: '../../assets/images/cards/arrowUp.svg',
-      iconDown: '../../assets/images/cards/arrowDown.svg'
+      secondResultText: (secondResultText === "") ? "" : ' % vs ' + secondResultText,
+      secondResultNumber: (secondResultText === "") ? 0 : secondResultNumber,
+      iconUp: (secondResultText === "") ? "" : '../../assets/images/cards/arrowUp.svg',
+      iconDown: (secondResultText === "") ? "" : '../../assets/images/cards/arrowDown.svg'
     };
     return cardResult;
   }
@@ -173,7 +174,7 @@ export class DashboardEndpointService {
           data['incoming']
         );
         const imissedData = this.chartsData.calculateChartData(data['missed']);
-        const answeredData = this.chartsData.calculateChartData(data['missed']);
+        const answeredData = this.chartsData.calculateChartData(data['answered']);
         const incomingChartRes: ChartData<'bar'> = this.chartDataForm(
           incomingData,
           incomingLabel
@@ -187,11 +188,11 @@ export class DashboardEndpointService {
           answeredLabel
         );
 
-        const groupChart = {
-          inmcoming: incomingChartRes,
-          missed: missedChartRes,
-          answered: answeredChartRes
-        };
+        const groupChart: ChartData<'bar'>[] = [
+          incomingChartRes,
+          missedChartRes,
+          answeredChartRes
+        ];
         this.chartDataSubject.next(groupChart);
       },
       (err: any) => {
@@ -209,9 +210,11 @@ export class DashboardEndpointService {
           data: chartData,
           backgroundColor: ['#1C54DB'],
           hoverBackgroundColor: ['#1C54DB'],
-          borderRadius: 10
+          borderRadius: 4,
+          maxBarThickness: 65,
+          hoverBorderColor: '#1C54DB',
         }
-      ]
+      ],
     };
     return ChartDataSet;
   }

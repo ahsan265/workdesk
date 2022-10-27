@@ -3,6 +3,7 @@ import {
   ChangeDetectorRef,
   Component,
   ElementRef,
+  OnDestroy,
   OnInit,
   ViewChild
 } from '@angular/core';
@@ -34,6 +35,7 @@ import {
 } from '../callsInterfaceData';
 import { MicrophoneVoiceIndicatorComponent } from '../microphone-voice-indicator/microphone-voice-indicator.component';
 import { MiniCameraScreenComponent } from '../mini-camera-screen/mini-camera-screen.component';
+import { CloseDialogOverlayRef } from '../overLayService/closeDialogService';
 import { OverlayService } from '../overLayService/overlay.service';
 
 @Component({
@@ -42,7 +44,7 @@ import { OverlayService } from '../overLayService/overlay.service';
   styleUrls: ['./call-console.component.scss'],
   changeDetection: ChangeDetectionStrategy.Default
 })
-export class CallConsoleComponent implements OnInit {
+export class CallConsoleComponent implements OnInit,OnDestroy  {
   constructor(
     private StreamingService: StreamingService,
     private MessageService: MessageService,
@@ -52,8 +54,10 @@ export class CallConsoleComponent implements OnInit {
     private CallsOperationService: CallsOperationService,
     private PeerConnectionService: PeerConnectionService,
     private AgentUserInformation: AgentUserInformation,
-    private ChangeDetectorRef: ChangeDetectorRef
   ) { }
+  ngOnDestroy(): void {
+    this.minmizeMaxmizeScreenOutput(false);
+  }
   minimizeCallControl = minimizeCallControlData;
   maximizeCallControl = maximizeCallControlData;
   CallsHeaderData = CallsHeaderData;
@@ -289,4 +293,5 @@ export class CallConsoleComponent implements OnInit {
 
     }
   }
+
 }

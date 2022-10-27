@@ -59,13 +59,12 @@ export class AgentService {
     invited: boolean,
     inactive: boolean,
     active: boolean,
-    first_name: string,
-    last_name: string
+    displayName: string
   ) {
     if (invited == true && inactive == false && active == false) {
       return 'Not joined yet';
     } else {
-      return first_name + ' ' + last_name;
+      return displayName;
     }
   }
   public disabledEditButton(email: string, isOrganizationAdmin: boolean, role: string): boolean {
@@ -140,11 +139,27 @@ export class AgentService {
 
   }
 
-  getLanguageFlagById(languages: AgentLanguages[]):UtlitiesIcon[] {
+  getLanguageFlagById(languages: AgentLanguages[]): UtlitiesIcon[] {
     let UtlitiesIcon: UtlitiesIcon[] = [];
     languages.forEach(data => {
       UtlitiesIcon.push({ image: this.CommonService.getLanguageFlags(data.id) });
     })
     return UtlitiesIcon;
+  }
+
+  // get agent role 
+  public getAgentRole(isOrganizationAdmin: boolean, isOrganizationOwner: boolean, role: string) {
+    if (isOrganizationAdmin === true && isOrganizationOwner === true && role === 'Admin') {
+      return 'Owner';
+    }
+    else if (isOrganizationAdmin === true && isOrganizationOwner === false && role === 'Admin') {
+      return 'Admin';
+    }
+    else if (isOrganizationAdmin === false && isOrganizationOwner === false && role === 'Admin') {
+      return 'Admin';
+    }
+    else {
+      return 'Agent';
+    }
   }
 }

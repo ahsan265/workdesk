@@ -3,10 +3,12 @@ import { ComponentPortal, PortalInjector } from '@angular/cdk/portal';
 import { ComponentRef, Injectable, Injector } from '@angular/core';
 import { CallConsoleComponent } from '../call-console/call-console.component';
 import { CloseDialogOverlayRef } from './closeDialogService';
+import { overlayToken } from './overlayToken';
 interface ComponentDialogConnfiguration {
   panelClass?: string;
   hasBackdrop?: boolean;
   backdropClass?: string;
+  data?:any;
 }
 @Injectable({
   providedIn: 'root'
@@ -30,7 +32,6 @@ export class OverlayService {
     this.dialogRef = new CloseDialogOverlayRef(overlayRef);
 
     const overlayComponent = this.attachDialogContainer(overlayRef, dialogConfig, this.dialogRef);
-
     overlayRef.backdropClick().subscribe(_ => this.dialogRef.close());
   }
 
@@ -44,12 +45,11 @@ export class OverlayService {
   }
 
 
-  private createInjector(config: ComponentDialogConnfiguration, dialogRef: CloseDialogOverlayRef): PortalInjector {
+  private createInjector(config: ComponentDialogConnfiguration, dialogRef: CloseDialogOverlayRef):Injector {
     const injectionTokens = new WeakMap();
-
     injectionTokens.set(CloseDialogOverlayRef, dialogRef);
-
-    return new PortalInjector(this.injector, injectionTokens);
+    injectionTokens.set(overlayToken, config.data);
+    return  Injector.create({  parent: this.injector,  providers:[ { provide: injectionTokens, useValue: this.DEFAULT_CONFIG.data }]});
   }
   private getOverlayConfig(config: ComponentDialogConnfiguration): OverlayConfig {
     const positionStrategy = this.overlay

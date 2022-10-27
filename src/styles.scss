@@ -7,6 +7,17 @@
   display: inline-block;
 }
 
+.modal {
+  padding: 24px;
+}
+
+// .headerAppWrapper .mainHeaderWrap .headerWrap {
+//   box-shadow: none;
+// }
+
+.headerWrap .pageTitleWrap .pageTitle {
+  font-weight: 500;
+}
 
 body,
 html {
@@ -58,9 +69,7 @@ body {
   color: #ff155a;
 }
 
-.onlineButton {
-  margin-bottom: 25px;
-}
+
 
 #toast-container {
   padding-right: 100px;

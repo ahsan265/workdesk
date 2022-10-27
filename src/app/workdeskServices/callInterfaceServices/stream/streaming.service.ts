@@ -323,8 +323,8 @@ export class StreamingService {
     this.CallSocketService.sendDataforCall({ type: 'hangup', data: '' });
     localStorage.removeItem('call-information');
     this.CallSocketService.ws.close();
-    this.router.navigate(['customersupport']);
-    // this.overlayService.close();
+   // this.router.navigate(['customersupport']);
+     this.overlayService.close();
   }
   private stopScreenShareByEvent(stream: MediaStream) {
     stream.getTracks()[0].addEventListener('ended', () => {

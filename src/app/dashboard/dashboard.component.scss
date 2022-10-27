@@ -1,13 +1,68 @@
+.dashboardSection {
+  padding-left: 30px;
+  margin-bottom: 20px;
+}
+
+.dashboardHeading {
+  font-family: 'Roboto', sans-serif;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 18px;
+  line-height: 22px;
+  display: flex;
+  align-items: center;
+  letter-spacing: .02em;
+  color: #162741;
+}
+
+
 ::ng-deep .dashboardWrapper .wrapper {
   height: fit-content;
   padding-bottom: 100px;
 }
 
+::ng-deep .cardWrap {
+  height: 89px;
+}
+
+::ng-deep .cardTitleSpan {
+  font-weight: 600 !important;
+  font-size: 12px !important;
+  line-height: 24px !important;
+}
+
+::ng-deep .cardTimeSpan {
+  font-weight: 600 !important;
+  font-size: 18px !important;
+  line-height: 20px !important;
+}
+
+::ng-deep .cardWeekResult {
+  height: 20px !important;
+}
+
+.dashboardWrapper {
+  margin-top: 95px;
+}
+
 .filterWrapper {
-  display: flex;
   width: 100%;
   padding: 30px 0;
+  background: #FFFFFF;
+  margin-bottom: 8px;
+  position: fixed;
+  display: block;
 }
+
+::ng-deep .filterWrapper .leftFilter .dropdownWrapper .selectDropdown {
+  background: #EDEDF6;
+  border: none;
+
+}
+
+// ::ng-deep .filterWrapper .leftFilter .dropdownWrapper {
+//   padding-left: 30px;
+// }
 
 ::ng-deep .filterWrapper .rightFilter .dropdownWrapper,
 ::ng-deep .filterWrapper .leftFilter .dropdownWrapper {
@@ -16,18 +71,23 @@
 
 .leftFilter {
   width: 30%;
+  display: inline-block;
+  text-align: left;
+  padding-left: 30px;
 }
 
 .rightFilter {
-  display: flex;
-  justify-content: flex-end;
-  width: 70%;
+  width: calc(70% - 310px);
+  position: relative;
+  display: inline-block;
+  text-align: right;
 }
 
 .multiSelectWrapper {
   width: 200px;
-  margin-right: 10px;
+  margin-right: 5px;
   position: relative;
+  display: inline-block;
 }
 
 .calendarLocationLanguage {
@@ -89,7 +149,7 @@
 }
 
 .card {
-  width: 33%;
+  width: 32%;
 }
 
 .chartWrapper {
@@ -98,8 +158,12 @@
   box-sizing: border-box;
   border-radius: 4px;
   margin-bottom: 20px;
-  margin-top: 50px;
+  margin-top: 20px;
   height: 328px;
+}
+
+.chartWrapper:last-child {
+  margin-bottom: 20px;
 }
 
 .titleWrap {
@@ -114,14 +178,19 @@
   text-transform: uppercase;
   font-size: 12px;
 }
-.cardTitle{
+
+.cardTitle {
   font-weight: 600;
 }
 
 .chart {
-  padding: 23px;
   box-sizing: border-box;
-  height: 300px;
+  width: 100%;
+  text-align: center;
+  height: 222px;
+  padding-left: 27px;
+  padding-right: 40px;
+  margin-top: 46px;
 
   canvas {
     width: 100% !important;

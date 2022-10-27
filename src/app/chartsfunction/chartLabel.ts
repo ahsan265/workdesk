@@ -6,7 +6,7 @@ import { Injectable } from '@angular/core';
   providedIn: 'root'
 })
 export class ChartLabel {
-  constructor() {}
+  constructor() { }
   caculateChartLabels(
     labelArray: Array<any>,
     range: string,

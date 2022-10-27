@@ -3,6 +3,61 @@
   padding-right: 30px;
 }
 
+.actionButttonWrapper {
+  display: block;
+  width: 100%;
+}
+
+.cancelPanel {
+  display: inline-block;
+  width: 50%;
+}
+
+.savePanel {
+  display: inline-block;
+  width: 50%;
+  text-align: right;
+}
+
+.cancel {
+  width: 83px;
+  height: 35px;
+  font-family: 'Roboto', sans-serif;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 16px;
+  align-items: center;
+  text-align: center;
+  color: #162741;
+  background: #FFFFFF;
+  border: 1px solid rgba(208, 208, 222, .6);
+  box-sizing: border-box;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.save {
+  width: 114px;
+  height: 35px;
+  background: #1C54DB;
+  border-radius: 4px;
+  font-family: 'Roboto', sans-serif;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 16px;
+  align-items: center;
+  text-align: center;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+}
+
+::ng-deep .titleSpan {
+  font-weight: 600 !important;
+}
+
 .mainheadingpanel {
   display: block;
   width: 100%;

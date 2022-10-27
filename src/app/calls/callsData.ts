@@ -27,7 +27,7 @@ const callType: MultiSelect = {
 };
 
 const searchInputData: SearchInput = {
-  placeholder: 'search items',
+  placeholder: 'Search by name or user ID',
   searchText: ''
 };
 

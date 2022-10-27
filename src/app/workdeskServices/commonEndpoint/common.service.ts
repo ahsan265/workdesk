@@ -9,6 +9,7 @@ import { AgentLanguages } from 'src/app/models/agentSocketModel';
 import { Country } from 'src/app/models/country';
 import { language } from 'src/app/models/language';
 import { SelectionModelCountry } from 'src/app/models/selectionModel';
+import { User } from 'src/app/models/user';
 import { AuthService } from 'src/app/services/auth.service';
 import { GigaaaApiService } from '../gigaaaApiService/gigaaa-api-service.service';
 import { MessageService } from '../messageService/message.service';
@@ -271,5 +272,11 @@ export class CommonService {
     return conversation === false ?
       "../../../assets/images/request_type/audio.svg" :
       "../../../assets/images/request_type/video.svg";
+  }
+
+  // get email logged in user
+  public getEmailForLoggedInUser() {
+    const newLocal: User = JSON.parse(localStorage.getItem('gigaaa-user') || '{}');
+    return newLocal.email;
   }
 }

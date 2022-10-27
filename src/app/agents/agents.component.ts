@@ -38,8 +38,9 @@ export class AgentsComponent implements OnInit {
   activeAgent: number = 1;
   inactiveAgent: number = 1;
   invitedAgent: number = 1;
-  showInviteModel: boolean = true;
+  showInviteModel: boolean = false;
   AgentList: AgentList[] = [];
+  dialog: any;
   constructor(
     private authService: AuthService,
     private CommonService: CommonService,
@@ -87,47 +88,30 @@ export class AgentsComponent implements OnInit {
     //   );
     //   this.router.navigate(['agents', 'settings', selectedAgent?.uuid]);
     // }
-    //this.openCallInterface.open();
-    this.showInviteModel === true
+    // this.openCallInterface.open();
+    this.showInviteModel = true
   }
 
+  onCloseAgentInvite(event: any) {
+    if (event) {
+      this.showInviteModel = false;
+    }
+  }
   getAgentList() {
     this.AgentSocketService.AgentListSubject.subscribe((data: AgentList[]) => {
+      data.forEach(element => {
+        if (this.CommonService.checkLoggedInUser(element.email)) {
+          var fromindex = data.findIndex(x => x.email === this.CommonService.getEmailForLoggedInUser());
+          var selectedobject = data[fromindex];
+          data.splice(fromindex, 1);
+          data.splice(0, 0, selectedobject);
+        }
+      });
       this.agentdata = data.map((AgentList: AgentList) => ({
-        // id: AgentList.uuid,
-        // agent: AgentList.email,
-        // name: this.AgentService.getAgentFullName(
-        //   AgentList.invited,
-        //   AgentList.inactive,
-        //   AgentList.active,
-        //   AgentList.first_name,
-        //   AgentList.last_name
-        // ),
-        // role: AgentList.role,
-        // routeUrl: ['agents', 'settings', AgentList.uuid],
-        // checked: AgentList.inactive,
-        // isDropdown: false,
-        // language_id: this.CommonService.getLanguagesWithFlags(
-        //   AgentList.languages
-        // ),
-        // editIcon: this.AgentService.disabledEditButton(AgentList.email, AgentList.is_organization_admin, AgentList.role),
-        // canEdit: true,
-        // invitation_accepted: this.AgentService.setAgentInvitedProperty(AgentList.invited, AgentList.inactive, AgentList.active),
-        // checkmark: this.CommonService.checkLoggedInUser(AgentList.email),
-        // userItem: {
-        //   text: AgentList.display_name,
-        //   image: AgentList.images['96'],
-        //   color: this.AgentService.checkIsAgentOnline(
-        //     AgentList.is_available,
-        //     AgentList.is_online
-        //   )
-        // }
-
-        /////////////////
         uuid: AgentList.uuid,
-        activity_icon: "../assets/images/request_type/audio.svg",
+        activity_icon: AgentList.is_in_call ? "../assets/images/request_type/call_icons.svg" : "../assets/images/request_type/chat_icons.svg",
         agent_details: { image: AgentList.images['96'], text: AgentList.first_name + " " + AgentList.last_name },
-        agent_name: AgentList.display_name,
+        agent_name: this.AgentService.getAgentFullName(AgentList.invited, AgentList.inactive, AgentList.active, AgentList.display_name),
         can_edit: this.AgentService.disabledEditButton(AgentList.email, AgentList.is_organization_admin, AgentList.role),
         email: AgentList.email,
         is_logged_in: this.CommonService.checkLoggedInUser(AgentList.email),
@@ -135,11 +119,11 @@ export class AgentsComponent implements OnInit {
           AgentList.is_available,
           AgentList.is_online
         ),
-        role: AgentList.role,
+        role: (this.AgentService.setAgentInvitedProperty(AgentList.invited, AgentList.inactive, AgentList.active) === true) ? this.AgentService.getAgentRole(AgentList.is_organization_admin, AgentList.is_organization_owner, AgentList.role) : 'Pending',
         show_edit: this.AgentService.disabledEditButton(AgentList.email, AgentList.is_organization_admin, AgentList.role),
         utilites: this.AgentService.getLanguageFlagById(AgentList.languages),
         invitation_accepted: this.AgentService.setAgentInvitedProperty(AgentList.invited, AgentList.inactive, AgentList.active),
-        is_organization_admin: AgentList.is_organization_admin,
+        is_organization_admin: (AgentList.is_organization_admin === true && AgentList.is_organization_owner === false && AgentList.role === 'Admin') ? true : false,
         loggedIn_user_icon: '../assets/images/tickSign.svg',
         organization_admin_icon: '../assets/images/crown.svg',
         edit_icon: '../assets/images/pencil.svg',

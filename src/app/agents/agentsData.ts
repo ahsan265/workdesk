@@ -77,59 +77,59 @@ const buttonData: Button = {
 const agentTableSetting: any = {
   tableName: 'agent',
   tableHeaders: [{
-      index: 0,
-      header: "Agent",
-      width: 25,
-      isHeaderImage: true,
-      showHeader: true,
-      isDropdown: false,
-      checkmark: true,
-      isImageItem: false,
-      isUserItem: false
+    index: 0,
+    header: "Agent",
+    width: 25,
+    isHeaderImage: true,
+    showHeader: true,
+    isDropdown: false,
+    checkmark: true,
+    isImageItem: false,
+    isUserItem: false
   },
   {
-      index: 1,
-      header: "Full Name",
-      width: 20,
-      isHeaderImage: true,
-      showHeader: true,
-      isDropdown: false,
-      checkmark: true,
-      isImageItem: false,
-      isUserItem: false
+    index: 1,
+    header: "Full Name",
+    width: 20,
+    isHeaderImage: true,
+    showHeader: true,
+    isDropdown: false,
+    checkmark: true,
+    isImageItem: false,
+    isUserItem: false
   },
   {
-      index: 2,
-      header: "Language",
-      width: 20,
-      isHeaderImage: true,
-      showHeader: true,
-      isDropdown: false,
-      checkmark: true,
-      isImageItem: false,
-      isUserItem: false
+    index: 2,
+    header: "Language",
+    width: 20,
+    isHeaderImage: true,
+    showHeader: true,
+    isDropdown: false,
+    checkmark: true,
+    isImageItem: false,
+    isUserItem: false
   },
   {
-      index: 3,
-      header: "Role",
-      width: 20,
-      isHeaderImage: true,
-      showHeader: true,
-      isDropdown: false,
-      checkmark: true,
-      isImageItem: false,
-      isUserItem: false
+    index: 3,
+    header: "Role",
+    width: 20,
+    isHeaderImage: true,
+    showHeader: true,
+    isDropdown: false,
+    checkmark: true,
+    isImageItem: false,
+    isUserItem: false
   },
   {
-      index: 4,
-      header: "",
-      width: 20,
-      isHeaderImage: true,
-      showHeader: true,
-      isDropdown: false,
-      checkmark: true,
-      isImageItem: false,
-      isUserItem: false
+    index: 4,
+    header: "",
+    width: 20,
+    isHeaderImage: true,
+    showHeader: true,
+    isDropdown: false,
+    checkmark: true,
+    isImageItem: false,
+    isUserItem: false
   }]
 }
 
@@ -213,12 +213,12 @@ const agents: any[] = [
 ];
 
 const agentModelData = {
-  title: 'INVITE HUMAN AGENT',
+  title: 'Invite Human Agents',
   image: '',
   onlyOneButton: true,
   buttonOne: true,
   buttonTwo: false,
-  width: '670px',
+  width: '594px',
   height: '385px'
 };
 export {

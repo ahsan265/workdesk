@@ -39,7 +39,7 @@ export class LandingPageComponent implements OnInit {
       'Automate your customer service and offer an elevated customer experience with gigaaa AI Customer Support solution',
     text: 'Make every customer more satisfied by giving them the exact information they need, right when they need it.',
     image: '../../assets/images/landingPage/landing-page.svg',
-    logo: '../../assets/images/sidebar/gigaaa_logo_1.svg'
+    logo: '../../assets/images/sidebar/neo_long.svg'
   };
 
   constructor(
