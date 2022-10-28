@@ -10,7 +10,8 @@
     "prepare": "husky install",
     "lint": "npx eslint \"src/**/*.{js,jsx,ts,tsx,html,css,scss}\" --quiet --fix",
     "format": "npx prettier \"src/**/*.{js,jsx,ts,tsx,html,css,scss}\" --write",
-    "e2e": "ng e2e"
+    "e2e": "ng e2e",
+    "build:ngssc": "ng run workdesk:ngsscbuild:production"
   },
   "private": true,
   "dependencies": {
@@ -24,6 +25,7 @@
     "@angular/platform-browser-dynamic": "^14.0.5",
     "@angular/router": "^14.0.5",
     "@gigaaa/gigaaa-components": "0.1.181",
+    "angular-server-side-configuration": "^14.0.1",
     "chart.js": "^3.8.0",
     "chartjs-plugin-datalabels": "^2.0.0",
     "crypto-js": "^4.1.1",

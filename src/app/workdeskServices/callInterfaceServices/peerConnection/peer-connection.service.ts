@@ -10,7 +10,6 @@ import { StreamingService } from '../stream/streaming.service';
 })
 export class PeerConnectionService {
   peerConnection!: RTCPeerConnection;
-  iceServersConfigurations = `${environment.iceServerConfiguration}`;
   remoteVideoSubject = new Subject<MediaStream>();
   remoteStream!: MediaStream;
   isRealoaded = new Subject<boolean>();
