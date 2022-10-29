@@ -11,7 +11,7 @@ RUN npm config set @gigaaa:registry https://gitlab.gigaaa.link/api/v4/projects/5
 RUN npm config set -- '//gitlab.gigaaa.link/api/v4/projects/59/packages/npm/:_authToken' "8Yze-d9mir9xZ827zdHo"
 RUN npm i
 
-RUN ng run workdesk:ngsscbuild:production
+RUN ng build
 
 ### STAGE 2: Run ###
 FROM nginx:1.21-alpine
