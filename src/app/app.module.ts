@@ -74,7 +74,8 @@ import { AddAgentComponent } from './modals/add-agent/add-agent.component';
 import { AgentListingComponent } from './modals/add-agent/agent-listing/agent-listing.component';
 import { scrollStageDirective } from './directives/scrollDirective';
 import { CountersComponent } from './components/counters/counters.component';
-
+import { ChartsData } from './chartsfunction/chartData'
+import { ChartLabel } from './chartsfunction/chartLabel'
 @NgModule({
   declarations: [
     AppComponent,
@@ -160,7 +161,8 @@ import { CountersComponent } from './components/counters/counters.component';
       useClass: GigaaaHeaderService
     },
     OverlayService,
-    
+    ChartLabel,
+    ChartsData
   ],
   bootstrap: [AppComponent]
 })

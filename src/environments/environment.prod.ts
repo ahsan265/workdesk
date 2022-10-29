@@ -18,6 +18,6 @@ export const environment = {
   prod_url_cs: process.env.PROD_URL_CS || 'https://api.gigaaa.link/cs',
   prod_url_workdesk: process.env.PROD_URL_WORKDESK || 'https://api.gigaaa.link',
   prod_anlytics: process.env.PROD_ANALYTICS || 'https://api.gigaaa.link/cs/private',
-  websocket_url: process.env.WEBSOCKER_URL || 'wss://api.gigaaa.link/websockets/cs',
+  websocket_url: process.env.WEBSOCKET_URL || 'wss://api.gigaaa.link/websockets/cs',
   logged_user: process.env.LOGGED_USER || 'https://api.gigaaa.link/v1/api/v1',
 };
