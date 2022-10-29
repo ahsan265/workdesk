@@ -103,8 +103,7 @@ export class DashboardComponent {
       },
       datalabels: {
         display: false
-      }
-      ,
+      },
       tooltip: {
         enabled: true,
         mode: 'nearest',
@@ -112,7 +111,7 @@ export class DashboardComponent {
         callbacks: {
           title: function () {
             return '';
-          },
+          }
         }
       }
     }

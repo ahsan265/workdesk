@@ -28,8 +28,7 @@ export class AgentSocketService {
   public AgentListSubject = new Subject<AgentList[]>();
   isOganizationAdminStatus: boolean = false;
   isUserAgentOrAdmin: string = '';
-  constructor(private CommonService: CommonService,
-    private Router: Router) { }
+  constructor(private CommonService: CommonService, private Router: Router) {}
 
   public callAgentSocketEndpoint() {
     const connectionId: connectionSecurityModel = JSON.parse(
@@ -54,8 +53,8 @@ export class AgentSocketService {
     this.ws.onmessage = (e) => {
       e.data != 'ping' ? this.getAgentList(JSON.parse(e.data)) : '';
     };
-    this.ws.onclose = (e) => { };
-    this.ws.onerror = (e) => { };
+    this.ws.onclose = (e) => {};
+    this.ws.onerror = (e) => {};
   }
   public sendAgentsParameter(AgentParameter: AgentParameter) {
     if (this.isSocketOpen === 1) {
@@ -72,7 +71,6 @@ export class AgentSocketService {
     this.AgentListSubject.next(AgentList);
     this.getAgentOnlineStatus(AgentList);
     this.getUserExistAsAgent(AgentList);
-
   }
   private getAgentOnlineStatus(AgentList: AgentList[]) {
     const user = JSON.parse(localStorage.getItem('gigaaa-user') || '{}');
@@ -127,20 +125,17 @@ export class AgentSocketService {
     }
   }
 
-
   private getUserExistAsAgent(agentlist: AgentList[]) {
     let isLoggedInAgent: boolean = false;
-    agentlist.find(data => {
+    agentlist.find((data) => {
       if (data.email === this.CommonService.getEmailForLoggedInUser()) {
-
-        return isLoggedInAgent = true
+        return (isLoggedInAgent = true);
+      } else {
+        return (isLoggedInAgent = false);
       }
-      else {
-        return isLoggedInAgent = false
-      }
-    })
+    });
     if (isLoggedInAgent === false) {
-      this.Router.navigate(['logout'])
+      this.Router.navigate(['logout']);
     }
   }
 }

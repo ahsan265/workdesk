@@ -17,12 +17,11 @@ export class AgentInviteService {
     private CommonService: CommonService,
     private ActivatedRoute: ActivatedRoute,
     private MessageService: MessageService,
-    private Router: Router,
-  ) { }
+    private Router: Router
+  ) {}
 
   public async sendtAgentInvitationCode() {
     let code = this.getInvitationCode();
-    console.log(code)
     if (code != null) {
       let code_invite = { invitation_code: JSON.parse(code) };
       await this.GigaaaApiService.sendinvitationcode(
@@ -36,7 +35,6 @@ export class AgentInviteService {
           this.Router.navigate(['logout']);
           this.agentNonComplientAccountSubject.next(true);
           this.MessageService.setErrorMessage(err.error.error);
-
         });
     }
   }
@@ -49,7 +47,6 @@ export class AgentInviteService {
           localStorage.setItem('gigaaa-invitation', JSON.stringify(code));
           this.GigaaaApiService.getinvitationdetails(code).subscribe(
             (data: inviteLinkModel) => {
-              console.log(data)
               if (data != null) {
                 // localStorage.removeItem('gigaaa-invitation');
                 this.agentInviteSubject.next(data);

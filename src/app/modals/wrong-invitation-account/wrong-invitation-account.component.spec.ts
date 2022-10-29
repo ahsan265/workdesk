@@ -8,9 +8,8 @@ describe('WrongInvitationAccountComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ WrongInvitationAccountComponent ]
-    })
-    .compileComponents();
+      declarations: [WrongInvitationAccountComponent]
+    }).compileComponents();
 
     fixture = TestBed.createComponent(WrongInvitationAccountComponent);
     component = fixture.componentInstance;

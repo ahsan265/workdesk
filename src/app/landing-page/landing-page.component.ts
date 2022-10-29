@@ -44,28 +44,28 @@ export class LandingPageComponent implements OnInit {
     image: '../../assets/images/landingPage/landing-page.svg',
     logo: '../../assets/images/sidebar/neo_long.svg'
   };
-  oauthUrl = `${environment.oauth_url}`
+  oauthUrl = `${environment.oauth_url}`;
   constructor(
     private router: Router,
     private authService: AuthService,
     private headerService: GigaaaHeaderService,
     private AgentInviteService: AgentInviteService
-  ) { }
+  ) {}
 
   ngOnInit(): void {
     this.AgentInviteService.getInvitedAgentDetails();
     if (this.authService.isLoggedIn()) {
       this.router.navigate(['/dashboard']);
     }
-    this.AgentInviteService.agentInviteSubject.subscribe((data: inviteLinkModel) => {
-      console.log(data)
-      this.showLinkExpireModal = data.already_used;
-      if (data.has_to_register) {
-        window.open('https://accounts.gigaaa.link/register', "_self");
+    this.AgentInviteService.agentInviteSubject.subscribe(
+      (data: inviteLinkModel) => {
+        console.log(data);
+        this.showLinkExpireModal = data.already_used;
+        if (data.has_to_register) {
+          window.open('https://accounts.gigaaa.link/register', '_self');
+        }
       }
-
-    });
-
+    );
   }
 
   onLogin(event: boolean) {
@@ -81,5 +81,4 @@ export class LandingPageComponent implements OnInit {
       this.showLinkExpireModal = false;
     }
   }
-
 }

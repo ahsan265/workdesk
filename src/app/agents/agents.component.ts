@@ -142,10 +142,10 @@ export class AgentsComponent implements OnInit {
             AgentList.active
           ) === true
             ? this.AgentService.getAgentRole(
-              AgentList.is_organization_admin,
-              AgentList.is_organization_owner,
-              AgentList.role
-            )
+                AgentList.is_organization_admin,
+                AgentList.is_organization_owner,
+                AgentList.role
+              )
             : 'Pending',
         show_edit: this.AgentService.disabledEditButton(
           AgentList.email,
@@ -160,12 +160,13 @@ export class AgentsComponent implements OnInit {
         ),
         is_organization_admin:
           AgentList.is_organization_admin === true &&
-            AgentList.is_organization_owner === false && this.AgentService.setAgentInvitedProperty(
-              AgentList.invited,
-              AgentList.inactive,
-              AgentList.active
-            ) &&
-            AgentList.role === 'Admin'
+          AgentList.is_organization_owner === false &&
+          this.AgentService.setAgentInvitedProperty(
+            AgentList.invited,
+            AgentList.inactive,
+            AgentList.active
+          ) &&
+          AgentList.role === 'Admin'
             ? true
             : false,
         loggedIn_user_icon: '../assets/images/tickSign.svg',

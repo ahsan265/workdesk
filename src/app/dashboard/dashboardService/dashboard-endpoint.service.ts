@@ -30,7 +30,7 @@ export class DashboardEndpointService {
     private chartsData: ChartsData,
     private calanderService: CalendarService,
     private MessageService: MessageService
-  ) { }
+  ) {}
   // call the cards count endpoint for
   public getCarddata(
     languages: Array<OneSelect>,
@@ -216,7 +216,7 @@ export class DashboardEndpointService {
           hoverBackgroundColor: ['#1C54DB'],
           borderRadius: 4,
           maxBarThickness: 65,
-          hoverBorderColor: '#1C54DB',
+          hoverBorderColor: '#1C54DB'
         }
       ]
     };

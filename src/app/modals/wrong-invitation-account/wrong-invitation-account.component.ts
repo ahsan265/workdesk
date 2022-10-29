@@ -7,11 +7,9 @@ import { AgentInviteService } from 'src/app/workdeskServices/agentInviteService/
   styleUrls: ['./wrong-invitation-account.component.scss']
 })
 export class WrongInvitationAccountComponent implements OnInit {
+  constructor(private AgentInviteService: AgentInviteService) {}
 
-  constructor(private AgentInviteService: AgentInviteService) { }
-
-  ngOnInit(): void {
-  }
+  ngOnInit(): void {}
   closeNonComplientAccountPopup() {
     this.AgentInviteService.agentNonComplientAccountSubject.next(false);
   }

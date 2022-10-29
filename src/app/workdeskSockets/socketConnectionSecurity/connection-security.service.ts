@@ -16,8 +16,8 @@ export class ConnectionSecurityService {
     private gigaaaApiService: GigaaaApiService,
     private AgentSocketService: AgentSocketService,
     private QueueSocketService: QueueSocketService,
-    private Router: Router,
-  ) { }
+    private Router: Router
+  ) {}
   public async createConnectionEndpoint(
     token: string,
     ogranizationId: string,
@@ -35,6 +35,5 @@ export class ConnectionSecurityService {
     this.QueueSocketService.closeQueueSocketConnection();
     this.AgentSocketService.callAgentSocketEndpoint();
     this.QueueSocketService.callQueueSocketEndpoint();
-
   }
 }

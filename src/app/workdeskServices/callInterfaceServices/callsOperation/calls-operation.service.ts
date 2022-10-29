@@ -104,8 +104,7 @@ export class CallsOperationService {
           default:
         }
       },
-      (error: any) => {
-      }
+      (error: any) => {}
     );
   }
 

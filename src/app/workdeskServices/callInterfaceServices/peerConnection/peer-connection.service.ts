@@ -146,8 +146,7 @@ export class PeerConnectionService {
       .then(() => {
         this.candidates.map((c) => this.peerConnection.addIceCandidate(c));
       })
-      .catch((error: any) => {
-      });
+      .catch((error: any) => {});
     this.checkedRemoteSet = true;
   }
 
@@ -164,15 +163,15 @@ export class PeerConnectionService {
 
         // }
       })
-      .catch(async (error: any) => {
-      });
+      .catch(async (error: any) => {});
   }
   // handle ice Condate Messages
   public async handleIceCandidateMessage(data: RTCIceCandidate): Promise<void> {
     if (this.checkedRemoteSet) {
       if (data.candidate != undefined && data.candidate != null) {
-        await this.peerConnection.addIceCandidate(data).catch((error: any) => {
-        });
+        await this.peerConnection
+          .addIceCandidate(data)
+          .catch((error: any) => {});
       }
     } else {
       this.candidates.push(data);

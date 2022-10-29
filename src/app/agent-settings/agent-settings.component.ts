@@ -85,7 +85,7 @@ export class AgentSettingsComponent implements OnInit {
     private MessageService: MessageService,
     private AgentService: AgentService,
     private SharedServices: SharedServices
-  ) { }
+  ) {}
 
   ngOnInit() {
     this.authService.pageTitle.next('Settings');
@@ -124,7 +124,9 @@ export class AgentSettingsComponent implements OnInit {
   }
   onGetSwitchAllLanguage(event: any) {
     this.isAllLanguageSelected = event;
-    this.agentSettingService.setAllLanguageEnabled(this.selectedAgent.uuid, { "all_languages": !this.isAllLanguageSelected })
+    this.agentSettingService.setAllLanguageEnabled(this.selectedAgent.uuid, {
+      all_languages: !this.isAllLanguageSelected
+    });
   }
 
   onGetBackButtonOutput(event: any) {
@@ -210,9 +212,9 @@ export class AgentSettingsComponent implements OnInit {
     } catch (err: any) {
       this.MessageService.setErrorMessage(err.error.error);
     }
-    (this.selectedAgent.is_organization_admin === true) ?
-      this.showAllSelectedLanguageToggle = true : this.showAllSelectedLanguageToggle = false;
-
+    this.selectedAgent.is_organization_admin === true
+      ? (this.showAllSelectedLanguageToggle = true)
+      : (this.showAllSelectedLanguageToggle = false);
   }
   public languaugesOutput(langaugesId: number[]) {
     this.agentLanguages = langaugesId;
@@ -271,7 +273,7 @@ export class AgentSettingsComponent implements OnInit {
       ? (this.showPasswordSection = true)
       : (this.showPasswordSection = false);
     this.switchButtonData.buttonChecked = !this.isAdmin;
-    this.allLanguageData.buttonChecked = !agentData.all_call_requests
+    this.allLanguageData.buttonChecked = !agentData.all_call_requests;
   }
   public updateAgentDetails() {
     const agentSetting: AgentSettings = {

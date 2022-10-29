@@ -8,11 +8,12 @@ import { AgentInviteService } from './workdeskServices/agentInviteService/agent-
 })
 export class AppComponent {
   showNonComplientAccountModal: boolean = false;
-  constructor(private AgentInviteService: AgentInviteService
-  ) {
-    this.AgentInviteService.agentNonComplientAccountSubject.subscribe((data: boolean) => {
-      this.showNonComplientAccountModal = data;
-    })
+  constructor(private AgentInviteService: AgentInviteService) {
+    this.AgentInviteService.agentNonComplientAccountSubject.subscribe(
+      (data: boolean) => {
+        this.showNonComplientAccountModal = data;
+      }
+    );
   }
   onCloseNonComplientAccount(event: any) {
     if (event) {

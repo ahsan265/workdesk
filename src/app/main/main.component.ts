@@ -37,7 +37,7 @@ export class MainComponent implements OnInit {
     private getOrganizationService: getOrganizationService,
     @Inject('GigaaaHeaderService') private headerService: GigaaaHeaderService,
     private CommonService: CommonService,
-    private GigaaaApiService: GigaaaApiService,
+    private GigaaaApiService: GigaaaApiService
   ) {}
 
   ngOnInit() {

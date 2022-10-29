@@ -101,8 +101,7 @@ export class StreamingService {
       });
     await this.PeerConnectionService.peerConnection
       .setLocalDescription(offer)
-      .catch((err: any) => {
-      });
+      .catch((err: any) => {});
     this.CallSocketService.sendDataforCall({
       type: 'offer',
       peer_id: peerId,
@@ -242,8 +241,7 @@ export class StreamingService {
           });
         await this.PeerConnectionService.peerConnection
           .setLocalDescription(offer)
-          .catch((err: any) => {
-          });
+          .catch((err: any) => {});
 
         this.CallSocketService.sendDataforCall({
           type: 'offer',
@@ -296,8 +294,7 @@ export class StreamingService {
         });
       await this.PeerConnectionService.peerConnection
         .setLocalDescription(offer)
-        .catch((err: any) => {
-        });
+        .catch((err: any) => {});
       this.CallSocketService.sendDataforCall({
         type: 'offer',
         peer_id: peerId,

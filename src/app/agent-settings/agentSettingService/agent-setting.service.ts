@@ -19,7 +19,7 @@ export class AgentSettingService {
     private CommonService: CommonService,
     private MessageService: MessageService,
     private Router: Router
-  ) { }
+  ) {}
 
   // get agentS Updated Data ()
   public async updateAgentSettings(
@@ -118,8 +118,8 @@ export class AgentSettingService {
     );
     this.MessageService.setSuccessMessage('Agent Invitation has been resent.');
   }
-  public updateAgentImage() { }
-  public updateLoggedInUserImage() { }
+  public updateAgentImage() {}
+  public updateLoggedInUserImage() {}
 
   public async UpdatePassword(data: any, id: number) {
     await this.GigaaaApiService.updatePassword(
@@ -133,14 +133,19 @@ export class AgentSettingService {
 
   public async setAllLanguageEnabled(uuid: string, data: any) {
     try {
-      await this.GigaaaApiService.setAllLanguageEnabled(this.CommonService.getEndpointsParamLocal().token, uuid,
+      await this.GigaaaApiService.setAllLanguageEnabled(
+        this.CommonService.getEndpointsParamLocal().token,
+        uuid,
         this.CommonService.getEndpointsParamLocal().organization,
-        this.CommonService.getEndpointsParamLocal().project, data);
-      (data.all_languages === true) ?
-        this.MessageService.setSuccessMessage('All project languages are assigned to you.') :
-        '';
-    }
-    catch (error: any) {
+        this.CommonService.getEndpointsParamLocal().project,
+        data
+      );
+      data.all_languages === true
+        ? this.MessageService.setSuccessMessage(
+            'All project languages are assigned to you.'
+          )
+        : '';
+    } catch (error: any) {
       this.MessageService.setErrorMessage(error.error.error);
     }
   }

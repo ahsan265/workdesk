@@ -74,8 +74,8 @@ import { AddAgentComponent } from './modals/add-agent/add-agent.component';
 import { AgentListingComponent } from './modals/add-agent/agent-listing/agent-listing.component';
 import { scrollStageDirective } from './directives/scrollDirective';
 import { CountersComponent } from './components/counters/counters.component';
-import { ChartsData } from './chartsfunction/chartData'
-import { ChartLabel } from './chartsfunction/chartLabel'
+import { ChartsData } from './chartsfunction/chartData';
+import { ChartLabel } from './chartsfunction/chartLabel';
 import { WrongInvitationAccountComponent } from './modals/wrong-invitation-account/wrong-invitation-account.component';
 
 @NgModule({
@@ -166,7 +166,6 @@ import { WrongInvitationAccountComponent } from './modals/wrong-invitation-accou
     OverlayService,
     ChartLabel,
     ChartsData
-    
   ],
   bootstrap: [AppComponent]
 })
