@@ -1,54 +1,53 @@
 ::ng-deep .titleWrapper .titleSpan {
-    font-weight: 600;
+  font-weight: 600;
 }
 
-
 .inviteAgentHeading {
-    font-family: "Roboto", sans-serif;
-    font-style: normal;
-    font-weight: 500;
-    font-size: 13px;
-    line-height: 139%;
-    letter-spacing: 0.02em;
-    margin-top: 20px;
-    color: #616b7b;
-    width: 100%;
+  font-family: 'Roboto', sans-serif;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 13px;
+  line-height: 139%;
+  letter-spacing: 0.02em;
+  margin-top: 20px;
+  color: #616b7b;
+  width: 100%;
 }
 
 .agentListingContainer {
-    display: block;
-    height: 300px;
-    position: relative;
-    overflow-x: hidden;
-    overflow-y: scroll;
+  display: block;
+  height: 300px;
+  position: relative;
+  overflow-x: hidden;
+  overflow-y: scroll;
 }
 
 .agentListingContainer::-webkit-scrollbar {
-    display: none;
+  display: none;
 }
 
 .agentFieldsWrapper {
-    display: flex;
-    width: 100%;
-    margin-bottom: 20px;
-    margin-top: 20px;
+  display: flex;
+  width: 100%;
+  margin-bottom: 20px;
+  margin-top: 20px;
 }
 
 .fieldData {
-    display: inline-flex;
-    width: 50%;
+  display: inline-flex;
+  width: 50%;
 }
 
 .fieldLabel {
-    font-family: 'Roboto', sans-serif;
-    font-style: normal;
-    font-weight: 500;
-    font-size: 16px;
-    line-height: 18px;
-    display: flex;
-    align-items: center;
-    letter-spacing: 0.02em;
-    color: #162741;
-    width: 260px;
-    padding-right: 30px;
+  font-family: 'Roboto', sans-serif;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 18px;
+  display: flex;
+  align-items: center;
+  letter-spacing: 0.02em;
+  color: #162741;
+  width: 260px;
+  padding-right: 30px;
 }

@@ -35,7 +35,7 @@ export class UploadImageComponent implements OnInit {
   progressbarvalue: any = 0;
   filesize: any;
   imageUploaded: any;
-  constructor(private SharedServices: SharedServices) { }
+  constructor(private SharedServices: SharedServices) {}
   showSaveButton: boolean = false;
   showCancelButton: boolean = true;
 
@@ -126,7 +126,6 @@ export class UploadImageComponent implements OnInit {
     }, 50);
   }
 
-
   closeImageModal() {
     this.SharedServices.closeImageDialog(false);
   }
@@ -134,7 +133,4 @@ export class UploadImageComponent implements OnInit {
   saveImageUpload() {
     this.SharedServices.saveAgentImage(true);
   }
-
-
-
 }

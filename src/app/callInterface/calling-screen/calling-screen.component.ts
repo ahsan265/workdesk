@@ -87,26 +87,28 @@ export class CallingScreenComponent implements OnInit {
   ) {
     this.Devices.getDeviceType() === true
       ? (this.desktop = {
-        height: 'calc(50% - 24px)',
-        width: '100%',
-        top: 'unset',
-        bottom: '0px'
-      })
+          height: 'calc(50% - 24px)',
+          width: '100%',
+          top: 'unset',
+          bottom: '0px'
+        })
       : (this.desktopNormal = {
-        height: '100%',
-        width: '100%',
-        top: 'unset',
-        bottom: 'unset'
-      });
+          height: '100%',
+          width: '100%',
+          top: 'unset',
+          bottom: 'unset'
+        });
     this.Devices.getDeviceType() === true
       ? (this.remoteVideoObjectSplitNormal = {
-        height: 'calc(50% - 24px)',
-        width: '100%'
-      })
+          height: 'calc(50% - 24px)',
+          width: '100%'
+        })
       : '';
-    this.AgentUserInformation.selectedSpearkerSubject.subscribe(speakerInformation => {
-      this.playSelectedAudioOutput(speakerInformation)
-    })
+    this.AgentUserInformation.selectedSpearkerSubject.subscribe(
+      (speakerInformation) => {
+        this.playSelectedAudioOutput(speakerInformation);
+      }
+    );
   }
 
   setStream(stream: MediaStream) {
@@ -130,17 +132,10 @@ export class CallingScreenComponent implements OnInit {
   }
   setRemoteStream(stream: MediaStream) {
     const user = this.AgentUserInformation.getCallInformation();
-    (user.peer_information.data.isScreenShareOn === true && user.is_minimize === true) ?
-      this.render.setStyle(
-        this.localVideo.nativeElement,
-        'display',
-        'none'
-      ) :
-      this.render.setStyle(
-        this.localVideo.nativeElement,
-        'display',
-        ''
-      );
+    user.peer_information.data.isScreenShareOn === true &&
+    user.is_minimize === true
+      ? this.render.setStyle(this.localVideo.nativeElement, 'display', 'none')
+      : this.render.setStyle(this.localVideo.nativeElement, 'display', '');
     this.remoteVideo.nativeElement.srcObject = null;
     this.remoteVideo.nativeElement.srcObject = stream;
     this.remoteStream = stream;
@@ -153,23 +148,20 @@ export class CallingScreenComponent implements OnInit {
     const user = this.AgentUserInformation.getCallInformation();
     this.CallsOperationService.sendPeerInformation.subscribe((data) => {
       data.isCameraOn === true || data.isScreenShareOn === true
-        ? this.isRemoteEnabled = true
-        : this.isRemoteEnabled = false;
+        ? (this.isRemoteEnabled = true)
+        : (this.isRemoteEnabled = false);
       data.isScreenShareOn === true
         ? this.render.setStyle(
-          this.remoteVideo.nativeElement,
-          'object-fit',
-          'contain'
-        )
+            this.remoteVideo.nativeElement,
+            'object-fit',
+            'contain'
+          )
         : this.render.setStyle(
-          this.remoteVideo.nativeElement,
-          'object-fit',
-          'cover'
-        );
-
-
+            this.remoteVideo.nativeElement,
+            'object-fit',
+            'cover'
+          );
     });
-
   }
   UnslplitScreen($event: boolean) {
     this.unSplitScreenOutput.emit($event);
@@ -203,22 +195,30 @@ export class CallingScreenComponent implements OnInit {
   }
 
   playSelectedAudioOutput(selectedDevice: inputOuputdevices) {
-    if (this.remoteStream != undefined && this.DevicesInformationService.getBrowserName() != 'firefox') {
+    if (
+      this.remoteStream != undefined &&
+      this.DevicesInformationService.getBrowserName() != 'firefox'
+    ) {
       this.remoteVideo.nativeElement.volume = 0;
       if (this.remoteVideo.nativeElement.children.length > 0) {
         this.remoteVideo.nativeElement.volume = 0;
-        this.remoteVideo.nativeElement.removeChild(this.remoteVideo.nativeElement.children[0])
+        this.remoteVideo.nativeElement.removeChild(
+          this.remoteVideo.nativeElement.children[0]
+        );
       }
       let test_audio_context1 = new AudioContext();
-      let webaudio_source1 = test_audio_context1.createMediaStreamSource(this.remoteStream);
+      let webaudio_source1 = test_audio_context1.createMediaStreamSource(
+        this.remoteStream
+      );
       let webaudio_ms1 = test_audio_context1.createMediaStreamDestination();
       webaudio_source1.connect(webaudio_ms1);
-      let test_output_audio1 = <HTMLMediaElement & { setSinkId(deviceId: string): void }>new Audio();
+      let test_output_audio1 = <
+        HTMLMediaElement & { setSinkId(deviceId: string): void }
+      >new Audio();
       test_output_audio1.srcObject = webaudio_ms1.stream;
       test_output_audio1.setSinkId(selectedDevice.id);
       this.remoteVideo.nativeElement.appendChild(test_output_audio1);
       test_output_audio1.play();
     }
-
   }
 }

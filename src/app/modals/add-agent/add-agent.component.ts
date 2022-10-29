@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 
-
 @Component({
   selector: 'app-add-agent',
   templateUrl: './add-agent.component.html',
@@ -10,6 +9,4 @@ export class AddAgentComponent implements OnInit {
   ngOnInit(): void {
     throw new Error('Method not implemented.');
   }
-
-
 }

@@ -11,6 +11,7 @@ import { AuthService } from 'src/app/services/auth.service';
 import { AgentSettings } from 'src/app/models/agentSettingsModel';
 import { AgentList } from 'src/app/models/agentSocketModel';
 import { InviteAgentModel } from 'src/app/models/agent';
+import { inviteLinkModel } from 'src/app/models/invite';
 @Injectable({
   providedIn: 'root'
 })
@@ -638,7 +639,7 @@ export class GigaaaApiService {
   }
 
   // get invitation status
-  public getinvitationdetails(code: string) {
+  public getinvitationdetails(code: string):any {
     const httpOptions: any = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
@@ -1098,6 +1099,40 @@ export class GigaaaApiService {
     return this.http
       .get<any>(
         `${this.workdeskurl_cs}/private/agent-full?organization=${organizationId}&project=${projectId}&agent=${agentUuid}`,
+        httpOptions
+      )
+      .toPromise()
+      .catch((err) => {
+        throw err;
+      });
+  }
+
+  // set all language selected
+
+  public async setAllLanguageEnabled(
+    token: string,
+    agentUuid: string,
+    organizationId: string,
+    projectId: string,
+    languageBody: any
+  ): Promise<any> {
+    const httpOptions: any = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        Accept: 'application/json',
+        Authorization: `Bearer ${token}`
+      })
+    };
+    return await this.http
+      .put(
+        this.workdeskurl_cs +
+        '/private/agent/all-languages/' +
+        agentUuid +
+        '?organization=' +
+        organizationId +
+        '&project=' +
+        projectId,
+        languageBody,
         httpOptions
       )
       .toPromise()

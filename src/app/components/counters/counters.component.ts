@@ -6,10 +6,8 @@ import { Component, Input, OnInit } from '@angular/core';
   styleUrls: ['./counters.component.scss']
 })
 export class CountersComponent implements OnInit {
-  @Input('counterValue') counterValue!: number
-  constructor() { }
+  @Input() counterValue!: number;
+  constructor() {}
 
-  ngOnInit(): void {
-  }
-
+  ngOnInit(): void {}
 }

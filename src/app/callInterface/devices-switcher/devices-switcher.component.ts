@@ -21,17 +21,20 @@ export class DevicesSwitcherComponent implements OnInit {
   voiceLevels!: Observable<number>;
   levels: number = 0;
 
-  constructor(private StreamingService: StreamingService,
+  constructor(
+    private StreamingService: StreamingService,
     private AgentUserInformation: AgentUserInformation,
-    private PeerConnectionService: PeerConnectionService) { }
+    private PeerConnectionService: PeerConnectionService
+  ) {}
 
   ngOnInit() {
-    const userInformation = this.AgentUserInformation.getCallInformation()
+    const userInformation = this.AgentUserInformation.getCallInformation();
     if (userInformation.last_used_microphone === undefined) {
       this.getInputOutputDeviceInformation(this.inputDevicesData.devices[0]);
-    }
-    else {
-      this.getInputOutputDeviceInformation(userInformation.last_used_microphone);
+    } else {
+      this.getInputOutputDeviceInformation(
+        userInformation.last_used_microphone
+      );
     }
     if (userInformation.last_used_speaker === undefined) {
       this.getInputOutputDeviceInformation(this.outputDevicesData.devices[0]);
@@ -44,27 +47,28 @@ export class DevicesSwitcherComponent implements OnInit {
   }
   getInputOutputDeviceInformation(event: inputOuputdevices) {
     this.selectInputOutputDeviceInformation.emit(event);
-    (event.deviceType === "audioinput") ?
-      this.showMicroPhoneLevels(event) :
-      this.AgentUserInformation.selectedSpearkerSubject.next(event);
-    (event.deviceType === "audioinput") ?
-      this.AgentUserInformation.updateLastUsedMicrophone(event) :
-      this.AgentUserInformation.updateLastUsedSpeaker(event);
-
+    event.deviceType === 'audioinput'
+      ? this.showMicroPhoneLevels(event)
+      : this.AgentUserInformation.selectedSpearkerSubject.next(event);
+    event.deviceType === 'audioinput'
+      ? this.AgentUserInformation.updateLastUsedMicrophone(event)
+      : this.AgentUserInformation.updateLastUsedSpeaker(event);
   }
   // for switching between micriphones
   public async showMicroPhoneLevels(selectedMicrophone: inputOuputdevices) {
     try {
       let constraint = { audio: { deviceId: selectedMicrophone.id } };
       if (this.StreamingService.localStream) {
-        this.StreamingService.localStream.getAudioTracks().forEach(track=>{
-          track.stop()
-        })
+        this.StreamingService.localStream.getAudioTracks().forEach((track) => {
+          track.stop();
+        });
       }
       navigator.mediaDevices.getUserMedia(constraint).then(async (stream) => {
-        const audio = this.PeerConnectionService.peerConnection.getSenders().find((audioTrack: any) => {
-          return audioTrack.track.kind === "audio";
-        })
+        const audio = this.PeerConnectionService.peerConnection
+          .getSenders()
+          .find((audioTrack: any) => {
+            return audioTrack.track.kind === 'audio';
+          });
         this.StreamingService.localStream.addTrack(stream.getAudioTracks()[0]);
         audio?.replaceTrack(stream.getAudioTracks()[0]);
         const audioContext = new AudioContext();
@@ -85,5 +89,4 @@ export class DevicesSwitcherComponent implements OnInit {
       //  console.log(err);
     }
   }
-
 }

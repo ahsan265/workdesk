@@ -4,24 +4,54 @@
   width: inherit;
   display: flex;">
 </div> -->
-  <canvas [height]="500" width="500" #layer1 id="layer1" class="canvanImage"
-    style="position: relative; height: inherit; width: inherit; display: flex">
+  <canvas
+    [height]="500"
+    width="500"
+    #layer1
+    id="layer1"
+    class="canvanImage"
+    style="position: relative; height: inherit; width: inherit; display: flex"
+  >
   </canvas>
-  <div cdkDragBoundary=".picturearea" cdkDrag class="content" [style.width.px]="width" [style.height.px]="height"
-    [style.backgroundColor]="color">
+  <div
+    cdkDragBoundary=".picturearea"
+    cdkDrag
+    class="content"
+    [style.width.px]="width"
+    [style.height.px]="height"
+    [style.backgroundColor]="color"
+  >
     <div class="resize" (mouseup)="dragEvent($event)"></div>
   </div>
 </div>
 
 <div class="btnpanelzooms">
-  <svg class="zoomout" (click)="zoomOut()" width="12" height="2" viewBox="0 0 12 2" fill="none"
-    xmlns="http://www.w3.org/2000/svg">
-    <path d="M11.8203 1.82019H0.179688V0.179565H11.8203V1.82019Z" fill="#7D8696" />
+  <svg
+    class="zoomout"
+    (click)="zoomOut()"
+    width="12"
+    height="2"
+    viewBox="0 0 12 2"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <path
+      d="M11.8203 1.82019H0.179688V0.179565H11.8203V1.82019Z"
+      fill="#7D8696"
+    />
   </svg>
-  <svg class="zoomin" (click)="zoomIn()" width="12" height="12" viewBox="0 0 12 12" fill="none"
-    xmlns="http://www.w3.org/2000/svg">
+  <svg
+    class="zoomin"
+    (click)="zoomIn()"
+    width="12"
+    height="12"
+    viewBox="0 0 12 12"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+  >
     <path
       d="M11.8203 6.82019H6.82031V11.8202H5.17969V6.82019H0.179688V5.17957H5.17969V0.179565H6.82031V5.17957H11.8203V6.82019Z"
-      fill="#7D8696" />
+      fill="#7D8696"
+    />
   </svg>
 </div>

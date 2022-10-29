@@ -120,16 +120,18 @@ export class DashboardEndpointService {
     secondResultText: string,
     secondResultNumber: number
   ) {
-
     const cardResult: Card = {
       icon: urls,
       title: title,
       color: color,
       mainResult: mainResult,
-      secondResultText: (secondResultText === "") ? "" : ' % vs ' + secondResultText,
-      secondResultNumber: (secondResultText === "") ? 0 : secondResultNumber,
-      iconUp: (secondResultText === "") ? "" : '../../assets/images/cards/arrowUp.svg',
-      iconDown: (secondResultText === "") ? "" : '../../assets/images/cards/arrowDown.svg'
+      secondResultText:
+        secondResultText === '' ? '' : ' % vs ' + secondResultText,
+      secondResultNumber: secondResultText === '' ? 0 : secondResultNumber,
+      iconUp:
+        secondResultText === '' ? '' : '../../assets/images/cards/arrowUp.svg',
+      iconDown:
+        secondResultText === '' ? '' : '../../assets/images/cards/arrowDown.svg'
     };
     return cardResult;
   }
@@ -174,7 +176,9 @@ export class DashboardEndpointService {
           data['incoming']
         );
         const imissedData = this.chartsData.calculateChartData(data['missed']);
-        const answeredData = this.chartsData.calculateChartData(data['answered']);
+        const answeredData = this.chartsData.calculateChartData(
+          data['answered']
+        );
         const incomingChartRes: ChartData<'bar'> = this.chartDataForm(
           incomingData,
           incomingLabel
@@ -214,7 +218,7 @@ export class DashboardEndpointService {
           maxBarThickness: 65,
           hoverBorderColor: '#1C54DB',
         }
-      ],
+      ]
     };
     return ChartDataSet;
   }

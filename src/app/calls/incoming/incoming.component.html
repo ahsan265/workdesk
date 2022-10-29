@@ -1,4 +1,8 @@
-<div class="tableWrapper" *ngIf="incomingData.length!=0">
-    <gigaaa-workdesk-table [tableData]="incomingData" [tableSettings]="tableSettings" (callId)="getCallsId($event)">
-    </gigaaa-workdesk-table>
+<div class="tableWrapper" *ngIf="incomingData.length !== 0">
+  <gigaaa-workdesk-table
+    [tableData]="incomingData"
+    [tableSettings]="tableSettings"
+    (callId)="getCallsId($event)"
+  >
+  </gigaaa-workdesk-table>
 </div>

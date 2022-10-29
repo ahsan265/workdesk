@@ -1,7 +1,17 @@
-<div class="mainCallWrapper" cdkDragBoundary=".workdeskWrap" cdkDrag [cdkDragDisabled]="!toogle"
-  [ngStyle]="toogle ? minimize : maximize">
-
-  <div class="screeenShareRestrictionPanel" *ngIf="toogle===true && this.secondpeerUserInformationData.showShareScreen==true">
+<div
+  class="mainCallWrapper"
+  cdkDragBoundary=".workdeskWrap"
+  cdkDrag
+  [cdkDragDisabled]="!toogle"
+  [ngStyle]="toogle ? minimize : maximize"
+>
+  <div
+    class="screeenShareRestrictionPanel"
+    *ngIf="
+      toogle === true &&
+      this.secondpeerUserInformationData.showShareScreen === true
+    "
+  >
     <app-screen-share-restriction></app-screen-share-restriction>
   </div>
   <app-calls-header

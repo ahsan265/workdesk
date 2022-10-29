@@ -17,11 +17,12 @@ import { languauges, selectedAgentType } from '../agentsData';
   providedIn: 'root'
 })
 export class AgentService {
-  constructor(private AgentSocketService: AgentSocketService,
+  constructor(
+    private AgentSocketService: AgentSocketService,
     private GigaaaApiService: GigaaaApiService,
     private CommonService: CommonService,
-    private MessageService: MessageService,
-  ) { }
+    private MessageService: MessageService
+  ) {}
   // send agent params from agent component using service
   public sendAgentDefaultParameter(
     languages: number[],
@@ -67,30 +68,39 @@ export class AgentService {
       return displayName;
     }
   }
-  public disabledEditButton(email: string, isOrganizationAdmin: boolean, role: string): boolean {
-    if (this.AgentSocketService.getOrganizationAdminStatus().is_organization_admin === true) {
+  public disabledEditButton(
+    email: string,
+    isOrganizationAdmin: boolean,
+    role: string
+  ): boolean {
+    if (
+      this.AgentSocketService.getOrganizationAdminStatus()
+        .is_organization_admin === true
+    ) {
       return true;
-    }
-    else if (this.AgentSocketService.getOrganizationAdminStatus().is_organization_admin === false && this.AgentSocketService.getOrganizationAdminStatus().role === 'Admin') {
+    } else if (
+      this.AgentSocketService.getOrganizationAdminStatus()
+        .is_organization_admin === false &&
+      this.AgentSocketService.getOrganizationAdminStatus().role === 'Admin'
+    ) {
       if (isOrganizationAdmin === true && role === 'Admin') {
         return false;
-      }
-      else {
-        return true
-      }
-    }
-    else if (this.AgentSocketService.getOrganizationAdminStatus().is_organization_admin === false && this.AgentSocketService.getOrganizationAdminStatus().role === 'Agent') {
-      if (this.checkIsLoggedInAgent(email) === true) {
+      } else {
         return true;
       }
-      else {
-        return false
+    } else if (
+      this.AgentSocketService.getOrganizationAdminStatus()
+        .is_organization_admin === false &&
+      this.AgentSocketService.getOrganizationAdminStatus().role === 'Agent'
+    ) {
+      if (this.checkIsLoggedInAgent(email) === true) {
+        return true;
+      } else {
+        return false;
       }
+    } else {
+      return false;
     }
-    else {
-      return false
-    }
-
   }
   // check is user LoggedIn agent
   public checkIsLoggedInAgent(agentEmail: string) {
@@ -101,64 +111,80 @@ export class AgentService {
   }
 
   // set Agent Invited property
-  public setAgentInvitedProperty(invited: boolean, inactive: boolean, active: boolean) {
+  public setAgentInvitedProperty(
+    invited: boolean,
+    inactive: boolean,
+    active: boolean
+  ) {
     if (invited == true && inactive == false && active == false) {
       return false;
-    }
-    else {
-      return true
+    } else {
+      return true;
     }
   }
-  // send Invitation to agent 
+  // send Invitation to agent
   private async sendInvitationToAgent(agentsInformation: InviteAgentModel) {
     try {
-      await this.GigaaaApiService.getinviteagent(this.CommonService.getEndpointsParamLocal().token, this.CommonService.getEndpointsParamLocal().organization,
-        this.CommonService.getEndpointsParamLocal().project, agentsInformation);
-
-    }
-    catch (error: any) {
-      this.MessageService.setErrorMessage(error.error.error)
+      await this.GigaaaApiService.getinviteagent(
+        this.CommonService.getEndpointsParamLocal().token,
+        this.CommonService.getEndpointsParamLocal().organization,
+        this.CommonService.getEndpointsParamLocal().project,
+        agentsInformation
+      );
+    } catch (error: any) {
+      this.MessageService.setErrorMessage(error.error.error);
     }
   }
 
-  // set Validation for Add agent 
+  // set Validation for Add agent
 
   public async validateAgent(agentsInformation: InviteAgentModel) {
-    console.log(agentsInformation);
     let ids: number[] = [];
     if (agentsInformation.language_ids === undefined) {
       ids = [];
       if (ids.length === 0) {
         this.MessageService.setErrorMessage('Please enter valid information');
       }
-    }
-    else {
+    } else {
       await this.sendInvitationToAgent(agentsInformation);
-
     }
-
   }
 
   getLanguageFlagById(languages: AgentLanguages[]): UtlitiesIcon[] {
     let UtlitiesIcon: UtlitiesIcon[] = [];
-    languages.forEach(data => {
-      UtlitiesIcon.push({ image: this.CommonService.getLanguageFlags(data.id) });
-    })
+    languages.forEach((data) => {
+      UtlitiesIcon.push({
+        image: this.CommonService.getLanguageFlags(data.id)
+      });
+    });
     return UtlitiesIcon;
   }
 
-  // get agent role 
-  public getAgentRole(isOrganizationAdmin: boolean, isOrganizationOwner: boolean, role: string) {
-    if (isOrganizationAdmin === true && isOrganizationOwner === true && role === 'Admin') {
+  // get agent role
+  public getAgentRole(
+    isOrganizationAdmin: boolean,
+    isOrganizationOwner: boolean,
+    role: string
+  ) {
+    if (
+      isOrganizationAdmin === true &&
+      isOrganizationOwner === true &&
+      role === 'Admin'
+    ) {
       return 'Owner';
-    }
-    else if (isOrganizationAdmin === true && isOrganizationOwner === false && role === 'Admin') {
+    } else if (
+      isOrganizationAdmin === true &&
+      isOrganizationOwner === false &&
+      role === 'Admin'
+    ) {
       return 'Admin';
-    }
-    else if (isOrganizationAdmin === false && isOrganizationOwner === false && role === 'Admin') {
+    } else if (
+      isOrganizationAdmin === false &&
+      isOrganizationOwner === false &&
+      role === 'Admin'
+    ) {
       return 'Admin';
-    }
-    else {
+    } else {
       return 'Agent';
     }
   }

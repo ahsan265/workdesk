@@ -4,6 +4,7 @@ import { Component, OnInit } from '@angular/core';
 import {
   agentDefaultModalData,
   agentUploadImageModal,
+  allLanguageData,
   backButtonData,
   cancelInvitationButtonData,
   deleteAgentButtonData,
@@ -37,7 +38,7 @@ export class AgentSettingsComponent implements OnInit {
   agentId!: string;
   adminAletMessage: string = '';
   pendingStatusForLanguages: string = '';
-  pendingStatusForAdminRights: string = ""
+  pendingStatusForAdminRights: string = '';
   agents: Agent[] = [];
   agentUploadModalData = agentUploadImageModal;
   agentDefaultModalData = agentDefaultModalData;
@@ -54,6 +55,7 @@ export class AgentSettingsComponent implements OnInit {
   showResendAndCancelButton: boolean = false;
   showPasswordSection: boolean = false;
   switchButtonData = switchButtonData;
+  allLanguageData = allLanguageData;
   isAdmin: boolean = false;
   agentImage!: string;
   agentLanguages: number[] = [];
@@ -63,6 +65,8 @@ export class AgentSettingsComponent implements OnInit {
   disableAgentRights: boolean = false;
   isDropdownEnabled: boolean = true;
   isButtonDisabled: boolean = false;
+  isAllLanguageSelected: boolean = false;
+  showAllSelectedLanguageToggle: boolean = false;
   agentSettingsForm = new FormGroup({
     email: new FormControl('', [
       Validators.required,
@@ -92,20 +96,20 @@ export class AgentSettingsComponent implements OnInit {
     this.SharedServices.closeImageUploadDialog.subscribe((data: boolean) => {
       this.showImageUploadModal = data;
     });
-    // for setting latest updated image 
+    // for setting latest updated image
 
     this.SharedServices.setAgentImage.subscribe((data: string) => {
-      let timestamp = (new Date()).getTime();
+      let timestamp = new Date().getTime();
       this.agentImage = data + '?_=' + timestamp;
-    })
+    });
 
     // closing passwordpopup
-    this.SharedServices.PasswordPopup.subscribe(data => {
+    this.SharedServices.PasswordPopup.subscribe((data) => {
       if (data) {
         this.showPasswordModal = false;
         this.showDeleteAgentModal = false;
       }
-    })
+    });
   }
 
   onGetInputValue(event: any) {
@@ -114,9 +118,13 @@ export class AgentSettingsComponent implements OnInit {
   // getAgent() {
   //   this.agents = agents;
   // }
-
+  // for admin rights
   onGetSwitchButtonValue(event: any) {
     this.isAdmin = !event;
+  }
+  onGetSwitchAllLanguage(event: any) {
+    this.isAllLanguageSelected = event;
+    this.agentSettingService.setAllLanguageEnabled(this.selectedAgent.uuid, { "all_languages": !this.isAllLanguageSelected })
   }
 
   onGetBackButtonOutput(event: any) {
@@ -202,6 +210,9 @@ export class AgentSettingsComponent implements OnInit {
     } catch (err: any) {
       this.MessageService.setErrorMessage(err.error.error);
     }
+    (this.selectedAgent.is_organization_admin === true) ?
+      this.showAllSelectedLanguageToggle = true : this.showAllSelectedLanguageToggle = false;
+
   }
   public languaugesOutput(langaugesId: number[]) {
     this.agentLanguages = langaugesId;
@@ -228,33 +239,39 @@ export class AgentSettingsComponent implements OnInit {
         agentData.role
       );
 
-    const isLoggedIn = this.AgentService.checkIsLoggedInAgent(
-      agentData.email
-    );
+    const isLoggedIn = this.AgentService.checkIsLoggedInAgent(agentData.email);
     this.isAdmin = this.agentSettingService.isAdmin(agentData.role);
-    const isAgentAcceptInvitation = this.AgentService.setAgentInvitedProperty(agentData.invited, agentData.inactive, agentData.active);
+    const isAgentAcceptInvitation = this.AgentService.setAgentInvitedProperty(
+      agentData.invited,
+      agentData.inactive,
+      agentData.active
+    );
     if (isAgentAcceptInvitation === false) {
-      this.agentSettingsForm.controls["first_name"].disable();
-      this.agentSettingsForm.controls["last_name"].disable();
-      this.agentSettingsForm.controls["display_name"].disable();
+      this.agentSettingsForm.controls['first_name'].disable();
+      this.agentSettingsForm.controls['last_name'].disable();
+      this.agentSettingsForm.controls['display_name'].disable();
     }
     if (isLoggedIn === true && this.isAdmin === true) {
-      this.showDeleteAgentButton = false
-    }
-    else if (isAgentAcceptInvitation === true) {
-      this.showDeleteAgentButton = true
-    }
-    else if (isAgentAcceptInvitation === false) {
+      this.showDeleteAgentButton = false;
+    } else if (isAgentAcceptInvitation === true) {
+      this.showDeleteAgentButton = true;
+    } else if (isAgentAcceptInvitation === false) {
       this.isDropdownEnabled = false;
       this.isButtonDisabled = true;
     }
-    this.pendingStatusForLanguages = this.agentSettingService.checkAgentStatusIsPendingLanguage(isAgentAcceptInvitation);
-    this.pendingStatusForAdminRights = this.agentSettingService.checkAgentStatusIsPendingAdminRights(isAgentAcceptInvitation);
+    this.pendingStatusForLanguages =
+      this.agentSettingService.checkAgentStatusIsPendingLanguage(
+        isAgentAcceptInvitation
+      );
+    this.pendingStatusForAdminRights =
+      this.agentSettingService.checkAgentStatusIsPendingAdminRights(
+        isAgentAcceptInvitation
+      );
     isLoggedIn === true
       ? (this.showPasswordSection = true)
       : (this.showPasswordSection = false);
     this.switchButtonData.buttonChecked = !this.isAdmin;
-
+    this.allLanguageData.buttonChecked = !agentData.all_call_requests
   }
   public updateAgentDetails() {
     const agentSetting: AgentSettings = {

@@ -1,7 +1,6 @@
 export interface tableSettings {
-  tableName: string,
-  tableHeaders: tableHeading[]
-
+  tableName: string;
+  tableHeaders: tableHeading[];
 }
 export interface tableHeading {
   index: number;
@@ -100,14 +99,13 @@ export interface CallsModel {
   new_call: boolean;
 }
 
-
 /// for Tables Data Model
 export interface IncomingCallModelTable {
   hashIcon: string;
   call_uuid: string;
   language_icon: string;
   utilites: UtlitiesIcon[];
-  callType: ImageText
+  callType: ImageText;
   name: string;
   user_id: string;
   time: string;
@@ -151,7 +149,6 @@ export interface AnsweredCallModelTable {
   agent_details: ImageText;
 }
 
-
 export interface AgentModelTable {
   uuid: string;
   agent_details: ImageText;
@@ -167,11 +164,10 @@ export interface AgentModelTable {
   invitation_accepted: boolean;
   loggedIn_user_icon: string;
   edit_icon: string;
-  routeUrl: string[],
+  routeUrl: string[];
   organization_admin_icon: String;
   is_organization_admin: boolean;
 }
-
 
 export interface UtlitiesIcon {
   image: string;
@@ -180,6 +176,3 @@ export interface ImageText {
   text: string;
   image: string;
 }
-
-
-

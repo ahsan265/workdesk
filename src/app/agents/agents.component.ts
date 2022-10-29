@@ -89,7 +89,7 @@ export class AgentsComponent implements OnInit {
     //   this.router.navigate(['agents', 'settings', selectedAgent?.uuid]);
     // }
     // this.openCallInterface.open();
-    this.showInviteModel = true
+    this.showInviteModel = true;
   }
 
   onCloseAgentInvite(event: any) {
@@ -99,9 +99,11 @@ export class AgentsComponent implements OnInit {
   }
   getAgentList() {
     this.AgentSocketService.AgentListSubject.subscribe((data: AgentList[]) => {
-      data.forEach(element => {
+      data.forEach((element) => {
         if (this.CommonService.checkLoggedInUser(element.email)) {
-          var fromindex = data.findIndex(x => x.email === this.CommonService.getEmailForLoggedInUser());
+          var fromindex = data.findIndex(
+            (x) => x.email === this.CommonService.getEmailForLoggedInUser()
+          );
           var selectedobject = data[fromindex];
           data.splice(fromindex, 1);
           data.splice(0, 0, selectedobject);
@@ -109,21 +111,63 @@ export class AgentsComponent implements OnInit {
       });
       this.agentdata = data.map((AgentList: AgentList) => ({
         uuid: AgentList.uuid,
-        activity_icon: AgentList.is_in_call ? "../assets/images/request_type/call_icons.svg" : "../assets/images/request_type/chat_icons.svg",
-        agent_details: { image: AgentList.images['96'], text: AgentList.first_name + " " + AgentList.last_name },
-        agent_name: this.AgentService.getAgentFullName(AgentList.invited, AgentList.inactive, AgentList.active, AgentList.display_name),
-        can_edit: this.AgentService.disabledEditButton(AgentList.email, AgentList.is_organization_admin, AgentList.role),
+        activity_icon: AgentList.is_in_call
+          ? '../assets/images/request_type/call_icons.svg'
+          : '../assets/images/request_type/chat_icons.svg',
+        agent_details: {
+          image: AgentList.images['96'],
+          text: AgentList.first_name + ' ' + AgentList.last_name
+        },
+        agent_name: this.AgentService.getAgentFullName(
+          AgentList.invited,
+          AgentList.inactive,
+          AgentList.active,
+          AgentList.display_name
+        ),
+        can_edit: this.AgentService.disabledEditButton(
+          AgentList.email,
+          AgentList.is_organization_admin,
+          AgentList.role
+        ),
         email: AgentList.email,
         is_logged_in: this.CommonService.checkLoggedInUser(AgentList.email),
         is_online_icon_color: this.AgentService.checkIsAgentOnline(
           AgentList.is_available,
           AgentList.is_online
         ),
-        role: (this.AgentService.setAgentInvitedProperty(AgentList.invited, AgentList.inactive, AgentList.active) === true) ? this.AgentService.getAgentRole(AgentList.is_organization_admin, AgentList.is_organization_owner, AgentList.role) : 'Pending',
-        show_edit: this.AgentService.disabledEditButton(AgentList.email, AgentList.is_organization_admin, AgentList.role),
+        role:
+          this.AgentService.setAgentInvitedProperty(
+            AgentList.invited,
+            AgentList.inactive,
+            AgentList.active
+          ) === true
+            ? this.AgentService.getAgentRole(
+              AgentList.is_organization_admin,
+              AgentList.is_organization_owner,
+              AgentList.role
+            )
+            : 'Pending',
+        show_edit: this.AgentService.disabledEditButton(
+          AgentList.email,
+          AgentList.is_organization_admin,
+          AgentList.role
+        ),
         utilites: this.AgentService.getLanguageFlagById(AgentList.languages),
-        invitation_accepted: this.AgentService.setAgentInvitedProperty(AgentList.invited, AgentList.inactive, AgentList.active),
-        is_organization_admin: (AgentList.is_organization_admin === true && AgentList.is_organization_owner === false && AgentList.role === 'Admin') ? true : false,
+        invitation_accepted: this.AgentService.setAgentInvitedProperty(
+          AgentList.invited,
+          AgentList.inactive,
+          AgentList.active
+        ),
+        is_organization_admin:
+          AgentList.is_organization_admin === true &&
+            AgentList.is_organization_owner === false && this.AgentService.setAgentInvitedProperty(
+              AgentList.invited,
+              AgentList.inactive,
+              AgentList.active
+            ) &&
+            AgentList.role === 'Admin'
+            ? true
+            : false,
         loggedIn_user_icon: '../assets/images/tickSign.svg',
         organization_admin_icon: '../assets/images/crown.svg',
         edit_icon: '../assets/images/pencil.svg',

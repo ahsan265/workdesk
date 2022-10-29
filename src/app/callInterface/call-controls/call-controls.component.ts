@@ -54,15 +54,15 @@ export class CallControlsComponent implements OnInit {
     private DevicesInformationService: DevicesInformationService,
     private StreamingService: StreamingService,
     private AgentUserInformation: AgentUserInformation
-  ) { }
+  ) {}
 
   async ngOnInit(): Promise<void> {
     navigator.mediaDevices.addEventListener('devicechange', async () => {
-      await this.deviceData()
+      await this.deviceData();
       this.markLastUsedDevices();
-    })
+    });
     await this.deviceData();
-    this.markLastUsedDevices()
+    this.markLastUsedDevices();
   }
   // on of microphone
   onOffMicrophone(event: boolean) {
@@ -108,7 +108,6 @@ export class CallControlsComponent implements OnInit {
   }
 
   setVideoMinimize() {
-    console.log('hello');
     return videoMinimizeControlData;
   }
   async deviceData() {
@@ -134,34 +133,32 @@ export class CallControlsComponent implements OnInit {
         isSelected: false,
         selectedbackgroundColor: '#243247',
         hoverColor: '',
-        selectedIcon: '../../../assets/images/callInterface/green_check_icon.svg',
+        selectedIcon:
+          '../../../assets/images/callInterface/green_check_icon.svg',
         voiceLevels: 0
       }));
     }
-
   }
-  // mark last Used Devices 
+  // mark last Used Devices
   private markLastUsedDevices() {
     const userInformation = this.AgentUserInformation.getCallInformation();
     // for last used microphone
-    (userInformation.last_used_microphone === undefined) ?
-      this.inputDeviceData.devices[0].isSelected = true :
-      this.inputDeviceData.devices.find(data => {
-        if (data.id === userInformation.last_used_microphone.id) {
-          data.isSelected = true;
-        }
-      });
-    // for last used speaker
-    if (this.DevicesInformationService.getBrowserName() != 'firefox') {
-      (userInformation.last_used_speaker === undefined) ?
-        this.outputDeviceData.devices[0].isSelected = true :
-        this.outputDeviceData.devices.filter(data => {
-          if (data.id === userInformation.last_used_speaker.id) {
+    userInformation.last_used_microphone === undefined
+      ? (this.inputDeviceData.devices[0].isSelected = true)
+      : this.inputDeviceData.devices.find((data) => {
+          if (data.id === userInformation.last_used_microphone.id) {
             data.isSelected = true;
           }
-        })
+        });
+    // for last used speaker
+    if (this.DevicesInformationService.getBrowserName() != 'firefox') {
+      userInformation.last_used_speaker === undefined
+        ? (this.outputDeviceData.devices[0].isSelected = true)
+        : this.outputDeviceData.devices.filter((data) => {
+            if (data.id === userInformation.last_used_speaker.id) {
+              data.isSelected = true;
+            }
+          });
     }
-
   }
-
 }

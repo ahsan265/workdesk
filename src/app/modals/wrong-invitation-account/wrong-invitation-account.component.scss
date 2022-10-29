@@ -1,0 +1,59 @@
+svg {
+    text-align: center;
+}
+
+.nonComplientwrapper {
+    width: 390px;
+    height: fit-content;
+}
+
+.headerLine {
+    font-family: 'Roboto', sans-serif;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 17px;
+    line-height: 130%;
+    text-align: center;
+    letter-spacing: 0.02em;
+    color: #162741;
+}
+
+.description {
+    font-family: 'Roboto', sans-serif;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 130%;
+    text-align: center;
+    letter-spacing: 0.02em;
+    color: #162741;
+}
+
+.actionButtonPanel {
+    display: block;
+    width: 100%;
+    text-align: center;
+}
+
+.cancel {
+    width: 96px;
+    height: 35px;
+    font-family: 'Roboto', sans-serif;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 160%;
+    align-items: center;
+    text-align: center;
+    letter-spacing: 0.02em;
+    color: #162741;
+    cursor: pointer;
+    background: #FFFFFF;
+    border: 1px solid rgba(208, 208, 222, 0.6);
+    border-radius: 4px;
+    margin-top: 20px;
+}
+
+span {
+    color: #ff155a;
+}

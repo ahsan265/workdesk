@@ -1,4 +1,3 @@
-
 export interface Agent {
   id: number;
   agent: string;
@@ -25,11 +24,10 @@ export interface AgentModelTable {
   invitation_accepted: boolean;
   loggedIn_user_icon: string;
   edit_icon: string;
-  routeUrl: string[],
+  routeUrl: string[];
   organization_admin_icon: String;
   is_organization_admin: boolean;
 }
-
 
 export interface UtlitiesIcon {
   image: string;
@@ -55,6 +53,6 @@ export interface InvitedAgentTableLanguage {
   image: string;
 }
 export interface InvitedAgentsModel {
-  email: string,
-  languages: number
+  email: string;
+  languages: number;
 }

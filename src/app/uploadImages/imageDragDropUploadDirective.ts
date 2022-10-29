@@ -12,12 +12,12 @@ import {
 })
 export class DragNDropDirective {
   @Input() private allowed_extensions: Array<string> = ['png', 'jpg', 'bmp'];
-  @Output() private filesChangeEmiter: EventEmitter<File> =
+  @Output() private filesChangeEmiter: EventEmitter<File> = new EventEmitter();
+  @Output() private filesInvalidEmiter: EventEmitter<File[]> =
     new EventEmitter();
-  @Output() private filesInvalidEmiter: EventEmitter<File[]> = new EventEmitter();
   @HostBinding('style.background') private background = '#eee';
 
-  constructor() { }
+  constructor() {}
 
   @HostListener('dragover', ['$event']) public onDragOver(evt: any) {
     evt.preventDefault();

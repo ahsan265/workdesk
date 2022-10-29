@@ -1,6 +1,5 @@
 @import '~ngx-toastr/toastr';
 
-
 .toastClass {
   font-size: 12px;
   line-height: 40px;
@@ -31,11 +30,11 @@ body {
 }
 
 .toast-success {
-  background-image: url(../src/assets/images/toastrMessage/saved_icon.svg);
+  background-image: url('../src/assets/images/toastrMessage/saved_icon.svg') !important;
 }
 
 .toast-warning {
-  background-image: url(../src/assets/images/toastrMessage/error_icon.svg);
+  background-image: url('../src/assets/images/toastrMessage/error_icon.svg') !important;
 }
 
 .toast-message {
@@ -68,8 +67,6 @@ body {
 .ngx-toastr.toast-warning button.toast-close-button[aria-label='Close']:hover {
   color: #ff155a;
 }
-
-
 
 #toast-container {
   padding-right: 100px;

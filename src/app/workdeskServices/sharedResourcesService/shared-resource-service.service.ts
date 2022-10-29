@@ -8,20 +8,20 @@ export class SharedServices {
   public LoadcommonEpsubject = new Subject();
   public closeImageUploadDialog = new Subject<boolean>();
   public saveImageUpload = new Subject<boolean>();
-  public setAgentImage = new Subject<string>()
-  public PasswordPopup = new Subject<boolean>()
-  constructor() { }
+  public setAgentImage = new Subject<string>();
+  public PasswordPopup = new Subject<boolean>();
+  constructor() {}
 
   // load common eps
   loadCommonEps(value: number) {
     this.LoadcommonEpsubject.next(value);
   }
 
-  // close image dialog 
+  // close image dialog
   closeImageDialog(value: boolean) {
     this.closeImageUploadDialog.next(value);
   }
-  // save image to data 
+  // save image to data
   saveAgentImage(value: boolean) {
     this.saveImageUpload.next(value);
   }
@@ -32,6 +32,6 @@ export class SharedServices {
   // close password popup
 
   closePasswordPopup(value: boolean) {
-    this.PasswordPopup.next(value)
+    this.PasswordPopup.next(value);
   }
 }

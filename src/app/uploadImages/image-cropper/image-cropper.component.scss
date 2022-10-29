@@ -331,7 +331,9 @@ mat-slider {
   background-color: #1c54db;
 }
 
-::ng-deep .mat-slider-min-value:not(.mat-slider-thumb-label-showing) .mat-slider-thumb {
+::ng-deep
+  .mat-slider-min-value:not(.mat-slider-thumb-label-showing)
+  .mat-slider-thumb {
   background-color: #d0d0de;
 }
 

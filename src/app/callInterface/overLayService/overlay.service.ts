@@ -8,14 +8,13 @@ interface ComponentDialogConnfiguration {
   panelClass?: string;
   hasBackdrop?: boolean;
   backdropClass?: string;
-  data?:any;
+  data?: any;
 }
 @Injectable({
   providedIn: 'root'
 })
-
 export class OverlayService {
-  constructor(private overlay: Overlay, private injector: Injector) { }
+  constructor(private overlay: Overlay, private injector: Injector) {}
   DEFAULT_CONFIG: ComponentDialogConnfiguration = {
     hasBackdrop: false,
     backdropClass: 'dark-backdrop',
@@ -31,27 +30,49 @@ export class OverlayService {
     // Instantiate remote control
     this.dialogRef = new CloseDialogOverlayRef(overlayRef);
 
-    const overlayComponent = this.attachDialogContainer(overlayRef, dialogConfig, this.dialogRef);
-    overlayRef.backdropClick().subscribe(_ => this.dialogRef.close());
+    const overlayComponent = this.attachDialogContainer(
+      overlayRef,
+      dialogConfig,
+      this.dialogRef
+    );
+    overlayRef.backdropClick().subscribe((_) => this.dialogRef.close());
   }
 
-  private attachDialogContainer(overlayRef: OverlayRef, config: ComponentDialogConnfiguration, dialogRef: CloseDialogOverlayRef) {
+  private attachDialogContainer(
+    overlayRef: OverlayRef,
+    config: ComponentDialogConnfiguration,
+    dialogRef: CloseDialogOverlayRef
+  ) {
     const injector = this.createInjector(config, dialogRef);
 
-    const containerPortal = new ComponentPortal(CallConsoleComponent, null, injector);
-    const containerRef: ComponentRef<CallConsoleComponent> = overlayRef.attach(containerPortal);
+    const containerPortal = new ComponentPortal(
+      CallConsoleComponent,
+      null,
+      injector
+    );
+    const containerRef: ComponentRef<CallConsoleComponent> =
+      overlayRef.attach(containerPortal);
 
     return containerRef.instance;
   }
 
-
-  private createInjector(config: ComponentDialogConnfiguration, dialogRef: CloseDialogOverlayRef):Injector {
+  private createInjector(
+    config: ComponentDialogConnfiguration,
+    dialogRef: CloseDialogOverlayRef
+  ): Injector {
     const injectionTokens = new WeakMap();
     injectionTokens.set(CloseDialogOverlayRef, dialogRef);
     injectionTokens.set(overlayToken, config.data);
-    return  Injector.create({  parent: this.injector,  providers:[ { provide: injectionTokens, useValue: this.DEFAULT_CONFIG.data }]});
+    return Injector.create({
+      parent: this.injector,
+      providers: [
+        { provide: injectionTokens, useValue: this.DEFAULT_CONFIG.data }
+      ]
+    });
   }
-  private getOverlayConfig(config: ComponentDialogConnfiguration): OverlayConfig {
+  private getOverlayConfig(
+    config: ComponentDialogConnfiguration
+  ): OverlayConfig {
     const positionStrategy = this.overlay
       .position()
       .global()

@@ -16,7 +16,10 @@ export class PeerConnectionService {
   checkedRemoteSet: boolean = false;
   candidates: any[] = [];
 
-  constructor(private CallSocketService: CallSocketService, private DevicesInformationService: DevicesInformationService) { }
+  constructor(
+    private CallSocketService: CallSocketService,
+    private DevicesInformationService: DevicesInformationService
+  ) {}
 
   public async createPeerConnection(): Promise<void> {
     let forTurnsSupported = [
@@ -27,7 +30,7 @@ export class PeerConnectionService {
         urls: 'turns:turn.gigaaa.link:5349',
         username: 'username',
         credential: 'password'
-      },
+      }
     ];
 
     let iceserversConfigs = [
@@ -57,10 +60,9 @@ export class PeerConnectionService {
     ];
     let turnConfig = [];
     if (this.DevicesInformationService.getBrowserName() === 'firefox') {
-      turnConfig = forTurnsSupported
-    }
-    else {
-      turnConfig = iceserversConfigs
+      turnConfig = forTurnsSupported;
+    } else {
+      turnConfig = iceserversConfigs;
     }
     this.peerConnection = new RTCPeerConnection({
       iceServers: turnConfig,
@@ -81,9 +83,11 @@ export class PeerConnectionService {
   }
   // handle ice candidate event Function
   private handIceCandidateEvent = (event: RTCPeerConnectionIceEvent) => {
-    console.log(event)
     if (event.candidate !== null) {
-      if (event.candidate?.candidate != null && event.candidate?.candidate != undefined) {
+      if (
+        event.candidate?.candidate != null &&
+        event.candidate?.candidate != undefined
+      ) {
         this.CallSocketService.sendDataforCall({
           type: 'ice-candidate',
           data: event.candidate
@@ -138,14 +142,12 @@ export class PeerConnectionService {
           type: 'answer',
           data: this.peerConnection.localDescription
         });
-
-      }).then(() => {
-        this.candidates.map(c => this.peerConnection.addIceCandidate(c));
+      })
+      .then(() => {
+        this.candidates.map((c) => this.peerConnection.addIceCandidate(c));
       })
       .catch((error: any) => {
-        console.log(error);
       });
-    console.log(this.peerConnection.getReceivers());
     this.checkedRemoteSet = true;
   }
 
@@ -153,31 +155,26 @@ export class PeerConnectionService {
   public async handleAnswerMessage(
     data: RTCSessionDescriptionInit
   ): Promise<void> {
-
     await this.peerConnection
-      .setRemoteDescription(new RTCSessionDescription(data)).then(() => {
+      .setRemoteDescription(new RTCSessionDescription(data))
+      .then(() => {
         // if(this.candidates.length!=0)
         // {
-        this.candidates.map(c => this.peerConnection.addIceCandidate(c));
+        this.candidates.map((c) => this.peerConnection.addIceCandidate(c));
 
         // }
       })
       .catch(async (error: any) => {
-        console.log(error);
       });
   }
   // handle ice Condate Messages
   public async handleIceCandidateMessage(data: RTCIceCandidate): Promise<void> {
     if (this.checkedRemoteSet) {
       if (data.candidate != undefined && data.candidate != null) {
-        await this.peerConnection
-          .addIceCandidate(data)
-          .catch((error: any) => {
-            console.log(error);
-          });
+        await this.peerConnection.addIceCandidate(data).catch((error: any) => {
+        });
       }
-    }
-    else {
+    } else {
       this.candidates.push(data);
     }
   }

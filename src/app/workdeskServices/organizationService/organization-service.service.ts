@@ -32,8 +32,8 @@ export class getOrganizationService {
     this.LastUsedproject = new BehaviorSubject(this.getProjects());
   }
   // get organization for workdesk
-  public getOrganization(token: string) {
-    this.AgentinviteService.sendtAgentInvitationCode();
+  public async getOrganization(token: string) {
+    await this.AgentinviteService.sendtAgentInvitationCode();
     this.gigaaaService
       .getOrganization(token)
       .then((data: any) => {

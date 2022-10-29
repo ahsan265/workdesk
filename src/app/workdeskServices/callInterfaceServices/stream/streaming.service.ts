@@ -36,18 +36,17 @@ export class StreamingService {
     private router: Router,
     private DevicesInformationService: DevicesInformationService,
     private overlayService: OverlayService
-
   ) {
-    this.PeerConnectionService.isRealoaded.subscribe(isReload => {
+    this.PeerConnectionService.isRealoaded.subscribe((isReload) => {
       if (isReload) {
         this.reloadOfferSend(this.peerUserId);
       }
-    })
+    });
     this.detectDevicesMicrphoneDeviceOnchange();
   }
   // load  audio and video
   public async loadAudioandVideoResouce() {
-    let constraint
+    let constraint;
     // const callDetail=this.AgentUserInformation.getCallInformation();
     // if(callDetail.last_used_microphone!=null)
     // {
@@ -87,10 +86,11 @@ export class StreamingService {
         }
       });
     if (audio === undefined) {
-      this.PeerConnectionService.peerConnection.addTrack(audioTrack, this.localStream);
-
-    }
-    else {
+      this.PeerConnectionService.peerConnection.addTrack(
+        audioTrack,
+        this.localStream
+      );
+    } else {
       audio.replaceTrack(audioTrack);
     }
     const offer: RTCSessionDescriptionInit =
@@ -102,14 +102,12 @@ export class StreamingService {
     await this.PeerConnectionService.peerConnection
       .setLocalDescription(offer)
       .catch((err: any) => {
-        // console.log(err);
       });
     this.CallSocketService.sendDataforCall({
       type: 'offer',
       peer_id: peerId,
       data: offer
     });
-    console.log(this.PeerConnectionService.peerConnection.getSenders())
   }
 
   // close the stream
@@ -150,7 +148,6 @@ export class StreamingService {
     const userInformation = this.AgentUserInformation.getCallInformation();
 
     if (this.localStream?.getVideoTracks()) {
-
       this.CallSocketService.sendDataforCall({
         type: 'update_peer',
         user_id: userInformation.user_information.user_id,
@@ -194,40 +191,49 @@ export class StreamingService {
       user_id: userInformation.user_information.user_id,
       data: userInformation.user_information.data
     });
-    await navigator.mediaDevices.getUserMedia({ video: true }).then(stream => {
-      mediastream = stream;
-      this.getLocalStream.next(stream);
-      const videoTrack = stream.getVideoTracks()[0];
-      videoTrack.enabled = true;
-      const audioTrack = this.localStream.getAudioTracks()[0]
-      this.localStream.addTrack(videoTrack)
-      this.localStream.addTrack(audioTrack)
-      const audio = this.PeerConnectionService.peerConnection
-        .getSenders()
-        .find((data: RTCRtpSender) => {
-          if (data.track != null) {
-            return data.track?.kind === 'audio';
-          } else {
-            return undefined;
-          }
-        });
-      const video = this.PeerConnectionService.peerConnection
-        .getSenders()
-        .find((data: RTCRtpSender) => {
-          if (data.track != null) {
-            return data.track?.kind === 'video';
-          } else {
-            return undefined;
-          }
-        });
+    await navigator.mediaDevices
+      .getUserMedia({ video: true })
+      .then((stream) => {
+        mediastream = stream;
+        this.getLocalStream.next(stream);
+        const videoTrack = stream.getVideoTracks()[0];
+        videoTrack.enabled = true;
+        const audioTrack = this.localStream.getAudioTracks()[0];
+        this.localStream.addTrack(videoTrack);
+        this.localStream.addTrack(audioTrack);
+        const audio = this.PeerConnectionService.peerConnection
+          .getSenders()
+          .find((data: RTCRtpSender) => {
+            if (data.track != null) {
+              return data.track?.kind === 'audio';
+            } else {
+              return undefined;
+            }
+          });
+        const video = this.PeerConnectionService.peerConnection
+          .getSenders()
+          .find((data: RTCRtpSender) => {
+            if (data.track != null) {
+              return data.track?.kind === 'video';
+            } else {
+              return undefined;
+            }
+          });
 
-      (audio === undefined) ?
-        this.PeerConnectionService.peerConnection.addTrack(audioTrack, this.localStream) :
-        audio.replaceTrack(audioTrack);
-      (video === undefined) ?
-        this.PeerConnectionService.peerConnection.addTrack(videoTrack, this.localStream) :
-        video.replaceTrack(videoTrack);
-    }).then(async () => {
+        audio === undefined
+          ? this.PeerConnectionService.peerConnection.addTrack(
+              audioTrack,
+              this.localStream
+            )
+          : audio.replaceTrack(audioTrack);
+        video === undefined
+          ? this.PeerConnectionService.peerConnection.addTrack(
+              videoTrack,
+              this.localStream
+            )
+          : video.replaceTrack(videoTrack);
+      })
+      .then(async () => {
         const offer: RTCSessionDescriptionInit =
           await this.PeerConnectionService.peerConnection.createOffer({
             offerToReceiveAudio: true,
@@ -237,16 +243,14 @@ export class StreamingService {
         await this.PeerConnectionService.peerConnection
           .setLocalDescription(offer)
           .catch((err: any) => {
-            console.log(err);
           });
-         
+
         this.CallSocketService.sendDataforCall({
           type: 'offer',
           peer_id: peerId,
           data: offer
         });
-     
-    })
+      });
     return mediastream;
   }
 
@@ -293,7 +297,6 @@ export class StreamingService {
       await this.PeerConnectionService.peerConnection
         .setLocalDescription(offer)
         .catch((err: any) => {
-          console.log(err);
         });
       this.CallSocketService.sendDataforCall({
         type: 'offer',
@@ -323,8 +326,8 @@ export class StreamingService {
     this.CallSocketService.sendDataforCall({ type: 'hangup', data: '' });
     localStorage.removeItem('call-information');
     this.CallSocketService.ws.close();
-   // this.router.navigate(['customersupport']);
-     this.overlayService.close();
+    // this.router.navigate(['customersupport']);
+    this.overlayService.close();
   }
   private stopScreenShareByEvent(stream: MediaStream) {
     stream.getTracks()[0].addEventListener('ended', () => {
@@ -341,15 +344,20 @@ export class StreamingService {
   // relaod stream offer
   public async reloadOfferSend(peerId: string) {
     const callData = this.AgentUserInformation.getCallInformation();
-    if (callData.user_information.data.is_camera_on === true && callData.user_information.data.is_shared_screen === false) {
+    if (
+      callData.user_information.data.is_camera_on === true &&
+      callData.user_information.data.is_shared_screen === false
+    ) {
       this.startVideo(peerId);
-    } else if (callData.user_information.data.is_camera_on === false && callData.user_information.data.is_shared_screen === false) {
+    } else if (
+      callData.user_information.data.is_camera_on === false &&
+      callData.user_information.data.is_shared_screen === false
+    ) {
       this.sendFirstOffer(peerId);
     } else if (callData.user_information.data.is_shared_screen === true) {
-
       if (this.screenShareStream) {
         const videoTrack = this.screenShareStream.getVideoTracks()[0];
-        this.screenShareStream.addTrack(videoTrack)
+        this.screenShareStream.addTrack(videoTrack);
         const audio = this.PeerConnectionService.peerConnection
           .getSenders()
           .find((data: RTCRtpSender) => {
@@ -360,44 +368,53 @@ export class StreamingService {
             }
           });
         if (audio === undefined) {
-          this.PeerConnectionService.peerConnection.addTrack(this.localStream.getAudioTracks()[0]);
-        }
-        else {
+          this.PeerConnectionService.peerConnection.addTrack(
+            this.localStream.getAudioTracks()[0]
+          );
+        } else {
           audio.replaceTrack(this.screenShareStream.getAudioTracks()[0]);
         }
-        this.PeerConnectionService.peerConnection.addTrack(videoTrack, this.screenShareStream);
+        this.PeerConnectionService.peerConnection.addTrack(
+          videoTrack,
+          this.screenShareStream
+        );
 
-        const offer: RTCSessionDescriptionInit = await this.PeerConnectionService.peerConnection.createOffer({
-          offerToReceiveAudio: true,
-          offerToReceiveVideo: true,
-          iceRestart: true
+        const offer: RTCSessionDescriptionInit =
+          await this.PeerConnectionService.peerConnection.createOffer({
+            offerToReceiveAudio: true,
+            offerToReceiveVideo: true,
+            iceRestart: true
+          });
+        await this.PeerConnectionService.peerConnection.setLocalDescription(
+          offer
+        );
+        this.CallSocketService.sendDataforCall({
+          type: 'offer',
+          peer_id: peerId,
+          data: offer
         });
-        await this.PeerConnectionService.peerConnection.setLocalDescription(offer);
-        this.CallSocketService.sendDataforCall({ type: "offer", peer_id: peerId, data: offer });
-      }
-      else {
+      } else {
         this.AgentUserInformation.updateScreenShareStutus(false);
         this.sendFirstOffer(peerId);
       }
-
     }
     this.restoreLastUsedMicrophone();
   }
 
-  // detect devices 
+  // detect devices
   private async detectDevicesMicrphoneDeviceOnchange(): Promise<void> {
     const userInformation = this.AgentUserInformation.getCallInformation();
     navigator.mediaDevices.addEventListener('devicechange', async () => {
-      await this.selectedDeviceForStream()
-    })
+      await this.selectedDeviceForStream();
+    });
   }
 
   // selected Devices
   public async selectedDeviceForStream() {
     const devices = await this.DevicesInformationService.getAllDevice();
-    this.localStream.getAudioTracks().forEach(track => {
+    this.localStream.getAudioTracks().forEach((track) => {
       track.stop();
-    })
+    });
     const selectedMicrophone = {
       id: devices.audioInputDevices[0].deviceId,
       groupId: devices.audioInputDevices[0].groupId,
@@ -427,31 +444,34 @@ export class StreamingService {
     let constraint = { audio: { deviceId: idOfMicrophone } };
     navigator.mediaDevices.getUserMedia(constraint).then(async (stream) => {
       this.localStream.addTrack(stream.getAudioTracks()[0]);
-      const audio = this.PeerConnectionService.peerConnection.getSenders().find((audioTrack: any) => {
-        return audioTrack.track.kind === "audio";
-      })
+      const audio = this.PeerConnectionService.peerConnection
+        .getSenders()
+        .find((audioTrack: any) => {
+          return audioTrack.track.kind === 'audio';
+        });
       audio?.replaceTrack(stream.getAudioTracks()[0]);
-    })
+    });
   }
 
-  // onrefresh restore last used microphone 
-
+  // onrefresh restore last used microphone
 
   public restoreLastUsedMicrophone() {
     const userInformation = this.AgentUserInformation.getCallInformation();
     if (userInformation.last_used_microphone != undefined) {
-      this.localStream.getAudioTracks().forEach(track => {
-        track.stop()
-      })
+      this.localStream.getAudioTracks().forEach((track) => {
+        track.stop();
+      });
       const idOfMicrophone = userInformation.last_used_microphone.id;
       let constraint = { audio: { deviceId: idOfMicrophone } };
       navigator.mediaDevices.getUserMedia(constraint).then(async (stream) => {
         this.localStream.addTrack(stream.getAudioTracks()[0]);
-        const audio = this.PeerConnectionService.peerConnection.getSenders().find((audioTrack: any) => {
-          return audioTrack.track.kind === "audio";
-        })
+        const audio = this.PeerConnectionService.peerConnection
+          .getSenders()
+          .find((audioTrack: any) => {
+            return audioTrack.track.kind === 'audio';
+          });
         audio?.replaceTrack(stream.getAudioTracks()[0]);
-      })
+      });
     }
   }
 }

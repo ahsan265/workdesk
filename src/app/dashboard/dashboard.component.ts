@@ -66,7 +66,7 @@ export class DashboardComponent {
     responsive: true,
     maintainAspectRatio: false,
     interaction: {
-      mode: 'index',
+      mode: 'index'
     },
 
     borderColor: 'none',
@@ -77,31 +77,25 @@ export class DashboardComponent {
     },
     hover: {
       mode: 'index',
-      intersect: false,
+      intersect: false
     },
     scales: {
-
       xAxes: {
         display: true,
         grid: {
           display: false
         }
-
       },
       yAxes: {
         grid: {
-          drawBorder: false,
-
+          drawBorder: false
         },
         ticks: {
           display: true,
           maxTicksLimit: 4,
-          padding: 14,
-
-
-        },
-      },
-
+          padding: 14
+        }
+      }
     },
     plugins: {
       legend: {
@@ -110,8 +104,18 @@ export class DashboardComponent {
       datalabels: {
         display: false
       }
-    },
-
+      ,
+      tooltip: {
+        enabled: true,
+        mode: 'nearest',
+        displayColors: false,
+        callbacks: {
+          title: function () {
+            return '';
+          },
+        }
+      }
+    }
   };
   public barChartType: ChartType = 'bar';
   public barChartPlugins = [DataLabelsPlugin];
@@ -196,7 +200,7 @@ export class DashboardComponent {
     );
   }
   public languaugesOutput(languaugesOutput: number[]) {
-    console.log(languaugesOutput)
+    console.log(languaugesOutput);
     this.idOfLanguage = languaugesOutput;
     this.dashboardEps.getCarddata(
       this.idOfLanguage,

@@ -76,6 +76,8 @@ import { scrollStageDirective } from './directives/scrollDirective';
 import { CountersComponent } from './components/counters/counters.component';
 import { ChartsData } from './chartsfunction/chartData'
 import { ChartLabel } from './chartsfunction/chartLabel'
+import { WrongInvitationAccountComponent } from './modals/wrong-invitation-account/wrong-invitation-account.component';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -119,7 +121,8 @@ import { ChartLabel } from './chartsfunction/chartLabel'
     ScreenShareRestrictionComponent,
     AddAgentComponent,
     AgentListingComponent,
-    CountersComponent
+    CountersComponent,
+    WrongInvitationAccountComponent
   ],
   imports: [
     BrowserAnimationsModule,
@@ -163,6 +166,7 @@ import { ChartLabel } from './chartsfunction/chartLabel'
     OverlayService,
     ChartLabel,
     ChartsData
+    
   ],
   bootstrap: [AppComponent]
 })

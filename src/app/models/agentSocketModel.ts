@@ -1,6 +1,7 @@
 import { ImagesModel } from './imagesModel';
 
 export interface AgentList {
+  all_call_requests: boolean,
   active: boolean;
   display_name: string;
   email: string;

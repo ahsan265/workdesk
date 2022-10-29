@@ -84,7 +84,7 @@ export class CallsComponent implements OnInit {
     this.route.url.subscribe(() => {
       const tabName: string =
         this.route.snapshot.firstChild?.routeConfig?.path || '';
-        this.selectedPage=tabName
+      this.selectedPage = tabName;
       this.callSegmentSelection(tabName);
     });
     this.callInitialEndpoints();
@@ -171,7 +171,6 @@ export class CallsComponent implements OnInit {
   }
 
   callSegmentSelection(title: string) {
-   
     if (title === 'missed') {
       this.showIndicator = true;
       const callIndicator: callsIndicatorData = {

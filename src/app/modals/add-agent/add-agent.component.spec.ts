@@ -8,9 +8,8 @@ describe('AddAgentComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ AddAgentComponent ]
-    })
-    .compileComponents();
+      declarations: [AddAgentComponent]
+    }).compileComponents();
 
     fixture = TestBed.createComponent(AddAgentComponent);
     component = fixture.componentInstance;

@@ -76,62 +76,64 @@ const buttonData: Button = {
 
 const agentTableSetting: any = {
   tableName: 'agent',
-  tableHeaders: [{
-    index: 0,
-    header: "Agent",
-    width: 25,
-    isHeaderImage: true,
-    showHeader: true,
-    isDropdown: false,
-    checkmark: true,
-    isImageItem: false,
-    isUserItem: false
-  },
-  {
-    index: 1,
-    header: "Full Name",
-    width: 20,
-    isHeaderImage: true,
-    showHeader: true,
-    isDropdown: false,
-    checkmark: true,
-    isImageItem: false,
-    isUserItem: false
-  },
-  {
-    index: 2,
-    header: "Language",
-    width: 20,
-    isHeaderImage: true,
-    showHeader: true,
-    isDropdown: false,
-    checkmark: true,
-    isImageItem: false,
-    isUserItem: false
-  },
-  {
-    index: 3,
-    header: "Role",
-    width: 20,
-    isHeaderImage: true,
-    showHeader: true,
-    isDropdown: false,
-    checkmark: true,
-    isImageItem: false,
-    isUserItem: false
-  },
-  {
-    index: 4,
-    header: "",
-    width: 20,
-    isHeaderImage: true,
-    showHeader: true,
-    isDropdown: false,
-    checkmark: true,
-    isImageItem: false,
-    isUserItem: false
-  }]
-}
+  tableHeaders: [
+    {
+      index: 0,
+      header: 'Agent',
+      width: 25,
+      isHeaderImage: true,
+      showHeader: true,
+      isDropdown: false,
+      checkmark: true,
+      isImageItem: false,
+      isUserItem: false
+    },
+    {
+      index: 1,
+      header: 'Full Name',
+      width: 20,
+      isHeaderImage: true,
+      showHeader: true,
+      isDropdown: false,
+      checkmark: true,
+      isImageItem: false,
+      isUserItem: false
+    },
+    {
+      index: 2,
+      header: 'Language',
+      width: 20,
+      isHeaderImage: true,
+      showHeader: true,
+      isDropdown: false,
+      checkmark: true,
+      isImageItem: false,
+      isUserItem: false
+    },
+    {
+      index: 3,
+      header: 'Role',
+      width: 20,
+      isHeaderImage: true,
+      showHeader: true,
+      isDropdown: false,
+      checkmark: true,
+      isImageItem: false,
+      isUserItem: false
+    },
+    {
+      index: 4,
+      header: '',
+      width: 20,
+      isHeaderImage: true,
+      showHeader: true,
+      isDropdown: false,
+      checkmark: true,
+      isImageItem: false,
+      isUserItem: false
+    }
+  ]
+};
 
 const agents: any[] = [
   {
@@ -142,7 +144,10 @@ const agents: any[] = [
     routeUrl: ['agents', 'settings', '1'],
     checked: false,
     isDropdown: false,
-    language_id: [{ id: 56, image: '/assets/images/Flags/english.svg' }, { id: 56, image: '/assets/images/Flags/english.svg' }],
+    language_id: [
+      { id: 56, image: '/assets/images/Flags/english.svg' },
+      { id: 56, image: '/assets/images/Flags/english.svg' }
+    ],
     editIcon: true,
     canEdit: true,
     invitation_accepted: true,
@@ -161,7 +166,10 @@ const agents: any[] = [
     routeUrl: ['agents', 'settings', '2'],
     checked: false,
     isDropdown: false,
-    language_id: [{ id: 56, image: '/assets/images/Flags/english.svg' }, { id: 56, image: '/assets/images/Flags/english.svg' }],
+    language_id: [
+      { id: 56, image: '/assets/images/Flags/english.svg' },
+      { id: 56, image: '/assets/images/Flags/english.svg' }
+    ],
     editIcon: true,
     canEdit: true,
     invitation_accepted: true,
@@ -180,7 +188,10 @@ const agents: any[] = [
     routeUrl: ['agents', 'settings', '3'],
     checked: false,
     isDropdown: false,
-    language_id: [{ id: 56, image: '/assets/images/Flags/english.svg' }, { id: 56, image: '/assets/images/Flags/english.svg' }],
+    language_id: [
+      { id: 56, image: '/assets/images/Flags/english.svg' },
+      { id: 56, image: '/assets/images/Flags/english.svg' }
+    ],
     editIcon: true,
     canEdit: true,
     invitation_accepted: true,
@@ -199,7 +210,10 @@ const agents: any[] = [
     routeUrl: ['agents', 'settings', '4'],
     checked: false,
     isDropdown: false,
-    language_id: [{ id: 56, image: '/assets/images/Flags/english.svg' }, { id: 56, image: '/assets/images/Flags/english.svg' }],
+    language_id: [
+      { id: 56, image: '/assets/images/Flags/english.svg' },
+      { id: 56, image: '/assets/images/Flags/english.svg' }
+    ],
     editIcon: true,
     canEdit: true,
     invitation_accepted: false,

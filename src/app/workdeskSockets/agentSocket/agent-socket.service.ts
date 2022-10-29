@@ -2,6 +2,7 @@
 /* eslint-disable no-undef */
 /* eslint-disable sort-imports */
 import { Injectable } from '@angular/core';
+import { Route, Router } from '@angular/router';
 import { BehaviorSubject, Subject } from 'rxjs';
 import {
   AgentAction,
@@ -11,6 +12,7 @@ import {
   AgentParameter
 } from 'src/app/models/agentSocketModel';
 import { connectionSecurityModel } from 'src/app/models/connectionSecurity';
+import { CommonService } from 'src/app/workdeskServices/commonEndpoint/common.service';
 import { environment } from 'src/environments/environment';
 import { agentLoggedData } from './agentSocketData';
 
@@ -26,8 +28,8 @@ export class AgentSocketService {
   public AgentListSubject = new Subject<AgentList[]>();
   isOganizationAdminStatus: boolean = false;
   isUserAgentOrAdmin: string = '';
-  constructor() {
-  }
+  constructor(private CommonService: CommonService,
+    private Router: Router) { }
 
   public callAgentSocketEndpoint() {
     const connectionId: connectionSecurityModel = JSON.parse(
@@ -67,23 +69,25 @@ export class AgentSocketService {
     }
   }
   private getAgentList(AgentList: AgentList[]) {
-
-
     this.AgentListSubject.next(AgentList);
     this.getAgentOnlineStatus(AgentList);
+    this.getUserExistAsAgent(AgentList);
+
   }
   private getAgentOnlineStatus(AgentList: AgentList[]) {
     const user = JSON.parse(localStorage.getItem('gigaaa-user') || '{}');
     const loggedInAgent = AgentList.find(
       (agent: AgentList) => agent.email === user.email
     );
-    loggedInAgent?.is_organization_admin === true ?
-      this.isOganizationAdminStatus = true : this.isOganizationAdminStatus = false;
-    loggedInAgent?.role === 'Admin' ? this.isUserAgentOrAdmin = 'Admin' : this.isUserAgentOrAdmin = 'Agent';
+    loggedInAgent?.is_organization_admin === true
+      ? (this.isOganizationAdminStatus = true)
+      : (this.isOganizationAdminStatus = false);
+    loggedInAgent?.role === 'Admin'
+      ? (this.isUserAgentOrAdmin = 'Admin')
+      : (this.isUserAgentOrAdmin = 'Agent');
     loggedInAgent?.is_available === true && loggedInAgent?.is_online === true
       ? this.sendAgentOnlineStatus(true)
       : this.sendAgentOnlineStatus(false);
-
   }
   public setAgentOnlineStatus(isOnline: boolean) {
     const isAgentOnline: AgentOnlineStatus = {
@@ -103,9 +107,12 @@ export class AgentSocketService {
     this.AgentLiveStatus.next(isOnline);
     localStorage.setItem('agent-online-status', JSON.stringify(isOnline));
   }
-  // set organization Admin or not 
+  // set organization Admin or not
   public getOrganizationAdminStatus() {
-    return { is_organization_admin: this.isOganizationAdminStatus, role: this.isUserAgentOrAdmin }
+    return {
+      is_organization_admin: this.isOganizationAdminStatus,
+      role: this.isUserAgentOrAdmin
+    };
   }
   // get last used parameters
   public getLastUsedParams() {
@@ -117,6 +124,23 @@ export class AgentSocketService {
   public closeAgentSocketConnection() {
     if (this.ws?.OPEN == this.isSocketOpen) {
       this.ws?.close();
+    }
+  }
+
+
+  private getUserExistAsAgent(agentlist: AgentList[]) {
+    let isLoggedInAgent: boolean = false;
+    agentlist.find(data => {
+      if (data.email === this.CommonService.getEmailForLoggedInUser()) {
+
+        return isLoggedInAgent = true
+      }
+      else {
+        return isLoggedInAgent = false
+      }
+    })
+    if (isLoggedInAgent === false) {
+      this.Router.navigate(['logout'])
     }
   }
 }

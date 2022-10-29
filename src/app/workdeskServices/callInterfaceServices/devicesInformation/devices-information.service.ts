@@ -16,8 +16,7 @@ export class DevicesInformationService {
         if (data.kind === 'audioinput') {
           audioInput.push(data);
         } else if (data.kind === 'audiooutput') {
-          if(this.getBrowserName()!='firefox')
-          {
+          if (this.getBrowserName() != 'firefox') {
             audioOutput.push(data);
           }
         } else if (data.kind === 'videoinput') {

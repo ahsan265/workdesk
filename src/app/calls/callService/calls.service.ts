@@ -3,7 +3,12 @@
 /* eslint-disable sort-imports */
 import { Injectable } from '@angular/core';
 import { ReplaySubject, Subject } from 'rxjs';
-import { AnsweredCallModel, IncomingCallModel, MissedCallModel, OngoingCallModel } from 'src/app/models/callModel';
+import {
+  AnsweredCallModel,
+  IncomingCallModel,
+  MissedCallModel,
+  OngoingCallModel
+} from 'src/app/models/callModel';
 import { OneSelect } from 'src/app/models/oneSelect';
 import { QueueSocketService } from 'src/app/workdeskSockets/queueSocket/queue-socket.service';
 import { callType } from '../callsData';
@@ -12,7 +17,7 @@ import { callType } from '../callsData';
   providedIn: 'root'
 })
 export class CallsService {
-  constructor(private QueueSocketService: QueueSocketService) { }
+  constructor(private QueueSocketService: QueueSocketService) {}
   sendDataToIncomingTabsSubject = new ReplaySubject<IncomingCallModel[]>();
   sendDataToMissedTabsSubject = new ReplaySubject<MissedCallModel[]>();
   sendDataToOngoingTabsSubject = new ReplaySubject<OngoingCallModel[]>();
@@ -61,37 +66,42 @@ export class CallsService {
     return [];
   }
 
-  // get call type 
+  // get call type
 
   getCallType(isVideo: boolean) {
     return isVideo === true ? 'Video' : 'Audio';
   }
-  // calulate time 
+  // calulate time
   calculatetime(totalSeconds: number) {
     totalSeconds = Number(totalSeconds);
     let h = Math.floor(totalSeconds / 3600);
-    let m = Math.floor(totalSeconds % 3600 / 60);
-    let s = Math.floor(totalSeconds % 3600 % 60);
+    let m = Math.floor((totalSeconds % 3600) / 60);
+    let s = Math.floor((totalSeconds % 3600) % 60);
     // let hDisplay = h > 0 ? h + (h == 1 ? "" : "") : "00";
-    let mDisplay = m > 0 ? m + (m == 1 ? "" : "") : "00";
-    let sDisplay = s > 0 ? s + (s == 1 ? "" : "") : "00";
-    return ("0" + mDisplay).slice(-2) + ":" + ("0" + sDisplay).slice(-2);
+    let mDisplay = m > 0 ? m + (m == 1 ? '' : '') : '00';
+    let sDisplay = s > 0 ? s + (s == 1 ? '' : '') : '00';
+    return ('0' + mDisplay).slice(-2) + ':' + ('0' + sDisplay).slice(-2);
   }
-
 
   gettimedurationformissedandanswered(val: string) {
     const myDate = new Date(val);
-    return ("0" + myDate.getHours()).slice(-2) + ":" + ("0" + myDate.getMinutes()).slice(-2)
+    return (
+      ('0' + myDate.getHours()).slice(-2) +
+      ':' +
+      ('0' + myDate.getMinutes()).slice(-2)
+    );
   }
   // check user Id
   getUserId(id: string) {
-    return id === null ? 'Anon' : id
+    return id === null ? 'Anon' : id;
   }
 
-  // get ellapsed time 
+  // get ellapsed time
   getElapsedTime(entry: string) {
     var myDate = new Date(entry);
-    let totalSeconds = Math.floor((new Date().getTime() - myDate.getTime()) / 1000);
+    let totalSeconds = Math.floor(
+      (new Date().getTime() - myDate.getTime()) / 1000
+    );
     let hours = 0;
     let minutes = 0;
     let seconds = 0;
@@ -104,6 +114,6 @@ export class CallsService {
       totalSeconds -= 60 * minutes;
     }
     seconds = totalSeconds;
-    return 0 + ":" + seconds
+    return 0 + ':' + seconds;
   }
 }

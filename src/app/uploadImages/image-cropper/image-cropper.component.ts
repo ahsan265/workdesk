@@ -57,11 +57,13 @@ export class ImageCropperComponent implements OnInit {
   private context!: CanvasRenderingContext2D;
   private layer1CanvasElement: any;
 
-  constructor(private renderer: Renderer2,
+  constructor(
+    private renderer: Renderer2,
     private GigaaaApiService: GigaaaApiService,
     private CommonService: CommonService,
     private MessageService: MessageService,
-    private SharedServices: SharedServices) { }
+    private SharedServices: SharedServices
+  ) {}
 
   imageLoad(image: string) {
     this.image = new Image();
@@ -101,14 +103,14 @@ export class ImageCropperComponent implements OnInit {
 
   ngOnInit(): void {
     this.imageLoad(this.imageView);
-    this.SharedServices.saveImageUpload.subscribe(data => {
+    this.SharedServices.saveImageUpload.subscribe((data) => {
       if (data) {
         this.cropImages();
         let image = this.context.canvas.toDataURL();
         const base64 = base64ToFile(image);
-        this.updateUserProfilePicture(base64)
+        this.updateUserProfilePicture(base64);
       }
-    })
+    });
   }
   zoomOut() {
     if (this.scale !== 1.0) {
@@ -123,16 +125,13 @@ export class ImageCropperComponent implements OnInit {
     }
   }
   dragEvent(event: MouseEvent) {
-
     this.renderer.listen(document, 'mouseup', (e) => {
-      console.log(e)
       this.initX = e.offsetX;
       this.initY = e.offsetY;
       this.uniX = e.x;
       this.uniY = e.y;
       this.uniX2 = 0;
       this.uniY2 = 0;
-
     });
   }
 
@@ -147,7 +146,17 @@ export class ImageCropperComponent implements OnInit {
   // }
   // crop image
   cropImages() {
-    this.context.drawImage(this.image, this.initX, this.initY, this.image.width, this.image.height, 0, 0, this.image.width, this.image.height);
+    this.context.drawImage(
+      this.image,
+      this.initX,
+      this.initY,
+      this.image.width,
+      this.image.height,
+      0,
+      0,
+      this.image.width,
+      this.image.height
+    );
     this.context.restore();
   }
 
@@ -183,25 +192,44 @@ export class ImageCropperComponent implements OnInit {
   }
 
   public updateUserProfilePicture(file: any) {
-    this.GigaaaApiService.uploaduserprofilepic(this.CommonService.getEndpointsParamLocal().token, this.CommonService.getEndpointsParamLocal().organization, this.CommonService.getEndpointsParamLocal().project, file).subscribe((event: any) => {
-      if (event['type'] === 4) {
-        this.MessageService.setSuccessMessage("Profile picture updated");
-        this.SharedServices.updateAgentImage(event['body']['96'])
-        this.SharedServices.closeImageDialog(false);
+    this.GigaaaApiService.uploaduserprofilepic(
+      this.CommonService.getEndpointsParamLocal().token,
+      this.CommonService.getEndpointsParamLocal().organization,
+      this.CommonService.getEndpointsParamLocal().project,
+      file
+    ).subscribe(
+      (event: any) => {
+        if (event['type'] === 4) {
+          this.MessageService.setSuccessMessage('Profile picture updated');
+          this.SharedServices.updateAgentImage(event['body']['96']);
+          this.SharedServices.closeImageDialog(false);
+        }
+      },
+      (err: any) => {
+        this.MessageService.setErrorMessage(err.error.error);
       }
-    }, (err: any) => {
-      this.MessageService.setErrorMessage(err.error.error)
-    })
+    );
   }
   public agentupdateuserprofilepic(file: any, uuid: any) {
-    this.GigaaaApiService.agentuploaduserprofilepic(this.CommonService.getEndpointsParamLocal().token, this.CommonService.getEndpointsParamLocal().organization, this.CommonService.getEndpointsParamLocal().project, uuid, file).subscribe((event: any) => {
-      if (event['type'] === 4) {
-        this.MessageService.setSuccessMessage("Agent profile picture updated");
-        this.SharedServices.updateAgentImage(event['body']['96'])
-        this.SharedServices.closeImageDialog(false);
+    this.GigaaaApiService.agentuploaduserprofilepic(
+      this.CommonService.getEndpointsParamLocal().token,
+      this.CommonService.getEndpointsParamLocal().organization,
+      this.CommonService.getEndpointsParamLocal().project,
+      uuid,
+      file
+    ).subscribe(
+      (event: any) => {
+        if (event['type'] === 4) {
+          this.MessageService.setSuccessMessage(
+            'Agent profile picture updated'
+          );
+          this.SharedServices.updateAgentImage(event['body']['96']);
+          this.SharedServices.closeImageDialog(false);
+        }
+      },
+      (err: any) => {
+        this.MessageService.setErrorMessage(err.error.error);
       }
-    }, (err: any) => {
-      this.MessageService.setErrorMessage(err.error.error)
-    })
+    );
   }
 }

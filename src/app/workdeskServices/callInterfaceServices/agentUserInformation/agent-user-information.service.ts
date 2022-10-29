@@ -1,6 +1,9 @@
 import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs';
-import { inputOuputdevices, PeersCallsInformationModel } from 'src/app/models/callInterfaceModel';
+import {
+  PeersCallsInformationModel,
+  inputOuputdevices
+} from 'src/app/models/callInterfaceModel';
 import { User } from 'src/app/models/user';
 import { DevicesInformationService } from '../devicesInformation/devices-information.service';
 
@@ -9,7 +12,7 @@ import { DevicesInformationService } from '../devicesInformation/devices-informa
 })
 export class AgentUserInformation {
   selectedSpearkerSubject = new Subject<any>();
-  constructor(private DevicesInformationService: DevicesInformationService) { }
+  constructor(private DevicesInformationService: DevicesInformationService) {}
 
   public getCallInformation() {
     return JSON.parse(localStorage.getItem('call-information') || '{}');
@@ -24,9 +27,8 @@ export class AgentUserInformation {
     };
   }
 
-
-   //set Refresh Status
-   public setIsMinimize(status: boolean) {
+  //set Refresh Status
+  public setIsMinimize(status: boolean) {
     const data = this.getCallInformation();
     data['is_minimize'] = status;
     localStorage.setItem('call-information', JSON.stringify(data));
@@ -66,14 +68,14 @@ export class AgentUserInformation {
     };
     localStorage.setItem('call-information', JSON.stringify(data));
   }
-  // update last used microphone 
+  // update last used microphone
   public updateLastUsedMicrophone(miceDetails: inputOuputdevices) {
     const data = this.getCallInformation();
     data['last_used_microphone'] = miceDetails;
     localStorage.setItem('call-information', JSON.stringify(data));
   }
 
-  // update last used microphone 
+  // update last used microphone
   public updateLastUsedSpeaker(speakerDetails: inputOuputdevices) {
     const data = this.getCallInformation();
     data['last_used_speaker'] = speakerDetails;

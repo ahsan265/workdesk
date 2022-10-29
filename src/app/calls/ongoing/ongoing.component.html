@@ -1,4 +1,4 @@
 <div class="tableWrapper">
-    <gigaaa-workdesk-table [tableData]="ongoingData" [tableSettings]="tableSettings">
-    </gigaaa-workdesk-table>
+  <gigaaa-workdesk-table *ngIf="ongoingData.length!=0" [tableData]="ongoingData" [tableSettings]="tableSettings">
+  </gigaaa-workdesk-table>
 </div>

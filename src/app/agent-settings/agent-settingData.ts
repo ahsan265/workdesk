@@ -163,7 +163,7 @@ const saveButtonData: Button = {
 
 const deleteAgentButtonData: Button = {
   title: 'Delete agent',
-   icon: '../assets/images/components/deleteicon.svg',
+  icon: '../assets/images/components/deleteicon.svg',
   backgroundColor: '#FFFFFF',
   borderColor: '1px solid rgba(208,208,222,.6)',
   textColor: '#162741',
@@ -192,6 +192,11 @@ const switchButtonData: SwitchButton = {
   buttonChecked: false
 };
 
+const allLanguageData: SwitchButton = {
+  firstColor: '#1C54DB',
+  secondColor: '#C4C4C4',
+  buttonChecked: false
+};
 export {
   agents,
   inputData,
@@ -199,6 +204,7 @@ export {
   backButtonData,
   saveButtonData,
   switchButtonData,
+  allLanguageData,
   deleteAgentButtonData,
   resendInvitationButtonData,
   cancelInvitationButtonData,

@@ -34,7 +34,7 @@ export class AgentSettingService {
         agentUuid,
         agentsetting
       );
-      this.MessageService.setInformationMessage('All Changes Saved.');
+      this.MessageService.setSuccessMessage('All Changes Saved.');
     } catch (err: any) {
       this.MessageService.setErrorMessage(err.error.error);
     }
@@ -66,30 +66,29 @@ export class AgentSettingService {
   public isAdmin(role: string) {
     return role === 'Admin' ? true : false;
   }
-  public checkAdminOrganizationOrNomral(isOrganizationAdmin: boolean, role: string) {
-
+  public checkAdminOrganizationOrNomral(
+    isOrganizationAdmin: boolean,
+    role: string
+  ) {
     if (isOrganizationAdmin === true && role === 'Admin') {
       return 'Organization admins cannot turn off administrative rights.';
-    }
-    else if (isOrganizationAdmin === false && role === 'Admin') {
+    } else if (isOrganizationAdmin === false && role === 'Admin') {
+      return '';
+    } else {
       return '';
     }
-    else {
-      return '';
-    }
-
   }
-  // show pending agent message 
+  // show pending agent message
   public checkAgentStatusIsPendingLanguage(isPending: boolean) {
-    return (isPending === false) ?
-      'Language(s) cannot be changed in pending status.' :
-      '';
+    return isPending === false
+      ? 'Language(s) cannot be changed in pending status.'
+      : '';
   }
-  // show Pending agent for Adming rights 
+  // show Pending agent for Adming rights
   public checkAgentStatusIsPendingAdminRights(isPending: boolean) {
-    return (isPending === false) ?
-      'Administrative rights cannot be changed in pending status.' :
-      '';
+    return isPending === false
+      ? 'Administrative rights cannot be changed in pending status.'
+      : '';
   }
 
   public agentUserName(agentData: AgentList): any {
@@ -109,7 +108,6 @@ export class AgentSettingService {
     );
     this.MessageService.setSuccessMessage('Agent deleted successfully');
     this.Router.navigate(['agents']);
-
   }
   public async resendInvitation(agentUuid: string) {
     await this.GigaaaApiService.resendInvitation(
@@ -124,7 +122,26 @@ export class AgentSettingService {
   public updateLoggedInUserImage() { }
 
   public async UpdatePassword(data: any, id: number) {
-    await this.GigaaaApiService.updatePassword(this.CommonService.getEndpointsParamLocal().token, data, id)
-    this.MessageService.setSuccessMessage("Password Updated Successfully");
+    await this.GigaaaApiService.updatePassword(
+      this.CommonService.getEndpointsParamLocal().token,
+      data,
+      id
+    );
+    this.MessageService.setSuccessMessage('Password Updated Successfully.');
+  }
+  // set All selected Language for Recieving requestion for all language users
+
+  public async setAllLanguageEnabled(uuid: string, data: any) {
+    try {
+      await this.GigaaaApiService.setAllLanguageEnabled(this.CommonService.getEndpointsParamLocal().token, uuid,
+        this.CommonService.getEndpointsParamLocal().organization,
+        this.CommonService.getEndpointsParamLocal().project, data);
+      (data.all_languages === true) ?
+        this.MessageService.setSuccessMessage('All project languages are assigned to you.') :
+        '';
+    }
+    catch (error: any) {
+      this.MessageService.setErrorMessage(error.error.error);
+    }
   }
 }

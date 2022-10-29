@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { AgentInviteService } from './workdeskServices/agentInviteService/agent-invite.service';
 
 @Component({
   selector: 'app-root',
@@ -6,5 +7,16 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  constructor() {}
+  showNonComplientAccountModal: boolean = false;
+  constructor(private AgentInviteService: AgentInviteService
+  ) {
+    this.AgentInviteService.agentNonComplientAccountSubject.subscribe((data: boolean) => {
+      this.showNonComplientAccountModal = data;
+    })
+  }
+  onCloseNonComplientAccount(event: any) {
+    if (event) {
+      this.showNonComplientAccountModal = false;
+    }
+  }
 }

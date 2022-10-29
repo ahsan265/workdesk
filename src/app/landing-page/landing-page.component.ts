@@ -5,6 +5,8 @@ import { AuthService } from '../services/auth.service';
 import { GigaaaHeaderService } from '@gigaaa/gigaaa-components';
 import { Router } from '@angular/router';
 import { AgentInviteService } from '../workdeskServices/agentInviteService/agent-invite.service';
+import { inviteLinkModel } from '../models/invite';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-landing-page',
@@ -34,6 +36,7 @@ export class LandingPageComponent implements OnInit {
     height: '400px'
   };
   showLinkExpireModal: boolean = false;
+  showNonComplientAccountModal: boolean = false;
   landingPageData: any = {
     title:
       'Automate your customer service and offer an elevated customer experience with gigaaa AI Customer Support solution',
@@ -41,23 +44,28 @@ export class LandingPageComponent implements OnInit {
     image: '../../assets/images/landingPage/landing-page.svg',
     logo: '../../assets/images/sidebar/neo_long.svg'
   };
-
+  oauthUrl = `${environment.oauth_url}`
   constructor(
     private router: Router,
     private authService: AuthService,
     private headerService: GigaaaHeaderService,
     private AgentInviteService: AgentInviteService
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.AgentInviteService.getInvitedAgentDetails();
     if (this.authService.isLoggedIn()) {
       this.router.navigate(['/dashboard']);
     }
-    this.AgentInviteService.agentInviteSubject.subscribe((data: boolean) => {
-      console.log(data);
-      this.showLinkExpireModal = data;
+    this.AgentInviteService.agentInviteSubject.subscribe((data: inviteLinkModel) => {
+      console.log(data)
+      this.showLinkExpireModal = data.already_used;
+      if (data.has_to_register) {
+        window.open('https://accounts.gigaaa.link/register', "_self");
+      }
+
     });
+
   }
 
   onLogin(event: boolean) {
@@ -73,4 +81,5 @@ export class LandingPageComponent implements OnInit {
       this.showLinkExpireModal = false;
     }
   }
+
 }

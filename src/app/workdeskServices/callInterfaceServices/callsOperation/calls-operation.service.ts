@@ -24,8 +24,8 @@ export class CallsOperationService {
     private StreamingService: StreamingService,
     private MessageService: MessageService,
     private AgentUserInformation: AgentUserInformation,
-    private AuthService: AuthService,
-  ) { }
+    private AuthService: AuthService
+  ) {}
 
   // add incoming call handler
   addIncomingCallHandler() {
@@ -71,7 +71,6 @@ export class CallsOperationService {
               }, 500);
 
               this.AgentUserInformation.setRefreshStatus(true);
-
             } else {
               this.sendPeerInformation.next(callsData.peer_information.data);
               //  this.PeerConnectionService.peerConnection.close();
@@ -85,7 +84,6 @@ export class CallsOperationService {
             }
             break;
           case 'peer_data':
-            console.log(msg.data)
             const peerData: PeersCallsInformationModel = {
               deviceType: msg.data.is_mobile,
               display_name: msg.data.display_name,
@@ -107,7 +105,6 @@ export class CallsOperationService {
         }
       },
       (error: any) => {
-        console.log(error);
       }
     );
   }

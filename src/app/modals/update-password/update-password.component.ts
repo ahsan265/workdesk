@@ -27,10 +27,12 @@ export class UpdatePasswordComponent implements OnInit {
   srcpass2: any;
   srcpass3: any;
   public form!: FormGroup;
-  constructor(private FormBuilder: FormBuilder,
+  constructor(
+    private FormBuilder: FormBuilder,
     private MessageService: MessageService,
     private AgentSettingService: AgentSettingService,
-    private SharedServices: SharedServices) { }
+    private SharedServices: SharedServices
+  ) {}
 
   ngOnInit(): void {
     this.srcpass1 = '../../../assets/images/components/hide_icon.svg';
@@ -85,38 +87,47 @@ export class UpdatePasswordComponent implements OnInit {
     }
   }
 
-
   public async updatepasssword(): Promise<void> {
     try {
       if (this.form.get('oldpassword')?.invalid) {
-        this.MessageService.setErrorMessage("Current Password field is required")
-      }
-      else if (this.form.get('newpassword')?.invalid) {
-        this.MessageService.setErrorMessage("New Password field  is required")
-      }
-      else if (this.form.get('confirmpassword')?.invalid) {
-        this.MessageService.setErrorMessage("Confirm New Password")
-      }
-      else if (this.form.get('newpassword')?.value != this.form.get('confirmpassword')?.value) {
-        this.MessageService.setErrorMessage("Please make sure your passwords match")
-      }
-      else if (this.form.get('oldpassword')?.value == this.form.get('newpassword')?.value || this.form.get('confirmpassword')?.value) {
-        this.MessageService.setErrorMessage("New password cannot be the same as current password")
-
-      }
-      else {
+        this.MessageService.setErrorMessage(
+          'Current Password field is required'
+        );
+      } else if (this.form.get('newpassword')?.invalid) {
+        this.MessageService.setErrorMessage('New Password field  is required');
+      } else if (this.form.get('confirmpassword')?.invalid) {
+        this.MessageService.setErrorMessage('Confirm New Password');
+      } else if (
+        this.form.get('newpassword')?.value !=
+        this.form.get('confirmpassword')?.value
+      ) {
+        this.MessageService.setErrorMessage(
+          'Please make sure your passwords match'
+        );
+      } else if (
+        this.form.get('oldpassword')?.value ==
+          this.form.get('newpassword')?.value ||
+        this.form.get('confirmpassword')?.value
+      ) {
+        this.MessageService.setErrorMessage(
+          'New password cannot be the same as current password'
+        );
+      } else {
         const user = JSON.parse(localStorage.getItem('gigaaa-user') || '{}');
-        var data = { "password_old": this.form.value.oldpassword, "password": this.form.value.newpassword, "password_confirmation": this.form.value.confirmpassword }
+        var data = {
+          password_old: this.form.value.oldpassword,
+          password: this.form.value.newpassword,
+          password_confirmation: this.form.value.confirmpassword
+        };
         await this.AgentSettingService.UpdatePassword(data, user.id);
         this.SharedServices.closePasswordPopup(true);
       }
-    }
-    catch (error: any) {
+    } catch (error: any) {
       this.MessageService.setErrorMessage(error.error.message);
     }
   }
 
   closethepassWordPopup() {
-    this.SharedServices.closePasswordPopup(true)
+    this.SharedServices.closePasswordPopup(true);
   }
 }

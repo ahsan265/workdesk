@@ -2,6 +2,7 @@
 /* eslint-disable no-undef */
 /* eslint-disable sort-imports */
 import { Injectable } from '@angular/core';
+import { Router } from '@angular/router';
 import { connectionSecurityModel } from 'src/app/models/connectionSecurity';
 import { GigaaaApiService } from 'src/app/workdeskServices/gigaaaApiService/gigaaa-api-service.service';
 import { AgentSocketService } from '../agentSocket/agent-socket.service';
@@ -14,8 +15,9 @@ export class ConnectionSecurityService {
   constructor(
     private gigaaaApiService: GigaaaApiService,
     private AgentSocketService: AgentSocketService,
-    private QueueSocketService: QueueSocketService
-  ) {}
+    private QueueSocketService: QueueSocketService,
+    private Router: Router,
+  ) { }
   public async createConnectionEndpoint(
     token: string,
     ogranizationId: string,
@@ -28,9 +30,11 @@ export class ConnectionSecurityService {
         projectId
       );
     localStorage.setItem('connection-id', JSON.stringify(connection));
+    // this.Router.navigate(['dashboard']);
     this.AgentSocketService.closeAgentSocketConnection();
     this.QueueSocketService.closeQueueSocketConnection();
     this.AgentSocketService.callAgentSocketEndpoint();
     this.QueueSocketService.callQueueSocketEndpoint();
+
   }
 }

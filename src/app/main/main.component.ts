@@ -12,7 +12,6 @@ import { environment } from 'src/environments/environment';
 import { getOrganizationService } from '../workdeskServices/organizationService/organization-service.service';
 import { AgentSocketService } from '../workdeskSockets/agentSocket/agent-socket.service';
 import { GigaaaApiService } from '../workdeskServices/gigaaaApiService/gigaaa-api-service.service';
-import { AgentAction } from '../models/agentSocketModel';
 import { AgentInviteService } from '../workdeskServices/agentInviteService/agent-invite.service';
 import { CommonService } from '../workdeskServices/commonEndpoint/common.service';
 
@@ -39,7 +38,6 @@ export class MainComponent implements OnInit {
     @Inject('GigaaaHeaderService') private headerService: GigaaaHeaderService,
     private CommonService: CommonService,
     private GigaaaApiService: GigaaaApiService,
-    private AgentInviteService: AgentInviteService
   ) {}
 
   ngOnInit() {

@@ -35,7 +35,7 @@ export class CommonService {
     private GigaaaApiService: GigaaaApiService,
     private MessageService: MessageService,
     private Authservice: AuthService
-  ) { }
+  ) {}
   // get the list of countries
   public async getLocations(): Promise<MultiSelect> {
     try {
@@ -140,11 +140,16 @@ export class CommonService {
   }
 
   // get languages Id and images  on for table in whole application
-  public getLanguagesWithFlags(selectedLanguage: AgentLanguages[]): Array<InvitedAgentTableLanguage> {
+  public getLanguagesWithFlags(
+    selectedLanguage: AgentLanguages[]
+  ): Array<InvitedAgentTableLanguage> {
     let InvitedAgentTableLanguage: InvitedAgentTableLanguage[] = [];
 
     selectedLanguage.forEach((language: AgentLanguages) => {
-      InvitedAgentTableLanguage.push({ id: language.id, image: this.getLanguageFlags(language.id) });
+      InvitedAgentTableLanguage.push({
+        id: language.id,
+        image: this.getLanguageFlags(language.id)
+      });
     });
     return InvitedAgentTableLanguage;
   }
@@ -196,7 +201,7 @@ export class CommonService {
     return this.Authservice.getLoggedUser().email === email ? true : false;
   }
 
-  // get language flags 
+  // get language flags
   public getLanguageFlags(id: number): string {
     switch (id) {
       case 83:
@@ -217,7 +222,7 @@ export class CommonService {
         return '';
     }
   }
-  // get browser Information 
+  // get browser Information
   // get pictures
   public getBrowserFlag(browserName: string) {
     switch (browserName) {
@@ -240,13 +245,14 @@ export class CommonService {
     }
   }
 
-  // get physical device 
+  // get physical device
   public getDeviceType(val: boolean): string {
-    return (val == true) ? "../../../assets/images/device/desktop.svg" :
-      "../../../assets/images/device/mobile.svg ";
+    return val == true
+      ? '../../../assets/images/device/desktop.svg'
+      : '../../../assets/images/device/mobile.svg ';
   }
 
-  // get operating system 
+  // get operating system
 
   public getOperatingSystem(os: string) {
     switch (os) {
@@ -265,18 +271,19 @@ export class CommonService {
       default:
         return '../../../assets/images/os/Windows.svg';
     }
-
   }
-  /// get conversation type 
+  /// get conversation type
   public getConversationType(conversation: boolean): string {
-    return conversation === false ?
-      "../../../assets/images/request_type/audio.svg" :
-      "../../../assets/images/request_type/video.svg";
+    return conversation === false
+      ? '../../../assets/images/request_type/audio.svg'
+      : '../../../assets/images/request_type/video.svg';
   }
 
   // get email logged in user
   public getEmailForLoggedInUser() {
-    const newLocal: User = JSON.parse(localStorage.getItem('gigaaa-user') || '{}');
+    const newLocal: User = JSON.parse(
+      localStorage.getItem('gigaaa-user') || '{}'
+    );
     return newLocal.email;
   }
 }

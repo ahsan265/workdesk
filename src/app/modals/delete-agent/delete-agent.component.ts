@@ -14,25 +14,24 @@ import { SharedServices } from 'src/app/workdeskServices/sharedResourcesService/
 export class DeleteAgentComponent implements OnInit {
   @Input()
   agentData!: AgentList;
-  constructor(private SharedServices: SharedServices,
-    private GigaaaApiService: GigaaaApiService, private MessageService: MessageService,
+  constructor(
+    private SharedServices: SharedServices,
+    private GigaaaApiService: GigaaaApiService,
+    private MessageService: MessageService,
     private AgentSettingService: AgentSettingService,
-    private CommonService: CommonService) { }
+    private CommonService: CommonService
+  ) {}
 
-  ngOnInit(): void {
-  }
+  ngOnInit(): void {}
 
   public async deleteAgent(): Promise<void> {
-
     try {
       await this.AgentSettingService.deleteAgent(this.agentData?.uuid);
       this.SharedServices.closePasswordPopup(true);
-    }
-    catch (err: any) {
+    } catch (err: any) {
       this.MessageService.setErrorMessage(err.error.error);
     }
   }
-
 
   // close popup
 

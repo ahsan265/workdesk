@@ -5,22 +5,26 @@
     </p>
   </div>
   <div class="agentinfopanel">
-    <img class="roudnagentpic" [src]="agentData.images['96']" height="50" width="50" alt="" />
-    <div style="vertical-align: middle; display: inline-block; margin-left: 16px">
+    <img
+      class="roudnagentpic"
+      [src]="agentData.images['96']"
+      height="50"
+      width="50"
+      alt=""
+    />
+    <div
+      style="vertical-align: middle; display: inline-block; margin-left: 16px"
+    >
       <p class="agentname">{{ agentData.display_name }}</p>
     </div>
   </div>
 
   <div class="actionButttonWrapper">
     <div class="cancelPanel">
-      <button class="cancel" (click)="closePopup()">
-        Cancel
-      </button>
+      <button class="cancel" (click)="closePopup()">Cancel</button>
     </div>
     <div class="savePanel">
-      <button class="save" (click)="deleteAgent()">
-        Delete agent
-      </button>
+      <button class="save" (click)="deleteAgent()">Delete agent</button>
     </div>
   </div>
 </ng-container>

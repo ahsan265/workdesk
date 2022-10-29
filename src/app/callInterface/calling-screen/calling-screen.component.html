@@ -16,24 +16,42 @@
         agentOperationInformation.IsVideoMinimize === true
           ? miniMizeVideoData
           : maxiMizeNormaData
-      " class="peerDeviceInformation" id="peerIndicator" #peerIndicator>
-      <div class="peerInitials" *ngIf="secondPeerInformationdata.showInitials" [style.font-size]="
+      "
+      class="peerDeviceInformation"
+      id="peerIndicator"
+      #peerIndicator
+    >
+      <div
+        class="peerInitials"
+        *ngIf="secondPeerInformationdata.showInitials"
+        [style.font-size]="
           agentOperationInformation.IsVideoMinimize === true ? '24px' : '40px'
-        ">
+        "
+      >
         {{
-        secondPeerInformationdata.firstName
-        | nameInitials: secondPeerInformationdata.lastName
+          secondPeerInformationdata.firstName
+            | nameInitials: secondPeerInformationdata.lastName
         }}
       </div>
-      <img [ngStyle]="
+      <img
+        [ngStyle]="
           agentOperationInformation.IsVideoMinimize === true
             ? peerImageData
             : peerImageNormal
-        " *ngIf="secondPeerInformationdata.showImage" class="peerImage" [src]="secondPeerInformationdata.peerImage"
-        alt="" />
-      <img *ngIf="secondPeerInformationdata.showWaitingIcon" class="peerWaitingImage"
-        [src]="secondPeerInformationdata.waitingIcon" alt="" />
-      <div [ngStyle]="{
+        "
+        *ngIf="secondPeerInformationdata.showImage"
+        class="peerImage"
+        [src]="secondPeerInformationdata.peerImage"
+        alt=""
+      />
+      <img
+        *ngIf="secondPeerInformationdata.showWaitingIcon"
+        class="peerWaitingImage"
+        [src]="secondPeerInformationdata.waitingIcon"
+        alt=""
+      />
+      <div
+        [ngStyle]="{
           display:
             secondPeerInformationdata.showLoaderAnimation === true
               ? 'block'
@@ -58,25 +76,39 @@
         *ngIf="peerInformationdata.showInitials"
         [style.font-size]="
           agentOperationInformation.IsVideoMinimize === true ? '24px' : '40px'
-        ">
+        "
+      >
         {{
-        peerInformationdata.firstName
-        | nameInitials: peerInformationdata.lastName
+          peerInformationdata.firstName
+            | nameInitials: peerInformationdata.lastName
         }}
       </div>
-      <img [ngStyle]="
+      <img
+        [ngStyle]="
           agentOperationInformation.IsVideoMinimize === true
             ? peerImageData
             : peerImageNormal
-        " *ngIf="peerInformationdata.showImage" class="peerImage" [src]="peerInformationdata.peerImage" alt="" />
-      <img *ngIf="peerInformationdata.showWaitingIcon" class="peerWaitingImage" [src]="peerInformationdata.waitingIcon"
-        alt="" />
+        "
+        *ngIf="peerInformationdata.showImage"
+        class="peerImage"
+        [src]="peerInformationdata.peerImage"
+        alt=""
+      />
+      <img
+        *ngIf="peerInformationdata.showWaitingIcon"
+        class="peerWaitingImage"
+        [src]="peerInformationdata.waitingIcon"
+        alt=""
+      />
 
       <div
         [ngStyle]="{
           display:
             peerInformationdata.showLoaderAnimation === true ? 'block' : 'none'
-        }" [@loaderAnimation]="color" class="loaderAnimation"></div>
+        }"
+        [@loaderAnimation]="color"
+        class="loaderAnimation"
+      ></div>
     </div>
   </div>
   <div *ngIf="isSplit" class="unSplit" (click)="UnslplitScreen(!isSplit)">

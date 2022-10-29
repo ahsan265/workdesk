@@ -44,7 +44,7 @@ import { OverlayService } from '../overLayService/overlay.service';
   styleUrls: ['./call-console.component.scss'],
   changeDetection: ChangeDetectionStrategy.Default
 })
-export class CallConsoleComponent implements OnInit,OnDestroy  {
+export class CallConsoleComponent implements OnInit, OnDestroy {
   constructor(
     private StreamingService: StreamingService,
     private MessageService: MessageService,
@@ -53,8 +53,8 @@ export class CallConsoleComponent implements OnInit,OnDestroy  {
     private CommonService: CommonService,
     private CallsOperationService: CallsOperationService,
     private PeerConnectionService: PeerConnectionService,
-    private AgentUserInformation: AgentUserInformation,
-  ) { }
+    private AgentUserInformation: AgentUserInformation
+  ) {}
   ngOnDestroy(): void {
     this.minmizeMaxmizeScreenOutput(false);
   }
@@ -108,9 +108,12 @@ export class CallConsoleComponent implements OnInit,OnDestroy  {
         user.peer_information.data.first_name;
       this.secondpeerUserInformationData.lastName =
         user.peer_information.data.last_name;
-      this.PeerMiniCameraScreen.showCamera = user.user_information.data.is_camera_on;
-      this.peerUserInformationData.showVideo = user.user_information.data.is_camera_on;
-      this.peerUserInformationData.showShareScreen = user.user_information.is_shared_screen;
+      this.PeerMiniCameraScreen.showCamera =
+        user.user_information.data.is_camera_on;
+      this.peerUserInformationData.showVideo =
+        user.user_information.data.is_camera_on;
+      this.peerUserInformationData.showShareScreen =
+        user.user_information.is_shared_screen;
       this.cameraData.isSelected = user.user_information.data.is_camera_on;
       this.isVideoMinimize = user.user_information.data.is_camera_on;
       // this.miceData.isSelected = user.user_information.data.is_microphone_on;
@@ -136,7 +139,8 @@ export class CallConsoleComponent implements OnInit,OnDestroy  {
     this.CallsOperationService.sendPeerInformation.subscribe((peerData) => {
       this.secondpeerUserInformationData.firstName = peerData.firstName;
       this.secondpeerUserInformationData.lastName = peerData.lastName;
-      this.secondpeerUserInformationData.showShareScreen = peerData.isScreenShareOn;
+      this.secondpeerUserInformationData.showShareScreen =
+        peerData.isScreenShareOn;
       this.secondpeerUserInformationData.showImage = true;
       this.secondpeerUserInformationData.showInitials = false;
       this.secondpeerUserInformationData.showLoaderAnimation = false;
@@ -147,19 +151,17 @@ export class CallConsoleComponent implements OnInit,OnDestroy  {
     // showing timer
     const startTime = new Date(Date.now());
     this.CallsOperationService.startTimer.subscribe((isStarted) => {
-      console.log("istime", isStarted)
       if (isStarted) {
         setInterval(() => {
           user.is_refreshed === true
             ? (this.callTimer = this.AgentUserInformation.CallDuration(
-              user.call_duration
-            ))
+                user.call_duration
+              ))
             : (this.callTimer =
-              this.AgentUserInformation.callJoiningTime(startTime));
+                this.AgentUserInformation.callJoiningTime(startTime));
         }, 1000);
       }
     });
-
   }
   public async seletecOutputForCamera(event: boolean) {
     if (!this.screenShareData.isSelected) {
@@ -191,13 +193,12 @@ export class CallConsoleComponent implements OnInit,OnDestroy  {
         'Cannot turn on camera while sharing screen.'
       );
     }
-
   }
   seletecOutputForMircrophone(event: boolean) {
     this.miceData.isSelected = event;
-    (event) ?
-      this.AgentUserInformation.setMicrophoneStatus(true) :
-      this.AgentUserInformation.setMicrophoneStatus(false);
+    event
+      ? this.AgentUserInformation.setMicrophoneStatus(true)
+      : this.AgentUserInformation.setMicrophoneStatus(false);
   }
   splitScreen(event: boolean) {
     if (event) {
@@ -273,7 +274,6 @@ export class CallConsoleComponent implements OnInit,OnDestroy  {
         this.minimizeCallControl['border-radius'] = '51px';
         this.minimizeCallControl.height = '55px';
         this.isMinimize = false;
-
       } else {
         this.isMinimize = true;
       }
@@ -290,8 +290,6 @@ export class CallConsoleComponent implements OnInit,OnDestroy  {
         this.toogle = false;
         this.isMinimize = false;
       }
-
     }
   }
-
 }

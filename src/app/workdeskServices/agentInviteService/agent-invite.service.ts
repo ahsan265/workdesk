@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Subject } from 'rxjs';
+import { inviteLinkModel } from 'src/app/models/invite';
 import { CommonService } from '../commonEndpoint/common.service';
 import { GigaaaApiService } from '../gigaaaApiService/gigaaa-api-service.service';
 import { MessageService } from '../messageService/message.service';
@@ -9,16 +10,19 @@ import { MessageService } from '../messageService/message.service';
   providedIn: 'root'
 })
 export class AgentInviteService {
-  public agentInviteSubject = new Subject<boolean>();
+  public agentInviteSubject = new Subject<inviteLinkModel>();
+  public agentNonComplientAccountSubject = new Subject<boolean>();
   constructor(
     private GigaaaApiService: GigaaaApiService,
     private CommonService: CommonService,
-    private router: ActivatedRoute,
-    private MessageService: MessageService
-  ) {}
+    private ActivatedRoute: ActivatedRoute,
+    private MessageService: MessageService,
+    private Router: Router,
+  ) { }
 
   public async sendtAgentInvitationCode() {
     let code = this.getInvitationCode();
+    console.log(code)
     if (code != null) {
       let code_invite = { invitation_code: JSON.parse(code) };
       await this.GigaaaApiService.sendinvitationcode(
@@ -29,24 +33,26 @@ export class AgentInviteService {
           localStorage.removeItem('gigaaa-invitation');
         })
         .catch((err: any) => {
+          this.Router.navigate(['logout']);
+          this.agentNonComplientAccountSubject.next(true);
           this.MessageService.setErrorMessage(err.error.error);
+
         });
     }
   }
 
   public getInvitedAgentDetails() {
-    this.router.queryParams.subscribe(
+    this.ActivatedRoute.queryParams.subscribe(
       (data) => {
         let code = data['invitation_code'];
         if (code != null) {
           localStorage.setItem('gigaaa-invitation', JSON.stringify(code));
           this.GigaaaApiService.getinvitationdetails(code).subscribe(
-            (data: any) => {
+            (data: inviteLinkModel) => {
+              console.log(data)
               if (data != null) {
-                if (data['already_used'] !== false) {
-                  localStorage.removeItem('gigaaa-invitation');
-                  this.agentInviteSubject.next(true);
-                }
+                // localStorage.removeItem('gigaaa-invitation');
+                this.agentInviteSubject.next(data);
               }
             }
           );

@@ -53,7 +53,7 @@
           {{ this.pendingStatusForLanguages }}
         </div>
       </div>
-      <div class="profileName ">
+      <div class="profileName">
         Language
         <div class="inputWrapper textField">
           <div class="label">Select language(s) for this agent:</div>
@@ -61,12 +61,25 @@
             [isDropdownEnabled]="isDropdownEnabled">
           </app-multi-select-dropdown>
         </div>
+
+        <div class="SelectAllLanguage" *ngIf="showAllSelectedLanguageToggle">
+          <div class="label">Show request data for all available languages</div>
+          <div class="toggleForAllLanguage">
+            <gigaaa-switch-button [switchButtonData]="allLanguageData"
+              (switchButtonValue)="onGetSwitchAllLanguage($event)"
+              
+              >
+            </gigaaa-switch-button>
+          </div>
+        </div>
       </div>
     </div>
     <div class="administrativeRightsWrapper section">
-      <div class="restrictedAdmin" *ngIf="adminAletMessage !== '' ||this.pendingStatusForAdminRights!=='' ">
+      <div class="restrictedAdmin" *ngIf="
+          adminAletMessage !== '' || this.pendingStatusForAdminRights !== ''
+        ">
         <div class="messageForAdminRights">
-          {{ this.adminAletMessage || this.pendingStatusForAdminRights}}
+          {{ this.adminAletMessage || this.pendingStatusForAdminRights }}
         </div>
       </div>
       <div class="profileName adminRight">
