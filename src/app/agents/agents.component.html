@@ -37,6 +37,7 @@
       (agentSetting)="getSettingsPage($event)"
     >
     </gigaaa-workdesk-table>
+    <app-no-table-data *ngIf="agentdata.length === 0"></app-no-table-data>
   </div>
 </app-page-wrapper>
 

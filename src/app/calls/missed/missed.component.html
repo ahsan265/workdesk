@@ -1,8 +1,8 @@
 <div class="tableWrapper">
   <gigaaa-workdesk-table
-    *ngIf="missedCallData.length !== 0"
     [tableData]="missedCallData"
     [tableSettings]="tableSettings"
   >
   </gigaaa-workdesk-table>
+  <app-no-table-data *ngIf="missedCallData.length === 0"></app-no-table-data>
 </div>

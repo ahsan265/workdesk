@@ -134,7 +134,7 @@ export class AgentSocketService {
         return (isLoggedInAgent = false);
       }
     });
-    if (isLoggedInAgent === false) {
+    if (agentlist.length !== 0 && isLoggedInAgent === false) {
       this.Router.navigate(['logout']);
     }
   }

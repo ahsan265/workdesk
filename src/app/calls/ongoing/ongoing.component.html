@@ -1,8 +1,8 @@
 <div class="tableWrapper">
   <gigaaa-workdesk-table
-    *ngIf="ongoingData.length !== 0"
     [tableData]="ongoingData"
     [tableSettings]="tableSettings"
   >
   </gigaaa-workdesk-table>
+  <app-no-table-data *ngIf="ongoingData.length === 0"></app-no-table-data>
 </div>

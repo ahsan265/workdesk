@@ -77,6 +77,7 @@ import { CountersComponent } from './components/counters/counters.component';
 import { ChartsData } from './chartsfunction/chartData';
 import { ChartLabel } from './chartsfunction/chartLabel';
 import { WrongInvitationAccountComponent } from './modals/wrong-invitation-account/wrong-invitation-account.component';
+import { NoTableDataComponent } from './components/no-table-data/no-table-data.component';
 
 @NgModule({
   declarations: [
@@ -122,7 +123,8 @@ import { WrongInvitationAccountComponent } from './modals/wrong-invitation-accou
     AddAgentComponent,
     AgentListingComponent,
     CountersComponent,
-    WrongInvitationAccountComponent
+    WrongInvitationAccountComponent,
+    NoTableDataComponent
   ],
   imports: [
     BrowserAnimationsModule,
