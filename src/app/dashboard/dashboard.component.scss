@@ -41,21 +41,28 @@
 }
 
 .dashboardWrapper {
-  margin-top: 95px;
+  margin-top: 2px;
 }
 
 .filterWrapper {
-  width: 100%;
   padding: 30px 0;
-  background: #ffffff;
-  margin-bottom: 8px;
-  position: fixed;
-  display: block;
+  position: sticky;
+  display: flex;
+  background: #fefeff;
+  padding-left: 30px;
+  padding-right: 30px;
+  width: 100%;
+  margin-right: 0px;
+  top: 1px;
 }
 
 ::ng-deep .filterWrapper .leftFilter .dropdownWrapper .selectDropdown {
   background: #ededf6;
   border: none;
+}
+
+::ng-deep .searchWrap {
+  justify-content: flex-end;
 }
 
 // ::ng-deep .filterWrapper .leftFilter .dropdownWrapper {
@@ -64,28 +71,37 @@
 
 ::ng-deep .filterWrapper .rightFilter .dropdownWrapper,
 ::ng-deep .filterWrapper .leftFilter .dropdownWrapper {
-  max-width: 200px;
+  max-width: 200px !important;
 }
 
 .leftFilter {
   width: 30%;
-  display: inline-block;
   text-align: left;
-  padding-left: 30px;
+  display: inline-block;
+}
+
+.rightFilterWrapper {
+  width: 70%;
+  text-align: right;
+  display: inline-flex;
+  justify-content: flex-end;
+  padding-right: 60px;
 }
 
 .rightFilter {
-  width: calc(70% - 310px);
+  width: fit-content;
   position: relative;
-  display: inline-block;
-  text-align: right;
+  display: inline-flex;
 }
 
 .multiSelectWrapper {
   width: 200px;
-  margin-right: 5px;
+  margin-right: 10px;
   position: relative;
-  display: inline-block;
+}
+
+.multiSelectWrapper.calendar {
+  margin-right: 0px;
 }
 
 .calendarLocationLanguage {

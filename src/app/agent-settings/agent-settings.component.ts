@@ -200,7 +200,7 @@ export class AgentSettingsComponent implements OnInit {
         this.agentId
       );
       this.agentImage = this.selectedAgent.images[96];
-      const allLanguages = await this.CommonService.getLanguages();
+      const allLanguages = await this.CommonService.getProjectLanguages();
       const agentLanguages = this.CommonService.selectedLanguageChecket(
         allLanguages.data,
         this.selectedAgent.languages

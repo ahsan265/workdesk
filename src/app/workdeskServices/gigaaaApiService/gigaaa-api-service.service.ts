@@ -76,6 +76,31 @@ export class GigaaaApiService {
       )
       .toPromise();
   }
+  // get project languages
+
+  public getProjectLanguages(
+    access_token: string,
+    organization: string,
+    project: string
+  ): Promise<any> {
+    const httpOptions: any = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        Accept: 'application/json',
+        Authorization: `Bearer ${access_token}`
+      })
+    };
+    return this.http
+      .get(
+        this.workdeskurl_cs +
+          '/private/agent/languages?organization=' +
+          organization +
+          '&project=' +
+          project,
+        httpOptions
+      )
+      .toPromise();
+  }
 
   public forgotPassword(email: string) {
     const httpOptions: any = this.getHeaders();

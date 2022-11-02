@@ -6,12 +6,12 @@ import { Card } from '@gigaaa/gigaaa-components/lib/models/card';
 import { OneSelect } from '@gigaaa/gigaaa-components/lib/models/oneSelect';
 import { ChartData } from 'chart.js';
 import { Subject } from 'rxjs';
-import { ChartsData } from 'src/app/chartsfunction/chartData';
-import { ChartLabel } from 'src/app/chartsfunction/chartLabel';
 import { CalendarService } from 'src/app/calendarService/calendar.service';
 import { GigaaaApiService } from 'src/app/workdeskServices/gigaaaApiService/gigaaa-api-service.service';
 import { MessageService } from 'src/app/workdeskServices/messageService/message.service';
 import { CommonService } from 'src/app/workdeskServices/commonEndpoint/common.service';
+import { ChartLabel } from 'src/app/chartsFunction/chartLabel';
+import { ChartsData } from 'src/app/chartsFunction/chartData';
 
 @Injectable({
   providedIn: 'root'
@@ -30,7 +30,7 @@ export class DashboardEndpointService {
     private chartsData: ChartsData,
     private calanderService: CalendarService,
     private MessageService: MessageService
-  ) {}
+  ) { }
   // call the cards count endpoint for
   public getCarddata(
     languages: Array<OneSelect>,

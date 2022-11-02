@@ -37,8 +37,8 @@ export class getOrganizationService {
     this.gigaaaService
       .getOrganization(token)
       .then((data: any) => {
-        const organz: Organization[] = data;
-        organz.forEach((data) => {
+        const organization: Organization[] = data;
+        organization.forEach((data) => {
           if (data.last_used === true) {
             const lastUsedOgranization = data.uuid;
             localStorage.setItem('gigaaa-organz', JSON.stringify(data));

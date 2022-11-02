@@ -19,8 +19,8 @@ const icons = {
   activeCallIcon: '../assets/images/sidebar/calls_active.svg',
   agentIcon: '../assets/images/sidebar/agents.svg',
   activeAgentIcon: '../assets/images/sidebar/agents_active.svg',
-  logo: '../assets/images/sidebar/neo_long.svg',
-  logoCollapsed: '../assets/images/sidebar/neo_short.svg'
+  logo: '../assets/images/sidebar/workdesk_logo_long.png',
+  logoCollapsed: '../assets/images/sidebar/workdesk_logo_short.png'
 };
 
 const sidebarData: any = [

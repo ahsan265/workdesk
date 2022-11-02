@@ -20,6 +20,7 @@ import { Router } from '@angular/router';
 import { CommonService } from '../workdeskServices/commonEndpoint/common.service';
 import { OverlayService } from '../callInterface/overLayService/overlay.service';
 import { AgentModelTable } from '../models/callModel';
+import { SharedServices } from '../workdeskServices/sharedResourcesService/shared-resource-service.service';
 
 @Component({
   selector: 'app-agents',
@@ -47,7 +48,7 @@ export class AgentsComponent implements OnInit {
     private AgentService: AgentService,
     private router: Router,
     private AgentSocketService: AgentSocketService,
-    private openCallInterface: OverlayService
+    private SharedServices: SharedServices
   ) {
     this.authService.pageTitle.next('Agents');
   }
@@ -55,9 +56,15 @@ export class AgentsComponent implements OnInit {
     this.callCommonEndpoints();
     this.getAgentList();
     this.AgentSocketService.getLastUsedParams();
+    this.SharedServices.LoadcommonEpsubject.subscribe((data) => {
+      if (data === 1) {
+        this.callCommonEndpoints();
+        this.showInviteModel = false;
+      }
+    });
   }
   private async callCommonEndpoints() {
-    this.languauges = await this.CommonService.getLanguages();
+    this.languauges = await this.CommonService.getProjectLanguages();
   }
   public langugaOutput(languaugesOutput: number[]) {
     this.selectedLanguages = languaugesOutput;

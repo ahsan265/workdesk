@@ -119,12 +119,14 @@ export class DashboardComponent {
   public barChartType: ChartType = 'bar';
   public barChartPlugins = [DataLabelsPlugin];
 
-  public barChartData!: ChartData<'bar'>[];
+  public barChartData1!: ChartData<'bar'>;
+  public barChartData2!: ChartData<'bar'>;
+  public barChartData3!: ChartData<'bar'>;
 
   constructor(
     private authService: AuthService,
     private CommonService: CommonService,
-    private sharedRes: SharedServices,
+    private SharedServices: SharedServices,
     private dashboardEps: DashboardEndpointService,
     private calendarService: CalendarService
   ) {
@@ -142,12 +144,14 @@ export class DashboardComponent {
       this.answeredCardData = data?.answered;
     });
     this.dashboardEps.chartDataSubject.subscribe((data: ChartData<'bar'>[]) => {
-      this.barChartData = data;
+      this.barChartData1 = data[0];
+      this.barChartData2 = data[1];
+      this.barChartData3 = data[2];
     });
   }
   private async callRouteLoad(): Promise<void> {
     this.countries = await this.CommonService.getLocations();
-    this.languauges = await this.CommonService.getLanguages();
+    this.languauges = await this.CommonService.getProjectLanguagesForUser();
     if (this.CommonService.getEndpointsParamLocal().project != undefined) {
       this.dashboardEps.getCarddata(
         this.CommonService.getIdsOfLanguage(),
@@ -164,8 +168,8 @@ export class DashboardComponent {
     }
   }
   private getFirstLoad(): void {
-    this.sharedRes.LoadcommonEpsubject.subscribe(async (data) => {
-      if (data == 1) {
+    this.SharedServices.LoadcommonEpsubject.subscribe(async (data) => {
+      if (data === 1) {
         this.idOfLocation = this.CommonService.getIdsOfLocation();
         this.idOfLanguage = this.CommonService.getIdsOfLanguage();
         this.dashboardEps.getCarddata(

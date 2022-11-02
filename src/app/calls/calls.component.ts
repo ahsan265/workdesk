@@ -117,7 +117,7 @@ export class CallsComponent implements OnInit {
   }
 
   private async callInitialEndpoints() {
-    this.languauges = await this.CommonService.getLanguages();
+    this.languauges = await this.CommonService.getProjectLanguagesForUser();
   }
   public languaugesOutput(languageOutput: number[]) {
     this.languageIds = languageOutput;

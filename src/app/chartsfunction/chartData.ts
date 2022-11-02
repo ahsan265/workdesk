@@ -1,8 +1,11 @@
 import { Injectable } from '@angular/core';
 
-@Injectable()
+
+@Injectable({
+  providedIn: 'root'
+})
 export class ChartsData {
-  constructor() {}
+  constructor() { }
   calculateChartData(ChartData: Array<any>) {
     let data: any = [];
     ChartData.forEach((element) => {

@@ -6,6 +6,7 @@ import {
 } from 'src/app/models/callModel';
 import { CommonService } from 'src/app/workdeskServices/commonEndpoint/common.service';
 import { GigaaaApiService } from 'src/app/workdeskServices/gigaaaApiService/gigaaa-api-service.service';
+import { AgentSocketService } from 'src/app/workdeskSockets/agentSocket/agent-socket.service';
 import { CallsService } from '../callService/calls.service';
 import { incomingTableSetting } from './incomingData';
 
@@ -21,7 +22,8 @@ export class IncomingComponent {
     private callservice: CallsService,
     private CommonService: CommonService,
     private OverlayService: OverlayService,
-    private GigaaaApiService: GigaaaApiService
+    private GigaaaApiService: GigaaaApiService,
+    private AgentSocketService: AgentSocketService
   ) {
     this.callservice.sendDataToIncomingTabsSubject.subscribe(
       (data: IncomingCallModel[]) => {
@@ -59,7 +61,7 @@ export class IncomingComponent {
           userImage: '../../../assets/images/callInterface/user.png',
           showUserImage: false,
           callPickButton: 'Answer',
-          showCallButton: true
+          disableButton: this.AgentSocketService.isInCallValue.value
         }));
       }
     );
