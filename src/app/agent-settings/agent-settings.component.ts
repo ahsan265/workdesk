@@ -24,8 +24,6 @@ import { AgentList } from '../models/agentSocketModel';
 import { AgentSettings } from '../models/agentSettingsModel';
 import { CommonService } from '../workdeskServices/commonEndpoint/common.service';
 import { MessageService } from '../workdeskServices/messageService/message.service';
-import { Modal } from '../models/modal';
-import { UpdatePasswordComponent } from '../modals/update-password/update-password.component';
 import { AgentService } from '../agents/agentService/agent.service';
 import { SharedServices } from '../workdeskServices/sharedResourcesService/shared-resource-service.service';
 

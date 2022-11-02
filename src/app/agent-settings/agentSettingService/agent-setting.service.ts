@@ -4,7 +4,6 @@ import { AgentSettings } from 'src/app/models/agentSettingsModel';
 import { AgentLanguages, AgentList } from 'src/app/models/agentSocketModel';
 import { MultiSelect } from 'src/app/models/multiSelect';
 import { OneSelect } from 'src/app/models/oneSelect';
-import { User } from 'src/app/models/user';
 import { CommonService } from 'src/app/workdeskServices/commonEndpoint/common.service';
 import { GigaaaApiService } from 'src/app/workdeskServices/gigaaaApiService/gigaaa-api-service.service';
 import { MessageService } from 'src/app/workdeskServices/messageService/message.service';
