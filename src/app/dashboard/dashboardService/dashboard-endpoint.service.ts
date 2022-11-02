@@ -30,7 +30,7 @@ export class DashboardEndpointService {
     private chartsData: ChartsData,
     private calanderService: CalendarService,
     private MessageService: MessageService
-  ) { }
+  ) {}
   // call the cards count endpoint for
   public getCarddata(
     languages: Array<OneSelect>,

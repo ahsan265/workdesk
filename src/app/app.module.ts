@@ -166,8 +166,7 @@ import { NoTableDataComponent } from './components/no-table-data/no-table-data.c
       provide: 'GigaaaHeaderService',
       useClass: GigaaaHeaderService
     },
-    OverlayService,
-   
+    OverlayService
   ],
   bootstrap: [AppComponent]
 })
