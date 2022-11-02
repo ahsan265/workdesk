@@ -8,6 +8,7 @@ import {
   GigaaaHeaderModule,
   GigaaaHeaderService,
   GigaaaLandingPageModule,
+  GigaaaPaginationModule,
   GigaaaSidebarModule,
   GigaaaTableModule,
   GigaaaTableWorkdeskModule,
@@ -74,8 +75,7 @@ import { AddAgentComponent } from './modals/add-agent/add-agent.component';
 import { AgentListingComponent } from './modals/add-agent/agent-listing/agent-listing.component';
 import { scrollStageDirective } from './directives/scrollDirective';
 import { CountersComponent } from './components/counters/counters.component';
-import { ChartsData } from './chartsfunction/chartData';
-import { ChartLabel } from './chartsfunction/chartLabel';
+
 import { WrongInvitationAccountComponent } from './modals/wrong-invitation-account/wrong-invitation-account.component';
 import { NoTableDataComponent } from './components/no-table-data/no-table-data.component';
 
@@ -158,16 +158,15 @@ import { NoTableDataComponent } from './components/no-table-data/no-table-data.c
     NgChartsModule,
     DragDropModule,
     OverlayModule,
-    GigaaaTableWorkdeskModule
+    GigaaaTableWorkdeskModule,
+    GigaaaPaginationModule
   ],
   providers: [
     {
       provide: 'GigaaaHeaderService',
       useClass: GigaaaHeaderService
     },
-    OverlayService,
-    ChartLabel,
-    ChartsData
+    OverlayService
   ],
   bootstrap: [AppComponent]
 })

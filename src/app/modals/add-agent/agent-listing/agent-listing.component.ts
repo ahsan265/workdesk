@@ -39,7 +39,7 @@ export class AgentListingComponent implements OnInit {
   });
 
   async ngOnInit(): Promise<void> {
-    const languages = await this.CommonService.getLanguages();
+    const languages = await this.CommonService.getProjectLanguages();
     this.languages.data = languages.data.map((data: OneSelect) => ({
       id: data.id,
       name: data.name,
@@ -55,7 +55,7 @@ export class AgentListingComponent implements OnInit {
   }
   // add new listing for invitation of agent
   async addAgentListing() {
-    const languages = await this.CommonService.getLanguages();
+    const languages = await this.CommonService.getProjectLanguages();
     this.agentListingCounter++;
     this.arrayOfLanguages.push(languages);
     this.langaugeIds[this.agentListingCounter - 1] = 0;

@@ -14,12 +14,20 @@ import { CommonService } from 'src/app/workdeskServices/commonEndpoint/common.se
 export class MissedComponent {
   tableSettings = missedTableSetting;
   missedCallData: MissedCallModelTable[] = missedCallData;
+  tableSizes = [
+    { value: 5, selected: false },
+    { value: 10, selected: true },
+    { value: 15, selected: false },
+    { value: 20, selected: false }
+  ];
+  pagination: any;
   constructor(
     private callservice: CallsService,
     private CommonService: CommonService
   ) {
     this.callservice.sendDataToMissedTabsSubject.subscribe(
       (data: MissedCallModel[]) => {
+        console.log(this.CommonService.paginate(data, 5, 1));
         this.missedCallData = data.map((missedCallData) => ({
           agent_name: missedCallData.name,
           call_uuid: missedCallData.call_uuid,
@@ -63,4 +71,8 @@ export class MissedComponent {
       }
     );
   }
+
+  onTableDataChange(event: any) {}
+
+  onTableSizeChange(event: any): void {}
 }

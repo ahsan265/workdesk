@@ -91,6 +91,68 @@ export class CommonService {
     }
     return this.nullMultiSelect;
   }
+  // get project languages
+  public async getProjectLanguages(): Promise<MultiSelect> {
+    try {
+      const languages: language[] =
+        await this.GigaaaApiService.getProjectLanguages(
+          this.getEndpointsParamLocal().token,
+          this.getEndpointsParamLocal().organization,
+          this.getEndpointsParamLocal().project
+        );
+      const languageSelected: OneSelect[] = languages.map((item: language) => ({
+        name: item.name,
+        id: item.id,
+        selected: false
+      }));
+      this.languageArray = languageSelected;
+      const languageListArray: MultiSelect = {
+        title: 'Language',
+        showSelectAll: true,
+        showSearchBar: true,
+        data: languageSelected
+      };
+      return languageListArray;
+    } catch (err: any) {
+      this.MessageService.setErrorMessage(err.error.error);
+    }
+    return this.nullMultiSelect;
+  }
+  public async getProjectLanguagesForUser(): Promise<MultiSelect> {
+    try {
+      const languages: OneSelect[] =
+        await this.GigaaaApiService.getProjectLanguages(
+          this.getEndpointsParamLocal().token,
+          this.getEndpointsParamLocal().organization,
+          this.getEndpointsParamLocal().project
+        );
+      const languageUserSelected = languages.filter((item: OneSelect) => {
+        if (item.selected === true) {
+          return item;
+        } else {
+          return null;
+        }
+      });
+      const languageSelected: OneSelect[] = languageUserSelected.map(
+        (item: OneSelect) => ({
+          name: item.name,
+          id: item.id,
+          selected: false
+        })
+      );
+      this.languageArray = languageSelected;
+      const languageListArray: MultiSelect = {
+        title: 'Language',
+        showSelectAll: true,
+        showSearchBar: true,
+        data: languageSelected
+      };
+      return languageListArray;
+    } catch (err: any) {
+      this.MessageService.setErrorMessage(err.error.error);
+    }
+    return this.nullMultiSelect;
+  }
   // get data token, organization , project from local storage
   public getEndpointsParamLocal() {
     const newLocal = JSON.parse(localStorage.getItem('gigaaa-user') || '{}');
@@ -285,5 +347,10 @@ export class CommonService {
       localStorage.getItem('gigaaa-user') || '{}'
     );
     return newLocal.email;
+  }
+
+  // paginate
+  paginate(array: any[], page_size: number, page_number: number) {
+    return array.slice((page_number - 1) * page_size, page_number * page_size);
   }
 }

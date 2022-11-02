@@ -6,6 +6,16 @@
   overflow: hidden;
 }
 
+::ng-deep .sidebarWrap .logoWrap .logoImage {
+  height: 50px;
+}
+
+::ng-deep .sidebarWrap .logoWrap .logoImageCollapsed {
+  height: 50px;
+  width: 44.3px;
+  margin-left: 10px;
+}
+
 .headerAppWrapper {
   max-width: 100%;
   width: 100%;

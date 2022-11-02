@@ -28,7 +28,12 @@ export class AgentSocketService {
   public AgentListSubject = new Subject<AgentList[]>();
   isOganizationAdminStatus: boolean = false;
   isUserAgentOrAdmin: string = '';
-  constructor(private CommonService: CommonService, private Router: Router) {}
+  isInCall: boolean = false;
+  public isInCallValue: BehaviorSubject<boolean>;
+
+  constructor(private CommonService: CommonService, private Router: Router) {
+    this.isInCallValue = new BehaviorSubject(this.isInCall);
+  }
 
   public callAgentSocketEndpoint() {
     const connectionId: connectionSecurityModel = JSON.parse(
@@ -86,6 +91,9 @@ export class AgentSocketService {
     loggedInAgent?.is_available === true && loggedInAgent?.is_online === true
       ? this.sendAgentOnlineStatus(true)
       : this.sendAgentOnlineStatus(false);
+    loggedInAgent?.is_in_call === true
+      ? (this.isInCall = true)
+      : (this.isInCall = false);
   }
   public setAgentOnlineStatus(isOnline: boolean) {
     const isAgentOnline: AgentOnlineStatus = {

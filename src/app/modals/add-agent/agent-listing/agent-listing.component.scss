@@ -12,6 +12,10 @@
   padding-left: 10px;
 }
 
+::ng-deep .dropdown ul {
+  max-height: 100px;
+}
+
 .agentTextFieldsWrapper {
   display: flex;
   width: 100%;

@@ -31,6 +31,13 @@
   border-bottom: 1px solid #e3e3eb;
 }
 
+.section:last-child {
+  border: none;
+}
+.section.administrativeRightsWrapper {
+  border-bottom: 1px solid #e3e3eb;
+}
+
 .section.btn,
 .section.info {
   display: flex;

@@ -112,7 +112,7 @@ export interface IncomingCallModelTable {
   userImage: string;
   showUserImage: boolean;
   callPickButton: string;
-  showCallButton: boolean;
+  disableButton: boolean;
 }
 
 export interface OngoingCallModelTable {
