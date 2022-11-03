@@ -682,8 +682,8 @@ export class GigaaaApiService {
     orgid: string,
     intid: string,
     time: string,
-    languages: Array<any>,
-    countries: Array<any>
+    languages: Array<number>,
+    countries: Array<number>
   ) {
     const httpOptions: any = {
       headers: new HttpHeaders({

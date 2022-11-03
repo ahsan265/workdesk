@@ -36,8 +36,8 @@ export class DashboardComponent {
   startDate: string = '';
   endDate: string = '';
 
-  idOfLanguage: Array<any> = [];
-  idOfLocation: Array<any> = [];
+  idOfLanguage: Array<number> = [];
+  idOfLocation: Array<number> = [];
 
   @ViewChild(BaseChartDirective) chart: BaseChartDirective | undefined;
   @ViewChild(GigaaaDaterangepickerDirective, { static: false })
@@ -154,13 +154,13 @@ export class DashboardComponent {
     this.languauges = await this.CommonService.getProjectLanguagesForUser();
     if (this.CommonService.getEndpointsParamLocal().project != undefined) {
       this.dashboardEps.getCarddata(
-        this.CommonService.getIdsOfLanguage(),
-        this.CommonService.getIdsOfLocation(),
+        [],
+        [],
         this.aggregate
       );
       this.dashboardEps.getChartData(
-        this.CommonService.getIdsOfLanguage(),
-        this.CommonService.getIdsOfLocation(),
+        [],
+        [],
         this.aggregate,
         this.startDate,
         this.endDate
@@ -170,8 +170,8 @@ export class DashboardComponent {
   private getFirstLoad(): void {
     this.SharedServices.LoadcommonEpsubject.subscribe(async (data) => {
       if (data === 1) {
-        this.idOfLocation = this.CommonService.getIdsOfLocation();
-        this.idOfLanguage = this.CommonService.getIdsOfLanguage();
+        // this.idOfLocation = this.CommonService.getIdsOfLocation();
+        // this.idOfLanguage = this.CommonService.getIdsOfLanguage();
         this.dashboardEps.getCarddata(
           this.idOfLanguage,
           this.idOfLocation,
@@ -235,7 +235,7 @@ export class DashboardComponent {
         }
       }
       if (compareArray.length === 8) {
-        this.aggregate = 'custom';
+       // this.aggregate = 'custom';
       }
     }
   }
