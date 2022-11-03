@@ -33,8 +33,8 @@ export class DashboardEndpointService {
   ) {}
   // call the cards count endpoint for
   public getCarddata(
-    languages: Array<OneSelect>,
-    location: Array<OneSelect>,
+    languages: Array<number>,
+    location: Array<number>,
     selectedRange: string
   ) {
     const epParams = this.CommonService.getEndpointsParamLocal();
@@ -138,8 +138,8 @@ export class DashboardEndpointService {
 
   // call the charts  endpoint f
   public getChartData(
-    languages: Array<OneSelect>,
-    locations: Array<OneSelect>,
+    languages: Array<number>,
+    locations: Array<number>,
     selectedRange: string,
     startDate: string,
     endDate: string
