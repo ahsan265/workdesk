@@ -153,11 +153,7 @@ export class DashboardComponent {
     this.countries = await this.CommonService.getLocations();
     this.languauges = await this.CommonService.getProjectLanguagesForUser();
     if (this.CommonService.getEndpointsParamLocal().project != undefined) {
-      this.dashboardEps.getCarddata(
-        [],
-        [],
-        this.aggregate
-      );
+      this.dashboardEps.getCarddata([], [], this.aggregate);
       this.dashboardEps.getChartData(
         [],
         [],
@@ -235,7 +231,7 @@ export class DashboardComponent {
         }
       }
       if (compareArray.length === 8) {
-       // this.aggregate = 'custom';
+        // this.aggregate = 'custom';
       }
     }
   }

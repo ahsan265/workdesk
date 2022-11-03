@@ -16,7 +16,6 @@ import { ChartsData } from 'src/app/chartsfunction/chartData';
 @Injectable({
   providedIn: 'root'
 })
-
 export class DashboardEndpointService {
   icomingIcon = '../../assets/images/components/calls_incoming.svg';
   missedIcon = '../../assets/images/components/total_missed.svg';
