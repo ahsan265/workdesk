@@ -10,12 +10,13 @@ import { CalendarService } from 'src/app/calendarService/calendar.service';
 import { GigaaaApiService } from 'src/app/workdeskServices/gigaaaApiService/gigaaa-api-service.service';
 import { MessageService } from 'src/app/workdeskServices/messageService/message.service';
 import { CommonService } from 'src/app/workdeskServices/commonEndpoint/common.service';
-import { ChartLabel } from 'src/app/chartsFunction/chartLabel';
-import { ChartsData } from 'src/app/chartsFunction/chartData';
+import { ChartLabel } from 'src/app/chartsfunction/chartLabel';
+import { ChartsData } from 'src/app/chartsfunction/chartData';
 
 @Injectable({
   providedIn: 'root'
 })
+
 export class DashboardEndpointService {
   icomingIcon = '../../assets/images/components/calls_incoming.svg';
   missedIcon = '../../assets/images/components/total_missed.svg';
