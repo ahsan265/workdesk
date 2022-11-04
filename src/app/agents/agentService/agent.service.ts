@@ -22,7 +22,7 @@ export class AgentService {
     private GigaaaApiService: GigaaaApiService,
     private CommonService: CommonService,
     private MessageService: MessageService
-  ) { }
+  ) {}
   // send agent params from agent component using service
   public sendAgentDefaultParameter(
     languages: number[],
@@ -194,14 +194,10 @@ export class AgentService {
   public checkAgentInCallChat(isInCall: boolean, isInChat: boolean) {
     if (isInCall === true && isInChat === false) {
       return '../assets/images/request_type/call_icons.svg';
-    }
-    else if (isInCall === false && isInChat === true) {
+    } else if (isInCall === false && isInChat === true) {
       return '../assets/images/request_type/chat_icons.svg';
-
+    } else {
+      return '';
     }
-    else {
-      return ''
-    }
-
   }
 }
