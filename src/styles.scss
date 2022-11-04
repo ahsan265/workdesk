@@ -10,9 +10,9 @@
   padding: 24px;
 }
 
-// .headerAppWrapper .mainHeaderWrap .headerWrap {
-//   box-shadow: none;
-// }
+::ng-deep .mainHeaderWrap .headerWrap {
+  border: none;
+}
 
 .headerWrap .pageTitleWrap .pageTitle {
   font-weight: 500;
