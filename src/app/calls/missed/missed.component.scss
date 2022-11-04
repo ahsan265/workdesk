@@ -127,7 +127,10 @@ option {
 }
 
 ::ng-deep .paginationWrapper .ngx-pagination .pagination-previous a::before,
-::ng-deep .paginationWrapper .ngx-pagination .pagination-previous.disabled::before {
+::ng-deep
+  .paginationWrapper
+  .ngx-pagination
+  .pagination-previous.disabled::before {
   content: '';
   background-image: url('../../../assets/images/pagination/prevPage.svg');
   width: 10px;
@@ -136,7 +139,10 @@ option {
   cursor: pointer;
 }
 
-::ng-deep .paginationWrapper .ngx-pagination .pagination-next.disabled::after:hover,
+::ng-deep
+  .paginationWrapper
+  .ngx-pagination
+  .pagination-next.disabled::after:hover,
 ::ng-deep .paginationWrapper .ngx-pagination .pagination-next a:hover {
   background: none;
 }
