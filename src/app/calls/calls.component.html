@@ -2,17 +2,11 @@
   <ul class="callsUl">
     <li class="callsLi" [routerLinkActive]="['active', 'callsActive']">
       <a class="callsA" routerLink="incoming">Incoming</a>
-      <app-counters
-        class="counterWrapper"
-        [counterValue]="this.incomingData.length"
-      ></app-counters>
+      <app-counters class="counterWrapper" [counterValue]="this.incomingData.length"></app-counters>
     </li>
     <li class="callsLi" [routerLinkActive]="['active', 'callsActive']">
       <a class="callsA" routerLink="ongoing">Ongoing</a>
-      <app-counters
-        class="counterWrapper"
-        [counterValue]="this.ongoingData.length"
-      ></app-counters>
+      <app-counters class="counterWrapper" [counterValue]="this.ongoingData.length"></app-counters>
     </li>
     <li class="callsLi" [routerLinkActive]="['active', 'callsActive']">
       <a class="callsA" routerLink="missed">Missed</a>
@@ -25,77 +19,40 @@
 <div class="filterWrapper" scroll>
   <div class="leftFilter">
     <div class="multiSelectWrapper">
-      <app-multi-select-dropdown
-        [multiSelectData]="languauges"
-        (multiSelectOutput)="languaugesOutput($event)"
-      >
+      <app-multi-select-dropdown [multiSelectData]="languauges" (multiSelectOutput)="languaugesOutput($event)">
       </app-multi-select-dropdown>
     </div>
     <div class="multiSelectWrapper">
-      <app-calls-indicator
-        *ngIf="showIndicator"
-        [callsIndicatorData]="callsIndicatorData"
-      >
+      <app-calls-indicator *ngIf="showIndicator" [callsIndicatorData]="callsIndicatorData">
       </app-calls-indicator>
     </div>
   </div>
   <div class="rightFilterWrapper">
     <div class="rightFilter">
       <div class="multiSelectWrapper callType">
-        <app-multi-select-dropdown
-          [multiSelectData]="callType"
-          (multiSelectOutput)="callOutput($event)"
-        >
+        <app-multi-select-dropdown [multiSelectData]="callType" (multiSelectOutput)="callOutput($event)">
         </app-multi-select-dropdown>
       </div>
       <div class="multiSelectWrapper" #calendarDropdown *ngIf="showCalender">
-        <div
-          class="calendarLocationLanguage calendarSelectMenu"
-          (click)="onOpenCalendar()"
-        >
-          <input
-            (change)="change($event)"
-            (rangeClicked)="rangeClicked($event)"
-            type="text"
-            placeholder="Choose date"
-            GigaaaDatepicker
-            [(ngModel)]="selected"
-            [showCustomRangeLabel]="false"
-            [alwaysShowCalendars]="true"
-            [ranges]="ranges"
-            [linkedCalendars]="true"
-            [showRangeLabelOnInput]="true"
-            class="calendarInput"
-            [locale]="{
+        <div class="calendarLocationLanguage calendarSelectMenu" (click)="onOpenCalendar()">
+          <input readonly (change)="change($event)" (rangeClicked)="rangeClicked($event)" type="text"
+            placeholder="Choose date" GigaaaDatepicker [(ngModel)]="selected" [showCustomRangeLabel]="false"
+            [alwaysShowCalendars]="true" [ranges]="ranges" [linkedCalendars]="true" [showRangeLabelOnInput]="true"
+            class="calendarInput" [locale]="{
               applyLabel: 'Apply',
               format: 'DD-MM-YYYY',
               firstDay: 1,
               customRangeLabel: 'Custom range'
-            }"
-            [showCancel]="true"
-            startKey="startDate"
-            endKey="endDate"
-          />
-          <svg
-            [ngClass]="showCalendar ? 'filterArrowRotate' : 'filterArrow'"
-            class="filterArrow"
-            width="10"
-            height="7"
-            viewBox="0 0 10 7"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              d="M1.55469 0.871094L5 4.31641L8.44531 0.871094L9.5 1.92578L5 6.42578L0.5 1.92578L1.55469 0.871094Z"
-              fill="#162741"
-            />
+            }" [showCancel]="true" startKey="startDate" endKey="endDate" />
+          <svg [ngClass]="showCalendar ? 'filterArrowRotate' : 'filterArrow'" class="filterArrow" width="10" height="7"
+            viewBox="0 0 10 7" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M1.55469 0.871094L5 4.31641L8.44531 0.871094L9.5 1.92578L5 6.42578L0.5 1.92578L1.55469 0.871094Z"
+              fill="#162741" />
           </svg>
         </div>
       </div>
       <div class="multiSelectWrapper search">
-        <app-search-input-field
-          [searchInputData]="searchInputData"
-        ></app-search-input-field>
+        <app-search-input-field [searchInputData]="searchInputData"></app-search-input-field>
       </div>
     </div>
   </div>

@@ -37,7 +37,7 @@ const ongoingTableSetting: any = {
     {
       index: 3,
       header: 'Call Type',
-      width: 20,
+      width: 15,
       isHeaderImage: true,
       showHeader: true,
       isDropdown: false,
@@ -59,7 +59,7 @@ const ongoingTableSetting: any = {
     {
       index: 4,
       header: 'Agent',
-      width: 20,
+      width: 25,
       isHeaderImage: true,
       showHeader: true,
       isDropdown: false,

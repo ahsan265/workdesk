@@ -1,4 +1,5 @@
 @import '~ngx-toastr/toastr';
+@import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
 
 .toastClass {
   font-size: 12px;
@@ -50,17 +51,16 @@ body {
   box-shadow: none;
 }
 
-.ngx-toastr.toast-success > button.toast-close-button[aria-label='Close'] {
+.ngx-toastr.toast-success>button.toast-close-button[aria-label='Close'] {
   color: #1c54db;
   padding: 15px;
 }
 
-.ngx-toastr.toast-success
-  > button.toast-close-button[aria-label='Close']:hover {
+.ngx-toastr.toast-success>button.toast-close-button[aria-label='Close']:hover {
   color: #1c54db;
 }
 
-.ngx-toastr.toast-warning > button.toast-close-button[aria-label='Close'] {
+.ngx-toastr.toast-warning>button.toast-close-button[aria-label='Close'] {
   color: #ff155a;
   padding: 15px;
 }
@@ -76,7 +76,7 @@ body {
   width: fit-content;
 }
 
-#toast-container > .toast-success {
+#toast-container>.toast-success {
   background-color: #dee8ff;
   color: #1c54db;
   border-radius: 4px;
@@ -93,7 +93,7 @@ body {
   transform: translateX(0%);
   transition: 0.4s;
 } */
-#toast-container > .toast-warning {
+#toast-container>.toast-warning {
   background-color: #fedee8;
   color: #ff155a;
   border: 1px solid rgba(255, 21, 90, 0.4);
