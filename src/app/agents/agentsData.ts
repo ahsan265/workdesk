@@ -80,7 +80,7 @@ const agentTableSetting: any = {
     {
       index: 0,
       header: 'Agent',
-      width: 25,
+      width: 30,
       isHeaderImage: true,
       showHeader: true,
       isDropdown: false,
@@ -113,7 +113,7 @@ const agentTableSetting: any = {
     {
       index: 3,
       header: 'Role',
-      width: 20,
+      width: 10,
       isHeaderImage: true,
       showHeader: true,
       isDropdown: false,

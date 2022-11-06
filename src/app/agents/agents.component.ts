@@ -118,9 +118,10 @@ export class AgentsComponent implements OnInit {
       });
       this.agentdata = data.map((AgentList: AgentList) => ({
         uuid: AgentList.uuid,
-        activity_icon: AgentList.is_in_call
-          ? '../assets/images/request_type/call_icons.svg'
-          : '../assets/images/request_type/chat_icons.svg',
+        activity_icon: this.AgentService.checkAgentInCallChat(
+          AgentList.is_in_call,
+          AgentList.is_in_chat
+        ),
         agent_details: {
           image: AgentList.images['96'],
           text: AgentList.first_name + ' ' + AgentList.last_name

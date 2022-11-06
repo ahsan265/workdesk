@@ -26,6 +26,7 @@
           (click)="onOpenCalendar()"
         >
           <input
+            readonly
             (change)="change($event)"
             (rangeClicked)="rangeClicked($event)"
             type="text"
