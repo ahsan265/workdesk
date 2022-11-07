@@ -27,7 +27,6 @@ export class MissedComponent {
   ) {
     this.callservice.sendDataToMissedTabsSubject.subscribe(
       (data: MissedCallModel[]) => {
-        console.log(this.CommonService.paginate(data, 5, 1));
         this.missedCallData = data.map((missedCallData) => ({
           agent_name: missedCallData.name,
           call_uuid: missedCallData.call_uuid,

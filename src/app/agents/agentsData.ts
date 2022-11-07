@@ -61,7 +61,7 @@ const selectedAgentType: any[] = [
 ];
 
 const searchInputData: SearchInput = {
-  placeholder: 'Search items',
+  placeholder: 'Search by name or email...',
   searchText: ''
 };
 
@@ -232,8 +232,8 @@ const agentModelData = {
   onlyOneButton: true,
   buttonOne: true,
   buttonTwo: false,
-  width: '594px',
-  height: '385px'
+  width: '595px',
+  height: '400px'
 };
 export {
   languauges,

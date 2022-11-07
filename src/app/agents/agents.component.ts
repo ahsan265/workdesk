@@ -59,9 +59,14 @@ export class AgentsComponent implements OnInit {
     this.SharedServices.LoadcommonEpsubject.subscribe((data) => {
       if (data === 1) {
         this.callCommonEndpoints();
-        this.showInviteModel = false;
       }
     });
+    this.SharedServices.closeAddAgentDialog.subscribe((data)=>{
+      if(data)
+      {
+        this.showInviteModel = false;
+      }
+    })
   }
   private async callCommonEndpoints() {
     this.languauges = await this.CommonService.getProjectLanguages();

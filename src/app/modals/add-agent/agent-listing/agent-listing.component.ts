@@ -13,6 +13,7 @@ import { MultiSelect } from 'src/app/models/multiSelect';
 import { OneSelect } from 'src/app/models/oneSelect';
 import { CommonService } from 'src/app/workdeskServices/commonEndpoint/common.service';
 import { MessageService } from 'src/app/workdeskServices/messageService/message.service';
+import { SharedServices } from 'src/app/workdeskServices/sharedResourcesService/shared-resource-service.service';
 import { languauges } from '../addAgentData';
 
 @Component({
@@ -32,8 +33,9 @@ export class AgentListingComponent implements OnInit {
     private CommonService: CommonService,
     private formBuilder: FormBuilder,
     private AgentService: AgentService,
-    private MessageService: MessageService
-  ) {}
+    private MessageService: MessageService,
+    private SharedServices: SharedServices
+  ) { }
   form: FormGroup = this.formBuilder.group({
     agentListing: this.formBuilder.array([])
   });
@@ -95,6 +97,7 @@ export class AgentListingComponent implements OnInit {
           language_ids: this.langaugeIds[i]
         };
         await this.AgentService.validateAgent(agentListedData);
+        this.SharedServices.closeAddAgentPopup(true);
       });
     } else {
       this.MessageService.setErrorMessage('Please enter valid information');
@@ -107,4 +110,5 @@ export class AgentListingComponent implements OnInit {
     this.email[indexValue] =
       this.emailLists.get(indexValue)?.nativeElement.value;
   }
+
 }

@@ -7,10 +7,11 @@ import { Subject } from 'rxjs';
 export class SharedServices {
   public LoadcommonEpsubject = new Subject();
   public closeImageUploadDialog = new Subject<boolean>();
+  public closeAddAgentDialog = new Subject<boolean>();
   public saveImageUpload = new Subject<boolean>();
   public setAgentImage = new Subject<string>();
   public PasswordPopup = new Subject<boolean>();
-  constructor() {}
+  constructor() { }
 
   // load common eps
   loadCommonEps(value: number) {
@@ -33,5 +34,9 @@ export class SharedServices {
 
   closePasswordPopup(value: boolean) {
     this.PasswordPopup.next(value);
+  }
+  // close add Agent popup 
+  closeAddAgentPopup(value: boolean) {
+    this.closeAddAgentDialog.next(value)
   }
 }
