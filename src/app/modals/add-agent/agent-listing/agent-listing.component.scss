@@ -57,7 +57,7 @@
 }
 
 .addNewListing {
-  font-family: 'Roboto', sans-serif;
+  font-family: "Roboto", sans-serif;
   font-style: normal;
   font-weight: 400;
   font-size: 14px;
@@ -67,6 +67,8 @@
   letter-spacing: 0.02em;
   color: #1c54db;
   margin-top: 10px;
+  height: 50px;
+  margin-bottom: 10px;
   width: 100%;
   cursor: pointer;
 }
@@ -122,5 +124,5 @@
   bottom: 0;
   color: #ffffff;
   cursor: pointer;
-  margin: 30px;
+  margin: 21px;
 }
