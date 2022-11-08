@@ -2,8 +2,12 @@
   font-weight: 600;
 }
 
+::ng-deep .titleWrapper {
+  padding: 30px 30px 0px 30px;
+}
+
 .inviteAgentHeading {
-  font-family: 'Roboto', sans-serif;
+  font-family: "Roboto", sans-serif;
   font-style: normal;
   font-weight: 500;
   font-size: 13px;
@@ -11,15 +15,16 @@
   letter-spacing: 0.02em;
   margin-top: 20px;
   color: #616b7b;
-  width: 100%;
+  padding: 0px 30px 30px 30px;
+  margin-bottom: 2px;
 }
 
 .agentListingContainer {
   display: block;
-  height: 300px;
+  height: 295px;
   position: relative;
   overflow-x: hidden;
-  overflow-y: scroll;
+  overflow-y: hidden;
 }
 
 .agentListingContainer::-webkit-scrollbar {

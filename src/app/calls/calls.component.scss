@@ -29,7 +29,7 @@
 .callsLi {
   list-style: none;
   margin-right: 22px;
-  padding: 4px 0;
+  padding: 9px 0;
   width: fit-content;
   display: flex;
 }
@@ -37,21 +37,20 @@
 .counterWrapper {
   margin-left: 8px;
   display: inline-block;
-  margin-top: 7px;
 }
 
 .callsA {
   text-decoration: none;
   font-style: normal;
   font-weight: 400;
-  font-size: 1em;
+  font-size: 12px;
   align-items: center;
-  line-height: 160%;
+  line-height: 14px;
   letter-spacing: 0.02em;
   color: #162741;
 }
 
-::ng-deep .filterWrapper > .leftFilter .dropdownWrapper .selectDropdown {
+::ng-deep .filterWrapper>.leftFilter .dropdownWrapper .selectDropdown {
   background: #ededf6 !important;
   border: none;
 }

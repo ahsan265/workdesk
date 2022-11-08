@@ -83,12 +83,11 @@ export class AgentSettingsComponent implements OnInit {
     private MessageService: MessageService,
     private AgentService: AgentService,
     private SharedServices: SharedServices
-  ) {}
+  ) { }
 
   ngOnInit() {
-    this.authService.pageTitle.next('Settings');
+    this.authService.pageTitle.next('Agent Settings');
     this.agentId = String(this.activatedRoute.snapshot.params.id);
-    // this.getAgent();
     this.getAgentData();
     // for closing image upload popup
     this.SharedServices.closeImageUploadDialog.subscribe((data: boolean) => {
