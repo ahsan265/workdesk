@@ -35,7 +35,7 @@ export class CommonService {
     private GigaaaApiService: GigaaaApiService,
     private MessageService: MessageService,
     private Authservice: AuthService
-  ) {}
+  ) { }
   // get the list of countries
   public async getLocations(): Promise<MultiSelect> {
     try {
@@ -349,8 +349,22 @@ export class CommonService {
     return newLocal.email;
   }
 
+  // get email logged in user
+  public getIsAdminOrAgent() {
+    const isAdmin: boolean = JSON.parse(
+      localStorage.getItem('is-admin') || '{}'
+    );
+    return isAdmin;
+  }
+
   // paginate
   paginate(array: any[], page_size: number, page_number: number) {
     return array.slice((page_number - 1) * page_size, page_number * page_size);
+  }
+  // get is logged in user is Admin or Agent
+  public getAgentRole() {
+    this.GigaaaApiService.getroleofagent(this.getEndpointsParamLocal().token, this.getEndpointsParamLocal().organization, this.getEndpointsParamLocal().project).subscribe((data: any) => {
+      localStorage.setItem('is-admin', JSON.stringify(data['is_admin']));
+    })
   }
 }

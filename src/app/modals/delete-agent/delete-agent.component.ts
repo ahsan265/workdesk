@@ -20,13 +20,13 @@ export class DeleteAgentComponent implements OnInit {
     private MessageService: MessageService,
     private AgentSettingService: AgentSettingService,
     private CommonService: CommonService
-  ) {}
+  ) { }
 
-  ngOnInit(): void {}
+  ngOnInit(): void { }
 
   public async deleteAgent(): Promise<void> {
     try {
-      await this.AgentSettingService.deleteAgent(this.agentData?.uuid);
+      await this.AgentSettingService.deleteAgent(this.agentData?.uuid, 'Agent deleted successfully.');
       this.SharedServices.closePasswordPopup(true);
     } catch (err: any) {
       this.MessageService.setErrorMessage(err.error.error);

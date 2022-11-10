@@ -151,7 +151,6 @@ export class DashboardComponent {
   }
   private async callRouteLoad(): Promise<void> {
     this.countries = await this.CommonService.getLocations();
-    this.languauges = await this.CommonService.getProjectLanguagesForUser();
     if (this.CommonService.getEndpointsParamLocal().project != undefined) {
       this.dashboardEps.getCarddata([], [], this.aggregate);
       this.dashboardEps.getChartData(
@@ -161,6 +160,7 @@ export class DashboardComponent {
         this.startDate,
         this.endDate
       );
+      this.languauges = await this.CommonService.getProjectLanguagesForUser();
     }
   }
   private getFirstLoad(): void {
@@ -168,6 +168,7 @@ export class DashboardComponent {
       if (data === 1) {
         // this.idOfLocation = this.CommonService.getIdsOfLocation();
         // this.idOfLanguage = this.CommonService.getIdsOfLanguage();
+        this.languauges = await this.CommonService.getProjectLanguagesForUser();
         this.dashboardEps.getCarddata(
           this.idOfLanguage,
           this.idOfLocation,

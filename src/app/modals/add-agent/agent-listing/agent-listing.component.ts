@@ -99,6 +99,8 @@ export class AgentListingComponent implements OnInit {
         await this.AgentService.validateAgent(agentListedData);
         this.SharedServices.closeAddAgentPopup(true);
       });
+   //   this.MessageService.setSuccessMessage('Agent invitation has been sent.');
+
     } else {
       this.MessageService.setErrorMessage('Please enter valid information');
     }

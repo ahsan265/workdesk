@@ -56,10 +56,16 @@ export class AgentSocketService {
       });
     };
     this.ws.onmessage = (e) => {
-      e.data != 'ping' ? this.getAgentList(JSON.parse(e.data)) : '';
+      switch (e.data) {
+        case '{"action":"logout"}':
+          this.Router.navigate(['logout']);
+          break;
+        default:
+      }
+      e.data !== 'ping' ? this.getAgentList(JSON.parse(e.data)) : '';
     };
-    this.ws.onclose = (e) => {};
-    this.ws.onerror = (e) => {};
+    this.ws.onclose = (e) => { };
+    this.ws.onerror = (e) => { };
   }
   public sendAgentsParameter(AgentParameter: AgentParameter) {
     if (this.isSocketOpen === 1) {
@@ -133,17 +139,7 @@ export class AgentSocketService {
     }
   }
 
-  private getUserExistAsAgent(agentlist: AgentList[]) {
-    let isLoggedInAgent: boolean = false;
-    agentlist.find((data) => {
-      if (data.email === this.CommonService.getEmailForLoggedInUser()) {
-        return (isLoggedInAgent = true);
-      } else {
-        return (isLoggedInAgent = false);
-      }
-    });
-    if (agentlist.length !== 0 && isLoggedInAgent === false) {
-      this.Router.navigate(['logout']);
-    }
+  private getUserExistAsAgent(data: any) {
+
   }
 }

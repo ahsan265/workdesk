@@ -98,14 +98,14 @@ export class AgentSettingService {
   public checkAgentIsInvited(agentData: AgentList): boolean {
     return agentData.invited === true ? true : false;
   }
-  public async deleteAgent(agentUuid: string) {
+  public async deleteAgent(agentUuid: string,toastMessage:string) {
     await this.GigaaaApiService.deleteagent(
       this.CommonService.getEndpointsParamLocal().token,
       this.CommonService.getEndpointsParamLocal().organization,
       this.CommonService.getEndpointsParamLocal().project,
       agentUuid
     );
-    this.MessageService.setSuccessMessage('Agent deleted successfully');
+    this.MessageService.setSuccessMessage(toastMessage);
     this.Router.navigate(['agents']);
   }
   public async resendInvitation(agentUuid: string) {
