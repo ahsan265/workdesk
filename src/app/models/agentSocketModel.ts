@@ -22,6 +22,7 @@ export interface AgentList {
   phone_number: string;
   role: string;
   uuid: string;
+  show_edit:boolean;
 }
 
 export interface AgentLanguages {

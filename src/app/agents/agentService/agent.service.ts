@@ -3,7 +3,7 @@
 /* eslint-disable sort-imports */
 import { Injectable } from '@angular/core';
 import { retry } from 'rxjs/operators';
-import { InviteAgentModel, UtlitiesIcon } from 'src/app/models/agent';
+import { AgentModelTable, InviteAgentModel, UtlitiesIcon } from 'src/app/models/agent';
 import { AgentLanguages, AgentList } from 'src/app/models/agentSocketModel';
 import { OneSelect } from 'src/app/models/oneSelect';
 import { User } from 'src/app/models/user';
@@ -22,7 +22,7 @@ export class AgentService {
     private GigaaaApiService: GigaaaApiService,
     private CommonService: CommonService,
     private MessageService: MessageService
-  ) {}
+  ) { }
   // send agent params from agent component using service
   public sendAgentDefaultParameter(
     languages: number[],
@@ -68,39 +68,57 @@ export class AgentService {
       return displayName;
     }
   }
-  public disabledEditButton(
-    email: string,
-    isOrganizationAdmin: boolean,
-    role: string
-  ): boolean {
-    if (
-      this.AgentSocketService.getOrganizationAdminStatus()
-        .is_organization_admin === true
-    ) {
-      return true;
-    } else if (
-      this.AgentSocketService.getOrganizationAdminStatus()
-        .is_organization_admin === false &&
-      this.AgentSocketService.getOrganizationAdminStatus().role === 'Admin'
-    ) {
-      if (isOrganizationAdmin === true && role === 'Admin') {
-        return false;
-      } else {
-        return true;
+  public getAgentWiseData(AgentList: AgentList[]) {
+    // let agentListsUpdated = AgentList;
+    // console.log(email,isOrganizationAdmin,role)
+    // if (
+    //   this.AgentSocketService.getOrganizationAdminStatus()
+    //     .is_organization_admin === true
+    // ) {
+    //   return true;
+    // } else if (
+    //   this.AgentSocketService.getOrganizationAdminStatus()
+    //     .is_organization_admin === false &&
+    //   this.AgentSocketService.getOrganizationAdminStatus().role === 'Admin'
+    // ) {
+    //   if (isOrganizationAdmin === true && role === 'Admin') {
+    //     return false;
+    //   } else {
+    //     return true;
+    //   }
+    // } else if (
+    //   this.AgentSocketService.getOrganizationAdminStatus()
+    //     .is_organization_admin === false &&
+    //   this.AgentSocketService.getOrganizationAdminStatus().role === 'Agent'
+    // ) {
+    //   if (this.checkIsLoggedInAgent(email) === true) {
+    //     return true;
+    //   } else {
+    //     return false;
+    //   }
+    // } else {
+    //   return false;
+    // }
+
+    AgentList.forEach(element => {
+      if (this.checkIsLoggedInAgent(element.email)) {
+        if (element.role == "Admin") {
+          AgentList.map((item) => Object.assign(item, { show_edit: true }));
+        }
+        else if (element.role == "Agent") {
+          element['show_edit'] = true;
+        }
+        let fromindex = AgentList.findIndex(
+          (x) => x.email === this.CommonService.getEmailForLoggedInUser()
+        );
+        let selectedobject = AgentList[fromindex];
+        AgentList.splice(fromindex, 1);
+        AgentList.splice(0, 0, selectedobject);
       }
-    } else if (
-      this.AgentSocketService.getOrganizationAdminStatus()
-        .is_organization_admin === false &&
-      this.AgentSocketService.getOrganizationAdminStatus().role === 'Agent'
-    ) {
-      if (this.checkIsLoggedInAgent(email) === true) {
-        return true;
-      } else {
-        return false;
-      }
-    } else {
-      return false;
-    }
+
+    });
+    return AgentList;
+
   }
   // check is user LoggedIn agent
   public checkIsLoggedInAgent(agentEmail: string) {
@@ -131,6 +149,7 @@ export class AgentService {
         this.CommonService.getEndpointsParamLocal().project,
         agentsInformation
       );
+      this.MessageService.setSuccessMessage('Agent invitation has been sent.');
     } catch (error: any) {
       this.MessageService.setErrorMessage(error.error.error);
     }
@@ -199,5 +218,28 @@ export class AgentService {
     } else {
       return '';
     }
+  }
+
+  // search agent 
+  public search(data: string, AgentList: AgentModelTable[],AllAgentsData: AgentModelTable[]) {
+    const result: AgentModelTable[] = AgentList.filter((obj: AgentModelTable) => {
+      if (obj.agent_name != null) {
+        return obj.agent_name.toLowerCase().includes(data.toLowerCase()) || obj.email.toLowerCase().includes(data.toLowerCase());
+      }
+      else if (obj.agent_name == null) {
+        return obj.email.toLowerCase().includes(data.toLowerCase());
+      }
+      else {
+        return [];
+      }
+    })
+    if(data.length===0)
+    {
+    return AllAgentsData;
+    }
+    else{
+      return result;
+    }
+    
   }
 }

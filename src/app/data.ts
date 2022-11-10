@@ -1,14 +1,18 @@
 const websites = [
   {
+    text: 'Neo Console',
+    url: ['https://gconsole.io/'],
+    image: '../assets/images/sidebar/console_logo.svg'
+  }
+];
+
+const addons = [
+  {
     text: 'Analytics',
     url: ['https://analytics.gconsole.io/'],
     image: '../assets/images/sidebar/analytics.svg'
   },
-  {
-    text: 'Console',
-    url: ['https://gconsole.io/'],
-    image: '../assets/images/sidebar/console.svg'
-  }
+ 
 ];
 
 const icons = {
@@ -57,4 +61,4 @@ const sidebarData: any = [
   }
 ];
 
-export { websites, icons, sidebarData };
+export { websites, icons, sidebarData,addons };

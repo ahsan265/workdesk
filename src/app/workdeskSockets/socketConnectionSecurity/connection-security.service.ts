@@ -4,6 +4,7 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { connectionSecurityModel } from 'src/app/models/connectionSecurity';
+import { CommonService } from 'src/app/workdeskServices/commonEndpoint/common.service';
 import { GigaaaApiService } from 'src/app/workdeskServices/gigaaaApiService/gigaaa-api-service.service';
 import { AgentSocketService } from '../agentSocket/agent-socket.service';
 import { QueueSocketService } from '../queueSocket/queue-socket.service';
@@ -16,8 +17,8 @@ export class ConnectionSecurityService {
     private gigaaaApiService: GigaaaApiService,
     private AgentSocketService: AgentSocketService,
     private QueueSocketService: QueueSocketService,
-    private Router: Router
-  ) {}
+    private CommonService: CommonService
+  ) { }
   public async createConnectionEndpoint(
     token: string,
     ogranizationId: string,
@@ -30,7 +31,7 @@ export class ConnectionSecurityService {
         projectId
       );
     localStorage.setItem('connection-id', JSON.stringify(connection));
-    // this.Router.navigate(['dashboard']);
+    this.CommonService.getAgentRole();
     this.AgentSocketService.closeAgentSocketConnection();
     this.QueueSocketService.closeQueueSocketConnection();
     this.AgentSocketService.callAgentSocketEndpoint();

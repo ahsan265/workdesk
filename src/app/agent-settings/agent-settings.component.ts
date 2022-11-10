@@ -65,6 +65,7 @@ export class AgentSettingsComponent implements OnInit {
   isButtonDisabled: boolean = false;
   isAllLanguageSelected: boolean = false;
   showAllSelectedLanguageToggle: boolean = false;
+  showAdminRightSection: boolean = true;
   agentSettingsForm = new FormGroup({
     email: new FormControl('', [
       Validators.required,
@@ -139,7 +140,7 @@ export class AgentSettingsComponent implements OnInit {
   onGetSubmitButtonDeleteOutput(event: boolean) {
     if (event) {
       this.showDeleteAgentModal = false;
-      this.agentSettingService.deleteAgent(this.selectedAgent.uuid);
+      this.agentSettingService.deleteAgent(this.selectedAgent.uuid, 'Agent deleted successfully.');
     }
   }
   onCloseDeleteModal(event: any) {
@@ -161,7 +162,7 @@ export class AgentSettingsComponent implements OnInit {
   // for cancel invitation and resend Initation.
   onGetCancelButtonOutput(event: boolean) {
     if (event) {
-      this.agentSettingService.deleteAgent(this.selectedAgent.uuid);
+      this.agentSettingService.deleteAgent(this.selectedAgent.uuid, 'Agent invitation has been canceled.');
     }
   }
   onGetResendInvitation(event: boolean) {
@@ -245,6 +246,10 @@ export class AgentSettingsComponent implements OnInit {
       agentData.inactive,
       agentData.active
     );
+    if (isLoggedIn === true) {
+      (agentData.is_organization_owner === true) ?
+        this.showAdminRightSection = true : this.showAdminRightSection = false;
+    }
     if (isAgentAcceptInvitation === false) {
       this.agentSettingsForm.controls['first_name'].disable();
       this.agentSettingsForm.controls['last_name'].disable();
@@ -258,6 +263,7 @@ export class AgentSettingsComponent implements OnInit {
       this.isDropdownEnabled = false;
       this.isButtonDisabled = true;
     }
+
     this.pendingStatusForLanguages =
       this.agentSettingService.checkAgentStatusIsPendingLanguage(
         isAgentAcceptInvitation

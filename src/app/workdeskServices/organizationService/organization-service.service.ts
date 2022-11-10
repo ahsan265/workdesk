@@ -57,10 +57,12 @@ export class getOrganizationService {
                       lastUsedOgranization,
                       data.uuid
                     );
+
                   }
                 });
-                this.SharedServices.loadCommonEps(1);
                 this.getProjectList(project);
+                this.SharedServices.loadCommonEps(1);
+
               });
           }
         });

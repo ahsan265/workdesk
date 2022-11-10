@@ -59,7 +59,6 @@ export class LandingPageComponent implements OnInit {
     }
     this.AgentInviteService.agentInviteSubject.subscribe(
       (data: inviteLinkModel) => {
-        console.log(data);
         this.showLinkExpireModal = data.already_used;
         if (data.has_to_register) {
           window.open('https://accounts.gigaaa.link/register', '_self');

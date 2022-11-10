@@ -4,7 +4,7 @@
 /* eslint-disable no-unused-vars */
 
 import { Component, Inject, OnInit } from '@angular/core';
-import { icons, sidebarData, websites } from '../data';
+import { addons, icons, sidebarData, websites } from '../data';
 import { AuthService } from '../services/auth.service';
 import { GigaaaHeaderService } from '@gigaaa/gigaaa-components';
 import { ReplaySubject } from 'rxjs';
@@ -29,6 +29,7 @@ export class MainComponent implements OnInit {
   sendUserStatus = new ReplaySubject(1);
   showModal: boolean = false;
   websites = websites;
+  addOns = addons;
   icons = icons;
   sidebarData = sidebarData;
   constructor(
@@ -38,7 +39,7 @@ export class MainComponent implements OnInit {
     @Inject('GigaaaHeaderService') private headerService: GigaaaHeaderService,
     private CommonService: CommonService,
     private GigaaaApiService: GigaaaApiService
-  ) {}
+  ) { }
 
   ngOnInit() {
     this.authService.pageTitle.subscribe((res: any) => {
