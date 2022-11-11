@@ -2,6 +2,7 @@ import { BehaviorSubject, ReplaySubject } from 'rxjs';
 import { CanActivate } from '@angular/router';
 import { Injectable } from '@angular/core';
 import { User } from '../models/user';
+import { CommonService } from '../workdeskServices/commonEndpoint/common.service';
 
 @Injectable({
   providedIn: 'root'

@@ -14,6 +14,7 @@ import { AgentSocketService } from '../workdeskSockets/agentSocket/agent-socket.
 import { GigaaaApiService } from '../workdeskServices/gigaaaApiService/gigaaa-api-service.service';
 import { AgentInviteService } from '../workdeskServices/agentInviteService/agent-invite.service';
 import { CommonService } from '../workdeskServices/commonEndpoint/common.service';
+import { SharedServices } from '../workdeskServices/sharedResourcesService/shared-resource-service.service';
 
 @Component({
   selector: 'app-main',
@@ -32,13 +33,16 @@ export class MainComponent implements OnInit {
   addOns = addons;
   icons = icons;
   sidebarData = sidebarData;
+  showComponents: boolean = false;
+
   constructor(
     public authService: AuthService,
     private AgentSocketService: AgentSocketService,
     private getOrganizationService: getOrganizationService,
     @Inject('GigaaaHeaderService') private headerService: GigaaaHeaderService,
     private CommonService: CommonService,
-    private GigaaaApiService: GigaaaApiService
+    private GigaaaApiService: GigaaaApiService,
+    private SharedServices: SharedServices
   ) { }
 
   ngOnInit() {
@@ -48,6 +52,11 @@ export class MainComponent implements OnInit {
     this.AgentSocketService.AgentLiveStatus.subscribe((data: boolean) => {
       this.statusOnline = data;
     });
+    this.SharedServices.LoadcommonEpsubject.subscribe(data => {
+      if (data === 1) {
+        this.showComponents = true;
+      }
+    })
   }
 
   onNoLoggedUsers(event: any) {

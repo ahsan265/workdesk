@@ -14,6 +14,7 @@ import { NgModule } from '@angular/core';
 import { OngoingComponent } from './calls/ongoing/ongoing.component';
 import { CallConsoleComponent } from './callInterface/call-console/call-console.component';
 import { CustomerSupportComponent } from './customer-support/customer-support.component';
+import { LoaderComponent } from './components/loader/loader.component';
 
 const routes: Routes = [
   { path: '', component: LandingPageComponent },
@@ -45,11 +46,16 @@ const routes: Routes = [
       },
       { path: 'agents', component: AgentsComponent },
       { path: 'agents/settings/:id', component: AgentSettingsComponent }
+
     ]
   },
   { path: 'callback', component: CallbackComponent },
-  { path: 'calling', component: CallConsoleComponent },
-  { path: 'customersupport', component: CustomerSupportComponent }
+  { path: 'calling', component: CallConsoleComponent, canActivate: [AuthService] },
+  { path: 'customersupport', component: CustomerSupportComponent, canActivate: [AuthService] },
+  {
+    path: 'loading', component: LoaderComponent, canActivate: [AuthService]
+  }
+
 
   // { path: '**', redirectTo: '' }
 ];
@@ -63,4 +69,4 @@ const routes: Routes = [
   ],
   exports: [RouterModule]
 })
-export class AppRoutingModule {}
+export class AppRoutingModule { }

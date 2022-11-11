@@ -7,6 +7,7 @@
 <app-modal-wrapper
   (closeModal)="onCloseModal($event)"
   *ngIf="showLinkExpireModal"
+  [modalData]="modalData"
 >
   <app-link-expire-modal></app-link-expire-modal>
 </app-modal-wrapper>

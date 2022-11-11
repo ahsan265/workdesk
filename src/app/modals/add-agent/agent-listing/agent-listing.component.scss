@@ -1,6 +1,5 @@
 .inputFields {
   width: 235px;
-  height: 35px;
   left: 30px;
   top: 136px;
   font-family: 'Roboto', sans-serif;
@@ -12,7 +11,7 @@
   padding-left: 10px;
 }
 
-::ng-deep .modal {
+::ng-deep .modalWrapper .modal {
   padding: 0px !important;
 }
 
@@ -53,7 +52,7 @@
   width: 235px;
   margin-left: 20px;
   position: relative;
-  height: 35px;
+  height: 34px;
 }
 
 .addNewListing {
@@ -69,7 +68,7 @@
   margin-top: 10px;
   height: 50px;
   margin-bottom: 10px;
-  width: 100%;
+  width: fit-content;
   cursor: pointer;
 }
 
