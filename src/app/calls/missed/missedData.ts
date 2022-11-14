@@ -121,7 +121,7 @@ const answeredTablaSetting: tableSettings = {
     {
       index: 3,
       header: 'Call Type',
-      width: 15,
+      width: 10,
       isHeaderImage: true,
       showHeader: true,
       isDropdown: false,

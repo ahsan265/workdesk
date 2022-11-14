@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { AgentInviteService } from 'src/app/workdeskServices/agentInviteService/agent-invite.service';
 
 @Component({
   selector: 'app-link-expire-modal',
@@ -6,7 +7,10 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./link-expire-modal.component.scss']
 })
 export class linkExpireModalComponent implements OnInit {
-  constructor() {}
+  constructor(private AgentInviteService: AgentInviteService) { }
 
-  ngOnInit(): void {}
+  ngOnInit(): void { }
+  closeNonComplientAccountPopup() {
+    this.AgentInviteService.agentInviteLinkExpireSubject.next(false);
+  }
 }

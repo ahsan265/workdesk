@@ -19,7 +19,7 @@ import { GigaaaDaterangepickerDirective } from '@gigaaa/gigaaa-components';
 import * as dayjs from 'dayjs';
 import { CalendarService } from '../calendarService/calendar.service';
 import { CommonService } from '../workdeskServices/commonEndpoint/common.service';
-import { MessageService } from '../workdeskServices/messageService/message.service';
+import { NavigationStart, Router } from '@angular/router';
 
 @Component({
   selector: 'app-dashboard',
@@ -122,16 +122,26 @@ export class DashboardComponent {
   public barChartData1!: ChartData<'bar'>;
   public barChartData2!: ChartData<'bar'>;
   public barChartData3!: ChartData<'bar'>;
-
+  browserRefresh = false;
   constructor(
     private authService: AuthService,
     private CommonService: CommonService,
     private SharedServices: SharedServices,
     private dashboardEps: DashboardEndpointService,
-    private calendarService: CalendarService
+    private calendarService: CalendarService,
+    private router: Router
+
   ) {
+    router.events.subscribe((event) => {
+      if (event instanceof NavigationStart) {
+        this.browserRefresh = !router.navigated;
+        if(this.browserRefresh===false)
+        {
+          this.callRouteLoad();
+        }
+      }
+    });
     this.authService.pageTitle.next('Dashboard');
-    this.callRouteLoad();
     this.getFirstLoad();
     this.getCardsAndChartsData();
     this.alwaysShowCalendars = true;
@@ -183,6 +193,8 @@ export class DashboardComponent {
         );
       }
     });
+
+
   }
   public locationOutput(locationOutput: number[]) {
     this.idOfLocation = locationOutput;

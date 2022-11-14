@@ -54,8 +54,16 @@
   cursor: pointer;
 }
 
+::ng-deep .titleWrapper {
+  padding: 0px;
+}
+
 ::ng-deep .titleSpan {
   font-weight: 600 !important;
+}
+
+::ng-deep .modalWrapper .modal {
+  padding: 30px !important;
 }
 
 .mainheadingpanel {

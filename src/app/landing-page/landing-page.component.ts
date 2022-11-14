@@ -7,6 +7,7 @@ import { Router } from '@angular/router';
 import { AgentInviteService } from '../workdeskServices/agentInviteService/agent-invite.service';
 import { inviteLinkModel } from '../models/invite';
 import { environment } from 'src/environments/environment';
+import { SharedServices } from '../workdeskServices/sharedResourcesService/shared-resource-service.service';
 
 @Component({
   selector: 'app-landing-page',
@@ -15,25 +16,8 @@ import { environment } from 'src/environments/environment';
 })
 export class LandingPageComponent implements OnInit {
   modalData = {
-    title: '',
-    // image: '../assets/images/sidebar/agents.svg',
-    onlyOneButton: false,
-    buttonOne: {
-      title: 'Cancel',
-      backgroundColor: 'white',
-      borderColor: '1px solid rgba(208,208,222,.6)',
-      textColor: '#162741',
-      active: false
-    },
-    buttonTwo: {
-      title: 'Save',
-      backgroundColor: '#1C54DB',
-      borderColor: 'none',
-      textColor: 'white',
-      active: true
-    },
-    width: '500px',
-    height: '400px'
+    width: '390px',
+    height: '300px'
   };
   showLinkExpireModal: boolean = false;
   showNonComplientAccountModal: boolean = false;
@@ -49,13 +33,14 @@ export class LandingPageComponent implements OnInit {
     private router: Router,
     private authService: AuthService,
     private headerService: GigaaaHeaderService,
-    private AgentInviteService: AgentInviteService
-  ) {}
+    private AgentInviteService: AgentInviteService,
+    private SharedServices: SharedServices
+  ) { }
 
   ngOnInit(): void {
     this.AgentInviteService.getInvitedAgentDetails();
     if (this.authService.isLoggedIn()) {
-      this.router.navigate(['/dashboard']);
+      this.router.navigate(['/loading']);
     }
     this.AgentInviteService.agentInviteSubject.subscribe(
       (data: inviteLinkModel) => {
@@ -65,6 +50,10 @@ export class LandingPageComponent implements OnInit {
         }
       }
     );
+    this.AgentInviteService.agentInviteLinkExpireSubject.subscribe(data => {
+      this.showLinkExpireModal = data;
+    })
+   
   }
 
   onLogin(event: boolean) {

@@ -78,6 +78,7 @@ import { CountersComponent } from './components/counters/counters.component';
 
 import { WrongInvitationAccountComponent } from './modals/wrong-invitation-account/wrong-invitation-account.component';
 import { NoTableDataComponent } from './components/no-table-data/no-table-data.component';
+import { LoaderComponent } from './components/loader/loader.component';
 
 @NgModule({
   declarations: [
@@ -124,7 +125,8 @@ import { NoTableDataComponent } from './components/no-table-data/no-table-data.c
     AgentListingComponent,
     CountersComponent,
     WrongInvitationAccountComponent,
-    NoTableDataComponent
+    NoTableDataComponent,
+    LoaderComponent
   ],
   imports: [
     BrowserAnimationsModule,

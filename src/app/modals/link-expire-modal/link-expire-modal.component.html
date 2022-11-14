@@ -1,12 +1,16 @@
 <div style="text-align: center">
-  <img src="../../assets/images/components/invitation_1.svg" alt="" />
+  <img src="../../../assets/images/sidebar/neo_long.svg" alt="" />
 </div>
 <div style="margin-top: 24px">
-  <p class="description">
-    We are unable to process this request<br />
-    because the <span>link has expired.</span>
-  </p>
-  <p class="description" style="margin-top: 12px">
+  <div class="description">
+    We are unable to process this request<br> because the link has expired.
+  </div>
+  <div class="contactLine" style="margin-top: 12px">
     Please contact your account administrator and request another invite.
-  </p>
+  </div>
+</div>
+<div class="actionButtonPanel">
+  <button class="cancel" (click)="closeNonComplientAccountPopup()">
+    Cancel
+  </button>
 </div>

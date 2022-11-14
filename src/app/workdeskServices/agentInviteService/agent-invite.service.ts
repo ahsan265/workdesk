@@ -12,13 +12,15 @@ import { MessageService } from '../messageService/message.service';
 export class AgentInviteService {
   public agentInviteSubject = new Subject<inviteLinkModel>();
   public agentNonComplientAccountSubject = new Subject<boolean>();
+  public agentInviteLinkExpireSubject = new Subject<boolean>();
+
   constructor(
     private GigaaaApiService: GigaaaApiService,
     private CommonService: CommonService,
     private ActivatedRoute: ActivatedRoute,
     private MessageService: MessageService,
     private Router: Router
-  ) {}
+  ) { }
 
   public async sendtAgentInvitationCode() {
     let code = this.getInvitationCode();
@@ -51,13 +53,14 @@ export class AgentInviteService {
                 // localStorage.removeItem('gigaaa-invitation');
                 this.agentInviteSubject.next(data);
               }
+            }, (err: any) => {
+              this.agentInviteLinkExpireSubject.next(true);
+              this.MessageService.setErrorMessage(err.error.error);
             }
           );
         }
       },
-      (err: any) => {
-        this.MessageService.setErrorMessage(err.error.error);
-      }
+
     );
   }
   private getInvitationCode() {
