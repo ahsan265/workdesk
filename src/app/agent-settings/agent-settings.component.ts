@@ -199,6 +199,7 @@ export class AgentSettingsComponent implements OnInit {
       this.selectedAgent = await this.agentSettingService.getAgentData(
         this.agentId
       );
+      this.setAgentData(this.selectedAgent);
       this.agentImage = this.selectedAgent.images[96];
       const allLanguages = await this.CommonService.getProjectLanguages();
       const agentLanguages = this.CommonService.selectedLanguageChecket(
@@ -206,7 +207,7 @@ export class AgentSettingsComponent implements OnInit {
         this.selectedAgent.languages
       );
       this.languauges = agentLanguages;
-      this.setAgentData(this.selectedAgent);
+
     } catch (err: any) {
       this.MessageService.setErrorMessage(err.error.error);
     }
@@ -238,18 +239,18 @@ export class AgentSettingsComponent implements OnInit {
         agentData.is_organization_admin,
         agentData.role
       );
-
     const isLoggedIn = this.AgentService.checkIsLoggedInAgent(agentData.email);
+    if (isLoggedIn === true) {
+      (agentData.is_organization_owner === true) ?
+        this.showAdminRightSection = false : this.showAdminRightSection = true;
+    }
     this.isAdmin = this.agentSettingService.isAdmin(agentData.role);
     const isAgentAcceptInvitation = this.AgentService.setAgentInvitedProperty(
       agentData.invited,
       agentData.inactive,
       agentData.active
     );
-    if (isLoggedIn === true) {
-      (agentData.is_organization_owner === true) ?
-        this.showAdminRightSection = true : this.showAdminRightSection = false;
-    }
+
     if (isAgentAcceptInvitation === false) {
       this.agentSettingsForm.controls['first_name'].disable();
       this.agentSettingsForm.controls['last_name'].disable();
