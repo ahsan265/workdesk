@@ -637,7 +637,6 @@ export class GigaaaApiService {
     agentUuid: string,
     agentBody: AgentSettings
   ): Promise<any> {
-    console.log(agentBody);
     const httpOptions: any = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',

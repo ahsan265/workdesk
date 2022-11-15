@@ -2,12 +2,12 @@
 /* eslint-disable no-undef */
 /* eslint-disable sort-imports */
 import { Injectable } from '@angular/core';
-import { MultiSelect } from '@gigaaa/gigaaa-components/lib/models/multiSelect';
-import { OneSelect } from '@gigaaa/gigaaa-components/lib/models/oneSelect';
 import { InvitedAgentTableLanguage } from 'src/app/models/agent';
-import { AgentLanguages } from 'src/app/models/agentSocketModel';
+import { AgentLanguages, AgentList } from 'src/app/models/agentSocketModel';
 import { Country } from 'src/app/models/country';
 import { language } from 'src/app/models/language';
+import { MultiSelect } from 'src/app/models/multiSelect';
+import { OneSelect } from 'src/app/models/oneSelect';
 import { SelectionModelCountry } from 'src/app/models/selectionModel';
 import { User } from 'src/app/models/user';
 import { AuthService } from 'src/app/services/auth.service';
@@ -263,6 +263,7 @@ export class CommonService {
     return this.Authservice.getLoggedUser().email === email ? true : false;
   }
 
+
   // get language flags
   public getLanguageFlags(id: number): string {
     switch (id) {
@@ -366,5 +367,19 @@ export class CommonService {
     this.GigaaaApiService.getroleofagent(this.getEndpointsParamLocal().token, this.getEndpointsParamLocal().organization, this.getEndpointsParamLocal().project).subscribe((data: any) => {
       localStorage.setItem('is-admin', JSON.stringify(data['is_admin']));
     })
+  }
+
+
+  // logged in agent data
+  public loggedInAgentDetails(data: AgentList) {
+    localStorage.setItem('agent-logged', JSON.stringify(data));
+  }
+
+  // get loggedin Agent Data 
+  public getLoggedInAgentData() {
+    const Agent: AgentList = JSON.parse(
+      localStorage.getItem('agent-logged') || '{}'
+    );
+      return Agent;
   }
 }

@@ -79,9 +79,10 @@ export class AgentSocketService {
     }
   }
   private getAgentList(AgentList: AgentList[]) {
+    this.CommonService.getIsAdminOrAgent();
     this.AgentListSubject.next(AgentList);
     this.getAgentOnlineStatus(AgentList);
-    this.getUserExistAsAgent(AgentList);
+ 
   }
   private getAgentOnlineStatus(AgentList: AgentList[]) {
     const user = JSON.parse(localStorage.getItem('gigaaa-user') || '{}');
@@ -139,7 +140,5 @@ export class AgentSocketService {
     }
   }
 
-  private getUserExistAsAgent(data: any) {
 
-  }
 }

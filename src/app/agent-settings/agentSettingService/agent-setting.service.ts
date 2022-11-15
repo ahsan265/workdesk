@@ -18,7 +18,7 @@ export class AgentSettingService {
     private CommonService: CommonService,
     private MessageService: MessageService,
     private Router: Router
-  ) {}
+  ) { }
 
   // get agentS Updated Data ()
   public async updateAgentSettings(
@@ -73,7 +73,10 @@ export class AgentSettingService {
       return 'Organization admins cannot turn off administrative rights.';
     } else if (isOrganizationAdmin === false && role === 'Admin') {
       return '';
-    } else {
+    } else if (isOrganizationAdmin === false && role === 'Agent') {
+      return 'Agents cannot turn on administrative rights.';
+    }
+    else {
       return '';
     }
   }
@@ -98,7 +101,7 @@ export class AgentSettingService {
   public checkAgentIsInvited(agentData: AgentList): boolean {
     return agentData.invited === true ? true : false;
   }
-  public async deleteAgent(agentUuid: string,toastMessage:string) {
+  public async deleteAgent(agentUuid: string, toastMessage: string) {
     await this.GigaaaApiService.deleteagent(
       this.CommonService.getEndpointsParamLocal().token,
       this.CommonService.getEndpointsParamLocal().organization,
@@ -117,8 +120,8 @@ export class AgentSettingService {
     );
     this.MessageService.setSuccessMessage('Agent Invitation has been resent.');
   }
-  public updateAgentImage() {}
-  public updateLoggedInUserImage() {}
+  public updateAgentImage() { }
+  public updateLoggedInUserImage() { }
 
   public async UpdatePassword(data: any, id: number) {
     await this.GigaaaApiService.updatePassword(
@@ -141,8 +144,8 @@ export class AgentSettingService {
       );
       data.all_languages === true
         ? this.MessageService.setSuccessMessage(
-            'All project languages are assigned to you.'
-          )
+          'All project languages are assigned to you.'
+        )
         : '';
     } catch (error: any) {
       this.MessageService.setErrorMessage(error.error.error);

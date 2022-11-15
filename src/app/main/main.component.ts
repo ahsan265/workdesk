@@ -6,7 +6,6 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { addons, icons, sidebarData, websites } from '../data';
 import { AuthService } from '../services/auth.service';
-import { GigaaaHeaderService } from '@gigaaa/gigaaa-components';
 import { ReplaySubject } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { getOrganizationService } from '../workdeskServices/organizationService/organization-service.service';
@@ -39,7 +38,6 @@ export class MainComponent implements OnInit {
     public authService: AuthService,
     private AgentSocketService: AgentSocketService,
     private getOrganizationService: getOrganizationService,
-    @Inject('GigaaaHeaderService') private headerService: GigaaaHeaderService,
     private CommonService: CommonService,
     private GigaaaApiService: GigaaaApiService,
     private SharedServices: SharedServices

@@ -112,16 +112,7 @@ export class AgentsComponent implements OnInit {
   }
   getAgentList() {
     this.AgentSocketService.AgentListSubject.subscribe((data: AgentList[]) => {
-      // data.forEach((element) => {
-      //   if (this.CommonService.checkLoggedInUser(element.email)) {
-      //     let fromindex = data.findIndex(
-      //       (x) => x.email === this.CommonService.getEmailForLoggedInUser()
-      //     );
-      //     let selectedobject = data[fromindex];
-      //     data.splice(fromindex, 1);
-      //     data.splice(0, 0, selectedobject);
-      //   }
-      // });
+      this.CommonService.getLoggedInAgentData().role==='Agent'?this.buttonData.active=false:this.buttonData.active=true;
       const dataUpdate = this.AgentService.getAgentWiseData(data);
       this.agentdata = dataUpdate.map((AgentList: AgentList) => ({
         uuid: AgentList.uuid,
@@ -158,7 +149,7 @@ export class AgentsComponent implements OnInit {
               AgentList.role
             )
             : 'Pending',
-        show_edit: this.CommonService.getIsAdminOrAgent() || this.CommonService.checkLoggedInUser(AgentList.email),
+        show_edit: AgentList.show_edit,
         utilites: this.AgentService.getLanguageFlagById(AgentList.languages),
         invitation_accepted: this.AgentService.setAgentInvitedProperty(
           AgentList.invited,
@@ -193,4 +184,6 @@ export class AgentsComponent implements OnInit {
   public getSearchValue(value: string) {
     this.agentdata = this.AgentService.search(value, this.agentdata, this.agentdataWithNoSearch);
   }
+
+
 }
