@@ -71,7 +71,7 @@ const buttonData: Button = {
   backgroundColor: '#1C54DB',
   borderColor: 'none',
   textColor: 'white',
-  active: true
+  active: false
 };
 
 const agentTableSetting: any = {

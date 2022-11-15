@@ -73,7 +73,7 @@ export class AgentSettingService {
       return 'Organization admins cannot turn off administrative rights.';
     } else if (isOrganizationAdmin === false && role === 'Admin') {
       return '';
-    } else if (isOrganizationAdmin === false && role === 'Agent') {
+    } else if (isOrganizationAdmin === false && role === 'Agent' && this.CommonService.getLoggedInAgentData().role !== 'Admin') {
       return 'Agents cannot turn on administrative rights.';
     }
     else {

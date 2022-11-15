@@ -1,3 +1,5 @@
+import { MultiSelect } from "src/app/models/multiSelect";
+
 const dataTableSettings: any[] = [
   {
     primaryKey: 'full_name',
@@ -65,7 +67,15 @@ const dataTableSettings: any[] = [
     isUserItem: false
   }
 ];
-
+const callTypeAnswered: MultiSelect = {
+  title: 'Call type',
+  showSelectAll: false,
+  showSearchBar: false,
+  data: [
+    { id: 1, name: 'Audio', selected: false },
+    { id: 2, name: 'Video', selected: false }
+  ]
+};
 const agents = [
   {
     id: '1',
@@ -125,4 +135,4 @@ const agents = [
   }
 ];
 
-export { dataTableSettings, agents };
+export { dataTableSettings, agents ,callTypeAnswered};

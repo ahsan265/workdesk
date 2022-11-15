@@ -1,4 +1,6 @@
 import { tableSettings } from 'src/app/models/callModel';
+import { MultiSelect } from 'src/app/models/multiSelect';
+import { SearchInput } from 'src/app/models/searchInput';
 
 const missedTableSetting: tableSettings = {
   tableName: 'missed',
@@ -203,5 +205,18 @@ const missedCallData: any[] = [
     user_details: { image: '../assets/images/user.png', text: 'Ahsan Sheikh' }
   }
 ];
+const callTypeMissed: MultiSelect = {
+  title: 'Call type',
+  showSelectAll: false,
+  showSearchBar: false,
+  data: [
+    { id: 1, name: 'Audio', selected: false },
+    { id: 2, name: 'Video', selected: false }
+  ]
+};
 
-export { missedTableSetting, missedCallData, answeredTablaSetting };
+const searchInputData: SearchInput = {
+  placeholder: 'Search by name or user ID',
+  searchText: ''
+};
+export { missedTableSetting, missedCallData, answeredTablaSetting, callTypeMissed, searchInputData };

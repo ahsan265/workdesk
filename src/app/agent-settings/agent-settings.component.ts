@@ -234,11 +234,13 @@ export class AgentSettingsComponent implements OnInit {
     this.agentLanguages = this.CommonService.getLanguageSelectedIds(
       agentData.languages
     );
-    this.adminAletMessage =
-      this.agentSettingService.checkAdminOrganizationOrNomral(
-        agentData.is_organization_admin,
-        agentData.role
-      );
+      this.adminAletMessage =
+        this.agentSettingService.checkAdminOrganizationOrNomral(
+          agentData.is_organization_admin,
+          agentData.role
+        );
+    
+
     const isLoggedIn = this.AgentService.checkIsLoggedInAgent(agentData.email);
     if (isLoggedIn === true) {
       (agentData.is_organization_owner === true) ?

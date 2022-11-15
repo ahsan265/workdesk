@@ -1,3 +1,7 @@
+.tableWrapper {
+  padding: 0 30px;
+}
+
 ::ng-deep .tableWrapper .tableWrap {
   padding: 0 !important;
 }
@@ -16,138 +20,123 @@
   border-bottom-right-radius: 0px;
 }
 
-.paginationWrapper {
-  max-height: 30px;
-  overflow: hidden;
+::ng-deep .filterWrapper .leftFilter .dropdownWrapper,
+::ng-deep .filterWrapper .rightFilter .dropdownWrapper {
+  width: unset !important;
+}
+
+.menuWrapper {
+  display: flex;
+  padding: 0 30px;
+  margin: -2px 0px 0px 0px;
+  border-bottom: 1px solid #d0d0de99;
+  background: #fafafd;
+  position: fixed;
   width: 100%;
-  display: flex;
-  align-items: center;
-  padding: 10px 0;
+  height: 31px;
 }
 
-.leftPagination {
-  width: 50%;
-  display: flex;
-  align-items: center;
-}
-
-.paginationOptions {
-  font-style: normal;
-  font-weight: normal;
-  font-size: 12px;
-  line-height: 120%;
-  letter-spacing: 0.02em;
-  color: rgba(22, 39, 65, 0.6);
-  margin-right: 25px;
-}
-
-select {
-  width: 48px;
-  height: 30px;
-  left: 242px;
-  top: 1068px;
-  background: #ededf6;
-  border-radius: 4px;
+::ng-deep .filterWrapper>.leftFilter .dropdownWrapper .selectDropdown {
+  background: #ededf6 !important;
   border: none;
-  font-style: normal;
-  font-weight: normal;
-  font-size: 12px;
-  line-height: 150%;
-  letter-spacing: -0.02em;
-  color: #000000;
-  cursor: pointer;
 }
 
-option {
-  font-style: normal;
-  font-weight: normal;
-  font-size: 12px;
-  line-height: 150%;
-  letter-spacing: -0.02em;
-  color: #000000;
-  background: #ededf6;
-}
-
-.rightPagination {
-  width: 50%;
+.filterWrapper {
+  padding: 30px 0;
+  margin-top: 30px;
+  position: sticky;
   display: flex;
-  align-items: center;
+  background: #fefeff;
+  padding-left: 30px;
+  padding-right: 30px;
+  margin-right: 0px;
+  top: 30px;
+  margin-bottom: 2px;
+}
+
+.leftFilter {
+  width: 40%;
+  display: inline-flex;
+  text-align: left;
+}
+
+.rightFilterWrapper {
+  width: 60%;
+  text-align: right;
+  display: inline-flex;
   justify-content: flex-end;
 }
 
-::ng-deep .paginationWrapper .ngx-pagination {
-  display: flex;
-  margin: 0;
+.rightFilter {
+  width: fit-content;
+  position: relative;
+  display: inline-flex;
 }
 
-::ng-deep .paginationWrapper .ngx-pagination li {
-  font-style: normal;
-  font-weight: normal;
-  font-size: 12px;
-  letter-spacing: -0.02em;
-  color: #000000;
+.multiSelectWrapper {
+  margin-right: 10px;
+  width: 185.55px;
+  position: relative;
+  vertical-align: bottom;
+}
+
+.multiSelectWrapper.search {
+  width: fit-content;
+}
+
+.callType {
+  width: 107px;
+  margin-right: 10px;
+}
+
+.multiSelectWrapper.search {
+  margin-right: 0px;
+}
+
+::ng-deep .searchWrap {
+  justify-content: flex-end;
+}
+
+::ng-deep .calendarLocationLanguage .md-drppicker {
+  right: 0 !important;
+  top: 120% !important;
+  left: auto !important;
+  width: max-content !important;
+}
+
+::ng-deep .calendarLocationLanguage .md-drppicker .ranges {
+  height: 371px;
+}
+
+.calendarSelectMenu {
+  height: 34px;
+  width: 100%;
+  cursor: pointer;
+
+  input {
+    cursor: pointer;
+    border: none;
+    width: 100%;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 160%;
+    display: flex;
+    align-items: center;
+    letter-spacing: 0.02em;
+    color: #162741cc;
+  }
+}
+
+.calendarLocationLanguage {
   display: flex;
+  flex-direction: row;
   align-items: center;
-  justify-content: center;
-}
-
-::ng-deep .paginationWrapper .ngx-pagination .current {
-  font-style: normal;
-  font-weight: 500;
-  font-size: 12px;
-  letter-spacing: -0.02em;
-  color: #000000;
-
-  background: #ededf6;
+  justify-content: space-between;
+  padding: 0 11px;
+  background: #ffffff;
+  border: 1px solid rgba(208, 208, 222, 0.6);
+  box-sizing: border-box;
   border-radius: 4px;
-  padding: 0;
-  width: 26px;
-  height: 30px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-::ng-deep .paginationWrapper .ngx-pagination .ellipsis a {
-  padding: 0;
-}
-
-::ng-deep .paginationWrapper .ngx-pagination .small-screen {
-  display: none;
-}
-
-::ng-deep .paginationWrapper .ngx-pagination .pagination-next.disabled::after,
-::ng-deep .paginationWrapper .ngx-pagination .pagination-next a::after {
-  content: '';
-  background-image: url('../../../assets/images/pagination/nextPage.svg');
-  width: 10px;
-  height: 10px;
-  background-repeat: no-repeat;
   cursor: pointer;
-}
-
-::ng-deep .paginationWrapper .ngx-pagination .pagination-previous a::before,
-::ng-deep
-  .paginationWrapper
-  .ngx-pagination
-  .pagination-previous.disabled::before {
-  content: '';
-  background-image: url('../../../assets/images/pagination/prevPage.svg');
-  width: 10px;
-  height: 10px;
-  background-repeat: no-repeat;
-  cursor: pointer;
-}
-
-::ng-deep
-  .paginationWrapper
-  .ngx-pagination
-  .pagination-next.disabled::after:hover,
-::ng-deep .paginationWrapper .ngx-pagination .pagination-next a:hover {
-  background: none;
-}
-
-::ng-deep .paginationWrapper .ngx-pagination a:hover,
-::ng-deep .paginationWrapper .ngx-pagination button:hover {
-  background: none;
 }

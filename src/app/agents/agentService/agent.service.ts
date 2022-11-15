@@ -268,5 +268,4 @@ export class AgentService {
 
   }
 
-  // check logged in user 
 }
