@@ -1,3 +1,4 @@
+import dayjs from 'dayjs';
 import { tableSettings } from 'src/app/models/callModel';
 import { MultiSelect } from 'src/app/models/multiSelect';
 import { SearchInput } from 'src/app/models/searchInput';
@@ -52,7 +53,7 @@ const missedTableSetting: tableSettings = {
     {
       index: 4,
       header: 'Called at',
-      width: 15,
+      width: 10,
       isHeaderImage: true,
       showHeader: true,
       isDropdown: false,
@@ -74,7 +75,7 @@ const missedTableSetting: tableSettings = {
     {
       index: 4,
       header: 'Reason',
-      width: 10,
+      width: 15,
       isHeaderImage: true,
       showHeader: true,
       isDropdown: false,
@@ -214,9 +215,18 @@ const callTypeMissed: MultiSelect = {
     { id: 2, name: 'Video', selected: false }
   ]
 };
+const languauges: MultiSelect = {
+  title: 'Language',
+  showSelectAll: true,
+  showSearchBar: false,
+  data: [
 
+  ]
+};
 const searchInputData: SearchInput = {
   placeholder: 'Search by name or user ID',
   searchText: ''
 };
-export { missedTableSetting, missedCallData, answeredTablaSetting, callTypeMissed, searchInputData };
+
+
+export { missedTableSetting, missedCallData, answeredTablaSetting, callTypeMissed, searchInputData ,languauges};

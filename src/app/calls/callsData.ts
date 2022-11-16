@@ -6,7 +6,6 @@ const languauges: MultiSelect = {
   showSelectAll: true,
   showSearchBar: false,
   data: [
-
   ]
 };
 

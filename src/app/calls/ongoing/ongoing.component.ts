@@ -96,6 +96,7 @@ export class OngoingComponent implements OnInit {
             text: 'csahsan021@gmail.com'
           }
         }));
+        this.unfilterOngoingData=this.ongoingData=this.unfilterOngoingData;
       }
     );
   }
@@ -135,6 +136,12 @@ export class OngoingComponent implements OnInit {
       event.dates[0].$d
     );
     this.endDate = this.calendarService.getDateRangeFormated(event.dates[1].$d);
+    this.CallsSrvice.callQueueSocketByLanguageandCall(
+      this.languageIds,
+      this.callTypeName,
+      'ongoing',
+      this.aggregate
+    );
   }
 
   public callOutput(callTypeOutput: any) {
@@ -142,16 +149,18 @@ export class OngoingComponent implements OnInit {
     this.CallsSrvice.callQueueSocketByLanguageandCall(
       this.languageIds,
       this.callTypeName,
-      'ongoing'
+      'ongoing',
+      this.aggregate
     );
   }
 
   public languaugesOutput(languageOutput: number[]) {
     this.languageIds = languageOutput;
     this.CallsSrvice.callQueueSocketByLanguageandCall(
-      languageOutput,
+      this.languageIds,
       this.callTypeName,
-      'ongoing'
+      'ongoing',
+      this.aggregate
     );
   }
   // get ongoing data
