@@ -1,50 +1,83 @@
-import { missedCallData, missedTableSetting } from './missedData';
-import { Component } from '@angular/core';
+import { callTypeMissed, missedCallData, missedTableSetting, searchInputData } from './missedData';
+import { Component, HostListener, OnInit, ViewChild } from '@angular/core';
 import { CallsService } from '../callService/calls.service';
 import {
   MissedCallModel,
   MissedCallModelTable
 } from 'src/app/models/callModel';
 import { CommonService } from 'src/app/workdeskServices/commonEndpoint/common.service';
+import { GigaaaDaterangepickerDirective } from '@gigaaa/gigaaa-components';
+import dayjs from 'dayjs';
+import { ranges } from 'src/app/dashboard/dashboardData';
+import { callType, languauges } from '../callsData';
+import { CalendarService } from 'src/app/calendarService/calendar.service';
+import { callsIndicatorData } from 'src/app/models/callIndicatorModel';
+import { QueueSocketService } from 'src/app/workdeskSockets/queueSocket/queue-socket.service';
 @Component({
   selector: 'app-missed',
   templateUrl: './missed.component.html',
   styleUrls: ['./missed.component.scss']
 })
-export class MissedComponent {
+export class MissedComponent implements OnInit {
+  showCalender = true;
   tableSettings = missedTableSetting;
-  missedCallData: MissedCallModelTable[] = missedCallData;
-  tableSizes = [
-    { value: 5, selected: false },
-    { value: 10, selected: true },
-    { value: 15, selected: false },
-    { value: 20, selected: false }
-  ];
-  pagination: any;
+  missedCallData: MissedCallModelTable[] = [];
+  unfilterMissedCallData: MissedCallModelTable[] = [];
+  lastUsedSearch: string = '';
+  startDate: string = '';
+  endDate: string = '';
+  ranges = ranges;
+  aggregate: string = 'this_week';
+  date_from: any = dayjs().startOf('week').add(1, 'day');
+  date_to: any = dayjs().endOf('week').add(1, 'day');
+  selected: any = {
+    startDate: this.date_from,
+    endDate: this.date_to,
+    aggregate: this.aggregate
+  };
+  callType = callTypeMissed;
+  languauges = languauges;
+  searchInputData = searchInputData;
+  @ViewChild(GigaaaDaterangepickerDirective, { static: false })
+  pickerDirective: GigaaaDaterangepickerDirective | undefined;
+  alwaysShowCalendars: boolean | undefined;
+  showCalendar: boolean = false;
+  languageIds: number[] = [];
+  callTypeName: string[] = [];
+  callsIndicatorData!: callsIndicatorData;
+  @ViewChild('calendarDropdown') calendar: any = HTMLElement;
+  @HostListener('document:click', ['$event'])
+  clickout(event: any) {
+    if (!this.calendar?.nativeElement.contains(event?.target)) {
+      this.showCalendar = false;
+    }
+  }
   constructor(
-    private callservice: CallsService,
-    private CommonService: CommonService
+    private CallsService: CallsService,
+    private CommonService: CommonService,
+    private calendarService: CalendarService,
+    private QueueSocketService: QueueSocketService
   ) {
-    this.callservice.sendDataToMissedTabsSubject.subscribe(
+    this.CallsService.sendDataToMissedTabsSubject.subscribe(
       (data: MissedCallModel[]) => {
         this.missedCallData = data.map((missedCallData) => ({
           agent_name: missedCallData.name,
           call_uuid: missedCallData.call_uuid,
-          called_at: this.callservice
+          called_at: this.CallsService
             .gettimedurationformissedandanswered(missedCallData.missed_at)
             .toString(),
           callType: {
             image: this.CommonService.getConversationType(
               missedCallData.is_video
             ),
-            text: this.callservice.getCallType(missedCallData.is_video)
+            text: this.CallsService.getCallType(missedCallData.is_video)
           },
           resaon: missedCallData.reason,
           user_details: {
             image: '../../../assets/images/callInterface/user.png',
             text: missedCallData.name
           },
-          user_id: this.callservice.getUserId(missedCallData.user_id),
+          user_id: this.CallsService.getUserId(missedCallData.user_id),
           utilites: [
             {
               image: this.CommonService.getLanguageFlags(
@@ -63,15 +96,79 @@ export class MissedComponent {
               )
             }
           ],
-          wait_time: this.callservice
+          wait_time: this.CallsService
             .calculatetime(missedCallData.wait_time)
             .toString()
         }));
+
+        this.callsIndicatorData = {
+          text: data.length + ' missed requests',
+          icon: '../assets/images/components/calls_count_missed.svg',
+          backgroundColor: '#F9EBEF',
+          borderColor: '1px solid #F4CAD6',
+          textColor: '#FF155A'
+        };
+
       }
     );
   }
+  async ngOnInit(): Promise<void> {
+    this.languauges = await this.CommonService.getProjectLanguagesForUser();
+  }
 
-  onTableDataChange(event: any) {}
 
-  onTableSizeChange(event: any): void {}
+  change(event: any) {
+    if (event.startDate) {
+      this.date_from = event.startDate;
+      this.date_to = event.endDate.add(1, 'day');
+      // Needs to be updated
+      let compareArray: any[] = [];
+      for (const property in this.ranges) {
+        if (
+          this.date_from !== this.ranges[property][0] &&
+          this.date_to !== this.ranges[property][1]
+        ) {
+          compareArray.push(this.ranges[property][0]);
+        }
+      }
+      if (compareArray.length === 8) {
+        // this.aggregate = 'custom';
+      }
+    }
+  }
+  onOpenCalendar() {
+    this.showCalendar = !this.showCalendar;
+  }
+  rangeClicked(event: any) {
+    this.aggregate =
+      event.label.charAt(0).toLowerCase() +
+      event.label.slice(1).replace(/ /g, '_');
+    this.startDate = this.calendarService.getDateRangeFormated(
+      event.dates[0].$d
+    );
+    this.endDate = this.calendarService.getDateRangeFormated(event.dates[1].$d);
+  }
+
+  public callOutput(callTypeOutput: any) {
+    this.callTypeName = this.CallsService.getCallTypeId(callTypeOutput);
+    this.CallsService.callQueueSocketByLanguageandCall(
+      this.languageIds,
+      this.callTypeName,
+      'missed'
+    );
+  }
+
+  public languaugesOutput(languageOutput: number[]) {
+    this.languageIds = languageOutput;
+    this.CallsService.callQueueSocketByLanguageandCall(
+      languageOutput,
+      this.callTypeName,
+      'missed'
+    );
+  }
+  // filter missed data
+  getSearchValue(value: string) {
+    this.lastUsedSearch = value;
+    this.missedCallData = this.CallsService.search(value, this.missedCallData, this.unfilterMissedCallData)
+  }
 }

@@ -81,6 +81,7 @@ export class CallsComponent implements OnInit {
   missedData: MissedCallModel[] = [];
   awnseredData: AnsweredCallModel[] = [];
   ngOnInit() {
+    this.QueueSocketService.SendDefaultParam();
     this.route.url.subscribe(() => {
       const tabName: string =
         this.route.snapshot.firstChild?.routeConfig?.path || '';
@@ -137,75 +138,19 @@ export class CallsComponent implements OnInit {
     );
   }
 
-  rangeClicked(event: any) {
-    this.aggregate =
-      event.label.charAt(0).toLowerCase() +
-      event.label.slice(1).replace(/ /g, '_');
-    this.startDate = this.calendarService.getDateRangeFormated(
-      event.dates[0].$d
-    );
-    this.endDate = this.calendarService.getDateRangeFormated(event.dates[1].$d);
-  }
 
-  change(event: any) {
-    if (event.startDate) {
-      this.date_from = event.startDate;
-      this.date_to = event.endDate.add(1, 'day');
-      // Needs to be updated
-      let compareArray: any[] = [];
-      for (const property in this.ranges) {
-        if (
-          this.date_from !== this.ranges[property][0] &&
-          this.date_to !== this.ranges[property][1]
-        ) {
-          compareArray.push(this.ranges[property][0]);
-        }
-      }
-      if (compareArray.length === 8) {
-        this.aggregate = 'custom';
-      }
-    }
-  }
-  onOpenCalendar() {
-    this.showCalendar = !this.showCalendar;
-  }
+
+
 
   callSegmentSelection(title: string) {
     if (title === 'missed') {
-      this.showIndicator = true;
-      const callIndicator: callsIndicatorData = {
-        text: this.missedData.length + ' missed requests',
-        icon: '../assets/images/components/calls_count_missed.svg',
-        backgroundColor: '#F9EBEF',
-        borderColor: '1px solid #F4CAD6',
-        textColor: '#FF155A'
-      };
-      this.callsIndicatorData = callIndicator;
-      this.showCalender = true;
       this.CallsService.sendDataToTabs(this.missedData, title);
     } else if (title === 'answered') {
-      this.showIndicator = true;
-      const callIndicator: callsIndicatorData = {
-        text: this.awnseredData.length + ' answered requests',
-        icon: '../assets/images/components/calls_count_answered.svg',
-        backgroundColor: '#EBF6DD',
-        borderColor: '1px solid #C1E297',
-        textColor: '#76CB09'
-      };
-      this.callsIndicatorData = callIndicator;
-      this.showCalender = true;
       this.CallsService.sendDataToTabs(this.awnseredData, title);
     } else if (title === 'incoming') {
-      this.showIndicator = false;
-      this.showCalender = false;
       this.CallsService.sendDataToTabs(this.incomingData, title);
     } else if (title === 'ongoing') {
-      this.showIndicator = false;
-      this.showCalender = false;
       this.CallsService.sendDataToTabs(this.ongoingData, title);
-    } else {
-      this.showIndicator = false;
-      this.showCalender = false;
     }
   }
 }

@@ -102,7 +102,9 @@ export class AgentsComponent implements OnInit {
     //   this.router.navigate(['agents', 'settings', selectedAgent?.uuid]);
     // }
     // this.openCallInterface.open();
-    this.showInviteModel = true;
+    if (this.buttonData.active) {
+      this.showInviteModel = true;
+    }
   }
 
   onCloseAgentInvite(event: any) {
@@ -112,7 +114,6 @@ export class AgentsComponent implements OnInit {
   }
   getAgentList() {
     this.AgentSocketService.AgentListSubject.subscribe((data: AgentList[]) => {
-      this.CommonService.getLoggedInAgentData().role==='Agent'?this.buttonData.active=false:this.buttonData.active=true;
       const dataUpdate = this.AgentService.getAgentWiseData(data);
       this.agentdata = dataUpdate.map((AgentList: AgentList) => ({
         uuid: AgentList.uuid,
@@ -173,6 +174,7 @@ export class AgentsComponent implements OnInit {
         routeUrl: ['agents', 'settings', AgentList.uuid]
       }));
       this.agentdataWithNoSearch = this.agentdata;
+      this.CommonService.getLoggedInAgentData().role === 'Agent' ? this.buttonData.active = false : this.buttonData.active = true;
     });
   }
 

@@ -21,7 +21,7 @@ export class QueueSocketService {
   isSocketOpen: any;
   callDataSubject = new Subject<any>();
 
-  constructor() {}
+  constructor() { }
   public callQueueSocketEndpoint() {
     const connectionId: connectionSecurityModel = JSON.parse(
       localStorage.getItem('connection-id') || '{}'
@@ -41,8 +41,8 @@ export class QueueSocketService {
     this.ws.onmessage = (e) => {
       e.data != 'ping' ? this.getQueueSocketList(JSON.parse(e.data)) : '';
     };
-    this.ws.onclose = (e) => {};
-    this.ws.onerror = (e) => {};
+    this.ws.onclose = (e) => { };
+    this.ws.onerror = (e) => { };
   }
 
   public sendQueueParameter(QueueSocketparamter: QueueSocketparamter) {
@@ -62,10 +62,10 @@ export class QueueSocketService {
     }
   }
 
-  private SendDefaultParam() {
+  public SendDefaultParam() {
     this.sendQueueParameter({
-      call_type: ['audio', 'video'],
-      languages: [6, 56, 83, 131, 161, 175, 179],
+      call_type: [],
+      languages: [],
       tab: 'default'
     });
     this.sendQueueDateParameter({

@@ -5,7 +5,7 @@ import { Directive, HostBinding, HostListener, Input } from '@angular/core';
 })
 export class scrollStageDirective {
   @Input('nonScrollClass') nonScrollClass: any = '.filterWrapper';
-  @Input('scrollClass') scrollClass: any = '.inPageWrapper';;
+  @Input('scrollClass') scrollClass: any = '.tableWrapper';;
 
   @HostBinding('style.box-shadow') private beforeScroll = 'none';
   constructor() { }

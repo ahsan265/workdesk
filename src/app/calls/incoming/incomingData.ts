@@ -1,4 +1,6 @@
 import { tableSettings } from 'src/app/models/callModel';
+import { MultiSelect } from 'src/app/models/multiSelect';
+import { SearchInput } from 'src/app/models/searchInput';
 
 const incomingTableSetting: tableSettings = {
   tableName: 'incoming',
@@ -71,4 +73,18 @@ const incomingTableSetting: tableSettings = {
     }
   ]
 };
-export { incomingTableSetting };
+
+const callTypeIncoming: MultiSelect = {
+  title: 'Call type',
+  showSelectAll: false,
+  showSearchBar: false,
+  data: [
+    { id: 1, name: 'Audio', selected: false },
+    { id: 2, name: 'Video', selected: false }
+  ]
+};
+const searchInputData: SearchInput = {
+  placeholder: 'Search by name or user ID',
+  searchText: ''
+};
+export { incomingTableSetting, callTypeIncoming, searchInputData };

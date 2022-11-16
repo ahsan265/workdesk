@@ -17,7 +17,7 @@ import { callType } from '../callsData';
   providedIn: 'root'
 })
 export class CallsService {
-  constructor(private QueueSocketService: QueueSocketService) {}
+  constructor(private QueueSocketService: QueueSocketService) { }
   sendDataToIncomingTabsSubject = new ReplaySubject<IncomingCallModel[]>();
   sendDataToMissedTabsSubject = new ReplaySubject<MissedCallModel[]>();
   sendDataToOngoingTabsSubject = new ReplaySubject<OngoingCallModel[]>();
@@ -116,4 +116,26 @@ export class CallsService {
     seconds = totalSeconds;
     return 0 + ':' + seconds;
   }
+
+  // search call details 
+  public search(data: string, AgentList: any[], AllAgentsData: any[]) {
+    const result: any[] = AgentList.filter((obj: any) => {
+      if (obj.user_id != null) {
+        return obj.agent_name.toLowerCase().includes(data.toLowerCase()) || obj.user_id.toLowerCase().includes(data.toLowerCase());
+      }
+      else if (obj.user_id == null) {
+        return obj.agent_name.toLowerCase().includes(data.toLowerCase());
+      }
+      else {
+        return [];
+      }
+    })
+    if (data.length === 0) {
+      return AllAgentsData;
+    }
+    else {
+      return result;
+    }
+  }
+
 }
