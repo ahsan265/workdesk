@@ -2,6 +2,7 @@ export interface QueueSocketparamter {
   call_type: string[];
   languages: number[];
   tab: string;
+  time_range:string;
 }
 export interface QueueList {
   finished: QueueListFinished[];

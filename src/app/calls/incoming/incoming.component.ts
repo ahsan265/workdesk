@@ -152,6 +152,12 @@ export class IncomingComponent implements OnInit {
       event.dates[0].$d
     );
     this.endDate = this.calendarService.getDateRangeFormated(event.dates[1].$d);
+    this.CallsService.callQueueSocketByLanguageandCall(
+      this.languageIds,
+      this.callTypeName,
+      'incoming',
+      this.aggregate
+    );
   }
 
   public callOutput(callTypeOutput: any) {
@@ -159,16 +165,18 @@ export class IncomingComponent implements OnInit {
     this.CallsService.callQueueSocketByLanguageandCall(
       this.languageIds,
       this.callTypeName,
-      'incoming'
+      'incoming',
+      this.aggregate
     );
   }
 
   public languaugesOutput(languageOutput: number[]) {
     this.languageIds = languageOutput;
     this.CallsService.callQueueSocketByLanguageandCall(
-      languageOutput,
+      this.languageIds,
       this.callTypeName,
-      'incoming'
+      'incoming',
+      this.aggregate
     );
   }
 

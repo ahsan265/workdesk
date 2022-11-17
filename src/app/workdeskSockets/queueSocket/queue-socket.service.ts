@@ -2,7 +2,8 @@
 /* eslint-disable no-undef */
 /* eslint-disable sort-imports */
 import { Injectable } from '@angular/core';
-import { Subject } from 'rxjs';
+import { BehaviorSubject, Subject } from 'rxjs';
+import { defaultCallData } from 'src/app/data';
 import { CallsModel } from 'src/app/models/callModel';
 import { connectionSecurityModel } from 'src/app/models/connectionSecurity';
 import {
@@ -19,9 +20,11 @@ export class QueueSocketService {
   protected websocket_url = `${environment.websocket_url}`;
   ws: WebSocket | undefined;
   isSocketOpen: any;
-  callDataSubject = new Subject<any>();
+  public callDataSubject = new Subject<CallsModel>();
+  defaultCallData = defaultCallData;
 
-  constructor() { }
+  constructor() {
+  }
   public callQueueSocketEndpoint() {
     const connectionId: connectionSecurityModel = JSON.parse(
       localStorage.getItem('connection-id') || '{}'
@@ -36,7 +39,7 @@ export class QueueSocketService {
     // on socket connection open
     this.ws.onopen = (e) => {
       this.isSocketOpen = this.ws?.OPEN;
-      this.SendDefaultParam();
+    //  this.SendDefaultParam();
     };
     this.ws.onmessage = (e) => {
       e.data != 'ping' ? this.getQueueSocketList(JSON.parse(e.data)) : '';
@@ -53,6 +56,13 @@ export class QueueSocketService {
   }
 
   public getQueueSocketList(QueueList: CallsModel) {
+    this.defaultCallData = {
+      finished: QueueList.finished,
+      incoming: QueueList.incoming,
+      missed: QueueList.missed,
+      ongoing: QueueList.ongoing,
+      new_call: QueueList.new_call
+    }
     this.callDataSubject.next(QueueList);
   }
   public sendQueueDateParameter(QueueDateRangeParam: QueueDateRangeParam) {
@@ -66,18 +76,10 @@ export class QueueSocketService {
     this.sendQueueParameter({
       call_type: [],
       languages: [],
-      tab: 'default'
+      tab: 'missed',
+      time_range: 'this_week'
     });
-    this.sendQueueDateParameter({
-      end_date: '2022-08-31T23:59:59.000Z',
-      start_date: '2022-08-01T00:00:00.000Z',
-      tab: 'missed_date'
-    });
-    this.sendQueueDateParameter({
-      end_date: '2022-08-31T23:59:59.000Z',
-      start_date: '2022-08-01T00:00:00.000Z',
-      tab: 'finished_date'
-    });
+
   }
   // close the agent socket Connnection
   public closeQueueSocketConnection() {

@@ -42,6 +42,7 @@ export class CallsComponent implements OnInit {
   callTypeName: string[] = [];
   startDate: string = '';
   endDate: string = '';
+
   constructor(
     private authService: AuthService,
     private router: Router,
@@ -75,7 +76,6 @@ export class CallsComponent implements OnInit {
       this.showCalendar = false;
     }
   }
-
   incomingData: IncomingCallModel[] = [];
   ongoingData: OngoingCallModel[] = [];
   missedData: MissedCallModel[] = [];
@@ -100,7 +100,7 @@ export class CallsComponent implements OnInit {
           return child.snapshot.routeConfig.path;
         })
       )
-      .subscribe(async (title: string) => {
+      .subscribe((title: string) => {
         this.selectedPage = title;
         this.callSegmentSelection(title);
       });
@@ -113,44 +113,40 @@ export class CallsComponent implements OnInit {
       this.CallsService.sendDataToTabs(data.finished, 'answered');
       this.CallsService.sendDataToTabs(data.ongoing, 'ongoing');
       this.CallsService.sendDataToTabs(data.incoming, 'incoming');
-      this.callSegmentSelection(this.selectedPage);
+
     });
+
+    // const data = this.QueueSocketService.callsData.value;
+    // this.incomingData = data.incoming;
+    // this.ongoingData = data.ongoing;
+    // this.missedData = data.missed;
+    // this.awnseredData = data.finished;
+    // this.CallsService.sendDataToTabs(data.missed, 'missed');
+    // this.CallsService.sendDataToTabs(data.finished, 'answered');
+    // this.CallsService.sendDataToTabs(data.ongoing, 'ongoing');
+    // this.CallsService.sendDataToTabs(data.incoming, 'incoming');
+    // this.callSegmentSelection(this.selectedPage);
   }
 
   private async callInitialEndpoints() {
-    this.languauges = await this.CommonService.getProjectLanguagesForUser();
+    // this.languauges = await this.CommonService.getProjectLanguagesForUser();
   }
-  public languaugesOutput(languageOutput: number[]) {
-    this.languageIds = languageOutput;
-    this.CallsService.callQueueSocketByLanguageandCall(
-      languageOutput,
-      this.callTypeName,
-      this.selectedPage
-    );
-  }
-  public callOutput(callTypeOutput: any) {
-    const callType: string[] = this.CallsService.getCallTypeId(callTypeOutput);
-    this.callTypeName = callType;
-    this.CallsService.callQueueSocketByLanguageandCall(
-      this.languageIds,
-      callType,
-      this.selectedPage
-    );
-  }
+
 
 
 
 
 
   callSegmentSelection(title: string) {
+    const data = this.QueueSocketService.defaultCallData;
     if (title === 'missed') {
-      this.CallsService.sendDataToTabs(this.missedData, title);
+      this.CallsService.sendDataToTabs(data.missed, title);
     } else if (title === 'answered') {
-      this.CallsService.sendDataToTabs(this.awnseredData, title);
+      this.CallsService.sendDataToTabs(data.finished, title);
     } else if (title === 'incoming') {
-      this.CallsService.sendDataToTabs(this.incomingData, title);
+      this.CallsService.sendDataToTabs(data.incoming, title);
     } else if (title === 'ongoing') {
-      this.CallsService.sendDataToTabs(this.ongoingData, title);
+      this.CallsService.sendDataToTabs(data.ongoing, title);
     }
   }
 }

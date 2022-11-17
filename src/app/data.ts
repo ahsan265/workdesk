@@ -1,3 +1,5 @@
+import { CallsModel } from "./models/callModel";
+
 const websites = [
   {
     text: 'Neo Console',
@@ -12,9 +14,16 @@ const addons = [
     url: ['https://analytics.gconsole.io/'],
     image: '../assets/images/sidebar/analytics.svg'
   },
- 
+
 ];
 
+const defaultCallData: CallsModel = {
+  incoming: [],
+  missed: [],
+  finished: [],
+  ongoing: [],
+  new_call: false
+}
 const icons = {
   integrationIcon: '../assets/images/sidebar/integration.svg',
   dashboardIcon: '../assets/images/sidebar/dashboard.svg',
@@ -61,4 +70,4 @@ const sidebarData: any = [
   }
 ];
 
-export { websites, icons, sidebarData,addons };
+export { websites, icons, sidebarData, addons, defaultCallData };

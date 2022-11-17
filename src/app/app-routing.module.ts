@@ -34,14 +34,14 @@ const routes: Routes = [
         component: CallsComponent,
         children: [
           { path: '', redirectTo: 'incoming', pathMatch: 'full' },
-          { path: 'incoming', component: IncomingComponent, data: {} },
-          { path: 'ongoing', component: OngoingComponent, data: {} },
+          { path: 'incoming', component: IncomingComponent, data: {}, pathMatch: 'full' },
+          { path: 'ongoing', component: OngoingComponent, data: {}, pathMatch: 'full' },
           {
             path: 'missed',
             component: MissedComponent,
-            data: { missedData: '' }
+            data: { missedData: '', pathMatch: 'full' }
           },
-          { path: 'answered', component: AnsweredComponent, data: {} }
+          { path: 'answered', component: AnsweredComponent, data: {}, pathMatch: 'full' }
         ]
       },
       { path: 'agents', component: AgentsComponent },

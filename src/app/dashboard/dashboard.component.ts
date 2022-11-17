@@ -135,8 +135,7 @@ export class DashboardComponent {
     router.events.subscribe((event) => {
       if (event instanceof NavigationStart) {
         this.browserRefresh = !router.navigated;
-        if(this.browserRefresh===false)
-        {
+        if (this.browserRefresh === false) {
           this.callRouteLoad();
         }
       }

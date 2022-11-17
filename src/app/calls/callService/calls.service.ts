@@ -26,12 +26,14 @@ export class CallsService {
   public callQueueSocketByLanguageandCall(
     languageId: number[],
     callType: string[],
-    tabName: string
+    tabName: string,
+    time_range: string,
   ) {
     this.QueueSocketService.sendQueueParameter({
       call_type: callType,
       languages: languageId,
-      tab: tabName
+      tab: tabName,
+      time_range: time_range
     });
   }
 
@@ -138,4 +140,35 @@ export class CallsService {
     }
   }
 
+  getCalledAtTimeDate(val: string, selectedRange: string) {
+
+    const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "June",
+      "July", "Aug", "Sep", "Oct", "Nov", "Dec"];
+    const Days = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
+
+    let myDate = new Date(val);
+    if (selectedRange === "today" || selectedRange === "yesterday") {
+      let time = ("0" + myDate.getHours()).slice(-2) + ":" + ("0" + myDate.getMinutes()).slice(-2)
+      return time;
+    }
+    else if (selectedRange === "this_month" || selectedRange === "last_month") {
+      let time = myDate.getDate() + '\xa0' + monthNames[myDate.getMonth()] + '\xa0' + ("0" + myDate.getHours()).slice(-2) + ":" + ("0" + myDate.getMinutes()).slice(-2);
+      return time;
+    }
+    else if (selectedRange === "this_week" || selectedRange === "last_week") {
+      let time = myDate.getDate() + '\xa0' + monthNames[myDate.getMonth()] + '\xa0' + ("0" + myDate.getHours()).slice(-2) + ":" + ("0" + myDate.getMinutes()).slice(-2);
+      return time;
+    }
+    else if (selectedRange === "this_year" || selectedRange === "last_year") {
+      let time = myDate.getDate() + '\xa0' + monthNames[myDate.getMonth()] + '\xa0' + ("0" + myDate.getHours()).slice(-2) + ":" + ("0" + myDate.getMinutes()).slice(-2);
+      return time;
+    }
+    else if (selectedRange == "custom") {
+      let time = ("0" + myDate.getHours()).slice(-2) + ":" + ("0" + myDate.getMinutes()).slice(-2)
+      return time;
+    }
+    else {
+      return '00:00'
+    }
+  }
 }

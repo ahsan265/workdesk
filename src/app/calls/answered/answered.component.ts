@@ -1,4 +1,4 @@
-import { agents, callTypeAnswered, dataTableSettings } from './answeredData';
+import { agents, callTypeAnswered } from './answeredData';
 import { Component, HostListener, OnInit, ViewChild } from '@angular/core';
 import {
   AnsweredCallModel,
@@ -9,10 +9,10 @@ import { CallsService } from '../callService/calls.service';
 import { CommonService } from 'src/app/workdeskServices/commonEndpoint/common.service';
 import { GigaaaDaterangepickerDirective } from '@gigaaa/gigaaa-components';
 import dayjs from 'dayjs';
-import { ranges } from 'src/app/dashboard/dashboardData';
 import { callsIndicatorData } from 'src/app/models/callIndicatorModel';
 import { languauges, searchInputData } from '../callsData';
 import { CalendarService } from 'src/app/calendarService/calendar.service';
+import { ranges } from 'src/app/dashboard/dashboardData';
 
 @Component({
   selector: 'app-answered',
@@ -59,8 +59,17 @@ export class AnsweredComponent implements OnInit {
     private CallsService: CallsService,
     private CommonService: CommonService,
     private calendarService: CalendarService,
-
   ) {
+    this.callsIndicatorData = {
+      text: this.answeredData + ' answered requests',
+      icon: '../assets/images/components/calls_count_answered.svg',
+      backgroundColor: '#EBF6DD',
+      borderColor: '1px solid #C1E297',
+      textColor: '#76CB09'
+    };
+  }
+  async ngOnInit(): Promise<void> {
+    this.languauges = await this.CommonService.getProjectLanguagesForUser();
     this.CallsService.sendDataToAnsweredTabsSubject.subscribe(
       (data: AnsweredCallModel[]) => {
         this.answeredData = data.map((answeredData) => ({
@@ -92,8 +101,7 @@ export class AnsweredComponent implements OnInit {
           },
           call_uuid: answeredData.call_uuid,
           duration: this.CallsService
-            .calculatetime(answeredData.call_time)
-            .toString(),
+            .getCalledAtTimeDate(answeredData.call_started_at, this.aggregate),
           agent_name: answeredData.name,
           user_id: this.CallsService.getUserId(answeredData.user_id),
           agent_details: {
@@ -101,18 +109,11 @@ export class AnsweredComponent implements OnInit {
             text: 'csahsan021@gmail.com'
           }
         }));
-        this.callsIndicatorData = {
-          text: data.length + ' answered requests',
-          icon: '../assets/images/components/calls_count_answered.svg',
-          backgroundColor: '#EBF6DD',
-          borderColor: '1px solid #C1E297',
-          textColor: '#76CB09'
-        };
+        this.unfilterAnsweredData = this.answeredData
+        this.callsIndicatorData.text = this.answeredData.length + ' answered requests';
+
       }
     );
-  }
-  async ngOnInit(): Promise<void> {
-    this.languauges = await this.CommonService.getProjectLanguagesForUser();
   }
 
   change(event: any) {
@@ -145,6 +146,12 @@ export class AnsweredComponent implements OnInit {
       event.dates[0].$d
     );
     this.endDate = this.calendarService.getDateRangeFormated(event.dates[1].$d);
+    this.CallsService.callQueueSocketByLanguageandCall(
+      this.languageIds,
+      this.callTypeName,
+      'finished',
+      this.aggregate
+    );
   }
 
   public callOutput(callTypeOutput: any) {
@@ -152,21 +159,25 @@ export class AnsweredComponent implements OnInit {
     this.CallsService.callQueueSocketByLanguageandCall(
       this.languageIds,
       this.callTypeName,
-      'finished'
+      'finished',
+      this.aggregate
     );
   }
 
   public languaugesOutput(languageOutput: number[]) {
     this.languageIds = languageOutput;
     this.CallsService.callQueueSocketByLanguageandCall(
-      languageOutput,
+      this.languageIds,
       this.callTypeName,
-      'finished'
+      'finished',
+      this.aggregate
     );
   }
   // filter answered data
   getSearchValue(value: string) {
-    this.lastUsedSearch=value;
-    this.answeredData = this.CallsService.search(value, this.answeredData, this.unfilterAnsweredData)
+    this.lastUsedSearch = value;
+    this.answeredData = this.CallsService.search(value, this.answeredData, this.unfilterAnsweredData);
+    this.callsIndicatorData.text = this.answeredData.length + ' answered requests';
+
   }
 }

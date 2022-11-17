@@ -1,4 +1,4 @@
-import { callTypeMissed, missedCallData, missedTableSetting, searchInputData } from './missedData';
+import { callTypeMissed, languauges, missedCallData, missedTableSetting, searchInputData } from './missedData';
 import { Component, HostListener, OnInit, ViewChild } from '@angular/core';
 import { CallsService } from '../callService/calls.service';
 import {
@@ -8,11 +8,12 @@ import {
 import { CommonService } from 'src/app/workdeskServices/commonEndpoint/common.service';
 import { GigaaaDaterangepickerDirective } from '@gigaaa/gigaaa-components';
 import dayjs from 'dayjs';
-import { ranges } from 'src/app/dashboard/dashboardData';
-import { callType, languauges } from '../callsData';
+import { callType } from '../callsData';
 import { CalendarService } from 'src/app/calendarService/calendar.service';
 import { callsIndicatorData } from 'src/app/models/callIndicatorModel';
 import { QueueSocketService } from 'src/app/workdeskSockets/queueSocket/queue-socket.service';
+import { MultiSelect } from 'src/app/models/multiSelect';
+import { ranges } from 'src/app/dashboard/dashboardData';
 @Component({
   selector: 'app-missed',
   templateUrl: './missed.component.html',
@@ -58,14 +59,24 @@ export class MissedComponent implements OnInit {
     private calendarService: CalendarService,
     private QueueSocketService: QueueSocketService
   ) {
+    this.callsIndicatorData = {
+      text: this.missedCallData.length + ' missed requests',
+      icon: '../assets/images/components/calls_count_missed.svg',
+      backgroundColor: '#F9EBEF',
+      borderColor: '1px solid #F4CAD6',
+      textColor: '#FF155A'
+    };
+  }
+  async ngOnInit(): Promise<void> {
+    this.languauges = await this.CommonService.getProjectLanguagesForUser();
     this.CallsService.sendDataToMissedTabsSubject.subscribe(
       (data: MissedCallModel[]) => {
+        console.log(this.languageIds)
         this.missedCallData = data.map((missedCallData) => ({
           agent_name: missedCallData.name,
           call_uuid: missedCallData.call_uuid,
           called_at: this.CallsService
-            .gettimedurationformissedandanswered(missedCallData.missed_at)
-            .toString(),
+            .getCalledAtTimeDate(missedCallData.missed_at, this.aggregate),
           callType: {
             image: this.CommonService.getConversationType(
               missedCallData.is_video
@@ -100,20 +111,11 @@ export class MissedComponent implements OnInit {
             .calculatetime(missedCallData.wait_time)
             .toString()
         }));
-
-        this.callsIndicatorData = {
-          text: data.length + ' missed requests',
-          icon: '../assets/images/components/calls_count_missed.svg',
-          backgroundColor: '#F9EBEF',
-          borderColor: '1px solid #F4CAD6',
-          textColor: '#FF155A'
-        };
+        this.unfilterMissedCallData = this.missedCallData;
+        this.callsIndicatorData.text = this.missedCallData.length + ' missed requests';
 
       }
     );
-  }
-  async ngOnInit(): Promise<void> {
-    this.languauges = await this.CommonService.getProjectLanguagesForUser();
   }
 
 
@@ -147,6 +149,12 @@ export class MissedComponent implements OnInit {
       event.dates[0].$d
     );
     this.endDate = this.calendarService.getDateRangeFormated(event.dates[1].$d);
+    this.CallsService.callQueueSocketByLanguageandCall(
+      this.languageIds,
+      this.callTypeName,
+      'missed',
+      this.aggregate
+    );
   }
 
   public callOutput(callTypeOutput: any) {
@@ -154,21 +162,26 @@ export class MissedComponent implements OnInit {
     this.CallsService.callQueueSocketByLanguageandCall(
       this.languageIds,
       this.callTypeName,
-      'missed'
+      'missed',
+      this.aggregate
     );
   }
 
   public languaugesOutput(languageOutput: number[]) {
     this.languageIds = languageOutput;
     this.CallsService.callQueueSocketByLanguageandCall(
-      languageOutput,
+      this.languageIds,
       this.callTypeName,
-      'missed'
+      'missed',
+      this.aggregate
     );
   }
   // filter missed data
   getSearchValue(value: string) {
     this.lastUsedSearch = value;
-    this.missedCallData = this.CallsService.search(value, this.missedCallData, this.unfilterMissedCallData)
+    this.missedCallData = this.CallsService.search(value, this.missedCallData, this.unfilterMissedCallData);
+    this.callsIndicatorData.text = this.missedCallData.length + ' missed requests';
   }
+
+
 }
