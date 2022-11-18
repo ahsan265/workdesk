@@ -131,7 +131,7 @@ export class AnsweredComponent implements OnInit {
         }
       }
       if (compareArray.length === 8) {
-        this.aggregate = 'custom';
+       // this.aggregate = 'custom';
       }
     }
   }
@@ -152,6 +152,7 @@ export class AnsweredComponent implements OnInit {
       'finished',
       this.aggregate
     );
+    console.log(this.aggregate);
   }
 
   public callOutput(callTypeOutput: any) {

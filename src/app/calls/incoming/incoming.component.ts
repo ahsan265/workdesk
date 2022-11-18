@@ -8,6 +8,7 @@ import {
   IncomingCallModel,
   IncomingCallModelTable
 } from 'src/app/models/callModel';
+import { AgentUserInformation } from 'src/app/workdeskServices/callInterfaceServices/agentUserInformation/agent-user-information.service';
 import { CommonService } from 'src/app/workdeskServices/commonEndpoint/common.service';
 import { GigaaaApiService } from 'src/app/workdeskServices/gigaaaApiService/gigaaa-api-service.service';
 import { AgentSocketService } from 'src/app/workdeskSockets/agentSocket/agent-socket.service';
@@ -18,7 +19,8 @@ import { callTypeIncoming, incomingTableSetting, searchInputData } from './incom
 @Component({
   selector: 'app-incoming',
   templateUrl: './incoming.component.html',
-  styleUrls: ['./incoming.component.scss']
+  styleUrls: ['./incoming.component.scss'],
+
 })
 export class IncomingComponent implements OnInit {
   showCalender = false;
@@ -60,9 +62,14 @@ export class IncomingComponent implements OnInit {
     private calendarService: CalendarService,
     private AgentSocketService: AgentSocketService,
     private CallsService: CallsService,
-
+    private AgentUserInformation: AgentUserInformation,
   ) {
-
+    const callInformation = this.AgentUserInformation.getCallInformation();
+    if (callInformation.is_refreshed === true) {
+      this.OverlayService.open({
+        data: callInformation['call-uuid']
+      });
+    }
     this.CallsService.sendDataToIncomingTabsSubject.subscribe(
       (data: IncomingCallModel[]) => {
         this.incomingData = data.map((incomingData) => ({
@@ -93,9 +100,7 @@ export class IncomingComponent implements OnInit {
           },
           name: incomingData.name,
           user_id: this.CallsService.getUserId(incomingData.user_id),
-          time: this.CallsService.getElapsedTime(
-            incomingData.waiting_started_at
-          ),
+          time: incomingData.waiting_started_at,
           userImage: '../../../assets/images/callInterface/user.png',
           showUserImage: false,
           callPickButton: 'Answer',
@@ -106,9 +111,8 @@ export class IncomingComponent implements OnInit {
     );
   }
   async ngOnInit(): Promise<void> {
-    if (this.languauges.data.length === 0) {
-      this.languauges = await this.CommonService.getProjectLanguagesForUser();
-    }
+    this.languauges = await this.CommonService.getProjectLanguagesForUser();
+
   }
 
   async getCallsId(event: string) {
@@ -119,7 +123,9 @@ export class IncomingComponent implements OnInit {
       this.CommonService.getEndpointsParamLocal().project,
       data
     );
-    this.OverlayService.open();
+    this.OverlayService.open({
+      data: event
+    });
   }
 
   change(event: any) {

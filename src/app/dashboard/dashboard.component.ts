@@ -118,7 +118,6 @@ export class DashboardComponent {
   };
   public barChartType: ChartType = 'bar';
   public barChartPlugins = [DataLabelsPlugin];
-
   public barChartData1!: ChartData<'bar'>;
   public barChartData2!: ChartData<'bar'>;
   public barChartData3!: ChartData<'bar'>;

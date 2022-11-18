@@ -10,7 +10,7 @@
       [redirectUri]="redirectUri" [pageTitle]="pageTitle" [portalData]="websites"
       (onLoggedUser)="onGetLoggedUser($event)" (isOnlineButtonClicked)="setOnlineStatus($event)"
       [showOnlineButton]="true" [currentUserStatus]="this.statusOnline" [showPreferences]="true"
-      [preferenceUrl]="'test2'" [addonData]="addOns">
+      [preferenceUrl]="'test2'" [addonData]="addOns" (userSwitched)="userSwitched($event)">
     </gigaaa-header>
     <div class="workdeskWrap">
       <router-outlet></router-outlet>

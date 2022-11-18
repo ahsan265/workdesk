@@ -21,8 +21,6 @@ import {
   MissedCallModel,
   OngoingCallModel
 } from '../models/callModel';
-import { MissedComponent } from './missed/missed.component';
-import { ThemeService } from 'ng2-charts';
 
 @Component({
   selector: 'app-calls',

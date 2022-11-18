@@ -25,7 +25,7 @@
     "@angular/platform-browser": "^14.0.5",
     "@angular/platform-browser-dynamic": "^14.0.5",
     "@angular/router": "^14.0.5",
-    "@gigaaa/gigaaa-components": "0.1.202",
+    "@gigaaa/gigaaa-components": "0.1.203",
     "angular-server-side-configuration": "^14.0.1",
     "chart.js": "^3.8.0",
     "chartjs-plugin-datalabels": "^2.0.0",

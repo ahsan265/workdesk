@@ -3,6 +3,7 @@ import {
   ChangeDetectorRef,
   Component,
   ElementRef,
+  Inject,
   OnDestroy,
   OnInit,
   ViewChild
@@ -37,6 +38,7 @@ import { MicrophoneVoiceIndicatorComponent } from '../microphone-voice-indicator
 import { MiniCameraScreenComponent } from '../mini-camera-screen/mini-camera-screen.component';
 import { CloseDialogOverlayRef } from '../overLayService/closeDialogService';
 import { OverlayService } from '../overLayService/overlay.service';
+import { overlayToken } from '../overLayService/overlayToken';
 
 @Component({
   selector: 'app-call-console',
@@ -53,10 +55,16 @@ export class CallConsoleComponent implements OnInit, OnDestroy {
     private CommonService: CommonService,
     private CallsOperationService: CallsOperationService,
     private PeerConnectionService: PeerConnectionService,
-    private AgentUserInformation: AgentUserInformation
-  ) {}
+    private AgentUserInformation: AgentUserInformation,
+    @Inject(overlayToken) public data: any
+
+  ) {
+    this.AgentUserInformation.updatelastUsedCallUuid(data)
+  }
   ngOnDestroy(): void {
     this.minmizeMaxmizeScreenOutput(false);
+    this.miniCameraOperation(false);
+    this.agentOperationInformationData.isMinimize = false;
   }
   minimizeCallControl = minimizeCallControlData;
   maximizeCallControl = maximizeCallControlData;
@@ -98,7 +106,7 @@ export class CallConsoleComponent implements OnInit, OnDestroy {
     const user = this.AgentUserInformation.getCallInformation();
     if (user.is_refreshed === true) {
       this.CallSocketService.dialCall(
-        'a651c27a-91e5-4749-a301-0c9ae6eab6b3',
+        this.data,
         user.user_information.user_id,
         true,
         this.DevicesInformationService.getBrowserName(),
@@ -119,7 +127,7 @@ export class CallConsoleComponent implements OnInit, OnDestroy {
       // this.miceData.isSelected = user.user_information.data.is_microphone_on;
     } else {
       this.CallSocketService.dialCall(
-        'a651c27a-91e5-4749-a301-0c9ae6eab6b3',
+        this.data,
         '',
         false,
         this.DevicesInformationService.getBrowserName(),
@@ -155,10 +163,10 @@ export class CallConsoleComponent implements OnInit, OnDestroy {
         setInterval(() => {
           user.is_refreshed === true
             ? (this.callTimer = this.AgentUserInformation.CallDuration(
-                user.call_duration
-              ))
+              user.call_duration
+            ))
             : (this.callTimer =
-                this.AgentUserInformation.callJoiningTime(startTime));
+              this.AgentUserInformation.callJoiningTime(startTime));
         }, 1000);
       }
     });
