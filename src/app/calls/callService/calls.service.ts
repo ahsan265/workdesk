@@ -1,7 +1,7 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable no-undef */
 /* eslint-disable sort-imports */
-import { Injectable } from '@angular/core';
+import { ChangeDetectorRef, Injectable } from '@angular/core';
 import { ReplaySubject, Subject } from 'rxjs';
 import {
   AnsweredCallModel,
@@ -17,7 +17,8 @@ import { callType } from '../callsData';
   providedIn: 'root'
 })
 export class CallsService {
-  constructor(private QueueSocketService: QueueSocketService) { }
+  constructor(private QueueSocketService: QueueSocketService,
+   ) { }
   sendDataToIncomingTabsSubject = new ReplaySubject<IncomingCallModel[]>();
   sendDataToMissedTabsSubject = new ReplaySubject<MissedCallModel[]>();
   sendDataToOngoingTabsSubject = new ReplaySubject<OngoingCallModel[]>();
@@ -100,7 +101,7 @@ export class CallsService {
 
   // get ellapsed time
   getElapsedTime(entry: string) {
-    var myDate = new Date(entry);
+    let myDate = new Date(entry);
     let totalSeconds = Math.floor(
       (new Date().getTime() - myDate.getTime()) / 1000
     );
@@ -121,19 +122,16 @@ export class CallsService {
 
   // search call details 
   public search(data: string, AgentList: any[], AllAgentsData: any[]) {
-    const result: any[] = AgentList.filter((obj: any) => {
+    const result: any[] = AllAgentsData.filter((obj: any) => {
       if (obj.user_id != null) {
         return obj.agent_name.toLowerCase().includes(data.toLowerCase()) || obj.user_id.toLowerCase().includes(data.toLowerCase());
       }
-      else if (obj.user_id == null) {
+      else if (obj.user_id === null) {
         return obj.agent_name.toLowerCase().includes(data.toLowerCase());
-      }
-      else {
-        return [];
       }
     })
     if (data.length === 0) {
-      return AllAgentsData;
+      return AgentList;
     }
     else {
       return result;
@@ -145,30 +143,38 @@ export class CallsService {
     const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "June",
       "July", "Aug", "Sep", "Oct", "Nov", "Dec"];
     const Days = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
-
+    let time;
     let myDate = new Date(val);
     if (selectedRange === "today" || selectedRange === "yesterday") {
-      let time = ("0" + myDate.getHours()).slice(-2) + ":" + ("0" + myDate.getMinutes()).slice(-2)
+      time = ("0" + myDate.getHours()).slice(-2) + ":" + ("0" + myDate.getMinutes()).slice(-2)
+      console.log(time)
       return time;
     }
     else if (selectedRange === "this_month" || selectedRange === "last_month") {
-      let time = myDate.getDate() + '\xa0' + monthNames[myDate.getMonth()] + '\xa0' + ("0" + myDate.getHours()).slice(-2) + ":" + ("0" + myDate.getMinutes()).slice(-2);
+      time = myDate.getDate() + '\xa0' + monthNames[myDate.getMonth()] + '\xa0' + ("0" + myDate.getHours()).slice(-2) + ":" + ("0" + myDate.getMinutes()).slice(-2);
+      console.log(time)
+
       return time;
     }
     else if (selectedRange === "this_week" || selectedRange === "last_week") {
-      let time = myDate.getDate() + '\xa0' + monthNames[myDate.getMonth()] + '\xa0' + ("0" + myDate.getHours()).slice(-2) + ":" + ("0" + myDate.getMinutes()).slice(-2);
+      time = myDate.getDate() + '\xa0' + monthNames[myDate.getMonth()] + '\xa0' + ("0" + myDate.getHours()).slice(-2) + ":" + ("0" + myDate.getMinutes()).slice(-2);
+      console.log(time)
+
       return time;
     }
     else if (selectedRange === "this_year" || selectedRange === "last_year") {
-      let time = myDate.getDate() + '\xa0' + monthNames[myDate.getMonth()] + '\xa0' + ("0" + myDate.getHours()).slice(-2) + ":" + ("0" + myDate.getMinutes()).slice(-2);
+      time = myDate.getDate() + '\xa0' + monthNames[myDate.getMonth()] + '\xa0' + ("0" + myDate.getHours()).slice(-2) + ":" + ("0" + myDate.getMinutes()).slice(-2);
+      console.log(time)
       return time;
     }
-    else if (selectedRange == "custom") {
-      let time = ("0" + myDate.getHours()).slice(-2) + ":" + ("0" + myDate.getMinutes()).slice(-2)
+    else if (selectedRange === "custom") {
+      time = ("0" + myDate.getHours()).slice(-2) + ":" + ("0" + myDate.getMinutes()).slice(-2)
+      console.log(time)
       return time;
     }
     else {
       return '00:00'
     }
+
   }
 }

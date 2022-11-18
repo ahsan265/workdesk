@@ -14,6 +14,7 @@ import { GigaaaApiService } from '../workdeskServices/gigaaaApiService/gigaaa-ap
 import { AgentInviteService } from '../workdeskServices/agentInviteService/agent-invite.service';
 import { CommonService } from '../workdeskServices/commonEndpoint/common.service';
 import { SharedServices } from '../workdeskServices/sharedResourcesService/shared-resource-service.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-main',
@@ -40,7 +41,8 @@ export class MainComponent implements OnInit {
     private getOrganizationService: getOrganizationService,
     private CommonService: CommonService,
     private GigaaaApiService: GigaaaApiService,
-    private SharedServices: SharedServices
+    private SharedServices: SharedServices,
+    private Router: Router
   ) { }
 
   ngOnInit() {
@@ -58,11 +60,17 @@ export class MainComponent implements OnInit {
   }
 
   onNoLoggedUsers(event: any) {
-    console.log(event);
+    if (event) {
+      this.Router.navigate(['logout']);
+      localStorage.clear();
+    }
   }
-
+  userSwitched(event: boolean) {
+    console.log(event)
+  }
   onGetLoggedUser(event: any) {
     this.getOrganizationService.getOrganization(event.api_token);
+
   }
 
   isSlideOpened(slideOpened: boolean) {

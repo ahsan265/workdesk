@@ -14,11 +14,12 @@ interface ComponentDialogConnfiguration {
   providedIn: 'root'
 })
 export class OverlayService {
-  constructor(private overlay: Overlay, private injector: Injector) {}
+  constructor(private overlay: Overlay, private injector: Injector) { }
   DEFAULT_CONFIG: ComponentDialogConnfiguration = {
     hasBackdrop: false,
     backdropClass: 'dark-backdrop',
-    panelClass: 'tm-file-preview-dialog-panel'
+    panelClass: 'dialog-panel',
+    data: null
   };
   dialogRef!: CloseDialogOverlayRef;
   open(config: ComponentDialogConnfiguration = {}) {
@@ -36,6 +37,7 @@ export class OverlayService {
       this.dialogRef
     );
     overlayRef.backdropClick().subscribe((_) => this.dialogRef.close());
+    return this.dialogRef;
   }
 
   private attachDialogContainer(
@@ -66,7 +68,7 @@ export class OverlayService {
     return Injector.create({
       parent: this.injector,
       providers: [
-        { provide: injectionTokens, useValue: this.DEFAULT_CONFIG.data }
+        { provide: overlayToken, useValue: config.data }
       ]
     });
   }

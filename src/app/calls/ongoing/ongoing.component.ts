@@ -96,7 +96,7 @@ export class OngoingComponent implements OnInit {
             text: 'csahsan021@gmail.com'
           }
         }));
-        this.unfilterOngoingData=this.ongoingData=this.unfilterOngoingData;
+        this.unfilterOngoingData = this.ongoingData;
       }
     );
   }

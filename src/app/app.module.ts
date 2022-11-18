@@ -79,6 +79,8 @@ import { CountersComponent } from './components/counters/counters.component';
 import { WrongInvitationAccountComponent } from './modals/wrong-invitation-account/wrong-invitation-account.component';
 import { NoTableDataComponent } from './components/no-table-data/no-table-data.component';
 import { LoaderComponent } from './components/loader/loader.component';
+import { AuthService } from './services/auth.service';
+import { overlayToken } from './callInterface/overLayService/overlayToken';
 
 @NgModule({
   declarations: [
@@ -168,8 +170,12 @@ import { LoaderComponent } from './components/loader/loader.component';
       provide: 'GigaaaHeaderService',
       useClass: GigaaaHeaderService
     },
-    OverlayService
+    {
+      provide: overlayToken,  // That's the token we defined previously
+      useClass: OverlayService,  // That's the actual service itself
+    },
+    AuthService
   ],
   bootstrap: [AppComponent]
 })
-export class AppModule {}
+export class AppModule { }

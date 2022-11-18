@@ -12,7 +12,7 @@ import { DevicesInformationService } from '../devicesInformation/devices-informa
 })
 export class AgentUserInformation {
   selectedSpearkerSubject = new Subject<any>();
-  constructor(private DevicesInformationService: DevicesInformationService) {}
+  constructor(private DevicesInformationService: DevicesInformationService) { }
 
   public getCallInformation() {
     return JSON.parse(localStorage.getItem('call-information') || '{}');
@@ -74,7 +74,12 @@ export class AgentUserInformation {
     data['last_used_microphone'] = miceDetails;
     localStorage.setItem('call-information', JSON.stringify(data));
   }
-
+  // update last used callUUid
+  public updatelastUsedCallUuid(uuid: string) {
+    const data = this.getCallInformation();
+    data['call-uuid'] = uuid;
+    localStorage.setItem('call-information', JSON.stringify(data));
+  }
   // update last used microphone
   public updateLastUsedSpeaker(speakerDetails: inputOuputdevices) {
     const data = this.getCallInformation();
