@@ -382,4 +382,18 @@ export class CommonService {
     );
     return Agent;
   }
+
+  public getDesktopNotification(title:any,body:any)
+  {
+    Notification.requestPermission().then((permission)=>{
+      if(permission="granted")
+      {
+        var notification = new Notification(title,{body:body,icon:'../assets/images/sidebar/workdesk_logo_short.png'});
+        setTimeout(function(){
+            notification.close();
+        },3000);
+      }
+
+  });
+  }
 }

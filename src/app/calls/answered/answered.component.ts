@@ -105,7 +105,7 @@ export class AnsweredComponent implements OnInit {
           agent_name: answeredData.agent.display_name,
           user_id: this.CallsService.getUserId(answeredData.user_id),
           agent_details: {
-            image: '../../../assets/images/callInterface/user.png',
+            image:answeredData.agent.images[96],
             text: answeredData.agent.email
           }
         }));
@@ -152,7 +152,6 @@ export class AnsweredComponent implements OnInit {
       'finished',
       this.aggregate
     );
-    console.log(this.aggregate);
   }
 
   public callOutput(callTypeOutput: any) {
@@ -179,6 +178,8 @@ export class AnsweredComponent implements OnInit {
     this.lastUsedSearch = value;
     this.answeredData = this.CallsService.search(value, this.answeredData, this.unfilterAnsweredData);
     this.callsIndicatorData.text = this.answeredData.length + ' answered requests';
-
+    if (value.length === 0 && this.answeredData.length === 0) {
+      this.answeredData = this.unfilterAnsweredData
+    }
   }
 }

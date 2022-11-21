@@ -189,6 +189,9 @@ export class IncomingComponent implements OnInit {
   // filter incoming data
   getSearchValue(value: string) {
     this.lastUsedSearch = value;
-    this.incomingData = this.CallsService.search(value, this.incomingData, this.unfilterIncomingData)
+    this.incomingData = this.CallsService.search(value, this.incomingData, this.unfilterIncomingData);
+    if (value.length === 0 && this.incomingData.length === 0) {
+      this.incomingData = this.unfilterIncomingData;
+    }
   }
 }

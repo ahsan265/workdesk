@@ -181,6 +181,9 @@ export class MissedComponent implements OnInit {
     this.lastUsedSearch = value;
     this.missedCallData = this.CallsService.search(value, this.missedCallData, this.unfilterMissedCallData);
     this.callsIndicatorData.text = this.missedCallData.length + ' missed requests';
+    if (value.length === 0 && this.missedCallData.length === 0) {
+      this.missedCallData = this.unfilterMissedCallData
+    }
   }
 
 
