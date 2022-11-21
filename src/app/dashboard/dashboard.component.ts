@@ -2,7 +2,7 @@
 /* eslint-disable no-undef */
 /* eslint-disable sort-imports */
 import { ChartConfiguration, ChartData, ChartType } from 'chart.js';
-import { Component, HostListener, ViewChild } from '@angular/core';
+import { Component, HostListener, OnInit, ViewChild } from '@angular/core';
 import {
   cardDataTotalVisitors,
   countries,
@@ -26,7 +26,7 @@ import { NavigationStart, Router } from '@angular/router';
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.scss']
 })
-export class DashboardComponent {
+export class DashboardComponent implements OnInit {
   oneSelectData = oneSelectData;
   countries = countries;
   languauges = languauges;
@@ -131,18 +131,21 @@ export class DashboardComponent {
     private router: Router
 
   ) {
-    router.events.subscribe((event) => {
-      if (event instanceof NavigationStart) {
-        this.browserRefresh = !router.navigated;
-        if (this.browserRefresh === false) {
-          this.callRouteLoad();
-        }
-      }
-    });
+
     this.authService.pageTitle.next('Dashboard');
     this.getFirstLoad();
     this.getCardsAndChartsData();
     this.alwaysShowCalendars = true;
+  }
+  async ngOnInit(): Promise<void> {
+    this.countries = await this.CommonService.getLocations();
+
+    if (this.CommonService.getEndpointsParamLocal().token === this.authService.user.value?.api_token) {
+      this.callRouteLoad()
+    }
+    else {
+      this.authService.user.next(this.authService.getLoggedUser());
+    }
   }
 
   getCardsAndChartsData() {
@@ -157,8 +160,8 @@ export class DashboardComponent {
       this.barChartData3 = data[2];
     });
   }
-  private async callRouteLoad(): Promise<void> {
-    this.countries = await this.CommonService.getLocations();
+  private async callRouteLoad() {
+    this.languauges = await this.CommonService.getProjectLanguagesForUser();
     if (this.CommonService.getEndpointsParamLocal().project != undefined) {
       this.dashboardEps.getCarddata([], [], this.aggregate);
       this.dashboardEps.getChartData(
@@ -168,14 +171,11 @@ export class DashboardComponent {
         this.startDate,
         this.endDate
       );
-      this.languauges = await this.CommonService.getProjectLanguagesForUser();
     }
   }
   private getFirstLoad(): void {
     this.SharedServices.LoadcommonEpsubject.subscribe(async (data) => {
       if (data === 1) {
-        // this.idOfLocation = this.CommonService.getIdsOfLocation();
-        // this.idOfLanguage = this.CommonService.getIdsOfLanguage();
         this.languauges = await this.CommonService.getProjectLanguagesForUser();
         this.dashboardEps.getCarddata(
           this.idOfLanguage,
