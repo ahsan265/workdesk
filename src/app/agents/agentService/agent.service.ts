@@ -94,7 +94,7 @@ export class AgentService {
           element['show_edit'] = false;
         }
         if (this.checkIsLoggedInAgent(element.email)) {
-         // this.CommonService.loggedInAgentDetails(element);
+          // this.CommonService.loggedInAgentDetails(element);
           let fromindex = AgentList.findIndex(
             (x) => x.email === this.CommonService.getEmailForLoggedInUser()
           );
@@ -112,7 +112,7 @@ export class AgentService {
           element['show_edit'] = false;
         }
         if (this.checkIsLoggedInAgent(element.email)) {
-        //  this.CommonService.loggedInAgentDetails(element);
+          //  this.CommonService.loggedInAgentDetails(element);
 
           let fromindex = AgentList.findIndex(
             (x) => x.email === this.CommonService.getEmailForLoggedInUser()
@@ -128,7 +128,7 @@ export class AgentService {
       AgentList.map((item) => Object.assign(item, { show_edit: false }));
       AgentList.forEach(element => {
         if (this.checkIsLoggedInAgent(element.email)) {
-        //  this.CommonService.loggedInAgentDetails(element);
+          //  this.CommonService.loggedInAgentDetails(element);
           if (element.role == "Agent") {
             element['show_edit'] = true;
           }
@@ -248,24 +248,20 @@ export class AgentService {
 
   // search agent 
   public search(data: string, AgentList: AgentModelTable[], AllAgentsData: AgentModelTable[]) {
-    const result: AgentModelTable[] = AgentList.filter((obj: AgentModelTable) => {
+    const result: AgentModelTable[] = AllAgentsData.filter((obj: any) => {
       if (obj.agent_name != null) {
         return obj.agent_name.toLowerCase().includes(data.toLowerCase()) || obj.email.toLowerCase().includes(data.toLowerCase());
       }
       else if (obj.agent_name == null) {
         return obj.email.toLowerCase().includes(data.toLowerCase());
       }
-      else {
-        return [];
-      }
     })
     if (data.length === 0) {
-      return AllAgentsData;
+      return AgentList;
     }
     else {
       return result;
     }
-
   }
 
 }

@@ -91,7 +91,7 @@ export class OngoingComponent implements OnInit {
           agent_name: answeredData.agent.display_name,
           user_id: this.CallsSrvice.getUserId(answeredData.user_id),
           agent_details: {
-            image: '../../../assets/images/callInterface/user.png',
+            image: answeredData.agent.images[96],
             text: answeredData.agent.email
           }
         }));
@@ -166,5 +166,8 @@ export class OngoingComponent implements OnInit {
   getSearchValue(value: string) {
     this.lastUsedSearch = value;
     this.ongoingData = this.CallsSrvice.search(value, this.ongoingData, this.unfilterOngoingData)
+    if (value.length === 0 && this.ongoingData.length === 0) {
+      this.ongoingData = this.unfilterOngoingData
+    }
   }
 }

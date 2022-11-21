@@ -10,6 +10,7 @@ import {
   QueueDateRangeParam,
   QueueSocketparamter
 } from 'src/app/models/queueSocketModel';
+import { CommonService } from 'src/app/workdeskServices/commonEndpoint/common.service';
 
 import { environment } from 'src/environments/environment';
 
@@ -23,7 +24,7 @@ export class QueueSocketService {
   public callDataSubject = new Subject<CallsModel>();
   defaultCallData = defaultCallData;
 
-  constructor() {
+  constructor(private CommonService: CommonService) {
   }
   public callQueueSocketEndpoint() {
     const connectionId: connectionSecurityModel = JSON.parse(
@@ -39,7 +40,7 @@ export class QueueSocketService {
     // on socket connection open
     this.ws.onopen = (e) => {
       this.isSocketOpen = this.ws?.OPEN;
-    //  this.SendDefaultParam();
+      //  this.SendDefaultParam();
     };
     this.ws.onmessage = (e) => {
       e.data != 'ping' ? this.getQueueSocketList(JSON.parse(e.data)) : '';
@@ -64,6 +65,9 @@ export class QueueSocketService {
       new_call: QueueList.new_call
     }
     this.callDataSubject.next(QueueList);
+    if (QueueList.new_call===true) {
+      this.CommonService.getDesktopNotification("Customer Support", "Please connect call")
+    }
   }
   public sendQueueDateParameter(QueueDateRangeParam: QueueDateRangeParam) {
     if (this.isSocketOpen === 1) {

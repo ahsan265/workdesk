@@ -94,14 +94,6 @@ export class AgentsComponent implements OnInit {
     );
   }
   showInviteModal() {
-    // if (this.AgentList.length != 0) {
-    //   const selectedAgent: AgentList | undefined = this.AgentList.find(
-    //     (data: AgentList) =>
-    //       data.uuid === 'ed4f6baf-c7ad-480e-9fa7-ba48ff9d4347'
-    //   );
-    //   this.router.navigate(['agents', 'settings', selectedAgent?.uuid]);
-    // }
-    // this.openCallInterface.open();
     if (this.buttonData.active) {
       this.showInviteModel = true;
     }
@@ -185,6 +177,9 @@ export class AgentsComponent implements OnInit {
   // get searched Value 
   public getSearchValue(value: string) {
     this.agentdata = this.AgentService.search(value, this.agentdata, this.agentdataWithNoSearch);
+    if (value.length === 0 && this.agentdata.length === 0) {
+      this.agentdata = this.agentdataWithNoSearch
+    }
   }
 
 
