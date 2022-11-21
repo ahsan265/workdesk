@@ -102,11 +102,11 @@ export class AnsweredComponent implements OnInit {
           call_uuid: answeredData.call_uuid,
           duration: this.CallsService
             .getCalledAtTimeDate(answeredData.call_started_at, this.aggregate),
-          agent_name: answeredData.name,
+          agent_name: answeredData.agent.display_name,
           user_id: this.CallsService.getUserId(answeredData.user_id),
           agent_details: {
             image: '../../../assets/images/callInterface/user.png',
-            text: 'csahsan021@gmail.com'
+            text: answeredData.agent.email
           }
         }));
         this.unfilterAnsweredData = this.answeredData

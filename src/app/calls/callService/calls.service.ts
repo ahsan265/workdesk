@@ -18,7 +18,7 @@ import { callType } from '../callsData';
 })
 export class CallsService {
   constructor(private QueueSocketService: QueueSocketService,
-   ) { }
+  ) { }
   sendDataToIncomingTabsSubject = new ReplaySubject<IncomingCallModel[]>();
   sendDataToMissedTabsSubject = new ReplaySubject<MissedCallModel[]>();
   sendDataToOngoingTabsSubject = new ReplaySubject<OngoingCallModel[]>();
@@ -139,7 +139,6 @@ export class CallsService {
   }
 
   getCalledAtTimeDate(val: string, selectedRange: string) {
-
     const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "June",
       "July", "Aug", "Sep", "Oct", "Nov", "Dec"];
     const Days = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
@@ -147,29 +146,23 @@ export class CallsService {
     let myDate = new Date(val);
     if (selectedRange === "today" || selectedRange === "yesterday") {
       time = ("0" + myDate.getHours()).slice(-2) + ":" + ("0" + myDate.getMinutes()).slice(-2)
-      console.log(time)
       return time;
     }
     else if (selectedRange === "this_month" || selectedRange === "last_month") {
       time = myDate.getDate() + '\xa0' + monthNames[myDate.getMonth()] + '\xa0' + ("0" + myDate.getHours()).slice(-2) + ":" + ("0" + myDate.getMinutes()).slice(-2);
-      console.log(time)
 
       return time;
     }
     else if (selectedRange === "this_week" || selectedRange === "last_week") {
       time = myDate.getDate() + '\xa0' + monthNames[myDate.getMonth()] + '\xa0' + ("0" + myDate.getHours()).slice(-2) + ":" + ("0" + myDate.getMinutes()).slice(-2);
-      console.log(time)
-
       return time;
     }
     else if (selectedRange === "this_year" || selectedRange === "last_year") {
       time = myDate.getDate() + '\xa0' + monthNames[myDate.getMonth()] + '\xa0' + ("0" + myDate.getHours()).slice(-2) + ":" + ("0" + myDate.getMinutes()).slice(-2);
-      console.log(time)
       return time;
     }
     else if (selectedRange === "custom") {
       time = ("0" + myDate.getHours()).slice(-2) + ":" + ("0" + myDate.getMinutes()).slice(-2)
-      console.log(time)
       return time;
     }
     else {

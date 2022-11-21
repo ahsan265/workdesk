@@ -1,3 +1,6 @@
+import { Agent } from "./agent";
+import { ImagesModel } from "./imagesModel";
+
 export interface tableSettings {
   tableName: string;
   tableHeaders: tableHeading[];
@@ -48,6 +51,14 @@ export interface OngoingCallModel {
   user_joined: boolean;
   wait_time: number;
   waiting_started_at: string;
+  agent: agentDetails
+}
+
+export interface agentDetails {
+  display_name: string;
+  images: ImagesModel;
+  uuid: string;
+  email: string;
 }
 
 export interface MissedCallModel {
@@ -89,6 +100,7 @@ export interface AnsweredCallModel {
   user_joined: boolean;
   wait_time: number;
   waiting_started_at: string;
+  agent: agentDetails;
 }
 
 export interface CallsModel {

@@ -58,6 +58,7 @@ export class OngoingComponent implements OnInit {
   ) {
     this.CallsSrvice.sendDataToOngoingTabsSubject.subscribe(
       (data: OngoingCallModel[]) => {
+
         this.ongoingData = data.map((answeredData) => ({
           user_details: {
             image: '../../../assets/images/callInterface/user.png',
@@ -86,14 +87,12 @@ export class OngoingComponent implements OnInit {
             text: this.CallsSrvice.getCallType(answeredData.is_video)
           },
           call_uuid: answeredData.call_uuid,
-          duration: this.CallsSrvice
-            .calculatetime(answeredData.wait_time)
-            .toString(),
-          agent_name: answeredData.name,
+          duration: answeredData.call_started_at,
+          agent_name: answeredData.agent.display_name,
           user_id: this.CallsSrvice.getUserId(answeredData.user_id),
           agent_details: {
             image: '../../../assets/images/callInterface/user.png',
-            text: 'csahsan021@gmail.com'
+            text: answeredData.agent.email
           }
         }));
         this.unfilterOngoingData = this.ongoingData;

@@ -140,7 +140,7 @@ export class CommonService {
           selected: false
         })
       );
-      this.languageArray = languageSelected;
+      // this.languageArray = languageSelected;
       const languageListArray: MultiSelect = {
         title: 'Language',
         showSelectAll: true,
@@ -380,6 +380,6 @@ export class CommonService {
     const Agent: AgentList = JSON.parse(
       localStorage.getItem('agent-logged') || '{}'
     );
-      return Agent;
+    return Agent;
   }
 }
