@@ -65,7 +65,7 @@ export class QueueSocketService {
       new_call: QueueList.new_call
     }
     this.callDataSubject.next(QueueList);
-    if (QueueList.new_call===true) {
+    if (QueueList.new_call === true && this.CommonService.getLoggedAgentStatus() === true) {
       this.CommonService.getDesktopNotification("Customer Support", "Please connect call")
     }
   }
