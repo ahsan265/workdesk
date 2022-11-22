@@ -84,7 +84,7 @@ export class AgentSettingsComponent implements OnInit {
     private MessageService: MessageService,
     private AgentService: AgentService,
     private SharedServices: SharedServices
-  ) { }
+  ) {}
 
   ngOnInit() {
     this.authService.pageTitle.next('Agent Settings');
@@ -140,7 +140,10 @@ export class AgentSettingsComponent implements OnInit {
   onGetSubmitButtonDeleteOutput(event: boolean) {
     if (event) {
       this.showDeleteAgentModal = false;
-      this.agentSettingService.deleteAgent(this.selectedAgent.uuid, 'Agent deleted successfully.');
+      this.agentSettingService.deleteAgent(
+        this.selectedAgent.uuid,
+        'Agent deleted successfully.'
+      );
     }
   }
   onCloseDeleteModal(event: any) {
@@ -162,7 +165,10 @@ export class AgentSettingsComponent implements OnInit {
   // for cancel invitation and resend Initation.
   onGetCancelButtonOutput(event: boolean) {
     if (event) {
-      this.agentSettingService.deleteAgent(this.selectedAgent.uuid, 'Agent invitation has been canceled.');
+      this.agentSettingService.deleteAgent(
+        this.selectedAgent.uuid,
+        'Agent invitation has been canceled.'
+      );
     }
   }
   onGetResendInvitation(event: boolean) {
@@ -207,7 +213,7 @@ export class AgentSettingsComponent implements OnInit {
         this.selectedAgent.languages
       );
       this.languauges = agentLanguages;
-
+      console.log(this.languauges.data);
     } catch (err: any) {
       this.MessageService.setErrorMessage(err.error.error);
     }
@@ -227,24 +233,24 @@ export class AgentSettingsComponent implements OnInit {
       {
         first_name: agentData?.first_name,
         last_name: agentData?.last_name,
-        display_name: agentData.display_name
+        display_name: agentData?.display_name
       },
       { emitEvent: false, onlySelf: true }
     );
     this.agentLanguages = this.CommonService.getLanguageSelectedIds(
       agentData.languages
     );
-      this.adminAletMessage =
-        this.agentSettingService.checkAdminOrganizationOrNomral(
-          agentData.is_organization_admin,
-          agentData.role
-        );
-    
+    this.adminAletMessage =
+      this.agentSettingService.checkAdminOrganizationOrNomral(
+        agentData.is_organization_admin,
+        agentData.role
+      );
 
     const isLoggedIn = this.AgentService.checkIsLoggedInAgent(agentData.email);
     if (isLoggedIn === true) {
-      (agentData.is_organization_owner === true) ?
-        this.showAdminRightSection = false : this.showAdminRightSection = true;
+      agentData.is_organization_owner === true
+        ? (this.showAdminRightSection = false)
+        : (this.showAdminRightSection = true);
     }
     this.isAdmin = this.agentSettingService.isAdmin(agentData.role);
     const isAgentAcceptInvitation = this.AgentService.setAgentInvitedProperty(
@@ -283,7 +289,7 @@ export class AgentSettingsComponent implements OnInit {
   }
   public updateAgentDetails() {
     const agentSetting: AgentSettings = {
-      display_name: this.agentSettingsForm.controls.display_name.value,
+      display_name: this.agentSettingsForm.controls?.display_name.value,
       first_name: this.agentSettingsForm.controls.first_name.value,
       last_name: this.agentSettingsForm.controls.last_name.value,
       language_ids: this.agentLanguages,
