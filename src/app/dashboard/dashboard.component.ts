@@ -139,7 +139,6 @@ export class DashboardComponent implements OnInit {
   }
   async ngOnInit(): Promise<void> {
     this.countries = await this.CommonService.getLocations();
-
     if (this.CommonService.getEndpointsParamLocal().token === this.authService.user.value?.api_token) {
       this.callRouteLoad()
     }
@@ -147,7 +146,6 @@ export class DashboardComponent implements OnInit {
       this.authService.user.next(this.authService.getLoggedUser());
     }
   }
-
   getCardsAndChartsData() {
     this.dashboardEps.cardDataSubject.subscribe((data: any) => {
       this.incomingCardData = data?.incoming;
