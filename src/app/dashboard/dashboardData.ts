@@ -36,9 +36,7 @@ const languauges: MultiSelect = {
   title: 'Language',
   showSelectAll: true,
   showSearchBar: true,
-  data: [
-
-  ]
+  data: []
 };
 
 const cardDataTotalVisitors: Card = {

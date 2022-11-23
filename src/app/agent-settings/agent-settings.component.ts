@@ -213,7 +213,6 @@ export class AgentSettingsComponent implements OnInit {
         this.selectedAgent.languages
       );
       this.languauges = agentLanguages;
-      console.log(this.languauges.data);
     } catch (err: any) {
       this.MessageService.setErrorMessage(err.error.error);
     }
