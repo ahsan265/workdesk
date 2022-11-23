@@ -171,6 +171,15 @@ export class CommonService {
       connectionId: socketConnection.connection
     };
   }
+  // get logged Agent
+  public getLoggedAgentStatus() {
+    const isLoggedIn = JSON.parse(
+      localStorage.getItem('agent-online-status') || '{}'
+    );
+
+
+    return isLoggedIn;
+  }
   // get locations Id
   public getIdsOfLocation() {
     let locationIds: any = [];
@@ -383,17 +392,15 @@ export class CommonService {
     return Agent;
   }
 
-  public getDesktopNotification(title:any,body:any)
-  {
-    Notification.requestPermission().then((permission)=>{
-      if(permission="granted")
-      {
-        var notification = new Notification(title,{body:body,icon:'../assets/images/sidebar/workdesk_logo_short.png'});
-        setTimeout(function(){
-            notification.close();
-        },3000);
+  public getDesktopNotification(title: any, body: any) {
+    Notification.requestPermission().then((permission) => {
+      if (permission = "granted") {
+        var notification = new Notification(title, { body: body, icon: '../assets/images/sidebar/workdesk_logo_short.png' });
+        setTimeout(function () {
+          notification.close();
+        }, 3000);
       }
 
-  });
+    });
   }
 }
