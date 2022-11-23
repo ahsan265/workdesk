@@ -69,7 +69,6 @@ import { CustomerSupportComponent } from './customer-support/customer-support.co
 import { ScreenShareRestrictionComponent } from './callInterface/screen-share-restriction/screen-share-restriction.component';
 import { peerMiniCameraAnimation } from './callInterface/callInterfaceDirectives/callInterfaceHideDirective';
 import { callInterfaceHideControlDirective } from './callInterface/callInterfaceDirectives/callInterfaceHideControlDirective';
-import { CloseDialogOverlayRef } from './callInterface/overLayService/closeDialogService';
 import { OverlayService } from './callInterface/overLayService/overlay.service';
 import { AddAgentComponent } from './modals/add-agent/add-agent.component';
 import { AgentListingComponent } from './modals/add-agent/agent-listing/agent-listing.component';
@@ -171,11 +170,11 @@ import { overlayToken } from './callInterface/overLayService/overlayToken';
       useClass: GigaaaHeaderService
     },
     {
-      provide: overlayToken,  // That's the token we defined previously
-      useClass: OverlayService,  // That's the actual service itself
+      provide: overlayToken, // That's the token we defined previously
+      useClass: OverlayService // That's the actual service itself
     },
     AuthService
   ],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {}
