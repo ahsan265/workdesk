@@ -1,0 +1,148 @@
+::ng-deep .modal {
+    display: unset;
+}
+
+
+
+.headerWrapper {
+    display: flex;
+    width: fit-content;
+    position: absolute;
+    top: 15px;
+}
+
+.discriptionWrapper {
+    display: flex;
+    width: 100%;
+}
+
+.heading {
+    font-family: 'Roboto', sans-serif;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 305.19%;
+    display: flex;
+    align-items: center;
+    letter-spacing: 0.02em;
+    color: #162741;
+}
+
+.discription {
+    font-family: 'Roboto', sans-serif;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 13px;
+    line-height: 130%;
+    letter-spacing: 0.02em;
+    color: #6A7585;
+}
+
+.actionPanel {
+    display: flex;
+    width: 100%;
+    bottom: 0;
+    border-top: 1px solid rgba(208, 208, 222, 0.6);
+    height: 49px;
+    justify-content: flex-end;
+
+}
+
+.Cancel {
+    background: #FFFFFF;
+    border: 1px solid rgba(208, 208, 222, 0.6);
+    border-radius: 4px;
+    width: 83px;
+    height: 35px;
+    font-family: 'Roboto', sans-serif;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 160%;
+    align-items: center;
+    text-align: center;
+    letter-spacing: 0.02em;
+    color: #162741;
+    margin: 28px 0 28px 28px;
+    cursor: pointer;
+}
+
+.organizationPanel {
+    height: 195px;
+    width: 716px;
+    justify-content: space-between;
+    display: flex;
+    overflow-y: hidden;
+    overflow-x: overlay;
+    scrollbar-gutter: stable;
+    flex-direction: column;
+    flex-wrap: wrap;
+    align-content: flex-start;
+    margin-top: 35px;
+    margin-bottom: 8px;
+}
+
+::-webkit-scrollbar {
+    width: 8px;
+    padding: 0;
+    height: 8px;
+    border-radius: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: #EDEDF0;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+    background: #616B7B;
+    border-radius: 8px;
+}
+
+
+.card {
+    width: 137px;
+    height: 159px;
+    background: #FFFFFF;
+    border: 1px solid #D9D9E5;
+    border-radius: 4px;
+    position: relative;
+    margin-right: 15px;
+    cursor: pointer;
+}
+
+.card:hover {
+    border: 1px solid #1C54DB;
+}
+
+.card:last-child {
+    margin: 0px;
+}
+
+.imageWrapper {
+    display: flex;
+    width: 100%;
+}
+
+.imageWrapper img {
+    width: 50px;
+    height: 50px;
+    border-radius: 50px;
+    margin: 15px;
+}
+
+.agentName {
+    font-family: 'Roboto', sans-serif;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 16px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    letter-spacing: 0.02em;
+    color: #162741;
+    position: absolute;
+    bottom: 0;
+    margin: 15px;
+}

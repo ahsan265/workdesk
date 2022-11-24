@@ -8,6 +8,8 @@ export class SharedServices {
   public LoadcommonEpsubject = new Subject();
   public closeImageUploadDialog = new Subject<boolean>();
   public closeAddAgentDialog = new Subject<boolean>();
+  public switchOrganizationDialog = new Subject<boolean>();
+  public switchOrganizationDoneDialog = new Subject<boolean>();
   public saveImageUpload = new Subject<boolean>();
   public setAgentImage = new Subject<string>();
   public PasswordPopup = new Subject<boolean>();
@@ -38,5 +40,16 @@ export class SharedServices {
   // close add Agent popup 
   closeAddAgentPopup(value: boolean) {
     this.closeAddAgentDialog.next(value)
+  }
+
+  // close open switch organization dialog 
+  switchOrganization(value: boolean) {
+    this.switchOrganizationDialog.next(value)
+  }
+
+  // show open and close 
+  showDoneOrganization(value:boolean)
+  {
+    this.switchOrganizationDoneDialog.next(value);
   }
 }

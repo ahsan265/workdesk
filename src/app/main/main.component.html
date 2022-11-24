@@ -1,4 +1,4 @@
-<div class="mainContainer" >
+<div class="mainContainer">
   <gigaaa-sidebar *ngIf="this.authService.isLoggedIn() " (selectedDropdownItem)="getSelectedDropdownItem($event)"
     [logo]="this.icons.logo" [logoCollapsed]="this.icons.logoCollapsed" [sidebarData]="sidebarData"
     (newRouteName)="addNewRouteName($event)" (slideOpened)="isSlideOpened($event)"
@@ -10,10 +10,23 @@
       [redirectUri]="redirectUri" [pageTitle]="pageTitle" [portalData]="websites"
       (onLoggedUser)="onGetLoggedUser($event)" (isOnlineButtonClicked)="setOnlineStatus($event)"
       [showOnlineButton]="true" [currentUserStatus]="this.statusOnline" [showPreferences]="true"
-      [preferenceUrl]="'test2'" [addonData]="addOns" (userSwitched)="userSwitched($event)">
+      [preferenceUrl]="'test2'" [addonData]="addOns" (userSwitched)="userSwitched($event)"
+      (switchOrganization)="openOgranizationSwitcher($event)" [showOrganization]="true" [organizationData]="organizationData">
     </gigaaa-header>
     <div class="workdeskWrap">
       <router-outlet></router-outlet>
     </div>
   </div>
 </div>
+
+<app-modal-wrapper (closeModal)="onCloseModal($event)" *ngIf="showSwitchOganization"
+  [modalData]="organizationModalData">
+  <app-switch-organization>
+  </app-switch-organization>
+</app-modal-wrapper>
+
+<app-modal-wrapper (closeModal)="onCloseSWitchDone($event)" *ngIf="showSwitchDoneOganization"
+  [modalData]="organizationDoneModalData">
+  <app-switch-ogranization-done>
+  </app-switch-ogranization-done>
+</app-modal-wrapper>

@@ -15,6 +15,7 @@ import { AgentInviteService } from '../workdeskServices/agentInviteService/agent
 import { CommonService } from '../workdeskServices/commonEndpoint/common.service';
 import { SharedServices } from '../workdeskServices/sharedResourcesService/shared-resource-service.service';
 import { Router } from '@angular/router';
+import { organizationDoneModalData, organizationModalData } from './mainData';
 
 @Component({
   selector: 'app-main',
@@ -34,6 +35,10 @@ export class MainComponent implements OnInit {
   icons = icons;
   sidebarData = sidebarData;
   showComponents: boolean = false;
+  showSwitchOganization: boolean = false;
+  showSwitchDoneOganization: boolean = false;
+  organizationModalData = organizationModalData
+  organizationDoneModalData = organizationDoneModalData
 
   constructor(
     public authService: AuthService,
@@ -44,7 +49,11 @@ export class MainComponent implements OnInit {
     private SharedServices: SharedServices,
     private Router: Router
   ) { }
-
+  organizationData = {
+    name: (this.getOrganizationService.getLastUsedOrganization().is_individual) ? this.getOrganizationService.getLastUsedOrganization().contact_person :
+      this.getOrganizationService.getLastUsedOrganization().name,
+    icon: '../assets/images/settings_icon/switchOrganization.svg',
+  }
   ngOnInit() {
     this.authService.pageTitle.subscribe((res: any) => {
       this.pageTitle = res;
@@ -56,6 +65,16 @@ export class MainComponent implements OnInit {
       if (data === 1) {
         this.showComponents = true;
       }
+    })
+    this.SharedServices.switchOrganizationDialog.subscribe((data: boolean) => {
+      this.showSwitchOganization = data;
+    })
+    this.SharedServices.switchOrganizationDoneDialog.subscribe((data: boolean) => {
+      setTimeout(() => {
+        this.showSwitchDoneOganization = data;
+        this.organizationData.name = (this.getOrganizationService.getLastUsedOrganization().is_individual) ? this.getOrganizationService.getLastUsedOrganization().contact_person :
+          this.getOrganizationService.getLastUsedOrganization().name;
+      }, 500);
     })
   }
 
@@ -70,7 +89,6 @@ export class MainComponent implements OnInit {
   }
   onGetLoggedUser(event: any) {
     this.getOrganizationService.getOrganization(event.api_token);
-
   }
 
   isSlideOpened(slideOpened: boolean) {
@@ -105,4 +123,23 @@ export class MainComponent implements OnInit {
       this.showModal = false;
     }
   }
+  onCloseModal(event: boolean) {
+    if (event) {
+      this.showSwitchOganization = !event
+    }
+  }
+
+  // done switch organization modal 
+  onCloseSWitchDone(event: boolean) {
+    if (event) {
+      this.showSwitchDoneOganization = !event
+    }
+  }
+  // swithc organization
+  openOgranizationSwitcher(value: boolean) {
+    if (value) {
+      this.showSwitchOganization = value;
+    }
+  }
+
 }
