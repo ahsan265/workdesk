@@ -80,6 +80,8 @@ import { NoTableDataComponent } from './components/no-table-data/no-table-data.c
 import { LoaderComponent } from './components/loader/loader.component';
 import { AuthService } from './services/auth.service';
 import { overlayToken } from './callInterface/overLayService/overlayToken';
+import { SwitchOrganizationComponent } from './modals/switch-organization/switch-organization.component';
+import { SwitchOgranizationDoneComponent } from './modals/switch-ogranization-done/switch-ogranization-done.component';
 
 @NgModule({
   declarations: [
@@ -127,7 +129,9 @@ import { overlayToken } from './callInterface/overLayService/overlayToken';
     CountersComponent,
     WrongInvitationAccountComponent,
     NoTableDataComponent,
-    LoaderComponent
+    LoaderComponent,
+    SwitchOrganizationComponent,
+    SwitchOgranizationDoneComponent
   ],
   imports: [
     BrowserAnimationsModule,

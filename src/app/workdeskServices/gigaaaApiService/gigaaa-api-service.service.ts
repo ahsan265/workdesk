@@ -1164,4 +1164,31 @@ export class GigaaaApiService {
         throw err;
       });
   }
+
+
+  public async setLastUsedOrganization(
+    token: string,
+    organizationId: string,
+  ): Promise<any> {
+    const httpOptions: any = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        Accept: 'application/json',
+        Authorization: `Bearer ${token}`
+      })
+    };
+    return await this.http
+      .put(
+        this.workdeskurl_cs +
+        '/private/organization/' +
+        organizationId +
+        '/last-used', 
+        {},
+        httpOptions
+      )
+      .toPromise()
+      .catch((err) => {
+        throw err;
+      });
+  }
 }

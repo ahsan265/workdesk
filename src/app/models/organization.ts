@@ -8,6 +8,7 @@ export interface Organization {
   projects: Project[];
   uuid: string;
   whmcs_id: string;
+  is_individual:boolean;
 }
 
 export interface Project {

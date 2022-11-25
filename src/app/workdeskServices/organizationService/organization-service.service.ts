@@ -16,9 +16,9 @@ import { SharedServices } from '../sharedResourcesService/shared-resource-servic
   providedIn: 'root'
 })
 export class getOrganizationService {
-  public lastUsedOgranization: BehaviorSubject<Organization>;
   public LastUsedproject: BehaviorSubject<Project>;
   sidebarData = sidebarData;
+  organizationData: Organization[] = [];
 
   constructor(
     private gigaaaService: GigaaaApiService,
@@ -26,11 +26,9 @@ export class getOrganizationService {
     private AgentinviteService: AgentInviteService,
     private ConnectionSecurityService: ConnectionSecurityService,
     private MessageService: MessageService,
-    private router:Router
+    private router: Router
   ) {
-    this.lastUsedOgranization = new BehaviorSubject(
-      this.getLastUsedOrganizationId()
-    );
+
     this.LastUsedproject = new BehaviorSubject(this.getProjects());
   }
   // get organization for workdesk
@@ -39,10 +37,10 @@ export class getOrganizationService {
     this.gigaaaService
       .getOrganization(token)
       .then((data: any) => {
-          
-        if(data.length!==0)
-        {
+
+        if (data.length !== 0) {
           const organization: Organization[] = data;
+          this.organizationData = organization;
           organization.forEach((data) => {
             if (data.last_used === true) {
               const lastUsedOgranization = data.uuid;
@@ -62,37 +60,36 @@ export class getOrganizationService {
                         lastUsedOgranization,
                         data.uuid
                       );
-  
+
                     }
                   });
                   this.getProjectList(project);
                   this.SharedServices.loadCommonEps(1);
-  
+
                 });
             }
-           
+
           });
-        }else{
-            this.router.navigate(['logout']);
+        } else {
+          this.router.navigate(['logout']);
         }
-       
+
       })
       .catch((err: any) => {
         this.MessageService.setErrorMessage(err.error.error);
       });
   }
 
-  // get Last used id
-  public getLastUsedOrganizationId(): Organization {
-    const lastUsedOrgan: any = localStorage.getItem('gigaaa-organz');
-    return JSON.parse(lastUsedOrgan);
-  }
   // get last projects against organization
   public getProjects(): Project {
     const listOfProjects: any = localStorage.getItem('gigaaa-project');
     return JSON.parse(listOfProjects);
   }
 
+  public getLastUsedOrganization(): Organization {
+    const listOfProjects: any = localStorage.getItem('gigaaa-organz');
+    return JSON.parse(listOfProjects);
+  }
   // get projects list
   public getProjectList(project: Project[]) {
     let lastUsedProject: string;
