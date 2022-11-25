@@ -15,7 +15,7 @@ import { AgentInviteService } from '../workdeskServices/agentInviteService/agent
 import { CommonService } from '../workdeskServices/commonEndpoint/common.service';
 import { SharedServices } from '../workdeskServices/sharedResourcesService/shared-resource-service.service';
 import { Router } from '@angular/router';
-import { organizationDoneModalData, organizationModalData } from './mainData';
+import { organizationData, organizationDoneModalData, organizationModalData } from './mainData';
 
 @Component({
   selector: 'app-main',
@@ -34,7 +34,6 @@ export class MainComponent implements OnInit {
   addOns = addons;
   icons = icons;
   sidebarData = sidebarData;
-  showComponents: boolean = false;
   showSwitchOganization: boolean = false;
   showSwitchDoneOganization: boolean = false;
   organizationModalData = organizationModalData
@@ -49,11 +48,7 @@ export class MainComponent implements OnInit {
     private SharedServices: SharedServices,
     private Router: Router
   ) { }
-  organizationData = {
-    name: (this.getOrganizationService.getLastUsedOrganization().is_individual) ? this.getOrganizationService.getLastUsedOrganization().contact_person :
-      this.getOrganizationService.getLastUsedOrganization().name,
-    icon: '../assets/images/settings_icon/switchOrganization.svg',
-  }
+  organizationData = organizationData
   ngOnInit() {
     this.authService.pageTitle.subscribe((res: any) => {
       this.pageTitle = res;
@@ -63,7 +58,8 @@ export class MainComponent implements OnInit {
     });
     this.SharedServices.LoadcommonEpsubject.subscribe(data => {
       if (data === 1) {
-        this.showComponents = true;
+        this.organizationData.name = ((this.getOrganizationService.getLastUsedOrganization().is_individual) ? this.getOrganizationService.getLastUsedOrganization().contact_person :
+          this.getOrganizationService.getLastUsedOrganization().name) || '';
       }
     })
     this.SharedServices.switchOrganizationDialog.subscribe((data: boolean) => {
@@ -72,8 +68,8 @@ export class MainComponent implements OnInit {
     this.SharedServices.switchOrganizationDoneDialog.subscribe((data: boolean) => {
       setTimeout(() => {
         this.showSwitchDoneOganization = data;
-        this.organizationData.name = (this.getOrganizationService.getLastUsedOrganization().is_individual) ? this.getOrganizationService.getLastUsedOrganization().contact_person :
-          this.getOrganizationService.getLastUsedOrganization().name;
+        this.organizationData.name = ((this.getOrganizationService.getLastUsedOrganization().is_individual) ? this.getOrganizationService.getLastUsedOrganization().contact_person :
+          this.getOrganizationService.getLastUsedOrganization().name) || '';
       }, 500);
     })
   }
@@ -89,6 +85,7 @@ export class MainComponent implements OnInit {
   }
   onGetLoggedUser(event: any) {
     this.getOrganizationService.getOrganization(event.api_token);
+
   }
 
   isSlideOpened(slideOpened: boolean) {
