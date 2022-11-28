@@ -64,12 +64,7 @@ export class IncomingComponent implements OnInit {
     private CallsService: CallsService,
     private AgentUserInformation: AgentUserInformation,
   ) {
-    const callInformation = this.AgentUserInformation.getCallInformation();
-    if (callInformation.is_refreshed === true) {
-      this.OverlayService.open({
-        data: callInformation['call-uuid']
-      });
-    }
+   
     this.CallsService.sendDataToIncomingTabsSubject.subscribe(
       (data: IncomingCallModel[]) => {
         this.incomingData = data.map((incomingData) => ({
@@ -104,7 +99,7 @@ export class IncomingComponent implements OnInit {
           userImage: '../../../assets/images/callInterface/user.png',
           showUserImage: false,
           callPickButton: 'Answer',
-          disableButton: this.AgentSocketService.isInCallValue.value
+          disableButton: this.AgentSocketService.isInCall
         }));
         this.unfilterIncomingData = this.incomingData;
       }

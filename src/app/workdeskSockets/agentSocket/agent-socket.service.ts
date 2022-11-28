@@ -89,6 +89,8 @@ export class AgentSocketService {
     const loggedInAgent = AgentList.find(
       (agent: AgentList) => agent.email === user.email
     );
+    this.isInCall=loggedInAgent?.is_in_call||false;
+
     loggedInAgent?.is_organization_admin === true
       ? (this.isOganizationAdminStatus = true)
       : (this.isOganizationAdminStatus = false);

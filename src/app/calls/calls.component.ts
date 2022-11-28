@@ -21,6 +21,8 @@ import {
   MissedCallModel,
   OngoingCallModel
 } from '../models/callModel';
+import { AgentUserInformation } from '../workdeskServices/callInterfaceServices/agentUserInformation/agent-user-information.service';
+import { OverlayService } from '../callInterface/overLayService/overlay.service';
 
 @Component({
   selector: 'app-calls',
@@ -46,13 +48,17 @@ export class CallsComponent implements OnInit {
     private router: Router,
     private route: ActivatedRoute,
     private activatedRoute: ActivatedRoute,
-    private CommonService: CommonService,
     private CallsService: CallsService,
     private calendarService: CalendarService,
-    private QueueSocketService: QueueSocketService
+    private QueueSocketService: QueueSocketService,
+    private AgentUserInformation: AgentUserInformation,
+    private OverlayService: OverlayService,
+
+
   ) {
     this.authService.pageTitle.next('Calls');
     this.alwaysShowCalendars = true;
+   
   }
   ranges = ranges;
   aggregate: string = 'this_week';
