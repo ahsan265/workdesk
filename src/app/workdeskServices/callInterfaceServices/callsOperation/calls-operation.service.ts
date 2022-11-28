@@ -25,7 +25,7 @@ export class CallsOperationService {
     private MessageService: MessageService,
     private AgentUserInformation: AgentUserInformation,
     private AuthService: AuthService
-  ) {}
+  ) { }
 
   // add incoming call handler
   addIncomingCallHandler() {
@@ -58,29 +58,25 @@ export class CallsOperationService {
                 false,
                 this.AuthService.user.value
               );
-              const timer = new Date(Date.now());
-              this.startTimer.next(true);
-              this.AgentUserInformation.setLastCallDuration(timer);
+              this.startTimer.next(false);
+
             }
             break;
           case 'accept':
+
             this.peerUserId = msg.peer_id;
             if (callsData.is_refreshed != true) {
-              setTimeout(() => {
-                this.StreamingService.sendFirstOffer(this.peerUserId);
-              }, 500);
-
+              const timer = new Date(Date.now());
+              this.AgentUserInformation.setLastCallDuration(timer);
               this.AgentUserInformation.setRefreshStatus(true);
+              this.StreamingService.sendFirstOffer(this.peerUserId);
+              this.startTimer.next(true);
             } else {
               this.sendPeerInformation.next(callsData.peer_information.data);
-              //  this.PeerConnectionService.peerConnection.close();
-              // await this.PeerConnectionService.createPeerConnection();
-              // }
+              this.startTimer.next(true);
               setTimeout(() => {
                 this.StreamingService.reloadOfferSend(this.peerUserId);
               }, 500);
-              // this.StreamingService.restoreLastUsedMicrophone();
-              this.startTimer.next(true);
             }
             break;
           case 'peer_data':
@@ -104,7 +100,7 @@ export class CallsOperationService {
           default:
         }
       },
-      (error: any) => {}
+      (error: any) => { }
     );
   }
 

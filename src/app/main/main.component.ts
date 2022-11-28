@@ -67,9 +67,9 @@ export class MainComponent implements OnInit {
     })
     this.SharedServices.switchOrganizationDoneDialog.subscribe((data: boolean) => {
       setTimeout(() => {
-        this.showSwitchDoneOganization = data;
         this.organizationData.name = ((this.getOrganizationService.getLastUsedOrganization().is_individual) ? this.getOrganizationService.getLastUsedOrganization().contact_person :
           this.getOrganizationService.getLastUsedOrganization().name) || '';
+          this.showSwitchDoneOganization = data;
       }, 500);
     })
   }

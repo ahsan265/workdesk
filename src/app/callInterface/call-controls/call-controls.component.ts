@@ -16,12 +16,9 @@ import { DevicesInformationService } from 'src/app/workdeskServices/callInterfac
 import { StreamingService } from 'src/app/workdeskServices/callInterfaceServices/stream/streaming.service';
 import {
   inputDevices,
-  maximizeCallControlData,
-  minimizeCallControlData,
   outputDevice,
   videoMinimizeControlData
 } from '../callsInterfaceData';
-import { MicrophoneVoiceIndicatorComponent } from '../microphone-voice-indicator/microphone-voice-indicator.component';
 
 @Component({
   selector: 'app-call-controls',

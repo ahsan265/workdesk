@@ -41,7 +41,7 @@ import { LandingPageComponent } from './landing-page/landing-page.component';
 import { MainComponent } from './main/main.component';
 import { MissedComponent } from './calls/missed/missed.component';
 import { NgChartsModule } from 'ng2-charts';
-import { NgModule } from '@angular/core';
+import { APP_INITIALIZER, NgModule } from '@angular/core';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { OngoingComponent } from './calls/ongoing/ongoing.component';
 import { PageWrapperComponent } from './components/page-wrapper/page-wrapper.component';
@@ -82,6 +82,7 @@ import { AuthService } from './services/auth.service';
 import { overlayToken } from './callInterface/overLayService/overlayToken';
 import { SwitchOrganizationComponent } from './modals/switch-organization/switch-organization.component';
 import { SwitchOgranizationDoneComponent } from './modals/switch-ogranization-done/switch-ogranization-done.component';
+import { ReDialCallService } from './workdeskServices/reDialCallService/re-dial-call.service';
 
 @NgModule({
   declarations: [
@@ -177,7 +178,12 @@ import { SwitchOgranizationDoneComponent } from './modals/switch-ogranization-do
       provide: overlayToken, // That's the token we defined previously
       useClass: OverlayService // That's the actual service itself
     },
-    AuthService
+    {
+      provide: APP_INITIALIZER,
+      useClass: ReDialCallService 
+    },
+    AuthService,
+    
   ],
   bootstrap: [AppComponent]
 })

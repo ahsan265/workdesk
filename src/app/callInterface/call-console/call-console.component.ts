@@ -8,6 +8,7 @@ import {
   OnInit,
   ViewChild
 } from '@angular/core';
+import { interval } from 'rxjs';
 import { AgentUserInformation } from 'src/app/workdeskServices/callInterfaceServices/agentUserInformation/agent-user-information.service';
 import { CallsOperationService } from 'src/app/workdeskServices/callInterfaceServices/callsOperation/calls-operation.service';
 import { DevicesInformationService } from 'src/app/workdeskServices/callInterfaceServices/devicesInformation/devices-information.service';
@@ -44,7 +45,7 @@ import { overlayToken } from '../overLayService/overlayToken';
   selector: 'app-call-console',
   templateUrl: './call-console.component.html',
   styleUrls: ['./call-console.component.scss'],
-  changeDetection: ChangeDetectionStrategy.Default
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class CallConsoleComponent implements OnInit, OnDestroy {
   constructor(
@@ -56,10 +57,14 @@ export class CallConsoleComponent implements OnInit, OnDestroy {
     private CallsOperationService: CallsOperationService,
     private PeerConnectionService: PeerConnectionService,
     private AgentUserInformation: AgentUserInformation,
+    private changeDetector: ChangeDetectorRef,
     @Inject(overlayToken) public data: any
 
   ) {
     this.AgentUserInformation.updatelastUsedCallUuid(data)
+    interval(1000).subscribe(() => {
+      this.changeDetector.detectChanges();
+    });
   }
   ngOnDestroy(): void {
     this.minmizeMaxmizeScreenOutput(false);
@@ -96,7 +101,8 @@ export class CallConsoleComponent implements OnInit, OnDestroy {
   selectedMicophone!: MicrophoneVoiceIndicatorComponent;
   @ViewChild('miniCameraScreen')
   miniCameraScreen!: ElementRef<HTMLMediaElement>;
-
+  initialTime: any;
+  callStartTimer: any;
   async ngOnInit() {
     await this.StreamingService.loadAudioandVideoResouce();
     this.StreamingService.getLocalStream.subscribe((stream) => {
@@ -159,15 +165,21 @@ export class CallConsoleComponent implements OnInit, OnDestroy {
     // showing timer
     const startTime = new Date(Date.now());
     this.CallsOperationService.startTimer.subscribe((isStarted) => {
+
+
       if (isStarted) {
-        setInterval(() => {
-          user.is_refreshed === true
-            ? (this.callTimer = this.AgentUserInformation.CallDuration(
-              user.call_duration
-            ))
-            : (this.callTimer =
-              this.AgentUserInformation.callJoiningTime(startTime));
-        }, 1000);
+        clearInterval(this.initialTime);
+        this.callStartTimer = setInterval(() => {
+          const time = this.AgentUserInformation.getCallInformation();
+          this.callTimer = this.AgentUserInformation.CallDuration(
+            time.call_duration);
+        }, 1000)
+
+      }
+      else {
+        this.initialTime = setInterval(() => {
+          this.callTimer = this.AgentUserInformation.callJoiningTime(startTime);
+        }, 1000)
       }
     });
   }

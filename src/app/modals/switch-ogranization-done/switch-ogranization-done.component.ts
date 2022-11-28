@@ -17,7 +17,8 @@ export class SwitchOgranizationDoneComponent implements OnInit {
     this.SharedServices.showDoneOrganization(false);
   }
   ngOnInit(): void {
-    this.name = this.getOrganizationService.getLastUsedOrganization().name || '';
+    this.name = ((this.getOrganizationService.getLastUsedOrganization().is_individual) ? this.getOrganizationService.getLastUsedOrganization().contact_person :
+    this.getOrganizationService.getLastUsedOrganization().name) || '';
   }
 
 }
