@@ -39,7 +39,9 @@ export class CallsOperationService {
             }
             break;
           case 'answer':
-            this.PeerConnectionService.handleAnswerMessage(msg.data);
+            if (msg.data !== null) {
+              this.PeerConnectionService.handleAnswerMessage(msg.data);
+            }
             break;
           case 'hangup':
             this.hanndleHangupMessage(msg.data);
@@ -48,7 +50,7 @@ export class CallsOperationService {
             this.PeerConnectionService.handleIceCandidateMessage(msg.data);
             break;
           case 'peer_id':
-            if (callsData.is_refreshed != true) {
+            if (callsData.is_refreshed !== true) {
               this.userId = msg.id;
               this.AgentUserInformation.setRefreshStatus(false);
               this.AgentUserInformation.saveUserInformation(
@@ -65,7 +67,7 @@ export class CallsOperationService {
           case 'accept':
 
             this.peerUserId = msg.peer_id;
-            if (callsData.is_refreshed != true) {
+            if (callsData.is_refreshed !== true) {
               const timer = new Date(Date.now());
               this.AgentUserInformation.setLastCallDuration(timer);
               this.AgentUserInformation.setRefreshStatus(true);
@@ -74,9 +76,12 @@ export class CallsOperationService {
             } else {
               this.sendPeerInformation.next(callsData.peer_information.data);
               this.startTimer.next(true);
-              setTimeout(() => {
+              setTimeout(async () => {
+
+                // this.PeerConnectionService.peerConnection.close();
+                // await this.PeerConnectionService.createPeerConnection();
                 this.StreamingService.reloadOfferSend(this.peerUserId);
-              }, 500);
+              }, 1000);
             }
             break;
           case 'peer_data':

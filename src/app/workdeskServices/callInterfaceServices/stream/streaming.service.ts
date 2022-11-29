@@ -16,8 +16,9 @@ import { PeerConnectionService } from '../peerConnection/peer-connection.service
   providedIn: 'root'
 })
 export class StreamingService {
-  mediaConstraint = {
-    audio: true
+  mediaConstraint:any = {
+    audio: true,
+    video: true
   };
   localStream!: MediaStream;
   screenShareStream!: MediaStream;
@@ -46,20 +47,20 @@ export class StreamingService {
   }
   // load  audio and video
   public async loadAudioandVideoResouce() {
-    let constraint;
-    // const callDetail=this.AgentUserInformation.getCallInformation();
-    // if(callDetail.last_used_microphone!=null)
-    // {
-    //   constraint = { audio: true };
-    // }
-    // else{
-    //    constraint = { audio: { deviceId: callDetail.last_used_microphone.id } };
-    // }
+    if (this.PeerConnectionService.peerConnection === undefined) {
+      await this.PeerConnectionService.createPeerConnection();
+    }
+
+    const userInformation = this.AgentUserInformation.getCallInformation();
+    if (userInformation.last_used_microphone !== undefined) {
+      this.mediaConstraint.audio = { deviceId: userInformation.last_used_microphone.id }
+    }
     await navigator.mediaDevices
       .getUserMedia(this.mediaConstraint)
       .then((stream) => {
         this.localStream = stream;
-        // this.localStream.addTrack(stream.getAudioTracks()[0]);
+        stream.getVideoTracks()[0].stop()
+        //this.localStream.addTrack(stream.getAudioTracks()[0]);
         this.getLocalStream.next(stream);
       });
   }
@@ -75,7 +76,7 @@ export class StreamingService {
       await this.PeerConnectionService.createPeerConnection();
     }
     const audioTrack = this.localStream.getAudioTracks()[0];
-    this.localStream.addTrack(audioTrack);
+    //this.localStream.addTrack(audioTrack);
     const audio = this.PeerConnectionService.peerConnection
       .getSenders()
       .find((data: RTCRtpSender) => {
@@ -101,7 +102,7 @@ export class StreamingService {
       });
     await this.PeerConnectionService.peerConnection
       .setLocalDescription(offer)
-      .catch((err: any) => {});
+      .catch((err: any) => { });
     this.CallSocketService.sendDataforCall({
       type: 'offer',
       peer_id: peerId,
@@ -221,15 +222,15 @@ export class StreamingService {
 
         audio === undefined
           ? this.PeerConnectionService.peerConnection.addTrack(
-              audioTrack,
-              this.localStream
-            )
+            audioTrack,
+            this.localStream
+          )
           : audio.replaceTrack(audioTrack);
         video === undefined
           ? this.PeerConnectionService.peerConnection.addTrack(
-              videoTrack,
-              this.localStream
-            )
+            videoTrack,
+            this.localStream
+          )
           : video.replaceTrack(videoTrack);
       })
       .then(async () => {
@@ -241,8 +242,8 @@ export class StreamingService {
           });
         await this.PeerConnectionService.peerConnection
           .setLocalDescription(offer)
-          .catch((err: any) => {});
-
+          .catch((err: any) => { });
+          this.restoreLastUsedMicrophone();
         this.CallSocketService.sendDataforCall({
           type: 'offer',
           peer_id: peerId,
@@ -269,14 +270,18 @@ export class StreamingService {
       const screenShareeStream = await media.getDisplayMedia({ video: true });
       this.screenShareStream = screenShareeStream;
       this.stopScreenShareByEvent(screenShareeStream);
-      screenShareeStream.addTrack(this.localStream.getAudioTracks()[0]);
-      this.localStream.addTrack(screenShareeStream.getVideoTracks()[0]);
-      this.screenShareStream.addTrack(this.localStream.getAudioTracks()[0]);
-      this.screenShareStream.addTrack(screenShareeStream.getVideoTracks()[0]);
+      const localAudio = this.localStream.getAudioTracks()[0];
+      const videotrack = screenShareeStream.getVideoTracks()[0];
+      this.localStream.addTrack(videotrack);
       const video = this.PeerConnectionService.peerConnection
         .getSenders()
         .find((data: any) => {
           return data.track?.kind === 'video';
+        });
+      const audio = this.PeerConnectionService.peerConnection
+        .getSenders()
+        .find((data: any) => {
+          return data.track?.kind === 'audio';
         });
       if (video === undefined) {
         this.PeerConnectionService.peerConnection.addTrack(
@@ -286,6 +291,12 @@ export class StreamingService {
       } else {
         video.replaceTrack(screenShareeStream.getVideoTracks()[0]);
       }
+      // for audio track
+      if (audio === undefined) {
+        this.PeerConnectionService.peerConnection.addTrack(localAudio, this.localStream)
+      } else {
+        audio.replaceTrack(localAudio);
+      }
       const offer: RTCSessionDescriptionInit =
         await this.PeerConnectionService.peerConnection.createOffer({
           offerToReceiveAudio: true,
@@ -294,7 +305,8 @@ export class StreamingService {
         });
       await this.PeerConnectionService.peerConnection
         .setLocalDescription(offer)
-        .catch((err: any) => {});
+        .catch((err: any) => { });
+       this.restoreLastUsedMicrophone();
       this.CallSocketService.sendDataforCall({
         type: 'offer',
         peer_id: peerId,
@@ -400,7 +412,6 @@ export class StreamingService {
 
   // detect devices
   private async detectDevicesMicrphoneDeviceOnchange(): Promise<void> {
-    const userInformation = this.AgentUserInformation.getCallInformation();
     navigator.mediaDevices.addEventListener('devicechange', async () => {
       await this.selectedDeviceForStream();
     });
@@ -455,9 +466,9 @@ export class StreamingService {
   public restoreLastUsedMicrophone() {
     const userInformation = this.AgentUserInformation.getCallInformation();
     if (userInformation.last_used_microphone != undefined) {
-      this.localStream.getAudioTracks().forEach((track) => {
-        track.stop();
-      });
+      // this.localStream.getAudioTracks().forEach((track) => {
+      //   track.stop();
+      // });
       const idOfMicrophone = userInformation.last_used_microphone.id;
       let constraint = { audio: { deviceId: idOfMicrophone } };
       navigator.mediaDevices.getUserMedia(constraint).then(async (stream) => {
