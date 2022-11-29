@@ -30,7 +30,8 @@
       (seletecOutputForScreenShare)="seletecOutputForScreenShare($event)"
       (seletecOutputForHangUpCall)="seletecOutputForHangUpCall($event)"
       (openDeviceSwitcherOutput)="openDeviceSwitcherOutput($event)" [openDeviceSwitcher]="openDeviceSwitcher"
-      [minimizeCallControl]="minimizeCallControl" [maximizeCallControl]="maximizeCallControl">
+      [minimizeCallControl]="minimizeCallControl" [maximizeCallControl]="maximizeCallControl"
+      [isPeerScreenShared]="this.peerUserInformationData.showShareScreen">
     </app-call-controls>
   </div>
 

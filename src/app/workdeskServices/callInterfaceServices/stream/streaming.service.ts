@@ -16,7 +16,7 @@ import { PeerConnectionService } from '../peerConnection/peer-connection.service
   providedIn: 'root'
 })
 export class StreamingService {
-  mediaConstraint:any = {
+  mediaConstraint: any = {
     audio: true,
     video: true
   };
@@ -34,7 +34,6 @@ export class StreamingService {
     private PeerConnectionService: PeerConnectionService,
     private AgentUserInformation: AgentUserInformation,
     private CallSocketService: CallSocketService,
-    private router: Router,
     private DevicesInformationService: DevicesInformationService,
     private overlayService: OverlayService
   ) {
@@ -43,7 +42,6 @@ export class StreamingService {
         this.reloadOfferSend(this.peerUserId);
       }
     });
-    this.detectDevicesMicrphoneDeviceOnchange();
   }
   // load  audio and video
   public async loadAudioandVideoResouce() {
@@ -65,6 +63,7 @@ export class StreamingService {
       });
   }
   public async sendFirstOffer(peerId: string): Promise<void> {
+    let audioTrack:any;
     const userInformation = this.AgentUserInformation.getCallInformation();
     this.CallSocketService.sendDataforCall({
       type: 'update_peer',
@@ -75,7 +74,12 @@ export class StreamingService {
     if (this.PeerConnectionService.peerConnection === undefined) {
       await this.PeerConnectionService.createPeerConnection();
     }
-    const audioTrack = this.localStream.getAudioTracks()[0];
+    audioTrack = this.localStream.getAudioTracks()[0];
+    if (userInformation.last_used_microphone !== undefined) {
+      audioTrack = { audio: { deviceId: userInformation.last_used_microphone.id } }
+    }
+
+   
     //this.localStream.addTrack(audioTrack);
     const audio = this.PeerConnectionService.peerConnection
       .getSenders()
@@ -243,7 +247,7 @@ export class StreamingService {
         await this.PeerConnectionService.peerConnection
           .setLocalDescription(offer)
           .catch((err: any) => { });
-          this.restoreLastUsedMicrophone();
+        this.restoreLastUsedMicrophone();
         this.CallSocketService.sendDataforCall({
           type: 'offer',
           peer_id: peerId,
@@ -306,7 +310,7 @@ export class StreamingService {
       await this.PeerConnectionService.peerConnection
         .setLocalDescription(offer)
         .catch((err: any) => { });
-       this.restoreLastUsedMicrophone();
+      this.restoreLastUsedMicrophone();
       this.CallSocketService.sendDataforCall({
         type: 'offer',
         peer_id: peerId,
@@ -405,14 +409,16 @@ export class StreamingService {
       } else {
         this.AgentUserInformation.updateScreenShareStutus(false);
         this.sendFirstOffer(peerId);
+
       }
     }
     this.restoreLastUsedMicrophone();
   }
 
   // detect devices
-  private async detectDevicesMicrphoneDeviceOnchange(): Promise<void> {
+  public async detectDevicesMicrphoneDeviceOnchange(): Promise<void> {
     navigator.mediaDevices.addEventListener('devicechange', async () => {
+      console.log("device change")
       await this.selectedDeviceForStream();
     });
   }
@@ -466,9 +472,9 @@ export class StreamingService {
   public restoreLastUsedMicrophone() {
     const userInformation = this.AgentUserInformation.getCallInformation();
     if (userInformation.last_used_microphone != undefined) {
-      // this.localStream.getAudioTracks().forEach((track) => {
-      //   track.stop();
-      // });
+      this.localStream.getAudioTracks().forEach((track) => {
+        track.stop();
+      });
       const idOfMicrophone = userInformation.last_used_microphone.id;
       let constraint = { audio: { deviceId: idOfMicrophone } };
       navigator.mediaDevices.getUserMedia(constraint).then(async (stream) => {

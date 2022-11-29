@@ -196,8 +196,8 @@ export class CallingScreenComponent implements OnInit {
 
   playSelectedAudioOutput(selectedDevice: inputOuputdevices) {
     if (
-      this.remoteStream != undefined &&
-      this.DevicesInformationService.getBrowserName() != 'firefox'
+      this.remoteStream !== undefined &&
+      this.DevicesInformationService.getBrowserName() !== 'firefox'
     ) {
       this.remoteVideo.nativeElement.volume = 0;
       if (this.remoteVideo.nativeElement.children.length > 0) {

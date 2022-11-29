@@ -62,9 +62,8 @@ export class IncomingComponent implements OnInit {
     private calendarService: CalendarService,
     private AgentSocketService: AgentSocketService,
     private CallsService: CallsService,
-    private AgentUserInformation: AgentUserInformation,
   ) {
-   
+  // this.getCallsId('aaedd2b1-5e89-40c5-8cdf-9ddb4e3be65a')
     this.CallsService.sendDataToIncomingTabsSubject.subscribe(
       (data: IncomingCallModel[]) => {
         this.incomingData = data.map((incomingData) => ({

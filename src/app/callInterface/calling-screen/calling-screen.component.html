@@ -1,157 +1,84 @@
-<div
-  [ngStyle]="{
+<div [ngStyle]="{
     height:
       agentOperationInformation.IsVideoMinimize === true
         ? 'calc(100% - 50px)'
         : 'calc(100% - 78px)'
-  }"
->
-  <div
-    class="callViewWrapperSplit"
-    [ngStyle]="isSplit ? desktop : desktopNormal"
-    [style.background]="isSplit ? '#0C1524' : '#0F1B2F'"
-  >
-    <div
-      [ngStyle]="
+  }">
+  <div class="callViewWrapperSplit" [ngStyle]="isSplit ? desktop : desktopNormal"
+    [style.background]="isSplit ? '#0C1524' : '#0F1B2F'">
+    <div [ngStyle]="
         agentOperationInformation.IsVideoMinimize === true
           ? miniMizeVideoData
           : maxiMizeNormaData
-      "
-      class="peerDeviceInformation"
-      id="peerIndicator"
-      #peerIndicator
-    >
-      <div
-        class="peerInitials"
-        *ngIf="secondPeerInformationdata.showInitials"
-        [style.font-size]="
+      " class="peerDeviceInformation" id="peerIndicator" #peerIndicator>
+      <div class="peerInitials" *ngIf="secondPeerInformationdata.showInitials" [style.font-size]="
           agentOperationInformation.IsVideoMinimize === true ? '24px' : '40px'
-        "
-      >
+        ">
         {{
-          secondPeerInformationdata.firstName
-            | nameInitials: secondPeerInformationdata.lastName
+        secondPeerInformationdata.firstName
+        | nameInitials: secondPeerInformationdata.lastName
         }}
       </div>
-      <img
-        [ngStyle]="
+      <img [ngStyle]="
           agentOperationInformation.IsVideoMinimize === true
             ? peerImageData
             : peerImageNormal
-        "
-        *ngIf="secondPeerInformationdata.showImage"
-        class="peerImage"
-        [src]="secondPeerInformationdata.peerImage"
-        alt=""
-      />
-      <img
-        *ngIf="secondPeerInformationdata.showWaitingIcon"
-        class="peerWaitingImage"
-        [src]="secondPeerInformationdata.waitingIcon"
-        alt=""
-      />
-      <div
-        [ngStyle]="{
+        " *ngIf="secondPeerInformationdata.showImage" class="peerImage" [src]="secondPeerInformationdata.peerImage"
+        alt="" />
+      <img *ngIf="secondPeerInformationdata.showWaitingIcon" class="peerWaitingImage"
+        [src]="secondPeerInformationdata.waitingIcon" alt="" />
+      <div [ngStyle]="{
           display:
             secondPeerInformationdata.showLoaderAnimation === true
               ? 'block'
               : 'none'
-        }"
-      
-        class="loaderAnimation"
-      ></div>
+        }" [@loaderAnimation]="color" class="loaderAnimation"></div>
     </div>
   </div>
   <div class="callViewWrapperNormal" *ngIf="isSplit">
-    <div
-      [ngStyle]="
+    <div [ngStyle]="
         agentOperationInformation.IsVideoMinimize === true
           ? miniMizeVideoData
           : maxiMizeNormaData
-      "
-      class="peerDeviceInformation"
-    >
-      <div
-        class="peerInitials"
-        *ngIf="peerInformationdata.showInitials"
-        [style.font-size]="
+      " class="peerDeviceInformation">
+      <div class="peerInitials" *ngIf="peerInformationdata.showInitials" [style.font-size]="
           agentOperationInformation.IsVideoMinimize === true ? '24px' : '40px'
-        "
-      >
+        ">
         {{
-          peerInformationdata.firstName
-            | nameInitials: peerInformationdata.lastName
+        peerInformationdata.firstName
+        | nameInitials: peerInformationdata.lastName
         }}
       </div>
-      <img
-        [ngStyle]="
+      <img [ngStyle]="
           agentOperationInformation.IsVideoMinimize === true
             ? peerImageData
             : peerImageNormal
-        "
-        *ngIf="peerInformationdata.showImage"
-        class="peerImage"
-        [src]="peerInformationdata.peerImage"
-        alt=""
-      />
-      <img
-        *ngIf="peerInformationdata.showWaitingIcon"
-        class="peerWaitingImage"
-        [src]="peerInformationdata.waitingIcon"
-        alt=""
-      />
+        " *ngIf="peerInformationdata.showImage" class="peerImage" [src]="peerInformationdata.peerImage" alt="" />
+      <img *ngIf="peerInformationdata.showWaitingIcon" class="peerWaitingImage" [src]="peerInformationdata.waitingIcon"
+        alt="" />
 
-      <div
-        [ngStyle]="{
+      <div [ngStyle]="{
           display:
             peerInformationdata.showLoaderAnimation === true ? 'block' : 'none'
-        }"
-        [@loaderAnimation]="color"
-        class="loaderAnimation"
-      ></div>
+        }" [@loaderAnimation]="color" class="loaderAnimation"></div>
     </div>
   </div>
   <div *ngIf="isSplit" class="unSplit" (click)="UnslplitScreen(!isSplit)">
-    <img
-      style="padding: 9px"
-      src="../../../assets/images/callInterface/smallscreen_icon14.svg"
-      alt=""
-    />
+    <img style="padding: 9px" src="../../../assets/images/callInterface/smallscreen_icon14.svg" alt="" />
   </div>
-  <div
-    [ngStyle]="{
+  <div [ngStyle]="{
       height:
         agentOperationInformation.IsVideoMinimize === true
           ? 'calc(100% - 50px)'
           : 'calc(100% - 78px)'
-    }"
-  >
-    <video
-      style="left: 0px"
-      [hidden]="!(peerInformationdata.showVideo && isSplit)"
-      [ngStyle]="
+    }">
+    <video style="left: 0px" [hidden]="!(peerInformationdata.showVideo && isSplit)" [ngStyle]="
         isSplit ? remoteVideoObjectSplitNormal : remoteVideoObjectNormal
-      "
-      id="localVideo"
-      #localVideo
-      [autoplay]="true"
-      playsInline
-      type="video/mp4"
-      [muted]="true"
-      class="unsplitVideoSrc localVideo"
-    ></video>
-    <video
-      [hidden]="!isRemoteEnabled"
-      [ngStyle]="
+      " id="localVideo" #localVideo [autoplay]="true" playsInline type="video/mp4" [muted]="true"
+      class="unsplitVideoSrc localVideo"></video>
+    <video [hidden]="!isRemoteEnabled" [ngStyle]="
         isSplit ? remoteVideoObjectSplitNormal : remoteVideoObjectNormal
-      "
-      id="remoteVideo"
-      #remoteVideo
-      [autoplay]="true"
-      [muted]="false"
-      playsInline
-      type="video/mp4"
-      class="unsplitVideoSrc"
-    ></video>
+      " id="remoteVideo" #remoteVideo [autoplay]="true" [muted]="false" playsInline type="video/mp4"
+      class="unsplitVideoSrc"></video>
   </div>
 </div>

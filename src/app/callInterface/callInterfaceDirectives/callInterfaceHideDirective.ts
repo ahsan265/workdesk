@@ -3,6 +3,7 @@ import {
   EventEmitter,
   HostBinding,
   HostListener,
+  Input,
   Output
 } from '@angular/core';
 import { AgentUserInformation } from 'src/app/workdeskServices/callInterfaceServices/agentUserInformation/agent-user-information.service';
@@ -11,7 +12,7 @@ import { AgentUserInformation } from 'src/app/workdeskServices/callInterfaceServ
   selector: '[miniCameraVideoStream]'
 })
 export class peerMiniCameraAnimation {
-  isAnimated: boolean = false;
+  @Input() isAnimated: boolean = false;
 
   @HostBinding('style.transform') private transform = 'translatex(0px)';
   constructor(private AgentUserInformation: AgentUserInformation) {}
