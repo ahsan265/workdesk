@@ -40,7 +40,7 @@ export class CallControlsComponent implements OnInit {
   @Input() openDeviceSwitcher: boolean = false;
   @Input() agentOperationInformationData!: agentOperationInformationModel;
   @Input() isMinimize!: boolean;
-
+  @Input() isPeerScreenShared!: boolean;
   @Output() seletecOutputForMicrophone = new EventEmitter();
   @Output() seletecOutputForCamera = new EventEmitter();
   @Output() seletecOutputForScreenShare = new EventEmitter();

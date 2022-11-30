@@ -19,7 +19,7 @@ export class PeerConnectionService {
   constructor(
     private CallSocketService: CallSocketService,
     private DevicesInformationService: DevicesInformationService
-  ) {}
+  ) { }
 
   public async createPeerConnection(): Promise<void> {
     let forTurnsSupported = [
@@ -84,10 +84,7 @@ export class PeerConnectionService {
   // handle ice candidate event Function
   private handIceCandidateEvent = (event: RTCPeerConnectionIceEvent) => {
     if (event.candidate !== null) {
-      if (
-        event.candidate?.candidate != null &&
-        event.candidate?.candidate != undefined
-      ) {
+    {
         this.CallSocketService.sendDataforCall({
           type: 'ice-candidate',
           data: event.candidate
@@ -125,6 +122,7 @@ export class PeerConnectionService {
   private handleTrackEvent = (event: RTCTrackEvent) => {
     this.remoteStream = event.streams[0];
     this.remoteVideoSubject.next(event.streams[0]);
+    this.remoteVideoSubject.next(event.streams[0]);
   };
 
   // handle Offer messager After recieving offer from peer candidate.
@@ -132,22 +130,25 @@ export class PeerConnectionService {
     msg: RTCSessionDescriptionInit
   ): Promise<void> {
     await this.peerConnection
-      .setRemoteDescription(new RTCSessionDescription(msg))
+      .setRemoteDescription(msg)
       .then(async () => {
         return await this.peerConnection.createAnswer();
       })
-
+      .then(async (answer) => {
+        await this.peerConnection.setLocalDescription(
+          answer
+        );
+      })
       .then(() => {
         this.CallSocketService.sendDataforCall({
           type: 'answer',
           data: this.peerConnection.localDescription
         });
       })
-      .then(() => {
-        this.candidates.map((c) => this.peerConnection.addIceCandidate(c));
-      })
-      .catch((error: any) => {});
-    this.checkedRemoteSet = true;
+      .catch((error: any) => {
+        console.log(error);
+      });
+    console.log(this.peerConnection.getReceivers())
   }
 
   // handle answer message
@@ -156,25 +157,16 @@ export class PeerConnectionService {
   ): Promise<void> {
     await this.peerConnection
       .setRemoteDescription(new RTCSessionDescription(data))
-      .then(() => {
-        // if(this.candidates.length!=0)
-        // {
-        this.candidates.map((c) => this.peerConnection.addIceCandidate(c));
-
-        // }
-      })
-      .catch(async (error: any) => {});
+      .catch(async (error: any) => { });
   }
   // handle ice Condate Messages
   public async handleIceCandidateMessage(data: RTCIceCandidate): Promise<void> {
-    if (this.checkedRemoteSet) {
-      if (data.candidate != undefined && data.candidate != null) {
-        await this.peerConnection
-          .addIceCandidate(data)
-          .catch((error: any) => {});
-      }
-    } else {
-      this.candidates.push(data);
+    console.log(data)
+    if (data.candidate !== "") {
+      await this.peerConnection
+        .addIceCandidate(data)
+        .catch((error: any) => { });
     }
+
   }
 }

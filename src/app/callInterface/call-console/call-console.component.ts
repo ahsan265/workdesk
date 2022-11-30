@@ -104,6 +104,7 @@ export class CallConsoleComponent implements OnInit, OnDestroy {
   initialTime: any;
   callStartTimer: any;
   async ngOnInit() {
+    this.StreamingService.detectDevicesMicrphoneDeviceOnchange();
     await this.StreamingService.loadAudioandVideoResouce();
     this.StreamingService.getLocalStream.subscribe((stream) => {
       this.miniCameraVideoStream.setMiniCameraSteam(stream);
