@@ -8,7 +8,7 @@ import { User } from 'src/app/models/user';
 import { DevicesInformationService } from '../devicesInformation/devices-information.service';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'platform'
 })
 export class AgentUserInformation {
   selectedSpearkerSubject = new Subject<any>();

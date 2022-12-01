@@ -7,10 +7,9 @@ import { AgentUserInformation } from 'src/app/workdeskServices/callInterfaceServ
 import { AuthService } from 'src/app/services/auth.service';
 import { PeersCallsInformationModel } from 'src/app/models/callInterfaceModel';
 import { Subject } from 'rxjs';
-import { CloseDialogOverlayRef } from 'src/app/callInterface/overLayService/closeDialogService';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'platform'
 })
 export class CallsOperationService {
   peerUserId!: string;
@@ -65,13 +64,12 @@ export class CallsOperationService {
             }
             break;
           case 'accept':
-
             this.peerUserId = msg.peer_id;
             if (callsData.is_refreshed !== true) {
               const timer = new Date(Date.now());
               this.AgentUserInformation.setLastCallDuration(timer);
               this.AgentUserInformation.setRefreshStatus(true);
-              callsData.call_type === 'Video' ? (this.AgentUserInformation.updateCameraStatus(true), this.StreamingService.startVideo(this.peerUserId)) :
+              callsData.call_type === 'Video' ? (this.AgentUserInformation.updateCameraStatus(true), this.StreamingService.setCallType.next(true), this.StreamingService.startVideo(this.peerUserId)) :
                 this.StreamingService.sendFirstOffer(this.peerUserId);
               this.startTimer.next(true);
             } else {

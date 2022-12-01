@@ -4,13 +4,13 @@ import { DevicesInformationService } from 'src/app/workdeskServices/callInterfac
 import { environment } from 'src/environments/environment';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'platform'
 })
 export class CallSocketService {
   ws!: WebSocket;
   protected websocket_url = `${environment.websocket_url}`;
   sendDataToInterface = new Subject<any>();
-  constructor(private DevicesInformationService: DevicesInformationService) {}
+  constructor(private DevicesInformationService: DevicesInformationService) { }
   // dial webrtcCall
   public async dialCall(
     calluuid: string,
@@ -32,7 +32,7 @@ export class CallSocketService {
       '&connection=' +
       connectionid;
     this.ws = new WebSocket(url);
-    this.ws.onopen = (e: any) => {};
+    this.ws.onopen = (e: any) => { };
     // recieve data and send it to required place
     this.ws.onmessage = async (e: any) => {
       if (e.data != 'ping') {

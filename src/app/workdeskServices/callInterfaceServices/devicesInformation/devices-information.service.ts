@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { groupDeicesInformation } from 'src/app/models/callInterfaceModel';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'platform'
 })
 export class DevicesInformationService {
   constructor() {}

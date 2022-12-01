@@ -165,7 +165,6 @@ const minimizeCallControlData = {
   width: '255px',
   background: '#162741',
   'margin-bottom': '0px',
-  bottom: '70px',
   'border-radius': '1px'
 };
 

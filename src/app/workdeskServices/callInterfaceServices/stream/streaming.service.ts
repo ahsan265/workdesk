@@ -13,7 +13,7 @@ import { DevicesInformationService } from '../devicesInformation/devices-informa
 import { PeerConnectionService } from '../peerConnection/peer-connection.service';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'platform'
 })
 export class StreamingService {
   mediaConstraint: any = {
@@ -28,6 +28,7 @@ export class StreamingService {
   screenShareData = screenShareData;
   getLocalStream = new Subject<MediaStream>();
   peerUserId!: string;
+  setCallType = new Subject<boolean>();
 
   constructor(
     private MessageService: MessageService,

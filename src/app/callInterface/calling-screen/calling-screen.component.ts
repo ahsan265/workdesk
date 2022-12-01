@@ -3,6 +3,7 @@ import {
   Component,
   ElementRef,
   EventEmitter,
+  HostListener,
   Input,
   OnInit,
   Output,
@@ -51,7 +52,11 @@ export class CallingScreenComponent implements OnInit {
   @ViewChild('localVideo') localVideo!: ElementRef<HTMLMediaElement>;
   remoteStream!: MediaStream;
   @Output() unSplitScreenOutput = new EventEmitter();
-
+  // @HostListener('window:resize', ['$event'])
+  // getScreenSize() {
+  //     this.AgentUserInformation?.innerWidth < 769 ? this.collapsedSidebar = true : this.collapsedSidebar = false;
+  //     window?.innerWidth < 769 ? this.showCollapseButton = false : this.showCollapseButton = true;
+  // }
   remoteVideoObjectNormal = {
     height: '100%',
     width: '100%'
@@ -85,6 +90,7 @@ export class CallingScreenComponent implements OnInit {
     private CallsOperationService: CallsOperationService,
     private DevicesInformationService: DevicesInformationService
   ) {
+    console.log(this.agentOperationInformation)
     this.Devices.getDeviceType() === true
       ? (this.desktop = {
         height: 'calc(50% - 24px)',
@@ -113,17 +119,27 @@ export class CallingScreenComponent implements OnInit {
 
   setStream(stream: MediaStream) {
     const user = this.AgentUserInformation.getCallInformation();
-    if (user.user_information.data.is_shared_screen === true) {
+    if (user.is_minimize===false ) {
+      if(user.user_information.data.is_shared_screen === true)
+      {
+        this.render.setStyle(
+          this.localVideo.nativeElement,
+          'object-fit',
+          'contain'
+        );
+      } else {
+        this.render.setStyle(
+          this.localVideo.nativeElement,
+          'object-fit',
+          'cover'
+        );
+      }
+    }
+    else{
       this.render.setStyle(
         this.localVideo.nativeElement,
-        'object-fit',
-        'contain'
-      );
-    } else {
-      this.render.setStyle(
-        this.localVideo.nativeElement,
-        'object-fit',
-        'cover'
+        'display',
+        'none'
       );
     }
 
@@ -161,6 +177,7 @@ export class CallingScreenComponent implements OnInit {
           'object-fit',
           'cover'
         );
+        
     });
   }
   UnslplitScreen($event: boolean) {
