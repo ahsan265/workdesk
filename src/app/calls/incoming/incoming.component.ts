@@ -63,7 +63,7 @@ export class IncomingComponent implements OnInit {
     private AgentSocketService: AgentSocketService,
     private CallsService: CallsService,
   ) {
-  // this.getCallsId('aaedd2b1-5e89-40c5-8cdf-9ddb4e3be65a')
+    // this.getCallsId('aaedd2b1-5e89-40c5-8cdf-9ddb4e3be65a')
     this.CallsService.sendDataToIncomingTabsSubject.subscribe(
       (data: IncomingCallModel[]) => {
         this.incomingData = data.map((incomingData) => ({
@@ -109,8 +109,8 @@ export class IncomingComponent implements OnInit {
 
   }
 
-  async getCallsId(event: string) {
-    let data = { call_uuid: event };
+  async getCallsId(event: any) {
+    let data = { call_uuid: event.call_uuid };
     await this.GigaaaApiService.getcalltype(
       this.CommonService.getEndpointsParamLocal().token,
       this.CommonService.getEndpointsParamLocal().organization,

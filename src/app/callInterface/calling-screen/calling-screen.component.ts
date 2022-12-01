@@ -87,22 +87,22 @@ export class CallingScreenComponent implements OnInit {
   ) {
     this.Devices.getDeviceType() === true
       ? (this.desktop = {
-          height: 'calc(50% - 24px)',
-          width: '100%',
-          top: 'unset',
-          bottom: '0px'
-        })
+        height: 'calc(50% - 24px)',
+        width: '100%',
+        top: 'unset',
+        bottom: '0px'
+      })
       : (this.desktopNormal = {
-          height: '100%',
-          width: '100%',
-          top: 'unset',
-          bottom: 'unset'
-        });
+        height: '100%',
+        width: '100%',
+        top: 'unset',
+        bottom: 'unset'
+      });
     this.Devices.getDeviceType() === true
       ? (this.remoteVideoObjectSplitNormal = {
-          height: 'calc(50% - 24px)',
-          width: '100%'
-        })
+        height: 'calc(50% - 24px)',
+        width: '100%'
+      })
       : '';
     this.AgentUserInformation.selectedSpearkerSubject.subscribe(
       (speakerInformation) => {
@@ -133,7 +133,7 @@ export class CallingScreenComponent implements OnInit {
   setRemoteStream(stream: MediaStream) {
     const user = this.AgentUserInformation.getCallInformation();
     user.peer_information.data.isScreenShareOn === true &&
-    user.is_minimize === true
+      user.is_minimize === true
       ? this.render.setStyle(this.localVideo.nativeElement, 'display', 'none')
       : this.render.setStyle(this.localVideo.nativeElement, 'display', '');
     this.remoteVideo.nativeElement.srcObject = null;
@@ -152,15 +152,15 @@ export class CallingScreenComponent implements OnInit {
         : (this.isRemoteEnabled = false);
       data.isScreenShareOn === true
         ? this.render.setStyle(
-            this.remoteVideo.nativeElement,
-            'object-fit',
-            'contain'
-          )
+          this.remoteVideo.nativeElement,
+          'object-fit',
+          'contain'
+        )
         : this.render.setStyle(
-            this.remoteVideo.nativeElement,
-            'object-fit',
-            'cover'
-          );
+          this.remoteVideo.nativeElement,
+          'object-fit',
+          'cover'
+        );
     });
   }
   UnslplitScreen($event: boolean) {
@@ -193,7 +193,6 @@ export class CallingScreenComponent implements OnInit {
       }
     };
   }
-
   playSelectedAudioOutput(selectedDevice: inputOuputdevices) {
     if (
       this.remoteStream !== undefined &&
@@ -214,7 +213,7 @@ export class CallingScreenComponent implements OnInit {
       webaudio_source1.connect(webaudio_ms1);
       let test_output_audio1 = <
         HTMLMediaElement & { setSinkId(deviceId: string): void }
-      >new Audio();
+        >new Audio();
       test_output_audio1.srcObject = webaudio_ms1.stream;
       test_output_audio1.setSinkId(selectedDevice.id);
       this.remoteVideo.nativeElement.appendChild(test_output_audio1);

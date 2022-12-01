@@ -1,3 +1,4 @@
+import { AfterViewInit } from '@angular/core';
 import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
@@ -47,7 +48,7 @@ import { overlayToken } from '../overLayService/overlayToken';
   styleUrls: ['./call-console.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class CallConsoleComponent implements OnInit, OnDestroy {
+export class CallConsoleComponent implements OnInit, OnDestroy, AfterViewInit {
   constructor(
     private StreamingService: StreamingService,
     private MessageService: MessageService,
@@ -61,12 +62,28 @@ export class CallConsoleComponent implements OnInit, OnDestroy {
     @Inject(overlayToken) public data: any
 
   ) {
-    this.AgentUserInformation.updatelastUsedCallUuid(data)
+    this.StreamingService.detectDevicesMicrphoneDeviceOnchange();
+    this.StreamingService.loadAudioandVideoResouce();
+
+    const user = this.AgentUserInformation.getCallInformation();
+    if (user.is_refreshed !== true) {
+      this.AgentUserInformation.updatelastUsedCallUuid(this.data.call_uuid)
+    }
     interval(1000).subscribe(() => {
       this.changeDetector.detectChanges();
     });
   }
+  ngAfterViewInit(): void {
+    this.StreamingService.getLocalStream.subscribe((stream) => {
+      this.PeerMiniCameraScreen.showCamera = true;
+      this.peerUserInformationData.showVideo = true
+      this.cameraData.isSelected = true;
+      this.miniCameraVideoStream.setMiniCameraSteam(stream);
+      this.stream.setStream(stream);
+    });
+  }
   ngOnDestroy(): void {
+
     this.minmizeMaxmizeScreenOutput(false);
     this.miniCameraOperation(false);
     this.agentOperationInformationData.isMinimize = false;
@@ -104,16 +121,11 @@ export class CallConsoleComponent implements OnInit, OnDestroy {
   initialTime: any;
   callStartTimer: any;
   async ngOnInit() {
-    this.StreamingService.detectDevicesMicrphoneDeviceOnchange();
-    await this.StreamingService.loadAudioandVideoResouce();
-    this.StreamingService.getLocalStream.subscribe((stream) => {
-      this.miniCameraVideoStream.setMiniCameraSteam(stream);
-      this.stream.setStream(stream);
-    });
+
     const user = this.AgentUserInformation.getCallInformation();
     if (user.is_refreshed === true) {
       this.CallSocketService.dialCall(
-        this.data,
+        user['call-uuid'],
         user.user_information.user_id,
         true,
         this.DevicesInformationService.getBrowserName(),
@@ -134,12 +146,13 @@ export class CallConsoleComponent implements OnInit, OnDestroy {
       // this.miceData.isSelected = user.user_information.data.is_microphone_on;
     } else {
       this.CallSocketService.dialCall(
-        this.data,
+        this.data.call_uuid,
         '',
         false,
         this.DevicesInformationService.getBrowserName(),
         this.CommonService.getEndpointsParamLocal().connectionId
       );
+      this.AgentUserInformation.setCallType(this.data.callType.text);
     }
 
     this.CallsOperationService.addIncomingCallHandler();

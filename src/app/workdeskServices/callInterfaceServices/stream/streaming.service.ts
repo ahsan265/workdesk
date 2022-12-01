@@ -63,7 +63,6 @@ export class StreamingService {
       });
   }
   public async sendFirstOffer(peerId: string): Promise<void> {
-    let audioTrack:any;
     const userInformation = this.AgentUserInformation.getCallInformation();
     this.CallSocketService.sendDataforCall({
       type: 'update_peer',
@@ -74,12 +73,7 @@ export class StreamingService {
     if (this.PeerConnectionService.peerConnection === undefined) {
       await this.PeerConnectionService.createPeerConnection();
     }
-    audioTrack = this.localStream.getAudioTracks()[0];
-    if (userInformation.last_used_microphone !== undefined) {
-      audioTrack = { audio: { deviceId: userInformation.last_used_microphone.id } }
-    }
-
-   
+    const audioTrack = this.localStream.getAudioTracks()[0];
     //this.localStream.addTrack(audioTrack);
     const audio = this.PeerConnectionService.peerConnection
       .getSenders()
@@ -418,7 +412,6 @@ export class StreamingService {
   // detect devices
   public async detectDevicesMicrphoneDeviceOnchange(): Promise<void> {
     navigator.mediaDevices.addEventListener('devicechange', async () => {
-      console.log("device change")
       await this.selectedDeviceForStream();
     });
   }
@@ -472,9 +465,9 @@ export class StreamingService {
   public restoreLastUsedMicrophone() {
     const userInformation = this.AgentUserInformation.getCallInformation();
     if (userInformation.last_used_microphone != undefined) {
-      this.localStream.getAudioTracks().forEach((track) => {
-        track.stop();
-      });
+      // this.localStream.getAudioTracks().forEach((track) => {
+      //   track.stop();
+      // });
       const idOfMicrophone = userInformation.last_used_microphone.id;
       let constraint = { audio: { deviceId: idOfMicrophone } };
       navigator.mediaDevices.getUserMedia(constraint).then(async (stream) => {
@@ -484,7 +477,9 @@ export class StreamingService {
           .find((audioTrack: any) => {
             return audioTrack.track.kind === 'audio';
           });
-        audio?.replaceTrack(stream.getAudioTracks()[0]);
+        if (this.DevicesInformationService.getBrowserName() !== 'firefox') {
+          audio?.replaceTrack(stream.getAudioTracks()[0]);
+        }
       });
     }
   }

@@ -71,7 +71,8 @@ export class CallsOperationService {
               const timer = new Date(Date.now());
               this.AgentUserInformation.setLastCallDuration(timer);
               this.AgentUserInformation.setRefreshStatus(true);
-              this.StreamingService.sendFirstOffer(this.peerUserId);
+              callsData.call_type === 'Video' ? (this.AgentUserInformation.updateCameraStatus(true), this.StreamingService.startVideo(this.peerUserId)) :
+                this.StreamingService.sendFirstOffer(this.peerUserId);
               this.startTimer.next(true);
             } else {
               this.sendPeerInformation.next(callsData.peer_information.data);
