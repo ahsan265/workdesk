@@ -26,6 +26,12 @@ export class AgentUserInformation {
       lastNameInitial: lastNameInitial
     };
   }
+// set call Type 
+public setCallType(status: boolean) {
+  const data = this.getCallInformation();
+  data['call_type'] = status;
+  localStorage.setItem('call-information', JSON.stringify(data));
+}
 
   //set Refresh Status
   public setIsMinimize(status: boolean) {

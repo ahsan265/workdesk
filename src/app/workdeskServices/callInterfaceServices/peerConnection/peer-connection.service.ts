@@ -84,7 +84,7 @@ export class PeerConnectionService {
   // handle ice candidate event Function
   private handIceCandidateEvent = (event: RTCPeerConnectionIceEvent) => {
     if (event.candidate !== null) {
-    {
+      {
         this.CallSocketService.sendDataforCall({
           type: 'ice-candidate',
           data: event.candidate
@@ -138,6 +138,10 @@ export class PeerConnectionService {
         await this.peerConnection.setLocalDescription(
           answer
         );
+      }).then(() => {
+        if (this.candidates.length != 0) {
+          this.candidates.map((c) => this.peerConnection.addIceCandidate(c));
+        }
       })
       .then(() => {
         this.CallSocketService.sendDataforCall({
@@ -157,6 +161,12 @@ export class PeerConnectionService {
   ): Promise<void> {
     await this.peerConnection
       .setRemoteDescription(new RTCSessionDescription(data))
+      .then(() => {
+        if (this.candidates.length != 0) {
+          this.candidates.map((c) => this.peerConnection.addIceCandidate(c));
+        }
+      })
+
       .catch(async (error: any) => { });
   }
   // handle ice Condate Messages
@@ -166,7 +176,8 @@ export class PeerConnectionService {
       await this.peerConnection
         .addIceCandidate(data)
         .catch((error: any) => { });
+        (this.DevicesInformationService.getBrowserName() === 'firefox') ? this.candidates.push(data) : this.candidates = [];
     }
-
+   
   }
 }
