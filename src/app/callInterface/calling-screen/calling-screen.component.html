@@ -72,7 +72,7 @@
           ? 'calc(100% - 50px)'
           : 'calc(100% - 78px)'
     }">
-    <video style="left: 0px" [hidden]="!(peerInformationdata.showVideo && isSplit)" [ngStyle]="
+    <video style="left: 0px" [hidden]="!(peerInformationdata.showVideo && isSplit) " [ngStyle]="
         isSplit ? remoteVideoObjectSplitNormal : remoteVideoObjectNormal
       " id="localVideo" #localVideo [autoplay]="true" playsInline type="video/mp4" [muted]="true"
       class="unsplitVideoSrc localVideo"></video>

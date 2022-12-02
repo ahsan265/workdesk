@@ -1,12 +1,10 @@
 import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs';
 import { CallSocketService } from 'src/app/workdeskSockets/callSocket/call-socket.service';
-import { environment } from 'src/environments/environment';
 import { DevicesInformationService } from '../devicesInformation/devices-information.service';
-import { StreamingService } from '../stream/streaming.service';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'platform'
 })
 export class PeerConnectionService {
   peerConnection!: RTCPeerConnection;
@@ -138,7 +136,6 @@ export class PeerConnectionService {
         await this.peerConnection.setLocalDescription(
           answer
         );
-      }).then(() => {
         if (this.candidates.length != 0) {
           this.candidates.map((c) => this.peerConnection.addIceCandidate(c));
         }
@@ -161,13 +158,10 @@ export class PeerConnectionService {
   ): Promise<void> {
     await this.peerConnection
       .setRemoteDescription(new RTCSessionDescription(data))
-      .then(() => {
-        if (this.candidates.length != 0) {
-          this.candidates.map((c) => this.peerConnection.addIceCandidate(c));
-        }
-      })
-
       .catch(async (error: any) => { });
+      if (this.candidates.length != 0) {
+        this.candidates.map((c) => this.peerConnection.addIceCandidate(c));
+      }
   }
   // handle ice Condate Messages
   public async handleIceCandidateMessage(data: RTCIceCandidate): Promise<void> {

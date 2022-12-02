@@ -37,7 +37,7 @@
         ? minimizeMiniCameraScreenData
         : normalMiniCameraScreenData
     "
-    *ngIf="PeerMiniCameraDetails.showCamera"
+    [hidden]="!PeerMiniCameraDetails.showCamera"
     class="miniVideoCamera"
     #localVideo
     id="localVideo"
