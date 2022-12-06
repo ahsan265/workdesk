@@ -29,6 +29,7 @@ export class StreamingService {
   getLocalStream = new Subject<MediaStream>();
   peerUserId!: string;
   setCallType = new Subject<boolean>();
+  isAudioInputEnabled: boolean = true;
 
   constructor(
     private MessageService: MessageService,
@@ -70,6 +71,7 @@ export class StreamingService {
       user_id: userInformation.user_information.user_id,
       data: userInformation.user_information.data
     });
+    this.audioChecker();
     this.peerUserId = peerId;
     if (this.PeerConnectionService.peerConnection === undefined) {
       await this.PeerConnectionService.createPeerConnection();
@@ -130,6 +132,7 @@ export class StreamingService {
       this.localStream.getAudioTracks().forEach((track) => {
         track.enabled = false;
       });
+      this.isAudioInputEnabled = false;
     }
   }
   // unmute audio
@@ -138,6 +141,8 @@ export class StreamingService {
       this.localStream.getAudioTracks().forEach((track) => {
         track.enabled = true;
       });
+      this.isAudioInputEnabled = true;
+
     }
   }
   // stop video
@@ -145,7 +150,7 @@ export class StreamingService {
     this.AgentUserInformation.updateCameraStatus(false);
     this.AgentUserInformation.updateScreenShareStutus(false);
     const userInformation = this.AgentUserInformation.getCallInformation();
-
+    this.audioChecker();
     if (this.localStream?.getVideoTracks()) {
       this.CallSocketService.sendDataforCall({
         type: 'update_peer',
@@ -155,14 +160,6 @@ export class StreamingService {
       this.localStream.getVideoTracks().forEach((track: MediaStreamTrack) => {
         track.stop();
       });
-      // const videoStreams = this.PeerConnectionService.peerConnection
-      //   .getSenders()
-      //   .filter((data: any) => {
-      //     return data.track?.kind === 'video';
-      //   });
-      // videoStreams.forEach((track) => {
-      //   this.PeerConnectionService.peerConnection.removeTrack(track);
-      // });
     }
     if (this.screenShareStream) {
       this.CallSocketService.sendDataforCall({
@@ -185,6 +182,7 @@ export class StreamingService {
     }
     this.AgentUserInformation.updateCameraStatus(true);
     const userInformation = this.AgentUserInformation.getCallInformation();
+    this.audioChecker();
     this.CallSocketService.sendDataforCall({
       type: 'update_peer',
       user_id: userInformation.user_information.user_id,
@@ -260,6 +258,7 @@ export class StreamingService {
       }
       this.AgentUserInformation.updateScreenShareStutus(true);
       const userInformation = this.AgentUserInformation.getCallInformation();
+      this.audioChecker();
       this.CallSocketService.sendDataforCall({
         type: 'update_peer',
         user_id: userInformation.user_information.user_id,
@@ -366,6 +365,7 @@ export class StreamingService {
       if (this.screenShareStream) {
         const videoTrack = this.screenShareStream.getVideoTracks()[0];
         this.screenShareStream.addTrack(videoTrack);
+        this.audioChecker();
         const audio = this.PeerConnectionService.peerConnection
           .getSenders()
           .find((data: RTCRtpSender) => {
@@ -413,16 +413,13 @@ export class StreamingService {
   // detect devices
   public async detectDevicesMicrphoneDeviceOnchange(): Promise<void> {
     navigator.mediaDevices.addEventListener('devicechange', async () => {
-      await this.selectedDeviceForStream();
+      await this.selectedDeviceForStream(true);
     });
   }
 
   // selected Devices
-  public async selectedDeviceForStream() {
+  public async selectedDeviceForStream(replaceTrack: boolean) {
     const devices = await this.DevicesInformationService.getAllDevice();
-    this.localStream.getAudioTracks().forEach((track) => {
-      track.stop();
-    });
     const selectedMicrophone = {
       id: devices.audioInputDevices[0].deviceId,
       groupId: devices.audioInputDevices[0].groupId,
@@ -448,27 +445,30 @@ export class StreamingService {
     };
     this.AgentUserInformation.updateLastUsedMicrophone(selectedMicrophone);
     this.AgentUserInformation.updateLastUsedSpeaker(selectedSpeaker);
-    const idOfMicrophone = devices.audioInputDevices[0].deviceId;
-    let constraint = { audio: { deviceId: idOfMicrophone } };
-    navigator.mediaDevices.getUserMedia(constraint).then(async (stream) => {
-      this.localStream.addTrack(stream.getAudioTracks()[0]);
-      const audio = this.PeerConnectionService.peerConnection
-        .getSenders()
-        .find((audioTrack: any) => {
-          return audioTrack.track.kind === 'audio';
-        });
-      audio?.replaceTrack(stream.getAudioTracks()[0]);
-    });
+    if (replaceTrack === true) {
+      this.localStream.getAudioTracks().forEach((track) => {
+        track.stop();
+      });
+      const idOfMicrophone = devices.audioInputDevices[0].deviceId;
+      let constraint = { audio: { deviceId: idOfMicrophone } };
+      navigator.mediaDevices.getUserMedia(constraint).then(async (stream) => {
+        this.localStream.addTrack(stream.getAudioTracks()[0]);
+        const audio = this.PeerConnectionService.peerConnection
+          .getSenders()
+          .find((audioTrack: any) => {
+            return audioTrack.track.kind === 'audio';
+          });
+        audio?.replaceTrack(stream.getAudioTracks()[0]);
+      });
+    }
   }
 
   // onrefresh restore last used microphone
 
   public restoreLastUsedMicrophone() {
     const userInformation = this.AgentUserInformation.getCallInformation();
-    if (userInformation.last_used_microphone != undefined) {
-      // this.localStream.getAudioTracks().forEach((track) => {
-      //   track.stop();
-      // });
+    if (userInformation.last_used_microphone !== undefined) {
+
       const idOfMicrophone = userInformation.last_used_microphone.id;
       let constraint = { audio: { deviceId: idOfMicrophone } };
       navigator.mediaDevices.getUserMedia(constraint).then(async (stream) => {
@@ -482,6 +482,16 @@ export class StreamingService {
           audio?.replaceTrack(stream.getAudioTracks()[0]);
         }
       });
+    }
+  }
+
+  // checker for audio 
+  audioChecker() {
+    if (this.isAudioInputEnabled === true) {
+      this.unmunteAudio();
+    }
+    else {
+      this.muteAudio();
     }
   }
 }

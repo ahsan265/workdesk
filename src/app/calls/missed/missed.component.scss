@@ -15,10 +15,10 @@
   text-align: left !important;
 }
 
-::ng-deep .tableWrapper .tableWrap table {
-  border-bottom-left-radius: 0px;
-  border-bottom-right-radius: 0px;
-}
+// ::ng-deep .tableWrapper .tableWrap table {
+//   border-bottom-left-radius: 0px;
+//   border-bottom-right-radius: 0px;
+// }
 
 ::ng-deep .filterWrapper .leftFilter .dropdownWrapper,
 ::ng-deep .filterWrapper .rightFilter .dropdownWrapper {

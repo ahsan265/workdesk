@@ -7,6 +7,10 @@
 
 }
 
+::ng-deep .mainHeaderWrap .portalWrapper .preferenceHeading {
+  border: none;
+}
+
 ::ng-deep .sidebarWrap .logoWrap .logoImage {
   height: 50px;
 }

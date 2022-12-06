@@ -4,6 +4,7 @@
   height: 160px;
   background: #fafafd;
   border: 1px solid #e3e3eb;
+  border-top: none;
   margin: 0 -1px;
 }
 
@@ -13,9 +14,10 @@
   font-weight: 400;
   font-size: 12px;
   line-height: 159px;
-  display: block;
+  display: flex;
   align-items: center;
   text-align: center;
+  justify-content: center;
   letter-spacing: 0.02em;
   color: #445167;
 }

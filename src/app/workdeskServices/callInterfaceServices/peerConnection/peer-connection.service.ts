@@ -55,6 +55,12 @@ export class PeerConnectionService {
         username: 'username',
         credential: 'password'
       }
+      ,
+      {
+        urls: 'turns:turn.gigaaa.link:3478?transport=tcp',
+        username: 'username',
+        credential: 'password'
+      }
     ];
     let turnConfig = [];
     if (this.DevicesInformationService.getBrowserName() === 'firefox') {

@@ -119,9 +119,8 @@ export class CallingScreenComponent implements OnInit {
 
   setStream(stream: MediaStream) {
     const user = this.AgentUserInformation.getCallInformation();
-    if (user.is_minimize===false ) {
-      if(user.user_information.data.is_shared_screen === true)
-      {
+    if (user.is_minimize === false) {
+      if (user.user_information.data.is_shared_screen === true) {
         this.render.setStyle(
           this.localVideo.nativeElement,
           'object-fit',
@@ -135,13 +134,7 @@ export class CallingScreenComponent implements OnInit {
         );
       }
     }
-    else{
-      this.render.setStyle(
-        this.localVideo.nativeElement,
-        'display',
-        'none'
-      );
-    }
+ 
 
     this.localVideo.nativeElement.srcObject = null;
     this.localVideo.nativeElement.srcObject = stream;
@@ -155,7 +148,7 @@ export class CallingScreenComponent implements OnInit {
     this.remoteVideo.nativeElement.srcObject = null;
     this.remoteVideo.nativeElement.srcObject = stream;
     this.remoteStream = stream;
-    // this.playSelectedAudioOutput(user.last_used_speaker);
+    this.playSelectedAudioOutput(user.last_used_speaker);
 
     this.PeerVoiceIndicatior(stream, 10);
   }
@@ -177,7 +170,7 @@ export class CallingScreenComponent implements OnInit {
           'object-fit',
           'cover'
         );
-        
+
     });
   }
   UnslplitScreen($event: boolean) {
@@ -211,11 +204,13 @@ export class CallingScreenComponent implements OnInit {
     };
   }
   playSelectedAudioOutput(selectedDevice: inputOuputdevices) {
+    let test_output_audio1 = <
+      HTMLMediaElement & { setSinkId(deviceId: string): void }
+      >new Audio();
     if (
       this.remoteStream !== undefined &&
-      this.DevicesInformationService.getBrowserName() !== 'firefox'
+      (this.DevicesInformationService.getBrowserName() !== 'firefox' || this.DevicesInformationService.getBrowserName() !== 'safari')
     ) {
-      this.remoteVideo.nativeElement.volume = 0;
       if (this.remoteVideo.nativeElement.children.length > 0) {
         this.remoteVideo.nativeElement.volume = 0;
         this.remoteVideo.nativeElement.removeChild(
@@ -228,9 +223,7 @@ export class CallingScreenComponent implements OnInit {
       );
       let webaudio_ms1 = test_audio_context1.createMediaStreamDestination();
       webaudio_source1.connect(webaudio_ms1);
-      let test_output_audio1 = <
-        HTMLMediaElement & { setSinkId(deviceId: string): void }
-        >new Audio();
+
       test_output_audio1.srcObject = webaudio_ms1.stream;
       test_output_audio1.setSinkId(selectedDevice.id);
       this.remoteVideo.nativeElement.appendChild(test_output_audio1);
