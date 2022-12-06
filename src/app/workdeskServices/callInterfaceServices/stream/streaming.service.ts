@@ -258,7 +258,7 @@ export class StreamingService {
       }
       this.AgentUserInformation.updateScreenShareStutus(true);
       const userInformation = this.AgentUserInformation.getCallInformation();
-      this.audioChecker();
+     
       this.CallSocketService.sendDataforCall({
         type: 'update_peer',
         user_id: userInformation.user_information.user_id,
@@ -295,6 +295,7 @@ export class StreamingService {
       } else {
         audio.replaceTrack(localAudio);
       }
+      this.audioChecker();
       const offer: RTCSessionDescriptionInit =
         await this.PeerConnectionService.peerConnection.createOffer({
           offerToReceiveAudio: true,

@@ -182,7 +182,7 @@ export class CallConsoleComponent implements OnInit, OnDestroy, AfterViewInit {
         this.miniCameraOperation(true);
 
       } else {
-        if (this.cameraData.isSelected === false) {
+        if (this.isMinimize === true && this.cameraData.isSelected === false) {
           this.miniCameraOperation(false)
         }
       }
