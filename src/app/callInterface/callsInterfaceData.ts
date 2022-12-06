@@ -61,8 +61,8 @@ const peerUserInformationData: PeerInformationModel = {
   showShareScreen: false
 };
 const secondPeerUserInformationData: PeerInformationModel = {
-  firstName: 'Muhammad',
-  lastName: 'Ahsan',
+  firstName: 'Anon',
+  lastName: 'Anon',
   peerImage: '../../../assets/images/callInterface/default_user.svg',
   waitingIcon: '../../../assets/images/callInterface/waiting_large.svg',
   peerVoiceIndicatorValue: 0,
@@ -245,6 +245,21 @@ const miniCameraFullName = {
 const normalMiniCameraFullName = {
   display: 'unset'
 };
+
+// mini camera screen margins 
+const normalMiniCameraMargins = {
+  'z-index': 1,
+  'position': 'absolute',
+  'top': '98px',
+  'left': '20px'
+};
+
+const minmizeMiniCameraMargins = {
+  'z-index': 1,
+  'position': 'absolute',
+  'top': '60px',
+  'left': '10px'
+};
 export {
   CallsHeaderData,
   miceData,
@@ -277,5 +292,7 @@ export {
   normalMiniCameraFullName,
   videoMinimizeControlData,
   peerNormalImage,
-  peerNormalImageNormal
+  peerNormalImageNormal,
+  normalMiniCameraMargins,
+  minmizeMiniCameraMargins
 };

@@ -25,7 +25,7 @@ export class DevicesSwitcherComponent implements OnInit {
     private StreamingService: StreamingService,
     private AgentUserInformation: AgentUserInformation,
     private PeerConnectionService: PeerConnectionService
-  ) {}
+  ) { }
 
   ngOnInit() {
     const userInformation = this.AgentUserInformation.getCallInformation();
@@ -70,6 +70,7 @@ export class DevicesSwitcherComponent implements OnInit {
             return audioTrack.track.kind === 'audio';
           });
         this.StreamingService.localStream.addTrack(stream.getAudioTracks()[0]);
+        this.StreamingService.audioChecker();
         audio?.replaceTrack(stream.getAudioTracks()[0]);
         const audioContext = new AudioContext();
         await audioContext.audioWorklet.addModule('assets/vumeter.js');

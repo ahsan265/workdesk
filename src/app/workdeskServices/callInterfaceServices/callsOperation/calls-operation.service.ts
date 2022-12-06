@@ -50,6 +50,7 @@ export class CallsOperationService {
             break;
           case 'peer_id':
             if (callsData.is_refreshed !== true) {
+              await this.StreamingService.selectedDeviceForStream(false);
               this.userId = msg.id;
               this.AgentUserInformation.setRefreshStatus(false);
               this.AgentUserInformation.saveUserInformation(

@@ -5,7 +5,7 @@ import { groupDeicesInformation } from 'src/app/models/callInterfaceModel';
   providedIn: 'platform'
 })
 export class DevicesInformationService {
-  constructor() {}
+  constructor() { }
 
   public async getAllDevice(): Promise<groupDeicesInformation> {
     const audioInput: InputDeviceInfo[] = [];
@@ -46,7 +46,7 @@ export class DevicesInformationService {
       case browserName.indexOf('firefox') > -1:
         return 'firefox';
       case browserName.indexOf('safari') > -1:
-        return 'firefox';
+        return 'safari';
       default:
         return 'other';
     }
