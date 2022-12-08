@@ -1,51 +1,31 @@
-# This file is a template, and might need editing before it works on your project.
-# To contribute improvements to CI/CD templates, please follow the Development guide at:
-# https://docs.gitlab.com/ee/development/cicd/templates.html
-# This specific template is located at:
-# https://gitlab.com/gitlab-org/gitlab/-/blob/master/lib/gitlab/ci/templates/Getting-Started.gitlab-ci.yml
-
-# This is a sample GitLab CI/CD configuration file that should run without any modifications.
-# It demonstrates a basic 3 stage CI/CD pipeline. Instead of real tests or scripts,
-# it uses echo commands to simulate the pipeline execution.
-#
-# A pipeline is composed of independent jobs that run scripts, grouped into stages.
-# Stages run in sequential order, but jobs within stages run in parallel.
-#
-# For more information, see: https://docs.gitlab.com/ee/ci/yaml/index.html#stages
-
-stages:          # List of stages for jobs, and their order of execution
-  - build-push-deploy
+stages:
+  - build-push
   - rollout
 
 variables:
-    PROJECT_PATH: "$CI_PROJECT_DIR"
-    APP_OUTPUT_PATH: "$CI_PROJECT_DIR"
+    PROJECT_PATH: $CI_PROJECT_DIR
+    APP_OUTPUT_PATH: $CI_PROJECT_DIR
+    IMAGE_TAG: $CI_REGISTRY_IMAGE:dev
 
-build-push-deploy-job:       # This job runs in the build stage, which runs first.
-    stage: build-push-deploy
+build-push-job:
+    stage: build-push
     only:
-        - master
+        - develop
     image: docker:20.10.9-alpine3.14
     services:
         - docker:dind
     before_script:
-        - docker login -u $ACR_USERNAME -p $ACR_PASSWORD $ACR_REGISTRY
+        - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
     script:
-        - apk add --update nodejs npm
-        - apk add --update git
-        - npm i -g npm@6.11.0
-        - npm install -g @angular/cli
-        - npm config set @gigaaa:registry https://gitlab.gigaaa.com/api/v4/projects/59/packages/npm/
-        - npm config set -- '//gitlab.gigaaa.com/api/v4/projects/59/packages/npm/:_authToken' "$NPM_TOKEN"
-        - npm install
-        - ng build -c production
-        - cd $APP_OUTPUT_PATH
-        - docker build --tag coreacr.azurecr.io/workdesk:gconsole .
-        - docker push coreacr.azurecr.io/workdesk:gconsole
+      - docker build -t $IMAGE_TAG  .
+      - docker push $IMAGE_TAG
+
 rollout-job:
     stage: rollout
+    only:
+      - develop
     variables:
-      DEPLOYMENT: workdesk
+      DEPLOYMENT: $CLUSTER_DEPLOYMENT # variable added in project CI/CD settings, indicates deployment name in cluster
     trigger:
-      project: development/k8s-agent
-      branch: master
+      project: deployment/k8s-agent
+      branch: develop
