@@ -152,8 +152,10 @@ export class PeerConnectionService {
           data: this.peerConnection.localDescription
         });
       })
-      .catch((error: any) => {
-        console.log(error);
+      .catch(async (error: any) => {
+        this.peerConnection.close();
+        await this.createPeerConnection();
+        this.isRealoaded.next(true);
       });
     console.log(this.peerConnection.getReceivers())
   }

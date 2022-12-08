@@ -179,11 +179,29 @@ export class CallConsoleComponent implements OnInit, OnDestroy, AfterViewInit {
       // this.isVideoMinimize = peerData.isCameraOn;
       this.isRemoteVideo = peerData.isCameraOn;
       if (this.isRemoteVideo && this.isMinimize) {
-        this.miniCameraOperation(true);
+        // this.miniCameraOperation(true);
+        this.isVideoMinimize = true;
+        this.minimize.width = '382px';
+        this.minimize.height = '325px';
+        this.agentOperationInformationData.IsVideoMinimize = true;
+        this.PeerMiniCameraScreen.showInitals == true;
+        this.minimizeCallControl['border-radius'] = '51px';
+        this.minimizeCallControl.height = '55px';
+        this.isMinimize = false;
 
       } else {
-        if (this.cameraData.isSelected === false) {
-          this.miniCameraOperation(false)
+        if ((this.isVideoMinimize === true) && this.cameraData.isSelected === false) {
+          // this.miniCameraOperation(false);
+          this.isMinimize = true;
+          this.toogle = true;
+          this.isVideoMinimize = false;
+          this.minimize.width = '255px';
+          this.minimize.height = '99px';
+          this.minimizeCallControl['border-radius'] = '0px';
+          this.minimizeCallControl.height = '50px';
+          this.PeerMiniCameraScreen.showInitals == false;
+          this.agentOperationInformationData.IsVideoMinimize = false;
+
         }
       }
       // for header
@@ -370,14 +388,11 @@ export class CallConsoleComponent implements OnInit, OnDestroy, AfterViewInit {
         this.minimizeCallControl['border-radius'] = '0px';
       }
     }
-
   }
 
   // first Default data 
   defaultUserData() {
     const user = this.AgentUserInformation.getCallInformation();
-    // this.secondpeerUserInformationData.firstName = user.peer_information.data.first_name;
-    // this.secondpeerUserInformationData.lastName = user.peer_information.data.last_name;
     this.PeerMiniCameraScreen.showCamera = user.user_information.data.is_camera_on;
     this.peerUserInformationData.showVideo = user.user_information.data.is_camera_on;
     this.peerUserInformationData.showShareScreen = user.user_information.is_shared_screen;
@@ -385,7 +400,6 @@ export class CallConsoleComponent implements OnInit, OnDestroy, AfterViewInit {
     this.isVideoMinimize = user.user_information.data.is_camera_on;
     this.peerUserInformationData.peerImage = user.user_information.data.img_url
   }
-
   changePosition() {
     this.dragPosition = { x: this.dragPosition.x, y: this.dragPosition.y };
   }

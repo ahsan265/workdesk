@@ -82,14 +82,16 @@ export class AgentSocketService {
     this.CommonService.getIsAdminOrAgent();
     this.AgentListSubject.next(AgentList);
     this.getAgentOnlineStatus(AgentList);
- 
+
   }
   private getAgentOnlineStatus(AgentList: AgentList[]) {
     const user = JSON.parse(localStorage.getItem('gigaaa-user') || '{}');
     const loggedInAgent = AgentList.find(
       (agent: AgentList) => agent.email === user.email
     );
-    this.isInCall=loggedInAgent?.is_in_call||false;
+    user['agent_info'] = loggedInAgent;
+    localStorage.setItem('gigaaa-user', JSON.stringify(user));
+    this.isInCall = loggedInAgent?.is_in_call || false;
 
     loggedInAgent?.is_organization_admin === true
       ? (this.isOganizationAdminStatus = true)

@@ -5,8 +5,9 @@ import { PeerConnectionService } from '../peerConnection/peer-connection.service
 import { StreamingService } from '../stream/streaming.service';
 import { AgentUserInformation } from 'src/app/workdeskServices/callInterfaceServices/agentUserInformation/agent-user-information.service';
 import { AuthService } from 'src/app/services/auth.service';
-import { PeersCallsInformationModel } from 'src/app/models/callInterfaceModel';
+import { devcieInformationModel, PeersCallsInformationModel } from 'src/app/models/callInterfaceModel';
 import { Subject } from 'rxjs';
+import { DevicesInformationService } from '../devicesInformation/devices-information.service';
 
 @Injectable({
   providedIn: 'platform'
@@ -23,6 +24,7 @@ export class CallsOperationService {
     private StreamingService: StreamingService,
     private MessageService: MessageService,
     private AgentUserInformation: AgentUserInformation,
+    private DevicesInformationService: DevicesInformationService,
     private AuthService: AuthService
   ) { }
 
@@ -50,7 +52,9 @@ export class CallsOperationService {
             break;
           case 'peer_id':
             if (callsData.is_refreshed !== true) {
-              await this.StreamingService.selectedDeviceForStream(false);
+              if (this.DevicesInformationService.getBrowserName() !== 'firefox' || this.DevicesInformationService.getBrowserName() !== 'safari') {
+                await this.StreamingService.selectedDeviceForStream(false);
+              }
               this.userId = msg.id;
               this.AgentUserInformation.setRefreshStatus(false);
               this.AgentUserInformation.saveUserInformation(

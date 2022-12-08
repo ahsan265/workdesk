@@ -26,12 +26,12 @@ export class AgentUserInformation {
       lastNameInitial: lastNameInitial
     };
   }
-// set call Type 
-public setCallType(status: boolean) {
-  const data = this.getCallInformation();
-  data['call_type'] = status;
-  localStorage.setItem('call-information', JSON.stringify(data));
-}
+  // set call Type 
+  public setCallType(status: boolean) {
+    const data = this.getCallInformation();
+    data['call_type'] = status;
+    localStorage.setItem('call-information', JSON.stringify(data));
+  }
 
   //set Refresh Status
   public setIsMinimize(status: boolean) {
@@ -57,7 +57,7 @@ public setCallType(status: boolean) {
     isCameraOn: boolean,
     isMicrophoneOn: boolean,
     isSharedScreenOn: boolean,
-    user: User
+    user: any
   ) {
     const data = this.getCallInformation();
     data['user_information'] = {
@@ -68,7 +68,7 @@ public setCallType(status: boolean) {
         is_shared_screen: isSharedScreenOn,
         first_name: user.profile.first_name,
         last_name: user.profile.last_name,
-        img_url: user.avatar_url,
+        img_url: user.agent_info.images['96'],
         is_mobile: this.DevicesInformationService.getDeviceType()
       }
     };
