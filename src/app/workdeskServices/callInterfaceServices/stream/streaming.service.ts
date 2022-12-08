@@ -258,7 +258,7 @@ export class StreamingService {
       }
       this.AgentUserInformation.updateScreenShareStutus(true);
       const userInformation = this.AgentUserInformation.getCallInformation();
-     
+
       this.CallSocketService.sendDataforCall({
         type: 'update_peer',
         user_id: userInformation.user_information.user_id,
@@ -432,20 +432,7 @@ export class StreamingService {
       selectedIcon: '../../../assets/images/callInterface/green_check_icon.svg',
       voiceLevels: 0
     };
-
-    const selectedSpeaker = {
-      id: devices.audioOutputDevice[0].deviceId,
-      groupId: devices.audioOutputDevice[0].groupId,
-      name: devices.audioOutputDevice[0].label,
-      deviceType: devices.audioOutputDevice[0].kind,
-      isSelected: true,
-      selectedbackgroundColor: '#243247',
-      hoverColor: '',
-      selectedIcon: '../../../assets/images/callInterface/green_check_icon.svg',
-      voiceLevels: 0
-    };
     this.AgentUserInformation.updateLastUsedMicrophone(selectedMicrophone);
-    this.AgentUserInformation.updateLastUsedSpeaker(selectedSpeaker);
     if (replaceTrack === true) {
       this.localStream.getAudioTracks().forEach((track) => {
         track.stop();
@@ -462,10 +449,23 @@ export class StreamingService {
         audio?.replaceTrack(stream.getAudioTracks()[0]);
       });
     }
+    if (this.DevicesInformationService.getBrowserName() !== 'firefox' || this.DevicesInformationService.getBrowserName() !== 'safari') {
+      const selectedSpeaker = {
+        id: devices.audioOutputDevice[0].deviceId,
+        groupId: devices.audioOutputDevice[0].groupId,
+        name: devices.audioOutputDevice[0].label,
+        deviceType: devices.audioOutputDevice[0].kind,
+        isSelected: true,
+        selectedbackgroundColor: '#243247',
+        hoverColor: '',
+        selectedIcon: '../../../assets/images/callInterface/green_check_icon.svg',
+        voiceLevels: 0
+      };
+      this.AgentUserInformation.updateLastUsedSpeaker(selectedSpeaker);
+    }
   }
 
   // onrefresh restore last used microphone
-
   public restoreLastUsedMicrophone() {
     const userInformation = this.AgentUserInformation.getCallInformation();
     if (userInformation.last_used_microphone !== undefined) {

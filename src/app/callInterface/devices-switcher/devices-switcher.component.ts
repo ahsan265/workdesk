@@ -5,6 +5,7 @@ import {
   inputOuputdevices
 } from 'src/app/models/callInterfaceModel';
 import { AgentUserInformation } from 'src/app/workdeskServices/callInterfaceServices/agentUserInformation/agent-user-information.service';
+import { DevicesInformationService } from 'src/app/workdeskServices/callInterfaceServices/devicesInformation/devices-information.service';
 import { PeerConnectionService } from 'src/app/workdeskServices/callInterfaceServices/peerConnection/peer-connection.service';
 import { StreamingService } from 'src/app/workdeskServices/callInterfaceServices/stream/streaming.service';
 
@@ -24,7 +25,8 @@ export class DevicesSwitcherComponent implements OnInit {
   constructor(
     private StreamingService: StreamingService,
     private AgentUserInformation: AgentUserInformation,
-    private PeerConnectionService: PeerConnectionService
+    private PeerConnectionService: PeerConnectionService,
+    public DevicesInformationService: DevicesInformationService
   ) { }
 
   ngOnInit() {
