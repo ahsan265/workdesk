@@ -148,7 +148,7 @@ export class CallControlsComponent implements OnInit {
           }
         });
     // for last used speaker
-    if (this.DevicesInformationService.getBrowserName() != 'firefox') {
+    if (this.DevicesInformationService.getBrowserName() !== 'firefox') {
       userInformation.last_used_speaker === undefined
         ? (this.outputDeviceData.devices[0].isSelected = true)
         : this.outputDeviceData.devices.filter((data) => {

@@ -71,7 +71,6 @@ export class MissedComponent implements OnInit {
     this.languauges = await this.CommonService.getProjectLanguagesForUser();
     this.CallsService.sendDataToMissedTabsSubject.subscribe(
       (data: MissedCallModel[]) => {
-        console.log(this.languageIds)
         this.missedCallData = data.map((missedCallData) => ({
           agent_name: missedCallData.name,
           call_uuid: missedCallData.call_uuid,

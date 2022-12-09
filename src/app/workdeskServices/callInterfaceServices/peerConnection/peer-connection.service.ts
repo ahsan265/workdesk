@@ -157,7 +157,6 @@ export class PeerConnectionService {
         await this.createPeerConnection();
         this.isRealoaded.next(true);
       });
-    console.log(this.peerConnection.getReceivers())
   }
 
   // handle answer message
@@ -173,7 +172,6 @@ export class PeerConnectionService {
   }
   // handle ice Condate Messages
   public async handleIceCandidateMessage(data: RTCIceCandidate): Promise<void> {
-    console.log(data)
     if (data.candidate !== "") {
       await this.peerConnection
         .addIceCandidate(data)

@@ -111,12 +111,8 @@ export class AgentSettingsComponent implements OnInit {
   }
 
   onGetInputValue(event: any) {
-    console.log(event);
   }
-  // getAgent() {
-  //   this.agents = agents;
-  // }
-  // for admin rights
+// to get is Admin or not 
   onGetSwitchButtonValue(event: any) {
     this.isAdmin = !event;
   }
