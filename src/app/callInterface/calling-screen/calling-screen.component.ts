@@ -90,7 +90,6 @@ export class CallingScreenComponent implements OnInit {
     private CallsOperationService: CallsOperationService,
     private DevicesInformationService: DevicesInformationService
   ) {
-    console.log(this.agentOperationInformation)
     this.Devices.getDeviceType() === true
       ? (this.desktop = {
         height: 'calc(50% - 24px)',

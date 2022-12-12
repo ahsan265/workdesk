@@ -2,7 +2,6 @@ import 'angular-server-side-configuration/process';
 
 export const environment = {
   production: true,
-
   apiUrl: process.env.API_URL || 'https://api.gigaaa.link/v1/api/v1',
   backendApi: process.env.BACKEND_API || 'https://api.gigaaa.link/v2',
   analyticsApi:

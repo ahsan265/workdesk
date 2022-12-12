@@ -9,7 +9,7 @@
         selectInputOutputDeviceInformation($event)
       ">
     </app-devices-switcher>
-    <div [style.background]="
+    <div [hidden]="this.isMinimize" [style.background]="
         openDeviceSwitcher === true ? '#1C54DB' : 'rgba(255, 255, 255, 0.1)'
       " (click)="openDeviceSwitcherPopup(!openDeviceSwitcher)" class="deviceSwitcher">
       <img class="deviceSwitcherIcon" [style.transform]="

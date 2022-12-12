@@ -89,7 +89,6 @@ export class DevicesSwitcherComponent implements OnInit {
         };
       });
     } catch (err) {
-      //  console.log(err);
     }
   }
 }
