@@ -17,7 +17,8 @@ export class PeerConnectionService {
   constructor(
     private CallSocketService: CallSocketService,
     private DevicesInformationService: DevicesInformationService
-  ) { }
+  ) {
+  }
 
   public async createPeerConnection(): Promise<void> {
     let forTurnsSupported = [
@@ -166,9 +167,9 @@ export class PeerConnectionService {
     await this.peerConnection
       .setRemoteDescription(new RTCSessionDescription(data))
       .catch(async (error: any) => { });
-      if (this.candidates.length != 0) {
-        this.candidates.map((c) => this.peerConnection.addIceCandidate(c));
-      }
+    if (this.candidates.length != 0) {
+      this.candidates.map((c) => this.peerConnection.addIceCandidate(c));
+    }
   }
   // handle ice Condate Messages
   public async handleIceCandidateMessage(data: RTCIceCandidate): Promise<void> {
@@ -176,8 +177,45 @@ export class PeerConnectionService {
       await this.peerConnection
         .addIceCandidate(data)
         .catch((error: any) => { });
-        (this.DevicesInformationService.getBrowserName() === 'firefox') ? this.candidates.push(data) : this.candidates = [];
+      (this.DevicesInformationService.getBrowserName() === 'firefox') ? this.candidates.push(data) : this.candidates = [];
+    }
+
+  }
+
+  // to get audio codec
+
+  getAudioCodec() {
+    if(this.DevicesInformationService.getBrowserName()!=='firefox')
+    {
+      const transreivers = this.peerConnection.getTransceivers()[0];
+      const codecs = RTCRtpSender.getCapabilities('audio')?.codecs;
+      const requiredCodec: any = [];
+      codecs?.forEach(data => {
+        if (data.mimeType === 'audio/opus') {
+          requiredCodec.push(data);
+        }
+      })
+      if (transreivers.setCodecPreferences !== undefined) {
+        transreivers.setCodecPreferences(requiredCodec);
+      }
     }
    
+  }
+  // update codec for video 
+  getVideoCodec() {
+    if(this.DevicesInformationService.getBrowserName()!=='firefox')
+    {
+    const transreivers = this.peerConnection.getTransceivers()[1];
+    const codecs = RTCRtpSender.getCapabilities('video')?.codecs;
+    const requiredCodec: any = [];
+    codecs?.forEach(data => {
+      if (data.mimeType === 'video/VP8') {
+        requiredCodec.push(data);
+      }
+    })
+    if (transreivers.setCodecPreferences !== undefined) {
+      transreivers.setCodecPreferences(requiredCodec);
+    }
+  }
   }
 }
