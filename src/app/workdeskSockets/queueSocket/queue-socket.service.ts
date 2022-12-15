@@ -87,7 +87,7 @@ export class QueueSocketService {
   }
   // close the agent socket Connnection
   public closeQueueSocketConnection() {
-    if (this.ws?.OPEN == this.isSocketOpen) {
+    if (this.ws?.OPEN === this.isSocketOpen) {
       this.ws?.close();
     }
   }

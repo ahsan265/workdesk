@@ -83,6 +83,7 @@ import { overlayToken } from './callInterface/overLayService/overlayToken';
 import { SwitchOrganizationComponent } from './modals/switch-organization/switch-organization.component';
 import { SwitchOgranizationDoneComponent } from './modals/switch-ogranization-done/switch-ogranization-done.component';
 import { ReDialCallService } from './workdeskServices/reDialCallService/re-dial-call.service';
+import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
 
 @NgModule({
   declarations: [
@@ -132,7 +133,8 @@ import { ReDialCallService } from './workdeskServices/reDialCallService/re-dial-
     NoTableDataComponent,
     LoaderComponent,
     SwitchOrganizationComponent,
-    SwitchOgranizationDoneComponent
+    SwitchOgranizationDoneComponent,
+    PageNotFoundComponent
   ],
   imports: [
     BrowserAnimationsModule,
