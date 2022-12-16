@@ -15,6 +15,7 @@ import { OngoingComponent } from './calls/ongoing/ongoing.component';
 import { CallConsoleComponent } from './callInterface/call-console/call-console.component';
 import { CustomerSupportComponent } from './customer-support/customer-support.component';
 import { LoaderComponent } from './components/loader/loader.component';
+import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
 
 const routes: Routes = [
   { path: '', component: LandingPageComponent },
@@ -54,10 +55,10 @@ const routes: Routes = [
   { path: 'customersupport', component: CustomerSupportComponent, canActivate: [AuthService] },
   {
     path: 'loading', component: LoaderComponent, canActivate: [AuthService]
-  }
+  },
 
 
-  // { path: '**', redirectTo: '' }
+  { path: '**', component: PageNotFoundComponent }
 ];
 
 @NgModule({
