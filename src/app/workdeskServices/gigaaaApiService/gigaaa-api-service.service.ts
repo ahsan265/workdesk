@@ -236,7 +236,7 @@ export class GigaaaApiService {
   public async updateLastUsediPorject(
     accesstoken: string,
     uuid: string,
-    porjectBody: any
+    projectBody: any
   ) {
     const httpOptions: any = {
       headers: new HttpHeaders({
@@ -248,7 +248,7 @@ export class GigaaaApiService {
     return await this.http
       .put(
         this.workdeskurl_cs + '/private/projects?organization=' + uuid,
-        porjectBody,
+        projectBody,
         httpOptions
       )
       .toPromise()
@@ -1182,8 +1182,39 @@ export class GigaaaApiService {
         this.workdeskurl_cs +
         '/private/organization/' +
         organizationId +
-        '/last-used', 
+        '/last-used',
         {},
+        httpOptions
+      )
+      .toPromise()
+      .catch((err) => {
+        throw err;
+      });
+  }
+
+  // remove agent image endpoint
+  public async deleteAgentImage(
+    accesstoken: string,
+    orgid: string,
+    intid: string,
+    agentUuid: string
+  ): Promise<any> {
+    const httpOptions: any = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        Accept: 'application/json',
+        Authorization: `Bearer ${accesstoken}`
+      })
+    };
+    return this.http
+      .delete(
+        this.workdeskurl_cs +
+        '/private/agents/image?organization=' +
+        orgid +
+        '&project=' +
+        intid +
+        '&agent=' +
+        agentUuid,
         httpOptions
       )
       .toPromise()

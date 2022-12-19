@@ -2,7 +2,7 @@
   <div class="imageWrapper section info">
     <div class="image">
       <img [src]="agentImage" alt="" class="agentImage" />
-      <div class="removeImage">
+      <div class="removeImage" (click)="removeImage()" *ngIf="showImageRemove">
         x
       </div>
       <div class="status-circle" (click)="openImageUploadButton()">

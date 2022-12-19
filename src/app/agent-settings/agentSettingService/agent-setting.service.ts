@@ -151,4 +151,16 @@ export class AgentSettingService {
       this.MessageService.setErrorMessage(error.error.error);
     }
   }
+
+  // remove agent image
+  async removeAgentImage(uuid: string) {
+    try {
+      return await this.GigaaaApiService.deleteAgentImage(this.CommonService.getEndpointsParamLocal().token, this.CommonService.getEndpointsParamLocal().organization,
+        this.CommonService.getEndpointsParamLocal().project, uuid);
+    }
+    catch (error: any) {
+      this.MessageService.setErrorMessage(error.error.error);
+    }
+
+  }
 }
