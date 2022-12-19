@@ -15,6 +15,7 @@ export interface AgentList {
   is_online: boolean;
   is_organization_admin: boolean;
   is_organization_owner: boolean;
+  is_image_set:boolean;
   joined: boolean;
   languages: AgentLanguages[];
   last_name: string;

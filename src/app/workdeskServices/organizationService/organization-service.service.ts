@@ -5,7 +5,7 @@ import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { BehaviorSubject } from 'rxjs';
 import { sidebarData } from 'src/app/data';
-import { Organization, Project } from 'src/app/models/organization';
+import { Organization, Project, sidebarDropdownData } from 'src/app/models/organization';
 import { ConnectionSecurityService } from 'src/app/workdeskSockets/socketConnectionSecurity/connection-security.service';
 import { AgentInviteService } from '../agentInviteService/agent-invite.service';
 import { GigaaaApiService } from '../gigaaaApiService/gigaaa-api-service.service';
@@ -37,7 +37,6 @@ export class getOrganizationService {
     this.gigaaaService
       .getOrganization(token)
       .then((data: any) => {
-
         if (data.length !== 0) {
           const organization: Organization[] = data;
           this.organizationData = organization;
@@ -45,35 +44,31 @@ export class getOrganizationService {
             if (data.last_used === true) {
               const lastUsedOgranization = data.uuid;
               localStorage.setItem('gigaaa-organz', JSON.stringify(data));
-              this.gigaaaService
-                .getAllProject(token, data.uuid)
-                .then((data: any) => {
-                  const project: Project[] = data;
-                  project.forEach(async (data) => {
-                    if (data.last_used === true) {
-                      localStorage.setItem(
-                        'gigaaa-project',
-                        JSON.stringify(data)
-                      );
-                      this.ConnectionSecurityService.createConnectionEndpoint(
-                        token,
-                        lastUsedOgranization,
-                        data.uuid
-                      );
-
-                    }
-                  });
-                  this.getProjectList(project);
+              const project: sidebarDropdownData[] = data.projects.map((elemnt) => ({
+                name: elemnt.title,
+                uuid: elemnt.uuid,
+                last_used: elemnt.last_used
+              }))
+              this.getProjectList(project);
+              project.forEach(project => {
+                if (project.last_used === true) {
+                  localStorage.setItem(
+                    'gigaaa-project',
+                    JSON.stringify(project)
+                  );
+                  this.ConnectionSecurityService.createConnectionEndpoint(
+                    token,
+                    lastUsedOgranization,
+                    project.uuid
+                  );
                   this.SharedServices.loadCommonEps(1);
-
-                });
+                }
+              })
             }
-
           });
         } else {
           this.router.navigate(['logout']);
         }
-
       })
       .catch((err: any) => {
         this.MessageService.setErrorMessage(err.error.error);
@@ -91,14 +86,14 @@ export class getOrganizationService {
     return JSON.parse(listOfProjects);
   }
   // get projects list
-  public getProjectList(project: Project[]) {
+  public getProjectList(project: sidebarDropdownData[]) {
     let lastUsedProject: string;
     project.forEach((data: any) => {
       if (data.last_used === true) {
         lastUsedProject = data.name;
         this.sidebarData.forEach((element: any) => {
           if (element.dropdown === true) {
-            element.dropdownItems = project;
+            element.dropdownItems = project
             element.name = lastUsedProject;
           }
         });
