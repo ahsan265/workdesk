@@ -53,6 +53,10 @@ export class MissedComponent implements OnInit {
       this.showCalendar = false;
     }
   }
+
+  pagination = {
+
+  }
   constructor(
     private CallsService: CallsService,
     private CommonService: CommonService,
