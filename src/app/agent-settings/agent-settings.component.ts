@@ -100,6 +100,7 @@ export class AgentSettingsComponent implements OnInit {
     this.SharedServices.setAgentImage.subscribe((data: string) => {
       let timestamp = new Date().getTime();
       this.agentImage = data + '?_=' + timestamp;
+      this.showImageRemove=true;
     });
 
     // closing passwordpopup

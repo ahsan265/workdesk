@@ -10,6 +10,10 @@
   margin-bottom: 130px;
 }
 
+::ng-deep gigaaa-button .button p {
+  font-size: 14px !important;
+}
+
 .toggleForAllLanguage {
   width: 100%;
 }
@@ -246,15 +250,16 @@
   border-radius: 50px;
   position: absolute;
   top: 0;
-  right: -9px;
+  right: 0px;
   transition: 0.4s;
-  font-family: 'Material Icons';
+  font-family:'Roboto',sans-serif;
   font-style: normal;
   font-weight: 400;
   font-size: 9.6px;
-  line-height: 11px;
+  line-height: 14px;
   justify-content: center;
   display: none;
+  border: 1px solid #ffffff;
   align-items: center;
   letter-spacing: 0.02em;
   color: #FAFAFD;

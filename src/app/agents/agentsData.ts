@@ -19,7 +19,7 @@ const languauges: MultiSelect = {
 };
 
 const oneSelect: OneSelect[] = [
-  { id: 1, name: 'Show all', selected: true },
+  { id: 1, name: 'Activity', selected: true },
   { id: 2, name: 'Active', selected: false },
   { id: 3, name: 'Inactive', selected: false },
   { id: 4, name: 'Invited', selected: false }
@@ -27,7 +27,7 @@ const oneSelect: OneSelect[] = [
 
 const selectedAgentType: any[] = [
   {
-    name: 'Show all',
+    name: 'Activity',
     options: {
       active: 1,
       inactive: 1,

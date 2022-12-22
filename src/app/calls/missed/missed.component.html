@@ -34,7 +34,8 @@
         </div>
       </div>
       <div class="multiSelectWrapper search">
-        <app-search-input-field [searchInputData]="searchInputData" (searchOutputData)="getSearchValue($event)"></app-search-input-field>
+        <app-search-input-field [searchInputData]="searchInputData"
+          (searchOutputData)="getSearchValue($event)"></app-search-input-field>
       </div>
     </div>
   </div>
@@ -42,5 +43,6 @@
 <div class="tableWrapper">
   <gigaaa-workdesk-table [tableData]="missedCallData" [tableSettings]="tableSettings">
   </gigaaa-workdesk-table>
+  <!-- <app-pagination [pagination]="{pages: 44, num: 4, page: 1, entries: 44}"></app-pagination> -->
   <app-no-table-data *ngIf="missedCallData.length === 0"></app-no-table-data>
 </div>

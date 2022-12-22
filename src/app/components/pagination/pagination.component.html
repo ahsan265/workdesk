@@ -1,0 +1,25 @@
+<div class="paginationWrapper" *ngIf="showPagination">
+    <div class="leftPagination">
+        <span class="paginationOptions" *ngIf="this.pagination?.page === 0">
+            Page 1 of {{this.pagination?.pages}} ({{this.pagination?.entries}} items)
+        </span>
+        <span class="paginationOptions" *ngIf="this.pagination?.page > 0">
+            Page {{this.pagination?.page}} of {{this.pagination?.pages}} ({{this.pagination?.entries}} items)
+        </span>
+
+        <span class="paginationOptions show">
+            Show:
+        </span>
+        <select (change)="onTableSizeChange($event)" class="custom-select" [value]='this.pagination?.num'>
+            <option *ngFor="let size of tableSizes" [value]="size.value" [selected]="size.selected">
+                {{ size.value }}
+            </option>
+        </select>
+    </div>
+    <div class="rightPagination">
+        <gigaaa-pagination-controls previousLabel="<" nextLabel=">" [responsive]="true"
+            (pageChange)="onTableDataChange($event)">
+        </gigaaa-pagination-controls>
+
+    </div>
+</div>
