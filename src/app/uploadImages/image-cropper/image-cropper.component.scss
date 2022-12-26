@@ -96,6 +96,7 @@ button {
   margin: 0 auto;
   margin-top: 30px;
   position: relative;
+  object-fit: cover;
 }
 
 .zoomout {
@@ -129,10 +130,9 @@ button {
 }
 
 .resize {
-  height: 200px;
-  width: 200px;
   background: #f0ffff3d;
   border-radius: 50%;
+  object-fit: cover;
 }
 
 .croppingCircele {
@@ -143,6 +143,8 @@ button {
   position: relative;
   min-width: 50px;
   min-height: 50px;
+  background-repeat: no-repeat;
+
 }
 
 mat-slider {
@@ -331,9 +333,7 @@ mat-slider {
   background-color: #1c54db;
 }
 
-::ng-deep
-  .mat-slider-min-value:not(.mat-slider-thumb-label-showing)
-  .mat-slider-thumb {
+::ng-deep .mat-slider-min-value:not(.mat-slider-thumb-label-showing) .mat-slider-thumb {
   background-color: #d0d0de;
 }
 

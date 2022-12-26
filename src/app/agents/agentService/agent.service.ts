@@ -264,4 +264,14 @@ export class AgentService {
     }
   }
 
+
+  countOnlineAgentsAvailable(agent: AgentList[]) {
+    const allAgents = agent.filter(data => {
+      return this.setAgentInvitedProperty(data.invited, data.inactive, data.active) === true;
+    })
+    const onlineAgents = allAgents.filter(data => {
+      return data.is_online === true && data.is_available === true;
+    })
+    return onlineAgents.length + '/' + allAgents.length ;
+  }
 }

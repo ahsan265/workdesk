@@ -64,11 +64,13 @@ export class MissedComponent implements OnInit {
     private QueueSocketService: QueueSocketService
   ) {
     this.callsIndicatorData = {
+      hightlightText: '',
       text: this.missedCallData.length + ' missed requests',
       icon: '../assets/images/components/calls_count_missed.svg',
       backgroundColor: '#F9EBEF',
       borderColor: '1px solid #F4CAD6',
-      textColor: '#FF155A'
+      textColor: '#FF155A',
+      isAgent: false
     };
   }
   async ngOnInit(): Promise<void> {

@@ -1,12 +1,19 @@
-<div
-  class="callsIndicatior"
-  [ngStyle]="{
+<div *ngIf="!callsIndicatorData.isAgent" class="callsIndicatior" [ngStyle]="{
     background: callsIndicatorData.backgroundColor,
     border: callsIndicatorData.borderColor
-  }"
->
+  }">
   <img [src]="callsIndicatorData.icon" alt="" class="icon" />
   <p [ngStyle]="{ color: callsIndicatorData.textColor }" class="text">
     {{ callsIndicatorData.text }}
+  </p>
+</div>
+
+<div *ngIf="callsIndicatorData.isAgent" class="callsIndicatior" [ngStyle]="{
+    background: callsIndicatorData.backgroundColor,
+    border: callsIndicatorData.borderColor
+  }">
+  <img [src]="callsIndicatorData.icon" alt="" class="icon" />
+  <p [ngStyle]="{ color: callsIndicatorData.textColor }" class="text">
+    <span>{{callsIndicatorData.hightlightText }}</span> {{ callsIndicatorData.text }}
   </p>
 </div>

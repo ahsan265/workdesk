@@ -8,7 +8,8 @@ import {
   agentTableSetting,
   languauges,
   oneSelect,
-  searchInputData
+  searchInputData,
+  agentIndicatorData
 } from './agentsData';
 import { AuthService } from '../services/auth.service';
 import { Component, OnInit } from '@angular/core';
@@ -21,6 +22,7 @@ import { CommonService } from '../workdeskServices/commonEndpoint/common.service
 import { OverlayService } from '../callInterface/overLayService/overlay.service';
 import { AgentModelTable } from '../models/callModel';
 import { SharedServices } from '../workdeskServices/sharedResourcesService/shared-resource-service.service';
+import { callsIndicatorData } from '../models/callIndicatorModel';
 
 @Component({
   selector: 'app-agents',
@@ -36,7 +38,7 @@ export class AgentsComponent implements OnInit {
   addAgentModelData = agentModelData;
   agentdata: AgentModelTable[] = [];
   agentdataWithNoSearch: AgentModelTable[] = [];
-
+  agentIndicator: callsIndicatorData = agentIndicatorData;
   selectedLanguages: Array<number> = [];
   activeAgent: number = 1;
   inactiveAgent: number = 1;
@@ -167,7 +169,17 @@ export class AgentsComponent implements OnInit {
       }));
       this.agentdataWithNoSearch = this.agentdata;
       this.CommonService.getLoggedInAgentData().role === 'Agent' ? this.buttonData.active = false : this.buttonData.active = true;
+      this.agentIndicator = {
+        hightlightText: this.AgentService.countOnlineAgentsAvailable(data) + " ",
+        text: ' Agents available',
+        icon: '../assets/images/components/agent_free.svg',
+        backgroundColor: '#FEFEFF',
+        borderColor: '1px solid #E1E1EA',
+        textColor: '#737D8D',
+        isAgent: true
+      };
     });
+
   }
 
   getSettingsPage(event: string[]) {
