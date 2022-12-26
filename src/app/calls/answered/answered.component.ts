@@ -61,11 +61,13 @@ export class AnsweredComponent implements OnInit {
     private calendarService: CalendarService,
   ) {
     this.callsIndicatorData = {
+      hightlightText: '',
       text: this.answeredData + ' answered requests',
       icon: '../assets/images/components/calls_count_answered.svg',
       backgroundColor: '#EBF6DD',
       borderColor: '1px solid #C1E297',
-      textColor: '#76CB09'
+      textColor: '#76CB09',
+      isAgent: false
     };
   }
   async ngOnInit(): Promise<void> {
@@ -105,7 +107,7 @@ export class AnsweredComponent implements OnInit {
           agent_name: answeredData.agent.display_name,
           user_id: this.CallsService.getUserId(answeredData.user_id),
           agent_details: {
-            image:answeredData.agent.images[96],
+            image: answeredData.agent.images[96],
             text: answeredData.agent.email
           }
         }));
@@ -131,7 +133,7 @@ export class AnsweredComponent implements OnInit {
         }
       }
       if (compareArray.length === 8) {
-       // this.aggregate = 'custom';
+        // this.aggregate = 'custom';
       }
     }
   }

@@ -303,5 +303,7 @@ export class AgentSettingsComponent implements OnInit {
   async removeImage() {
     const defaultImage = await this.agentSettingService.removeAgentImage(this.selectedAgent.uuid);
     this.agentImage = defaultImage[96];
+    this.showImageRemove=false;
+
   }
 }

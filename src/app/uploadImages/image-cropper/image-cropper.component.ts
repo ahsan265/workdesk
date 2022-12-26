@@ -37,8 +37,10 @@ export class ImageCropperComponent implements OnInit {
   imgWidth!: number;
   uniX: number = 0;
   uniY: number = 0;
-  uniX2: number = 0;
-  uniY2: number = 0;
+  x0 = 0;
+  y0 = 0;
+  x1 = 500;
+  y1 = 500;
   initX: number = 0;
   initY: number = 0;
   imgHeight!: number;
@@ -63,7 +65,7 @@ export class ImageCropperComponent implements OnInit {
     private CommonService: CommonService,
     private MessageService: MessageService,
     private SharedServices: SharedServices
-  ) {}
+  ) { }
 
   imageLoad(image: string) {
     this.image = new Image();
@@ -73,8 +75,6 @@ export class ImageCropperComponent implements OnInit {
       this.originalImageHeight = this.image.height;
       this.CanvasWidth = this.image.width;
       this.CanvasHeight = this.image.height;
-      this.image.width = this.CanvasWidth;
-      this.image.height = this.CanvasHeight;
       this.hRatio = this.originalImageWidth / this.CanvasWidth;
       this.vRatio = this.originalImageHeight / this.CanvasHeight;
       this.layer1CanvasElement = this.layer1Canvas.nativeElement;
@@ -98,6 +98,7 @@ export class ImageCropperComponent implements OnInit {
       this.image.width,
       this.image.height
     );
+
     this.context.restore();
   }
 
@@ -125,44 +126,41 @@ export class ImageCropperComponent implements OnInit {
     }
   }
   dragEvent(event: MouseEvent) {
-    this.renderer.listen(document, 'mouseup', (e) => {
-      this.initX = e.offsetX;
-      this.initY = e.offsetY;
-      this.uniX = e.x;
-      this.uniY = e.y;
-      this.uniX2 = 0;
-      this.uniY2 = 0;
+    this.renderer.listen(document, 'mousemove', (e) => {
+      const main = document.querySelector('.picturearea') as HTMLElement;
+      const drag = document.querySelector('.content') as HTMLElement;
+      this.initY = drag.getBoundingClientRect().top - main.getBoundingClientRect().top;
+      this.initX = drag.getBoundingClientRect().left - main.getBoundingClientRect().left;
     });
+
+
+    this.renderer.listen(document, 'mouseup', (e) => {
+    });
+
+
   }
 
-  // getHeight(length: any, ratio: any) {
-  //   let height = length / Math.sqrt(Math.pow(ratio, 2) + 1);
-  //   return Math.round(height);
-  // }
-
-  // getWidth(length: any, ratio: any) {
-  //   let width = length / Math.sqrt(1 / (Math.pow(ratio, 2) + 1));
-  //   return Math.round(width);
-  // }
   // crop image
   cropImages() {
-    this.context.drawImage(
-      this.image,
-      this.initX,
-      this.initY,
-      this.image.width,
-      this.image.height,
-      0,
-      0,
-      this.image.width,
-      this.image.height
-    );
-    this.context.restore();
+
+    const x0 = (this.initX * this.hRatio) * 3.5;
+    const y0 = (this.initY * this.vRatio) * 3.5;
+
+    this.context.clearRect(0, 0, this.context.canvas.width, this.context.canvas.height);
+    this.context.drawImage(this.image,
+      x0, y0,   // Start at 70/20 pixels from the left and the top of the image (crop),
+      this.height * 2.5, this.width * 2.5,   // "Get" a `50 * 50` (w * h) area from the source image (crop),
+      0, 0,     // Place the result at 0, 0 in the canvas,
+      this.image.height, this.image.width);
+    this.context.restore()
+
+
   }
 
   expandCroppingZone(event: MouseEvent) {
     let pageX: number;
     const moveListener = this.renderer.listen(document, 'mousemove', (e) => {
+      console.log(e)
       const diff = isNaN(pageX) ? 1 : e.pageX - pageX;
       const minSize = 10;
       if (
