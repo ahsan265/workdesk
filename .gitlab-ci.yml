@@ -1,6 +1,8 @@
 stages:
   - build-push
   - rollout
+  - build-push-dev-testing
+  - rollout-dev-testing
 
 variables:
     PROJECT_PATH: $CI_PROJECT_DIR
@@ -26,6 +28,29 @@ rollout-job:
       - develop
     variables:
       DEPLOYMENT: $CLUSTER_DEPLOYMENT # variable added in project CI/CD settings, indicates deployment name in cluster
+    trigger:
+      project: deployment/k8s-agent
+      branch: develop
+
+build-push-dev-testing-job:
+    stage: build-push-dev-testing
+    only:
+        - feature/ma/pageNumber
+    image: docker:20.10.9-alpine3.14
+    services:
+        - docker:dind
+    before_script:
+        - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
+    script:
+      - docker build -t $IMAGE_TAG-testing  .
+      - docker push $IMAGE_TAG-testing
+
+rollout-dev-testing-job:
+    stage: rollout-dev-testing
+    only:
+      - feature/ma/pageNumber
+    variables:
+      DEPLOYMENT: $CLUSTER_DEPLOYMENT-dev-testing # variable added in project CI/CD settings, indicates deployment name in cluster
     trigger:
       project: deployment/k8s-agent
       branch: develop
