@@ -5,6 +5,10 @@
         <app-one-select-dropdown [oneSelectData]="oneSelectData" (oneSelectOutput)="agentTypeOutput($event)">
         </app-one-select-dropdown>
       </div>
+      <div class="indicatorWrapper">
+        <app-calls-indicator [callsIndicatorData]="agentIndicator">
+        </app-calls-indicator>
+      </div>
     </div>
     <div class="rightFilter">
       <div class="multiSelectWrapper languauge">

@@ -106,7 +106,7 @@ export class CallConsoleComponent implements OnInit, OnDestroy, AfterViewInit {
   initialTime: any;
   callStartTimer: any;
   ngAfterViewInit(): void {
-
+    this.minmizeMaxmizeScreenOutput(false);
   }
   ngOnDestroy(): void {
 
@@ -179,7 +179,6 @@ export class CallConsoleComponent implements OnInit, OnDestroy, AfterViewInit {
       // this.isVideoMinimize = peerData.isCameraOn;
       this.isRemoteVideo = peerData.isCameraOn;
       if (this.isRemoteVideo && this.isMinimize) {
-        // this.miniCameraOperation(true);
         this.isVideoMinimize = true;
         this.minimize.width = '382px';
         this.minimize.height = '325px';
@@ -191,7 +190,6 @@ export class CallConsoleComponent implements OnInit, OnDestroy, AfterViewInit {
 
       } else {
         if ((this.isVideoMinimize === true) && this.cameraData.isSelected === false) {
-          // this.miniCameraOperation(false);
           this.isMinimize = true;
           this.toogle = true;
           this.isVideoMinimize = false;
@@ -206,7 +204,6 @@ export class CallConsoleComponent implements OnInit, OnDestroy, AfterViewInit {
       }
       // for header
       CallsHeaderData.name = peerData.firstName + ' ' + peerData.lastName;
-      // CallsHeaderData.agentImage = peerData.peerImage;
     });
     // showing timer
     const startTime = new Date(Date.now());
@@ -322,6 +319,7 @@ export class CallConsoleComponent implements OnInit, OnDestroy, AfterViewInit {
     if (event) {
       this.openDeviceSwitcher = true;
     }
+   
   }
   minmizeMaxmizeScreenOutput(event: boolean) {
 

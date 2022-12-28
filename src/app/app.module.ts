@@ -8,6 +8,7 @@ import {
   GigaaaHeaderModule,
   GigaaaHeaderService,
   GigaaaLandingPageModule,
+  GigaaaPaginatePipe,
   GigaaaPaginationModule,
   GigaaaSidebarModule,
   GigaaaTableModule,
@@ -83,6 +84,9 @@ import { overlayToken } from './callInterface/overLayService/overlayToken';
 import { SwitchOrganizationComponent } from './modals/switch-organization/switch-organization.component';
 import { SwitchOgranizationDoneComponent } from './modals/switch-ogranization-done/switch-ogranization-done.component';
 import { ReDialCallService } from './workdeskServices/reDialCallService/re-dial-call.service';
+import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
+import { PaginationComponent } from './components/pagination/pagination.component';
+import { GigaaaApiService } from './workdeskServices/gigaaaApiService/gigaaa-api-service.service';
 
 @NgModule({
   declarations: [
@@ -132,7 +136,9 @@ import { ReDialCallService } from './workdeskServices/reDialCallService/re-dial-
     NoTableDataComponent,
     LoaderComponent,
     SwitchOrganizationComponent,
-    SwitchOgranizationDoneComponent
+    SwitchOgranizationDoneComponent,
+    PageNotFoundComponent,
+    PaginationComponent,
   ],
   imports: [
     BrowserAnimationsModule,
@@ -167,9 +173,11 @@ import { ReDialCallService } from './workdeskServices/reDialCallService/re-dial-
     DragDropModule,
     OverlayModule,
     GigaaaTableWorkdeskModule,
-    GigaaaPaginationModule
+    GigaaaPaginationModule,
+  
   ],
   providers: [
+    GigaaaPaginatePipe,
     {
       provide: 'GigaaaHeaderService',
       useClass: GigaaaHeaderService

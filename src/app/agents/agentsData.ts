@@ -19,7 +19,7 @@ const languauges: MultiSelect = {
 };
 
 const oneSelect: OneSelect[] = [
-  { id: 1, name: 'Show all', selected: true },
+  { id: 1, name: 'All activity', selected: true },
   { id: 2, name: 'Active', selected: false },
   { id: 3, name: 'Inactive', selected: false },
   { id: 4, name: 'Invited', selected: false }
@@ -27,7 +27,7 @@ const oneSelect: OneSelect[] = [
 
 const selectedAgentType: any[] = [
   {
-    name: 'Show all',
+    name: 'All activity',
     options: {
       active: 1,
       inactive: 1,
@@ -235,6 +235,15 @@ const agentModelData = {
   width: '595px',
   height: '400px'
 };
+const agentIndicatorData = {
+  hightlightText: 0 + '/' + 0,
+  text: 'Agents available',
+  icon: '../assets/images/components/agent_free.svg',
+  backgroundColor: '#FEFEFF',
+  borderColor: '1px solid #E1E1EA',
+  textColor: '#737D8D',
+  isAgent: true
+};
 export {
   languauges,
   buttonData,
@@ -243,5 +252,6 @@ export {
   agentTableSetting,
   agents,
   selectedAgentType,
-  agentModelData
+  agentModelData,
+  agentIndicatorData
 };

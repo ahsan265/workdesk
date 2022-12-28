@@ -133,13 +133,13 @@ export class AgentSocketService {
   }
   // get last used parameters
   public getLastUsedParams() {
-    if (this.lastUsedParameter != '{}') {
+    if (this.lastUsedParameter !== '{}') {
       this.sendAgentsParameter(this.lastUsedParameter);
     }
   }
   // close the agent socket Connnection
   public closeAgentSocketConnection() {
-    if (this.ws?.OPEN == this.isSocketOpen) {
+    if (this.ws?.OPEN === this.isSocketOpen) {
       this.ws?.close();
     }
   }

@@ -2,6 +2,9 @@
   <div class="imageWrapper section info">
     <div class="image">
       <img [src]="agentImage" alt="" class="agentImage" />
+      <div class="removeImage" (click)="removeImage()" *ngIf="showImageRemove">
+      <img src="../../assets/images/components/x.svg" alt="">
+      </div>
       <div class="status-circle" (click)="openImageUploadButton()">
         <svg class="uploadcamera" width="18" height="16" viewBox="0 0 18 16" fill="none"
           xmlns="http://www.w3.org/2000/svg">

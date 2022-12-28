@@ -81,7 +81,6 @@ export class MainComponent implements OnInit {
     }
   }
   userSwitched(event: boolean) {
-    console.log(event)
   }
   onGetLoggedUser(event: any) {
     this.getOrganizationService.getOrganization(event.api_token);
@@ -94,7 +93,7 @@ export class MainComponent implements OnInit {
 
   getSelectedDropdownItem(event: any) {
     this.GigaaaApiService.updateLastUsediPorject(
-      this.authService.user.value.api_token,
+      this.CommonService.getEndpointsParamLocal().token,
       this.CommonService.getEndpointsParamLocal().organization,
       { project: event.uuid }
     );
@@ -112,7 +111,6 @@ export class MainComponent implements OnInit {
   }
 
   isSidebarOpen(event: any) {
-    console.log(event);
   }
 
   onCancelButtonClicked(event: any) {

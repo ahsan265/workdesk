@@ -3,20 +3,25 @@
   border: none;
 }
 
+::ng-deep .button {
+  min-height: 34px !important;
+}
+
 .filterWrapper {
   display: block;
   padding: 30px 0;
 }
 
 .leftFilter {
-  width: 30%;
-  display: inline-block;
+  width: 40%;
+  display: inline-flex;
 }
 
 .rightFilter {
-  width: 70%;
-  display: inline-block;
+  width: 60%;
+  display: inline-flex;
   text-align: right;
+  justify-content: end;
 }
 
 .multiSelectWrapper {
@@ -25,8 +30,15 @@
   vertical-align: middle;
 }
 
+.indicatorWrapper {
+  display: inline-flex;
+  width: 167.71px;
+}
+
 .multiSelectWrapper.activity {
-  display: block;
+  display: inline-block;
+  width: 200px;
+  margin-right: 10px;
 }
 
 .multiSelectWrapper.search {

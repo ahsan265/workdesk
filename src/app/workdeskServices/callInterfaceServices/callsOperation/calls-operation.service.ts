@@ -52,9 +52,6 @@ export class CallsOperationService {
             break;
           case 'peer_id':
             if (callsData.is_refreshed !== true) {
-              if (this.DevicesInformationService.getBrowserName() !== 'firefox' || this.DevicesInformationService.getBrowserName() !== 'safari') {
-                await this.StreamingService.selectedDeviceForStream(false);
-              }
               this.userId = msg.id;
               this.AgentUserInformation.setRefreshStatus(false);
               this.AgentUserInformation.saveUserInformation(
@@ -64,6 +61,8 @@ export class CallsOperationService {
                 false,
                 this.AuthService.user.value
               );
+                await this.StreamingService.selectedDeviceForStream(false);
+            
               this.startTimer.next(false);
 
             }

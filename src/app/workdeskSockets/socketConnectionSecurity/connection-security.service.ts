@@ -7,6 +7,7 @@ import { connectionSecurityModel } from 'src/app/models/connectionSecurity';
 import { CommonService } from 'src/app/workdeskServices/commonEndpoint/common.service';
 import { GigaaaApiService } from 'src/app/workdeskServices/gigaaaApiService/gigaaa-api-service.service';
 import { AgentSocketService } from '../agentSocket/agent-socket.service';
+import { AnalyticsSocketService } from '../analyticsSocket/analytics-socket.service';
 import { QueueSocketService } from '../queueSocket/queue-socket.service';
 
 @Injectable({
@@ -17,6 +18,7 @@ export class ConnectionSecurityService {
     private gigaaaApiService: GigaaaApiService,
     private AgentSocketService: AgentSocketService,
     private QueueSocketService: QueueSocketService,
+    private AnalyticsSocketService: AnalyticsSocketService,
     private CommonService: CommonService
   ) { }
   public async createConnectionEndpoint(
@@ -34,7 +36,10 @@ export class ConnectionSecurityService {
     this.CommonService.getAgentRole();
     this.AgentSocketService.closeAgentSocketConnection();
     this.QueueSocketService.closeQueueSocketConnection();
+    this.AnalyticsSocketService.closeAnalyticsSocketConnection();
+    this.AnalyticsSocketService.callAnalyticsSocketEndpoint();
     this.AgentSocketService.callAgentSocketEndpoint();
     this.QueueSocketService.callQueueSocketEndpoint();
+
   }
 }

@@ -66,6 +66,7 @@ export class AgentSettingsComponent implements OnInit {
   isAllLanguageSelected: boolean = false;
   showAllSelectedLanguageToggle: boolean = false;
   showAdminRightSection: boolean = true;
+  showImageRemove: boolean = false
   agentSettingsForm = new FormGroup({
     email: new FormControl('', [
       Validators.required,
@@ -84,7 +85,7 @@ export class AgentSettingsComponent implements OnInit {
     private MessageService: MessageService,
     private AgentService: AgentService,
     private SharedServices: SharedServices
-  ) {}
+  ) { }
 
   ngOnInit() {
     this.authService.pageTitle.next('Agent Settings');
@@ -99,6 +100,7 @@ export class AgentSettingsComponent implements OnInit {
     this.SharedServices.setAgentImage.subscribe((data: string) => {
       let timestamp = new Date().getTime();
       this.agentImage = data + '?_=' + timestamp;
+      this.showImageRemove=true;
     });
 
     // closing passwordpopup
@@ -111,12 +113,8 @@ export class AgentSettingsComponent implements OnInit {
   }
 
   onGetInputValue(event: any) {
-    console.log(event);
   }
-  // getAgent() {
-  //   this.agents = agents;
-  // }
-  // for admin rights
+  // to get is Admin or not 
   onGetSwitchButtonValue(event: any) {
     this.isAdmin = !event;
   }
@@ -216,6 +214,7 @@ export class AgentSettingsComponent implements OnInit {
     } catch (err: any) {
       this.MessageService.setErrorMessage(err.error.error);
     }
+    (this.selectedAgent.is_image_set) ? this.showImageRemove = true : this.showImageRemove = false;
     this.selectedAgent.is_organization_admin === true
       ? (this.showAllSelectedLanguageToggle = true)
       : (this.showAllSelectedLanguageToggle = false);
@@ -298,5 +297,13 @@ export class AgentSettingsComponent implements OnInit {
       ? this.MessageService.setErrorMessage('Please fill out fields.')
       : '';
     this.agentSettingService.updateAgentSettings(agentSetting, this.agentId);
+  }
+
+  // set remove picture
+  async removeImage() {
+    const defaultImage = await this.agentSettingService.removeAgentImage(this.selectedAgent.uuid);
+    this.agentImage = defaultImage[96];
+    this.showImageRemove=false;
+
   }
 }

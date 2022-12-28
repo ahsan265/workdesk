@@ -161,66 +161,36 @@ export class DashboardComponent implements OnInit {
   private async callRouteLoad() {
     this.languauges = await this.CommonService.getProjectLanguagesForUser();
     if (this.CommonService.getEndpointsParamLocal().project != undefined) {
-      this.dashboardEps.getCarddata([], [], this.aggregate);
-      this.dashboardEps.getChartData(
-        [],
-        [],
-        this.aggregate,
-        this.startDate,
-        this.endDate
-      );
+      this.dashboardEps.getAnalyticsData([], [], this.aggregate);
     }
   }
   private getFirstLoad(): void {
     this.SharedServices.LoadcommonEpsubject.subscribe(async (data) => {
       if (data === 1) {
+        this.setDefaultDate();
         this.languauges = await this.CommonService.getProjectLanguagesForUser();
-        this.dashboardEps.getCarddata(
+        this.dashboardEps.getAnalyticsData(
           this.idOfLanguage,
           this.idOfLocation,
           this.aggregate
         );
-        this.dashboardEps.getChartData(
-          this.idOfLanguage,
-          this.idOfLocation,
-          this.aggregate,
-          this.startDate,
-          this.endDate
-        );
       }
     });
-
-
   }
   public locationOutput(locationOutput: number[]) {
     this.idOfLocation = locationOutput;
-    this.dashboardEps.getCarddata(
+    this.dashboardEps.getAnalyticsData(
       this.idOfLanguage,
       this.idOfLocation,
       this.aggregate
-    );
-    this.dashboardEps.getChartData(
-      this.idOfLanguage,
-      this.idOfLocation,
-      this.aggregate,
-      this.startDate,
-      this.endDate
     );
   }
   public languaugesOutput(languaugesOutput: number[]) {
-    console.log(languaugesOutput);
     this.idOfLanguage = languaugesOutput;
-    this.dashboardEps.getCarddata(
+    this.dashboardEps.getAnalyticsData(
       this.idOfLanguage,
       this.idOfLocation,
       this.aggregate
-    );
-    this.dashboardEps.getChartData(
-      this.idOfLanguage,
-      this.idOfLocation,
-      this.aggregate,
-      this.startDate,
-      this.endDate
     );
   }
 
@@ -228,7 +198,6 @@ export class DashboardComponent implements OnInit {
     if (event.startDate) {
       this.date_from = event.startDate;
       this.date_to = event.endDate.add(1, 'day');
-
       // Needs to be updated
       let compareArray: any[] = [];
       for (const property in this.ranges) {
@@ -253,21 +222,25 @@ export class DashboardComponent implements OnInit {
       event.dates[0].$d
     );
     this.endDate = this.calendarService.getDateRangeFormated(event.dates[1].$d);
-    this.dashboardEps.getCarddata(
+    this.dashboardEps.getAnalyticsData(
       this.idOfLanguage,
       this.idOfLocation,
       this.aggregate
-    );
-    this.dashboardEps.getChartData(
-      this.idOfLanguage,
-      this.idOfLocation,
-      this.aggregate,
-      this.startDate,
-      this.endDate
     );
   }
 
   onOpenCalendar() {
     this.showCalendar = !this.showCalendar;
+  }
+
+  //default date param 
+
+  setDefaultDate() {
+    this.aggregate = "this_week";
+    this.selected = {
+      startDate: dayjs().startOf('week').add(1, 'day'),
+      endDate: dayjs().endOf('week').add(1, 'day'),
+      aggregate: this.aggregate
+    }
   }
 }

@@ -53,6 +53,10 @@ export class MissedComponent implements OnInit {
       this.showCalendar = false;
     }
   }
+
+  pagination = {
+
+  }
   constructor(
     private CallsService: CallsService,
     private CommonService: CommonService,
@@ -60,18 +64,19 @@ export class MissedComponent implements OnInit {
     private QueueSocketService: QueueSocketService
   ) {
     this.callsIndicatorData = {
+      hightlightText: '',
       text: this.missedCallData.length + ' missed requests',
       icon: '../assets/images/components/calls_count_missed.svg',
       backgroundColor: '#F9EBEF',
       borderColor: '1px solid #F4CAD6',
-      textColor: '#FF155A'
+      textColor: '#FF155A',
+      isAgent: false
     };
   }
   async ngOnInit(): Promise<void> {
     this.languauges = await this.CommonService.getProjectLanguagesForUser();
     this.CallsService.sendDataToMissedTabsSubject.subscribe(
       (data: MissedCallModel[]) => {
-        console.log(this.languageIds)
         this.missedCallData = data.map((missedCallData) => ({
           agent_name: missedCallData.name,
           call_uuid: missedCallData.call_uuid,

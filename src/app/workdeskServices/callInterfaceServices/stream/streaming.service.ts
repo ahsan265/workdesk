@@ -94,7 +94,8 @@ export class StreamingService {
       );
     } else {
       audio.replaceTrack(audioTrack);
-    }
+    } this.PeerConnectionService.getAudioCodec()
+
     const offer: RTCSessionDescriptionInit =
       await this.PeerConnectionService.peerConnection.createOffer({
         offerToReceiveAudio: true,
@@ -216,7 +217,7 @@ export class StreamingService {
               return undefined;
             }
           });
-
+      
         audio === undefined
           ? this.PeerConnectionService.peerConnection.addTrack(
             audioTrack,
@@ -231,6 +232,7 @@ export class StreamingService {
           : video.replaceTrack(videoTrack);
       })
       .then(async () => {
+        this.PeerConnectionService.getVideoCodec();
         const offer: RTCSessionDescriptionInit =
           await this.PeerConnectionService.peerConnection.createOffer({
             offerToReceiveAudio: true,
@@ -296,6 +298,7 @@ export class StreamingService {
         audio.replaceTrack(localAudio);
       }
       this.audioChecker();
+      this.PeerConnectionService.getVideoCodec();
       const offer: RTCSessionDescriptionInit =
         await this.PeerConnectionService.peerConnection.createOffer({
           offerToReceiveAudio: true,
@@ -387,13 +390,14 @@ export class StreamingService {
           videoTrack,
           this.screenShareStream
         );
-
+        this.PeerConnectionService.getVideoCodec();
         const offer: RTCSessionDescriptionInit =
           await this.PeerConnectionService.peerConnection.createOffer({
             offerToReceiveAudio: true,
             offerToReceiveVideo: true,
             iceRestart: true
           });
+
         await this.PeerConnectionService.peerConnection.setLocalDescription(
           offer
         );
