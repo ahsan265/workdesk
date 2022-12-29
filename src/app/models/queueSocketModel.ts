@@ -2,7 +2,16 @@ export interface QueueSocketparamter {
   call_type: string[];
   languages: number[];
   tab: string;
-  time_range:string;
+  time_range: string;
+}
+
+export interface QueueSocketparamterForPagination {
+  call_type: string[];
+  languages: number[];
+  tab: string;
+  time_range: string;
+  page: number;
+  items_per_page: number;
 }
 export interface QueueList {
   finished: QueueListFinished[];
@@ -52,9 +61,9 @@ export interface QueueListFinished {
   waiting_started_at: string;
 }
 // for ongoing tab
-export interface QueueListOngoing {}
+export interface QueueListOngoing { }
 // for incoming tab
-export interface QueueListIncoming {}
+export interface QueueListIncoming { }
 // for send data param
 export interface QueueDateRangeParam {
   end_date: string;

@@ -55,8 +55,7 @@ export class CallConsoleComponent implements OnInit, OnDestroy, AfterViewInit {
     private CallsOperationService: CallsOperationService,
     private PeerConnectionService: PeerConnectionService,
     private AgentUserInformation: AgentUserInformation,
-    @Inject(overlayToken) public data: any
-
+    @Inject(overlayToken) public data: any 
   ) {
 
     this.StreamingService.detectDevicesMicrphoneDeviceOnchange();

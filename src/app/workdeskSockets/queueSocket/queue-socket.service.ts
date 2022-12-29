@@ -2,13 +2,14 @@
 /* eslint-disable no-undef */
 /* eslint-disable sort-imports */
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Subject } from 'rxjs';
+import { BehaviorSubject, queue, Subject } from 'rxjs';
 import { defaultCallData } from 'src/app/data';
-import { CallsModel } from 'src/app/models/callModel';
+import { CallsModel, newCallModelMissed } from 'src/app/models/callModel';
 import { connectionSecurityModel } from 'src/app/models/connectionSecurity';
 import {
   QueueDateRangeParam,
-  QueueSocketparamter
+  QueueSocketparamter,
+  QueueSocketparamterForPagination
 } from 'src/app/models/queueSocketModel';
 import { CommonService } from 'src/app/workdeskServices/commonEndpoint/common.service';
 
@@ -21,7 +22,7 @@ export class QueueSocketService {
   protected websocket_url = `${environment.websocket_url}`;
   ws: WebSocket | undefined;
   isSocketOpen: any;
-  public callDataSubject = new Subject<CallsModel>();
+  public callDataSubject = new Subject<any>();
   defaultCallData = defaultCallData;
 
   constructor(private CommonService: CommonService) {
@@ -40,10 +41,11 @@ export class QueueSocketService {
     // on socket connection open
     this.ws.onopen = (e) => {
       this.isSocketOpen = this.ws?.OPEN;
-      //  this.SendDefaultParam();
+      this.SendDefaultParam();
+      this.SendDefaultParamFinished();
     };
     this.ws.onmessage = (e) => {
-      e.data != 'ping' ? this.getQueueSocketList(JSON.parse(e.data)) : '';
+      e.data != 'test' ? this.getQueueSocketList(JSON.parse(e.data)) : '';
     };
     this.ws.onclose = (e) => { };
     this.ws.onerror = (e) => { };
@@ -56,18 +58,47 @@ export class QueueSocketService {
     }
   }
 
-  public getQueueSocketList(QueueList: CallsModel) {
-    this.defaultCallData = {
-      finished: QueueList.finished,
-      incoming: QueueList.incoming,
-      missed: QueueList.missed,
-      ongoing: QueueList.ongoing,
-      new_call: QueueList.new_call
+  public sendQueueParameterPagination(QueueSocketparamter: QueueSocketparamterForPagination) {
+    if (this.isSocketOpen === 1) {
+      const queueParameterObject = JSON.stringify(QueueSocketparamter);
+      this.ws?.send(queueParameterObject);
     }
-    this.callDataSubject.next(QueueList);
-    if (QueueList.new_call === true && this.CommonService.getLoggedAgentStatus() === true) {
-      this.CommonService.getDesktopNotification("Customer Support", "Please connect call")
+  }
+
+  public getQueueSocketList(QueueList: any) {
+    // this.defaultCallData = {
+    //   finished: QueueList.finished,
+    //   incoming: QueueList.incoming,
+    //   missed: QueueList.missed,
+    //   ongoing: QueueList.ongoing,
+    //   new_call: QueueList.new_call
+    // }
+    // if (QueueList.new_call === true && this.CommonService.getLoggedAgentStatus() === true) {
+    //   this.CommonService.getDesktopNotification("Customer Support", "Please connect call")
+    // }
+    switch (QueueList.type) {
+      case 'missed':
+        this.defaultCallData.missed = QueueList;
+        this.callDataSubject.next(QueueList);
+        break;
+      case 'finished':
+        this.defaultCallData.finished = QueueList;
+        this.callDataSubject.next(QueueList);
+        break;
+      case 'incoming':
+        console.log(QueueList)
+        this.defaultCallData.incoming = QueueList;
+        if (QueueList.new_call === true && this.CommonService.getLoggedAgentStatus() === true) {
+          this.CommonService.getDesktopNotification("Customer Support", "Please connect call")
+        }
+        this.callDataSubject.next(QueueList);
+        break;
+      case 'ongoing':
+        break;
+      default:
+        break;
     }
+
   }
   public sendQueueDateParameter(QueueDateRangeParam: QueueDateRangeParam) {
     if (this.isSocketOpen === 1) {
@@ -77,13 +108,25 @@ export class QueueSocketService {
   }
 
   public SendDefaultParam() {
-    this.sendQueueParameter({
+    this.sendQueueParameterPagination({
       call_type: [],
       languages: [],
       tab: 'missed',
-      time_range: 'this_week'
+      time_range: 'this_week',
+      items_per_page: 10,
+      page: 1
     });
+  }
 
+  public SendDefaultParamFinished() {
+    this.sendQueueParameterPagination({
+      call_type: [],
+      languages: [],
+      tab: 'finished',
+      time_range: 'this_week',
+      items_per_page: 10,
+      page: 1
+    });
   }
   // close the agent socket Connnection
   public closeQueueSocketConnection() {

@@ -3,7 +3,8 @@ import { Component, HostListener, OnInit, ViewChild } from '@angular/core';
 import { CallsService } from '../callService/calls.service';
 import {
   MissedCallModel,
-  MissedCallModelTable
+  MissedCallModelTable,
+  newCallModelMissed
 } from 'src/app/models/callModel';
 import { CommonService } from 'src/app/workdeskServices/commonEndpoint/common.service';
 import { GigaaaDaterangepickerDirective } from '@gigaaa/gigaaa-components';
@@ -39,6 +40,8 @@ export class MissedComponent implements OnInit {
   callType = callTypeMissed;
   languauges = languauges;
   searchInputData = searchInputData;
+  itemsPerPage: number = 10;
+  pageNumber: number = 1;
   @ViewChild(GigaaaDaterangepickerDirective, { static: false })
   pickerDirective: GigaaaDaterangepickerDirective | undefined;
   alwaysShowCalendars: boolean | undefined;
@@ -61,7 +64,6 @@ export class MissedComponent implements OnInit {
     private CallsService: CallsService,
     private CommonService: CommonService,
     private calendarService: CalendarService,
-    private QueueSocketService: QueueSocketService
   ) {
     this.callsIndicatorData = {
       hightlightText: '',
@@ -72,55 +74,56 @@ export class MissedComponent implements OnInit {
       textColor: '#FF155A',
       isAgent: false
     };
+    this.CallsService.sendDataToMissedTabsSubject.subscribe((data:newCallModelMissed) => {
+      this.missedCallData = data.calls.map((missedCallData: MissedCallModel) => ({
+        agent_name: missedCallData.name,
+        call_uuid: missedCallData.call_uuid,
+        called_at: this.CallsService
+          .getCalledAtTimeDate(missedCallData.missed_at, this.aggregate),
+        callType: {
+          image: this.CommonService.getConversationType(
+            missedCallData.is_video
+          ),
+          text: this.CallsService.getCallType(missedCallData.is_video)
+        },
+        resaon: missedCallData.reason,
+        user_details: {
+          image: '../../../assets/images/callInterface/user.png',
+          text: missedCallData.name
+        },
+        user_id: this.CallsService.getUserId(missedCallData.user_id),
+        utilites: [
+          {
+            image: this.CommonService.getLanguageFlags(
+              missedCallData.language_id
+            )
+          },
+          {
+            image: this.CommonService.getBrowserFlag(missedCallData.browser)
+          },
+          {
+            image: this.CommonService.getDeviceType(missedCallData.desktop)
+          },
+          {
+            image: this.CommonService.getOperatingSystem(
+              missedCallData.operating_system
+            )
+          }
+        ],
+        wait_time: this.CallsService
+          .calculatetime(missedCallData.wait_time)
+          .toString()
+      }));
+      this.unfilterMissedCallData = this.missedCallData;
+      this.callsIndicatorData.text = this.missedCallData.length + ' missed requests';
+
+    }
+    );
+
   }
   async ngOnInit(): Promise<void> {
     this.languauges = await this.CommonService.getProjectLanguagesForUser();
-    this.CallsService.sendDataToMissedTabsSubject.subscribe(
-      (data: MissedCallModel[]) => {
-        this.missedCallData = data.map((missedCallData) => ({
-          agent_name: missedCallData.name,
-          call_uuid: missedCallData.call_uuid,
-          called_at: this.CallsService
-            .getCalledAtTimeDate(missedCallData.missed_at, this.aggregate),
-          callType: {
-            image: this.CommonService.getConversationType(
-              missedCallData.is_video
-            ),
-            text: this.CallsService.getCallType(missedCallData.is_video)
-          },
-          resaon: missedCallData.reason,
-          user_details: {
-            image: '../../../assets/images/callInterface/user.png',
-            text: missedCallData.name
-          },
-          user_id: this.CallsService.getUserId(missedCallData.user_id),
-          utilites: [
-            {
-              image: this.CommonService.getLanguageFlags(
-                missedCallData.language_id
-              )
-            },
-            {
-              image: this.CommonService.getBrowserFlag(missedCallData.browser)
-            },
-            {
-              image: this.CommonService.getDeviceType(missedCallData.desktop)
-            },
-            {
-              image: this.CommonService.getOperatingSystem(
-                missedCallData.operating_system
-              )
-            }
-          ],
-          wait_time: this.CallsService
-            .calculatetime(missedCallData.wait_time)
-            .toString()
-        }));
-        this.unfilterMissedCallData = this.missedCallData;
-        this.callsIndicatorData.text = this.missedCallData.length + ' missed requests';
 
-      }
-    );
   }
 
 
@@ -154,31 +157,37 @@ export class MissedComponent implements OnInit {
       event.dates[0].$d
     );
     this.endDate = this.calendarService.getDateRangeFormated(event.dates[1].$d);
-    this.CallsService.callQueueSocketByLanguageandCall(
+    this.CallsService.callQueueSocketByLanguageandCallFoPagination(
       this.languageIds,
       this.callTypeName,
       'missed',
-      this.aggregate
+      this.aggregate,
+      this.itemsPerPage,
+      this.pageNumber
     );
   }
 
   public callOutput(callTypeOutput: any) {
     this.callTypeName = this.CallsService.getCallTypeId(callTypeOutput);
-    this.CallsService.callQueueSocketByLanguageandCall(
+    this.CallsService.callQueueSocketByLanguageandCallFoPagination(
       this.languageIds,
       this.callTypeName,
       'missed',
-      this.aggregate
+      this.aggregate,
+      this.itemsPerPage,
+      this.pageNumber
     );
   }
 
   public languaugesOutput(languageOutput: number[]) {
     this.languageIds = languageOutput;
-    this.CallsService.callQueueSocketByLanguageandCall(
+    this.CallsService.callQueueSocketByLanguageandCallFoPagination(
       this.languageIds,
       this.callTypeName,
       'missed',
-      this.aggregate
+      this.aggregate,
+      this.itemsPerPage,
+      this.pageNumber
     );
   }
   // filter missed data
@@ -190,6 +199,29 @@ export class MissedComponent implements OnInit {
       this.missedCallData = this.unfilterMissedCallData
     }
   }
-
+  // get page number
+  pagenumber(event: number) {
+    this.itemsPerPage = event;
+    this.CallsService.callQueueSocketByLanguageandCallFoPagination(
+      this.languageIds,
+      this.callTypeName,
+      'missed',
+      this.aggregate,
+      this.itemsPerPage,
+      this.pageNumber
+    );
+  }
+  // get number of items per page()
+  itemPerPage(event: number) {
+    this.itemsPerPage = Number(event);
+    this.CallsService.callQueueSocketByLanguageandCallFoPagination(
+      this.languageIds,
+      this.callTypeName,
+      'missed',
+      this.aggregate,
+      this.itemsPerPage,
+      this.pageNumber
+    );
+  }
 
 }

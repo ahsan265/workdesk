@@ -157,6 +157,7 @@ import { GigaaaApiService } from './workdeskServices/gigaaaApiService/gigaaa-api
     ChartWrapperModule,
     InputFieldModule,
     ModalWrapperModule,
+    NgxPaginationModule,
     GigaaaDatepicker.forRoot({
       applyLabel: 'Okay',
       firstDay: 3
@@ -183,8 +184,8 @@ import { GigaaaApiService } from './workdeskServices/gigaaaApiService/gigaaa-api
       useClass: GigaaaHeaderService
     },
     {
-      provide: overlayToken, // That's the token we defined previously
-      useClass: OverlayService // That's the actual service itself
+      provide: overlayToken, 
+      useClass: OverlayService 
     },
     {
       provide: APP_INITIALIZER,

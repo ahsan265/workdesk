@@ -41,7 +41,8 @@
   </div>
 </div>
 <div class="tableWrapper">
-  <gigaaa-workdesk-table [tableData]="answeredData" [tableSettings]="tableSettings">
+  <gigaaa-workdesk-table [tableData]="answeredData" [tableSettings]="tableSettings" (pagenumber)="pagenumber($event)"
+    (itemPerPage)="itemPerPage($event)">
   </gigaaa-workdesk-table>
   <app-no-table-data *ngIf="answeredData.length === 0"></app-no-table-data>
 </div>

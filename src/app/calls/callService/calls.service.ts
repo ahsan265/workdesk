@@ -7,6 +7,9 @@ import {
   AnsweredCallModel,
   IncomingCallModel,
   MissedCallModel,
+  newCallModelAnswered,
+  newCallModelIncoming,
+  newCallModelMissed,
   OngoingCallModel
 } from 'src/app/models/callModel';
 import { OneSelect } from 'src/app/models/oneSelect';
@@ -19,22 +22,39 @@ import { callType } from '../callsData';
 export class CallsService {
   constructor(private QueueSocketService: QueueSocketService,
   ) { }
-  sendDataToIncomingTabsSubject = new ReplaySubject<IncomingCallModel[]>();
-  sendDataToMissedTabsSubject = new ReplaySubject<MissedCallModel[]>();
+  sendDataToIncomingTabsSubject = new ReplaySubject<newCallModelIncoming>();
+  sendDataToMissedTabsSubject = new ReplaySubject<newCallModelMissed>();
   sendDataToOngoingTabsSubject = new ReplaySubject<OngoingCallModel[]>();
-  sendDataToAnsweredTabsSubject = new ReplaySubject<AnsweredCallModel[]>();
-
+  sendDataToAnsweredTabsSubject = new ReplaySubject<newCallModelAnswered>();
   public callQueueSocketByLanguageandCall(
     languageId: number[],
     callType: string[],
     tabName: string,
     time_range: string,
+
   ) {
     this.QueueSocketService.sendQueueParameter({
       call_type: callType,
       languages: languageId,
       tab: tabName,
       time_range: time_range
+    });
+  }
+  public callQueueSocketByLanguageandCallFoPagination(
+    languageId: number[],
+    callType: string[],
+    tabName: string,
+    time_range: string,
+    items_per_page: number,
+    page_number: number
+  ) {
+    this.QueueSocketService.sendQueueParameterPagination({
+      call_type: callType,
+      languages: languageId,
+      tab: tabName,
+      time_range: time_range,
+      items_per_page: items_per_page,
+      page: page_number
     });
   }
 
@@ -52,21 +72,30 @@ export class CallsService {
   sendDataToTabs(data: any, tabname: string) {
     switch (tabname) {
       case 'incoming':
+        console.log(tabname)
         this.sendDataToIncomingTabsSubject.next(data);
         break;
       case 'ongoing':
         this.sendDataToOngoingTabsSubject.next(data);
         break;
+      default:
+        break;
+    }
+    return [];
+  }
+
+  sendDatatoMissedAndAnswered(data: any, tabname: string) {
+    switch (tabname) {
       case 'missed':
         this.sendDataToMissedTabsSubject.next(data);
         break;
-      case 'answered':
+      case 'finished':
         this.sendDataToAnsweredTabsSubject.next(data);
         break;
       default:
         break;
     }
-    return [];
+
   }
 
   // get call type

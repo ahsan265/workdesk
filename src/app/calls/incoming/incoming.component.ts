@@ -6,7 +6,8 @@ import { OverlayService } from 'src/app/callInterface/overLayService/overlay.ser
 import { ranges } from 'src/app/dashboard/dashboardData';
 import {
   IncomingCallModel,
-  IncomingCallModelTable
+  IncomingCallModelTable,
+  newCallModelIncoming
 } from 'src/app/models/callModel';
 import { AgentUserInformation } from 'src/app/workdeskServices/callInterfaceServices/agentUserInformation/agent-user-information.service';
 import { CommonService } from 'src/app/workdeskServices/commonEndpoint/common.service';
@@ -63,10 +64,10 @@ export class IncomingComponent implements OnInit {
     private AgentSocketService: AgentSocketService,
     private CallsService: CallsService,
   ) {
-    // this.getCallsId('aaedd2b1-5e89-40c5-8cdf-9ddb4e3be65a')
     this.CallsService.sendDataToIncomingTabsSubject.subscribe(
-      (data: IncomingCallModel[]) => {
-        this.incomingData = data.map((incomingData) => ({
+      (data: newCallModelIncoming) => {
+        console.log(data)
+        this.incomingData = data.calls.map((incomingData) => ({
           hashIcon: '#',
           call_uuid: incomingData.call_uuid,
           language_icon: '',

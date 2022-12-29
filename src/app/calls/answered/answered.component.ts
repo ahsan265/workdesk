@@ -2,7 +2,8 @@ import { agents, callTypeAnswered } from './answeredData';
 import { Component, HostListener, OnInit, ViewChild } from '@angular/core';
 import {
   AnsweredCallModel,
-  AnsweredCallModelTable
+  AnsweredCallModelTable,
+  newCallModelAnswered
 } from 'src/app/models/callModel';
 import { answeredTablaSetting } from '../missed/missedData';
 import { CallsService } from '../callService/calls.service';
@@ -25,8 +26,8 @@ export class AnsweredComponent implements OnInit {
   answeredData: AnsweredCallModelTable[] = [];
   unfilterAnsweredData: AnsweredCallModelTable[] = [];
   lastUsedSearch: string = '';
-
-
+  itemsPerPage: number = 10;
+  pageNumber: number = 1;
   startDate: string = '';
   endDate: string = '';
   ranges = ranges;
@@ -73,8 +74,8 @@ export class AnsweredComponent implements OnInit {
   async ngOnInit(): Promise<void> {
     this.languauges = await this.CommonService.getProjectLanguagesForUser();
     this.CallsService.sendDataToAnsweredTabsSubject.subscribe(
-      (data: AnsweredCallModel[]) => {
-        this.answeredData = data.map((answeredData) => ({
+      (data: newCallModelAnswered) => {
+        this.answeredData = data.calls.map((answeredData: AnsweredCallModel) => ({
           user_details: {
             image: '../../../assets/images/callInterface/user.png',
             text: answeredData.name
@@ -148,31 +149,37 @@ export class AnsweredComponent implements OnInit {
       event.dates[0].$d
     );
     this.endDate = this.calendarService.getDateRangeFormated(event.dates[1].$d);
-    this.CallsService.callQueueSocketByLanguageandCall(
+    this.CallsService.callQueueSocketByLanguageandCallFoPagination(
       this.languageIds,
       this.callTypeName,
       'finished',
-      this.aggregate
+      this.aggregate,
+      this.itemsPerPage,
+      this.pageNumber
     );
   }
 
   public callOutput(callTypeOutput: any) {
     this.callTypeName = this.CallsService.getCallTypeId(callTypeOutput);
-    this.CallsService.callQueueSocketByLanguageandCall(
+    this.CallsService.callQueueSocketByLanguageandCallFoPagination(
       this.languageIds,
       this.callTypeName,
       'finished',
-      this.aggregate
+      this.aggregate,
+      this.itemsPerPage,
+      this.pageNumber
     );
   }
 
   public languaugesOutput(languageOutput: number[]) {
     this.languageIds = languageOutput;
-    this.CallsService.callQueueSocketByLanguageandCall(
+    this.CallsService.callQueueSocketByLanguageandCallFoPagination(
       this.languageIds,
       this.callTypeName,
       'finished',
-      this.aggregate
+      this.aggregate,
+      this.itemsPerPage,
+      this.pageNumber
     );
   }
   // filter answered data
@@ -184,4 +191,29 @@ export class AnsweredComponent implements OnInit {
       this.answeredData = this.unfilterAnsweredData
     }
   }
+  // get page number
+  pagenumber(event: number) {
+    this.pageNumber = event;
+    this.CallsService.callQueueSocketByLanguageandCallFoPagination(
+      this.languageIds,
+      this.callTypeName,
+      'finished',
+      this.aggregate,
+      this.itemsPerPage,
+      this.pageNumber
+    );
+  }
+  // get number of items per page()
+  itemPerPage(event: number) {
+    this.itemsPerPage = Number(event);
+    this.CallsService.callQueueSocketByLanguageandCallFoPagination(
+      this.languageIds,
+      this.callTypeName,
+      'finished',
+      this.aggregate,
+      this.itemsPerPage,
+      this.pageNumber
+    );
+  }
+
 }

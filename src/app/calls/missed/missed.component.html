@@ -41,8 +41,8 @@
   </div>
 </div>
 <div class="tableWrapper">
-  <gigaaa-workdesk-table [tableData]="missedCallData" [tableSettings]="tableSettings">
+  <gigaaa-workdesk-table [tableData]="missedCallData" [tableSettings]="tableSettings"  (pagenumber)="pagenumber($event)"
+  (itemPerPage)="itemPerPage($event)">
   </gigaaa-workdesk-table>
-  <!-- <app-pagination [pagination]="{pages: 44, num: 4, page: 1, entries: 44}"></app-pagination> -->
   <app-no-table-data *ngIf="missedCallData.length === 0"></app-no-table-data>
 </div>

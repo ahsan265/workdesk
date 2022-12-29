@@ -16,11 +16,24 @@ const addons = [
   },
 
 ];
+const placeholder = {
+  items_count: 10,
+  items_per_page: 10,
+  page_number: 1,
+  total_pages: 10,
+  type: '',
+  calls: []
+}
 
+const placeholderIncoming = {
+  new_call: false,
+  type: 'incoming',
+  calls: []
+}
 const defaultCallData: CallsModel = {
-  incoming: [],
-  missed: [],
-  finished: [],
+  incoming: placeholderIncoming,
+  missed: placeholder,
+  finished: placeholder,
   ongoing: [],
   new_call: false
 }
