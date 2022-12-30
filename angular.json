@@ -41,8 +41,7 @@
               "node_modules/ngx-toastr/toastr.css"
             ],
             "scripts": [],
-            "additionalEnvironmentVariables": [],
-            "ngsscEnvironmentFile": "src/environments/environment.prod.ts"
+            "additionalEnvironmentVariables": []
           },
           "configurations": {
             "production": {
@@ -72,8 +71,7 @@
               "vendorChunk": true,
               "extractLicenses": false,
               "sourceMap": true,
-              "namedChunks": true,
-              "ngsscEnvironmentFile": "src/environments/environment.ts"
+              "namedChunks": true
             }
           },
           "defaultConfiguration": "production"
