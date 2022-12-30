@@ -3,6 +3,11 @@
 
 .cdk-overlay-container {
   z-index: 1000;
+  top: 0;
+  margin: 0 auto;
+  position: static;
+  height: 100%;
+  width: 100%;
 }
 
 .toastClass {
@@ -15,6 +20,8 @@
   height: 100%;
   width: 100%;
   display: grid;
+  top: 0;
+  position: absolute;
 }
 
 
@@ -34,10 +41,11 @@
 
 .imagePopup {
   width: 594px;
-  height: 355px;
+  height: fit-content;
   background: #FFFFFF;
-  box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.23);
+  box-shadow: 3px 3px 10px rgb(0 0 0 / 23%);
   border-radius: 4px;
+  padding: 30px;
 }
 
 .modal {

@@ -48,8 +48,7 @@ export class SharedServices {
   }
 
   // show open and close 
-  showDoneOrganization(value:boolean)
-  {
+  showDoneOrganization(value: boolean) {
     this.switchOrganizationDoneDialog.next(value);
   }
 }

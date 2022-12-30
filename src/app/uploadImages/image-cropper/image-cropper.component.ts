@@ -3,11 +3,13 @@ import {
   ElementRef,
   EventEmitter,
   Input,
+  OnDestroy,
   OnInit,
   Output,
   Renderer2,
   ViewChild
 } from '@angular/core';
+import { OverlayService } from '@gigaaa/gigaaa-components';
 import { base64ToFile } from 'ngx-image-cropper';
 import { CommonService } from 'src/app/workdeskServices/commonEndpoint/common.service';
 import { GigaaaApiService } from 'src/app/workdeskServices/gigaaaApiService/gigaaa-api-service.service';
@@ -19,7 +21,7 @@ import { SharedServices } from 'src/app/workdeskServices/sharedResourcesService/
   templateUrl: './image-cropper.component.html',
   styleUrls: ['./image-cropper.component.scss']
 })
-export class ImageCropperComponent implements OnInit {
+export class ImageCropperComponent implements OnInit, OnDestroy {
   @Input() public fileName: string = '';
   @Input() public imageSize: string = '';
   @Input() public imageView: string = '';
@@ -53,6 +55,7 @@ export class ImageCropperComponent implements OnInit {
   public translatePos = { x: this.CanvasWidth / 2, y: this.CanvasHeight / 2 };
   public scale = 1.0;
   public scaleMultiplier = 0.8;
+  isDrag = 1;
 
   @ViewChild('layer1', { static: false })
   layer1Canvas!: ElementRef;
@@ -64,8 +67,12 @@ export class ImageCropperComponent implements OnInit {
     private GigaaaApiService: GigaaaApiService,
     private CommonService: CommonService,
     private MessageService: MessageService,
-    private SharedServices: SharedServices
+    private SharedServices: SharedServices,
+    private OverlayService: OverlayService
   ) { }
+  ngOnDestroy(): void {
+
+  }
 
   imageLoad(image: string) {
     this.image = new Image();
@@ -103,15 +110,16 @@ export class ImageCropperComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    // this.SharedServices.saveImageUpload.subscribe((data) => {
+    //   if (data) {
+    //     this.cropImages();
+    //     let image = this.context.canvas.toDataURL();
+    //     const base64 = base64ToFile(image);
+    //     this.updateUserProfilePicture(base64);
+    //   }
+    // });
     this.imageLoad(this.imageView);
-    this.SharedServices.saveImageUpload.subscribe((data) => {
-      if (data) {
-        this.cropImages();
-        let image = this.context.canvas.toDataURL();
-        const base64 = base64ToFile(image);
-        this.updateUserProfilePicture(base64);
-      }
-    });
+
   }
   zoomOut() {
     if (this.scale !== 1.0) {
@@ -126,15 +134,21 @@ export class ImageCropperComponent implements OnInit {
     }
   }
   dragEvent(event: MouseEvent) {
+
     this.renderer.listen(document, 'mousemove', (e) => {
-      const main = document.querySelector('.picturearea') as HTMLElement;
-      const drag = document.querySelector('.content') as HTMLElement;
-      this.initY = drag.getBoundingClientRect().top - main.getBoundingClientRect().top;
-      this.initX = drag.getBoundingClientRect().left - main.getBoundingClientRect().left;
+      if (this.isDrag === 1) {
+        const main = document.querySelector('.picturearea') as HTMLElement;
+        const drag = document.querySelector('.content') as HTMLElement;
+        this.initY = drag.getBoundingClientRect().top - main.getBoundingClientRect().top;
+        this.initX = drag.getBoundingClientRect().left - main.getBoundingClientRect().left;
+      }
     });
 
 
+
+
     this.renderer.listen(document, 'mouseup', (e) => {
+
     });
 
 
@@ -189,7 +203,10 @@ export class ImageCropperComponent implements OnInit {
     return Math.round(width);
   }
 
-  public updateUserProfilePicture(file: any) {
+  public updateUserProfilePicture() {
+    this.cropImages();
+    let image = this.context.canvas.toDataURL();
+    const file: any = base64ToFile(image);
     this.GigaaaApiService.uploaduserprofilepic(
       this.CommonService.getEndpointsParamLocal().token,
       this.CommonService.getEndpointsParamLocal().organization,
@@ -200,7 +217,8 @@ export class ImageCropperComponent implements OnInit {
         if (event['type'] === 4) {
           this.MessageService.setSuccessMessage('Profile picture updated');
           this.SharedServices.updateAgentImage(event['body']['96']);
-          this.SharedServices.closeImageDialog(false);
+          this.isDrag = 0;
+          this.OverlayService.close();
         }
       },
       (err: any) => {
@@ -222,7 +240,8 @@ export class ImageCropperComponent implements OnInit {
             'Agent profile picture updated'
           );
           this.SharedServices.updateAgentImage(event['body']['96']);
-          this.SharedServices.closeImageDialog(false);
+          this.isDrag = 0;
+          this.OverlayService.close();
         }
       },
       (err: any) => {
