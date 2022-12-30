@@ -9,8 +9,7 @@ RUN npm i @angular/cli -g
 
 RUN npm config set @gigaaa:registry https://gitlab.gigaaa.link/api/v4/projects/59/packages/npm/
 RUN npm config set -- '//gitlab.gigaaa.link/api/v4/projects/59/packages/npm/:_authToken' "glpat-gMu5vstkxC-2dQjDdr6G"
-RUN npm i
-
+RUN npm i --legacy-peer-deps
 RUN ng build
 
 ### STAGE 2: Run ###
