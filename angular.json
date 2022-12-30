@@ -127,7 +127,6 @@
           "builder": "angular-server-side-configuration:ngsscbuild",
           "options": {
             "additionalEnvironmentVariables": [],
-            "ngsscEnvironmentFile": "src/environments/environment.prod.ts",
             "browserTarget": "workdesk:ngsscbuild:production"
           },
           "configurations": {
