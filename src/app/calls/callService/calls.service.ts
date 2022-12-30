@@ -10,6 +10,7 @@ import {
   newCallModelAnswered,
   newCallModelIncoming,
   newCallModelMissed,
+  newCallModelOngoing,
   OngoingCallModel
 } from 'src/app/models/callModel';
 import { OneSelect } from 'src/app/models/oneSelect';
@@ -24,7 +25,7 @@ export class CallsService {
   ) { }
   sendDataToIncomingTabsSubject = new ReplaySubject<newCallModelIncoming>();
   sendDataToMissedTabsSubject = new ReplaySubject<newCallModelMissed>();
-  sendDataToOngoingTabsSubject = new ReplaySubject<OngoingCallModel[]>();
+  sendDataToOngoingTabsSubject = new ReplaySubject<newCallModelOngoing>();
   sendDataToAnsweredTabsSubject = new ReplaySubject<newCallModelAnswered>();
   public callQueueSocketByLanguageandCall(
     languageId: number[],
@@ -72,7 +73,6 @@ export class CallsService {
   sendDataToTabs(data: any, tabname: string) {
     switch (tabname) {
       case 'incoming':
-        console.log(tabname)
         this.sendDataToIncomingTabsSubject.next(data);
         break;
       case 'ongoing':

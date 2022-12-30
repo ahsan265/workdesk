@@ -26,6 +26,8 @@ import { CommonService } from '../workdeskServices/commonEndpoint/common.service
 import { MessageService } from '../workdeskServices/messageService/message.service';
 import { AgentService } from '../agents/agentService/agent.service';
 import { SharedServices } from '../workdeskServices/sharedResourcesService/shared-resource-service.service';
+import { OverlayService } from '@gigaaa/gigaaa-components';
+import { UploadImageComponent } from '../modals/upload-image/upload-image.component';
 
 @Component({
   selector: 'app-agent-settings',
@@ -84,7 +86,8 @@ export class AgentSettingsComponent implements OnInit {
     private CommonService: CommonService,
     private MessageService: MessageService,
     private AgentService: AgentService,
-    private SharedServices: SharedServices
+    private SharedServices: SharedServices,
+    private OverlayService: OverlayService
   ) { }
 
   ngOnInit() {
@@ -100,7 +103,7 @@ export class AgentSettingsComponent implements OnInit {
     this.SharedServices.setAgentImage.subscribe((data: string) => {
       let timestamp = new Date().getTime();
       this.agentImage = data + '?_=' + timestamp;
-      this.showImageRemove=true;
+      this.showImageRemove = true;
     });
 
     // closing passwordpopup
@@ -185,7 +188,11 @@ export class AgentSettingsComponent implements OnInit {
   // for image upload
 
   openImageUploadButton() {
-    this.showImageUploadModal = true;
+    this.OverlayService.open({
+      component: UploadImageComponent,
+      panelClass: 'imagePopup',
+      hasBackdrop: true
+    })
   }
   onGetSubmitImageUploadOutput(event: any) {
     if (event) {
@@ -303,7 +310,7 @@ export class AgentSettingsComponent implements OnInit {
   async removeImage() {
     const defaultImage = await this.agentSettingService.removeAgentImage(this.selectedAgent.uuid);
     this.agentImage = defaultImage[96];
-    this.showImageRemove=false;
+    this.showImageRemove = false;
 
   }
 }

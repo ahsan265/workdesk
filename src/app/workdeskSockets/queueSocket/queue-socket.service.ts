@@ -94,6 +94,8 @@ export class QueueSocketService {
         this.callDataSubject.next(QueueList);
         break;
       case 'ongoing':
+        this.defaultCallData.ongoing = QueueList;
+        this.callDataSubject.next(QueueList);
         break;
       default:
         break;

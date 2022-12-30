@@ -4,6 +4,7 @@
 
 ::ng-deep .tableWrapper .tableWrap {
   padding: 0 !important;
+  height: calc(100vh + 250px);
 }
 
 :ng-deep .tableWrapper .tableWrap table {

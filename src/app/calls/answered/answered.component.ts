@@ -1,4 +1,4 @@
-import { agents, callTypeAnswered } from './answeredData';
+import { agents, callTypeAnswered, paginationData } from './answeredData';
 import { Component, HostListener, OnInit, ViewChild } from '@angular/core';
 import {
   AnsweredCallModel,
@@ -21,6 +21,7 @@ import { ranges } from 'src/app/dashboard/dashboardData';
   styleUrls: ['./answered.component.scss']
 })
 export class AnsweredComponent implements OnInit {
+  pagination = paginationData;
   showCalender = true;
   tableSettings = answeredTablaSetting;
   answeredData: AnsweredCallModelTable[] = [];
@@ -75,6 +76,8 @@ export class AnsweredComponent implements OnInit {
     this.languauges = await this.CommonService.getProjectLanguagesForUser();
     this.CallsService.sendDataToAnsweredTabsSubject.subscribe(
       (data: newCallModelAnswered) => {
+        this.pagination.totalItems = data.items_count;
+        this.pagination.totolPages = data.total_pages;
         this.answeredData = data.calls.map((answeredData: AnsweredCallModel) => ({
           user_details: {
             image: '../../../assets/images/callInterface/user.png',
@@ -194,6 +197,7 @@ export class AnsweredComponent implements OnInit {
   // get page number
   pagenumber(event: number) {
     this.pageNumber = event;
+    this.pagination.currentPage = event;
     this.CallsService.callQueueSocketByLanguageandCallFoPagination(
       this.languageIds,
       this.callTypeName,
@@ -206,6 +210,7 @@ export class AnsweredComponent implements OnInit {
   // get number of items per page()
   itemPerPage(event: number) {
     this.itemsPerPage = Number(event);
+    this.pagination.itemsPerPage = this.itemsPerPage;
     this.CallsService.callQueueSocketByLanguageandCallFoPagination(
       this.languageIds,
       this.callTypeName,

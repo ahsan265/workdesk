@@ -107,7 +107,7 @@ export interface CallsModel {
   incoming: newCallModelIncoming;
   missed: newCallModelMissed;
   finished: newCallModelAnswered;
-  ongoing: OngoingCallModel[];
+  ongoing: newCallModelOngoing;
   new_call: boolean;
 }
 export interface newCallModelMissed {
@@ -123,6 +123,10 @@ export interface newCallModelIncoming {
   new_call: boolean;
   type: string;
   calls: IncomingCallModel[]
+}
+export interface newCallModelOngoing {
+  type: string;
+  calls: OngoingCallModel[]
 }
 export interface paginationModelSocket {
   items_count: number;

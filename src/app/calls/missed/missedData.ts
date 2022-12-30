@@ -156,6 +156,13 @@ const answeredTablaSetting: tableSettings = {
     }
   ]
 };
+const paginationData: any =
+{
+  currentPage: 1,
+  itemsPerPage: 10,
+  totalItems: 50,
+  totolPages: 12
+}
 const missedCallData: any[] = [
   {
     call_uuid: 'dshfjdgshfjfs',
@@ -229,4 +236,4 @@ const searchInputData: SearchInput = {
 };
 
 
-export { missedTableSetting, missedCallData, answeredTablaSetting, callTypeMissed, searchInputData ,languauges};
+export { missedTableSetting, missedCallData, answeredTablaSetting, callTypeMissed, searchInputData, languauges, paginationData };

@@ -77,6 +77,15 @@ const callTypeAnswered: MultiSelect = {
     { id: 2, name: 'Video', selected: false }
   ]
 };
+
+const paginationData: any =
+{
+  currentPage: 1,
+  itemsPerPage: 10,
+  totalItems: 50,
+  totolPages: 12
+}
+
 const agents = [
   {
     id: '1',
@@ -137,4 +146,4 @@ const agents = [
 ];
 
 
-export { dataTableSettings, agents ,callTypeAnswered};
+export { dataTableSettings, agents, callTypeAnswered, paginationData };

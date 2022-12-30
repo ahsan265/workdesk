@@ -10,6 +10,7 @@ import {
   GigaaaLandingPageModule,
   GigaaaPaginatePipe,
   GigaaaPaginationModule,
+  gigaaaPopupModule,
   GigaaaSidebarModule,
   GigaaaTableModule,
   GigaaaTableWorkdeskModule,
@@ -175,7 +176,7 @@ import { GigaaaApiService } from './workdeskServices/gigaaaApiService/gigaaa-api
     OverlayModule,
     GigaaaTableWorkdeskModule,
     GigaaaPaginationModule,
-  
+    gigaaaPopupModule
   ],
   providers: [
     GigaaaPaginatePipe,

@@ -1,4 +1,4 @@
-import { callTypeMissed, languauges, missedCallData, missedTableSetting, searchInputData } from './missedData';
+import { callTypeMissed, languauges, missedCallData, missedTableSetting, paginationData, searchInputData } from './missedData';
 import { Component, HostListener, OnInit, ViewChild } from '@angular/core';
 import { CallsService } from '../callService/calls.service';
 import {
@@ -21,6 +21,7 @@ import { ranges } from 'src/app/dashboard/dashboardData';
   styleUrls: ['./missed.component.scss']
 })
 export class MissedComponent implements OnInit {
+  pagination = paginationData;
   showCalender = true;
   tableSettings = missedTableSetting;
   missedCallData: MissedCallModelTable[] = [];
@@ -57,9 +58,7 @@ export class MissedComponent implements OnInit {
     }
   }
 
-  pagination = {
 
-  }
   constructor(
     private CallsService: CallsService,
     private CommonService: CommonService,
@@ -74,7 +73,9 @@ export class MissedComponent implements OnInit {
       textColor: '#FF155A',
       isAgent: false
     };
-    this.CallsService.sendDataToMissedTabsSubject.subscribe((data:newCallModelMissed) => {
+    this.CallsService.sendDataToMissedTabsSubject.subscribe((data: newCallModelMissed) => {
+      this.pagination.totalItems = data.items_count;
+      this.pagination.totolPages = data.total_pages;
       this.missedCallData = data.calls.map((missedCallData: MissedCallModel) => ({
         agent_name: missedCallData.name,
         call_uuid: missedCallData.call_uuid,
@@ -116,6 +117,7 @@ export class MissedComponent implements OnInit {
       }));
       this.unfilterMissedCallData = this.missedCallData;
       this.callsIndicatorData.text = this.missedCallData.length + ' missed requests';
+
 
     }
     );
@@ -201,7 +203,8 @@ export class MissedComponent implements OnInit {
   }
   // get page number
   pagenumber(event: number) {
-    this.itemsPerPage = event;
+    this.pageNumber = event;
+    this.pagination.currentPage = event;
     this.CallsService.callQueueSocketByLanguageandCallFoPagination(
       this.languageIds,
       this.callTypeName,
@@ -213,7 +216,9 @@ export class MissedComponent implements OnInit {
   }
   // get number of items per page()
   itemPerPage(event: number) {
+    console.log(event);
     this.itemsPerPage = Number(event);
+    this.pagination.itemsPerPage = this.itemsPerPage;
     this.CallsService.callQueueSocketByLanguageandCallFoPagination(
       this.languageIds,
       this.callTypeName,

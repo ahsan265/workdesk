@@ -4,6 +4,7 @@ import dayjs from 'dayjs';
 import { CalendarService } from 'src/app/calendarService/calendar.service';
 import { ranges } from 'src/app/dashboard/dashboardData';
 import {
+  newCallModelOngoing,
   OngoingCallModel,
   OngoingCallModelTable
 } from 'src/app/models/callModel';
@@ -57,9 +58,9 @@ export class OngoingComponent implements OnInit {
 
   ) {
     this.CallsSrvice.sendDataToOngoingTabsSubject.subscribe(
-      (data: OngoingCallModel[]) => {
+      (data: newCallModelOngoing) => {
 
-        this.ongoingData = data.map((answeredData) => ({
+        this.ongoingData = data.calls.map((answeredData) => ({
           user_details: {
             image: '../../../assets/images/callInterface/user.png',
             text: answeredData.name

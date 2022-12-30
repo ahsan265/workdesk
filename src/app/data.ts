@@ -34,7 +34,7 @@ const defaultCallData: CallsModel = {
   incoming: placeholderIncoming,
   missed: placeholder,
   finished: placeholder,
-  ongoing: [],
+  ongoing: placeholder,
   new_call: false
 }
 const icons = {
