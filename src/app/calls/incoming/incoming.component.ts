@@ -112,12 +112,12 @@ export class IncomingComponent implements OnInit {
 
   async getCallsId(event: any) {
     let data = { call_uuid: event.call_uuid };
-    await this.GigaaaApiService.getcalltype(
-      this.CommonService.getEndpointsParamLocal().token,
-      this.CommonService.getEndpointsParamLocal().organization,
-      this.CommonService.getEndpointsParamLocal().project,
-      data
-    );
+    // await this.GigaaaApiService.getcalltype(
+    //   this.CommonService.getEndpointsParamLocal().token,
+    //   this.CommonService.getEndpointsParamLocal().organization,
+    //   this.CommonService.getEndpointsParamLocal().project,
+    //   data
+    // );
     this.OverlayService.open({
       data: event
     });
