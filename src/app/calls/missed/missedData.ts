@@ -1,4 +1,5 @@
 import dayjs from 'dayjs';
+import { callsIndicatorData } from 'src/app/models/callIndicatorModel';
 import { tableSettings } from 'src/app/models/callModel';
 import { MultiSelect } from 'src/app/models/multiSelect';
 import { SearchInput } from 'src/app/models/searchInput';
@@ -234,6 +235,14 @@ const searchInputData: SearchInput = {
   placeholder: 'Search by name or user ID',
   searchText: ''
 };
+const missedData: callsIndicatorData = {
+  hightlightText: '',
+  text: 0 + ' missed requests',
+  icon: '../assets/images/components/calls_count_missed.svg',
+  backgroundColor: '#F9EBEF',
+  borderColor: '1px solid #F4CAD6',
+  textColor: '#FF155A',
+  isAgent: false
+};
 
-
-export { missedTableSetting, missedCallData, answeredTablaSetting, callTypeMissed, searchInputData, languauges, paginationData };
+export { missedTableSetting, missedCallData, answeredTablaSetting, callTypeMissed, searchInputData, languauges, paginationData ,missedData};

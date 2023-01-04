@@ -19,12 +19,22 @@
   max-height: 100px;
 }
 
+.agentListingContainer {
+  display: block;
+  height: 250px;
+  position: relative;
+  overflow-x: hidden;
+  overflow-y: scroll
+}
+
+// .agentListingContainer::-webkit-scrollbar {
+//   display: none;
+// }
 
 
 .inPageWrapper {
-  height: 200px;
   padding: 0 0 0 30px;
-  overflow-y: scroll;
+  overflow-y: hidden;
 }
 
 ::-webkit-scrollbar {
@@ -67,7 +77,7 @@
   color: #1c54db;
   margin-top: 10px;
   height: 50px;
-  margin-bottom: 10px;
+  margin-bottom: 22px;
   width: fit-content;
   cursor: pointer;
 }
@@ -106,6 +116,7 @@
   height: 95px;
   justify-content: flex-end;
   bottom: 0;
+  background: white;
   box-shadow: 0px -1px 4px rgb(0 0 0 / 25%);
 }
 

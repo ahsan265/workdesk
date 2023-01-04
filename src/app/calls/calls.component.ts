@@ -3,12 +3,10 @@
 /* eslint-disable sort-imports */
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { Component, HostListener, OnInit, ViewChild } from '@angular/core';
-import { callType, languauges, searchInputData } from './callsData';
+import { callType,searchInputData } from './callsData';
 import { filter, map } from 'rxjs/operators';
 import { AuthService } from '../services/auth.service';
-import { callsIndicatorData } from '../models/callIndicatorModel';
 import { CallsService } from './callService/calls.service';
-import { CommonService } from '../workdeskServices/commonEndpoint/common.service';
 import { GigaaaDaterangepickerDirective } from '@gigaaa/gigaaa-components';
 import { ranges } from '../dashboard/dashboardData';
 import dayjs from 'dayjs';
@@ -16,24 +14,22 @@ import { CalendarService } from '../calendarService/calendar.service';
 import { QueueSocketService } from '../workdeskSockets/queueSocket/queue-socket.service';
 import {
   AnsweredCallModel,
-  CallsModel,
   IncomingCallModel,
   MissedCallModel,
-  newCallModelMissed,
   OngoingCallModel
 } from '../models/callModel';
 import { AgentUserInformation } from '../workdeskServices/callInterfaceServices/agentUserInformation/agent-user-information.service';
 import { OverlayService } from '../callInterface/overLayService/overlay.service';
+import { getDefaultInputsLoadOnce } from './incoming/incoming.Service';
 
 @Component({
   selector: 'app-calls',
   templateUrl: './calls.component.html',
   styleUrls: ['./calls.component.scss'],
-  providers: [CallsService]
+  providers: [CallsService,getDefaultInputsLoadOnce]
 })
 export class CallsComponent implements OnInit {
   callType = callType;
-  languauges = languauges;
   searchInputData = searchInputData;
   showIndicator = false;
   callsIndicatorData = {};
@@ -50,11 +46,7 @@ export class CallsComponent implements OnInit {
     private route: ActivatedRoute,
     private activatedRoute: ActivatedRoute,
     private CallsService: CallsService,
-    private calendarService: CalendarService,
     private QueueSocketService: QueueSocketService,
-    private AgentUserInformation: AgentUserInformation,
-    private OverlayService: OverlayService,
-
 
   ) {
     this.authService.pageTitle.next('Calls');
@@ -124,9 +116,13 @@ export class CallsComponent implements OnInit {
     } else if (title === 'finished') {
       this.CallsService.sendDatatoMissedAndAnswered(data.finished, title);
     } else if (title === 'incoming') {
+      this.incomingData = data.incoming.calls;
       this.CallsService.sendDataToTabs(data.incoming, title);
     } else if (title === 'ongoing') {
+      this.ongoingData = data.ongoing.calls;
       this.CallsService.sendDataToTabs(data.ongoing, title);
     }
   }
+
+
 }

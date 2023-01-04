@@ -1,32 +1,35 @@
-import { callTypeMissed, languauges, missedCallData, missedTableSetting, paginationData, searchInputData } from './missedData';
 import { Component, HostListener, OnInit, ViewChild } from '@angular/core';
-import { CallsService } from '../callService/calls.service';
 import {
-  MissedCallModel,
-  MissedCallModelTable,
-  newCallModelMissed
+  AnsweredCallModel,
+  AnsweredCallModelTable,
+  newCallModelAnswered
 } from 'src/app/models/callModel';
 import { CommonService } from 'src/app/workdeskServices/commonEndpoint/common.service';
 import { GigaaaDaterangepickerDirective } from '@gigaaa/gigaaa-components';
 import dayjs from 'dayjs';
-import { callType } from '../callsData';
-import { CalendarService } from 'src/app/calendarService/calendar.service';
 import { callsIndicatorData } from 'src/app/models/callIndicatorModel';
-import { QueueSocketService } from 'src/app/workdeskSockets/queueSocket/queue-socket.service';
-import { MultiSelect } from 'src/app/models/multiSelect';
+import { CalendarService } from 'src/app/calendarService/calendar.service';
 import { ranges } from 'src/app/dashboard/dashboardData';
+import { languaugesAnswered, searchInputData } from '../../callsData';
+import { answeredTablaSetting } from '../../missed/missedData';
+import { answeredData, callTypeAnswered, paginationData } from '../answeredData';
+import { CallsService } from '../../callService/calls.service';
+import { getDefaultInputsLoadOnce } from '../../incoming/incoming.Service';
+
 @Component({
-  selector: 'app-missed',
-  templateUrl: './missed.component.html',
-  styleUrls: ['./missed.component.scss']
+  selector: 'app-answered',
+  templateUrl: './answered.component.html',
+  styleUrls: ['./answered.component.scss']
 })
-export class MissedComponent implements OnInit {
+export class AnsweredComponent implements OnInit {
   pagination = paginationData;
   showCalender = true;
-  tableSettings = missedTableSetting;
-  missedCallData: MissedCallModelTable[] = [];
-  unfilterMissedCallData: MissedCallModelTable[] = [];
+  tableSettings = answeredTablaSetting;
+  answeredData: AnsweredCallModelTable[] = [];
+  unfilterAnsweredData: AnsweredCallModelTable[] = [];
   lastUsedSearch: string = '';
+  itemsPerPage: number = 10;
+  pageNumber: number = 1;
   startDate: string = '';
   endDate: string = '';
   ranges = ranges;
@@ -38,18 +41,16 @@ export class MissedComponent implements OnInit {
     endDate: this.date_to,
     aggregate: this.aggregate
   };
-  callType = callTypeMissed;
-  languauges = languauges;
+  callType = callTypeAnswered;
+  languauges = languaugesAnswered;
   searchInputData = searchInputData;
-  itemsPerPage: number = 10;
-  pageNumber: number = 1;
   @ViewChild(GigaaaDaterangepickerDirective, { static: false })
   pickerDirective: GigaaaDaterangepickerDirective | undefined;
   alwaysShowCalendars: boolean | undefined;
   showCalendar: boolean = false;
   languageIds: number[] = [];
   callTypeName: string[] = [];
-  callsIndicatorData!: callsIndicatorData;
+  callsIndicatorData = answeredData;
   @ViewChild('calendarDropdown') calendar: any = HTMLElement;
   @HostListener('document:click', ['$event'])
   clickout(event: any) {
@@ -57,77 +58,75 @@ export class MissedComponent implements OnInit {
       this.showCalendar = false;
     }
   }
-
-
   constructor(
     private CallsService: CallsService,
     private CommonService: CommonService,
     private calendarService: CalendarService,
+    private getDefaultInputsLoadOnce: getDefaultInputsLoadOnce
+
   ) {
-    this.callsIndicatorData = {
-      hightlightText: '',
-      text: this.missedCallData.length + ' missed requests',
-      icon: '../assets/images/components/calls_count_missed.svg',
-      backgroundColor: '#F9EBEF',
-      borderColor: '1px solid #F4CAD6',
-      textColor: '#FF155A',
-      isAgent: false
-    };
-    this.CallsService.sendDataToMissedTabsSubject.subscribe((data: newCallModelMissed) => {
-      this.pagination.totalItems = data.items_count;
-      this.pagination.totolPages = data.total_pages;
-      this.missedCallData = data.calls.map((missedCallData: MissedCallModel) => ({
-        agent_name: missedCallData.name,
-        call_uuid: missedCallData.call_uuid,
-        called_at: this.CallsService
-          .getCalledAtTimeDate(missedCallData.missed_at, this.aggregate),
-        callType: {
-          image: this.CommonService.getConversationType(
-            missedCallData.is_video
-          ),
-          text: this.CallsService.getCallType(missedCallData.is_video)
-        },
-        resaon: missedCallData.reason,
-        user_details: {
-          image: '../../../assets/images/callInterface/user.png',
-          text: missedCallData.name
-        },
-        user_id: this.CallsService.getUserId(missedCallData.user_id),
-        utilites: [
-          {
-            image: this.CommonService.getLanguageFlags(
-              missedCallData.language_id
-            )
+    // this.callsIndicatorData = {
+    //   hightlightText: '',
+    //   text: this.answeredData + ' answered requests',
+    //   icon: '../assets/images/components/calls_count_answered.svg',
+    //   backgroundColor: '#EBF6DD',
+    //   borderColor: '1px solid #C1E297',
+    //   textColor: '#76CB09',
+    //   isAgent: false
+    // };
+    this.CallsService.sendDataToAnsweredTabsSubject.subscribe(
+      (data: newCallModelAnswered) => {
+        this.pagination.totalItems = data.items_count;
+        this.pagination.totolPages = data.total_pages;
+        this.answeredData = data.calls.map((answeredData: AnsweredCallModel) => ({
+          user_details: {
+            image: '../../../assets/images/callInterface/user.png',
+            text: answeredData.name
           },
-          {
-            image: this.CommonService.getBrowserFlag(missedCallData.browser)
+          utilites: [
+            {
+              image: this.CommonService.getLanguageFlags(
+                answeredData.language_id
+              )
+            },
+            { image: this.CommonService.getBrowserFlag(answeredData.browser) },
+            {
+              image: this.CommonService.getDeviceType(answeredData.desktop)
+            },
+            {
+              image: this.CommonService.getOperatingSystem(
+                answeredData.operating_system
+              )
+            }
+          ],
+          callType: {
+            image: this.CommonService.getConversationType(
+              answeredData.is_video
+            ),
+            text: this.CallsService.getCallType(answeredData.is_video)
           },
-          {
-            image: this.CommonService.getDeviceType(missedCallData.desktop)
-          },
-          {
-            image: this.CommonService.getOperatingSystem(
-              missedCallData.operating_system
-            )
+          call_uuid: answeredData.call_uuid,
+          duration: this.CallsService
+            .getCalledAtTimeDate(answeredData.call_started_at, this.aggregate),
+          agent_name: answeredData.agent.display_name,
+          user_id: this.CallsService.getUserId(answeredData.user_id),
+          agent_details: {
+            image: answeredData.agent.images[96],
+            text: answeredData.agent.email
           }
-        ],
-        wait_time: this.CallsService
-          .calculatetime(missedCallData.wait_time)
-          .toString()
-      }));
-      this.unfilterMissedCallData = this.missedCallData;
-      this.callsIndicatorData.text = this.missedCallData.length + ' missed requests';
+        }));
+        this.unfilterAnsweredData = this.answeredData
+        this.callsIndicatorData.text = this.pagination.totalItems + ' answered requests';
 
-
-    }
+      }
     );
-
   }
   async ngOnInit(): Promise<void> {
-    this.languauges = await this.CommonService.getProjectLanguagesForUser();
+    this.getDefaultInputsLoadOnce.answeredlanguage.asObservable().subscribe(data => {
+      this.languauges = data;
+    })
 
   }
-
 
   change(event: any) {
     if (event.startDate) {
@@ -162,7 +161,7 @@ export class MissedComponent implements OnInit {
     this.CallsService.callQueueSocketByLanguageandCallFoPagination(
       this.languageIds,
       this.callTypeName,
-      'missed',
+      'finished',
       this.aggregate,
       this.itemsPerPage,
       this.pageNumber
@@ -174,7 +173,7 @@ export class MissedComponent implements OnInit {
     this.CallsService.callQueueSocketByLanguageandCallFoPagination(
       this.languageIds,
       this.callTypeName,
-      'missed',
+      'finished',
       this.aggregate,
       this.itemsPerPage,
       this.pageNumber
@@ -186,19 +185,19 @@ export class MissedComponent implements OnInit {
     this.CallsService.callQueueSocketByLanguageandCallFoPagination(
       this.languageIds,
       this.callTypeName,
-      'missed',
+      'finished',
       this.aggregate,
       this.itemsPerPage,
       this.pageNumber
     );
   }
-  // filter missed data
+  // filter answered data
   getSearchValue(value: string) {
     this.lastUsedSearch = value;
-    this.missedCallData = this.CallsService.search(value, this.missedCallData, this.unfilterMissedCallData);
-    this.callsIndicatorData.text = this.missedCallData.length + ' missed requests';
-    if (value.length === 0 && this.missedCallData.length === 0) {
-      this.missedCallData = this.unfilterMissedCallData
+    this.answeredData = this.CallsService.search(value, this.answeredData, this.unfilterAnsweredData);
+    this.callsIndicatorData.text = this.answeredData.length + ' answered requests';
+    if (value.length === 0 && this.answeredData.length === 0) {
+      this.answeredData = this.unfilterAnsweredData
     }
   }
   // get page number
@@ -208,7 +207,7 @@ export class MissedComponent implements OnInit {
     this.CallsService.callQueueSocketByLanguageandCallFoPagination(
       this.languageIds,
       this.callTypeName,
-      'missed',
+      'finished',
       this.aggregate,
       this.itemsPerPage,
       this.pageNumber
@@ -216,13 +215,12 @@ export class MissedComponent implements OnInit {
   }
   // get number of items per page()
   itemPerPage(event: number) {
-    console.log(event);
     this.itemsPerPage = Number(event);
     this.pagination.itemsPerPage = this.itemsPerPage;
     this.CallsService.callQueueSocketByLanguageandCallFoPagination(
       this.languageIds,
       this.callTypeName,
-      'missed',
+      'finished',
       this.aggregate,
       this.itemsPerPage,
       this.pageNumber

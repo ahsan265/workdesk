@@ -12,8 +12,8 @@
         <app-multi-select-dropdown [multiSelectData]="languauges" (multiSelectOutput)="languaugesOutput($event)">
         </app-multi-select-dropdown>
       </div>
-      <div class="multiSelectWrapper calendar" #calendarDropdown>
-        <div class="calendarLocationLanguage calendarSelectMenu" (click)="onOpenCalendar()">
+      <div class="multiSelectWrapper calendar" #calendarDropdown (click)="onOpenCalendar()">
+        <div class="calendarLocationLanguage calendarSelectMenu" >
           <input readonly (change)="change($event)" (rangeClicked)="rangeClicked($event)" type="text"
             placeholder="Choose date" GigaaaDatepicker [(ngModel)]="selected" [showCustomRangeLabel]="false"
             [alwaysShowCalendars]="true" [ranges]="ranges" [linkedCalendars]="true" [showRangeLabelOnInput]="true"

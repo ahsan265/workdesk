@@ -24,13 +24,11 @@ import {
 } from '@gigaaa/gigaaa-components';
 import { AgentSettingsComponent } from './agent-settings/agent-settings.component';
 import { AgentsComponent } from './agents/agents.component';
-import { AnsweredComponent } from './calls/answered/answered.component';
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { BrowserModule } from '@angular/platform-browser';
 import { CallsComponent } from './calls/calls.component';
-import { CallsIndicatorComponent } from './components/calls-indicator/calls-indicator.component';
 import { ChartBarComponent } from './charts/chart-bar/chart-bar.component';
 import { ChartDoughnutComponent } from './charts/chart-doughnut/chart-doughnut.component';
 import { ChartLineComponent } from './charts/chart-line/chart-line.component';
@@ -38,14 +36,11 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 import { FilterPipe } from './pipes/filter.pipe';
 import { FooterComponent } from './footer/footer.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { IncomingComponent } from './calls/incoming/incoming.component';
 import { LandingPageComponent } from './landing-page/landing-page.component';
 import { MainComponent } from './main/main.component';
-import { MissedComponent } from './calls/missed/missed.component';
 import { NgChartsModule } from 'ng2-charts';
 import { APP_INITIALIZER, NgModule } from '@angular/core';
 import { NgxPaginationModule } from 'ngx-pagination';
-import { OngoingComponent } from './calls/ongoing/ongoing.component';
 import { PageWrapperComponent } from './components/page-wrapper/page-wrapper.component';
 import { environment } from 'src/environments/environment';
 import { linkExpireModalComponent } from './modals/link-expire-modal/link-expire-modal.component';
@@ -78,7 +73,6 @@ import { scrollStageDirective } from './directives/scrollDirective';
 import { CountersComponent } from './components/counters/counters.component';
 
 import { WrongInvitationAccountComponent } from './modals/wrong-invitation-account/wrong-invitation-account.component';
-import { NoTableDataComponent } from './components/no-table-data/no-table-data.component';
 import { LoaderComponent } from './components/loader/loader.component';
 import { AuthService } from './services/auth.service';
 import { overlayToken } from './callInterface/overLayService/overlayToken';
@@ -87,18 +81,22 @@ import { SwitchOgranizationDoneComponent } from './modals/switch-ogranization-do
 import { ReDialCallService } from './workdeskServices/reDialCallService/re-dial-call.service';
 import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
 import { PaginationComponent } from './components/pagination/pagination.component';
-import { GigaaaApiService } from './workdeskServices/gigaaaApiService/gigaaa-api-service.service';
+import { CallsIndicatorComponent } from './components/calls-indicator/calls-indicator.component';
+import { NoTableDataComponent } from './components/no-table-data/no-table-data.component';
+import { IncomingComponent } from './calls/incoming/incoming/incoming.component';
+import { MissedComponent } from './calls/missed/missed/missed.component';
+import { AnsweredComponent } from './calls/answered/answered/answered.component';
+import { OngoingComponent } from './calls/ongoing/ongoing/ongoing.component';
+import { agentScrollList } from './directives/agentListDirective';
 
 @NgModule({
   declarations: [
+    CallsIndicatorComponent,
+    NoTableDataComponent,
     AppComponent,
     DashboardComponent,
     CallsComponent,
     AgentsComponent,
-    IncomingComponent,
-    OngoingComponent,
-    MissedComponent,
-    AnsweredComponent,
     FooterComponent,
     MainComponent,
     ChartBarComponent,
@@ -107,7 +105,6 @@ import { GigaaaApiService } from './workdeskServices/gigaaaApiService/gigaaa-api
     FilterPipe,
     PageWrapperComponent,
     AgentSettingsComponent,
-    CallsIndicatorComponent,
     LandingPageComponent,
     linkExpireModalComponent,
     UpdatePasswordComponent,
@@ -119,6 +116,7 @@ import { GigaaaApiService } from './workdeskServices/gigaaaApiService/gigaaa-api
     peerMiniCameraAnimation,
     callInterfaceHideControlDirective,
     scrollStageDirective,
+    agentScrollList,
     CallConsoleComponent,
     CallsHeaderComponent,
     CallingScreenComponent,
@@ -134,12 +132,15 @@ import { GigaaaApiService } from './workdeskServices/gigaaaApiService/gigaaa-api
     AgentListingComponent,
     CountersComponent,
     WrongInvitationAccountComponent,
-    NoTableDataComponent,
     LoaderComponent,
     SwitchOrganizationComponent,
     SwitchOgranizationDoneComponent,
     PageNotFoundComponent,
     PaginationComponent,
+    IncomingComponent,
+    MissedComponent,
+    AnsweredComponent,
+    OngoingComponent
   ],
   imports: [
     BrowserAnimationsModule,
@@ -176,7 +177,7 @@ import { GigaaaApiService } from './workdeskServices/gigaaaApiService/gigaaa-api
     OverlayModule,
     GigaaaTableWorkdeskModule,
     GigaaaPaginationModule,
-    gigaaaPopupModule
+    gigaaaPopupModule,
   ],
   providers: [
     GigaaaPaginatePipe,
@@ -185,16 +186,16 @@ import { GigaaaApiService } from './workdeskServices/gigaaaApiService/gigaaa-api
       useClass: GigaaaHeaderService
     },
     {
-      provide: overlayToken, 
-      useClass: OverlayService 
+      provide: overlayToken,
+      useClass: OverlayService
     },
     {
       provide: APP_INITIALIZER,
-      useClass: ReDialCallService 
+      useClass: ReDialCallService
     },
     AuthService,
-    
+
   ],
   bootstrap: [AppComponent]
 })
-export class AppModule {}
+export class AppModule { }

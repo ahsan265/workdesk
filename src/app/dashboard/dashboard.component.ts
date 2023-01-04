@@ -231,6 +231,7 @@ export class DashboardComponent implements OnInit {
 
   onOpenCalendar() {
     this.showCalendar = !this.showCalendar;
+    console.log(this.showCalendar);
   }
 
   //default date param 

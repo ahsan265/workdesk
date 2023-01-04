@@ -4,18 +4,17 @@
 
 ::ng-deep .tableWrapper .tableWrap {
   padding: 0 !important;
-  height: calc(100vh + 200px);
-
+  height: fit-content;
 }
+
+// ::ng-deep .tableWrapper .tableWrap table {
+//   border-bottom-left-radius: 0px;
+//   border-bottom-right-radius: 0px;
+// }
 
 ::ng-deep .tableWrapper .tableWrap .table thead tr th:first-child,
 ::ng-deep .tableWrapper .tableWrap .table tbody tr td:first-child {
   text-align: left !important;
-}
-
-:ng-deep .tableWrapper .tableWrap table {
-  border-bottom-left-radius: 0px;
-  border-bottom-right-radius: 0px;
 }
 
 ::ng-deep .filterWrapper .leftFilter .dropdownWrapper,
@@ -37,6 +36,14 @@
 ::ng-deep .filterWrapper>.leftFilter .dropdownWrapper .selectDropdown {
   background: #ededf6 !important;
   border: none;
+}
+
+.callsActive {
+  border-bottom: 2px solid #1c54db;
+
+  a {
+    color: #162741;
+  }
 }
 
 .filterWrapper {

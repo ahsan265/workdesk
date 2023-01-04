@@ -1,13 +1,7 @@
 import { MultiSelect } from '../models/multiSelect';
 import { SearchInput } from '../models/searchInput';
 
-const languauges: MultiSelect = {
-  title: 'Language',
-  showSelectAll: true,
-  showSearchBar: false,
-  data: [
-  ]
-};
+
 
 const callType: MultiSelect = {
   title: 'Call type',
@@ -18,10 +12,37 @@ const callType: MultiSelect = {
     { id: 2, name: 'Video', selected: false }
   ]
 };
-
+const languaugesIncoming: MultiSelect = {
+  title: 'Language',
+  showSelectAll: true,
+  showSearchBar: false,
+  data: [
+  ]
+};
+const languaugesMissed: MultiSelect = {
+  title: 'Language',
+  showSelectAll: true,
+  showSearchBar: false,
+  data: [
+  ]
+};
+const languaugesOngoing: MultiSelect = {
+  title: 'Language',
+  showSelectAll: true,
+  showSearchBar: false,
+  data: [
+  ]
+};
+const languaugesAnswered: MultiSelect = {
+  title: 'Language',
+  showSelectAll: true,
+  showSearchBar: false,
+  data: [
+  ]
+};
 const searchInputData: SearchInput = {
   placeholder: 'Search by name or user ID',
   searchText: ''
 };
 
-export { languauges, callType, searchInputData };
+export { languaugesIncoming, languaugesAnswered, languaugesOngoing, languaugesMissed, callType, searchInputData };

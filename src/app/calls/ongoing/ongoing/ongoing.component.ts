@@ -5,13 +5,13 @@ import { CalendarService } from 'src/app/calendarService/calendar.service';
 import { ranges } from 'src/app/dashboard/dashboardData';
 import {
   newCallModelOngoing,
-  OngoingCallModel,
   OngoingCallModelTable
 } from 'src/app/models/callModel';
 import { CommonService } from 'src/app/workdeskServices/commonEndpoint/common.service';
-import { callType, languauges } from '../callsData';
-import { CallsService } from '../callService/calls.service';
-import { callTypeOngoing, ongoingTableSetting, searchInputData } from './ongoingData';
+import { languaugesOngoing } from '../../callsData';
+import { CallsService } from '../../callService/calls.service';
+import { getDefaultInputsLoadOnce } from '../../incoming/incoming.Service';
+import { callTypeOngoing, ongoingTableSetting, searchInputData } from '../../ongoing/ongoingData';
 
 @Component({
   selector: 'app-ongoing',
@@ -36,7 +36,7 @@ export class OngoingComponent implements OnInit {
     aggregate: this.aggregate
   };
   callType = callTypeOngoing;
-  languauges = languauges;
+  languauges = languaugesOngoing;
   searchInputData = searchInputData;
   @ViewChild(GigaaaDaterangepickerDirective, { static: false })
   pickerDirective: GigaaaDaterangepickerDirective | undefined;
@@ -55,6 +55,7 @@ export class OngoingComponent implements OnInit {
     private CallsSrvice: CallsService,
     private CommonService: CommonService,
     private calendarService: CalendarService,
+    private getDefaultInputsLoadOnce: getDefaultInputsLoadOnce
 
   ) {
     this.CallsSrvice.sendDataToOngoingTabsSubject.subscribe(
@@ -101,10 +102,10 @@ export class OngoingComponent implements OnInit {
     );
   }
   async ngOnInit(): Promise<void> {
-    this.languauges = await this.CommonService.getProjectLanguagesForUser();
+    this.getDefaultInputsLoadOnce.ongoingLangauge.asObservable().subscribe(data => {
+      this.languauges = data;
+    });
   }
-
-
 
   change(event: any) {
     if (event.startDate) {
