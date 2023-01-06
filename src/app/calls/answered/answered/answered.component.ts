@@ -65,19 +65,11 @@ export class AnsweredComponent implements OnInit {
     private getDefaultInputsLoadOnce: getDefaultInputsLoadOnce
 
   ) {
-    // this.callsIndicatorData = {
-    //   hightlightText: '',
-    //   text: this.answeredData + ' answered requests',
-    //   icon: '../assets/images/components/calls_count_answered.svg',
-    //   backgroundColor: '#EBF6DD',
-    //   borderColor: '1px solid #C1E297',
-    //   textColor: '#76CB09',
-    //   isAgent: false
-    // };
     this.CallsService.sendDataToAnsweredTabsSubject.subscribe(
       (data: newCallModelAnswered) => {
         this.pagination.totalItems = data.items_count;
         this.pagination.totolPages = data.total_pages;
+        this.pagination.itemsPerPage = data.items_per_page;
         this.answeredData = data.calls.map((answeredData: AnsweredCallModel) => ({
           user_details: {
             image: '../../../assets/images/callInterface/user.png',
@@ -217,6 +209,8 @@ export class AnsweredComponent implements OnInit {
   itemPerPage(event: number) {
     this.itemsPerPage = Number(event);
     this.pagination.itemsPerPage = this.itemsPerPage;
+    this.pagination.currentPage = 1;
+    this.pageNumber = 1;
     this.CallsService.callQueueSocketByLanguageandCallFoPagination(
       this.languageIds,
       this.callTypeName,

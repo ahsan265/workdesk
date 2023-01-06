@@ -66,18 +66,10 @@ export class MissedComponent implements OnInit {
     private getDefaultInputsLoadOnce: getDefaultInputsLoadOnce
 
   ) {
-    // this.callsIndicatorData = {
-    //   hightlightText: '',
-    //   text: this.missedCallData.length + ' missed requests',
-    //   icon: '../assets/images/components/calls_count_missed.svg',
-    //   backgroundColor: '#F9EBEF',
-    //   borderColor: '1px solid #F4CAD6',
-    //   textColor: '#FF155A',
-    //   isAgent: false
-    // };
     this.CallsService.sendDataToMissedTabsSubject.subscribe((data: newCallModelMissed) => {
       this.pagination.totalItems = data.items_count;
       this.pagination.totolPages = data.total_pages;
+      this.pagination.itemsPerPage = data.items_per_page
       this.missedCallData = data.calls.map((missedCallData: MissedCallModel) => ({
         agent_name: missedCallData.name,
         call_uuid: missedCallData.call_uuid,
@@ -220,9 +212,10 @@ export class MissedComponent implements OnInit {
   }
   // get number of items per page()
   itemPerPage(event: number) {
-    console.log(event);
     this.itemsPerPage = Number(event);
     this.pagination.itemsPerPage = this.itemsPerPage;
+    this.pagination.currentPage = 1;
+    this.pageNumber = 1;
     this.CallsService.callQueueSocketByLanguageandCallFoPagination(
       this.languageIds,
       this.callTypeName,

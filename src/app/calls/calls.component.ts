@@ -104,7 +104,6 @@ export class CallsComponent implements OnInit {
       });
     this.QueueSocketService.callDataSubject.subscribe((data: any) => {
       this.callSegmentSelection(data.type)
-
     });
 
   }

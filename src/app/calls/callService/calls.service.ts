@@ -23,10 +23,10 @@ import { callType } from '../callsData';
 export class CallsService {
   constructor(private QueueSocketService: QueueSocketService,
   ) { }
-  sendDataToIncomingTabsSubject = new ReplaySubject<newCallModelIncoming>();
-  sendDataToMissedTabsSubject = new ReplaySubject<newCallModelMissed>();
-  sendDataToOngoingTabsSubject = new ReplaySubject<newCallModelOngoing>();
-  sendDataToAnsweredTabsSubject = new ReplaySubject<newCallModelAnswered>();
+  sendDataToIncomingTabsSubject = new ReplaySubject<newCallModelIncoming>(0);
+  sendDataToMissedTabsSubject = new ReplaySubject<newCallModelMissed>(0);
+  sendDataToOngoingTabsSubject = new ReplaySubject<newCallModelOngoing>(0);
+  sendDataToAnsweredTabsSubject = new ReplaySubject<newCallModelAnswered>(0);
   public callQueueSocketByLanguageandCall(
     languageId: number[],
     callType: string[],
