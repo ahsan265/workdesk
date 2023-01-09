@@ -12,6 +12,7 @@ export interface QueueSocketparamterForPagination {
   time_range: string;
   page: number;
   items_per_page: number;
+  search_value: string;
 }
 export interface QueueList {
   finished: QueueListFinished[];

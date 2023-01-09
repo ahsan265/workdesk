@@ -156,7 +156,8 @@ export class AnsweredComponent implements OnInit {
       'finished',
       this.aggregate,
       this.itemsPerPage,
-      this.pageNumber
+      this.pageNumber,
+      this.lastUsedSearch
     );
   }
 
@@ -168,7 +169,8 @@ export class AnsweredComponent implements OnInit {
       'finished',
       this.aggregate,
       this.itemsPerPage,
-      this.pageNumber
+      this.pageNumber,
+      this.lastUsedSearch
     );
   }
 
@@ -180,17 +182,31 @@ export class AnsweredComponent implements OnInit {
       'finished',
       this.aggregate,
       this.itemsPerPage,
-      this.pageNumber
+      this.pageNumber,
+      this.lastUsedSearch
     );
   }
   // filter answered data
   getSearchValue(value: string) {
     this.lastUsedSearch = value;
-    this.answeredData = this.CallsService.search(value, this.answeredData, this.unfilterAnsweredData);
-    this.callsIndicatorData.text = this.answeredData.length + ' answered requests';
-    if (value.length === 0 && this.answeredData.length === 0) {
-      this.answeredData = this.unfilterAnsweredData
-    }
+    // this.answeredData = this.CallsService.search(value, this.answeredData, this.unfilterAnsweredData);
+    // this.callsIndicatorData.text = this.answeredData.length + ' answered requests';
+    // if (value.length === 0 && this.answeredData.length === 0) {
+    //   this.answeredData = this.unfilterAnsweredData
+    // }
+    setTimeout(() => {
+      this.pagination.currentPage = 1;
+      this.pageNumber = 1;
+      this.CallsService.callQueueSocketByLanguageandCallFoPagination(
+        this.languageIds,
+        this.callTypeName,
+        'finished',
+        this.aggregate,
+        this.itemsPerPage,
+        this.pageNumber,
+        this.lastUsedSearch
+      );
+    })
   }
   // get page number
   pagenumber(event: number) {
@@ -202,7 +218,8 @@ export class AnsweredComponent implements OnInit {
       'finished',
       this.aggregate,
       this.itemsPerPage,
-      this.pageNumber
+      this.pageNumber,
+      this.lastUsedSearch
     );
   }
   // get number of items per page()
@@ -217,7 +234,8 @@ export class AnsweredComponent implements OnInit {
       'finished',
       this.aggregate,
       this.itemsPerPage,
-      this.pageNumber
+      this.pageNumber,
+      this.lastUsedSearch
     );
   }
 

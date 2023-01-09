@@ -86,7 +86,6 @@ export class QueueSocketService {
         this.callDataSubject.next(QueueList);
         break;
       case 'incoming':
-        console.log(QueueList)
         this.defaultCallData.incoming = QueueList;
         if (QueueList.new_call === true && this.CommonService.getLoggedAgentStatus() === true) {
           this.CommonService.getDesktopNotification("Customer Support", "Please connect call")
@@ -116,7 +115,8 @@ export class QueueSocketService {
       tab: 'missed',
       time_range: 'this_week',
       items_per_page: 10,
-      page: 1
+      page: 1,
+      search_value: ''
     });
   }
 
@@ -127,7 +127,8 @@ export class QueueSocketService {
       tab: 'finished',
       time_range: 'this_week',
       items_per_page: 10,
-      page: 1
+      page: 1,
+      search_value: ''
     });
   }
   // close the agent socket Connnection

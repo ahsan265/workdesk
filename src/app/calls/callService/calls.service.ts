@@ -47,7 +47,8 @@ export class CallsService {
     tabName: string,
     time_range: string,
     items_per_page: number,
-    page_number: number
+    page_number: number,
+    search_value:string
   ) {
     this.QueueSocketService.sendQueueParameterPagination({
       call_type: callType,
@@ -55,7 +56,8 @@ export class CallsService {
       tab: tabName,
       time_range: time_range,
       items_per_page: items_per_page,
-      page: page_number
+      page: page_number,
+      search_value:search_value,
     });
   }
 

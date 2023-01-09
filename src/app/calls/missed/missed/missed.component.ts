@@ -161,7 +161,8 @@ export class MissedComponent implements OnInit {
       'missed',
       this.aggregate,
       this.itemsPerPage,
-      this.pageNumber
+      this.pageNumber,
+      ''
     );
   }
 
@@ -173,7 +174,8 @@ export class MissedComponent implements OnInit {
       'missed',
       this.aggregate,
       this.itemsPerPage,
-      this.pageNumber
+      this.pageNumber,
+      this.lastUsedSearch
     );
   }
 
@@ -185,17 +187,32 @@ export class MissedComponent implements OnInit {
       'missed',
       this.aggregate,
       this.itemsPerPage,
-      this.pageNumber
+      this.pageNumber,
+      this.lastUsedSearch
     );
   }
   // filter missed data
   getSearchValue(value: string) {
     this.lastUsedSearch = value;
-    this.missedCallData = this.CallsService.search(value, this.missedCallData, this.unfilterMissedCallData);
-    this.callsIndicatorData.text = this.missedCallData.length + ' missed requests';
-    if (value.length === 0 && this.missedCallData.length === 0) {
-      this.missedCallData = this.unfilterMissedCallData
-    }
+    setTimeout(()=>{
+      this.pagination.currentPage = 1;
+      this.pageNumber = 1;
+      this.CallsService.callQueueSocketByLanguageandCallFoPagination(
+        this.languageIds,
+        this.callTypeName,
+        'missed',
+        this.aggregate,
+        this.itemsPerPage,
+        this.pageNumber,
+        this.lastUsedSearch
+      );
+    },500)
+  
+    // this.missedCallData = this.CallsService.search(value, this.missedCallData, this.unfilterMissedCallData);
+    // this.callsIndicatorData.text = this.missedCallData.length + ' missed requests';
+    // if (value.length === 0 && this.missedCallData.length === 0) {
+    //   this.missedCallData = this.unfilterMissedCallData
+    // }
   }
   // get page number
   pagenumber(event: number) {
@@ -207,7 +224,8 @@ export class MissedComponent implements OnInit {
       'missed',
       this.aggregate,
       this.itemsPerPage,
-      this.pageNumber
+      this.pageNumber,
+      this.lastUsedSearch
     );
   }
   // get number of items per page()
@@ -222,7 +240,8 @@ export class MissedComponent implements OnInit {
       'missed',
       this.aggregate,
       this.itemsPerPage,
-      this.pageNumber
+      this.pageNumber,
+      this.lastUsedSearch
     );
   }
 
