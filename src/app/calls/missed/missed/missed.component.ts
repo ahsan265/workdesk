@@ -21,6 +21,7 @@ import { getDefaultInputsLoadOnce } from '../../incoming/incoming.Service';
   styleUrls: ['./missed.component.scss']
 })
 export class MissedComponent implements OnInit {
+  timer: any;
   pagination = paginationData;
   showCalender = true;
   tableSettings = missedTableSetting;
@@ -194,20 +195,27 @@ export class MissedComponent implements OnInit {
   // filter missed data
   getSearchValue(value: string) {
     this.lastUsedSearch = value;
-    setTimeout(()=>{
-      this.pagination.currentPage = 1;
-      this.pageNumber = 1;
-      this.CallsService.callQueueSocketByLanguageandCallFoPagination(
-        this.languageIds,
-        this.callTypeName,
-        'missed',
-        this.aggregate,
-        this.itemsPerPage,
-        this.pageNumber,
-        this.lastUsedSearch
-      );
-    },500)
-  
+    const startTimer = new Date(Date.now()).getMilliseconds();
+    this.timer = setTimeout(() => {
+      const endTimer = new Date(Date.now()).getMilliseconds();
+      if (Math.abs(startTimer - endTimer) > 480) {
+        this.pagination.currentPage = 1;
+        this.pageNumber = 1;
+        this.CallsService.callQueueSocketByLanguageandCallFoPagination(
+          this.languageIds,
+          this.callTypeName,
+          'missed',
+          this.aggregate,
+          this.itemsPerPage,
+          this.pageNumber,
+          this.lastUsedSearch
+        );
+      }
+      else {
+        clearTimeout(this.timer)
+      }
+    }, 500)
+
     // this.missedCallData = this.CallsService.search(value, this.missedCallData, this.unfilterMissedCallData);
     // this.callsIndicatorData.text = this.missedCallData.length + ' missed requests';
     // if (value.length === 0 && this.missedCallData.length === 0) {

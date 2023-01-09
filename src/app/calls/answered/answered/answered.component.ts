@@ -22,6 +22,7 @@ import { getDefaultInputsLoadOnce } from '../../incoming/incoming.Service';
   styleUrls: ['./answered.component.scss']
 })
 export class AnsweredComponent implements OnInit {
+  timer: any;
   pagination = paginationData;
   showCalender = true;
   tableSettings = answeredTablaSetting;
@@ -189,24 +190,27 @@ export class AnsweredComponent implements OnInit {
   // filter answered data
   getSearchValue(value: string) {
     this.lastUsedSearch = value;
-    // this.answeredData = this.CallsService.search(value, this.answeredData, this.unfilterAnsweredData);
-    // this.callsIndicatorData.text = this.answeredData.length + ' answered requests';
-    // if (value.length === 0 && this.answeredData.length === 0) {
-    //   this.answeredData = this.unfilterAnsweredData
-    // }
-    setTimeout(() => {
-      this.pagination.currentPage = 1;
-      this.pageNumber = 1;
-      this.CallsService.callQueueSocketByLanguageandCallFoPagination(
-        this.languageIds,
-        this.callTypeName,
-        'finished',
-        this.aggregate,
-        this.itemsPerPage,
-        this.pageNumber,
-        this.lastUsedSearch
-      );
-    })
+    const startTimer = new Date(Date.now()).getMilliseconds();
+    this.timer = setTimeout(() => {
+      const endTimer = new Date(Date.now()).getMilliseconds();
+      if (Math.abs(startTimer - endTimer) >= 480) {
+        this.pagination.currentPage = 1;
+        this.pageNumber = 1;
+        this.CallsService.callQueueSocketByLanguageandCallFoPagination(
+          this.languageIds,
+          this.callTypeName,
+          'finished',
+          this.aggregate,
+          this.itemsPerPage,
+          this.pageNumber,
+          this.lastUsedSearch
+        );
+      }
+      else {
+        clearTimeout(this.timer)
+      }
+    }, 500)
+
   }
   // get page number
   pagenumber(event: number) {
