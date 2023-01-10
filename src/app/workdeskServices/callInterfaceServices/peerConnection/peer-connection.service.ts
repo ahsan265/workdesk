@@ -164,6 +164,7 @@ export class PeerConnectionService {
   public async handleAnswerMessage(
     data: RTCSessionDescriptionInit
   ): Promise<void> {
+    this.getVideoCodec();
     await this.peerConnection
       .setRemoteDescription(new RTCSessionDescription(data))
       .catch(async (error: any) => { });
@@ -185,8 +186,7 @@ export class PeerConnectionService {
   // to get audio codec
 
   getAudioCodec() {
-    if(this.DevicesInformationService.getBrowserName()!=='firefox')
-    {
+    if (this.DevicesInformationService.getBrowserName() !== 'firefox') {
       const transreivers = this.peerConnection.getTransceivers()[0];
       const codecs = RTCRtpSender.getCapabilities('audio')?.codecs;
       const requiredCodec: any = [];
@@ -199,23 +199,22 @@ export class PeerConnectionService {
         transreivers.setCodecPreferences(requiredCodec);
       }
     }
-   
+
   }
   // update codec for video 
   getVideoCodec() {
-    if(this.DevicesInformationService.getBrowserName()!=='firefox')
-    {
-    const transreivers = this.peerConnection.getTransceivers()[1];
-    const codecs = RTCRtpSender.getCapabilities('video')?.codecs;
-    const requiredCodec: any = [];
-    codecs?.forEach(data => {
-      if (data.mimeType === 'video/VP8') {
-        requiredCodec.push(data);
+    if (this.DevicesInformationService.getBrowserName() !== 'firefox') {
+      const transreivers = this.peerConnection.getTransceivers()[1];
+      const codecs = RTCRtpSender.getCapabilities('video')?.codecs;
+      const requiredCodec: any = [];
+      codecs?.forEach(data => {
+        if (data.mimeType === 'video/VP8') {
+          requiredCodec.push(data);
+        }
+      })
+      if (transreivers.setCodecPreferences !== undefined) {
+        transreivers.setCodecPreferences(requiredCodec);
       }
-    })
-    if (transreivers.setCodecPreferences !== undefined) {
-      transreivers.setCodecPreferences(requiredCodec);
     }
-  }
   }
 }

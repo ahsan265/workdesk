@@ -174,7 +174,6 @@ export class ImageCropperComponent implements OnInit, OnDestroy {
   expandCroppingZone(event: MouseEvent) {
     let pageX: number;
     const moveListener = this.renderer.listen(document, 'mousemove', (e) => {
-      console.log(e)
       const diff = isNaN(pageX) ? 1 : e.pageX - pageX;
       const minSize = 10;
       if (
