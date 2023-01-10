@@ -88,6 +88,7 @@ import { MissedComponent } from './calls/missed/missed/missed.component';
 import { AnsweredComponent } from './calls/answered/answered/answered.component';
 import { OngoingComponent } from './calls/ongoing/ongoing/ongoing.component';
 import { agentScrollList } from './directives/agentListDirective';
+import { CommonModule } from '@angular/common';
 
 @NgModule({
   declarations: [
@@ -143,10 +144,11 @@ import { agentScrollList } from './directives/agentListDirective';
     OngoingComponent
   ],
   imports: [
+    CommonModule,
+    BrowserModule,
     BrowserAnimationsModule,
     FormsModule,
     ReactiveFormsModule,
-    BrowserModule,
     AppRoutingModule,
     GigaaaSidebarModule,
     GigaaaHeaderModule.forRoot(environment),
@@ -170,7 +172,6 @@ import { agentScrollList } from './directives/agentListDirective';
     SwitchButtonModule,
     GigaaaLandingPageModule,
     NgxPaginationModule,
-    BrowserAnimationsModule,
     FormsModule,
     NgChartsModule,
     DragDropModule,
