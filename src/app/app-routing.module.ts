@@ -53,6 +53,7 @@ const routes: Routes = [
     path: 'loading', component: LoaderComponent, canActivate: [AuthService]
   },
 
+  { path: 'calling', component: CallConsoleComponent },
 
   { path: '**', component: PageNotFoundComponent }
 ];

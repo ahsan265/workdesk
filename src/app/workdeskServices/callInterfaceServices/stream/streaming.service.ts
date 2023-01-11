@@ -232,7 +232,7 @@ export class StreamingService {
           : video.replaceTrack(videoTrack);
       })
       .then(async () => {
-        this.PeerConnectionService.getVideoCodec();
+        //this.PeerConnectionService.getVideoCodec();
         const offer: RTCSessionDescriptionInit =
           await this.PeerConnectionService.peerConnection.createOffer({
             offerToReceiveAudio: true,
@@ -298,7 +298,7 @@ export class StreamingService {
         audio.replaceTrack(localAudio);
       }
       this.audioChecker();
-      this.PeerConnectionService.getVideoCodec();
+      //this.PeerConnectionService.getVideoCodec();
       const offer: RTCSessionDescriptionInit =
         await this.PeerConnectionService.peerConnection.createOffer({
           offerToReceiveAudio: true,
@@ -390,7 +390,7 @@ export class StreamingService {
           videoTrack,
           this.screenShareStream
         );
-        this.PeerConnectionService.getVideoCodec();
+       // this.PeerConnectionService.getVideoCodec();
         const offer: RTCSessionDescriptionInit =
           await this.PeerConnectionService.peerConnection.createOffer({
             offerToReceiveAudio: true,
