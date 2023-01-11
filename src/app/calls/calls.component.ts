@@ -78,6 +78,10 @@ export class CallsComponent implements OnInit {
   missedData: MissedCallModel[] = [];
   awnseredData: AnsweredCallModel[] = [];
   ngOnInit() {
+    const data = this.QueueSocketService.defaultCallData;
+    this.ongoingData = data.ongoing.calls;
+    this.incomingData = data.incoming.calls;
+
     this.QueueSocketService.SendDefaultParam();
     this.QueueSocketService.SendDefaultParamFinished();
     this.route.url.subscribe(() => {
