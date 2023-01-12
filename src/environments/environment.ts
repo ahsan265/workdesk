@@ -21,6 +21,7 @@ export const environment = {
   prod_anlytics: 'https://api.gigaaa.link/cse/private',
   websocket_url: 'wss://api.gigaaa.link/cse',
   logged_user: 'https://api.gigaaa.link/v1/api/v1',
+  
 
   iceServerConfiguration: [
     {
