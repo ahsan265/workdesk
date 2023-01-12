@@ -4,6 +4,8 @@
 
 ::ng-deep .tableWrapper .tableWrap {
   padding: 0 !important;
+  height: fit-content;
+  margin-bottom: 70px
 }
 
 ::ng-deep .tableWrapper .tableWrap .table thead tr th:first-child,

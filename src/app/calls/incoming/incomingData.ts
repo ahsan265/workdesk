@@ -83,6 +83,7 @@ const callTypeIncoming: MultiSelect = {
     { id: 2, name: 'Video', selected: false }
   ]
 };
+
 const searchInputData: SearchInput = {
   placeholder: 'Search by name or user ID',
   searchText: ''

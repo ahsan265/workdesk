@@ -104,11 +104,44 @@ export interface AnsweredCallModel {
 }
 
 export interface CallsModel {
-  incoming: IncomingCallModel[];
-  missed: MissedCallModel[];
-  finished: AnsweredCallModel[];
-  ongoing: OngoingCallModel[];
+  incoming: newCallModelIncoming;
+  missed: newCallModelMissed;
+  finished: newCallModelAnswered;
+  ongoing: newCallModelOngoing;
   new_call: boolean;
+}
+export interface newCallModelMissed {
+  items_count: number;
+  items_per_page: number;
+  page_number: number;
+  total_pages: number;
+  type: string;
+  calls: MissedCallModel[]
+}
+
+export interface newCallModelIncoming {
+  new_call: boolean;
+  type: string;
+  calls: IncomingCallModel[]
+}
+export interface newCallModelOngoing {
+  type: string;
+  calls: OngoingCallModel[]
+}
+export interface paginationModelSocket {
+  items_count: number;
+  items_per_page: number;
+  page_number: number;
+  total_pages: number;
+  type: string;
+}
+export interface newCallModelAnswered {
+  items_count: number;
+  items_per_page: number;
+  page_number: number;
+  total_pages: number;
+  type: string;
+  calls: AnsweredCallModel[];
 }
 
 /// for Tables Data Model

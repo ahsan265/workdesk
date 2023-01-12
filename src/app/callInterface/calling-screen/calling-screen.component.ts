@@ -33,7 +33,7 @@ import { peerIndicatorData } from './peerIndicatorData';
   templateUrl: './calling-screen.component.html',
   styleUrls: ['./calling-screen.component.scss'],
   changeDetection: ChangeDetectionStrategy.Default,
-  animations: [peerVoiceIndicator, loaderAnimation]
+  animations: [peerVoiceIndicator]
 })
 export class CallingScreenComponent implements OnInit {
   peerImageNormal = peerNormalImageNormal;
@@ -133,7 +133,7 @@ export class CallingScreenComponent implements OnInit {
         );
       }
     }
- 
+
 
     this.localVideo.nativeElement.srcObject = null;
     this.localVideo.nativeElement.srcObject = stream;

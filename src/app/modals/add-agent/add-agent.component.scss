@@ -13,23 +13,19 @@
   font-size: 13px;
   line-height: 139%;
   letter-spacing: 0.02em;
-  margin-top: 20px;
+  margin-top: 22px;
   color: #616b7b;
-  padding: 0px 30px 30px 30px;
-  margin-bottom: 2px;
+  padding: 0px 30px 0px 30px;
+  margin-bottom: 0px;
+  position: absolute;
+  width: calc(100% - 60px);
+  align-items: center;
+  display: flex;
+  z-index: 1;
+  top: 30px;
+  height: 72px;
 }
 
-.agentListingContainer {
-  display: block;
-  height: 295px;
-  position: relative;
-  overflow-x: hidden;
-  overflow-y: hidden;
-}
-
-.agentListingContainer::-webkit-scrollbar {
-  display: none;
-}
 
 .agentFieldsWrapper {
   display: flex;

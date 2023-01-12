@@ -1,32 +1,33 @@
-import { agents, callTypeAnswered } from './answeredData';
 import { Component, HostListener, OnInit, ViewChild } from '@angular/core';
-import {
-  AnsweredCallModel,
-  AnsweredCallModelTable
-} from 'src/app/models/callModel';
-import { answeredTablaSetting } from '../missed/missedData';
-import { CallsService } from '../callService/calls.service';
-import { CommonService } from 'src/app/workdeskServices/commonEndpoint/common.service';
+import { ActivatedRoute, NavigationStart, Router } from '@angular/router';
 import { GigaaaDaterangepickerDirective } from '@gigaaa/gigaaa-components';
 import dayjs from 'dayjs';
-import { callsIndicatorData } from 'src/app/models/callIndicatorModel';
-import { languauges, searchInputData } from '../callsData';
 import { CalendarService } from 'src/app/calendarService/calendar.service';
+import { OverlayService } from 'src/app/callInterface/overLayService/overlay.service';
 import { ranges } from 'src/app/dashboard/dashboardData';
+import {
+  IncomingCallModelTable,
+  newCallModelIncoming
+} from 'src/app/models/callModel';
+import { CommonService } from 'src/app/workdeskServices/commonEndpoint/common.service';
+import { AgentSocketService } from 'src/app/workdeskSockets/agentSocket/agent-socket.service';
+import { languaugesIncoming } from '../../callsData';
+import { CallsService } from '../../callService/calls.service';
+import { callTypeIncoming, incomingTableSetting, searchInputData } from '../../incoming/incomingData';
+import { getDefaultInputsLoadOnce } from '../incoming.Service';
 
 @Component({
-  selector: 'app-answered',
-  templateUrl: './answered.component.html',
-  styleUrls: ['./answered.component.scss']
+  selector: 'app-incoming',
+  templateUrl: './incoming.component.html',
+  styleUrls: ['./incoming.component.scss'],
+
 })
-export class AnsweredComponent implements OnInit {
-  showCalender = true;
-  tableSettings = answeredTablaSetting;
-  answeredData: AnsweredCallModelTable[] = [];
-  unfilterAnsweredData: AnsweredCallModelTable[] = [];
+export class IncomingComponent implements OnInit {
+  showCalender = false;
+  tableSettings = incomingTableSetting;
+  incomingData: IncomingCallModelTable[] = [];
+  unfilterIncomingData: IncomingCallModelTable[] = [];
   lastUsedSearch: string = '';
-
-
   startDate: string = '';
   endDate: string = '';
   ranges = ranges;
@@ -38,8 +39,8 @@ export class AnsweredComponent implements OnInit {
     endDate: this.date_to,
     aggregate: this.aggregate
   };
-  callType = callTypeAnswered;
-  languauges = languauges;
+  callType = callTypeIncoming;
+  languauges = languaugesIncoming;
   searchInputData = searchInputData;
   @ViewChild(GigaaaDaterangepickerDirective, { static: false })
   pickerDirective: GigaaaDaterangepickerDirective | undefined;
@@ -47,7 +48,6 @@ export class AnsweredComponent implements OnInit {
   showCalendar: boolean = false;
   languageIds: number[] = [];
   callTypeName: string[] = [];
-  callsIndicatorData!: callsIndicatorData;
   @ViewChild('calendarDropdown') calendar: any = HTMLElement;
   @HostListener('document:click', ['$event'])
   clickout(event: any) {
@@ -56,66 +56,70 @@ export class AnsweredComponent implements OnInit {
     }
   }
   constructor(
-    private CallsService: CallsService,
     private CommonService: CommonService,
+    private OverlayService: OverlayService,
     private calendarService: CalendarService,
+    private AgentSocketService: AgentSocketService,
+    private CallsService: CallsService,
+    private getDefaultInputsLoadOnce: getDefaultInputsLoadOnce
   ) {
-    this.callsIndicatorData = {
-      hightlightText: '',
-      text: this.answeredData + ' answered requests',
-      icon: '../assets/images/components/calls_count_answered.svg',
-      backgroundColor: '#EBF6DD',
-      borderColor: '1px solid #C1E297',
-      textColor: '#76CB09',
-      isAgent: false
-    };
-  }
-  async ngOnInit(): Promise<void> {
-    this.languauges = await this.CommonService.getProjectLanguagesForUser();
-    this.CallsService.sendDataToAnsweredTabsSubject.subscribe(
-      (data: AnsweredCallModel[]) => {
-        this.answeredData = data.map((answeredData) => ({
-          user_details: {
-            image: '../../../assets/images/callInterface/user.png',
-            text: answeredData.name
-          },
+    this.CallsService.sendDataToIncomingTabsSubject.subscribe(
+      (data: newCallModelIncoming) => {
+        this.incomingData = data.calls.map((incomingData) => ({
+          hashIcon: '#',
+          call_uuid: incomingData.call_uuid,
+          language_icon: '',
           utilites: [
             {
               image: this.CommonService.getLanguageFlags(
-                answeredData.language_id
+                incomingData.language_id
               )
             },
-            { image: this.CommonService.getBrowserFlag(answeredData.browser) },
+            { image: this.CommonService.getBrowserFlag(incomingData.browser) },
             {
-              image: this.CommonService.getDeviceType(answeredData.desktop)
+              image: this.CommonService.getDeviceType(incomingData.desktop)
             },
             {
               image: this.CommonService.getOperatingSystem(
-                answeredData.operating_system
+                incomingData.operating_system
               )
             }
           ],
           callType: {
             image: this.CommonService.getConversationType(
-              answeredData.is_video
+              incomingData.is_video
             ),
-            text: this.CallsService.getCallType(answeredData.is_video)
+            text: this.CallsService.getCallType(incomingData.is_video)
           },
-          call_uuid: answeredData.call_uuid,
-          duration: this.CallsService
-            .getCalledAtTimeDate(answeredData.call_started_at, this.aggregate),
-          agent_name: answeredData.agent.display_name,
-          user_id: this.CallsService.getUserId(answeredData.user_id),
-          agent_details: {
-            image: answeredData.agent.images[96],
-            text: answeredData.agent.email
-          }
+          name: incomingData.name,
+          user_id: this.CallsService.getUserId(incomingData.user_id),
+          time: incomingData.waiting_started_at,
+          userImage: '../../../assets/images/callInterface/user.png',
+          showUserImage: false,
+          callPickButton: 'Answer',
+          disableButton: this.AgentSocketService.isInCall
         }));
-        this.unfilterAnsweredData = this.answeredData
-        this.callsIndicatorData.text = this.answeredData.length + ' answered requests';
-
+        this.unfilterIncomingData = this.incomingData;
       }
     );
+  }
+  async ngOnInit(): Promise<void> {
+   this.getDefaultInputsLoadOnce.incominglanguages.asObservable().subscribe(data=>{
+    this.languauges =data;
+    });
+  }
+
+  async getCallsId(event: any) {
+    let data = { call_uuid: event.call_uuid };
+    // await this.GigaaaApiService.getcalltype(
+    //   this.CommonService.getEndpointsParamLocal().token,
+    //   this.CommonService.getEndpointsParamLocal().organization,
+    //   this.CommonService.getEndpointsParamLocal().project,
+    //   data
+    // );
+    this.OverlayService.open({
+      data: event
+    });
   }
 
   change(event: any) {
@@ -133,7 +137,7 @@ export class AnsweredComponent implements OnInit {
         }
       }
       if (compareArray.length === 8) {
-        // this.aggregate = 'custom';
+        this.aggregate = 'custom';
       }
     }
   }
@@ -151,7 +155,7 @@ export class AnsweredComponent implements OnInit {
     this.CallsService.callQueueSocketByLanguageandCall(
       this.languageIds,
       this.callTypeName,
-      'finished',
+      'incoming',
       this.aggregate
     );
   }
@@ -161,7 +165,7 @@ export class AnsweredComponent implements OnInit {
     this.CallsService.callQueueSocketByLanguageandCall(
       this.languageIds,
       this.callTypeName,
-      'finished',
+      'incoming',
       this.aggregate
     );
   }
@@ -171,17 +175,17 @@ export class AnsweredComponent implements OnInit {
     this.CallsService.callQueueSocketByLanguageandCall(
       this.languageIds,
       this.callTypeName,
-      'finished',
+      'incoming',
       this.aggregate
     );
   }
-  // filter answered data
+
+  // filter incoming data
   getSearchValue(value: string) {
     this.lastUsedSearch = value;
-    this.answeredData = this.CallsService.search(value, this.answeredData, this.unfilterAnsweredData);
-    this.callsIndicatorData.text = this.answeredData.length + ' answered requests';
-    if (value.length === 0 && this.answeredData.length === 0) {
-      this.answeredData = this.unfilterAnsweredData
+    this.incomingData = this.CallsService.search(value, this.incomingData, this.unfilterIncomingData);
+    if (value.length === 0 && this.incomingData.length === 0) {
+      this.incomingData = this.unfilterIncomingData;
     }
   }
 }

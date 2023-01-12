@@ -1,0 +1,20 @@
+ package-lock.json                                  | 15504 [32m++++++++++++++++++[m[31m-[m
+ package.json                                       |     3 [32m+[m[31m-[m
+ src/app/app.module.ts                              |     5 [32m+[m[31m-[m
+ .../call-console/call-console.component.ts         |     3 [32m+[m[31m-[m
+ src/app/calls/answered/answered.component.html     |     3 [32m+[m[31m-[m
+ src/app/calls/answered/answered.component.scss     |     3 [32m+[m
+ src/app/calls/answered/answered.component.ts       |    54 [32m+[m[31m-[m
+ src/app/calls/callService/calls.service.ts         |    41 [32m+[m[31m-[m
+ src/app/calls/calls.component.ts                   |    42 [32m+[m[31m-[m
+ src/app/calls/incoming/incoming.component.ts       |     9 [32m+[m[31m-[m
+ src/app/calls/missed/missed.component.html         |     4 [32m+[m[31m-[m
+ src/app/calls/missed/missed.component.ts           |   140 [32m+[m[31m-[m
+ .../calls-indicator/calls-indicator.component.scss |     2 [32m+[m[31m-[m
+ src/app/data.ts                                    |    19 [32m+[m[31m-[m
+ src/app/models/callModel.ts                        |    35 [32m+[m[31m-[m
+ src/app/models/queueSocketModel.ts                 |    15 [32m+[m[31m-[m
+ .../gigaaaApiService/gigaaa-api-service.service.ts |     2 [32m+[m[31m-[m
+ .../queueSocket/queue-socket.service.ts            |    79 [32m+[m[31m-[m
+ src/environments/environment.ts                    |     6 [32m+[m[31m-[m
+ 19 files changed, 15064 insertions(+), 905 deletions(-)

@@ -56,7 +56,6 @@ export class CallConsoleComponent implements OnInit, OnDestroy, AfterViewInit {
     private PeerConnectionService: PeerConnectionService,
     private AgentUserInformation: AgentUserInformation,
     @Inject(overlayToken) public data: any
-
   ) {
 
     this.StreamingService.detectDevicesMicrphoneDeviceOnchange();
@@ -189,7 +188,8 @@ export class CallConsoleComponent implements OnInit, OnDestroy, AfterViewInit {
         this.isMinimize = false;
 
       } else {
-        if ((this.isVideoMinimize === true) && this.cameraData.isSelected === false) {
+
+        if (this.isVideoMinimize === true && this.cameraData.isSelected === false) {
           this.isMinimize = true;
           this.toogle = true;
           this.isVideoMinimize = false;
@@ -199,8 +199,9 @@ export class CallConsoleComponent implements OnInit, OnDestroy, AfterViewInit {
           this.minimizeCallControl.height = '50px';
           this.PeerMiniCameraScreen.showInitals == false;
           this.agentOperationInformationData.IsVideoMinimize = false;
-
+          this.isRemoteVideo = false;
         }
+
       }
       // for header
       CallsHeaderData.name = peerData.firstName + ' ' + peerData.lastName;
@@ -245,6 +246,9 @@ export class CallConsoleComponent implements OnInit, OnDestroy, AfterViewInit {
       }
       this.cameraData.isSelected = event;
       this.isVideoMinimize = event;
+      if (this.isRemoteVideo) {
+        this.isVideoMinimize = true;
+      }
       if (this.agentOperationInformationData.isMinimize) {
         this.miniCameraOperation(event);
       }
@@ -319,7 +323,7 @@ export class CallConsoleComponent implements OnInit, OnDestroy, AfterViewInit {
     if (event) {
       this.openDeviceSwitcher = true;
     }
-   
+
   }
   minmizeMaxmizeScreenOutput(event: boolean) {
 
@@ -346,6 +350,7 @@ export class CallConsoleComponent implements OnInit, OnDestroy, AfterViewInit {
         this.minimizeCallControl['border-radius'] = '51px';
         this.minimizeCallControl.height = '55px';
         this.isMinimize = false;
+        this.isVideoMinimize = true;
         (this.isSplit) ?
           this.peerUserInformationData.showVideo = true : this.peerUserInformationData.showVideo = false;
 
@@ -354,7 +359,6 @@ export class CallConsoleComponent implements OnInit, OnDestroy, AfterViewInit {
         this.isMinimize = true;
       }
       this.toogle = true;
-
     } else {
       if (this.agentOperationInformationData.isMinimize === false && this.isRemoteVideo === false) {
         this.minimize.width = '255px';
@@ -375,11 +379,13 @@ export class CallConsoleComponent implements OnInit, OnDestroy, AfterViewInit {
         this.PeerMiniCameraScreen.showInitals == true;
         this.toogle = false;
         this.isMinimize = false;
+        this.isVideoMinimize = true;
+
       }
       else if (this.isRemoteVideo === false) {
         this.isMinimize = true;
         this.toogle = true;
-        this.isVideoMinimize = false;
+        this.isVideoMinimize = true;
         this.minimize.width = '255px';
         this.minimize.height = '99px';
         this.agentOperationInformationData.IsVideoMinimize = false;

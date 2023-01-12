@@ -1,4 +1,5 @@
 import dayjs from "dayjs";
+import { callsIndicatorData } from "src/app/models/callIndicatorModel";
 import { MultiSelect } from "src/app/models/multiSelect";
 
 const dataTableSettings: any[] = [
@@ -77,6 +78,15 @@ const callTypeAnswered: MultiSelect = {
     { id: 2, name: 'Video', selected: false }
   ]
 };
+
+const paginationData: any =
+{
+  currentPage: 1,
+  itemsPerPage: 10,
+  totalItems: 50,
+  totolPages: 12
+}
+
 const agents = [
   {
     id: '1',
@@ -135,6 +145,14 @@ const agents = [
     }
   }
 ];
+const answeredData: callsIndicatorData = {
+  hightlightText: '',
+  text: 0 + ' answered requests',
+  icon: '../assets/images/components/calls_count_answered.svg',
+  backgroundColor: '#EBF6DD',
+  borderColor: '1px solid #C1E297',
+  textColor: '#76CB09',
+  isAgent: false
+};
 
-
-export { dataTableSettings, agents ,callTypeAnswered};
+export { dataTableSettings, agents, callTypeAnswered, paginationData ,answeredData};

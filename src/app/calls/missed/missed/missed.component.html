@@ -1,4 +1,4 @@
-<div class="filterWrapper" scroll>
+<div class="filterWrapper" scroll [nonScrollClass]="'.filterWrapper'" [scrollClass]="'.tableWrapper'">
   <div class="leftFilter">
     <div class="multiSelectWrapper">
       <app-multi-select-dropdown [multiSelectData]="languauges" (multiSelectOutput)="languaugesOutput($event)">
@@ -34,14 +34,15 @@
         </div>
       </div>
       <div class="multiSelectWrapper search">
-        <app-search-input-field [searchInputData]="searchInputData" (searchOutputData)="getSearchValue($event)">
-        </app-search-input-field>
+        <app-search-input-field [searchInputData]="searchInputData"
+          (searchOutputData)="getSearchValue($event)"></app-search-input-field>
       </div>
     </div>
   </div>
 </div>
 <div class="tableWrapper">
-  <gigaaa-workdesk-table [tableData]="answeredData" [tableSettings]="tableSettings">
+  <gigaaa-workdesk-table [tableData]="missedCallData" [tableSettings]="tableSettings" (pagenumber)="pagenumber($event)"
+    [pagination]="pagination" (itemPerPage)="itemPerPage($event)">
   </gigaaa-workdesk-table>
-  <app-no-table-data *ngIf="answeredData.length === 0"></app-no-table-data>
+  <app-no-table-data *ngIf="missedCallData.length === 0"></app-no-table-data>
 </div>

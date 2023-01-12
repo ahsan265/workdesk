@@ -10,6 +10,14 @@
   margin-bottom: 130px;
 }
 
+.imagePopup {
+  width: 594px;
+  height: 355px;
+  background: #FFFFFF;
+  box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.23);
+  border-radius: 4px;
+}
+
 ::ng-deep gigaaa-button .button p {
   font-size: 14px !important;
 }
@@ -252,7 +260,7 @@
   top: 0;
   right: 0px;
   transition: 0.4s;
-  font-family:'Roboto',sans-serif;
+  font-family: 'Roboto', sans-serif;
   font-style: normal;
   font-weight: 400;
   font-size: 9.6px;

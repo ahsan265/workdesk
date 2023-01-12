@@ -8,6 +8,7 @@ import { AuthService } from 'src/app/services/auth.service';
 import { devcieInformationModel, PeersCallsInformationModel } from 'src/app/models/callInterfaceModel';
 import { Subject } from 'rxjs';
 import { DevicesInformationService } from '../devicesInformation/devices-information.service';
+import { CommonService } from '../../commonEndpoint/common.service';
 
 @Injectable({
   providedIn: 'platform'
@@ -24,7 +25,7 @@ export class CallsOperationService {
     private StreamingService: StreamingService,
     private MessageService: MessageService,
     private AgentUserInformation: AgentUserInformation,
-    private DevicesInformationService: DevicesInformationService,
+    private CommonService: CommonService,
     private AuthService: AuthService
   ) { }
 
@@ -59,7 +60,7 @@ export class CallsOperationService {
                 false,
                 true,
                 false,
-                this.AuthService.user.value
+                this.AuthService.getLoggedUser(),
               );
                 await this.StreamingService.selectedDeviceForStream(false);
             

@@ -32,7 +32,7 @@
             secondPeerInformationdata.showLoaderAnimation === true
               ? 'block'
               : 'none'
-        }" [@loaderAnimation]="color" class="loaderAnimation"></div>
+        }"  class="loaderAnimation"></div>
     </div>
   </div>
   <div class="callViewWrapperNormal" *ngIf="isSplit">
@@ -59,8 +59,8 @@
 
       <div [ngStyle]="{
           display:
-            peerInformationdata.showLoaderAnimation === true ? 'block' : 'none'
-        }" [@loaderAnimation]="color" class="loaderAnimation"></div>
+            peerInformationdata.showLoaderAnimation === true ? 'inline-block' : 'none'
+        }"  class="loaderAnimation"></div>
     </div>
   </div>
   <div *ngIf="isSplit" class="unSplit" (click)="UnslplitScreen(!isSplit)">

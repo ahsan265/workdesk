@@ -1,8 +1,13 @@
-@import '~ngx-toastr/toastr';
+// @import '~ngx-toastr/toastr';
 @import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
 
 .cdk-overlay-container {
   z-index: 1000;
+  top: 0;
+  margin: 0 auto;
+  position: static;
+  height: 100%;
+  width: 100%;
 }
 
 .toastClass {
@@ -14,7 +19,9 @@
 .cdk-global-overlay-wrapper {
   height: 100%;
   width: 100%;
-  display: grid;
+  display: contents;
+  top: 0;
+  position: absolute;
 }
 
 
@@ -30,6 +37,15 @@
   overflow-y: hidden;
   display: contents;
   vertical-align: middle;
+}
+
+.imagePopup {
+  width: 594px;
+  height: fit-content;
+  background: #FFFFFF;
+  box-shadow: 3px 3px 10px rgb(0 0 0 / 23%);
+  border-radius: 4px;
+  padding: 30px;
 }
 
 .modal {

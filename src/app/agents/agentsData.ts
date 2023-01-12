@@ -233,7 +233,7 @@ const agentModelData = {
   buttonOne: true,
   buttonTwo: false,
   width: '595px',
-  height: '400px'
+  height: '450px'
 };
 const agentIndicatorData = {
   hightlightText: 0 + '/' + 0,

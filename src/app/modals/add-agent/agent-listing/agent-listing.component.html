@@ -1,20 +1,22 @@
-<div class="inPageWrapper" [style.overflow-y]="this.getListingAgents().length>2?'scroll':'overlay'">
-  <div class="agentFieldsWrapper">
-    <div class="fieldLabel">Email</div>
-    <div class="fieldLabel">Language</div>
-  </div>
-  <div class="agentTextFieldsWrapper" *ngFor="let agent of this.getListingAgents(); let i = index">
-    <input (keyup)="getEmailByIndex(i)" class="inputFields" type="email" placeholder="name@example.com" #email />
-    <div class="languageWrapper">
-      <app-multi-select-dropdown [multiSelectData]="this.arrayOfLanguages[i]"
-        (multiSelectOutput)="languaugesOutput($event, i)">
-      </app-multi-select-dropdown>
+<div class="agentListingContainer" [style.overflow-y]="this.getListingAgents().length>2?'scroll':'hidden'">
+  <div class="inPageWrapper">
+    <div class="agentFieldsWrapper">
+      <div class="fieldLabel">Email</div>
+      <div class="fieldLabel">Language</div>
     </div>
-    <div *ngIf="i !== 0" class="removeAgentFromListing" (click)="removeAgentFromListing(i)">
-      <img src="../../../../assets/images/components/removeAgentIcon.svg" alt="" />
+    <div class="agentTextFieldsWrapper" *ngFor="let agent of this.getListingAgents(); let i = index">
+      <input (keyup)="getEmailByIndex(i)" class="inputFields" type="email" placeholder="name@example.com" #email />
+      <div class="languageWrapper">
+        <app-multi-select-dropdown [multiSelectData]="this.arrayOfLanguages[i]"
+          (multiSelectOutput)="languaugesOutput($event, i)">
+        </app-multi-select-dropdown>
+      </div>
+      <div *ngIf="i !== 0" class="removeAgentFromListing" (click)="removeAgentFromListing(i)">
+        <img src="../../../../assets/images/components/removeAgentIcon.svg" alt="" />
+      </div>
     </div>
+    <div class="addNewListing" (click)="addAgentListing()">+ Add agent</div>
   </div>
-  <div class="addNewListing" (click)="addAgentListing()">+ Add agent</div>
 </div>
 <div class="sendAgentListingWrapper">
   <Button (click)="sendAgentInformation()" class="sendAgentInvitedListing">Send invitation</Button>

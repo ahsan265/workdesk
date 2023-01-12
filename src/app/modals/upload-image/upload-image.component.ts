@@ -1,6 +1,8 @@
 /* eslint-disable no-undef */
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { OverlayService } from '@gigaaa/gigaaa-components';
 import { ImageTransform } from 'ngx-image-cropper';
+import { ImageCropperComponent } from 'src/app/uploadImages/image-cropper/image-cropper.component';
 import { SharedServices } from 'src/app/workdeskServices/sharedResourcesService/shared-resource-service.service';
 
 @Component({
@@ -8,7 +10,7 @@ import { SharedServices } from 'src/app/workdeskServices/sharedResourcesService/
   templateUrl: './upload-image.component.html',
   styleUrls: ['./upload-image.component.scss']
 })
-export class UploadImageComponent implements OnInit {
+export class UploadImageComponent implements OnInit, OnDestroy {
   imageChangedEvent: any = '';
   croppedImage: any = '';
   filename: any;
@@ -35,9 +37,13 @@ export class UploadImageComponent implements OnInit {
   progressbarvalue: any = 0;
   filesize: any;
   imageUploaded: any;
-  constructor(private SharedServices: SharedServices) {}
+  constructor(private SharedServices: SharedServices, private OverlayService: OverlayService) { }
   showSaveButton: boolean = false;
   showCancelButton: boolean = true;
+  @ViewChild('ImageCropperComponent') ImageCropperComponent!: ImageCropperComponent;
+
+  ngOnDestroy(): void {
+  }
 
   ngOnInit(): void {
     this.uploadpicture = true;
@@ -120,16 +126,17 @@ export class UploadImageComponent implements OnInit {
           this.croppicture = true;
           this.showCancelButton = false;
           this.showSaveButton = true;
+
         }
       }
     }, 50);
   }
 
   closeImageModal() {
-    this.SharedServices.closeImageDialog(false);
+    this.OverlayService.close();
   }
 
   saveImageUpload() {
-    this.SharedServices.saveAgentImage(true);
+    this.ImageCropperComponent.updateUserProfilePicture();
   }
 }

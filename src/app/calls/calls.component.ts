@@ -3,12 +3,10 @@
 /* eslint-disable sort-imports */
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { Component, HostListener, OnInit, ViewChild } from '@angular/core';
-import { callType, languauges, searchInputData } from './callsData';
+import { callType,searchInputData } from './callsData';
 import { filter, map } from 'rxjs/operators';
 import { AuthService } from '../services/auth.service';
-import { callsIndicatorData } from '../models/callIndicatorModel';
 import { CallsService } from './callService/calls.service';
-import { CommonService } from '../workdeskServices/commonEndpoint/common.service';
 import { GigaaaDaterangepickerDirective } from '@gigaaa/gigaaa-components';
 import { ranges } from '../dashboard/dashboardData';
 import dayjs from 'dayjs';
@@ -16,23 +14,22 @@ import { CalendarService } from '../calendarService/calendar.service';
 import { QueueSocketService } from '../workdeskSockets/queueSocket/queue-socket.service';
 import {
   AnsweredCallModel,
-  CallsModel,
   IncomingCallModel,
   MissedCallModel,
   OngoingCallModel
 } from '../models/callModel';
 import { AgentUserInformation } from '../workdeskServices/callInterfaceServices/agentUserInformation/agent-user-information.service';
 import { OverlayService } from '../callInterface/overLayService/overlay.service';
+import { getDefaultInputsLoadOnce } from './incoming/incoming.Service';
 
 @Component({
   selector: 'app-calls',
   templateUrl: './calls.component.html',
   styleUrls: ['./calls.component.scss'],
-  providers: [CallsService]
+  providers: [CallsService,getDefaultInputsLoadOnce]
 })
 export class CallsComponent implements OnInit {
   callType = callType;
-  languauges = languauges;
   searchInputData = searchInputData;
   showIndicator = false;
   callsIndicatorData = {};
@@ -49,16 +46,12 @@ export class CallsComponent implements OnInit {
     private route: ActivatedRoute,
     private activatedRoute: ActivatedRoute,
     private CallsService: CallsService,
-    private calendarService: CalendarService,
     private QueueSocketService: QueueSocketService,
-    private AgentUserInformation: AgentUserInformation,
-    private OverlayService: OverlayService,
-
 
   ) {
     this.authService.pageTitle.next('Calls');
     this.alwaysShowCalendars = true;
-   
+
   }
   ranges = ranges;
   aggregate: string = 'this_week';
@@ -85,14 +78,19 @@ export class CallsComponent implements OnInit {
   missedData: MissedCallModel[] = [];
   awnseredData: AnsweredCallModel[] = [];
   ngOnInit() {
+    const data = this.QueueSocketService.defaultCallData;
+    this.ongoingData = data.ongoing.calls;
+    this.incomingData = data.incoming.calls;
+
     this.QueueSocketService.SendDefaultParam();
+    this.QueueSocketService.SendDefaultParamFinished();
     this.route.url.subscribe(() => {
       const tabName: string =
         this.route.snapshot.firstChild?.routeConfig?.path || '';
       this.selectedPage = tabName;
       this.callSegmentSelection(tabName);
     });
-    this.callInitialEndpoints();
+
     this.router.events
       .pipe(
         filter((event) => event instanceof NavigationEnd),
@@ -108,49 +106,26 @@ export class CallsComponent implements OnInit {
         this.selectedPage = title;
         this.callSegmentSelection(title);
       });
-    this.QueueSocketService.callDataSubject.subscribe((data: CallsModel) => {
-      this.incomingData = data.incoming;
-      this.ongoingData = data.ongoing;
-      this.missedData = data.missed;
-      this.awnseredData = data.finished;
-      this.CallsService.sendDataToTabs(data.missed, 'missed');
-      this.CallsService.sendDataToTabs(data.finished, 'answered');
-      this.CallsService.sendDataToTabs(data.ongoing, 'ongoing');
-      this.CallsService.sendDataToTabs(data.incoming, 'incoming');
-
+    this.QueueSocketService.callDataSubject.subscribe((data: any) => {
+      this.callSegmentSelection(data.type)
     });
 
-    // const data = this.QueueSocketService.callsData.value;
-    // this.incomingData = data.incoming;
-    // this.ongoingData = data.ongoing;
-    // this.missedData = data.missed;
-    // this.awnseredData = data.finished;
-    // this.CallsService.sendDataToTabs(data.missed, 'missed');
-    // this.CallsService.sendDataToTabs(data.finished, 'answered');
-    // this.CallsService.sendDataToTabs(data.ongoing, 'ongoing');
-    // this.CallsService.sendDataToTabs(data.incoming, 'incoming');
-    // this.callSegmentSelection(this.selectedPage);
   }
-
-  private async callInitialEndpoints() {
-    // this.languauges = await this.CommonService.getProjectLanguagesForUser();
-  }
-
-
-
-
-
 
   callSegmentSelection(title: string) {
     const data = this.QueueSocketService.defaultCallData;
     if (title === 'missed') {
-      this.CallsService.sendDataToTabs(data.missed, title);
-    } else if (title === 'answered') {
-      this.CallsService.sendDataToTabs(data.finished, title);
+      this.CallsService.sendDatatoMissedAndAnswered(data.missed, title);
+    } else if (title === 'finished') {
+      this.CallsService.sendDatatoMissedAndAnswered(data.finished, title);
     } else if (title === 'incoming') {
+      this.incomingData = data.incoming.calls;
       this.CallsService.sendDataToTabs(data.incoming, title);
     } else if (title === 'ongoing') {
+      this.ongoingData = data.ongoing.calls;
       this.CallsService.sendDataToTabs(data.ongoing, title);
     }
   }
+
+
 }

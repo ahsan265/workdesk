@@ -60,6 +60,7 @@ export class AgentUserInformation {
     user: any
   ) {
     const data = this.getCallInformation();
+    
     data['user_information'] = {
       user_id: userId,
       data: {

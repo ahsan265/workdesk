@@ -1098,7 +1098,7 @@ export class GigaaaApiService {
     };
     return await this.http
       .get(
-        `${this.gigaabackendUlr}/websockets/cs/private/organization/${organizationId}/project/${projectId}/connection`,
+        `${this.workdeskurl_cs}/private/organization/${organizationId}/project/${projectId}/connection`,
         httpOptions
       )
       .toPromise()
