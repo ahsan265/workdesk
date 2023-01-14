@@ -15,6 +15,8 @@ import { answeredTablaSetting } from '../../missed/missedData';
 import { answeredData, callTypeAnswered, paginationData } from '../answeredData';
 import { CallsService } from '../../callService/calls.service';
 import { getDefaultInputsLoadOnce } from '../../incoming/incoming.Service';
+import { noTobaleData } from 'src/app/components/no-table-data/notableData';
+import { noAgentTobaleData } from 'src/app/agents/agentsData';
 
 @Component({
   selector: 'app-answered',
@@ -22,6 +24,7 @@ import { getDefaultInputsLoadOnce } from '../../incoming/incoming.Service';
   styleUrls: ['./answered.component.scss']
 })
 export class AnsweredComponent implements OnInit {
+  nodata = noAgentTobaleData;
   timer: any;
   pagination = paginationData;
   showCalender = true;

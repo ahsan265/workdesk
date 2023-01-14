@@ -1,7 +1,9 @@
 import { Component, HostListener, OnInit, ViewChild } from '@angular/core';
 import { GigaaaDaterangepickerDirective } from '@gigaaa/gigaaa-components';
 import dayjs from 'dayjs';
+import { noAgentTobaleData } from 'src/app/agents/agentsData';
 import { CalendarService } from 'src/app/calendarService/calendar.service';
+import { noTobaleData } from 'src/app/components/no-table-data/notableData';
 import { ranges } from 'src/app/dashboard/dashboardData';
 import {
   newCallModelOngoing,
@@ -19,6 +21,7 @@ import { callTypeOngoing, ongoingTableSetting, searchInputData } from '../../ong
   styleUrls: ['./ongoing.component.scss']
 })
 export class OngoingComponent implements OnInit {
+  nodata = noTobaleData;
   showCalender = false;
   ongoingData: OngoingCallModelTable[] = [];
   unfilterOngoingData: OngoingCallModelTable[] = [];

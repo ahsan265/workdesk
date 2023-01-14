@@ -28,7 +28,7 @@
     <gigaaa-workdesk-table [tableData]="agentdata" [tableSettings]="tableSetting"
       (agentSetting)="getSettingsPage($event)">
     </gigaaa-workdesk-table>
-    <app-no-table-data *ngIf="agentdata.length === 0"></app-no-table-data>
+    <app-no-table-data *ngIf="agentdata.length === 0" [notableClass]="noAgentTobaleData"></app-no-table-data>
   </div>
 </app-page-wrapper>
 
