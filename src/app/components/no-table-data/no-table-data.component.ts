@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-no-table-data',
@@ -6,7 +6,10 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./no-table-data.component.scss']
 })
 export class NoTableDataComponent implements OnInit {
-  constructor() {}
 
-  ngOnInit(): void {}
+  @Input() notableClass: any
+  constructor() {
+  }
+
+  ngOnInit(): void { }
 }

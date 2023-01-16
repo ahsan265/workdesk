@@ -4,6 +4,7 @@ import { GigaaaDaterangepickerDirective } from '@gigaaa/gigaaa-components';
 import dayjs from 'dayjs';
 import { CalendarService } from 'src/app/calendarService/calendar.service';
 import { OverlayService } from 'src/app/callInterface/overLayService/overlay.service';
+import { noTobaleData } from 'src/app/components/no-table-data/notableData';
 import { ranges } from 'src/app/dashboard/dashboardData';
 import {
   IncomingCallModelTable,
@@ -23,6 +24,7 @@ import { getDefaultInputsLoadOnce } from '../incoming.Service';
 
 })
 export class IncomingComponent implements OnInit {
+  nodata = noTobaleData;
   showCalender = false;
   tableSettings = incomingTableSetting;
   incomingData: IncomingCallModelTable[] = [];

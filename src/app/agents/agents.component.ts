@@ -9,7 +9,8 @@ import {
   languauges,
   oneSelect,
   searchInputData,
-  agentIndicatorData
+  agentIndicatorData,
+  noAgentTobaleData
 } from './agentsData';
 import { AuthService } from '../services/auth.service';
 import { Component, OnInit } from '@angular/core';
@@ -30,6 +31,7 @@ import { callsIndicatorData } from '../models/callIndicatorModel';
   styleUrls: ['./agents.component.scss']
 })
 export class AgentsComponent implements OnInit {
+  noAgentTobaleData=noAgentTobaleData;
   languauges = languauges;
   searchInputData = searchInputData;
   oneSelectData = oneSelect;
@@ -79,19 +81,16 @@ export class AgentsComponent implements OnInit {
     this.AgentService.sendAgentDefaultParameter(
       languaugesOutput,
       this.activeAgent,
-      this.inactiveAgent,
       this.invitedAgent
     );
   }
   public agentTypeOutput(agentType: OneSelect) {
     const selectedType = this.AgentService.getAgenttypeParameter(agentType);
     this.activeAgent = selectedType.active;
-    this.inactiveAgent = selectedType.inactive;
     this.invitedAgent = selectedType.invited;
     this.AgentService.sendAgentDefaultParameter(
       this.selectedLanguages,
       selectedType.active,
-      selectedType.inactive,
       selectedType.invited
     );
   }

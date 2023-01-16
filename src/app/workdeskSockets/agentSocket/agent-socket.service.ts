@@ -50,7 +50,6 @@ export class AgentSocketService {
       this.isSocketOpen = this.ws?.OPEN;
       this.sendAgentsParameter({
         active: 1,
-        inactive: 1,
         invited: 1,
         languages: []
       });
