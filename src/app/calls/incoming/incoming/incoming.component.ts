@@ -99,7 +99,7 @@ export class IncomingComponent implements OnInit {
           userImage: '../../../assets/images/callInterface/user.png',
           showUserImage: false,
           callPickButton: 'Answer',
-          disableButton: this.AgentSocketService.isInCall
+          disableButton: incomingData.on_hold
         }));
         this.unfilterIncomingData = this.incomingData;
       }

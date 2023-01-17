@@ -31,6 +31,7 @@ export interface IncomingCallModel {
   tablet: false;
   user_id: string;
   waiting_started_at: string;
+  on_hold:boolean;
 }
 
 export interface OngoingCallModel {
