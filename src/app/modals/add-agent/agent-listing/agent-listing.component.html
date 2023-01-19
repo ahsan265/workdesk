@@ -40,6 +40,7 @@
     </div>
   </div>
   <div class="sendAgentListingWrapper">
-    <Button (click)="sendAgentInformation()" class="sendAgentInvitedListing">Send invitation</Button>
+    <Button (click)="sendAgentInformation()" [disabled]="this.agentIvitationList.length===0"
+      class="sendAgentInvitedListing">Send invitation</Button>
   </div>
 </div>

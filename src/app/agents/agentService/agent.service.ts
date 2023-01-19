@@ -173,7 +173,6 @@ export class AgentService {
         this.CommonService.getEndpointsParamLocal().project,
         agentsInformation
       );
-      this.MessageService.setSuccessMessage('Agent invitation has been sent.');
     } catch (error: any) {
       this.MessageService.setErrorMessage(error.error.error);
     }

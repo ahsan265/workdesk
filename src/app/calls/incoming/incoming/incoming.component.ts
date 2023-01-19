@@ -2,6 +2,7 @@ import { Component, HostListener, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, NavigationStart, Router } from '@angular/router';
 import { GigaaaDaterangepickerDirective } from '@gigaaa/gigaaa-components';
 import dayjs from 'dayjs';
+import { noAgentTobaleData } from 'src/app/agents/agentsData';
 import { CalendarService } from 'src/app/calendarService/calendar.service';
 import { OverlayService } from 'src/app/callInterface/overLayService/overlay.service';
 import { noTobaleData } from 'src/app/components/no-table-data/notableData';
@@ -24,7 +25,7 @@ import { getDefaultInputsLoadOnce } from '../incoming.Service';
 
 })
 export class IncomingComponent implements OnInit {
-  nodata = noTobaleData;
+  nodata = noAgentTobaleData;
   showCalender = false;
   tableSettings = incomingTableSetting;
   incomingData: IncomingCallModelTable[] = [];

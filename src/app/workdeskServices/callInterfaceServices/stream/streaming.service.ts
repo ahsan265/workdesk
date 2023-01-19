@@ -50,7 +50,6 @@ export class StreamingService {
     if (this.PeerConnectionService.peerConnection === undefined) {
       await this.PeerConnectionService.createPeerConnection();
     }
-
     const userInformation = this.AgentUserInformation.getCallInformation();
     if (userInformation.last_used_microphone !== undefined) {
       this.mediaConstraint.audio = { deviceId: userInformation.last_used_microphone.id }
@@ -60,7 +59,6 @@ export class StreamingService {
       .then((stream) => {
         this.localStream = stream;
         stream.getVideoTracks()[0].stop()
-        //this.localStream.addTrack(stream.getAudioTracks()[0]);
         this.getLocalStream.next(stream);
       });
   }
