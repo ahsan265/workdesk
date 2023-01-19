@@ -2,12 +2,21 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
 
 .cdk-overlay-container {
-  z-index: 1000;
   top: 0;
   margin: 0 auto;
   position: static;
   height: 100%;
   width: 100%;
+  display: flex;
+  position: absolute;
+  align-items: center;
+  justify-content: center
+}
+
+.dark-backdrop {
+  height: 100%;
+  width: 100%;
+  position: absolute;
 }
 
 .toastClass {
@@ -19,9 +28,19 @@
 .cdk-global-overlay-wrapper {
   height: 100%;
   width: 100%;
-  display: contents;
-  top: 0;
+  display: flex;
   position: absolute;
+}
+
+::ng-deep .cdk-global-overlay-backdrop {
+  height: 100%;
+  width: 100%;
+  margin: 0 auto;
+  position: absolute;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 
@@ -46,6 +65,14 @@
   box-shadow: 3px 3px 10px rgb(0 0 0 / 23%);
   border-radius: 4px;
   padding: 30px;
+}
+
+.addAgent {
+  width: 504px;
+  height: 580px;
+  background: #FFFFFF;
+  box-shadow: 3px 3px 10px rgb(0 0 0 / 23%);
+  border-radius: 4px;
 }
 
 .modal {
