@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { OverlayService } from '@gigaaa/gigaaa-components';
+import { MultiSelect } from 'src/app/models/multiSelect';
+import { languauges } from './addAgentData';
 
 @Component({
   selector: 'app-add-agent',
@@ -6,7 +9,15 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./add-agent.component.scss']
 })
 export class AddAgentComponent implements OnInit {
+  languages = languauges;
+  arrayOfLanguages!: MultiSelect;
+  constructor(private OverlayService:OverlayService){
+
+  }
   ngOnInit(): void {
-    throw new Error('Method not implemented.');
+  }
+  closeDialog()
+  {
+    this.OverlayService.close()
   }
 }

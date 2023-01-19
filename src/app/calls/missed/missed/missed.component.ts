@@ -16,13 +16,14 @@ import { ranges } from 'src/app/dashboard/dashboardData';
 import { CallsService } from '../../callService/calls.service';
 import { getDefaultInputsLoadOnce } from '../../incoming/incoming.Service';
 import { noTobaleData } from 'src/app/components/no-table-data/notableData';
+import { noAgentTobaleData } from 'src/app/agents/agentsData';
 @Component({
   selector: 'app-missed',
   templateUrl: './missed.component.html',
   styleUrls: ['./missed.component.scss']
 })
 export class MissedComponent implements OnInit {
-  nodata = noTobaleData;
+  nodata = noAgentTobaleData;
   timer: any;
   pagination = paginationData;
   showCalender = true;

@@ -20,10 +20,11 @@ import { AgentSocketService } from '../workdeskSockets/agentSocket/agent-socket.
 import { AgentList } from '../models/agentSocketModel';
 import { Router } from '@angular/router';
 import { CommonService } from '../workdeskServices/commonEndpoint/common.service';
-import { OverlayService } from '../callInterface/overLayService/overlay.service';
 import { AgentModelTable } from '../models/callModel';
 import { SharedServices } from '../workdeskServices/sharedResourcesService/shared-resource-service.service';
 import { callsIndicatorData } from '../models/callIndicatorModel';
+import { OverlayService } from '@gigaaa/gigaaa-components';
+import { AddAgentComponent } from '../modals/add-agent/add-agent.component';
 
 @Component({
   selector: 'app-agents',
@@ -31,7 +32,7 @@ import { callsIndicatorData } from '../models/callIndicatorModel';
   styleUrls: ['./agents.component.scss']
 })
 export class AgentsComponent implements OnInit {
-  noAgentTobaleData=noAgentTobaleData;
+  noAgentTobaleData = noAgentTobaleData;
   languauges = languauges;
   searchInputData = searchInputData;
   oneSelectData = oneSelect;
@@ -54,8 +55,8 @@ export class AgentsComponent implements OnInit {
     private AgentService: AgentService,
     private router: Router,
     private AgentSocketService: AgentSocketService,
-    private SharedServices: SharedServices
-  ) {
+    private SharedServices: SharedServices,
+    private OverlayService: OverlayService) {
     this.authService.pageTitle.next('Agents');
   }
   ngOnInit(): void {
@@ -95,9 +96,14 @@ export class AgentsComponent implements OnInit {
     );
   }
   showInviteModal() {
-    if (this.buttonData.active) {
-      this.showInviteModel = true;
-    }
+    // if (this.buttonData.active) {
+    //   this.showInviteModel = true;
+    // }
+    this.OverlayService.open({
+      component: AddAgentComponent,
+      panelClass: 'addAgent',
+      hasBackdrop: true,
+    })
   }
 
   onCloseAgentInvite(event: any) {

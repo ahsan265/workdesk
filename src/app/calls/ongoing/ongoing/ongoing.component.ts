@@ -21,7 +21,7 @@ import { callTypeOngoing, ongoingTableSetting, searchInputData } from '../../ong
   styleUrls: ['./ongoing.component.scss']
 })
 export class OngoingComponent implements OnInit {
-  nodata = noTobaleData;
+  nodata = noAgentTobaleData;
   showCalender = false;
   ongoingData: OngoingCallModelTable[] = [];
   unfilterOngoingData: OngoingCallModelTable[] = [];

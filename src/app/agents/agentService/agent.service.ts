@@ -165,7 +165,7 @@ export class AgentService {
     }
   }
   // send Invitation to agent
-  private async sendInvitationToAgent(agentsInformation: InviteAgentModel) {
+  public async sendInvitationToAgent(agentsInformation: InviteAgentModel) {
     try {
       await this.GigaaaApiService.getinviteagent(
         this.CommonService.getEndpointsParamLocal().token,
@@ -173,25 +173,24 @@ export class AgentService {
         this.CommonService.getEndpointsParamLocal().project,
         agentsInformation
       );
-      this.MessageService.setSuccessMessage('Agent invitation has been sent.');
     } catch (error: any) {
       this.MessageService.setErrorMessage(error.error.error);
     }
   }
 
-  // set Validation for Add agent
+  // // set Validation for Add agent
 
-  public async validateAgent(agentsInformation: InviteAgentModel) {
-    let ids: number[] = [];
-    if (agentsInformation.language_ids === undefined) {
-      ids = [];
-      if (ids.length === 0) {
-        this.MessageService.setErrorMessage('Please enter valid information');
-      }
-    } else {
-      await this.sendInvitationToAgent(agentsInformation);
-    }
-  }
+  // public async validateAgent(agentsInformation: InviteAgentModel) {
+  //   let ids: number[] = [];
+  //   if (agentsInformation.language_ids === undefined) {
+  //     ids = [];
+  //     if (ids.length === 0) {
+  //       this.MessageService.setErrorMessage('Please enter valid information');
+  //     }
+  //   } else {
+  //     await this.sendInvitationToAgent(agentsInformation);
+  //   }
+  // }
 
   getLanguageFlagById(languages: AgentLanguages[]): UtlitiesIcon[] {
     let UtlitiesIcon: UtlitiesIcon[] = [];

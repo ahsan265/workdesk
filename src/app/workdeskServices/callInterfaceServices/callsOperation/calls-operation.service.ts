@@ -63,9 +63,7 @@ export class CallsOperationService {
                 this.AuthService.getLoggedUser(),
               );
                 await this.StreamingService.selectedDeviceForStream(false);
-            
               this.startTimer.next(false);
-
             }
             break;
           case 'accept':
@@ -81,9 +79,6 @@ export class CallsOperationService {
               this.sendPeerInformation.next(callsData.peer_information.data);
               this.startTimer.next(true);
               setTimeout(async () => {
-
-                // this.PeerConnectionService.peerConnection.close();
-                // await this.PeerConnectionService.createPeerConnection();
                 this.StreamingService.reloadOfferSend(this.peerUserId);
               }, 1000);
             }
