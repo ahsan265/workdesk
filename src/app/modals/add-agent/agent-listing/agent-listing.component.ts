@@ -25,10 +25,13 @@ import { languauges } from '../addAgentData';
 })
 export class AgentListingComponent implements OnInit {
   email: string = '';
+  typedEmail: string = '';
+
   languages = languauges;
   agentIvitationList: agentInvitationList[] = [];
   agentListingCounter: number = 1;
   @ViewChildren('email') emailTyped!: QueryList<ElementRef>;
+  @ViewChild('email', { static: true }) emailEntered!: ElementRef;
 
   langaugeIds: number[] = [];
   constructor(
@@ -63,8 +66,9 @@ export class AgentListingComponent implements OnInit {
       this.languages.data.forEach(language => {
         language.selected = false;
       })
-      this.email = '';
-      this.langaugeIds=[];
+      this.typedEmail = '';
+      this.langaugeIds = [];
+
       // this.AgentService.getLanguageFlagById(AgentList.languages)
     }
     else {
@@ -107,7 +111,7 @@ export class AgentListingComponent implements OnInit {
       this.overlayService.close();
 
     } else {
-      this.MessageService.setErrorMessage('Please enter valid information');
+      this.MessageService.setErrorMessage('Please fill all fields.');
     }
   }
 

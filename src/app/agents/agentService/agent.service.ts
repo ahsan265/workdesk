@@ -261,13 +261,13 @@ export class AgentService {
     }
   }
 
-
+// counter for online user
   countOnlineAgentsAvailable(agent: AgentList[]) {
     const allAgents = agent.filter(data => {
       return this.setAgentInvitedProperty(data.invited, data.inactive, data.active) === true;
     })
     const onlineAgents = allAgents.filter(data => {
-      return data.is_online === true && data.is_available === true;
+      return data.is_online === true && data.is_available === true && data.is_in_call===false;
     })
     return onlineAgents.length + '/' + allAgents.length ;
   }

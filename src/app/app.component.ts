@@ -11,9 +11,11 @@ export class AppComponent {
   constructor(private AgentInviteService: AgentInviteService) {
     this.AgentInviteService.agentNonComplientAccountSubject.subscribe(
       (data: boolean) => {
+        console.log(data)
         this.showNonComplientAccountModal = data;
       }
     );
+
   }
   onCloseNonComplientAccount(event: any) {
     if (event) {

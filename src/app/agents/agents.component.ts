@@ -96,14 +96,14 @@ export class AgentsComponent implements OnInit {
     );
   }
   showInviteModal() {
-    // if (this.buttonData.active) {
-    //   this.showInviteModel = true;
-    // }
-    this.OverlayService.open({
-      component: AddAgentComponent,
-      panelClass: 'addAgent',
-      hasBackdrop: true,
-    })
+    if (this.buttonData.active) {
+      this.OverlayService.open({
+        component: AddAgentComponent,
+        panelClass: 'addAgent',
+        hasBackdrop: true,
+        backdropClass: 'dark-backdrop'
+      })
+    }
   }
 
   onCloseAgentInvite(event: any) {

@@ -3,6 +3,7 @@ import {
   CallbackModule,
   CardModule,
   ChartWrapperModule,
+  component_data,
   GigaaaButtonModule,
   GigaaaDatepicker,
   GigaaaHeaderModule,
@@ -19,6 +20,7 @@ import {
   ModalWrapperModule,
   MultiSelectDropdownModule,
   OneSelectDropdownModule,
+  OverlayService,
   SearchInputFieldModule,
   SwitchButtonModule
 } from '@gigaaa/gigaaa-components';
@@ -66,7 +68,6 @@ import { CustomerSupportComponent } from './customer-support/customer-support.co
 import { ScreenShareRestrictionComponent } from './callInterface/screen-share-restriction/screen-share-restriction.component';
 import { peerMiniCameraAnimation } from './callInterface/callInterfaceDirectives/callInterfaceHideDirective';
 import { callInterfaceHideControlDirective } from './callInterface/callInterfaceDirectives/callInterfaceHideControlDirective';
-import { OverlayService } from './callInterface/overLayService/overlay.service';
 import { AddAgentComponent } from './modals/add-agent/add-agent.component';
 import { AgentListingComponent } from './modals/add-agent/agent-listing/agent-listing.component';
 import { scrollStageDirective } from './directives/scrollDirective';
@@ -75,7 +76,6 @@ import { CountersComponent } from './components/counters/counters.component';
 import { WrongInvitationAccountComponent } from './modals/wrong-invitation-account/wrong-invitation-account.component';
 import { LoaderComponent } from './components/loader/loader.component';
 import { AuthService } from './services/auth.service';
-import { overlayToken } from './callInterface/overLayService/overlayToken';
 import { SwitchOrganizationComponent } from './modals/switch-organization/switch-organization.component';
 import { SwitchOgranizationDoneComponent } from './modals/switch-ogranization-done/switch-ogranization-done.component';
 import { ReDialCallService } from './workdeskServices/reDialCallService/re-dial-call.service';
@@ -89,6 +89,7 @@ import { AnsweredComponent } from './calls/answered/answered/answered.component'
 import { OngoingComponent } from './calls/ongoing/ongoing/ongoing.component';
 import { agentScrollList } from './directives/agentListDirective';
 import { CommonModule } from '@angular/common';
+import { AccountNotpartComponent } from './modals/account-not-part/account-notpart.component';
 
 @NgModule({
   declarations: [
@@ -141,7 +142,8 @@ import { CommonModule } from '@angular/common';
     IncomingComponent,
     MissedComponent,
     AnsweredComponent,
-    OngoingComponent
+    OngoingComponent,
+    AccountNotpartComponent
   ],
   imports: [
     CommonModule,
@@ -187,13 +189,12 @@ import { CommonModule } from '@angular/common';
       useClass: GigaaaHeaderService
     },
     {
-      provide: overlayToken,
-      useClass: OverlayService
-    },
-    {
       provide: APP_INITIALIZER,
       useClass: ReDialCallService
     },
+    {
+      provide: component_data, 
+      useClass: OverlayService },
     AuthService,
 
   ],
