@@ -1,10 +1,10 @@
 import { Component, HostListener, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, NavigationStart, Router } from '@angular/router';
-import { GigaaaDaterangepickerDirective } from '@gigaaa/gigaaa-components';
+import { GigaaaDaterangepickerDirective, OverlayService } from '@gigaaa/gigaaa-components';
 import dayjs from 'dayjs';
 import { noAgentTobaleData } from 'src/app/agents/agentsData';
 import { CalendarService } from 'src/app/calendarService/calendar.service';
-import { OverlayService } from 'src/app/callInterface/overLayService/overlay.service';
+import { CallConsoleComponent } from 'src/app/callInterface/call-console/call-console.component';
 import { noTobaleData } from 'src/app/components/no-table-data/notableData';
 import { ranges } from 'src/app/dashboard/dashboardData';
 import {
@@ -100,15 +100,16 @@ export class IncomingComponent implements OnInit {
           userImage: '../../../assets/images/callInterface/user.png',
           showUserImage: false,
           callPickButton: 'Answer',
-          disableButton: incomingData.on_hold
+          disableButton: (incomingData.on_hold === true || this.AgentSocketService.isInCall === true) ? true : false
+
         }));
         this.unfilterIncomingData = this.incomingData;
       }
     );
   }
   async ngOnInit(): Promise<void> {
-   this.getDefaultInputsLoadOnce.incominglanguages.asObservable().subscribe(data=>{
-    this.languauges =data;
+    this.getDefaultInputsLoadOnce.incominglanguages.asObservable().subscribe(data => {
+      this.languauges = data;
     });
   }
 
@@ -121,7 +122,10 @@ export class IncomingComponent implements OnInit {
     //   data
     // );
     this.OverlayService.open({
-      data: event
+      component:CallConsoleComponent,
+      data: event,
+      panelClass:'dialog-panel',
+      isPopup:false
     });
   }
 

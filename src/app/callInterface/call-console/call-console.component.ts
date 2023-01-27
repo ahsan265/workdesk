@@ -7,6 +7,7 @@ import {
   OnInit,
   ViewChild
 } from '@angular/core';
+import { component_data } from '@gigaaa/gigaaa-components';
 import { interval } from 'rxjs';
 import { AgentUserInformation } from 'src/app/workdeskServices/callInterfaceServices/agentUserInformation/agent-user-information.service';
 import { CallsOperationService } from 'src/app/workdeskServices/callInterfaceServices/callsOperation/calls-operation.service';
@@ -37,7 +38,6 @@ import {
 } from '../callsInterfaceData';
 import { MicrophoneVoiceIndicatorComponent } from '../microphone-voice-indicator/microphone-voice-indicator.component';
 import { MiniCameraScreenComponent } from '../mini-camera-screen/mini-camera-screen.component';
-import { overlayToken } from '../overLayService/overlayToken';
 
 @Component({
   selector: 'app-call-console',
@@ -55,7 +55,7 @@ export class CallConsoleComponent implements OnInit, OnDestroy, AfterViewInit {
     private CallsOperationService: CallsOperationService,
     private PeerConnectionService: PeerConnectionService,
     private AgentUserInformation: AgentUserInformation,
-    @Inject(overlayToken) public data: any
+    @Inject(component_data) public data: any
   ) {
 
     this.StreamingService.detectDevicesMicrphoneDeviceOnchange();

@@ -16,6 +16,7 @@ import { IncomingComponent } from './calls/incoming/incoming/incoming.component'
 import { OngoingComponent } from './calls/ongoing/ongoing/ongoing.component';
 import { MissedComponent } from './calls/missed/missed/missed.component';
 import { AnsweredComponent } from './calls/answered/answered/answered.component';
+import { AccountNotpartComponent } from './modals/account-not-part/account-notpart.component';
 
 const routes: Routes = [
   { path: '', component: LandingPageComponent },
@@ -53,7 +54,7 @@ const routes: Routes = [
     path: 'loading', component: LoaderComponent, canActivate: [AuthService]
   },
 
-  { path: 'calling', component: CallConsoleComponent },
+  { path: 'noaccount', component: AccountNotpartComponent },
 
   { path: '**', component: PageNotFoundComponent }
 ];

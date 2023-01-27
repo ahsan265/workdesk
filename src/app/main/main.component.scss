@@ -6,6 +6,9 @@
   overflow: hidden;
 
 }
+::ng-deep .mainContainer .sidebarWrap {
+  z-index: 1;
+}
 
 ::ng-deep .mainHeaderWrap .portalWrapper .preferenceHeading {
   border: none;

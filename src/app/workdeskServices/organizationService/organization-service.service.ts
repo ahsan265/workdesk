@@ -3,8 +3,10 @@
 /* eslint-disable sort-imports */
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
+import { OverlayService } from '@gigaaa/gigaaa-components';
 import { BehaviorSubject } from 'rxjs';
 import { sidebarData } from 'src/app/data';
+import { AccountNotpartComponent } from 'src/app/modals/account-not-part/account-notpart.component';
 import { Organization, Project, sidebarDropdownData } from 'src/app/models/organization';
 import { ConnectionSecurityService } from 'src/app/workdeskSockets/socketConnectionSecurity/connection-security.service';
 import { AgentInviteService } from '../agentInviteService/agent-invite.service';
@@ -26,7 +28,8 @@ export class getOrganizationService {
     private AgentinviteService: AgentInviteService,
     private ConnectionSecurityService: ConnectionSecurityService,
     private MessageService: MessageService,
-    private router: Router
+    private router: Router,
+    private OverlayService:OverlayService
   ) {
 
     this.LastUsedproject = new BehaviorSubject(this.getProjects());
@@ -68,6 +71,11 @@ export class getOrganizationService {
           });
         } else {
           this.router.navigate(['logout']);
+          this.OverlayService.open({
+            component:AccountNotpartComponent,
+            panelClass:'notAccount',
+            backdropClass: 'dark-backdrop'
+          })
         }
       })
       .catch((err: any) => {

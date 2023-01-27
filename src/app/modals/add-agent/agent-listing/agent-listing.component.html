@@ -1,8 +1,8 @@
 <div class="agentListingContainer">
   <div class="inPageWrapper">
     <div class="agentTextFieldsWrapper">
-      <input pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" (keyup)="getEmailByIndex()" class="inputFields"
-        type="email" placeholder="name@example.com" #email />
+      <input pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" (keyup)="getEmailByIndex()" class="inputFields"  [(ngModel)]="typedEmail"
+        type="email" placeholder="name@example.com" #email  />
       <div class="languageWrapper">
         <app-multi-select-dropdown [multiSelectData]="this.languages" (multiSelectOutput)="languaugesOutput($event)">
         </app-multi-select-dropdown>
@@ -11,7 +11,7 @@
           src="../../../../assets/images/components/addAgent.svg" alt=""></div>
     </div>
   </div>
-  <div class="agentListWrapper" [style.overflow-y]="this.agentIvitationList.length>2?'overlay':'hidden'">
+  <div class="agentListWrapper" [style.overflow-y]="this.agentIvitationList.length>1?'overlay':'hidden'">
     <div class="agentTitle">
       Agent(s)
     </div>
