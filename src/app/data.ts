@@ -83,4 +83,30 @@ const sidebarData: any = [
   }
 ];
 
-export { websites, icons, sidebarData, addons, defaultCallData };
+const sidebarDataAgent: any = [
+  {
+    iconUrl: icons.integrationIcon,
+    name: 'Select project',
+    dropdownItems: [],
+    dropdown: true,
+    isLink: false
+  },
+ 
+  {
+    iconUrl: icons.callIcon,
+    activeIconUrl: icons.activeCallIcon,
+    name: 'Calls',
+    routeUrl: ['calls'],
+    dropdown: false,
+    isLink: true
+  },
+  {
+    iconUrl: icons.agentIcon,
+    activeIconUrl: icons.activeAgentIcon,
+    name: 'Agents',
+    routeUrl: ['agents'],
+    dropdown: false,
+    isLink: true
+  }
+];
+export { websites, icons, sidebarData, addons, defaultCallData ,sidebarDataAgent};

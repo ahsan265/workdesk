@@ -24,6 +24,12 @@ const oneSelect: OneSelect[] = [
   { id: 3, name: 'Invited', selected: false }
 ];
 
+const onlineStatuses: OneSelect[] = [
+  { id: 1, name: 'All status', selected: true },
+  { id: 2, name: 'Online', selected: false },
+  { id: 3, name: 'Away', selected: false }
+];
+
 const selectedAgentType: any[] = [
   {
     name: 'All activity',
@@ -251,5 +257,6 @@ export {
   selectedAgentType,
   agentModelData,
   agentIndicatorData,
-  noAgentTobaleData
+  noAgentTobaleData,
+  onlineStatuses
 };

@@ -37,6 +37,8 @@
   height: 100vh;
   background: #fefeff;
   overflow: scroll;
+  position: relative;
+  z-index: 0;
 }
 
 .workdeskWrap::-webkit-scrollbar {

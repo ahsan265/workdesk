@@ -1,5 +1,7 @@
 .tableWrapper {
   padding: 0 30px;
+  position: relative;
+
 }
 
 ::ng-deep .tableWrapper .tableWrap {
@@ -25,6 +27,15 @@
 ::ng-deep .filterWrapper .leftFilter .dropdownWrapper,
 ::ng-deep .filterWrapper .rightFilter .dropdownWrapper {
   width: unset !important;
+}
+
+.filterArrow {
+  margin-left: 10px;
+}
+
+.filterArrowRotate {
+  transform: rotate(180deg);
+  transition: all 0.3s;
 }
 
 .menuWrapper {
@@ -54,6 +65,8 @@
   margin-right: 0px;
   top: 30px;
   margin-bottom: 2px;
+  z-index: 1;
+
 }
 
 .leftFilter {

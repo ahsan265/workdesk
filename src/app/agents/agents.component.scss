@@ -13,13 +13,13 @@
 }
 
 .leftFilter {
-  width: 40%;
+  width: 35%;
   display: inline-flex;
 }
 
 
 .rightFilter {
-  width: 60%;
+  width: 65%;
   display: inline-flex;
   text-align: right;
   justify-content: end;
@@ -38,7 +38,13 @@
 
 .multiSelectWrapper.activity {
   display: inline-block;
-  width: 200px;
+  width: 185.55px;
+  margin-right: 10px;
+}
+
+.multiSelectWrapper.onlineStatus {
+  display: inline-block;
+  width: 180px;
   margin-right: 10px;
 }
 

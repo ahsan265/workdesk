@@ -50,7 +50,7 @@ export class AgentService {
   }
 
   public checkIsAgentOnline(is_available: boolean, is_online: boolean) {
-    return is_available === true && is_online === true ? '#3EDE26' : '#FF155A';
+    return is_available === true && is_online === true ? true : false;
   }
 
   public getAgentFullName(
@@ -178,19 +178,6 @@ export class AgentService {
     }
   }
 
-  // // set Validation for Add agent
-
-  // public async validateAgent(agentsInformation: InviteAgentModel) {
-  //   let ids: number[] = [];
-  //   if (agentsInformation.language_ids === undefined) {
-  //     ids = [];
-  //     if (ids.length === 0) {
-  //       this.MessageService.setErrorMessage('Please enter valid information');
-  //     }
-  //   } else {
-  //     await this.sendInvitationToAgent(agentsInformation);
-  //   }
-  // }
 
   getLanguageFlagById(languages: AgentLanguages[]): UtlitiesIcon[] {
     let UtlitiesIcon: UtlitiesIcon[] = [];
@@ -261,14 +248,28 @@ export class AgentService {
     }
   }
 
-// counter for online user
+  // counter for online user
   countOnlineAgentsAvailable(agent: AgentList[]) {
     const allAgents = agent.filter(data => {
       return this.setAgentInvitedProperty(data.invited, data.inactive, data.active) === true;
     })
     const onlineAgents = allAgents.filter(data => {
-      return data.is_online === true && data.is_available === true && data.is_in_call===false;
+      return data.is_online === true && data.is_available === true && data.is_in_call === false;
     })
-    return onlineAgents.length + '/' + allAgents.length ;
+    return onlineAgents.length + '/' + allAgents.length;
+  }
+  /// get agent status response
+
+  public getAgentOnlineStatus(value: number) {
+    switch (value) {
+      case 1:
+        return 'online';
+      case 2:
+        return 'away';
+      case 3:
+        return 'all';
+      default:
+        return null;
+    }
   }
 }
