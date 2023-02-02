@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from 'src/app/services/auth.service';
+import { CommonService } from 'src/app/workdeskServices/commonEndpoint/common.service';
 import { getOrganizationService } from 'src/app/workdeskServices/organizationService/organization-service.service';
 
 @Component({
@@ -11,12 +12,17 @@ import { getOrganizationService } from 'src/app/workdeskServices/organizationSer
 export class LoaderComponent implements OnInit {
 
   constructor(private router: Router,
-    private getOrganizationService: getOrganizationService) { }
+    private getOrganizationService: getOrganizationService, private CommonService: CommonService) { }
 
   ngOnInit(): void {
-    setTimeout(() => {
+    if (this.CommonService.getEndpointsParamLocal().organization === undefined) {
+      this.getOrganizationService.checkUserIsAuthorized(this.CommonService.getEndpointsParamLocal().token)
+    }
+    else {
       this.router.navigate(['/dashboard']);
-    }, 1000);
+      this.CommonService.restrictRoute();
+
+    }
   }
 
 }

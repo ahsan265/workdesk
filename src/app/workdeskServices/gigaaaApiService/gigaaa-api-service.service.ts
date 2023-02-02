@@ -400,7 +400,7 @@ export class GigaaaApiService {
   }
 
   //get visitors
-  public getvisitorlist(accesstoken: string, orgid: string, intid: string) {
+  public async getvisitorlist(accesstoken: string, orgid: string, intid: string): Promise<any> {
     const httpOptions: any = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
@@ -408,18 +408,21 @@ export class GigaaaApiService {
         Authorization: `Bearer ${accesstoken}`
       })
     };
-    return this.http.get(
+    return await this.http.get(
       this.gigaabackendUlr +
       '/workdesk/visitors?organization=' +
       orgid +
       '&integration=' +
       intid,
       httpOptions
-    );
+    ).toPromise()
+      .catch((err) => {
+        throw err;
+      });
   }
 
   //get visitors
-  public getroleofagent(accesstoken: string, orgid: string, intid: string) {
+  public async getroleofagent(accesstoken: string, orgid: string, intid: string): Promise<any> {
     const httpOptions: any = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
@@ -434,7 +437,10 @@ export class GigaaaApiService {
       '&project=' +
       intid,
       httpOptions
-    );
+    ).toPromise()
+      .catch((err) => {
+        throw err;
+      });
   }
 
   // get token for agents socket api

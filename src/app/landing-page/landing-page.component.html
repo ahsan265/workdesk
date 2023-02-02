@@ -1,13 +1,6 @@
-<gigaaa-landing-page
-  [landingPageData]="landingPageData"
-  (login)="onLogin($event)"
-  [policySource]="'./assets/policy/Privacy_policy_gigaaa.pdf'"
-></gigaaa-landing-page>
+<gigaaa-landing-page [landingPageData]="landingPageData" (login)="onLogin($event)" (register)="register($event)"
+  [policySource]="'./assets/policy/Privacy_policy_gigaaa.pdf'"></gigaaa-landing-page>
 
-<app-modal-wrapper
-  (closeModal)="onCloseModal($event)"
-  *ngIf="showLinkExpireModal"
-  [modalData]="modalData"
->
+<app-modal-wrapper (closeModal)="onCloseModal($event)" *ngIf="showLinkExpireModal" [modalData]="modalData">
   <app-link-expire-modal></app-link-expire-modal>
 </app-modal-wrapper>

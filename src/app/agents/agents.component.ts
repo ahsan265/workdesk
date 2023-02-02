@@ -10,7 +10,8 @@ import {
   oneSelect,
   searchInputData,
   agentIndicatorData,
-  noAgentTobaleData
+  noAgentTobaleData,
+  onlineStatuses
 } from './agentsData';
 import { AuthService } from '../services/auth.service';
 import { Component, OnInit } from '@angular/core';
@@ -36,6 +37,7 @@ export class AgentsComponent implements OnInit {
   languauges = languauges;
   searchInputData = searchInputData;
   oneSelectData = oneSelect;
+  onlineStatuses = onlineStatuses;
   buttonData = buttonData;
   tableSetting = agentTableSetting;
   addAgentModelData = agentModelData;
@@ -95,6 +97,21 @@ export class AgentsComponent implements OnInit {
       selectedType.invited
     );
   }
+  // get agent status data 
+  public agentStatusOutput(agentType: OneSelect) {
+    const dataStatusWise = this.agentdataWithNoSearch.filter(data => {
+      if (agentType.id === 2) {
+        return data.is_online_icon_color === '#3EDE26';
+      }
+      else if (agentType.id === 3) {
+        return data.is_online_icon_color === '#FF155A';
+      }
+      else {
+        return data;
+      }
+    })
+    this.agentdata=dataStatusWise;
+  }
   showInviteModal() {
     if (this.buttonData.active) {
       this.OverlayService.open({
@@ -113,8 +130,8 @@ export class AgentsComponent implements OnInit {
   }
   getAgentList() {
     this.AgentSocketService.AgentListSubject.subscribe((data: AgentList[]) => {
-      const dataUpdate = this.AgentService.getAgentWiseData(data);
-      this.agentdata = dataUpdate.map((AgentList: AgentList) => ({
+      this.AgentList = this.AgentService.getAgentWiseData(data);
+      this.agentdata = this.AgentList.map((AgentList: AgentList) => ({
         uuid: AgentList.uuid,
         activity_icon: this.AgentService.checkAgentInCallChat(
           AgentList.is_in_call,
@@ -136,7 +153,7 @@ export class AgentsComponent implements OnInit {
         is_online_icon_color: this.AgentService.checkIsAgentOnline(
           AgentList.is_available,
           AgentList.is_online
-        ),
+        ) === true ? '#3EDE26' : '#FF155A',
         role:
           this.AgentService.setAgentInvitedProperty(
             AgentList.invited,

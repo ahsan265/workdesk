@@ -11,6 +11,10 @@
       </div>
     </div>
     <div class="rightFilter">
+      <div class="multiSelectWrapper onlineStatus">
+        <app-one-select-dropdown [oneSelectData]="onlineStatuses" (oneSelectOutput)="agentStatusOutput($event)">
+        </app-one-select-dropdown>
+      </div>
       <div class="multiSelectWrapper languauge">
         <app-multi-select-dropdown [multiSelectData]="languauges" (multiSelectOutput)="langugaOutput($event)">
         </app-multi-select-dropdown>

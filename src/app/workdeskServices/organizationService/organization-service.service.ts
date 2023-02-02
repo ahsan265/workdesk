@@ -5,11 +5,12 @@ import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { OverlayService } from '@gigaaa/gigaaa-components';
 import { BehaviorSubject } from 'rxjs';
-import { sidebarData } from 'src/app/data';
+import { sidebarData, sidebarDataAgent } from 'src/app/data';
 import { AccountNotpartComponent } from 'src/app/modals/account-not-part/account-notpart.component';
 import { Organization, Project, sidebarDropdownData } from 'src/app/models/organization';
 import { ConnectionSecurityService } from 'src/app/workdeskSockets/socketConnectionSecurity/connection-security.service';
 import { AgentInviteService } from '../agentInviteService/agent-invite.service';
+import { CommonService } from '../commonEndpoint/common.service';
 import { GigaaaApiService } from '../gigaaaApiService/gigaaa-api-service.service';
 import { MessageService } from '../messageService/message.service';
 import { SharedServices } from '../sharedResourcesService/shared-resource-service.service';
@@ -20,7 +21,9 @@ import { SharedServices } from '../sharedResourcesService/shared-resource-servic
 export class getOrganizationService {
   public LastUsedproject: BehaviorSubject<Project>;
   sidebarData = sidebarData;
+  sidebarDataAgent = sidebarDataAgent;
   organizationData: Organization[] = [];
+  project: sidebarDropdownData[] = [];
 
   constructor(
     private gigaaaService: GigaaaApiService,
@@ -29,7 +32,8 @@ export class getOrganizationService {
     private ConnectionSecurityService: ConnectionSecurityService,
     private MessageService: MessageService,
     private router: Router,
-    private OverlayService:OverlayService
+    private OverlayService: OverlayService,
+    private CommonService: CommonService
   ) {
 
     this.LastUsedproject = new BehaviorSubject(this.getProjects());
@@ -47,13 +51,13 @@ export class getOrganizationService {
             if (data.last_used === true) {
               const lastUsedOgranization = data.uuid;
               localStorage.setItem('gigaaa-organz', JSON.stringify(data));
-              const project: sidebarDropdownData[] = data.projects.map((elemnt) => ({
+              this.project = data.projects.map((elemnt) => ({
                 name: elemnt.title,
                 uuid: elemnt.uuid,
                 last_used: elemnt.last_used
               }))
-              this.getProjectList(project);
-              project.forEach(project => {
+              // this.getProjectList(project);
+              this.project.forEach(project => {
                 if (project.last_used === true) {
                   localStorage.setItem(
                     'gigaaa-project',
@@ -64,7 +68,6 @@ export class getOrganizationService {
                     lastUsedOgranization,
                     project.uuid
                   );
-                  this.SharedServices.loadCommonEps(1);
                 }
               })
             }
@@ -72,8 +75,9 @@ export class getOrganizationService {
         } else {
           this.router.navigate(['logout']);
           this.OverlayService.open({
-            component:AccountNotpartComponent,
-            panelClass:'notAccount',
+            component: AccountNotpartComponent,
+            panelClass: 'notAccount',
+            hasBackdrop: true,
             backdropClass: 'dark-backdrop'
           })
         }
@@ -83,6 +87,30 @@ export class getOrganizationService {
       });
   }
 
+  // check user belong to project and organization 
+
+  public async checkUserIsAuthorized(token: string) {
+    await this.AgentinviteService.sendtAgentInvitationCode();
+    this.gigaaaService
+      .getOrganization(token)
+      .then((data: any) => {
+        if (data.length === 0) {
+          this.router.navigate(['logout']);
+          this.OverlayService.open({
+            component: AccountNotpartComponent,
+            panelClass: 'notAccount',
+            hasBackdrop: true,
+            backdropClass: 'dark-backdrop'
+          })
+        }
+        else {
+          this.router.navigate(['/dashboard']);
+        }
+      })
+      .catch((err: any) => {
+        this.MessageService.setErrorMessage(err.error.error);
+      });
+  }
   // get last projects against organization
   public getProjects(): Project {
     const listOfProjects: any = localStorage.getItem('gigaaa-project');
@@ -94,19 +122,32 @@ export class getOrganizationService {
     return JSON.parse(listOfProjects);
   }
   // get projects list
-  public getProjectList(project: sidebarDropdownData[]) {
+  public async getProjectList(project: sidebarDropdownData[]): Promise<any> {
     let lastUsedProject: string;
+    let sidebar: any
     project.forEach((data: any) => {
       if (data.last_used === true) {
         lastUsedProject = data.name;
-        this.sidebarData.forEach((element: any) => {
-          if (element.dropdown === true) {
-            element.dropdownItems = project
-            element.name = lastUsedProject;
-          }
-        });
+        if (this.CommonService.getIsAdminOrAgent() === true) {
+          this.sidebarData.forEach((element: any, index: any) => {
+            if (element.dropdown === true) {
+              element.dropdownItems = project
+              element.name = lastUsedProject;
+            }
+          });
+          sidebar = this.sidebarData;
+        }
+        else {
+          this.sidebarDataAgent.forEach((element: any, index: any) => {
+            if (element.dropdown === true) {
+              element.dropdownItems = project
+              element.name = lastUsedProject;
+            }
+          });
+          sidebar = this.sidebarDataAgent;
+        }
       }
     });
-    return this.sidebarData;
+    return sidebar;
   }
 }
