@@ -59,13 +59,8 @@ const searchInputData: SearchInput = {
   searchText: ''
 };
 
-const buttonData: Button = {
-  title: '+ Add agent',
-  // icon: '../assets/images/sidebar/agents.svg',
-  backgroundColor: '#1C54DB',
-  borderColor: 'none',
-  textColor: 'white',
-  active: false
+const buttonData: any = {
+  active: true
 };
 
 const agentTableSetting: any = {
