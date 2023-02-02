@@ -110,10 +110,10 @@ export class AgentsComponent implements OnInit {
         return data;
       }
     })
-    this.agentdata=dataStatusWise;
+    this.agentdata = dataStatusWise;
   }
   showInviteModal() {
-    if (this.buttonData.active) {
+    if (this.buttonData.active===true) {
       this.OverlayService.open({
         component: AddAgentComponent,
         panelClass: 'addAgent',
@@ -192,8 +192,8 @@ export class AgentsComponent implements OnInit {
       this.agentdataWithNoSearch = this.agentdata;
       this.CommonService.getLoggedInAgentData().role === 'Agent' ? this.buttonData.active = false : this.buttonData.active = true;
       this.agentIndicator = {
-        hightlightText: this.AgentService.countOnlineAgentsAvailable(data) + " ",
-        text: ' Agents available',
+        hightlightText: this.AgentService.countOnlineAgentsAvailable(data) + "",
+        text: '',
         icon: '../assets/images/components/agent_free.svg',
         backgroundColor: '#FEFEFF',
         borderColor: '1px solid #E1E1EA',

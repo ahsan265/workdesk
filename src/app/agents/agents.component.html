@@ -24,7 +24,8 @@
         </app-search-input-field>
       </div>
       <div class="multiSelectWrapper">
-        <gigaaa-button (click)="showInviteModal()" [buttonData]="buttonData"></gigaaa-button>
+        <!-- <gigaaa-button (click)="showInviteModal()" [buttonData]="buttonData"></gigaaa-button> -->
+        <button class="addAgentButton" [disabled]="!this.buttonData.active" (click)="showInviteModal()">+</button>
       </div>
     </div>
   </div>
