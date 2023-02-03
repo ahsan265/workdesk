@@ -17,7 +17,7 @@ export class ImageUploaderComponent implements OnInit {
   }
   fileChangeEvent(event: any): void {
     this.filename = event.target.files[0].name;
-    this.getUploadImage.emit(event.target.files[0]);
+    this.getUploadImage.emit(event);
   }
 
   dragImageUpload(event: any) {

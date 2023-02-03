@@ -1,5 +1,21 @@
 image-cropper {
-  height: 50vh;
+  height: fit-content;
+}
+
+// ::ng-deep .ngx-ic-cropper {
+//   height: 230px !important;
+//   width: 230px !important;
+// }
+
+::ng-deep .ngx-ic-cropper.ngx-ic-round {
+  outline-color: rgb(56 55 55 / 63%) !important;
+  border-radius: 50%;
+  border: 1px solid #E1E1EA;
+
+}
+
+::ng-deep .ngx-ic-cropper .ngx-ic-resize {
+  z-index: -1 !important;
 }
 
 button {
@@ -91,8 +107,10 @@ button {
 
 .picturearea {
   display: block;
-  width: 282px;
-  height: 282px;
+  min-width: 282px;
+  min-height: 282px;
+  max-width: 282px;
+  max-height: 282px;
   margin: 0 auto;
   margin-top: 30px;
   position: relative;
