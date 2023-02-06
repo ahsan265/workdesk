@@ -49,6 +49,7 @@ export class AgentsComponent implements OnInit {
   inactiveAgent: number = 1;
   invitedAgent: number = 1;
   showInviteModel: boolean = false;
+  selectedStatus: OneSelect=onlineStatuses[0];
   AgentList: AgentList[] = [];
   dialog: any;
   constructor(
@@ -99,6 +100,7 @@ export class AgentsComponent implements OnInit {
   }
   // get agent status data 
   public agentStatusOutput(agentType: OneSelect) {
+    this.selectedStatus=agentType;
     const dataStatusWise = this.agentdataWithNoSearch.filter(data => {
       if (agentType.id === 2) {
         return data.is_online_icon_color === '#3EDE26';
@@ -113,7 +115,7 @@ export class AgentsComponent implements OnInit {
     this.agentdata = dataStatusWise;
   }
   showInviteModal() {
-    if (this.buttonData.active===true) {
+    if (this.buttonData.active === true) {
       this.OverlayService.open({
         component: AddAgentComponent,
         panelClass: 'addAgent',
@@ -200,7 +202,9 @@ export class AgentsComponent implements OnInit {
         textColor: '#737D8D',
         isAgent: true
       };
+      this.agentStatusOutput(this.selectedStatus);
     });
+
 
   }
 

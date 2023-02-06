@@ -31,6 +31,7 @@ export interface AgentModelTable {
 
 export interface UtlitiesIcon {
   image: string;
+  is_disabled:boolean;
 }
 export interface ImageText {
   text: string;

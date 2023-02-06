@@ -1,5 +1,10 @@
 // @import '~ngx-toastr/toastr';
-
+.main{
+  overflow-y: scroll;
+}
+.main::-webkit-scrollbar{
+  display: none;
+}
 .cdk-overlay-container {
   inset: 0;
   flex-wrap: wrap;
@@ -201,7 +206,6 @@ h5,
 h6,
 p {
   margin: 0;
-  font-weight: normal;
 }
 
 input {

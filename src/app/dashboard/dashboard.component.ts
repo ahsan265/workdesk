@@ -161,7 +161,7 @@ export class DashboardComponent implements OnInit {
     this.languauges = await this.CommonService.getProjectLanguagesForUser();
     this.countries = await this.CommonService.getLocations();
     if (this.CommonService.getEndpointsParamLocal().project != undefined) {
-      this.dashboardEps.getAnalyticsData([], [], this.aggregate);
+     this.dashboardEps.getAnalyticsData([], [], this.aggregate);
     }
   }
   private getFirstLoad(): void {
@@ -170,11 +170,11 @@ export class DashboardComponent implements OnInit {
         this.CommonService.restrictRoute();
         this.setDefaultDate();
         this.languauges = await this.CommonService.getProjectLanguagesForUser();
-        this.dashboardEps.getAnalyticsData(
-          this.idOfLanguage,
-          this.idOfLocation,
-          this.aggregate
-        );
+        // this.dashboardEps.getAnalyticsData(
+        //   this.idOfLanguage,
+        //   this.idOfLocation,
+        //   this.aggregate
+        // );
       }
     });
   }

@@ -30,6 +30,7 @@ export interface AgentLanguages {
   id: number;
   name: string;
   code: string;
+  disabled:boolean;
 }
 export interface AgentParameter {
   active?: number;
