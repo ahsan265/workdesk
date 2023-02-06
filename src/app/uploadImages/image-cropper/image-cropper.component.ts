@@ -10,7 +10,7 @@ import {
   ViewChild
 } from '@angular/core';
 import { OverlayService } from '@gigaaa/gigaaa-components';
-import { base64ToFile } from 'ngx-image-cropper';
+import { base64ToFile, Dimensions, ImageCroppedEvent, ImageTransform } from 'ngx-image-cropper';
 import { CommonService } from 'src/app/workdeskServices/commonEndpoint/common.service';
 import { GigaaaApiService } from 'src/app/workdeskServices/gigaaaApiService/gigaaa-api-service.service';
 import { MessageService } from 'src/app/workdeskServices/messageService/message.service';
@@ -24,7 +24,7 @@ import { SharedServices } from 'src/app/workdeskServices/sharedResourcesService/
 export class ImageCropperComponent implements OnInit, OnDestroy {
   @Input() public fileName: string = '';
   @Input() public imageSize: string = '';
-  @Input() public imageView: string = '';
+  @Input() public imageView: any = '';
   count = 0;
   @Input() CanvasHeight!: number;
   @Input() CanvasWidth!: number;
@@ -32,7 +32,7 @@ export class ImageCropperComponent implements OnInit, OnDestroy {
   width = 200;
   height = 200;
   color = '#505962b5';
-
+  croppedImage: any = '';
   taggedItem = '';
   showInput: boolean = false;
   isMoving!: boolean;
@@ -56,7 +56,12 @@ export class ImageCropperComponent implements OnInit, OnDestroy {
   public scale = 1.0;
   public scaleMultiplier = 0.8;
   isDrag = 1;
+    canvasRotation = 0;
 
+
+  showCropper = false;
+  containWithinAspectRatio = true;
+  transform: ImageTransform = {};
   @ViewChild('layer1', { static: false })
   layer1Canvas!: ElementRef;
   private context!: CanvasRenderingContext2D;
@@ -118,19 +123,29 @@ export class ImageCropperComponent implements OnInit, OnDestroy {
     //     this.updateUserProfilePicture(base64);
     //   }
     // });
-    this.imageLoad(this.imageView);
+   
 
   }
+  // fileChangeEvent(event:any)
+  // {
+  //   this.imageView=event;
+  // }
   zoomOut() {
     if (this.scale !== 1.0) {
-      this.scale *= this.scaleMultiplier;
-      this.showImage();
+      this.scale -= .1;
+      this.transform = {
+          ...this.transform,
+          scale: this.scale
+      };
     }
   }
   zoomIn() {
     if (this.scale !== 1.6) {
-      this.scale /= this.scaleMultiplier;
-      this.showImage();
+      this.scale += .1;
+      this.transform = {
+          ...this.transform,
+          scale: this.scale
+      };
     }
   }
   dragEvent(event: MouseEvent) {
@@ -143,15 +158,8 @@ export class ImageCropperComponent implements OnInit, OnDestroy {
         this.initX = drag.getBoundingClientRect().left - main.getBoundingClientRect().left;
       }
     });
-
-
-
-
-    this.renderer.listen(document, 'mouseup', (e) => {
-
-    });
-
-
+ this.renderer.listen(document, 'mouseup', (e) => {
+  });
   }
 
   // crop image
@@ -203,9 +211,8 @@ export class ImageCropperComponent implements OnInit, OnDestroy {
   }
 
   public updateUserProfilePicture() {
-    this.cropImages();
-    let image = this.context.canvas.toDataURL();
-    const file: any = base64ToFile(image);
+   
+    const file: any = base64ToFile(this.croppedImage);
     this.GigaaaApiService.uploaduserprofilepic(
       this.CommonService.getEndpointsParamLocal().token,
       this.CommonService.getEndpointsParamLocal().organization,
@@ -225,7 +232,8 @@ export class ImageCropperComponent implements OnInit, OnDestroy {
       }
     );
   }
-  public agentupdateuserprofilepic(file: any, uuid: any) {
+  public agentupdateuserprofilepic(uuid: any) {
+    const file: any = base64ToFile(this.croppedImage);
     this.GigaaaApiService.agentuploaduserprofilepic(
       this.CommonService.getEndpointsParamLocal().token,
       this.CommonService.getEndpointsParamLocal().organization,
@@ -248,4 +256,22 @@ export class ImageCropperComponent implements OnInit, OnDestroy {
       }
     );
   }
+  ///////////////////
+  imageCropped(event: ImageCroppedEvent) {
+    this.croppedImage = event.base64;
+}
+
+imageLoaded() {
+    this.showCropper = true;
+    console.log('Image loaded');
+}
+
+cropperReady(sourceImageDimensions: Dimensions) {
+    console.log('Cropper ready', sourceImageDimensions);
+}
+
+loadImageFailed() {
+  this.MessageService.setErrorMessage('Please reupload photo again.')
+  this.OverlayService.close();
+}
 }

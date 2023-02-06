@@ -10,7 +10,6 @@ import { CallsService } from './callService/calls.service';
 import { GigaaaDaterangepickerDirective } from '@gigaaa/gigaaa-components';
 import { ranges } from '../dashboard/dashboardData';
 import dayjs from 'dayjs';
-import { CalendarService } from '../calendarService/calendar.service';
 import { QueueSocketService } from '../workdeskSockets/queueSocket/queue-socket.service';
 import {
   AnsweredCallModel,
@@ -18,8 +17,6 @@ import {
   MissedCallModel,
   OngoingCallModel
 } from '../models/callModel';
-import { AgentUserInformation } from '../workdeskServices/callInterfaceServices/agentUserInformation/agent-user-information.service';
-import { OverlayService } from '../callInterface/overLayService/overlay.service';
 import { getDefaultInputsLoadOnce } from './incoming/incoming.Service';
 
 @Component({

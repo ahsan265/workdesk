@@ -90,6 +90,7 @@ import { OngoingComponent } from './calls/ongoing/ongoing/ongoing.component';
 import { agentScrollList } from './directives/agentListDirective';
 import { CommonModule } from '@angular/common';
 import { AccountNotpartComponent } from './modals/account-not-part/account-notpart.component';
+import { ImageCropperModule } from 'ngx-image-cropper';
 
 @NgModule({
   declarations: [
@@ -181,6 +182,7 @@ import { AccountNotpartComponent } from './modals/account-not-part/account-notpa
     GigaaaTableWorkdeskModule,
     GigaaaPaginationModule,
     gigaaaPopupModule,
+    ImageCropperModule
   ],
   providers: [
     GigaaaPaginatePipe,

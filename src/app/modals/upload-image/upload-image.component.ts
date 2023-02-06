@@ -1,8 +1,11 @@
 /* eslint-disable no-undef */
-import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { OverlayService } from '@gigaaa/gigaaa-components';
+import { Component, Inject, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { component_data, OverlayService } from '@gigaaa/gigaaa-components';
 import { ImageTransform } from 'ngx-image-cropper';
+import { AgentService } from 'src/app/agents/agentService/agent.service';
+import { AgentList } from 'src/app/models/agentSocketModel';
 import { ImageCropperComponent } from 'src/app/uploadImages/image-cropper/image-cropper.component';
+import { AgentInviteService } from 'src/app/workdeskServices/agentInviteService/agent-invite.service';
 import { SharedServices } from 'src/app/workdeskServices/sharedResourcesService/shared-resource-service.service';
 
 @Component({
@@ -37,7 +40,7 @@ export class UploadImageComponent implements OnInit, OnDestroy {
   progressbarvalue: any = 0;
   filesize: any;
   imageUploaded: any;
-  constructor(private SharedServices: SharedServices, private OverlayService: OverlayService) { }
+  constructor( @Inject(component_data) public data: AgentList, private OverlayService: OverlayService,private AgentService:AgentService) { }
   showSaveButton: boolean = false;
   showCancelButton: boolean = true;
   @ViewChild('ImageCropperComponent') ImageCropperComponent!: ImageCropperComponent;
@@ -51,6 +54,7 @@ export class UploadImageComponent implements OnInit, OnDestroy {
     this.croppicture = false;
   }
   getImageOutput(event: any) {
+    console.log(event)
     this.getFile(event);
   }
 
@@ -104,15 +108,15 @@ export class UploadImageComponent implements OnInit, OnDestroy {
   }
 
   getFile(event: any): void {
-    this.filename = event.name;
-    this.filesize = this.bytesToSize(event.size);
+    this.filename = event.target.files[0].name;
+    this.filesize = this.bytesToSize(event.target.files[0].size);
     this.uploadpicture = false;
     this.croppicture = false;
-    const reader = new FileReader();
-    reader.readAsDataURL(event);
-    reader.onload = () => {
-      this.imageUploaded = reader.result;
-    };
+    // const reader = new FileReader();
+    // reader.readAsDataURL(event);
+    // reader.onload = () => {
+    //   this.imageUploaded = reader.result;
+    // };
     this.loadpicture = true;
 
     setInterval(() => {
@@ -126,6 +130,7 @@ export class UploadImageComponent implements OnInit, OnDestroy {
           this.croppicture = true;
           this.showCancelButton = false;
           this.showSaveButton = true;
+          this.imageUploaded=event;
 
         }
       }
@@ -137,6 +142,8 @@ export class UploadImageComponent implements OnInit, OnDestroy {
   }
 
   saveImageUpload() {
-    this.ImageCropperComponent.updateUserProfilePicture();
+    (this.AgentService.checkIsLoggedInAgent(this.data.email))?
+    this.ImageCropperComponent.updateUserProfilePicture():
+     this.ImageCropperComponent.agentupdateuserprofilepic(this.data.uuid);
   }
 }
