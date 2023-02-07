@@ -263,11 +263,9 @@ export class ImageCropperComponent implements OnInit, OnDestroy {
 
 imageLoaded() {
     this.showCropper = true;
-    console.log('Image loaded');
 }
 
 cropperReady(sourceImageDimensions: Dimensions) {
-    console.log('Cropper ready', sourceImageDimensions);
 }
 
 loadImageFailed() {

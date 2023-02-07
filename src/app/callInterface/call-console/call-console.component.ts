@@ -127,9 +127,11 @@ export class CallConsoleComponent implements OnInit, OnDestroy, AfterViewInit {
   async ngOnInit() {
     this.StreamingService.setCallType.subscribe(isVideo => {
       if (isVideo) {
-        this.PeerMiniCameraScreen.showCamera = true;
-        this.peerUserInformationData.showVideo = true;
-        this.cameraData.isSelected = true;
+        // this.PeerMiniCameraScreen.showCamera = true;
+        // this.peerUserInformationData.showVideo = true;
+        // this.cameraData.isSelected = true;
+        this.cameraoperation(true)
+
       }
     })
     this.StreamingService.getLocalStream.subscribe((stream) => {
@@ -177,7 +179,8 @@ export class CallConsoleComponent implements OnInit, OnDestroy, AfterViewInit {
       this.secondpeerUserInformationData.showLoaderAnimation = false;
       // this.isVideoMinimize = peerData.isCameraOn;
       this.isRemoteVideo = peerData.isCameraOn;
-      if (this.isRemoteVideo && this.isMinimize) {
+      if (this.isRemoteVideo && this.isMinimize
+      ) {
         this.isVideoMinimize = true;
         this.minimize.width = '382px';
         this.minimize.height = '325px';
@@ -226,19 +229,24 @@ export class CallConsoleComponent implements OnInit, OnDestroy, AfterViewInit {
     });
   }
   public async seletecOutputForCamera(event: boolean) {
+    if (event == true) {
+      this.videoStream = await this.StreamingService.startVideo(
+        this.CallsOperationService.peerUserId
+      );
+      this.stream.setStream(this.videoStream);
+      this.miniCameraVideoStream.setMiniCameraSteam(this.videoStream);
+    } else {
+      this.StreamingService.stopVideo();
+    }
+    this.cameraoperation(event)
+  }
+  //comera oepration 
+  async cameraoperation(event: boolean) {
     if (!this.screenShareData.isSelected) {
       event === true
         ? (this.PeerMiniCameraScreen.showCamera = true)
         : (this.PeerMiniCameraScreen.showCamera = false);
-      if (event == true) {
-        this.videoStream = await this.StreamingService.startVideo(
-          this.CallsOperationService.peerUserId
-        );
-        this.stream.setStream(this.videoStream);
-        this.miniCameraVideoStream.setMiniCameraSteam(this.videoStream);
-      } else {
-        this.StreamingService.stopVideo();
-      }
+
       if (this.isSplit === true) {
         event === true
           ? (this.peerUserInformationData.showVideo = true)
@@ -248,6 +256,10 @@ export class CallConsoleComponent implements OnInit, OnDestroy, AfterViewInit {
       this.isVideoMinimize = event;
       if (this.isRemoteVideo) {
         this.isVideoMinimize = true;
+      }
+      else {
+        this.isVideoMinimize = false;
+
       }
       if (this.agentOperationInformationData.isMinimize) {
         this.miniCameraOperation(event);

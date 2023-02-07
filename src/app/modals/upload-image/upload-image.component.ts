@@ -54,7 +54,6 @@ export class UploadImageComponent implements OnInit, OnDestroy {
     this.croppicture = false;
   }
   getImageOutput(event: any) {
-    console.log(event)
     this.getFile(event);
   }
 

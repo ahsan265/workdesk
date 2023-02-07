@@ -183,7 +183,8 @@ export class AgentService {
     let UtlitiesIcon: UtlitiesIcon[] = [];
     languages.forEach((data) => {
       UtlitiesIcon.push({
-        image: this.CommonService.getLanguageFlags(data.id)
+        image: this.CommonService.getLanguageFlags(data.id),
+        is_disabled:data.disabled
       });
     });
     return UtlitiesIcon;

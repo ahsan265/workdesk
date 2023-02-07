@@ -58,7 +58,7 @@ export class AnalyticsSocketService {
   // for sending params
   sendAnalyticssParameter(data: analyticParamModel) {
 
-    if (this.isSocketOpen === 1) {
+    if (this.isSocketOpen === this.isSocketOpen) {
       const analyticsSocketParam = JSON.stringify(data);
       this.ws?.send(analyticsSocketParam);
     }
