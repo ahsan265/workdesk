@@ -3,7 +3,7 @@
 /* eslint-disable sort-imports */
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { Component, HostListener, OnInit, ViewChild } from '@angular/core';
-import { callType,searchInputData } from './callsData';
+import { callType, searchInputData } from './callsData';
 import { filter, map } from 'rxjs/operators';
 import { AuthService } from '../services/auth.service';
 import { CallsService } from './callService/calls.service';
@@ -17,13 +17,14 @@ import {
   MissedCallModel,
   OngoingCallModel
 } from '../models/callModel';
-import { getDefaultInputsLoadOnce } from './incoming/incoming.Service';
+import { getDefaultInputsLoadOnce } from './defaultLoadService/incoming.Service';
+import { SharedServices } from '../workdeskServices/sharedResourcesService/shared-resource-service.service';
 
 @Component({
   selector: 'app-calls',
   templateUrl: './calls.component.html',
   styleUrls: ['./calls.component.scss'],
-  providers: [CallsService,getDefaultInputsLoadOnce]
+  providers: [CallsService, getDefaultInputsLoadOnce]
 })
 export class CallsComponent implements OnInit {
   callType = callType;
@@ -44,11 +45,17 @@ export class CallsComponent implements OnInit {
     private activatedRoute: ActivatedRoute,
     private CallsService: CallsService,
     private QueueSocketService: QueueSocketService,
+    private SharedServices: SharedServices,
+    private getDefaultInputsLoadOnce: getDefaultInputsLoadOnce
 
   ) {
     this.authService.pageTitle.next('Calls');
     this.alwaysShowCalendars = true;
-
+    this.SharedServices.LoadcommonEpsubject.subscribe((data) => {
+      if (data === 1) {
+        this.getDefaultInputsLoadOnce.getUserLangage();
+      }
+    });
   }
   ranges = ranges;
   aggregate: string = 'this_week';

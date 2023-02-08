@@ -14,9 +14,9 @@ import { QueueSocketService } from 'src/app/workdeskSockets/queueSocket/queue-so
 import { MultiSelect } from 'src/app/models/multiSelect';
 import { ranges } from 'src/app/dashboard/dashboardData';
 import { CallsService } from '../../callService/calls.service';
-import { getDefaultInputsLoadOnce } from '../../incoming/incoming.Service';
 import { noTobaleData } from 'src/app/components/no-table-data/notableData';
 import { noAgentTobaleData } from 'src/app/agents/agentsData';
+import { getDefaultInputsLoadOnce } from '../../defaultLoadService/incoming.Service';
 @Component({
   selector: 'app-missed',
   templateUrl: './missed.component.html',
@@ -124,6 +124,12 @@ export class MissedComponent implements OnInit {
   async ngOnInit(): Promise<void> {
     this.getDefaultInputsLoadOnce.missedLanguage.asObservable().subscribe(data => {
       this.languauges = data;
+      this.languageIds=[];
+      this.callTypeName=[];
+      this.callType.data.map(data=>{
+        data.selected=false;
+      })
+      this.searchInputData.searchText='';
     })
 
   }

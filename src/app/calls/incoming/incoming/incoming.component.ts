@@ -13,10 +13,10 @@ import {
 } from 'src/app/models/callModel';
 import { CommonService } from 'src/app/workdeskServices/commonEndpoint/common.service';
 import { AgentSocketService } from 'src/app/workdeskSockets/agentSocket/agent-socket.service';
-import { languaugesIncoming } from '../../callsData';
+import { languaugesIncoming, searchInputData } from '../../callsData';
 import { CallsService } from '../../callService/calls.service';
-import { callTypeIncoming, incomingTableSetting, searchInputData } from '../../incoming/incomingData';
-import { getDefaultInputsLoadOnce } from '../incoming.Service';
+import { getDefaultInputsLoadOnce } from '../../defaultLoadService/incoming.Service';
+import { callTypeIncoming, incomingTableSetting } from '../../defaultLoadService/incomingData';
 
 @Component({
   selector: 'app-incoming',
@@ -110,6 +110,12 @@ export class IncomingComponent implements OnInit {
   async ngOnInit(): Promise<void> {
     this.getDefaultInputsLoadOnce.incominglanguages.asObservable().subscribe(data => {
       this.languauges = data;
+      this.languageIds=[];
+      this.callTypeName=[];
+      this.callType.data.map(data=>{
+        data.selected=false;
+      })
+      this.searchInputData.searchText='';
     });
   }
 

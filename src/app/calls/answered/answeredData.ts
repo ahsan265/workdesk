@@ -1,6 +1,7 @@
 import dayjs from "dayjs";
 import { callsIndicatorData } from "src/app/models/callIndicatorModel";
 import { MultiSelect } from "src/app/models/multiSelect";
+import { SearchInput } from "src/app/models/searchInput";
 
 const dataTableSettings: any[] = [
   {
@@ -154,5 +155,9 @@ const answeredData: callsIndicatorData = {
   textColor: '#76CB09',
   isAgent: false
 };
+const searchInputData: SearchInput = {
+  placeholder: 'Search by name or user ID',
+  searchText: ''
+};
 
-export { dataTableSettings, agents, callTypeAnswered, paginationData ,answeredData};
+export { dataTableSettings, agents, callTypeAnswered, paginationData ,answeredData,searchInputData};
