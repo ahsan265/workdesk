@@ -19,7 +19,7 @@ import { GigaaaDaterangepickerDirective } from '@gigaaa/gigaaa-components';
 import * as dayjs from 'dayjs';
 import { CalendarService } from '../calendarService/calendar.service';
 import { CommonService } from '../workdeskServices/commonEndpoint/common.service';
-import { NavigationStart, Router } from '@angular/router';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-dashboard',
@@ -131,9 +131,8 @@ export class DashboardComponent implements OnInit {
     private router: Router
 
   ) {
-
-    this.authService.pageTitle.next('Dashboard');
     this.getFirstLoad();
+    this.authService.pageTitle.next('Dashboard');
     this.getCardsAndChartsData();
     this.alwaysShowCalendars = true;
   }
@@ -160,6 +159,7 @@ export class DashboardComponent implements OnInit {
   }
   private async callRouteLoad() {
     this.languauges = await this.CommonService.getProjectLanguagesForUser();
+    this.countries = await this.CommonService.getLocations();
     if (this.CommonService.getEndpointsParamLocal().project != undefined) {
       this.dashboardEps.getAnalyticsData([], [], this.aggregate);
     }
@@ -167,13 +167,12 @@ export class DashboardComponent implements OnInit {
   private getFirstLoad(): void {
     this.SharedServices.LoadcommonEpsubject.subscribe(async (data) => {
       if (data === 1) {
+        this.CommonService.restrictRoute();
         this.setDefaultDate();
         this.languauges = await this.CommonService.getProjectLanguagesForUser();
-        this.dashboardEps.getAnalyticsData(
-          this.idOfLanguage,
-          this.idOfLocation,
-          this.aggregate
-        );
+        this.countries = await this.CommonService.getLocations();
+        this.idOfLanguage = [];
+        this.idOfLocation = [];
       }
     });
   }

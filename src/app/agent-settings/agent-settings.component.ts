@@ -190,8 +190,10 @@ export class AgentSettingsComponent implements OnInit {
   openImageUploadButton() {
     this.OverlayService.open({
       component: UploadImageComponent,
+      data: this.selectedAgent,
       panelClass: 'imagePopup',
-      hasBackdrop: true
+      hasBackdrop: true,
+      backdropClass: 'dark-backdrop'
     })
   }
   onGetSubmitImageUploadOutput(event: any) {

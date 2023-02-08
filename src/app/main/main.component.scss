@@ -6,6 +6,9 @@
   overflow: hidden;
 
 }
+::ng-deep .mainContainer .sidebarWrap {
+  z-index: 1;
+}
 
 ::ng-deep .mainHeaderWrap .portalWrapper .preferenceHeading {
   border: none;
@@ -34,6 +37,8 @@
   height: 100vh;
   background: #fefeff;
   overflow: scroll;
+  position: relative;
+  z-index: 0;
 }
 
 .workdeskWrap::-webkit-scrollbar {

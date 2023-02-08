@@ -46,5 +46,5 @@
 <div class="tableWrapper">
   <gigaaa-workdesk-table [tableData]="incomingData" [tableSettings]="tableSettings" (callId)="getCallsId($event)">
   </gigaaa-workdesk-table>
-  <app-no-table-data *ngIf="incomingData.length === 0"></app-no-table-data>
+  <app-no-table-data *ngIf="incomingData.length === 0" [notableClass]="nodata"></app-no-table-data>
 </div>

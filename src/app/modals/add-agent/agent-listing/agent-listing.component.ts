@@ -2,13 +2,15 @@ import {
   Component,
   ElementRef,
   OnInit,
+  Query,
   QueryList,
   ViewChild,
   ViewChildren
 } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { OverlayService } from '@gigaaa/gigaaa-components';
 import { AgentService } from 'src/app/agents/agentService/agent.service';
-import { InviteAgentModel } from 'src/app/models/agent';
+import { agentInvitationList, InviteAgentModel } from 'src/app/models/agent';
 import { MultiSelect } from 'src/app/models/multiSelect';
 import { OneSelect } from 'src/app/models/oneSelect';
 import { CommonService } from 'src/app/workdeskServices/commonEndpoint/common.service';
@@ -22,19 +24,23 @@ import { languauges } from '../addAgentData';
   styleUrls: ['./agent-listing.component.scss']
 })
 export class AgentListingComponent implements OnInit {
-  email: string[] = new Array();
-  languages = languauges;
-  arrayOfLanguages: MultiSelect[] = new Array();
+  email: string = '';
+  typedEmail: string = '';
 
+  languages = languauges;
+  agentIvitationList: agentInvitationList[] = [];
   agentListingCounter: number = 1;
-  @ViewChildren('email') emailLists!: QueryList<ElementRef>;
-  langaugeIds: number[] = new Array();
+  @ViewChildren('email') emailTyped!: QueryList<ElementRef>;
+  @ViewChild('email', { static: true }) emailEntered!: ElementRef;
+
+  langaugeIds: number[] = [];
   constructor(
     private CommonService: CommonService,
     private formBuilder: FormBuilder,
     private AgentService: AgentService,
     private MessageService: MessageService,
-    private SharedServices: SharedServices
+    private SharedServices: SharedServices,
+    private overlayService: OverlayService
   ) { }
   form: FormGroup = this.formBuilder.group({
     agentListing: this.formBuilder.array([])
@@ -47,38 +53,41 @@ export class AgentListingComponent implements OnInit {
       name: data.name,
       selected: false
     }));
-    this.arrayOfLanguages.push(this.languages);
-    this.langaugeIds[0] = 0;
-    this.email.push('');
+
   }
 
-  languaugesOutput(event: number, indexValue: number) {
-    this.langaugeIds[indexValue] = event;
+  languaugesOutput(event: number[]) {
+    this.langaugeIds = event;
   }
   // add new listing for invitation of agent
   async addAgentListing() {
-    const languages = await this.CommonService.getProjectLanguages();
-    this.agentListingCounter++;
-    this.arrayOfLanguages.push(languages);
-    this.langaugeIds[this.agentListingCounter - 1] = 0;
-    this.email.push('');
+    if (this.email !== '' && this.langaugeIds.length !== 0) {
+      this.agentIvitationList.push({ email: this.email, language: this.langaugeIds });
+      this.languages.data.forEach(language => {
+        language.selected = false;
+      })
+      this.typedEmail = '';
+      this.langaugeIds = [];
+
+      // this.AgentService.getLanguageFlagById(AgentList.languages)
+    }
+    else {
+      this.MessageService.setErrorMessage('Please enter valid information');
+    }
   }
   // remove agent from listing
   removeAgentFromListing(indexValue: number) {
-    this.agentListingCounter--;
-    this.arrayOfLanguages.splice(indexValue, 1);
-    this.langaugeIds.splice(indexValue, 1);
-    this.email.splice(indexValue, 1);
+    this.agentIvitationList.splice(indexValue, 1);
   }
-  // get dynamically update list of Agents to be added
-  getListingAgents() {
-    return Array(this.agentListingCounter);
+  // get aent languages flag 
+  getAgentLanguageFlag(id: number) {
+    return this.CommonService.getLanguageFlags(id);
   }
 
   public async getListedAgentDetails(): Promise<boolean> {
     let isAllDataOk: boolean = false;
-    this.email.forEach(async (data, i) => {
-      if (data !== '' && this.langaugeIds[i] != 0) {
+    this.agentIvitationList.forEach(async (data, i) => {
+      if (data.email !== '' && data.language.length !== 0) {
         isAllDataOk = true;
       } else {
         isAllDataOk = false;
@@ -90,27 +99,25 @@ export class AgentListingComponent implements OnInit {
   async sendAgentInformation() {
     const isAllDataOk: boolean = await this.getListedAgentDetails();
     if (isAllDataOk) {
-      this.email.forEach(async (data, i) => {
+      this.agentIvitationList.forEach(async (data) => {
         let agentListedData: InviteAgentModel = {
-          email: this.email[i],
+          email: data.email,
           role: 'agent',
-          language_ids: this.langaugeIds[i]
+          language_ids: data.language
         };
-        await this.AgentService.validateAgent(agentListedData);
-        this.SharedServices.closeAddAgentPopup(true);
+        await this.AgentService.sendInvitationToAgent(agentListedData);
       });
-   //   this.MessageService.setSuccessMessage('Agent invitation has been sent.');
+      this.MessageService.setSuccessMessage('Agent invitation(s) has been sent.');
+      this.overlayService.close();
 
     } else {
-      this.MessageService.setErrorMessage('Please enter valid information');
+      this.MessageService.setErrorMessage('Please fill all fields.');
     }
   }
 
   // get email
-  getEmailByIndex(indexValue: number) {
-    let pattern = '^w+([.-]?w+)*@w+([.-]?w+)*(.w{2,3})+$';
-    this.email[indexValue] =
-      this.emailLists.get(indexValue)?.nativeElement.value;
+  getEmailByIndex() {
+    this.email = this.emailTyped.get(0)?.nativeElement.value;
   }
 
 }

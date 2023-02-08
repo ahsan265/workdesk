@@ -1,7 +1,9 @@
 import { Component, HostListener, OnInit, ViewChild } from '@angular/core';
 import { GigaaaDaterangepickerDirective } from '@gigaaa/gigaaa-components';
 import dayjs from 'dayjs';
+import { noAgentTobaleData } from 'src/app/agents/agentsData';
 import { CalendarService } from 'src/app/calendarService/calendar.service';
+import { noTobaleData } from 'src/app/components/no-table-data/notableData';
 import { ranges } from 'src/app/dashboard/dashboardData';
 import {
   newCallModelOngoing,
@@ -10,7 +12,7 @@ import {
 import { CommonService } from 'src/app/workdeskServices/commonEndpoint/common.service';
 import { languaugesOngoing } from '../../callsData';
 import { CallsService } from '../../callService/calls.service';
-import { getDefaultInputsLoadOnce } from '../../incoming/incoming.Service';
+import { getDefaultInputsLoadOnce } from '../../defaultLoadService/incoming.Service';
 import { callTypeOngoing, ongoingTableSetting, searchInputData } from '../../ongoing/ongoingData';
 
 @Component({
@@ -19,6 +21,7 @@ import { callTypeOngoing, ongoingTableSetting, searchInputData } from '../../ong
   styleUrls: ['./ongoing.component.scss']
 })
 export class OngoingComponent implements OnInit {
+  nodata = noAgentTobaleData;
   showCalender = false;
   ongoingData: OngoingCallModelTable[] = [];
   unfilterOngoingData: OngoingCallModelTable[] = [];
@@ -104,6 +107,12 @@ export class OngoingComponent implements OnInit {
   async ngOnInit(): Promise<void> {
     this.getDefaultInputsLoadOnce.ongoingLangauge.asObservable().subscribe(data => {
       this.languauges = data;
+      this.languageIds=[];
+      this.callTypeName=[];
+      this.callType.data.map(data=>{
+        data.selected=false;
+      })
+      this.searchInputData.searchText='';
     });
   }
 

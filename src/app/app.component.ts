@@ -14,6 +14,7 @@ export class AppComponent {
         this.showNonComplientAccountModal = data;
       }
     );
+
   }
   onCloseNonComplientAccount(event: any) {
     if (event) {

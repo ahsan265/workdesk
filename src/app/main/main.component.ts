@@ -33,7 +33,7 @@ export class MainComponent implements OnInit {
   websites = websites;
   addOns = addons;
   icons = icons;
-  sidebarData = sidebarData;
+  sidebarData = [];
   showSwitchOganization: boolean = false;
   showSwitchDoneOganization: boolean = false;
   organizationModalData = organizationModalData
@@ -56,10 +56,12 @@ export class MainComponent implements OnInit {
     this.AgentSocketService.AgentLiveStatus.subscribe((data: boolean) => {
       this.statusOnline = data;
     });
-    this.SharedServices.LoadcommonEpsubject.subscribe(data => {
+    this.SharedServices.LoadcommonEpsubject.subscribe(async data => {
       if (data === 1) {
         this.organizationData.name = ((this.getOrganizationService.getLastUsedOrganization().is_individual) ? this.getOrganizationService.getLastUsedOrganization().contact_person :
           this.getOrganizationService.getLastUsedOrganization().name) || '';
+        this.sidebarData = await this.getOrganizationService.getProjectList(this.getOrganizationService.project);
+        this.authService.user.next(this.authService.getLoggedUser());
       }
     })
     this.SharedServices.switchOrganizationDialog.subscribe((data: boolean) => {
@@ -69,7 +71,7 @@ export class MainComponent implements OnInit {
       setTimeout(() => {
         this.organizationData.name = ((this.getOrganizationService.getLastUsedOrganization().is_individual) ? this.getOrganizationService.getLastUsedOrganization().contact_person :
           this.getOrganizationService.getLastUsedOrganization().name) || '';
-          this.showSwitchDoneOganization = data;
+        this.showSwitchDoneOganization = data;
       }, 500);
     })
   }

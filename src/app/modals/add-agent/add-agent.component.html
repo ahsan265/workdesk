@@ -1,6 +1,17 @@
-<div class="inviteAgentHeading" agentScroll [nonScrollClass]="'.inviteAgentHeading'" [scrollClass]="'.inPageWrapper'" >
-  Invite human agents to your integration now and get started with AI Customer
-  Support.
+<div class="addAgentWrapper">
+  <div class="addAgentOperation">
+    <div class="headerPanel">
+      <div class="heading">
+        Invite Human Agents
+      </div>
+      <div class="closeIconPanel">
+        <img style="    height: 25px;
+    width: 15px;
+ cursor: pointer;" src="../../../assets/images/components/close_icon.svg" (click)="closeDialog()" alt="">
+      </div>
+    </div>
+    <div>
+      <app-agent-listing></app-agent-listing>
+    </div>
+  </div>
 </div>
-
-<app-agent-listing></app-agent-listing>

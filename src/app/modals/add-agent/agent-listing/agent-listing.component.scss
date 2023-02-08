@@ -1,5 +1,5 @@
 .inputFields {
-  width: 235px;
+  width: 240px;
   left: 30px;
   top: 136px;
   font-family: 'Roboto', sans-serif;
@@ -8,11 +8,16 @@
   border-radius: 4px;
   display: flex;
   padding: 0px;
+  color: #616B7B;
   padding-left: 10px;
 }
 
 ::ng-deep .modalWrapper .modal {
   padding: 0px !important;
+}
+
+::ng-deep .dropdown {
+  z-index: 0;
 }
 
 ::ng-deep .dropdown ul {
@@ -21,20 +26,50 @@
 
 .agentListingContainer {
   display: block;
-  height: 250px;
+  height: 393px;
   position: relative;
   overflow-x: hidden;
-  overflow-y: scroll
+  overflow-y: hidden
 }
 
-// .agentListingContainer::-webkit-scrollbar {
-//   display: none;
-// }
+.agentListWrapper {
+  height: 190px;
+  padding: 30px 0 0px 30px;
+  overflow-y: scroll;
+}
 
+.agentTitle {
+
+  font-family: 'Roboto';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 16px;
+  display: flex;
+  align-items: center;
+  letter-spacing: 0.02em;
+
+  color: #162741;
+
+}
+
+.agentdescp {
+  font-family: 'Roboto';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 16px;
+  display: flex;
+  align-items: center;
+  letter-spacing: 0.02em;
+  color: #616B7B;
+  margin-top: 15px;
+}
 
 .inPageWrapper {
-  padding: 0 0 0 30px;
-  overflow-y: hidden;
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.25);
+  padding-bottom: 30px;
+  margin-bottom: 5px;
 }
 
 ::-webkit-scrollbar {
@@ -54,32 +89,28 @@
 
 .agentTextFieldsWrapper {
   display: flex;
-  width: 100%;
   margin-bottom: 15px;
+  padding: 0px 30px 0px 30px;
 }
 
 .languageWrapper {
-  width: 235px;
+  width: 150px;
   margin-left: 20px;
   position: relative;
   height: 34px;
 }
 
 .addNewListing {
-  font-family: "Roboto", sans-serif;
-  font-style: normal;
-  font-weight: 400;
-  font-size: 14px;
-  line-height: 22px;
-  display: flex;
-  align-items: center;
-  letter-spacing: 0.02em;
-  color: #1c54db;
-  margin-top: 10px;
-  height: 50px;
-  margin-bottom: 22px;
-  width: fit-content;
+  width: 32px;
+  height: 32px;
+  background: #D8D8F5;
+  border-radius: 4px;
   cursor: pointer;
+  margin-left: 10px;
+  display: flex;
+  justify-content: center;
+  align-content: center;
+  flex-wrap: wrap;
 }
 
 .removeAgentFromListing {
@@ -92,7 +123,6 @@
   display: flex;
   width: 100%;
   margin-bottom: 20px;
-  margin-top: 20px;
 }
 
 .fieldLabel {
@@ -116,8 +146,8 @@
   height: 95px;
   justify-content: flex-end;
   bottom: 0;
-  background: white;
-  box-shadow: 0px -1px 4px rgb(0 0 0 / 25%);
+  background: #FFFFFF;
+  box-shadow: 0px -1px 4px rgba(0, 0, 0, 0.25);
 }
 
 .sendAgentInvitedListing {
@@ -134,5 +164,71 @@
   bottom: 0;
   color: #ffffff;
   cursor: pointer;
-  margin: 21px;
+  margin: 30px;
+}
+
+.sendAgentInvitedListing:disabled {
+  background: #ECECF3;
+  color: #A4A4A4;
+}
+
+.agentInvitationList {
+  width: 100%;
+  height: fit-content;
+  margin-top: 15px;
+}
+
+.inivationCard {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding: 0px 10px 0px 10px;
+  background: #FFFFFF;
+  border: 1px solid #E3E3EB;
+  border-radius: 4px;
+  width: 421px;
+  height: 61px;
+  cursor: pointer;
+  transition: 0.4s;
+  margin-bottom: 15px;
+}
+
+.invitationCardInfo {
+  width: 80%;
+}
+
+.removeCard {
+  width: 20%;
+  display: inline-flex;
+  justify-content: flex-end;
+}
+
+.flagWrapper {
+  display: flex;
+}
+
+.flagWrapper img {
+  display: inline-flex;
+  height: 18px;
+  width: 18px;
+  margin-right: 10px;
+}
+
+.email {
+  font-family: 'Roboto';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 30px;
+  display: flex;
+  align-items: center;
+  letter-spacing: 0.02em;
+  color: #162741;
+}
+
+.inivationCard:hover {
+  background: #EDEDF6;
+}
+.inivationCard:hover .removeCard svg path{
+  fill: #162741;
 }

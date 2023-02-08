@@ -3,14 +3,13 @@
 /* eslint-disable sort-imports */
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { Component, HostListener, OnInit, ViewChild } from '@angular/core';
-import { callType,searchInputData } from './callsData';
+import { callType, searchInputData } from './callsData';
 import { filter, map } from 'rxjs/operators';
 import { AuthService } from '../services/auth.service';
 import { CallsService } from './callService/calls.service';
 import { GigaaaDaterangepickerDirective } from '@gigaaa/gigaaa-components';
 import { ranges } from '../dashboard/dashboardData';
 import dayjs from 'dayjs';
-import { CalendarService } from '../calendarService/calendar.service';
 import { QueueSocketService } from '../workdeskSockets/queueSocket/queue-socket.service';
 import {
   AnsweredCallModel,
@@ -18,15 +17,14 @@ import {
   MissedCallModel,
   OngoingCallModel
 } from '../models/callModel';
-import { AgentUserInformation } from '../workdeskServices/callInterfaceServices/agentUserInformation/agent-user-information.service';
-import { OverlayService } from '../callInterface/overLayService/overlay.service';
-import { getDefaultInputsLoadOnce } from './incoming/incoming.Service';
+import { getDefaultInputsLoadOnce } from './defaultLoadService/incoming.Service';
+import { SharedServices } from '../workdeskServices/sharedResourcesService/shared-resource-service.service';
 
 @Component({
   selector: 'app-calls',
   templateUrl: './calls.component.html',
   styleUrls: ['./calls.component.scss'],
-  providers: [CallsService,getDefaultInputsLoadOnce]
+  providers: [CallsService, getDefaultInputsLoadOnce]
 })
 export class CallsComponent implements OnInit {
   callType = callType;
@@ -47,11 +45,17 @@ export class CallsComponent implements OnInit {
     private activatedRoute: ActivatedRoute,
     private CallsService: CallsService,
     private QueueSocketService: QueueSocketService,
+    private SharedServices: SharedServices,
+    private getDefaultInputsLoadOnce: getDefaultInputsLoadOnce
 
   ) {
     this.authService.pageTitle.next('Calls');
     this.alwaysShowCalendars = true;
-
+    this.SharedServices.LoadcommonEpsubject.subscribe((data) => {
+      if (data === 1) {
+        this.getDefaultInputsLoadOnce.getUserLangage();
+      }
+    });
   }
   ranges = ranges;
   aggregate: string = 'this_week';
@@ -78,6 +82,10 @@ export class CallsComponent implements OnInit {
   missedData: MissedCallModel[] = [];
   awnseredData: AnsweredCallModel[] = [];
   ngOnInit() {
+    const data = this.QueueSocketService.defaultCallData;
+    this.ongoingData = data.ongoing.calls;
+    this.incomingData = data.incoming.calls;
+
     this.QueueSocketService.SendDefaultParam();
     this.QueueSocketService.SendDefaultParamFinished();
     this.route.url.subscribe(() => {

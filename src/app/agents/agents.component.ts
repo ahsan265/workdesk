@@ -9,7 +9,9 @@ import {
   languauges,
   oneSelect,
   searchInputData,
-  agentIndicatorData
+  agentIndicatorData,
+  noAgentTobaleData,
+  onlineStatuses
 } from './agentsData';
 import { AuthService } from '../services/auth.service';
 import { Component, OnInit } from '@angular/core';
@@ -19,10 +21,11 @@ import { AgentSocketService } from '../workdeskSockets/agentSocket/agent-socket.
 import { AgentList } from '../models/agentSocketModel';
 import { Router } from '@angular/router';
 import { CommonService } from '../workdeskServices/commonEndpoint/common.service';
-import { OverlayService } from '../callInterface/overLayService/overlay.service';
 import { AgentModelTable } from '../models/callModel';
 import { SharedServices } from '../workdeskServices/sharedResourcesService/shared-resource-service.service';
 import { callsIndicatorData } from '../models/callIndicatorModel';
+import { OverlayService } from '@gigaaa/gigaaa-components';
+import { AddAgentComponent } from '../modals/add-agent/add-agent.component';
 
 @Component({
   selector: 'app-agents',
@@ -30,9 +33,11 @@ import { callsIndicatorData } from '../models/callIndicatorModel';
   styleUrls: ['./agents.component.scss']
 })
 export class AgentsComponent implements OnInit {
+  noAgentTobaleData = noAgentTobaleData;
   languauges = languauges;
   searchInputData = searchInputData;
   oneSelectData = oneSelect;
+  onlineStatuses = onlineStatuses;
   buttonData = buttonData;
   tableSetting = agentTableSetting;
   addAgentModelData = agentModelData;
@@ -44,16 +49,19 @@ export class AgentsComponent implements OnInit {
   inactiveAgent: number = 1;
   invitedAgent: number = 1;
   showInviteModel: boolean = false;
+  selectedStatus: OneSelect = onlineStatuses[0];
   AgentList: AgentList[] = [];
   dialog: any;
+  searchedValue: string = '';
+
   constructor(
     private authService: AuthService,
     private CommonService: CommonService,
     private AgentService: AgentService,
     private router: Router,
     private AgentSocketService: AgentSocketService,
-    private SharedServices: SharedServices
-  ) {
+    private SharedServices: SharedServices,
+    private OverlayService: OverlayService) {
     this.authService.pageTitle.next('Agents');
   }
   ngOnInit(): void {
@@ -62,7 +70,14 @@ export class AgentsComponent implements OnInit {
     this.AgentSocketService.getLastUsedParams();
     this.SharedServices.LoadcommonEpsubject.subscribe((data) => {
       if (data === 1) {
+        this.oneSelectData.map((data=>{
+        (  data.id===1)?data.selected=true:data.selected=false;
+        }))
         this.callCommonEndpoints();
+        this.selectedStatus = onlineStatuses[0];
+        this.selectedLanguages = [];
+        this.searchInputData.searchText = '';
+
       }
     });
     this.SharedServices.closeAddAgentDialog.subscribe((data) => {
@@ -77,27 +92,45 @@ export class AgentsComponent implements OnInit {
   public langugaOutput(languaugesOutput: number[]) {
     this.selectedLanguages = languaugesOutput;
     this.AgentService.sendAgentDefaultParameter(
-      languaugesOutput,
+      this.selectedLanguages,
       this.activeAgent,
-      this.inactiveAgent,
       this.invitedAgent
     );
   }
   public agentTypeOutput(agentType: OneSelect) {
     const selectedType = this.AgentService.getAgenttypeParameter(agentType);
     this.activeAgent = selectedType.active;
-    this.inactiveAgent = selectedType.inactive;
     this.invitedAgent = selectedType.invited;
     this.AgentService.sendAgentDefaultParameter(
       this.selectedLanguages,
       selectedType.active,
-      selectedType.inactive,
       selectedType.invited
     );
   }
+  // get agent status data 
+  public agentStatusOutput(agentType: OneSelect) {
+    this.selectedStatus = agentType;
+    const dataStatusWise = this.agentdataWithNoSearch.filter(data => {
+      if (agentType.id === 2) {
+        return data.is_online_icon_color === '#3EDE26';
+      }
+      else if (agentType.id === 3) {
+        return data.is_online_icon_color === '#FF155A';
+      }
+      else {
+        return data;
+      }
+    })
+    this.agentdata = dataStatusWise;
+  }
   showInviteModal() {
-    if (this.buttonData.active) {
-      this.showInviteModel = true;
+    if (this.buttonData.active === true) {
+      this.OverlayService.open({
+        component: AddAgentComponent,
+        panelClass: 'addAgent',
+        hasBackdrop: true,
+        backdropClass: 'dark-backdrop'
+      })
     }
   }
 
@@ -108,8 +141,8 @@ export class AgentsComponent implements OnInit {
   }
   getAgentList() {
     this.AgentSocketService.AgentListSubject.subscribe((data: AgentList[]) => {
-      const dataUpdate = this.AgentService.getAgentWiseData(data);
-      this.agentdata = dataUpdate.map((AgentList: AgentList) => ({
+      this.AgentList = this.AgentService.getAgentWiseData(data);
+      this.agentdata = this.AgentList.map((AgentList: AgentList) => ({
         uuid: AgentList.uuid,
         activity_icon: this.AgentService.checkAgentInCallChat(
           AgentList.is_in_call,
@@ -131,7 +164,7 @@ export class AgentsComponent implements OnInit {
         is_online_icon_color: this.AgentService.checkIsAgentOnline(
           AgentList.is_available,
           AgentList.is_online
-        ),
+        ) === true ? '#3EDE26' : '#FF155A',
         role:
           this.AgentService.setAgentInvitedProperty(
             AgentList.invited,
@@ -170,15 +203,17 @@ export class AgentsComponent implements OnInit {
       this.agentdataWithNoSearch = this.agentdata;
       this.CommonService.getLoggedInAgentData().role === 'Agent' ? this.buttonData.active = false : this.buttonData.active = true;
       this.agentIndicator = {
-        hightlightText: this.AgentService.countOnlineAgentsAvailable(data) + " ",
-        text: ' Agents available',
+        hightlightText: this.AgentService.countOnlineAgentsAvailable(data) + "",
+        text: '',
         icon: '../assets/images/components/agent_free.svg',
         backgroundColor: '#FEFEFF',
         borderColor: '1px solid #E1E1EA',
         textColor: '#737D8D',
         isAgent: true
       };
+      this.agentStatusOutput(this.selectedStatus);
     });
+
 
   }
 
