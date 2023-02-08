@@ -1,12 +1,14 @@
 import { ThisReceiver } from '@angular/compiler';
 import { ElementRef, Injectable } from '@angular/core';
 import { Router } from '@angular/router';
+import { OverlayService } from '@gigaaa/gigaaa-components';
 import { Subject } from 'rxjs';
 import { CallConsoleComponent } from 'src/app/callInterface/call-console/call-console.component';
 import { screenShareData } from 'src/app/callInterface/callsInterfaceData';
 import { CloseDialogOverlayRef } from 'src/app/callInterface/overLayService/closeDialogService';
-import { OverlayService } from 'src/app/callInterface/overLayService/overlay.service';
+import { CallsService } from 'src/app/calls/callService/calls.service';
 import { CallSocketService } from 'src/app/workdeskSockets/callSocket/call-socket.service';
+import { QueueSocketService } from 'src/app/workdeskSockets/queueSocket/queue-socket.service';
 import { MessageService } from '../../messageService/message.service';
 import { AgentUserInformation } from '../agentUserInformation/agent-user-information.service';
 import { DevicesInformationService } from '../devicesInformation/devices-information.service';
@@ -37,7 +39,9 @@ export class StreamingService {
     private AgentUserInformation: AgentUserInformation,
     private CallSocketService: CallSocketService,
     private DevicesInformationService: DevicesInformationService,
-    private overlayService: OverlayService
+    private overlayService: OverlayService,
+    private CallsService: CallsService,
+    private QueueSocketService: QueueSocketService
   ) {
     this.PeerConnectionService.isRealoaded.subscribe((isReload) => {
       if (isReload) {
@@ -50,7 +54,6 @@ export class StreamingService {
     if (this.PeerConnectionService.peerConnection === undefined) {
       await this.PeerConnectionService.createPeerConnection();
     }
-
     const userInformation = this.AgentUserInformation.getCallInformation();
     if (userInformation.last_used_microphone !== undefined) {
       this.mediaConstraint.audio = { deviceId: userInformation.last_used_microphone.id }
@@ -60,7 +63,6 @@ export class StreamingService {
       .then((stream) => {
         this.localStream = stream;
         stream.getVideoTracks()[0].stop()
-        //this.localStream.addTrack(stream.getAudioTracks()[0]);
         this.getLocalStream.next(stream);
       });
   }
@@ -217,7 +219,7 @@ export class StreamingService {
               return undefined;
             }
           });
-      
+
         audio === undefined
           ? this.PeerConnectionService.peerConnection.addTrack(
             audioTrack,
@@ -339,6 +341,8 @@ export class StreamingService {
     // this.router.navigate(['customersupport']);
     localStorage.removeItem('call-information');
     this.overlayService.close();
+    const data = this.QueueSocketService.defaultCallData;
+    this.CallsService.sendDataToTabs(data.incoming, 'incoming');
   }
   private stopScreenShareByEvent(stream: MediaStream) {
     stream.getTracks()[0].addEventListener('ended', () => {
@@ -390,7 +394,7 @@ export class StreamingService {
           videoTrack,
           this.screenShareStream
         );
-       // this.PeerConnectionService.getVideoCodec();
+        // this.PeerConnectionService.getVideoCodec();
         const offer: RTCSessionDescriptionInit =
           await this.PeerConnectionService.peerConnection.createOffer({
             offerToReceiveAudio: true,

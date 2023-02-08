@@ -2,6 +2,7 @@
 /* eslint-disable no-undef */
 /* eslint-disable sort-imports */
 import { Injectable } from '@angular/core';
+import { Router } from '@angular/router';
 import { InvitedAgentTableLanguage } from 'src/app/models/agent';
 import { AgentLanguages, AgentList } from 'src/app/models/agentSocketModel';
 import { Country } from 'src/app/models/country';
@@ -34,7 +35,8 @@ export class CommonService {
   constructor(
     private GigaaaApiService: GigaaaApiService,
     private MessageService: MessageService,
-    private Authservice: AuthService
+    private Authservice: AuthService,
+    private Router: Router
   ) { }
   // get the list of countries
   public async getLocations(): Promise<MultiSelect> {
@@ -166,7 +168,7 @@ export class CommonService {
 
     return {
       token: newLocal.api_token,
-      organization: organization.uuid,
+      organization: organization?.uuid,
       project: project.uuid,
       connectionId: socketConnection.connection
     };
@@ -372,10 +374,9 @@ export class CommonService {
     return array.slice((page_number - 1) * page_size, page_number * page_size);
   }
   // get is logged in user is Admin or Agent
-  public getAgentRole() {
-    this.GigaaaApiService.getroleofagent(this.getEndpointsParamLocal().token, this.getEndpointsParamLocal().organization, this.getEndpointsParamLocal().project).subscribe((data: any) => {
-      localStorage.setItem('is-admin', JSON.stringify(data['is_admin']));
-    })
+  public async getAgentRole() {
+    const data = await this.GigaaaApiService.getroleofagent(this.getEndpointsParamLocal().token, this.getEndpointsParamLocal().organization, this.getEndpointsParamLocal().project)
+    localStorage.setItem('is-admin', JSON.stringify(data['is_admin']));
   }
 
 
@@ -402,5 +403,13 @@ export class CommonService {
       }
 
     });
+  }
+
+  // restrict Router
+  public restrictRoute() {
+    if (!this.getIsAdminOrAgent()) {
+      this.Router.navigate(['calls']);
+    }
+ 
   }
 }

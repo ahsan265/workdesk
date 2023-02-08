@@ -21,8 +21,13 @@ const languauges: MultiSelect = {
 const oneSelect: OneSelect[] = [
   { id: 1, name: 'All activity', selected: true },
   { id: 2, name: 'Active', selected: false },
-  { id: 3, name: 'Inactive', selected: false },
-  { id: 4, name: 'Invited', selected: false }
+  { id: 3, name: 'Invited', selected: false }
+];
+
+const onlineStatuses: OneSelect[] = [
+  { id: 1, name: 'All status', selected: true },
+  { id: 2, name: 'Online', selected: false },
+  { id: 3, name: 'Away', selected: false }
 ];
 
 const selectedAgentType: any[] = [
@@ -30,7 +35,6 @@ const selectedAgentType: any[] = [
     name: 'All activity',
     options: {
       active: 1,
-      inactive: 1,
       invited: 1
     }
   },
@@ -38,15 +42,6 @@ const selectedAgentType: any[] = [
     name: 'Active',
     options: {
       active: 1,
-      inactive: 0,
-      invited: 0
-    }
-  },
-  {
-    name: 'Inactive',
-    options: {
-      active: 0,
-      inactive: 1,
       invited: 0
     }
   },
@@ -54,7 +49,6 @@ const selectedAgentType: any[] = [
     name: 'Invited',
     options: {
       active: 0,
-      inactive: 0,
       invited: 1
     }
   }
@@ -65,13 +59,8 @@ const searchInputData: SearchInput = {
   searchText: ''
 };
 
-const buttonData: Button = {
-  title: '+ Add agent',
-  // icon: '../assets/images/sidebar/agents.svg',
-  backgroundColor: '#1C54DB',
-  borderColor: 'none',
-  textColor: 'white',
-  active: false
+const buttonData: any = {
+  active: true
 };
 
 const agentTableSetting: any = {
@@ -225,15 +214,24 @@ const agents: any[] = [
     }
   }
 ];
-
+const noAgentTobaleData = {
+  'display': 'block',
+  'width': '100%',
+  'height': '160px',
+  'background': '#fafafd',
+  'border': '1px solid #e3e3eb',
+  'border-top': 'none',
+  'margin': '0 -1px',
+  'margin-top': '1px'
+}
 const agentModelData = {
   title: 'Invite Human Agents',
   image: '',
   onlyOneButton: true,
   buttonOne: true,
   buttonTwo: false,
-  width: '595px',
-  height: '450px'
+  width: '589px',
+  height: '400px'
 };
 const agentIndicatorData = {
   hightlightText: 0 + '/' + 0,
@@ -253,5 +251,7 @@ export {
   agents,
   selectedAgentType,
   agentModelData,
-  agentIndicatorData
+  agentIndicatorData,
+  noAgentTobaleData,
+  onlineStatuses
 };

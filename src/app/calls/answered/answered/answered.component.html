@@ -44,5 +44,5 @@
   <gigaaa-workdesk-table [tableData]="answeredData" [tableSettings]="tableSettings" (pagenumber)="pagenumber($event)"
     (itemPerPage)="itemPerPage($event)" [pagination]="pagination">
   </gigaaa-workdesk-table>
-  <app-no-table-data *ngIf="answeredData.length === 0"></app-no-table-data>
+  <app-no-table-data *ngIf="answeredData.length === 0" [notableClass]="nodata"></app-no-table-data>
 </div>

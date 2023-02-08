@@ -31,6 +31,7 @@ export interface AgentModelTable {
 
 export interface UtlitiesIcon {
   image: string;
+  is_disabled:boolean;
 }
 export interface ImageText {
   text: string;
@@ -45,7 +46,7 @@ export interface AgentCardInformation {
 export interface InviteAgentModel {
   email: string;
   role: string;
-  language_ids: number | [];
+  language_ids: number[];
 }
 
 export interface InvitedAgentTableLanguage {
@@ -55,4 +56,9 @@ export interface InvitedAgentTableLanguage {
 export interface InvitedAgentsModel {
   email: string;
   languages: number;
+}
+
+export interface agentInvitationList {
+  email: string;
+  language: number[];
 }

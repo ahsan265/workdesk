@@ -1,9 +1,11 @@
 import { Component, HostListener, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, NavigationStart, Router } from '@angular/router';
-import { GigaaaDaterangepickerDirective } from '@gigaaa/gigaaa-components';
+import { GigaaaDaterangepickerDirective, OverlayService } from '@gigaaa/gigaaa-components';
 import dayjs from 'dayjs';
+import { noAgentTobaleData } from 'src/app/agents/agentsData';
 import { CalendarService } from 'src/app/calendarService/calendar.service';
-import { OverlayService } from 'src/app/callInterface/overLayService/overlay.service';
+import { CallConsoleComponent } from 'src/app/callInterface/call-console/call-console.component';
+import { noTobaleData } from 'src/app/components/no-table-data/notableData';
 import { ranges } from 'src/app/dashboard/dashboardData';
 import {
   IncomingCallModelTable,
@@ -11,10 +13,10 @@ import {
 } from 'src/app/models/callModel';
 import { CommonService } from 'src/app/workdeskServices/commonEndpoint/common.service';
 import { AgentSocketService } from 'src/app/workdeskSockets/agentSocket/agent-socket.service';
-import { languaugesIncoming } from '../../callsData';
+import { languaugesIncoming, searchInputData } from '../../callsData';
 import { CallsService } from '../../callService/calls.service';
-import { callTypeIncoming, incomingTableSetting, searchInputData } from '../../incoming/incomingData';
-import { getDefaultInputsLoadOnce } from '../incoming.Service';
+import { getDefaultInputsLoadOnce } from '../../defaultLoadService/incoming.Service';
+import { callTypeIncoming, incomingTableSetting } from '../../defaultLoadService/incomingData';
 
 @Component({
   selector: 'app-incoming',
@@ -23,6 +25,7 @@ import { getDefaultInputsLoadOnce } from '../incoming.Service';
 
 })
 export class IncomingComponent implements OnInit {
+  nodata = noAgentTobaleData;
   showCalender = false;
   tableSettings = incomingTableSetting;
   incomingData: IncomingCallModelTable[] = [];
@@ -97,15 +100,22 @@ export class IncomingComponent implements OnInit {
           userImage: '../../../assets/images/callInterface/user.png',
           showUserImage: false,
           callPickButton: 'Answer',
-          disableButton: this.AgentSocketService.isInCall
+          disableButton: (incomingData.on_hold === true || this.AgentSocketService.isInCall === true) ? true : false
+
         }));
         this.unfilterIncomingData = this.incomingData;
       }
     );
   }
   async ngOnInit(): Promise<void> {
-   this.getDefaultInputsLoadOnce.incominglanguages.asObservable().subscribe(data=>{
-    this.languauges =data;
+    this.getDefaultInputsLoadOnce.incominglanguages.asObservable().subscribe(data => {
+      this.languauges = data;
+      this.languageIds=[];
+      this.callTypeName=[];
+      this.callType.data.map(data=>{
+        data.selected=false;
+      })
+      this.searchInputData.searchText='';
     });
   }
 
@@ -118,7 +128,10 @@ export class IncomingComponent implements OnInit {
     //   data
     // );
     this.OverlayService.open({
-      data: event
+      component:CallConsoleComponent,
+      data: event,
+      panelClass:'dialog-panel',
+      isPopup:false
     });
   }
 

@@ -22,12 +22,14 @@ export class LandingPageComponent implements OnInit {
   showLinkExpireModal: boolean = false;
   showNonComplientAccountModal: boolean = false;
   landingPageData: any = {
-    title:
-      'Automate your customer service and offer an elevated customer experience with gigaaa AI Customer Support solution',
-    text: 'Make every customer more satisfied by giving them the exact information they need, right when they need it.',
-    image: '../../assets/images/landingPage/landing-page.svg',
-    logo: '../../assets/images/sidebar/neo_long.svg'
-  };
+    logo: '../../assets/images/landingpage/workdesk_logo.svg',
+    title: ['Automate your <br> customer <br> service'],
+    text: ['Offer an elevated customer <br> experience with gigaaa AI <br> Customer Support solution'],
+    message: ['Make every customer more satisfied by giving them <br> the exact information they  need, right when they <br> need it.'],
+    image: '../../assets/images/landingpage/workdesk_hero.svg',
+    icons: [{ text: 'Customer Support', icon: '../assets/images/landingpage/customer_support_icon.svg' }, { text: '24/7', icon: '../assets/images/landingpage/24_7_icon.svg' },
+    { text: 'Video Calls', icon: '../assets/images/landingpage/video_calls_icon.svg' }, { text: 'Audio Calls', icon: '../assets/images/landingpage/audio_call_icon.svg' }, { text: 'Multilingual', icon: '../assets/images/landingpage/multilingual_icon.svg' }, { text: 'Ticketing', icon: '../assets/images/landingpage/ticketing_icon.svg' }, { text: 'Chats', icon: '../assets/images/landingpage/chats_icon.svg' }]
+  }
   oauthUrl = `${environment.oauth_url}`;
   constructor(
     private router: Router,
@@ -53,12 +55,17 @@ export class LandingPageComponent implements OnInit {
     this.AgentInviteService.agentInviteLinkExpireSubject.subscribe(data => {
       this.showLinkExpireModal = data;
     })
-   
+
   }
 
   onLogin(event: boolean) {
     if (event) {
       this.headerService.login();
+    }
+  }
+  register(event: boolean) {
+    if (event) {
+      window.open('https://accounts.gigaaa.link/register', '_self');
     }
   }
   showInviteModal() {

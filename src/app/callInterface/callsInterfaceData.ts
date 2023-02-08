@@ -194,7 +194,7 @@ const peerNormalCallConnectedData = {
   top: 'calc(50% - 160px)'
 };
 const peerNormalImageNormal = {
-  height: '199px',
+  height: '198px',
   width: '198px'
 };
 

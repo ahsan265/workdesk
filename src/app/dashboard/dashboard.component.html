@@ -23,7 +23,7 @@
               firstDay: 1,
               customRangeLabel: 'Custom range'
             }" [showCancel]="true" startKey="startDate" endKey="endDate" />
-          <svg [ngClass]="showCalendar ? 'filterArrowRotate' : 'filterArrow'" class="filterArrow" width="10" height="7"
+          <svg (click)="onOpenCalendar()" [ngClass]="showCalendar ? 'filterArrowRotate' : 'filterArrow'" class="filterArrow" width="10" height="7"
             viewBox="0 0 10 7" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path d="M1.55469 0.871094L5 4.31641L8.44531 0.871094L9.5 1.92578L5 6.42578L0.5 1.92578L1.55469 0.871094Z"
               fill="#162741" />

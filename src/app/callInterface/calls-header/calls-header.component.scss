@@ -4,6 +4,7 @@
   display: flex;
   background: #162741;
   box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.23);
+
 }
 
 .UserInformationPanel {
@@ -34,6 +35,7 @@
   line-height: 125%;
   align-items: center;
   letter-spacing: 0.02em;
+  white-space: nowrap;
   color: #ffffff;
 }
 

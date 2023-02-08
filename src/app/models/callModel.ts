@@ -31,6 +31,7 @@ export interface IncomingCallModel {
   tablet: false;
   user_id: string;
   waiting_started_at: string;
+  on_hold:boolean;
 }
 
 export interface OngoingCallModel {
@@ -202,7 +203,7 @@ export interface AgentModelTable {
   is_logged_in: boolean;
   activity_icon: string;
   agent_name: String;
-  utilites: UtlitiesIcon[];
+  utilites: AgentUtlitiesIcon[];
   role: string;
   can_edit: boolean;
   show_edit: boolean;
@@ -216,6 +217,10 @@ export interface AgentModelTable {
 
 export interface UtlitiesIcon {
   image: string;
+}
+export interface AgentUtlitiesIcon {
+  image: string;
+  is_disabled:boolean;
 }
 export interface ImageText {
   text: string;

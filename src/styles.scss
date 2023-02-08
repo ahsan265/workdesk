@@ -1,13 +1,28 @@
 // @import '~ngx-toastr/toastr';
-@import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
-
+.main{
+  overflow-y: scroll;
+}
+.main::-webkit-scrollbar{
+  display: none;
+}
 .cdk-overlay-container {
-  z-index: 1000;
-  top: 0;
-  margin: 0 auto;
-  position: static;
+  inset: 0;
+  flex-wrap: wrap;
+}
+
+.callinterface {
   height: 100%;
   width: 100%;
+}
+
+.dark-backdrop {
+  height: 100%;
+  width: 100%;
+  position: absolute;
+  background-color: rgba(0, 0, 0, 0.3);
+  top: 0;
+  left: 0;
+  z-index: 1;
 }
 
 .toastClass {
@@ -16,12 +31,31 @@
   display: inline-block;
 }
 
+
 .cdk-global-overlay-wrapper {
+  top: 0;
+  margin: 0 auto;
+  position: absolute;
   height: 100%;
   width: 100%;
-  display: contents;
-  top: 0;
+  display: flex;
+  z-index: 1;
+}
+
+.cdk-global-overlay-wrapper .dark-backdrop>.addAgent {
+  height: fit-content !important;
+  width: fit-content !important;
+}
+
+::ng-deep .cdk-global-overlay-backdrop {
+  height: 100%;
+  width: 100%;
+  margin: 0 auto;
   position: absolute;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 
@@ -35,7 +69,7 @@
   padding: 0px !important;
   overflow-x: hidden;
   overflow-y: hidden;
-  display: contents;
+  display: flex;
   vertical-align: middle;
 }
 
@@ -46,6 +80,24 @@
   box-shadow: 3px 3px 10px rgb(0 0 0 / 23%);
   border-radius: 4px;
   padding: 30px;
+}
+
+.notAccount {
+  width: 390px;
+  height: 279px;
+  background: #FFFFFF;
+  box-shadow: 3px 3px 10px rgb(0 0 0 / 23%);
+  border-radius: 4px;
+  display: flex;
+  justify-content: center;
+  align-content: center;
+  flex-wrap: wrap;
+}
+
+.addAgent {
+  width: 504px;
+  height: 480px;
+
 }
 
 .modal {
@@ -154,7 +206,6 @@ h5,
 h6,
 p {
   margin: 0;
-  font-weight: normal;
 }
 
 input {
@@ -162,9 +213,15 @@ input {
 }
 
 // For Desktops
-@media only screen and (max-width: 1200px) and (min-width: 769px) {
+@media only screen and (max-width: 1200px) and (min-width: 768px) {
   body {
     font-size: 80%;
+  }
+  div{
+    font-size: 80%;
+  }
+  .sidebarWrap{
+    width: 80%;
   }
 }
 

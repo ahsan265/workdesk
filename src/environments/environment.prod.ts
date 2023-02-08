@@ -17,11 +17,11 @@ export const environment = {
   accounts_callback_url:
     process.env.ACCOUNTS_CALLBACK_URL || 'http://localhost:4202',
   currentUser: process.env.CURRENT_USER || 'https://api.gigaaa.link/users/me',
-  prod_url_cs: process.env.PROD_URL_CS || 'https://api.gigaaa.link/cse',
+  prod_url_cs: process.env.PROD_URL_CS || 'https://api.gigaaa.link/cs',
   prod_url_workdesk: process.env.PROD_URL_WORKDESK || 'https://api.gigaaa.link',
   prod_anlytics:
-    process.env.PROD_ANALYTICS || 'https://api.gigaaa.link/cse/private',
+    process.env.PROD_ANALYTICS || 'https://api.gigaaa.link/cs/private',
   websocket_url:
-    process.env.WEBSOCKET_URL || 'wss://api.gigaaa.link/websockets/cse',
+    process.env.WEBSOCKET_URL || 'wss://api.gigaaa.link/websockets/cs',
   logged_user: process.env.LOGGED_USER || 'https://api.gigaaa.link/v1/api/v1'
 };
