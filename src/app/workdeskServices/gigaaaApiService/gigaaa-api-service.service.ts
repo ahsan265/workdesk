@@ -360,7 +360,7 @@ export class GigaaaApiService {
       this.workdeskurl_cs +
       '/private/agents/image?organization=' +
       orgid +
-      '&integration=' +
+      '&project=' +
       intgid +
       '&agent=' +
       uuid,

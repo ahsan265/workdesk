@@ -10,13 +10,12 @@ import dayjs from 'dayjs';
 import { callsIndicatorData } from 'src/app/models/callIndicatorModel';
 import { CalendarService } from 'src/app/calendarService/calendar.service';
 import { ranges } from 'src/app/dashboard/dashboardData';
-import { languaugesAnswered, searchInputData } from '../../callsData';
+import { languaugesAnswered } from '../../callsData';
 import { answeredTablaSetting } from '../../missed/missedData';
-import { answeredData, callTypeAnswered, paginationData } from '../answeredData';
+import { answeredData, callTypeAnswered, paginationData, searchInputData } from '../answeredData';
 import { CallsService } from '../../callService/calls.service';
-import { getDefaultInputsLoadOnce } from '../../incoming/incoming.Service';
-import { noTobaleData } from 'src/app/components/no-table-data/notableData';
 import { noAgentTobaleData } from 'src/app/agents/agentsData';
+import { getDefaultInputsLoadOnce } from '../../defaultLoadService/incoming.Service';
 
 @Component({
   selector: 'app-answered',
@@ -120,6 +119,12 @@ export class AnsweredComponent implements OnInit {
   async ngOnInit(): Promise<void> {
     this.getDefaultInputsLoadOnce.answeredlanguage.asObservable().subscribe(data => {
       this.languauges = data;
+      this.languageIds = [];
+      this.callTypeName = [];
+      this.callType.data.map(data => {
+        data.selected = false;
+      })
+      this.searchInputData.searchText='';
     })
 
   }

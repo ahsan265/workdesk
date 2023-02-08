@@ -49,9 +49,11 @@ export class AgentsComponent implements OnInit {
   inactiveAgent: number = 1;
   invitedAgent: number = 1;
   showInviteModel: boolean = false;
-  selectedStatus: OneSelect=onlineStatuses[0];
+  selectedStatus: OneSelect = onlineStatuses[0];
   AgentList: AgentList[] = [];
   dialog: any;
+  searchedValue: string = '';
+
   constructor(
     private authService: AuthService,
     private CommonService: CommonService,
@@ -68,7 +70,14 @@ export class AgentsComponent implements OnInit {
     this.AgentSocketService.getLastUsedParams();
     this.SharedServices.LoadcommonEpsubject.subscribe((data) => {
       if (data === 1) {
+        this.oneSelectData.map((data=>{
+        (  data.id===1)?data.selected=true:data.selected=false;
+        }))
         this.callCommonEndpoints();
+        this.selectedStatus = onlineStatuses[0];
+        this.selectedLanguages = [];
+        this.searchInputData.searchText = '';
+
       }
     });
     this.SharedServices.closeAddAgentDialog.subscribe((data) => {
@@ -83,7 +92,7 @@ export class AgentsComponent implements OnInit {
   public langugaOutput(languaugesOutput: number[]) {
     this.selectedLanguages = languaugesOutput;
     this.AgentService.sendAgentDefaultParameter(
-      languaugesOutput,
+      this.selectedLanguages,
       this.activeAgent,
       this.invitedAgent
     );
@@ -100,7 +109,7 @@ export class AgentsComponent implements OnInit {
   }
   // get agent status data 
   public agentStatusOutput(agentType: OneSelect) {
-    this.selectedStatus=agentType;
+    this.selectedStatus = agentType;
     const dataStatusWise = this.agentdataWithNoSearch.filter(data => {
       if (agentType.id === 2) {
         return data.is_online_icon_color === '#3EDE26';
