@@ -3,17 +3,16 @@ import { GigaaaDaterangepickerDirective } from '@gigaaa/gigaaa-components';
 import dayjs from 'dayjs';
 import { noAgentTobaleData } from 'src/app/agents/agentsData';
 import { CalendarService } from 'src/app/calendarService/calendar.service';
-import { noTobaleData } from 'src/app/components/no-table-data/notableData';
 import { ranges } from 'src/app/dashboard/dashboardData';
 import {
   newCallModelOngoing,
   OngoingCallModelTable
 } from 'src/app/models/callModel';
+import { MultiSelect } from 'src/app/models/multiSelect';
 import { CommonService } from 'src/app/workdeskServices/commonEndpoint/common.service';
-import { languaugesOngoing } from '../../callsData';
 import { CallsService } from '../../callService/calls.service';
 import { getDefaultInputsLoadOnce } from '../../defaultLoadService/incoming.Service';
-import { callTypeOngoing, ongoingTableSetting, searchInputData } from '../../ongoing/ongoingData';
+import { callTypeOngoing, languaugesOngoing, ongoingTableSetting, searchInputData } from '../../ongoing/ongoingData';
 
 @Component({
   selector: 'app-ongoing',
@@ -39,7 +38,7 @@ export class OngoingComponent implements OnInit {
     aggregate: this.aggregate
   };
   callType = callTypeOngoing;
-  languauges = languaugesOngoing;
+  languauges !: MultiSelect;
   searchInputData = searchInputData;
   @ViewChild(GigaaaDaterangepickerDirective, { static: false })
   pickerDirective: GigaaaDaterangepickerDirective | undefined;
@@ -107,12 +106,12 @@ export class OngoingComponent implements OnInit {
   async ngOnInit(): Promise<void> {
     this.getDefaultInputsLoadOnce.ongoingLangauge.asObservable().subscribe(data => {
       this.languauges = data;
-      this.languageIds=[];
-      this.callTypeName=[];
-      this.callType.data.map(data=>{
-        data.selected=false;
+      this.languageIds = [];
+      this.callTypeName = [];
+      this.callType.data.map(data => {
+        data.selected = false;
       })
-      this.searchInputData.searchText='';
+      this.searchInputData.searchText = '';
     });
   }
 

@@ -1,9 +1,11 @@
-import { BehaviorSubject, Observable, ReplaySubject, Subject } from 'rxjs';
-import { CanActivate } from '@angular/router';
+import { BehaviorSubject } from 'rxjs';
 import { Injectable } from '@angular/core';
 import { CommonService } from 'src/app/workdeskServices/commonEndpoint/common.service';
 import { MultiSelect } from 'src/app/models/multiSelect';
-import { languaugesAnswered, languaugesIncoming, languaugesMissed, languaugesOngoing } from '../callsData';
+import { languaugesIncoming } from '../callsData';
+import { languaugesOngoing } from '../ongoing/ongoingData';
+import { languaugesMissed } from '../missed/missedData';
+import { dataTableSettings, languaugesAnswered } from '../answered/answeredData';
 
 @Injectable({
     providedIn: 'root'
@@ -13,18 +15,16 @@ export class getDefaultInputsLoadOnce {
     ongoingLangauge: BehaviorSubject<MultiSelect>;
     missedLanguage: BehaviorSubject<MultiSelect>;
     answeredlanguage: BehaviorSubject<MultiSelect>;
-
-    getLang = new Subject<MultiSelect>();
     constructor(private CommonService: CommonService,
     ) {
 
         this.incominglanguages = new BehaviorSubject(languaugesIncoming);
-        this.ongoingLangauge = new BehaviorSubject(languaugesOngoing);
-        this.missedLanguage = new BehaviorSubject(languaugesMissed);
+        this.ongoingLangauge = new BehaviorSubject(languaugesMissed);
+        this.missedLanguage = new BehaviorSubject(languaugesAnswered);
         this.answeredlanguage = new BehaviorSubject(languaugesAnswered);
         this.getUserLangage();
     }
-    getUserLangage() {
+    async getUserLangage() {
         this.CommonService.getProjectLanguagesForUser().then((data => {
             this.incominglanguages.next(data);
         }))
@@ -38,4 +38,6 @@ export class getDefaultInputsLoadOnce {
             this.answeredlanguage.next(data);
         }))
     }
+
+
 }
