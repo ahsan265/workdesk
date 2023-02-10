@@ -223,7 +223,7 @@ const callTypeMissed: MultiSelect = {
     { id: 2, name: 'Video', selected: false }
   ]
 };
-const languauges: MultiSelect = {
+const languaugesMissed: MultiSelect = {
   title: 'Language',
   showSelectAll: true,
   showSearchBar: false,
@@ -245,4 +245,4 @@ const missedData: callsIndicatorData = {
   isAgent: false
 };
 
-export { missedTableSetting, missedCallData, answeredTablaSetting, callTypeMissed, searchInputData, languauges, paginationData ,missedData};
+export { missedTableSetting, missedCallData, answeredTablaSetting, callTypeMissed, searchInputData, languaugesMissed, paginationData ,missedData};

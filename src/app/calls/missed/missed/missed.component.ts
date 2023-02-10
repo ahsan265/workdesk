@@ -1,4 +1,4 @@
-import { callTypeMissed, languauges, missedCallData, missedData, missedTableSetting, paginationData, searchInputData } from '../../missed/missedData';
+import { callTypeMissed, languaugesMissed, missedData, missedTableSetting, paginationData, searchInputData } from '../../missed/missedData';
 import { Component, HostListener, OnInit, ViewChild } from '@angular/core';
 import {
   MissedCallModel,
@@ -9,12 +9,8 @@ import { CommonService } from 'src/app/workdeskServices/commonEndpoint/common.se
 import { GigaaaDaterangepickerDirective } from '@gigaaa/gigaaa-components';
 import dayjs from 'dayjs';
 import { CalendarService } from 'src/app/calendarService/calendar.service';
-import { callsIndicatorData } from 'src/app/models/callIndicatorModel';
-import { QueueSocketService } from 'src/app/workdeskSockets/queueSocket/queue-socket.service';
-import { MultiSelect } from 'src/app/models/multiSelect';
 import { ranges } from 'src/app/dashboard/dashboardData';
 import { CallsService } from '../../callService/calls.service';
-import { noTobaleData } from 'src/app/components/no-table-data/notableData';
 import { noAgentTobaleData } from 'src/app/agents/agentsData';
 import { getDefaultInputsLoadOnce } from '../../defaultLoadService/incoming.Service';
 @Component({
@@ -43,7 +39,7 @@ export class MissedComponent implements OnInit {
     aggregate: this.aggregate
   };
   callType = callTypeMissed;
-  languauges = languauges;
+  languauges = languaugesMissed;
   searchInputData = searchInputData;
   itemsPerPage: number = 10;
   pageNumber: number = 1;
@@ -61,8 +57,6 @@ export class MissedComponent implements OnInit {
       this.showCalendar = false;
     }
   }
-
-
   constructor(
     private CallsService: CallsService,
     private CommonService: CommonService,
@@ -115,25 +109,20 @@ export class MissedComponent implements OnInit {
       }));
       this.unfilterMissedCallData = this.missedCallData;
       this.callsIndicatorData.text = this.pagination.totalItems + ' missed requests';
-
-
     }
     );
-
   }
   async ngOnInit(): Promise<void> {
     this.getDefaultInputsLoadOnce.missedLanguage.asObservable().subscribe(data => {
       this.languauges = data;
-      this.languageIds=[];
-      this.callTypeName=[];
-      this.callType.data.map(data=>{
-        data.selected=false;
+      this.languageIds = [];
+      this.callTypeName = [];
+      this.callType.data.map(data => {
+        data.selected = false;
       })
-      this.searchInputData.searchText='';
+      this.searchInputData.searchText = '';
     })
-
   }
-
 
   change(event: any) {
     if (event.startDate) {
@@ -175,7 +164,6 @@ export class MissedComponent implements OnInit {
       ''
     );
   }
-
   public callOutput(callTypeOutput: any) {
     this.callTypeName = this.CallsService.getCallTypeId(callTypeOutput);
     this.CallsService.callQueueSocketByLanguageandCallFoPagination(

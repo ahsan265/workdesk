@@ -89,7 +89,12 @@ import { AnsweredComponent } from './calls/answered/answered/answered.component'
 import { OngoingComponent } from './calls/ongoing/ongoing/ongoing.component';
 import { agentScrollList } from './directives/agentListDirective';
 import { CommonModule } from '@angular/common';
-import { AccountNotpartComponent } from './modals/account-not-part/account-notpart.component';
+import { ChatConsoleComponent } from './chatInterface/chat-console/chat-console.component';
+import { ChatThreadsComponent } from './chatInterface/chat-threads/chat-threads.component';
+import { ChatWrapperComponent } from './chatInterface/chat-wrapper/chat-wrapper.component';
+import { ChattextAreaComponent } from './chatInterface/chattext-area/chattext-area.component';
+import { ChatHeaderComponent } from './chatInterface/chat-header/chat-header.component';
+import { ChatTheadItemComponent } from './chatInterface/chat-thead-item/chat-thead-item.component';
 import { ImageCropperModule } from 'ngx-image-cropper';
 
 @NgModule({
@@ -144,7 +149,12 @@ import { ImageCropperModule } from 'ngx-image-cropper';
     MissedComponent,
     AnsweredComponent,
     OngoingComponent,
-    AccountNotpartComponent
+    ChatConsoleComponent,
+    ChatThreadsComponent,
+    ChatWrapperComponent,
+    ChattextAreaComponent,
+    ChatHeaderComponent,
+    ChatTheadItemComponent
   ],
   imports: [
     CommonModule,
