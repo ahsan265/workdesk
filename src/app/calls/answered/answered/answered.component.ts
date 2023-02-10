@@ -7,12 +7,10 @@ import {
 import { CommonService } from 'src/app/workdeskServices/commonEndpoint/common.service';
 import { GigaaaDaterangepickerDirective } from '@gigaaa/gigaaa-components';
 import dayjs from 'dayjs';
-import { callsIndicatorData } from 'src/app/models/callIndicatorModel';
 import { CalendarService } from 'src/app/calendarService/calendar.service';
 import { ranges } from 'src/app/dashboard/dashboardData';
-import { languaugesAnswered } from '../../callsData';
 import { answeredTablaSetting } from '../../missed/missedData';
-import { answeredData, callTypeAnswered, paginationData, searchInputData } from '../answeredData';
+import { answeredData, callTypeAnswered, languaugesAnswered, paginationData, searchInputData } from '../answeredData';
 import { CallsService } from '../../callService/calls.service';
 import { noAgentTobaleData } from 'src/app/agents/agentsData';
 import { getDefaultInputsLoadOnce } from '../../defaultLoadService/incoming.Service';

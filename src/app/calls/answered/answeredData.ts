@@ -159,5 +159,12 @@ const searchInputData: SearchInput = {
   placeholder: 'Search by name or user ID',
   searchText: ''
 };
+const languaugesAnswered: MultiSelect = {
+  title: 'Language',
+  showSelectAll: true,
+  showSearchBar: false,
+  data: [
 
-export { dataTableSettings, agents, callTypeAnswered, paginationData ,answeredData,searchInputData};
+  ]
+};
+export { dataTableSettings, agents, callTypeAnswered, paginationData ,answeredData,searchInputData,languaugesAnswered};

@@ -6,3 +6,5 @@ export interface MultiSelect {
   showSearchBar: boolean;
   data: OneSelect[];
 }
+
+

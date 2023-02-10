@@ -62,7 +62,7 @@ export class CallsOperationService {
                 false,
                 this.AuthService.getLoggedUser(),
               );
-                await this.StreamingService.selectedDeviceForStream(false);
+              await this.StreamingService.selectedDeviceForStream(false);
               this.startTimer.next(false);
             }
             break;
@@ -100,6 +100,10 @@ export class CallsOperationService {
             break;
           case 'peer_notification':
             this.MessageService.setInformationMessage(msg.data.msg);
+            break;
+          case 'err':
+            this.MessageService.setErrorMessage('There seems to be a system error.');
+            this.StreamingService.hangUpCall();
             break;
           default:
         }
