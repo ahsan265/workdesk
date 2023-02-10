@@ -12,7 +12,7 @@
   </app-calls-header>
   <div class="dragArea"
     [style.height]="this.agentOperationInformationData.isMinimize && (this.isVideoMinimize || this.isRemoteVideo)?'calc(100% - 120px)':'calc(100% - 150px)'">
-    <app-mini-camera-screen #miniCameraVideoStream [hidden]="this.isMinimize"
+    <app-mini-camera-screen #miniCameraVideoStream [hidden]="this.isMinimize "
       [agentOperationInformation]="agentOperationInformationData" [cdkDragFreeDragPosition]="dragPosition"
       cdkDragBoundary=".dragArea" cdkDrag
       [ngStyle]="this.agentOperationInformationData.isMinimize?this.minmizeMiniCameraMargins:this.normalMiniCameraMargins"

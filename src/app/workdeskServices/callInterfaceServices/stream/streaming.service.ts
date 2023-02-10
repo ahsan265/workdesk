@@ -316,9 +316,12 @@ export class StreamingService {
         peer_id: peerId,
         data: offer
       });
+      this.stopScreenStream.next(true);
       return screenShareeStream;
     } catch (error: any) {
       this.MessageService.setErrorMessage('Permission Denied');
+      this.AgentUserInformation.updateScreenShareStutus(false);
+      this.stopScreenStream.next(false);
     }
     return this.localStream;
   }
