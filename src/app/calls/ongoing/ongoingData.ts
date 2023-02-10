@@ -85,4 +85,12 @@ const searchInputData: SearchInput = {
   placeholder: 'Search by name or user ID',
   searchText: ''
 };
-export { ongoingTableSetting ,callTypeOngoing,searchInputData};
+const languaugesOngoing: MultiSelect = {
+  title: 'Language',
+  showSelectAll: true,
+  showSearchBar: false,
+  data: [
+  ]
+};
+
+export { ongoingTableSetting ,callTypeOngoing,searchInputData,languaugesOngoing};

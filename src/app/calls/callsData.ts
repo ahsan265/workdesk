@@ -19,30 +19,10 @@ const languaugesIncoming: MultiSelect = {
   data: [
   ]
 };
-const languaugesMissed: MultiSelect = {
-  title: 'Language',
-  showSelectAll: true,
-  showSearchBar: false,
-  data: [
-  ]
-};
-const languaugesOngoing: MultiSelect = {
-  title: 'Language',
-  showSelectAll: true,
-  showSearchBar: false,
-  data: [
-  ]
-};
-const languaugesAnswered: MultiSelect = {
-  title: 'Language',
-  showSelectAll: true,
-  showSearchBar: false,
-  data: [
-  ]
-};
+
 const searchInputData: SearchInput = {
   placeholder: 'Search by name or user ID',
   searchText: ''
 };
 
-export { languaugesIncoming, languaugesAnswered, languaugesOngoing, languaugesMissed, callType, searchInputData };
+export { languaugesIncoming,callType, searchInputData };

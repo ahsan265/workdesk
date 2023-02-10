@@ -110,12 +110,12 @@ export class IncomingComponent implements OnInit {
   async ngOnInit(): Promise<void> {
     this.getDefaultInputsLoadOnce.incominglanguages.asObservable().subscribe(data => {
       this.languauges = data;
-      this.languageIds=[];
-      this.callTypeName=[];
-      this.callType.data.map(data=>{
-        data.selected=false;
+      this.languageIds = [];
+      this.callTypeName = [];
+      this.callType.data.map(data => {
+        data.selected = false;
       })
-      this.searchInputData.searchText='';
+      this.searchInputData.searchText = '';
     });
   }
 
@@ -128,10 +128,10 @@ export class IncomingComponent implements OnInit {
     //   data
     // );
     this.OverlayService.open({
-      component:CallConsoleComponent,
+      component: CallConsoleComponent,
       data: event,
-      panelClass:'dialog-panel',
-      isPopup:false
+      panelClass: 'dialog-panel',
+      isPopup: false
     });
   }
 
