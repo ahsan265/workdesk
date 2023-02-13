@@ -1,0 +1,27 @@
+<div class="threadItemPanel" *ngFor="let thread of this.chatData">
+    <div class="thread">
+        <div class="userImage">
+            <img src="../../../assets/images/callInterface/default_user.svg" alt="">
+        </div>
+        <div class="informationWrapper">
+            <div class="userDetailsLast">
+                <div class="userName">
+                    {{thread.name}}
+                </div>
+                <div class="timer">
+                    {{thread.date}}
+                </div>
+            </div>
+            <div class="userMessageDetails">
+                <div class="lastMessage">
+                    {{thread.last_message}}
+                </div>
+                <div class="counerWrapper">
+                    <div class="counter">
+                        {{thread.counter}}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

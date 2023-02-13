@@ -35,7 +35,7 @@ rollout-job:
 build-push-dev-testing-job:
     stage: build-push-dev-testing
     only:
-        - feature/ma/pageNumber
+        - workdesk/develop/v2
     image: docker:20.10.9-alpine3.14
     services:
         - docker:dind
@@ -48,7 +48,7 @@ build-push-dev-testing-job:
 rollout-dev-testing-job:
     stage: rollout-dev-testing
     only:
-      - feature/ma/pageNumber
+      - workdesk/develop/v2
     variables:
       DEPLOYMENT: $CLUSTER_DEPLOYMENT-dev-testing # variable added in project CI/CD settings, indicates deployment name in cluster
     trigger:
