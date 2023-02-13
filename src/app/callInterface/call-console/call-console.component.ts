@@ -162,7 +162,8 @@ export class CallConsoleComponent implements OnInit, OnDestroy, AfterViewInit {
 
     this.CallsOperationService.addIncomingCallHandler();
     this.StreamingService.stopScreenStream.subscribe((data) => {
-      this.seletecOutputForScreenShare(data);
+      (data === true) ? this.screenShareData.isSelected = true : (this.screenShareData.isSelected = false, this.seletecOutputForScreenShare(false));
+      ;
     });
     this.PeerConnectionService.remoteVideoSubject.subscribe((stream) => {
       this.stream.setRemoteStream(stream);
@@ -192,7 +193,8 @@ export class CallConsoleComponent implements OnInit, OnDestroy, AfterViewInit {
 
       } else {
 
-        if (this.isVideoMinimize === true && this.cameraData.isSelected === false) {
+        if (this.agentOperationInformationData.isMinimize === true && this.cameraData.isSelected === false) {
+
           this.isMinimize = true;
           this.toogle = true;
           this.isVideoMinimize = false;
@@ -203,6 +205,7 @@ export class CallConsoleComponent implements OnInit, OnDestroy, AfterViewInit {
           this.PeerMiniCameraScreen.showInitals == false;
           this.agentOperationInformationData.IsVideoMinimize = false;
           this.isRemoteVideo = false;
+
         }
 
       }
@@ -254,13 +257,6 @@ export class CallConsoleComponent implements OnInit, OnDestroy, AfterViewInit {
       }
       this.cameraData.isSelected = event;
       this.isVideoMinimize = event;
-      if (this.isRemoteVideo) {
-        this.isVideoMinimize = true;
-      }
-      else {
-        this.isVideoMinimize = false;
-
-      }
       if (this.agentOperationInformationData.isMinimize) {
         this.miniCameraOperation(event);
       }
@@ -301,7 +297,6 @@ export class CallConsoleComponent implements OnInit, OnDestroy, AfterViewInit {
       );
       this.stream.setStream(this.videoStream);
       this.miniCameraVideoStream.setMiniCameraSteam(this.videoStream);
-      this.screenShareData.isSelected = event;
     } else {
       this.PeerMiniCameraScreen.showCamera = false;
       this.peerUserInformationData.showVideo = false;
@@ -309,7 +304,8 @@ export class CallConsoleComponent implements OnInit, OnDestroy, AfterViewInit {
       if (this.StreamingService.localStream) {
         this.StreamingService.stopVideo();
       }
-      this.screenShareData.isSelected = event;
+      this.screenShareData.isSelected = false;
+
     }
     this.isMinimize ? this.miniCameraOperation(false) : ''
   }
@@ -340,12 +336,22 @@ export class CallConsoleComponent implements OnInit, OnDestroy, AfterViewInit {
   minmizeMaxmizeScreenOutput(event: boolean) {
 
     this.agentOperationInformationData.isMinimize = event;
+    if (this.isRemoteVideo || this.cameraData.isSelected) {
+      this.isVideoMinimize = true;
+    }
+    else {
+      this.isVideoMinimize = false;
+    }
     event && this.DevicesInformationService.getDeviceType() === true
       ? (this.minimize.height = '141px')
       : (this.minimize.height = '146px');
     this.miniCameraOperation(event);
     this.AgentUserInformation.setIsMinimize(event);
     this.changePosition();
+
+    // else {
+    //   this.isVideoMinimize = false;
+    // }
   }
 
   // for mini camera Operation
@@ -372,7 +378,9 @@ export class CallConsoleComponent implements OnInit, OnDestroy, AfterViewInit {
       }
       this.toogle = true;
     } else {
+
       if (this.agentOperationInformationData.isMinimize === false && this.isRemoteVideo === false) {
+
         this.minimize.width = '255px';
         this.minimize.height = '99px';
         this.minimizeCallControl['border-radius'] = '0px';
@@ -383,6 +391,7 @@ export class CallConsoleComponent implements OnInit, OnDestroy, AfterViewInit {
         this.isMinimize = false;
       }
       else if (this.agentOperationInformationData.isMinimize === false && this.isRemoteVideo === true) {
+
         this.minimize.width = '382px';
         this.minimize.height = '325px';
         this.minimizeCallControl['border-radius'] = '51px';
