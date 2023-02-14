@@ -2,6 +2,7 @@
     display: flex;
     width: 100%;
     flex-direction: column;
+    margin-top: 27.5px;
 }
 
 .senderMessage {
@@ -28,6 +29,10 @@
     border-radius: 50%;
     display: inline-flex;
     margin-right: 10px;
+}
+
+.userImage img {
+    border-radius: 50%;
 }
 
 .message {
@@ -78,14 +83,14 @@
     width: calc(100vw - 385px);
     justify-content: left;
     margin-bottom: 20px;
-    align-items: center;
+    align-items: flex-start;
 }
 
 .recieverPanel {
     display: flex;
     width: calc(100vw - 385px);
     margin-bottom: 20px;
-    align-items: center;
+    align-items: self-start;
     direction: rtl;
 }
 
@@ -95,7 +100,7 @@
 }
 
 .dividerPanel {
-    justify-content: space-around;
+    justify-content: space-between;
     display: flex;
     width: 100%;
     align-items: center;
@@ -105,7 +110,7 @@
     height: 0.5px;
     bottom: 396.5px;
     background: rgba(255, 255, 255, 0.88);
-    width: 33%;
+    width: 40%;
 }
 
 .dividerText {

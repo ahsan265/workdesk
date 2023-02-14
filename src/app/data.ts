@@ -45,6 +45,8 @@ const icons = {
   activeCallIcon: '../assets/images/sidebar/calls_active.svg',
   agentIcon: '../assets/images/sidebar/agents.svg',
   activeAgentIcon: '../assets/images/sidebar/agents_active.svg',
+  chatIcon: '../assets/images/sidebar/chat.svg',
+  activeChatIcon: '../assets/images/sidebar/chat_clicked.svg',
   logo: '../assets/images/sidebar/workdesk_logo_long.png',
   logoCollapsed: '../assets/images/sidebar/workdesk_logo_short.png'
 };
@@ -80,6 +82,14 @@ const sidebarData: any = [
     routeUrl: ['agents'],
     dropdown: false,
     isLink: true
+  },
+  {
+    iconUrl: icons.chatIcon,
+    activeIconUrl: icons.activeChatIcon,
+    name: 'Chats',
+    routeUrl: ['chat'],
+    dropdown: false,
+    isLink: true
   }
 ];
 
@@ -91,7 +101,7 @@ const sidebarDataAgent: any = [
     dropdown: true,
     isLink: false
   },
- 
+
   {
     iconUrl: icons.callIcon,
     activeIconUrl: icons.activeCallIcon,
@@ -107,6 +117,14 @@ const sidebarDataAgent: any = [
     routeUrl: ['agents'],
     dropdown: false,
     isLink: true
+  },
+  {
+    iconUrl: icons.chatIcon,
+    activeIconUrl: icons.activeChatIcon,
+    name: 'Chats',
+    routeUrl: ['chat'],
+    dropdown: false,
+    isLink: true
   }
 ];
-export { websites, icons, sidebarData, addons, defaultCallData ,sidebarDataAgent};
+export { websites, icons, sidebarData, addons, defaultCallData, sidebarDataAgent };

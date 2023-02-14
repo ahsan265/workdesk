@@ -66,10 +66,12 @@ input::placeholder {
     align-items: center;
     letter-spacing: 0.02em;
     color: #FFFFFF;
+    cursor: pointer;
 }
 
 .sendMessage {
     position: absolute;
     right: 180px;
     top: 26px;
+    cursor: pointer;
 }
