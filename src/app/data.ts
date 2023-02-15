@@ -70,8 +70,8 @@ const sidebarData: any = [
   {
     iconUrl: icons.callIcon,
     activeIconUrl: icons.activeCallIcon,
-    name: 'Calls',
-    routeUrl: ['calls'],
+    name: 'Requests',
+    routeUrl: ['requests'],
     dropdown: false,
     isLink: true
   },
@@ -105,8 +105,8 @@ const sidebarDataAgent: any = [
   {
     iconUrl: icons.callIcon,
     activeIconUrl: icons.activeCallIcon,
-    name: 'Calls',
-    routeUrl: ['calls'],
+    name: 'Requests',
+    routeUrl: ['requests'],
     dropdown: false,
     isLink: true
   },

@@ -1,4 +1,4 @@
-<div class="messageItem">
+<div class="messageItem" *ngFor="let i of  this.getIteration();">
     <div class="senderPanel">
         <div class="senderMessage">
             <div class="message">
@@ -53,4 +53,8 @@
             </div>
         </div>
     </div>
+</div>
+<app-no-chat></app-no-chat>
+<div class="scrollBottom">
+    <img src="../../../assets/images/chatInterface/scroll_arrow.svg" alt="">
 </div>

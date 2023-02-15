@@ -39,7 +39,7 @@ const ongoingTableSetting: any = {
     },
     {
       index: 3,
-      header: 'Call Type',
+      header: 'Request Type',
       width: 10,
       isHeaderImage: true,
       showHeader: true,
@@ -73,7 +73,7 @@ const ongoingTableSetting: any = {
   ]
 };
 const callTypeOngoing: MultiSelect = {
-  title: 'Call type',
+  title: 'Request type',
   showSelectAll: false,
   showSearchBar: false,
   data: [

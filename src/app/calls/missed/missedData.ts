@@ -42,7 +42,7 @@ const missedTableSetting: tableSettings = {
     },
     {
       index: 3,
-      header: 'Call Type',
+      header: 'Request Type',
       width: 10,
       isHeaderImage: true,
       showHeader: true,
@@ -53,7 +53,7 @@ const missedTableSetting: tableSettings = {
     },
     {
       index: 4,
-      header: 'Called at',
+      header: 'Requested at',
       width: 10,
       isHeaderImage: true,
       showHeader: true,
@@ -124,7 +124,7 @@ const answeredTablaSetting: tableSettings = {
     },
     {
       index: 3,
-      header: 'Call Type',
+      header: 'Request Type',
       width: 10,
       isHeaderImage: true,
       showHeader: true,
@@ -135,7 +135,7 @@ const answeredTablaSetting: tableSettings = {
     },
     {
       index: 4,
-      header: 'Called At',
+      header: 'Requested At',
       width: 15,
       isHeaderImage: true,
       showHeader: true,
@@ -215,7 +215,7 @@ const missedCallData: any[] = [
   }
 ];
 const callTypeMissed: MultiSelect = {
-  title: 'Call type',
+  title: 'Request type',
   showSelectAll: false,
   showSearchBar: false,
   data: [
