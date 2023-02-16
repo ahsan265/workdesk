@@ -1,0 +1,87 @@
+<div class="preferenceWrapper">
+    <div class="heading settings">
+        Settings
+    </div>
+    <div class="smallHeading settings">
+        Wait time
+    </div>
+    <div class="text">
+        Set how long it takes for the Agent to respond to a request.
+    </div>
+    <div class="timerSetting">
+        <input type="number" value="1">
+        <div class="timerText">
+            min
+        </div>
+        <div class="sperator">:</div>
+        <input type="number" value="1" class="sec">
+        <div class="timerText">
+            sec
+        </div>
+    </div>
+
+    <div class="smallHeading settings">
+        User wait time
+    </div>
+    <div class="text">
+        Set how long it takes for the Agent to respond to a request.
+    </div>
+    <div class="timerSetting">
+        <input type="number" value="1">
+        <div class="timerText">
+            min
+        </div>
+        <div class="sperator">:</div>
+        <input type="number" value="1" class="sec">
+        <div class="timerText">
+            sec
+        </div>
+    </div>
+    <div class="smallHeading settings">
+        Language
+    </div>
+    <div class="multiSelectWrapper languauge">
+        <app-multi-select-dropdown [multiSelectData]="languauges" (multiSelectOutput)="langugaOutput($event)">
+        </app-multi-select-dropdown>
+    </div>
+    <div class="divider">
+    </div>
+    <div class="heading">
+        Appearance
+    </div>
+    <div class="smallHeading theme">
+        Theme
+    </div>
+    <div class="themeWrapper">
+        <div class="themeHeading">
+            Dark Mode
+        </div>
+        <div class="toggleForAllLanguage">
+            <gigaaa-switch-button [switchButtonData]="allLanguageData"
+                (switchButtonValue)="onGetSwitchAllLanguage($event)">
+            </gigaaa-switch-button>
+        </div>
+    </div>
+    <div class="divider">
+    </div>
+    <div class="heading">
+        Notifications
+    </div>
+    <div class="smallHeading theme">
+        Sounds
+    </div>
+    <div class="themeWrapper">
+        <div class="themeHeading">
+            Bing
+        </div>
+        <div class="toggleForAllLanguage">
+            <gigaaa-switch-button [switchButtonData]="allLanguageData"
+                (switchButtonValue)="onGetSwitchAllLanguage($event)">
+            </gigaaa-switch-button>
+        </div>
+    </div>
+
+    <div class="actionPanel">
+        <Button class="saveButton">Save</Button>
+    </div>
+</div>

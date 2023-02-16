@@ -16,6 +16,7 @@ import { OngoingComponent } from './calls/ongoing/ongoing/ongoing.component';
 import { MissedComponent } from './calls/missed/missed/missed.component';
 import { AnsweredComponent } from './calls/answered/answered/answered.component';
 import { ChatConsoleComponent } from './chatInterface/chat-console/chat-console.component';
+import { PreferenceComponent } from './components/preference/preference.component';
 
 const routes: Routes = [
   { path: '', component: LandingPageComponent },
@@ -38,11 +39,12 @@ const routes: Routes = [
           { path: 'ongoing', component: OngoingComponent },
           { path: 'missed', component: MissedComponent },
           { path: 'answered', component: AnsweredComponent }
+
         ]
       },
       { path: 'agents', component: AgentsComponent },
       { path: 'agents/settings/:id', component: AgentSettingsComponent },
-
+      { path: 'preference', component: PreferenceComponent },
     ]
   },
   { path: 'callback', component: CallbackComponent },

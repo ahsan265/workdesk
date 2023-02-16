@@ -97,6 +97,7 @@ import { ChatHeaderComponent } from './chatInterface/chat-header/chat-header.com
 import { ChatTheadItemComponent } from './chatInterface/chat-thead-item/chat-thead-item.component';
 import { ImageCropperModule } from 'ngx-image-cropper';
 import { NoChatComponent } from './chatInterface/no-chat/no-chat.component';
+import { PreferenceComponent } from './components/preference/preference.component';
 
 @NgModule({
   declarations: [
@@ -156,7 +157,8 @@ import { NoChatComponent } from './chatInterface/no-chat/no-chat.component';
     ChattextAreaComponent,
     ChatHeaderComponent,
     ChatTheadItemComponent,
-    NoChatComponent
+    NoChatComponent,
+    PreferenceComponent
   ],
   imports: [
     CommonModule,
