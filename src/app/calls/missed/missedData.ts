@@ -10,7 +10,7 @@ const missedTableSetting: tableSettings = {
     {
       index: 0,
       header: 'User',
-      width: 20,
+      width: 15,
       isHeaderImage: true,
       showHeader: true,
       isDropdown: false,
@@ -43,7 +43,7 @@ const missedTableSetting: tableSettings = {
     {
       index: 3,
       header: 'Request Type',
-      width: 10,
+      width: 15,
       isHeaderImage: true,
       showHeader: true,
       isDropdown: false,
@@ -65,7 +65,7 @@ const missedTableSetting: tableSettings = {
     {
       index: 4,
       header: 'Wait Time',
-      width: 20,
+      width: 15,
       isHeaderImage: true,
       showHeader: true,
       isDropdown: false,
