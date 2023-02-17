@@ -22,13 +22,13 @@ export class LandingPageComponent implements OnInit {
   showLinkExpireModal: boolean = false;
   showNonComplientAccountModal: boolean = false;
   landingPageData: any = {
-    logo: '../../assets/images/landingPage/workdesk_logo.svg',
+    logo: '../../assets/images/landingpage/workdesk_logo.svg',
     title: ['Automate your <br> customer <br> service'],
     text: ['Offer an elevated customer <br> experience with gigaaa AI <br> Customer Support solution'],
     message: ['Make every customer more satisfied by giving them <br> the exact information they  need, right when they <br> need it.'],
-    image: '../../assets/images/landingPage/workdesk_hero.svg',
-    icons: [{ text: 'Customer Support', icon: '../assets/images/landingPage/customer_support_icon.svg' }, { text: '24/7', icon: '../assets/images/landingPage/24_7_icon.svg' },
-    { text: 'Video Calls', icon: '../assets/images/landingPage/video_calls_icon.svg' }, { text: 'Audio Calls', icon: '../assets/images/landingPage/audio_call_icon.svg' }, { text: 'Multilingual', icon: '../assets/images/landingPage/multilingual_icon.svg' }, { text: 'Ticketing', icon: '../assets/images/landingPage/ticketing_icon.svg' }, { text: 'Chats', icon: '../assets/images/landingPage/chats_icon.svg' }]
+    image: '../../assets/images/landingpage/workdesk_hero.svg',
+    icons: [{ text: 'Customer Support', icon: '../assets/images/landingpage/customer_support_icon.svg' }, { text: '24/7', icon: '../assets/images/landingpage/24_7_icon.svg' },
+    { text: 'Video Calls', icon: '../assets/images/landingpage/video_calls_icon.svg' }, { text: 'Audio Calls', icon: '../assets/images/landingpage/audio_call_icon.svg' }, { text: 'Multilingual', icon: '../assets/images/landingpage/multilingual_icon.svg' }, { text: 'Ticketing', icon: '../assets/images/landingpage/ticketing_icon.svg' }, { text: 'Chats', icon: '../assets/images/landingpage/chats_icon.svg' }]
   }
   oauthUrl = `${environment.oauth_url}`;
   constructor(
