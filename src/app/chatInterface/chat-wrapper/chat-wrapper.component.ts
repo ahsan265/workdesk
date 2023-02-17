@@ -7,4 +7,9 @@ import { Component } from '@angular/core';
 })
 export class ChatWrapperComponent {
 
+
+  getIteration()
+  {
+    return Array(4);
+  }
 }

@@ -1,6 +1,6 @@
 .typingWrapper {
-    position: absolute;
-    width: calc(100% - 16px);
+    position: relative;
+    width: calc(100% - 230px);
     bottom: 0;
     box-shadow: 2px 5px 8px rgb(114 114 157 / 16%);
     border-radius: 10px;
@@ -45,7 +45,7 @@ input::placeholder {
     height: 73px;
     justify-content: center;
     align-items: center;
-    border-radius: 0px 0px 10px 0px;
+    border-radius: 0px 10px 10px 0px;
     border: 1px solid rgba(255, 255, 255, 0.63);
 }
 

@@ -64,6 +64,7 @@ export class AgentsComponent implements OnInit {
     private OverlayService: OverlayService) {
     this.authService.pageTitle.next('Agents');
   }
+  
   ngOnInit(): void {
     this.callCommonEndpoints();
     this.getAgentList();
@@ -213,8 +214,6 @@ export class AgentsComponent implements OnInit {
       };
       this.agentStatusOutput(this.selectedStatus);
     });
-
-
   }
 
   getSettingsPage(event: string[]) {
@@ -228,6 +227,5 @@ export class AgentsComponent implements OnInit {
       this.agentdata = this.agentdataWithNoSearch
     }
   }
-
 
 }

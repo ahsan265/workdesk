@@ -16,6 +16,7 @@ import { OngoingComponent } from './calls/ongoing/ongoing/ongoing.component';
 import { MissedComponent } from './calls/missed/missed/missed.component';
 import { AnsweredComponent } from './calls/answered/answered/answered.component';
 import { ChatConsoleComponent } from './chatInterface/chat-console/chat-console.component';
+import { PreferenceComponent } from './components/preference/preference.component';
 
 const routes: Routes = [
   { path: '', component: LandingPageComponent },
@@ -27,11 +28,10 @@ const routes: Routes = [
     children: [
       { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
       {
-        path: 'dashboard',
-        component: DashboardComponent
+        path: 'dashboard', component: DashboardComponent
       },
       {
-        path: 'calls',
+        path: 'requests',
         component: CallsComponent,
         children: [
           { path: '', redirectTo: 'incoming', pathMatch: 'full' },
@@ -39,21 +39,18 @@ const routes: Routes = [
           { path: 'ongoing', component: OngoingComponent },
           { path: 'missed', component: MissedComponent },
           { path: 'answered', component: AnsweredComponent }
+
         ]
       },
       { path: 'agents', component: AgentsComponent },
-      { path: 'agents/settings/:id', component: AgentSettingsComponent }
-
+      { path: 'agents/settings/:id', component: AgentSettingsComponent },
+      { path: 'preference', component: PreferenceComponent },
     ]
   },
   { path: 'callback', component: CallbackComponent },
   { path: 'customersupport', component: CustomerSupportComponent, canActivate: [AuthService] },
-  {
-    path: 'loading', component: LoaderComponent, canActivate: [AuthService]
-  },
-
-  { path: 'chat', component: ChatConsoleComponent },
-
+  { path: 'loading', component: LoaderComponent, canActivate: [AuthService] },
+  { path: 'chat', component: ChatConsoleComponent, canActivate: [AuthService] },
   { path: '**', component: PageNotFoundComponent }
 ];
 

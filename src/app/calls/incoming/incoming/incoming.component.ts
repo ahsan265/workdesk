@@ -1,11 +1,9 @@
 import { Component, HostListener, OnInit, ViewChild } from '@angular/core';
-import { ActivatedRoute, NavigationStart, Router } from '@angular/router';
 import { GigaaaDaterangepickerDirective, OverlayService } from '@gigaaa/gigaaa-components';
 import dayjs from 'dayjs';
 import { noAgentTobaleData } from 'src/app/agents/agentsData';
 import { CalendarService } from 'src/app/calendarService/calendar.service';
 import { CallConsoleComponent } from 'src/app/callInterface/call-console/call-console.component';
-import { noTobaleData } from 'src/app/components/no-table-data/notableData';
 import { ranges } from 'src/app/dashboard/dashboardData';
 import {
   IncomingCallModelTable,

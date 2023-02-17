@@ -51,7 +51,7 @@ const incomingTableSetting: tableSettings = {
     },
     {
       index: 4,
-      header: 'Call Type',
+      header: 'Request  Type',
       width: 10,
       isHeaderImage: true,
       showHeader: true,
@@ -75,7 +75,7 @@ const incomingTableSetting: tableSettings = {
 };
 
 const callTypeIncoming: MultiSelect = {
-  title: 'Call type',
+  title: 'Request type',
   showSelectAll: false,
   showSearchBar: false,
   data: [

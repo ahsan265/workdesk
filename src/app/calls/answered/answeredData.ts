@@ -71,7 +71,7 @@ const dataTableSettings: any[] = [
   }
 ];
 const callTypeAnswered: MultiSelect = {
-  title: 'Call type',
+  title: 'Request type',
   showSelectAll: false,
   showSearchBar: false,
   data: [
