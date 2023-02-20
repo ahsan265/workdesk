@@ -15,7 +15,7 @@ export interface AgentList {
   is_online: boolean;
   is_organization_admin: boolean;
   is_organization_owner: boolean;
-  is_image_set:boolean;
+  is_image_set: boolean;
   joined: boolean;
   languages: AgentLanguages[];
   last_name: string;
@@ -23,14 +23,14 @@ export interface AgentList {
   phone_number: string;
   role: string;
   uuid: string;
-  show_edit:boolean;
+  show_edit: boolean;
 }
 
 export interface AgentLanguages {
   id: number;
   name: string;
   code: string;
-  disabled:boolean;
+  disabled: boolean;
 }
 export interface AgentParameter {
   active?: number;
@@ -49,3 +49,10 @@ export interface AgentOnlineOrNot {
   action: string;
   data: AgentOnlineStatus;
 }
+
+export interface FreeSeats {
+  type: string;
+  free_seats: boolean;
+}
+
+

@@ -1,3 +1,4 @@
+import { FreeSeats } from "./models/agentSocketModel";
 import { CallsModel } from "./models/callModel";
 
 const websites = [
@@ -91,7 +92,7 @@ const sidebarDataAgent: any = [
     dropdown: true,
     isLink: false
   },
- 
+
   {
     iconUrl: icons.callIcon,
     activeIconUrl: icons.activeCallIcon,
@@ -109,4 +110,9 @@ const sidebarDataAgent: any = [
     isLink: true
   }
 ];
-export { websites, icons, sidebarData, addons, defaultCallData ,sidebarDataAgent};
+
+const defaultSeats:FreeSeats = {
+  type: 'free_seats',
+  free_seats: false
+}
+export { websites, icons, sidebarData, addons, defaultCallData, sidebarDataAgent ,defaultSeats};

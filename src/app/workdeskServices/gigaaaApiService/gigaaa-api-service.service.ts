@@ -1228,4 +1228,35 @@ export class GigaaaApiService {
         throw err;
       });
   }
+
+  // set active agent when agent is disbaled by cs on console. 
+
+  public async setInavtiveAgentToActive(
+    token: string,
+    uuid: string,
+    organizationId: string,
+    projectId: string,
+    inactive:boolean
+  ): Promise<any> {
+    const httpOptions: any = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        Accept: 'application/json',
+        Authorization: `Bearer ${token}`
+      })
+    };
+    return await this.http
+      .put(
+        this.workdeskurl_cs +
+        '/private/agents/' +
+        uuid +
+        '/deactivate?organization='+organizationId+'&project='+projectId,
+        {"inactive": inactive},
+        httpOptions
+      )
+      .toPromise()
+      .catch((err) => {
+        throw err;
+      });
+  }
 }

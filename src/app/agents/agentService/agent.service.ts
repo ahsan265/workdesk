@@ -153,6 +153,22 @@ export class AgentService {
   }
 
   // set Agent Invited property
+  public setAgentInActiveProperty(
+    invited: boolean,
+    inactive: boolean,
+    active: boolean
+  ) {
+    if (invited == true && inactive == false && active == false) {
+      return false;
+    }
+    else if (invited == false && inactive == true && active == true) {
+      return false;
+    }
+    else {
+      return true;
+    }
+  }
+  // set Agent Invited property
   public setAgentInvitedProperty(
     invited: boolean,
     inactive: boolean,
@@ -160,7 +176,8 @@ export class AgentService {
   ) {
     if (invited == true && inactive == false && active == false) {
       return false;
-    } else {
+    }
+    else {
       return true;
     }
   }
@@ -184,7 +201,7 @@ export class AgentService {
     languages.forEach((data) => {
       UtlitiesIcon.push({
         image: this.CommonService.getLanguageFlags(data.id),
-        is_disabled:data.disabled
+        is_disabled: data.disabled
       });
     });
     return UtlitiesIcon;
@@ -271,6 +288,25 @@ export class AgentService {
         return 'all';
       default:
         return null;
+    }
+  }
+
+  // get agent by uuid 
+  public getAgentByUuid(uuid: string, agent: AgentList[]) {
+    const data = agent.find(data => {
+      return data.uuid === uuid;
+    })
+    return data;
+  }
+
+  // setAgent to be Active only 
+  public async setAgentActive(uuid: string, status: boolean) {
+    try {
+      await this.GigaaaApiService.setInavtiveAgentToActive(this.CommonService.getEndpointsParamLocal().token, uuid, this.CommonService.getEndpointsParamLocal().organization,
+        this.CommonService.getEndpointsParamLocal().project, status)
+    }
+    catch (error: any) {
+      this.MessageService.setErrorMessage(error.error.error)
     }
   }
 }
