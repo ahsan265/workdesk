@@ -2,14 +2,16 @@
 /* eslint-disable no-undef */
 /* eslint-disable sort-imports */
 import { Injectable } from '@angular/core';
-import { Route, Router } from '@angular/router';
-import { BehaviorSubject, Subject } from 'rxjs';
+import { Router } from '@angular/router';
+import { BehaviorSubject, ReplaySubject, Subject } from 'rxjs';
+import { defaultSeats } from 'src/app/data';
 import {
   AgentAction,
   AgentList,
   AgentOnlineOrNot,
   AgentOnlineStatus,
-  AgentParameter
+  AgentParameter,
+  FreeSeats
 } from 'src/app/models/agentSocketModel';
 import { connectionSecurityModel } from 'src/app/models/connectionSecurity';
 import { CommonService } from 'src/app/workdeskServices/commonEndpoint/common.service';
@@ -20,6 +22,7 @@ import { agentLoggedData } from './agentSocketData';
   providedIn: 'root'
 })
 export class AgentSocketService {
+  freeSeatsInformation: BehaviorSubject<boolean>;
   lastUsedParameter: AgentParameter = {};
   protected websocket_url = `${environment.websocket_url}`;
   ws: WebSocket | undefined;
@@ -33,6 +36,7 @@ export class AgentSocketService {
 
   constructor(private CommonService: CommonService, private Router: Router) {
     this.isInCallValue = new BehaviorSubject(this.isInCall);
+    this.freeSeatsInformation = new BehaviorSubject(false)
   }
 
   public callAgentSocketEndpoint() {
@@ -53,15 +57,28 @@ export class AgentSocketService {
         invited: 1,
         languages: []
       });
+      this.sendParameterForSeats();
     };
     this.ws.onmessage = (e) => {
-      switch (e.data) {
-        case '{"action":"logout"}':
-          this.Router.navigate(['logout']);
-          break;
-        default:
+      let data = JSON.parse(e.data)
+
+      if (!Array.isArray(data)) {
+        switch (data.type) {
+          case 'logout':
+            this.Router.navigate(['logout']);
+            break;
+          case 'free_seats':
+            const seatsInformation: FreeSeats = data;
+            this.freeSeatsInformation.next(seatsInformation.free_seats);
+            break;
+          default:
+        }
       }
-      e.data !== 'ping' ? this.getAgentList(JSON.parse(e.data)) : '';
+      else if (Array.isArray(data)) {
+        this.getAgentList(data)
+
+      }
+      //e.data !== 'ping' ? this.getAgentList(JSON.parse(e.data)) : '';
     };
     this.ws.onclose = (e) => { };
     this.ws.onerror = (e) => { };
@@ -72,6 +89,16 @@ export class AgentSocketService {
       const agentParameters: AgentAction = {
         action: 'filter',
         data: AgentParameter
+      };
+      const agentParameterObject = JSON.stringify(agentParameters);
+      this.ws?.send(agentParameterObject);
+    }
+  }
+  public sendParameterForSeats() {
+    if (this.isSocketOpen === 1) {
+      const agentParameters: any = {
+        action: 'free_seats',
+        data: ''
       };
       const agentParameterObject = JSON.stringify(agentParameters);
       this.ws?.send(agentParameterObject);
