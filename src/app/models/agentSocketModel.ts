@@ -35,6 +35,7 @@ export interface AgentLanguages {
 export interface AgentParameter {
   active?: number;
   invited?: number;
+  inactive?: number;
   languages?: number[];
 }
 export interface AgentAction {

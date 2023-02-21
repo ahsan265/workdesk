@@ -75,6 +75,9 @@ export class AgentsComponent implements OnInit {
         this.oneSelectData.map((data => {
           (data.id === 1) ? data.selected = true : data.selected = false;
         }))
+        this.activeAgent = 1;
+        this.inactiveAgent = 1;
+        this.invitedAgent = 1;
         this.callCommonEndpoints();
         this.selectedStatus = onlineStatuses[0];
         this.selectedLanguages = [];
@@ -98,17 +101,20 @@ export class AgentsComponent implements OnInit {
     this.AgentService.sendAgentDefaultParameter(
       this.selectedLanguages,
       this.activeAgent,
-      this.invitedAgent
+      this.invitedAgent,
+      this.inactiveAgent
     );
   }
   public agentTypeOutput(agentType: OneSelect) {
     const selectedType = this.AgentService.getAgenttypeParameter(agentType);
     this.activeAgent = selectedType.active;
     this.invitedAgent = selectedType.invited;
+    this.inactiveAgent = selectedType.inactive;
     this.AgentService.sendAgentDefaultParameter(
       this.selectedLanguages,
       selectedType.active,
-      selectedType.invited
+      selectedType.invited,
+      selectedType.inactive
     );
   }
   // get agent status data 

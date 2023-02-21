@@ -26,11 +26,13 @@ export class AgentService {
   public sendAgentDefaultParameter(
     languages: number[],
     active: number,
-    invited: number
+    invited: number,
+    inactive:number
   ) {
     this.AgentSocketService.sendAgentsParameter({
       active: active,
       invited: invited,
+      inactive:inactive,
       languages: languages
     });
   }
