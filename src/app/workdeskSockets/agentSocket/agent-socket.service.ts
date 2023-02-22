@@ -15,6 +15,8 @@ import {
 } from 'src/app/models/agentSocketModel';
 import { connectionSecurityModel } from 'src/app/models/connectionSecurity';
 import { CommonService } from 'src/app/workdeskServices/commonEndpoint/common.service';
+import { getOrganizationService } from 'src/app/workdeskServices/organizationService/organization-service.service';
+import { SharedServices } from 'src/app/workdeskServices/sharedResourcesService/shared-resource-service.service';
 import { environment } from 'src/environments/environment';
 import { agentLoggedData } from './agentSocketData';
 
@@ -34,7 +36,7 @@ export class AgentSocketService {
   isInCall: boolean = false;
   public isInCallValue: BehaviorSubject<boolean>;
 
-  constructor(private CommonService: CommonService, private Router: Router) {
+  constructor(private CommonService: CommonService, private Router: Router, private SharedServices: SharedServices) {
     this.isInCallValue = new BehaviorSubject(this.isInCall);
     this.freeSeatsInformation = new BehaviorSubject(false)
   }
@@ -55,6 +57,7 @@ export class AgentSocketService {
       this.sendAgentsParameter({
         active: 1,
         invited: 1,
+        inactive: 1,
         languages: []
       });
       this.sendParameterForSeats();
@@ -70,6 +73,12 @@ export class AgentSocketService {
           case 'free_seats':
             const seatsInformation: FreeSeats = data;
             this.freeSeatsInformation.next(seatsInformation.free_seats);
+            break;
+          case 'project_disabled':
+            this.SharedServices.reloadProject(true);
+            break;
+          case 'refresh_project_list':
+            this.SharedServices.reloadProject(true);
             break;
           default:
         }

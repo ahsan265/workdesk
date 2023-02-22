@@ -52,18 +52,18 @@ export class getOrganizationService {
               const lastUsedOgranization = data.uuid;
               localStorage.setItem('gigaaa-organz', JSON.stringify(data));
               this.project = data.projects.map((elemnt) => ({
-                name: elemnt.title,
-                uuid: elemnt.uuid,
-                last_used: elemnt.last_used
+                name: elemnt?.title,
+                uuid: elemnt?.uuid,
+                last_used: elemnt?.last_used
               }))
-              // this.getProjectList(project);
-              this.project.forEach(project => {
+              //this.getProjectList(this.project);
+              this.project.forEach(async project => {
                 if (project.last_used === true) {
                   localStorage.setItem(
                     'gigaaa-project',
                     JSON.stringify(project)
                   );
-                  this.ConnectionSecurityService.createConnectionEndpoint(
+                  await this.ConnectionSecurityService.createConnectionEndpoint(
                     token,
                     lastUsedOgranization,
                     project.uuid
@@ -123,24 +123,34 @@ export class getOrganizationService {
   }
   // get projects list
   public async getProjectList(project: sidebarDropdownData[]): Promise<any> {
-    let lastUsedProject: string;
+    let lastUsedProject: string = '';
     let sidebar: any
     project.forEach((data: any) => {
       if (data.last_used === true) {
         lastUsedProject = data.name;
         if (this.CommonService.getIsAdminOrAgent() === true) {
-          this.sidebarData.forEach((element: any, index: any) => {
+          this.sidebarData.forEach((element: any) => {
             if (element.dropdown === true) {
-              element.dropdownItems = project
+              element.dropdownItems = project.map((data => ({
+                name: data.name,
+                uuid: [data.uuid],
+                isLink: false,
+                selected:(data.name===lastUsedProject)?true:false
+              })))
               element.name = lastUsedProject;
             }
           });
           sidebar = this.sidebarData;
         }
         else {
-          this.sidebarDataAgent.forEach((element: any, index: any) => {
+          this.sidebarDataAgent.forEach((element: any) => {
             if (element.dropdown === true) {
-              element.dropdownItems = project
+              element.dropdownItems = project.map((data => ({
+                name: data.name,
+                routeUrl: [data.uuid],
+                isLink: false,
+                selected:(data.last_used===true)?true:false
+              })))
               element.name = lastUsedProject;
             }
           });
