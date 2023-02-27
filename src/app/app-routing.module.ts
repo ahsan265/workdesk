@@ -17,8 +17,7 @@ import { OngoingComponent } from './calls/ongoing/ongoing/ongoing.component';
 import { MissedComponent } from './calls/missed/missed/missed.component';
 import { AnsweredComponent } from './calls/answered/answered/answered.component';
 import { AccountNotpartComponent } from './modals/account-not-part/account-notpart.component';
-import { CanloadService } from './services/canLoad/canload.service';
-import { CommonService } from './workdeskServices/commonEndpoint/common.service';
+
 
 const routes: Routes = [
   { path: '', component: LandingPageComponent },
