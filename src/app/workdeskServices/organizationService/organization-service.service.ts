@@ -135,7 +135,7 @@ export class getOrganizationService {
                 name: data.name,
                 uuid: [data.uuid],
                 isLink: false,
-                selected:(data.name===lastUsedProject)?true:false
+                selected: (data.name === lastUsedProject) ? true : false
               })))
               element.name = lastUsedProject;
             }
@@ -147,9 +147,9 @@ export class getOrganizationService {
             if (element.dropdown === true) {
               element.dropdownItems = project.map((data => ({
                 name: data.name,
-                routeUrl: [data.uuid],
+                uuid: [data.uuid],
                 isLink: false,
-                selected:(data.last_used===true)?true:false
+                selected: (data.last_used === true) ? true : false
               })))
               element.name = lastUsedProject;
             }

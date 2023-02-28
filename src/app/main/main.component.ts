@@ -102,7 +102,6 @@ export class MainComponent implements OnInit {
   }
 
   getSelectedDropdownItem(event: any) {
-    console.log(event)
     this.GigaaaApiService.updateLastUsediPorject(
       this.CommonService.getEndpointsParamLocal().token,
       this.CommonService.getEndpointsParamLocal().organization,
