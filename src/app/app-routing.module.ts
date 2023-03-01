@@ -17,6 +17,8 @@ import { MissedComponent } from './calls/missed/missed/missed.component';
 import { AnsweredComponent } from './calls/answered/answered/answered.component';
 import { ChatConsoleComponent } from './chatInterface/chat-console/chat-console.component';
 import { PreferenceComponent } from './components/preference/preference.component';
+import { DashboardCallComponent } from './dashboard/dashboard-call/dashboard-call.component';
+import { DashboardChatsComponent } from './dashboard/dashboard-chats/dashboard-chats.component';
 
 const routes: Routes = [
   { path: '', component: LandingPageComponent },
@@ -26,9 +28,13 @@ const routes: Routes = [
     component: MainComponent,
     canActivate: [AuthService],
     children: [
-      { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
       {
-        path: 'dashboard', component: DashboardComponent
+        path: 'dashboard', component: DashboardComponent,
+        children: [
+          { path: '', redirectTo: 'calls', pathMatch: 'full' },
+          { path: 'calls', component: DashboardCallComponent },
+          { path: 'chats', component: DashboardChatsComponent },
+        ]
       },
       {
         path: 'requests',
