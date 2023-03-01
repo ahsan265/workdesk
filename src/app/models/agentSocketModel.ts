@@ -54,6 +54,7 @@ export interface AgentOnlineOrNot {
 export interface FreeSeats {
   type: string;
   free_seats: boolean;
+  count: number;
 }
 
 

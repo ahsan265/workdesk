@@ -135,7 +135,7 @@ export class AgentsComponent implements OnInit {
   }
   showInviteModal() {
     if (this.buttonData.active === true) {
-      if (this.AgentSocketService.freeSeatsInformation.getValue()) {
+      if (this.AgentSocketService.freeSeatsInformation.getValue().free_seats) {
         this.OverlayService.open({
           component: AddAgentComponent,
           panelClass: 'addAgent',
@@ -236,7 +236,7 @@ export class AgentsComponent implements OnInit {
   getSettingsPage(event: string[]) {
 
     const data = this.AgentService.getAgentByUuid(event[2], this.AgentList);
-    const FreeSeats = this.AgentSocketService.freeSeatsInformation.getValue();
+    const FreeSeats = this.AgentSocketService.freeSeatsInformation.getValue().free_seats;
     if (data?.inactive === true && data.active === true) { (FreeSeats) ? this.AgentService.setAgentActive(data.uuid, false) : this.MessageService.setErrorMessage('No more available seats.'); }
     else {
       this.router.navigate(event);

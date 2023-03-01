@@ -111,8 +111,5 @@ const sidebarDataAgent: any = [
   }
 ];
 
-const defaultSeats:FreeSeats = {
-  type: 'free_seats',
-  free_seats: false
-}
-export { websites, icons, sidebarData, addons, defaultCallData, sidebarDataAgent ,defaultSeats};
+
+export { websites, icons, sidebarData, addons, defaultCallData, sidebarDataAgent };

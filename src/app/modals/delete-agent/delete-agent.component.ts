@@ -29,14 +29,12 @@ export class DeleteAgentComponent implements OnInit {
   public async deleteAgent(): Promise<void> {
     try {
       await this.AgentSettingService.deleteAgent(this.agentData?.uuid, 'Agent deleted successfully.');
-      this.SharedServices.closePasswordPopup(true);
+      this.OverlayService.close();
     } catch (err: any) {
       this.MessageService.setErrorMessage(err.error.error);
     }
   }
-
   // close popup
-
   closePopup() {
     this.OverlayService.close()
   }

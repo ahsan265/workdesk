@@ -3,8 +3,7 @@
 /* eslint-disable sort-imports */
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { BehaviorSubject, ReplaySubject, Subject } from 'rxjs';
-import { defaultSeats } from 'src/app/data';
+import { BehaviorSubject, Subject } from 'rxjs';
 import {
   AgentAction,
   AgentList,
@@ -15,16 +14,15 @@ import {
 } from 'src/app/models/agentSocketModel';
 import { connectionSecurityModel } from 'src/app/models/connectionSecurity';
 import { CommonService } from 'src/app/workdeskServices/commonEndpoint/common.service';
-import { getOrganizationService } from 'src/app/workdeskServices/organizationService/organization-service.service';
 import { SharedServices } from 'src/app/workdeskServices/sharedResourcesService/shared-resource-service.service';
 import { environment } from 'src/environments/environment';
-import { agentLoggedData } from './agentSocketData';
+import { freeSeats } from './agentSocketData';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AgentSocketService {
-  freeSeatsInformation: BehaviorSubject<boolean>;
+  freeSeatsInformation: BehaviorSubject<FreeSeats>;
   lastUsedParameter: AgentParameter = {};
   protected websocket_url = `${environment.websocket_url}`;
   ws: WebSocket | undefined;
@@ -38,7 +36,7 @@ export class AgentSocketService {
 
   constructor(private CommonService: CommonService, private Router: Router, private SharedServices: SharedServices) {
     this.isInCallValue = new BehaviorSubject(this.isInCall);
-    this.freeSeatsInformation = new BehaviorSubject(false)
+    this.freeSeatsInformation = new BehaviorSubject(freeSeats)
   }
 
   public callAgentSocketEndpoint() {
@@ -72,7 +70,7 @@ export class AgentSocketService {
             break;
           case 'free_seats':
             const seatsInformation: FreeSeats = data;
-            this.freeSeatsInformation.next(seatsInformation.free_seats);
+            this.freeSeatsInformation.next(seatsInformation);
             break;
           case 'project_disabled':
             this.SharedServices.reloadProject(true);
