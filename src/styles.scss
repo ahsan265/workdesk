@@ -1,10 +1,12 @@
 // @import '~ngx-toastr/toastr';
-.main{
+.main {
   overflow-y: scroll;
 }
-.main::-webkit-scrollbar{
+
+.main::-webkit-scrollbar {
   display: none;
 }
+
 .cdk-overlay-container {
   inset: 0;
   flex-wrap: wrap;
@@ -80,6 +82,19 @@
   box-shadow: 3px 3px 10px rgb(0 0 0 / 23%);
   border-radius: 4px;
   padding: 30px;
+}
+
+.deleteAgent {
+  width: 594px;
+  height: 250px;
+  background: #ffffff;
+  box-shadow: 3px 3px 10px #0000003b;
+  border-radius: 4px;
+  padding: 30px;
+  box-sizing: border-box;
+  position: relative;
+  display: grid;
+  align-content: space-between;
 }
 
 .notAccount {
@@ -168,6 +183,10 @@ body {
   width: fit-content;
 }
 
+#toast-container {
+  right: 29px;
+}
+
 #toast-container>.toast-success {
   background-color: #dee8ff;
   color: #1c54db;
@@ -216,10 +235,12 @@ input {
   body {
     font-size: 80%;
   }
-  div{
+
+  div {
     font-size: 80%;
   }
-  .sidebarWrap{
+
+  .sidebarWrap {
     width: 80%;
   }
 }
