@@ -98,6 +98,8 @@ import { ChatTheadItemComponent } from './chatInterface/chat-thead-item/chat-the
 import { ImageCropperModule } from 'ngx-image-cropper';
 import { NoChatComponent } from './chatInterface/no-chat/no-chat.component';
 import { PreferenceComponent } from './components/preference/preference.component';
+import { DashboardCallComponent } from './dashboard/dashboard-call/dashboard-call.component';
+import { DashboardChatsComponent } from './dashboard/dashboard-chats/dashboard-chats.component';
 
 @NgModule({
   declarations: [
@@ -158,7 +160,9 @@ import { PreferenceComponent } from './components/preference/preference.componen
     ChatHeaderComponent,
     ChatTheadItemComponent,
     NoChatComponent,
-    PreferenceComponent
+    PreferenceComponent,
+    DashboardCallComponent,
+    DashboardChatsComponent
   ],
   imports: [
     CommonModule,
