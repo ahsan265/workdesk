@@ -93,7 +93,7 @@ export class getOrganizationService {
     await this.AgentinviteService.sendtAgentInvitationCode();
     this.gigaaaService
       .getOrganization(token)
-      .then((data: any) => {
+      .then(async (data: any) => {
         if (data.length === 0) {
           this.router.navigate(['logout']);
           this.OverlayService.open({
@@ -104,7 +104,7 @@ export class getOrganizationService {
           })
         }
         else {
-          this.router.navigate(['/dashboard']);
+          this.CommonService.restrictRoute();
         }
       })
       .catch((err: any) => {

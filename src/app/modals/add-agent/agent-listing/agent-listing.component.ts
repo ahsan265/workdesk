@@ -82,7 +82,7 @@ export class AgentListingComponent implements OnInit {
 
     }
     else {
-      this.MessageService.setErrorMessage('No available seats. ');
+      this.MessageService.setErrorMessage('No more available seats. ');
     }
 
   }
@@ -110,14 +110,13 @@ export class AgentListingComponent implements OnInit {
   async sendAgentInformation() {
     const isAllDataOk: boolean = await this.getListedAgentDetails();
     if (isAllDataOk) {
-      this.agentIvitationList.forEach(async (data) => {
-        let agentListedData: InviteAgentModel = {
+   
+        const agentListedData: InviteAgentModel[] = this.agentIvitationList.map((data) => ({
           email: data.email,
           role: 'agent',
           language_ids: data.language
-        };
+        }))
         await this.AgentService.sendInvitationToAgent(agentListedData);
-      });
       this.MessageService.setSuccessMessage('Agent invitation(s) has been sent.');
       this.overlayService.close();
 

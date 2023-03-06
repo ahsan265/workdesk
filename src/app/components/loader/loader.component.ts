@@ -15,14 +15,7 @@ export class LoaderComponent implements OnInit {
     private getOrganizationService: getOrganizationService, private CommonService: CommonService) { }
 
   ngOnInit(): void {
-    if (this.CommonService.getEndpointsParamLocal().organization === undefined) {
       this.getOrganizationService.checkUserIsAuthorized(this.CommonService.getEndpointsParamLocal().token)
-    }
-    else {
-      this.router.navigate(['/dashboard']);
-      this.CommonService.restrictRoute();
-
-    }
   }
 
 }

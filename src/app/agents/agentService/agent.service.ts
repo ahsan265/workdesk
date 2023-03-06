@@ -184,7 +184,7 @@ export class AgentService {
     }
   }
   // send Invitation to agent
-  public async sendInvitationToAgent(agentsInformation: InviteAgentModel) {
+  public async sendInvitationToAgent(agentsInformation: InviteAgentModel[]) {
     try {
       await this.GigaaaApiService.getinviteagent(
         this.CommonService.getEndpointsParamLocal().token,

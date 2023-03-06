@@ -22,6 +22,6 @@ export const environment = {
   prod_anlytics:
     process.env.PROD_ANALYTICS || 'https://api.gigaaa.link/cs/private',
   websocket_url:
-    process.env.WEBSOCKET_URL || 'wss://api.gigaaa.link/websockets/cs',
+    process.env.WEBSOCKET_URL || 'wss://api.gigaaa.link/cs',
   logged_user: process.env.LOGGED_USER || 'https://api.gigaaa.link/v1/api/v1'
 };

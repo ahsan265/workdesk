@@ -59,13 +59,19 @@ export class GigaaaApiService {
       .toPromise();
   }
 
-  public getAllCountries(): Promise<any> {
-    const httpOptions: any = this.getHeaders();
+  public getAllCountries(project: string, oranization:string): Promise<any> {
+    const httpOptions: any = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        Accept: 'application/json',
+        Authorization: `Bearer ${this.authService.getLoggedUser().api_token}`
+      })
+    };
+
     return this.http
-      .get(this.gigaabackendUlr + '/statics/public/countries', httpOptions)
+      .get(this.workdeskurl_cs + '/private/countries?project=' + project+"&organization="+oranization, httpOptions)
       .toPromise();
   }
-
   public getAllLanguages(): Promise<any> {
     const httpOptions: any = this.getHeaders();
 
@@ -468,7 +474,7 @@ export class GigaaaApiService {
     accesstoken: string,
     uuid: string,
     project: string,
-    agentdata: InviteAgentModel
+    agentdata: InviteAgentModel[]
   ): Promise<any> {
     const httpOptions: any = {
       method: 'POST',
@@ -481,7 +487,7 @@ export class GigaaaApiService {
     return await this.http
       .post(
         this.workdeskurl_cs +
-        '/private/invitation?organization=' +
+        '/private/v2/invitation?organization=' +
         uuid +
         '&project=' +
         project,
@@ -1236,7 +1242,7 @@ export class GigaaaApiService {
     uuid: string,
     organizationId: string,
     projectId: string,
-    inactive:boolean
+    inactive: boolean
   ): Promise<any> {
     const httpOptions: any = {
       headers: new HttpHeaders({
@@ -1250,8 +1256,8 @@ export class GigaaaApiService {
         this.workdeskurl_cs +
         '/private/agents/' +
         uuid +
-        '/deactivate?organization='+organizationId+'&project='+projectId,
-        {"inactive": inactive},
+        '/deactivate?organization=' + organizationId + '&project=' + projectId,
+        { "inactive": inactive },
         httpOptions
       )
       .toPromise()
