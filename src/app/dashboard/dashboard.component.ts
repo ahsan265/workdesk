@@ -137,7 +137,7 @@ export class DashboardComponent implements OnInit {
     this.alwaysShowCalendars = true;
   }
   async ngOnInit(): Promise<void> {
-    this.countries = await this.CommonService.getLocations();
+    // this.countries = await this.CommonService.getLocations();
     if (this.CommonService.getEndpointsParamLocal().token === this.authService.user.value?.api_token) {
       this.callRouteLoad()
     }
