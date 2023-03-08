@@ -28,6 +28,7 @@ import { AgentService } from '../agents/agentService/agent.service';
 import { SharedServices } from '../workdeskServices/sharedResourcesService/shared-resource-service.service';
 import { OverlayService } from '@gigaaa/gigaaa-components';
 import { UploadImageComponent } from '../modals/upload-image/upload-image.component';
+import { DeleteAgentComponent } from '../modals/delete-agent/delete-agent.component';
 
 @Component({
   selector: 'app-agent-settings',
@@ -132,9 +133,13 @@ export class AgentSettingsComponent implements OnInit {
     this.router.navigate(['agents']);
   }
   onGetDeleteButtonOutput(event: any) {
-    if (event) {
-      this.showDeleteAgentModal = true;
-    }
+    this.OverlayService.open({
+      component: DeleteAgentComponent,
+      data: this.selectedAgent,
+      isPopup: true,
+      hasBackdrop: true,
+      panelClass: 'deleteAgent'
+    })
   }
 
   // for delete agent modal

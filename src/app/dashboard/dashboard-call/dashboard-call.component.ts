@@ -150,9 +150,9 @@ export class DashboardCallComponent {
   }
   private async callRouteLoad() {
     this.languauges = await this.CommonService.getProjectLanguagesForUser();
-    this.countries = await this.CommonService.getLocations();
     if (this.CommonService.getEndpointsParamLocal().project != undefined) {
       this.dashboardEps.getAnalyticsData([], [], this.aggregate);
+      this.countries = await this.CommonService.getLocations();
     }
   }
   private getFirstLoad(): void {

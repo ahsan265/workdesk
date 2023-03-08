@@ -1,20 +1,25 @@
 <ng-container>
+  <div class="headingPanel">
+    <div class="heaidng">
+      Are you sure you with to delete this agent?
+    </div>
+    <div class="CloseIconWapper">
+      <svg (click)="closePopup()" width="12" height="12" viewBox="0 0 12 12" fill="none"
+        xmlns="http://www.w3.org/2000/svg">
+        <path
+          d="M11.8203 1.35156L7.17188 6L11.8203 10.6484L10.6484 11.8203L6 7.17188L1.35156 11.8203L0.179688 10.6484L4.82812 6L0.179688 1.35156L1.35156 0.179688L6 4.82812L10.6484 0.179688L11.8203 1.35156Z"
+          fill="#616B7B" />
+      </svg>
+    </div>
+  </div>
   <div class="descroptionpanel">
-    <p class="descp">
+    <div class="descp">
       Deleting this agent will remove the agent from this project.
-    </p>
+    </div>
   </div>
   <div class="agentinfopanel">
-    <img
-      class="roudnagentpic"
-      [src]="agentData.images['96']"
-      height="50"
-      width="50"
-      alt=""
-    />
-    <div
-      style="vertical-align: middle; display: inline-block; margin-left: 16px"
-    >
+    <img class="roudnagentpic" [src]="agentData.images['96']" height="50" width="50" alt="" />
+    <div style="vertical-align: middle; display: inline-block; margin-left: 16px">
       <p class="agentname">{{ agentData.display_name }}</p>
     </div>
   </div>

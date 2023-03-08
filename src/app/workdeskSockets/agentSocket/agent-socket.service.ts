@@ -2,24 +2,27 @@
 /* eslint-disable no-undef */
 /* eslint-disable sort-imports */
 import { Injectable } from '@angular/core';
-import { Route, Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { BehaviorSubject, Subject } from 'rxjs';
 import {
   AgentAction,
   AgentList,
   AgentOnlineOrNot,
   AgentOnlineStatus,
-  AgentParameter
+  AgentParameter,
+  FreeSeats
 } from 'src/app/models/agentSocketModel';
 import { connectionSecurityModel } from 'src/app/models/connectionSecurity';
 import { CommonService } from 'src/app/workdeskServices/commonEndpoint/common.service';
+import { SharedServices } from 'src/app/workdeskServices/sharedResourcesService/shared-resource-service.service';
 import { environment } from 'src/environments/environment';
-import { agentLoggedData } from './agentSocketData';
+import { freeSeats } from './agentSocketData';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AgentSocketService {
+  freeSeatsInformation: BehaviorSubject<FreeSeats>;
   lastUsedParameter: AgentParameter = {};
   protected websocket_url = `${environment.websocket_url}`;
   ws: WebSocket | undefined;
@@ -31,8 +34,9 @@ export class AgentSocketService {
   isInCall: boolean = false;
   public isInCallValue: BehaviorSubject<boolean>;
 
-  constructor(private CommonService: CommonService, private Router: Router) {
+  constructor(private CommonService: CommonService, private Router: Router, private SharedServices: SharedServices) {
     this.isInCallValue = new BehaviorSubject(this.isInCall);
+    this.freeSeatsInformation = new BehaviorSubject(freeSeats)
   }
 
   public callAgentSocketEndpoint() {
@@ -51,17 +55,37 @@ export class AgentSocketService {
       this.sendAgentsParameter({
         active: 1,
         invited: 1,
+        inactive: 1,
         languages: []
       });
+      this.sendParameterForSeats();
     };
     this.ws.onmessage = (e) => {
-      switch (e.data) {
-        case '{"action":"logout"}':
-          this.Router.navigate(['logout']);
-          break;
-        default:
+      let data = JSON.parse(e.data)
+
+      if (!Array.isArray(data)) {
+        switch (data.type) {
+          case 'logout':
+            this.Router.navigate(['logout']);
+            break;
+          case 'free_seats':
+            const seatsInformation: FreeSeats = data;
+            this.freeSeatsInformation.next(seatsInformation);
+            break;
+          case 'project_disabled':
+            this.SharedServices.reloadProject(true);
+            break;
+          case 'refresh_project_list':
+            this.SharedServices.reloadProject(true);
+            break;
+          default:
+        }
       }
-      e.data !== 'ping' ? this.getAgentList(JSON.parse(e.data)) : '';
+      else if (Array.isArray(data)) {
+        this.getAgentList(data)
+
+      }
+      //e.data !== 'ping' ? this.getAgentList(JSON.parse(e.data)) : '';
     };
     this.ws.onclose = (e) => { };
     this.ws.onerror = (e) => { };
@@ -72,6 +96,16 @@ export class AgentSocketService {
       const agentParameters: AgentAction = {
         action: 'filter',
         data: AgentParameter
+      };
+      const agentParameterObject = JSON.stringify(agentParameters);
+      this.ws?.send(agentParameterObject);
+    }
+  }
+  public sendParameterForSeats() {
+    if (this.isSocketOpen === 1) {
+      const agentParameters: any = {
+        action: 'free_seats',
+        data: ''
       };
       const agentParameterObject = JSON.stringify(agentParameters);
       this.ws?.send(agentParameterObject);

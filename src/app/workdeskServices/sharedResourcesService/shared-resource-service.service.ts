@@ -13,6 +13,8 @@ export class SharedServices {
   public saveImageUpload = new Subject<boolean>();
   public setAgentImage = new Subject<string>();
   public PasswordPopup = new Subject<boolean>();
+  public reloadProjects = new Subject<boolean>();
+
   constructor() { }
 
   // load common eps
@@ -50,5 +52,9 @@ export class SharedServices {
   // show open and close 
   showDoneOrganization(value: boolean) {
     this.switchOrganizationDoneDialog.next(value);
+  }
+  // reload projects
+  reloadProject(value: boolean) {
+    this.reloadProjects.next(value);
   }
 }

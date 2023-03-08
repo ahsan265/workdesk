@@ -1,3 +1,5 @@
+import { FreeSeats } from "src/app/models/agentSocketModel";
+
 const agentLoggedData: any = {
   active: true,
   display_name: 'string',
@@ -29,4 +31,9 @@ const agentLoggedData: any = {
   role: 'string',
   uuid: 'string'
 };
-export { agentLoggedData };
+const freeSeats: FreeSeats = {
+  count: 0,
+  free_seats: false,
+  type: 'free_seats'
+}
+export { agentLoggedData ,freeSeats};

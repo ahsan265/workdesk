@@ -26,6 +26,7 @@ import { SharedServices } from '../workdeskServices/sharedResourcesService/share
 import { callsIndicatorData } from '../models/callIndicatorModel';
 import { OverlayService } from '@gigaaa/gigaaa-components';
 import { AddAgentComponent } from '../modals/add-agent/add-agent.component';
+import { MessageService } from '../workdeskServices/messageService/message.service';
 
 @Component({
   selector: 'app-agents',
@@ -61,6 +62,7 @@ export class AgentsComponent implements OnInit {
     private router: Router,
     private AgentSocketService: AgentSocketService,
     private SharedServices: SharedServices,
+    private MessageService: MessageService,
     private OverlayService: OverlayService) {
     this.authService.pageTitle.next('Agents');
   }
@@ -71,9 +73,12 @@ export class AgentsComponent implements OnInit {
     this.AgentSocketService.getLastUsedParams();
     this.SharedServices.LoadcommonEpsubject.subscribe((data) => {
       if (data === 1) {
-        this.oneSelectData.map((data=>{
-        (  data.id===1)?data.selected=true:data.selected=false;
+        this.oneSelectData.map((data => {
+          (data.id === 1) ? data.selected = true : data.selected = false;
         }))
+        this.activeAgent = 1;
+        this.inactiveAgent = 1;
+        this.invitedAgent = 1;
         this.callCommonEndpoints();
         this.selectedStatus = onlineStatuses[0];
         this.selectedLanguages = [];
@@ -86,6 +91,8 @@ export class AgentsComponent implements OnInit {
         this.showInviteModel = false;
       }
     })
+
+
   }
   private async callCommonEndpoints() {
     this.languauges = await this.CommonService.getProjectLanguages();
@@ -95,17 +102,20 @@ export class AgentsComponent implements OnInit {
     this.AgentService.sendAgentDefaultParameter(
       this.selectedLanguages,
       this.activeAgent,
-      this.invitedAgent
+      this.invitedAgent,
+      this.inactiveAgent
     );
   }
   public agentTypeOutput(agentType: OneSelect) {
     const selectedType = this.AgentService.getAgenttypeParameter(agentType);
     this.activeAgent = selectedType.active;
     this.invitedAgent = selectedType.invited;
+    this.inactiveAgent = selectedType.inactive;
     this.AgentService.sendAgentDefaultParameter(
       this.selectedLanguages,
       selectedType.active,
-      selectedType.invited
+      selectedType.invited,
+      selectedType.inactive
     );
   }
   // get agent status data 
@@ -126,12 +136,17 @@ export class AgentsComponent implements OnInit {
   }
   showInviteModal() {
     if (this.buttonData.active === true) {
-      this.OverlayService.open({
-        component: AddAgentComponent,
-        panelClass: 'addAgent',
-        hasBackdrop: true,
-        backdropClass: 'dark-backdrop'
-      })
+      if (this.AgentSocketService.freeSeatsInformation.getValue().free_seats) {
+        this.OverlayService.open({
+          component: AddAgentComponent,
+          panelClass: 'addAgent',
+          hasBackdrop: true,
+          backdropClass: 'dark-backdrop'
+        })
+      }
+      else {
+        this.MessageService.setErrorMessage('No more available seats.');
+      }
     }
   }
 
@@ -180,7 +195,7 @@ export class AgentsComponent implements OnInit {
             : 'Pending',
         show_edit: AgentList.show_edit,
         utilites: this.AgentService.getLanguageFlagById(AgentList.languages),
-        invitation_accepted: this.AgentService.setAgentInvitedProperty(
+        invitation_accepted: this.AgentService.setAgentInActiveProperty(
           AgentList.invited,
           AgentList.inactive,
           AgentList.active
@@ -198,7 +213,8 @@ export class AgentsComponent implements OnInit {
             : false,
         loggedIn_user_icon: '../assets/images/tickSign.svg',
         organization_admin_icon: '../assets/images/crown.svg',
-        edit_icon: '../assets/images/pencil.svg',
+        edit_icon:
+          (AgentList.inactive === true && AgentList.active === true) ? '../assets/images/reactivate.svg' : '../assets/images/pencil.svg',
         routeUrl: ['agents', 'settings', AgentList.uuid]
       }));
       this.agentdataWithNoSearch = this.agentdata;
@@ -217,7 +233,14 @@ export class AgentsComponent implements OnInit {
   }
 
   getSettingsPage(event: string[]) {
-    this.router.navigate(event);
+
+    const data = this.AgentService.getAgentByUuid(event[2], this.AgentList);
+    const FreeSeats = this.AgentSocketService.freeSeatsInformation.getValue().free_seats;
+    if (data?.inactive === true && data.active === true) { (FreeSeats) ? this.AgentService.setAgentActive(data.uuid, false) : this.MessageService.setErrorMessage('No more available seats.'); }
+    else {
+      this.router.navigate(event);
+    }
+
   }
 
   // get searched Value 
