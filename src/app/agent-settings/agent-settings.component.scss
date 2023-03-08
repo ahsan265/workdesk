@@ -13,7 +13,7 @@
 .imagePopup {
   width: 594px;
   height: 355px;
-  background: #FFFFFF;
+  background: #ffffff;
   box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.23);
   border-radius: 4px;
 }
@@ -254,7 +254,7 @@
 .removeImage {
   width: 15px;
   height: 15px;
-  background: #1C54DB;
+  background: #1c54db;
   border-radius: 50px;
   position: absolute;
   top: 0;
@@ -270,15 +270,13 @@
   border: 1px solid #ffffff;
   align-items: center;
   letter-spacing: 0.02em;
-  color: #FAFAFD;
+  color: #fafafd;
   cursor: pointer;
 }
 
 .image:hover .removeImage {
   display: flex;
 }
-
-
 
 .uploadcamera {
   margin: 5px;

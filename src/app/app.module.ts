@@ -215,11 +215,11 @@ import { TicketsComponent } from './tickets/tickets.component';
       useClass: ReDialCallService
     },
     {
-      provide: component_data, 
-      useClass: OverlayService },
-    AuthService,
-
+      provide: component_data,
+      useClass: OverlayService
+    },
+    AuthService
   ],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {}

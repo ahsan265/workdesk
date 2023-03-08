@@ -2,7 +2,11 @@
 /* eslint-disable no-undef */
 /* eslint-disable sort-imports */
 import { Injectable } from '@angular/core';
-import { AgentModelTable, InviteAgentModel, UtlitiesIcon } from 'src/app/models/agent';
+import {
+  AgentModelTable,
+  InviteAgentModel,
+  UtlitiesIcon
+} from 'src/app/models/agent';
 import { AgentLanguages, AgentList } from 'src/app/models/agentSocketModel';
 import { OneSelect } from 'src/app/models/oneSelect';
 import { User } from 'src/app/models/user';
@@ -21,18 +25,18 @@ export class AgentService {
     private GigaaaApiService: GigaaaApiService,
     private CommonService: CommonService,
     private MessageService: MessageService
-  ) { }
+  ) {}
   // send agent params from agent component using service
   public sendAgentDefaultParameter(
     languages: number[],
     active: number,
     invited: number,
-    inactive:number
+    inactive: number
   ) {
     this.AgentSocketService.sendAgentsParameter({
       active: active,
       invited: invited,
-      inactive:inactive,
+      inactive: inactive,
       languages: languages
     });
   }
@@ -68,15 +72,19 @@ export class AgentService {
     }
   }
   public getAgentWiseData(AgentList: AgentList[]) {
-    AgentList.forEach(data => {
+    AgentList.forEach((data) => {
       if (this.checkIsLoggedInAgent(data.email)) {
         this.CommonService.loggedInAgentDetails(data);
       }
-    })
-    const data = this.CommonService.getLoggedInAgentData()
-    if (data.role === 'Admin' && data.is_organization_admin === true && data.is_organization_owner === true) {
+    });
+    const data = this.CommonService.getLoggedInAgentData();
+    if (
+      data.role === 'Admin' &&
+      data.is_organization_admin === true &&
+      data.is_organization_owner === true
+    ) {
       AgentList.map((item) => Object.assign(item, { show_edit: true }));
-      AgentList.forEach(element => {
+      AgentList.forEach((element) => {
         if (this.checkIsLoggedInAgent(element.email)) {
           let fromindex = AgentList.findIndex(
             (x) => x.email === this.CommonService.getEmailForLoggedInUser()
@@ -86,11 +94,18 @@ export class AgentService {
           AgentList.splice(0, 0, selectedobject);
         }
       });
-    }
-    else if (data.role === 'Admin' && data.is_organization_admin === true && data.is_organization_owner === false) {
+    } else if (
+      data.role === 'Admin' &&
+      data.is_organization_admin === true &&
+      data.is_organization_owner === false
+    ) {
       AgentList.map((item) => Object.assign(item, { show_edit: true }));
-      AgentList.forEach(element => {
-        if (element.role === "Admin" && element.is_organization_admin === true && element.is_organization_owner === true) {
+      AgentList.forEach((element) => {
+        if (
+          element.role === 'Admin' &&
+          element.is_organization_admin === true &&
+          element.is_organization_owner === true
+        ) {
           element['show_edit'] = false;
         }
         if (this.checkIsLoggedInAgent(element.email)) {
@@ -102,13 +117,19 @@ export class AgentService {
           AgentList.splice(fromindex, 1);
           AgentList.splice(0, 0, selectedobject);
         }
-
       });
-    }
-    else if (data.role === 'Admin' && data.is_organization_admin === false && data.is_organization_owner === false) {
+    } else if (
+      data.role === 'Admin' &&
+      data.is_organization_admin === false &&
+      data.is_organization_owner === false
+    ) {
       AgentList.map((item) => Object.assign(item, { show_edit: true }));
-      AgentList.forEach(element => {
-        if (element.role === "Admin" && element.is_organization_admin === true && element.is_organization_owner === true) {
+      AgentList.forEach((element) => {
+        if (
+          element.role === 'Admin' &&
+          element.is_organization_admin === true &&
+          element.is_organization_owner === true
+        ) {
           element['show_edit'] = false;
         }
         if (this.checkIsLoggedInAgent(element.email)) {
@@ -121,15 +142,17 @@ export class AgentService {
           AgentList.splice(fromindex, 1);
           AgentList.splice(0, 0, selectedobject);
         }
-
       });
-    }
-    else if (data.role === 'Agent' && data.is_organization_admin === false && data.is_organization_owner === false) {
+    } else if (
+      data.role === 'Agent' &&
+      data.is_organization_admin === false &&
+      data.is_organization_owner === false
+    ) {
       AgentList.map((item) => Object.assign(item, { show_edit: false }));
-      AgentList.forEach(element => {
+      AgentList.forEach((element) => {
         if (this.checkIsLoggedInAgent(element.email)) {
           //  this.CommonService.loggedInAgentDetails(element);
-          if (element.role == "Agent") {
+          if (element.role == 'Agent') {
             element['show_edit'] = true;
           }
           let fromindex = AgentList.findIndex(
@@ -139,12 +162,10 @@ export class AgentService {
           AgentList.splice(fromindex, 1);
           AgentList.splice(0, 0, selectedobject);
         }
-
       });
     }
 
     return AgentList;
-
   }
   // check is user LoggedIn agent
   public checkIsLoggedInAgent(agentEmail: string) {
@@ -162,11 +183,9 @@ export class AgentService {
   ) {
     if (invited == true && inactive == false && active == false) {
       return false;
-    }
-    else if (invited == false && inactive == true && active == true) {
+    } else if (invited == false && inactive == true && active == true) {
       return false;
-    }
-    else {
+    } else {
       return true;
     }
   }
@@ -178,8 +197,7 @@ export class AgentService {
   ) {
     if (invited == true && inactive == false && active == false) {
       return false;
-    }
-    else {
+    } else {
       return true;
     }
   }
@@ -196,7 +214,6 @@ export class AgentService {
       this.MessageService.setErrorMessage(error.error.error);
     }
   }
-
 
   getLanguageFlagById(languages: AgentLanguages[]): UtlitiesIcon[] {
     let UtlitiesIcon: UtlitiesIcon[] = [];
@@ -250,32 +267,47 @@ export class AgentService {
     }
   }
 
-  // search agent 
-  public search(data: string, AgentList: AgentModelTable[], AllAgentsData: AgentModelTable[]) {
+  // search agent
+  public search(
+    data: string,
+    AgentList: AgentModelTable[],
+    AllAgentsData: AgentModelTable[]
+  ) {
     const result: AgentModelTable[] = AllAgentsData.filter((obj: any) => {
       if (obj.agent_name != null) {
-        return obj.agent_name.toLowerCase().includes(data.toLowerCase()) || obj.email.toLowerCase().includes(data.toLowerCase());
-      }
-      else if (obj.agent_name == null) {
+        return (
+          obj.agent_name.toLowerCase().includes(data.toLowerCase()) ||
+          obj.email.toLowerCase().includes(data.toLowerCase())
+        );
+      } else if (obj.agent_name == null) {
         return obj.email.toLowerCase().includes(data.toLowerCase());
       }
-    })
+    });
     if (data.length === 0) {
       return AgentList;
-    }
-    else {
+    } else {
       return result;
     }
   }
 
   // counter for online user
   countOnlineAgentsAvailable(agent: AgentList[]) {
-    const allAgents = agent.filter(data => {
-      return this.setAgentInvitedProperty(data.invited, data.inactive, data.active) === true;
-    })
-    const onlineAgents = allAgents.filter(data => {
-      return data.is_online === true && data.is_available === true && data.is_in_call === false;
-    })
+    const allAgents = agent.filter((data) => {
+      return (
+        this.setAgentInvitedProperty(
+          data.invited,
+          data.inactive,
+          data.active
+        ) === true
+      );
+    });
+    const onlineAgents = allAgents.filter((data) => {
+      return (
+        data.is_online === true &&
+        data.is_available === true &&
+        data.is_in_call === false
+      );
+    });
     return onlineAgents.length + '/' + allAgents.length;
   }
   /// get agent status response
@@ -293,22 +325,26 @@ export class AgentService {
     }
   }
 
-  // get agent by uuid 
+  // get agent by uuid
   public getAgentByUuid(uuid: string, agent: AgentList[]) {
-    const data = agent.find(data => {
+    const data = agent.find((data) => {
       return data.uuid === uuid;
-    })
+    });
     return data;
   }
 
-  // setAgent to be Active only 
+  // setAgent to be Active only
   public async setAgentActive(uuid: string, status: boolean) {
     try {
-      await this.GigaaaApiService.setInavtiveAgentToActive(this.CommonService.getEndpointsParamLocal().token, uuid, this.CommonService.getEndpointsParamLocal().organization,
-        this.CommonService.getEndpointsParamLocal().project, status)
-    }
-    catch (error: any) {
-      this.MessageService.setErrorMessage(error.error.error)
+      await this.GigaaaApiService.setInavtiveAgentToActive(
+        this.CommonService.getEndpointsParamLocal().token,
+        uuid,
+        this.CommonService.getEndpointsParamLocal().organization,
+        this.CommonService.getEndpointsParamLocal().project,
+        status
+      );
+    } catch (error: any) {
+      this.MessageService.setErrorMessage(error.error.error);
     }
   }
 }
