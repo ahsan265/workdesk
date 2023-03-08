@@ -19,6 +19,7 @@ import { ChatConsoleComponent } from './chatInterface/chat-console/chat-console.
 import { PreferenceComponent } from './components/preference/preference.component';
 import { DashboardCallComponent } from './dashboard/dashboard-call/dashboard-call.component';
 import { DashboardChatsComponent } from './dashboard/dashboard-chats/dashboard-chats.component';
+import { TicketsComponent } from './tickets/tickets.component';
 
 const routes: Routes = [
   { path: '', component: LandingPageComponent },
@@ -49,6 +50,7 @@ const routes: Routes = [
         ]
       },
       { path: 'agents', component: AgentsComponent },
+      { path: 'tickets', component: TicketsComponent },
       { path: 'agents/settings/:id', component: AgentSettingsComponent },
       { path: 'preference', component: PreferenceComponent },
     ]
