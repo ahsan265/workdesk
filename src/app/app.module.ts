@@ -100,6 +100,7 @@ import { NoChatComponent } from './chatInterface/no-chat/no-chat.component';
 import { PreferenceComponent } from './components/preference/preference.component';
 import { DashboardCallComponent } from './dashboard/dashboard-call/dashboard-call.component';
 import { DashboardChatsComponent } from './dashboard/dashboard-chats/dashboard-chats.component';
+import { TicketsComponent } from './tickets/tickets.component';
 
 @NgModule({
   declarations: [
@@ -162,7 +163,8 @@ import { DashboardChatsComponent } from './dashboard/dashboard-chats/dashboard-c
     NoChatComponent,
     PreferenceComponent,
     DashboardCallComponent,
-    DashboardChatsComponent
+    DashboardChatsComponent,
+    TicketsComponent
   ],
   imports: [
     CommonModule,
