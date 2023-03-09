@@ -42,26 +42,26 @@ export class CommonService {
   public async getLocations(): Promise<MultiSelect> {
     try {
       const countryList: Country[] =
-        await this.GigaaaApiService.getAllCountries();
-      const countriesList: OneSelect[] = countryList.map((item: Country) => ({
+        await this.GigaaaApiService.getAllCountries(this.getEndpointsParamLocal().project, this.getEndpointsParamLocal().organization);
+
+      let sortedCountry = countryList.filter(e => e.name === 'Undefined').concat(countryList.filter(d => d.name !== 'Undefined').sort(
+        (cOne: Country, cTwo: Country) => {
+          let countryOne = cOne.count_of_call_requests;
+          let countryTwo = cTwo.count_of_call_requests;
+          return countryTwo - countryOne;
+        }
+      ));
+      const countriesList: OneSelect[] = sortedCountry.map((item: Country) => ({
         name: item.name,
         id: item.id,
         selected: false
       }));
-
-      let sortedCountry = countriesList.sort(
-        (cOne: OneSelect, cTwo: OneSelect) => {
-          let countryOne = cOne.name;
-          let countryTwo = cTwo.name;
-          return countryOne < countryTwo ? -1 : countryOne > countryTwo ? 1 : 0;
-        }
-      );
-      this.countryArray = sortedCountry;
+      this.countryArray = countriesList;
       const countryListArray: MultiSelect = {
         title: 'Location',
         showSelectAll: true,
         showSearchBar: true,
-        data: sortedCountry
+        data: countriesList
       };
       return countryListArray;
     } catch (err: any) {
@@ -410,6 +410,9 @@ export class CommonService {
     if (!this.getIsAdminOrAgent()) {
       this.Router.navigate(['calls']);
     }
- 
+    else {
+      this.Router.navigate(['/dashboard']);
+    }
+
   }
 }

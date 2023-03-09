@@ -30,11 +30,12 @@ const routes: Routes = [
     canActivate: [AuthService],
     children: [
       {
-        path: 'dashboard', component: DashboardComponent,
+        path: 'dashboard',
+        component: DashboardComponent,
         children: [
           { path: '', redirectTo: 'calls', pathMatch: 'full' },
           { path: 'calls', component: DashboardCallComponent },
-          { path: 'chats', component: DashboardChatsComponent },
+          { path: 'chats', component: DashboardChatsComponent }
         ]
       },
       {
@@ -46,17 +47,20 @@ const routes: Routes = [
           { path: 'ongoing', component: OngoingComponent },
           { path: 'missed', component: MissedComponent },
           { path: 'answered', component: AnsweredComponent }
-
         ]
       },
       { path: 'agents', component: AgentsComponent },
       { path: 'tickets', component: TicketsComponent },
       { path: 'agents/settings/:id', component: AgentSettingsComponent },
-      { path: 'preference', component: PreferenceComponent },
+      { path: 'preference', component: PreferenceComponent }
     ]
   },
   { path: 'callback', component: CallbackComponent },
-  { path: 'customersupport', component: CustomerSupportComponent, canActivate: [AuthService] },
+  {
+    path: 'customersupport',
+    component: CustomerSupportComponent,
+    canActivate: [AuthService]
+  },
   { path: 'loading', component: LoaderComponent, canActivate: [AuthService] },
   { path: 'chat', component: ChatConsoleComponent, canActivate: [AuthService] },
   { path: '**', component: PageNotFoundComponent }
@@ -71,5 +75,4 @@ const routes: Routes = [
   ],
   exports: [RouterModule]
 })
-export class AppRoutingModule {
-}
+export class AppRoutingModule {}

@@ -18,7 +18,7 @@ export class AgentSettingService {
     private CommonService: CommonService,
     private MessageService: MessageService,
     private Router: Router
-  ) { }
+  ) {}
 
   // get agentS Updated Data ()
   public async updateAgentSettings(
@@ -73,10 +73,13 @@ export class AgentSettingService {
       return 'Organization admins cannot turn off administrative rights.';
     } else if (isOrganizationAdmin === false && role === 'Admin') {
       return '';
-    } else if (isOrganizationAdmin === false && role === 'Agent' && this.CommonService.getLoggedInAgentData().role !== 'Admin') {
+    } else if (
+      isOrganizationAdmin === false &&
+      role === 'Agent' &&
+      this.CommonService.getLoggedInAgentData().role !== 'Admin'
+    ) {
       return 'Agents cannot turn on administrative rights.';
-    }
-    else {
+    } else {
       return '';
     }
   }
@@ -120,8 +123,8 @@ export class AgentSettingService {
     );
     this.MessageService.setSuccessMessage('Agent Invitation has been resent.');
   }
-  public updateAgentImage() { }
-  public updateLoggedInUserImage() { }
+  public updateAgentImage() {}
+  public updateLoggedInUserImage() {}
 
   public async UpdatePassword(data: any, id: number) {
     await this.GigaaaApiService.updatePassword(
@@ -144,8 +147,8 @@ export class AgentSettingService {
       );
       data.all_languages === true
         ? this.MessageService.setSuccessMessage(
-          'All project languages are assigned to you.'
-        )
+            'All project languages are assigned to you.'
+          )
         : '';
     } catch (error: any) {
       this.MessageService.setErrorMessage(error.error.error);
@@ -155,12 +158,14 @@ export class AgentSettingService {
   // remove agent image
   async removeAgentImage(uuid: string) {
     try {
-      return await this.GigaaaApiService.deleteAgentImage(this.CommonService.getEndpointsParamLocal().token, this.CommonService.getEndpointsParamLocal().organization,
-        this.CommonService.getEndpointsParamLocal().project, uuid);
-    }
-    catch (error: any) {
+      return await this.GigaaaApiService.deleteAgentImage(
+        this.CommonService.getEndpointsParamLocal().token,
+        this.CommonService.getEndpointsParamLocal().organization,
+        this.CommonService.getEndpointsParamLocal().project,
+        uuid
+      );
+    } catch (error: any) {
       this.MessageService.setErrorMessage(error.error.error);
     }
-
   }
 }

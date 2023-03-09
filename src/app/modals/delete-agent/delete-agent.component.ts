@@ -1,8 +1,7 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Inject, Input, OnInit } from '@angular/core';
+import { component_data, OverlayService } from '@gigaaa/gigaaa-components';
 import { AgentSettingService } from 'src/app/agent-settings/agentSettingService/agent-setting.service';
 import { AgentList } from 'src/app/models/agentSocketModel';
-import { CommonService } from 'src/app/workdeskServices/commonEndpoint/common.service';
-import { GigaaaApiService } from 'src/app/workdeskServices/gigaaaApiService/gigaaa-api-service.service';
 import { MessageService } from 'src/app/workdeskServices/messageService/message.service';
 import { SharedServices } from 'src/app/workdeskServices/sharedResourcesService/shared-resource-service.service';
 
@@ -16,26 +15,27 @@ export class DeleteAgentComponent implements OnInit {
   agentData!: AgentList;
   constructor(
     private SharedServices: SharedServices,
-    private GigaaaApiService: GigaaaApiService,
     private MessageService: MessageService,
     private AgentSettingService: AgentSettingService,
-    private CommonService: CommonService
-  ) { }
+    @Inject(component_data) public data: any,
+    private OverlayService: OverlayService
+
+  ) {
+    this.agentData = data;
+  }
 
   ngOnInit(): void { }
 
   public async deleteAgent(): Promise<void> {
     try {
       await this.AgentSettingService.deleteAgent(this.agentData?.uuid, 'Agent deleted successfully.');
-      this.SharedServices.closePasswordPopup(true);
+      this.OverlayService.close();
     } catch (err: any) {
       this.MessageService.setErrorMessage(err.error.error);
     }
   }
-
   // close popup
-
   closePopup() {
-    this.SharedServices.closePasswordPopup(true);
+    this.OverlayService.close()
   }
 }

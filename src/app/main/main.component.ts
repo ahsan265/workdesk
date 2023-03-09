@@ -32,7 +32,7 @@ export class MainComponent implements OnInit {
   websites = websites;
   addOns = addons;
   icons = icons;
-  sidebarData = [];
+  sidebarData: any[] = [];
   showSwitchOganization: boolean = false;
   showSwitchDoneOganization: boolean = false;
   organizationModalData = organizationModalData
@@ -59,7 +59,9 @@ export class MainComponent implements OnInit {
       if (data === 1) {
         this.organizationData.name = ((this.getOrganizationService.getLastUsedOrganization().is_individual) ? this.getOrganizationService.getLastUsedOrganization().contact_person :
           this.getOrganizationService.getLastUsedOrganization().name) || '';
-        this.sidebarData = await this.getOrganizationService.getProjectList(this.getOrganizationService.project);
+        await this.getOrganizationService.getProjectList(this.getOrganizationService.project).then(data => {
+          this.sidebarData = data;
+        })
         this.authService.user.next(this.authService.getLoggedUser());
       }
     })
@@ -72,6 +74,12 @@ export class MainComponent implements OnInit {
           this.getOrganizationService.getLastUsedOrganization().name) || '';
         this.showSwitchDoneOganization = data;
       }, 500);
+    })
+    // for reload projects
+    this.SharedServices.reloadProjects.subscribe((data: boolean) => {
+      if (data) {
+        this.getOrganizationService.getOrganization(this.CommonService.getEndpointsParamLocal().token);
+      }
     })
   }
 
@@ -96,7 +104,7 @@ export class MainComponent implements OnInit {
     this.GigaaaApiService.updateLastUsediPorject(
       this.CommonService.getEndpointsParamLocal().token,
       this.CommonService.getEndpointsParamLocal().organization,
-      { project: event.uuid }
+      { project: event.uuid[0] }
     );
     this.getOrganizationService.getOrganization(
       this.CommonService.getEndpointsParamLocal().token

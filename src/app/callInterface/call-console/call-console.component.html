@@ -1,41 +1,87 @@
-<div class="mainCallWrapper" cdkDragBoundary=".main" cdkDrag [cdkDragDisabled]="!toogle"
-  [ngStyle]="toogle ? minimize : maximize" cdkDragHandle>
-  <div class="screeenShareRestrictionPanel" *ngIf="
+<div
+  class="mainCallWrapper"
+  cdkDragBoundary=".main"
+  cdkDrag
+  [cdkDragDisabled]="!toogle"
+  [ngStyle]="toogle ? minimize : maximize"
+  cdkDragHandle
+>
+  <div
+    class="screeenShareRestrictionPanel"
+    *ngIf="
       toogle === true &&
       this.secondpeerUserInformationData.showShareScreen === true
-    ">
+    "
+  >
     <app-screen-share-restriction></app-screen-share-restriction>
   </div>
-  <app-calls-header [agentOperationInformation]="agentOperationInformationData" [callsHeaderData]="CallsHeaderData"
-    [isCameraOn]="isVideoMinimize" (minmizeMaxmizeScreenOutput)="minmizeMaxmizeScreenOutput($event)"
-    [headerTimer]="callTimer">
+  <app-calls-header
+    [agentOperationInformation]="agentOperationInformationData"
+    [callsHeaderData]="CallsHeaderData"
+    [isCameraOn]="isVideoMinimize"
+    (minmizeMaxmizeScreenOutput)="minmizeMaxmizeScreenOutput($event)"
+    [headerTimer]="callTimer"
+  >
   </app-calls-header>
-  <div class="dragArea"
-    [style.height]="this.agentOperationInformationData.isMinimize && (this.isVideoMinimize || this.isRemoteVideo)?'calc(100% - 120px)':'calc(100% - 150px)'">
-    <app-mini-camera-screen #miniCameraVideoStream [hidden]="this.isMinimize "
-      [agentOperationInformation]="agentOperationInformationData" [cdkDragFreeDragPosition]="dragPosition"
-      cdkDragBoundary=".dragArea" cdkDrag
-      [ngStyle]="this.agentOperationInformationData.isMinimize?this.minmizeMiniCameraMargins:this.normalMiniCameraMargins"
-      [PeerMiniCameraDetails]="PeerMiniCameraScreen" (splitScreenOutput)="splitScreen($event)">
+  <div
+    class="dragArea"
+    [style.height]="
+      this.agentOperationInformationData.isMinimize &&
+      (this.isVideoMinimize || this.isRemoteVideo)
+        ? 'calc(100% - 120px)'
+        : 'calc(100% - 150px)'
+    "
+  >
+    <app-mini-camera-screen
+      #miniCameraVideoStream
+      [hidden]="this.isMinimize"
+      [agentOperationInformation]="agentOperationInformationData"
+      [cdkDragFreeDragPosition]="dragPosition"
+      cdkDragBoundary=".dragArea"
+      cdkDrag
+      [ngStyle]="
+        this.agentOperationInformationData.isMinimize
+          ? this.minmizeMiniCameraMargins
+          : this.normalMiniCameraMargins
+      "
+      [PeerMiniCameraDetails]="PeerMiniCameraScreen"
+      (splitScreenOutput)="splitScreen($event)"
+    >
     </app-mini-camera-screen>
-    <app-calling-screen #videoStream [peerStream]="peerStream" [hidden]="this.isMinimize"
-      [agentOperationInformation]="agentOperationInformationData" [peerInformationdata]="peerUserInformationData"
-      class="mainscreen" [secondPeerInformationdata]="secondpeerUserInformationData" [isSplit]="this.isSplit"
-      (unSplitScreenOutput)="unSplitScreenOutput($event)">
+    <app-calling-screen
+      #videoStream
+      [peerStream]="peerStream"
+      [hidden]="this.isMinimize"
+      [agentOperationInformation]="agentOperationInformationData"
+      [peerInformationdata]="peerUserInformationData"
+      class="mainscreen"
+      [secondPeerInformationdata]="secondpeerUserInformationData"
+      [isSplit]="this.isSplit"
+      (unSplitScreenOutput)="unSplitScreenOutput($event)"
+    >
     </app-calling-screen>
   </div>
   <div class="callControlsWrapper">
-    <app-call-controls [agentOperationInformationData]="agentOperationInformationData" [miceData]="miceData"
-      [cameraData]="cameraData" [screenShareData]="screenShareData" [hangUpData]="hangUpData" [time]="callTimer"
+    <app-call-controls
+      [agentOperationInformationData]="agentOperationInformationData"
+      [miceData]="miceData"
+      [cameraData]="cameraData"
+      [screenShareData]="screenShareData"
+      [hangUpData]="hangUpData"
+      [time]="callTimer"
       (seletecOutputForCamera)="seletecOutputForCamera($event)"
       (seletecOutputForMicrophone)="seletecOutputForMircrophone($event)"
       (seletecOutputForScreenShare)="seletecOutputForScreenShare($event)"
       (seletecOutputForHangUpCall)="seletecOutputForHangUpCall($event)"
-      (openDeviceSwitcherOutput)="openDeviceSwitcherOutput($event)" [openDeviceSwitcher]="openDeviceSwitcher"
-      [minimizeCallControl]="minimizeCallControl" [maximizeCallControl]="maximizeCallControl"
+      (openDeviceSwitcherOutput)="openDeviceSwitcherOutput($event)"
+      [openDeviceSwitcher]="openDeviceSwitcher"
+      [minimizeCallControl]="minimizeCallControl"
+      [maximizeCallControl]="maximizeCallControl"
       [isPeerScreenShared]="this.peerUserInformationData.showShareScreen"
-      [isMinimize]="this.isMinimize ||this.agentOperationInformationData.isMinimize">
+      [isMinimize]="
+        this.isMinimize || this.agentOperationInformationData.isMinimize
+      "
+    >
     </app-call-controls>
   </div>
-
 </div>

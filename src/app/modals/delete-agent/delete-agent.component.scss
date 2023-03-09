@@ -120,6 +120,28 @@
   color: #616b7b;
 }
 
+.headingPanel {
+  display: flex;
+  justify-content: space-between;
+}
+
+.heaidng {
+  display: inline-flex;
+  font-family: 'Roboto', sans-serif;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 18px;
+  line-height: 22px;
+  align-items: center;
+  letter-spacing: 0.02em;
+  color: #162741;
+}
+
+.CloseIconWapper {
+  display: inline-flex;
+  justify-content: flex-end;
+}
+
 .fullname {
   font-family: 'Roboto', sans-serif;
   font-style: normal;
@@ -150,8 +172,12 @@
 .agentinfopanel {
   display: flex;
   width: 100%;
-  margin-top: 30px;
-  margin-bottom: 30px;
+  margin-top: 25px;
+  margin-bottom: 25px;
+}
+
+svg {
+  cursor: pointer;
 }
 
 .buttonpanel {

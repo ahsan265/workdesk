@@ -1,3 +1,4 @@
+import { FreeSeats } from "./models/agentSocketModel";
 import { CallsModel } from "./models/callModel";
 
 const websites = [

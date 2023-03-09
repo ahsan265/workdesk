@@ -28,6 +28,7 @@ import { AgentService } from '../agents/agentService/agent.service';
 import { SharedServices } from '../workdeskServices/sharedResourcesService/shared-resource-service.service';
 import { OverlayService } from '@gigaaa/gigaaa-components';
 import { UploadImageComponent } from '../modals/upload-image/upload-image.component';
+import { DeleteAgentComponent } from '../modals/delete-agent/delete-agent.component';
 
 @Component({
   selector: 'app-agent-settings',
@@ -68,7 +69,7 @@ export class AgentSettingsComponent implements OnInit {
   isAllLanguageSelected: boolean = false;
   showAllSelectedLanguageToggle: boolean = false;
   showAdminRightSection: boolean = true;
-  showImageRemove: boolean = false
+  showImageRemove: boolean = false;
   agentSettingsForm = new FormGroup({
     email: new FormControl('', [
       Validators.required,
@@ -88,7 +89,7 @@ export class AgentSettingsComponent implements OnInit {
     private AgentService: AgentService,
     private SharedServices: SharedServices,
     private OverlayService: OverlayService
-  ) { }
+  ) {}
 
   ngOnInit() {
     this.authService.pageTitle.next('Agent Settings');
@@ -115,9 +116,8 @@ export class AgentSettingsComponent implements OnInit {
     });
   }
 
-  onGetInputValue(event: any) {
-  }
-  // to get is Admin or not 
+  onGetInputValue(event: any) {}
+  // to get is Admin or not
   onGetSwitchButtonValue(event: any) {
     this.isAdmin = !event;
   }
@@ -132,9 +132,13 @@ export class AgentSettingsComponent implements OnInit {
     this.router.navigate(['agents']);
   }
   onGetDeleteButtonOutput(event: any) {
-    if (event) {
-      this.showDeleteAgentModal = true;
-    }
+    this.OverlayService.open({
+      component: DeleteAgentComponent,
+      data: this.selectedAgent,
+      isPopup: true,
+      hasBackdrop: true,
+      panelClass: 'deleteAgent'
+    });
   }
 
   // for delete agent modal
@@ -194,7 +198,7 @@ export class AgentSettingsComponent implements OnInit {
       panelClass: 'imagePopup',
       hasBackdrop: true,
       backdropClass: 'dark-backdrop'
-    })
+    });
   }
   onGetSubmitImageUploadOutput(event: any) {
     if (event) {
@@ -223,7 +227,9 @@ export class AgentSettingsComponent implements OnInit {
     } catch (err: any) {
       this.MessageService.setErrorMessage(err.error.error);
     }
-    (this.selectedAgent.is_image_set) ? this.showImageRemove = true : this.showImageRemove = false;
+    this.selectedAgent.is_image_set
+      ? (this.showImageRemove = true)
+      : (this.showImageRemove = false);
     this.selectedAgent.is_organization_admin === true
       ? (this.showAllSelectedLanguageToggle = true)
       : (this.showAllSelectedLanguageToggle = false);
@@ -310,9 +316,10 @@ export class AgentSettingsComponent implements OnInit {
 
   // set remove picture
   async removeImage() {
-    const defaultImage = await this.agentSettingService.removeAgentImage(this.selectedAgent.uuid);
+    const defaultImage = await this.agentSettingService.removeAgentImage(
+      this.selectedAgent.uuid
+    );
     this.agentImage = defaultImage[96];
     this.showImageRemove = false;
-
   }
 }

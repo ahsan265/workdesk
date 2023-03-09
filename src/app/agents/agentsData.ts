@@ -21,7 +21,8 @@ const languauges: MultiSelect = {
 const oneSelect: OneSelect[] = [
   { id: 1, name: 'All activity', selected: true },
   { id: 2, name: 'Active', selected: false },
-  { id: 3, name: 'Invited', selected: false }
+  { id: 3, name: 'Invited', selected: false },
+  { id: 4, name: 'Inactive', selected: false }
 ];
 
 const onlineStatuses: OneSelect[] = [
@@ -35,21 +36,32 @@ const selectedAgentType: any[] = [
     name: 'All activity',
     options: {
       active: 1,
-      invited: 1
+      invited: 1,
+      inactive: 1
     }
   },
   {
     name: 'Active',
     options: {
       active: 1,
-      invited: 0
+      invited: 0,
+      inactive: 0
     }
   },
   {
     name: 'Invited',
     options: {
       active: 0,
-      invited: 1
+      invited: 1,
+      inactive: 0
+    }
+  },
+  {
+    name: 'Inactive',
+    options: {
+      active: 0,
+      invited: 0,
+      inactive: 1
     }
   }
 ];
@@ -215,15 +227,15 @@ const agents: any[] = [
   }
 ];
 const noAgentTobaleData = {
-  'display': 'block',
-  'width': '100%',
-  'height': '160px',
-  'background': '#fafafd',
-  'border': '1px solid #e3e3eb',
+  display: 'block',
+  width: '100%',
+  height: '160px',
+  background: '#fafafd',
+  border: '1px solid #e3e3eb',
   'border-top': 'none',
-  'margin': '0 -1px',
+  margin: '0 -1px',
   'margin-top': '1px'
-}
+};
 const agentModelData = {
   title: 'Invite Human Agents',
   image: '',

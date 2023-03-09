@@ -34,7 +34,7 @@ import {
   screenShareData,
   secondPeerUserInformationData,
   normalMiniCameraMargins,
-  minmizeMiniCameraMargins,
+  minmizeMiniCameraMargins
 } from '../callsInterfaceData';
 import { MicrophoneVoiceIndicatorComponent } from '../microphone-voice-indicator/microphone-voice-indicator.component';
 import { MiniCameraScreenComponent } from '../mini-camera-screen/mini-camera-screen.component';
@@ -43,7 +43,14 @@ import { MiniCameraScreenComponent } from '../mini-camera-screen/mini-camera-scr
   selector: 'app-call-console',
   templateUrl: './call-console.component.html',
   styleUrls: ['./call-console.component.scss'],
-  providers: [CallSocketService, StreamingService, CallsOperationService, PeerConnectionService, AgentUserInformation, CallsOperationService]
+  providers: [
+    CallSocketService,
+    StreamingService,
+    CallsOperationService,
+    PeerConnectionService,
+    AgentUserInformation,
+    CallsOperationService
+  ]
 })
 export class CallConsoleComponent implements OnInit, OnDestroy, AfterViewInit {
   constructor(
@@ -57,17 +64,16 @@ export class CallConsoleComponent implements OnInit, OnDestroy, AfterViewInit {
     private AgentUserInformation: AgentUserInformation,
     @Inject(component_data) public data: any
   ) {
-
     this.StreamingService.detectDevicesMicrphoneDeviceOnchange();
     this.StreamingService.loadAudioandVideoResouce();
 
     const user = this.AgentUserInformation.getCallInformation();
     if (user.is_refreshed !== true) {
-      this.AgentUserInformation.updatelastUsedCallUuid(this.data.call_uuid)
+      this.AgentUserInformation.updatelastUsedCallUuid(this.data.call_uuid);
     }
   }
   normalMiniCameraMargins = normalMiniCameraMargins;
-  minmizeMiniCameraMargins = minmizeMiniCameraMargins
+  minmizeMiniCameraMargins = minmizeMiniCameraMargins;
   dragPosition = { x: 0, y: 0 };
   minimizeCallControl = minimizeCallControlData;
   maximizeCallControl = maximizeCallControlData;
@@ -108,11 +114,10 @@ export class CallConsoleComponent implements OnInit, OnDestroy, AfterViewInit {
     this.minmizeMaxmizeScreenOutput(false);
   }
   ngOnDestroy(): void {
-
     this.minmizeMaxmizeScreenOutput(false);
     this.miniCameraOperation(false);
     this.agentOperationInformationData.isMinimize = false;
-    this.PeerMiniCameraScreen.showCamera = false
+    this.PeerMiniCameraScreen.showCamera = false;
     this.CallsOperationService.startTimer.unsubscribe();
     const user = this.AgentUserInformation.getCallInformation();
     if (user.is_refreshed === true) {
@@ -123,17 +128,17 @@ export class CallConsoleComponent implements OnInit, OnDestroy, AfterViewInit {
     this.cameraData.isSelected = false;
     this.screenShareData.isSelected = false;
     this.miceData.isSelected = true;
+    this.secondpeerUserInformationData.showLoaderAnimation = true;
   }
   async ngOnInit() {
-    this.StreamingService.setCallType.subscribe(isVideo => {
+    this.StreamingService.setCallType.subscribe((isVideo) => {
       if (isVideo) {
         // this.PeerMiniCameraScreen.showCamera = true;
         // this.peerUserInformationData.showVideo = true;
         // this.cameraData.isSelected = true;
-        this.cameraoperation(true)
-
+        this.cameraoperation(true);
       }
-    })
+    });
     this.StreamingService.getLocalStream.subscribe((stream) => {
       this.miniCameraVideoStream.setMiniCameraSteam(stream);
       this.stream.setStream(stream);
@@ -147,7 +152,7 @@ export class CallConsoleComponent implements OnInit, OnDestroy, AfterViewInit {
         this.DevicesInformationService.getBrowserName(),
         this.CommonService.getEndpointsParamLocal().connectionId
       );
-      this.defaultUserData()
+      this.defaultUserData();
       // this.miceData.isSelected = user.user_information.data.is_microphone_on;
     } else {
       this.AgentUserInformation.setCallType(this.data.callType.text);
@@ -162,8 +167,10 @@ export class CallConsoleComponent implements OnInit, OnDestroy, AfterViewInit {
 
     this.CallsOperationService.addIncomingCallHandler();
     this.StreamingService.stopScreenStream.subscribe((data) => {
-      (data === true) ? this.screenShareData.isSelected = true : (this.screenShareData.isSelected = false, this.seletecOutputForScreenShare(false));
-      ;
+      data === true
+        ? (this.screenShareData.isSelected = true)
+        : ((this.screenShareData.isSelected = false),
+          this.seletecOutputForScreenShare(false));
     });
     this.PeerConnectionService.remoteVideoSubject.subscribe((stream) => {
       this.stream.setRemoteStream(stream);
@@ -180,8 +187,7 @@ export class CallConsoleComponent implements OnInit, OnDestroy, AfterViewInit {
       this.secondpeerUserInformationData.showLoaderAnimation = false;
       // this.isVideoMinimize = peerData.isCameraOn;
       this.isRemoteVideo = peerData.isCameraOn;
-      if (this.isRemoteVideo && this.isMinimize
-      ) {
+      if (this.isRemoteVideo && this.isMinimize) {
         this.isVideoMinimize = true;
         this.minimize.width = '382px';
         this.minimize.height = '325px';
@@ -190,11 +196,11 @@ export class CallConsoleComponent implements OnInit, OnDestroy, AfterViewInit {
         this.minimizeCallControl['border-radius'] = '51px';
         this.minimizeCallControl.height = '55px';
         this.isMinimize = false;
-
       } else {
-
-        if (this.agentOperationInformationData.isMinimize === true && this.cameraData.isSelected === false) {
-
+        if (
+          this.agentOperationInformationData.isMinimize === true &&
+          this.cameraData.isSelected === false
+        ) {
           this.isMinimize = true;
           this.toogle = true;
           this.isVideoMinimize = false;
@@ -205,9 +211,7 @@ export class CallConsoleComponent implements OnInit, OnDestroy, AfterViewInit {
           this.PeerMiniCameraScreen.showInitals == false;
           this.agentOperationInformationData.IsVideoMinimize = false;
           this.isRemoteVideo = false;
-
         }
-
       }
       // for header
       CallsHeaderData.name = peerData.firstName + ' ' + peerData.lastName;
@@ -221,18 +225,19 @@ export class CallConsoleComponent implements OnInit, OnDestroy, AfterViewInit {
         this.callStartTimer = setInterval(() => {
           const time = this.AgentUserInformation.getCallInformation();
           this.callTimer = this.AgentUserInformation.CallDuration(
-            time.call_duration);
-        }, 1000)
-      }
-      else {
+            time.call_duration
+          );
+        }, 1000);
+      } else {
         this.initialTime = setInterval(() => {
           this.callTimer = this.AgentUserInformation.callJoiningTime(startTime);
-        }, 1000)
+        }, 1000);
       }
     });
   }
   public async seletecOutputForCamera(event: boolean) {
-    if (event == true) {
+    if (!this.screenShareData.isSelected) {
+    if (event === true) {
       this.videoStream = await this.StreamingService.startVideo(
         this.CallsOperationService.peerUserId
       );
@@ -242,10 +247,14 @@ export class CallConsoleComponent implements OnInit, OnDestroy, AfterViewInit {
       this.StreamingService.stopVideo();
     }
     this.cameraoperation(event)
+  } else {
+    this.MessageService.setErrorMessage(
+      'Cannot turn on camera while sharing screen.'
+    );
   }
-  //comera oepration 
+  }
+  //comera oepration
   async cameraoperation(event: boolean) {
-    if (!this.screenShareData.isSelected) {
       event === true
         ? (this.PeerMiniCameraScreen.showCamera = true)
         : (this.PeerMiniCameraScreen.showCamera = false);
@@ -260,11 +269,7 @@ export class CallConsoleComponent implements OnInit, OnDestroy, AfterViewInit {
       if (this.agentOperationInformationData.isMinimize) {
         this.miniCameraOperation(event);
       }
-    } else {
-      this.MessageService.setErrorMessage(
-        'Cannot turn on camera while sharing screen.'
-      );
-    }
+     
   }
   seletecOutputForMircrophone(event: boolean) {
     this.miceData.isSelected = event;
@@ -282,7 +287,6 @@ export class CallConsoleComponent implements OnInit, OnDestroy, AfterViewInit {
         this.peerUserInformationData.showVideo = true;
       }
     }
-
   }
   async seletecOutputForScreenShare(event: boolean) {
     if (this.cameraData.isSelected) {
@@ -305,9 +309,8 @@ export class CallConsoleComponent implements OnInit, OnDestroy, AfterViewInit {
         this.StreamingService.stopVideo();
       }
       this.screenShareData.isSelected = false;
-
     }
-    this.isMinimize ? this.miniCameraOperation(false) : ''
+    this.isMinimize ? this.miniCameraOperation(false) : '';
   }
   unSplitScreenOutput(event: boolean) {
     if (!event) {
@@ -318,9 +321,8 @@ export class CallConsoleComponent implements OnInit, OnDestroy, AfterViewInit {
         this.peerUserInformationData.showWaitingIcon = true;
         this.peerUserInformationData.showImage = false;
       }
-      this.changePosition()
+      this.changePosition();
     }
-
   }
   seletecOutputForHangUpCall(event: boolean) {
     if (event) {
@@ -331,15 +333,12 @@ export class CallConsoleComponent implements OnInit, OnDestroy, AfterViewInit {
     if (event) {
       this.openDeviceSwitcher = true;
     }
-
   }
   minmizeMaxmizeScreenOutput(event: boolean) {
-
     this.agentOperationInformationData.isMinimize = event;
     if (this.isRemoteVideo || this.cameraData.isSelected) {
       this.isVideoMinimize = true;
-    }
-    else {
+    } else {
       this.isVideoMinimize = false;
     }
     event && this.DevicesInformationService.getDeviceType() === true
@@ -369,18 +368,18 @@ export class CallConsoleComponent implements OnInit, OnDestroy, AfterViewInit {
         this.minimizeCallControl.height = '55px';
         this.isMinimize = false;
         this.isVideoMinimize = true;
-        (this.isSplit) ?
-          this.peerUserInformationData.showVideo = true : this.peerUserInformationData.showVideo = false;
-
-      }
-      else {
+        this.isSplit
+          ? (this.peerUserInformationData.showVideo = true)
+          : (this.peerUserInformationData.showVideo = false);
+      } else {
         this.isMinimize = true;
       }
       this.toogle = true;
     } else {
-
-      if (this.agentOperationInformationData.isMinimize === false && this.isRemoteVideo === false) {
-
+      if (
+        this.agentOperationInformationData.isMinimize === false &&
+        this.isRemoteVideo === false
+      ) {
         this.minimize.width = '255px';
         this.minimize.height = '99px';
         this.minimizeCallControl['border-radius'] = '0px';
@@ -389,9 +388,10 @@ export class CallConsoleComponent implements OnInit, OnDestroy, AfterViewInit {
         this.PeerMiniCameraScreen.showInitals == false;
         this.toogle = false;
         this.isMinimize = false;
-      }
-      else if (this.agentOperationInformationData.isMinimize === false && this.isRemoteVideo === true) {
-
+      } else if (
+        this.agentOperationInformationData.isMinimize === false &&
+        this.isRemoteVideo === true
+      ) {
         this.minimize.width = '382px';
         this.minimize.height = '325px';
         this.minimizeCallControl['border-radius'] = '51px';
@@ -401,9 +401,7 @@ export class CallConsoleComponent implements OnInit, OnDestroy, AfterViewInit {
         this.toogle = false;
         this.isMinimize = false;
         this.isVideoMinimize = true;
-
-      }
-      else if (this.isRemoteVideo === false) {
+      } else if (this.isRemoteVideo === false) {
         this.isMinimize = true;
         this.toogle = true;
         this.isVideoMinimize = true;
@@ -415,18 +413,20 @@ export class CallConsoleComponent implements OnInit, OnDestroy, AfterViewInit {
     }
   }
 
-  // first Default data 
+  // first Default data
   defaultUserData() {
     const user = this.AgentUserInformation.getCallInformation();
-    this.PeerMiniCameraScreen.showCamera = user.user_information.data.is_camera_on;
-    this.peerUserInformationData.showVideo = user.user_information.data.is_camera_on;
-    this.peerUserInformationData.showShareScreen = user.user_information.is_shared_screen;
+    this.PeerMiniCameraScreen.showCamera =
+      user.user_information.data.is_camera_on;
+    this.peerUserInformationData.showVideo =
+      user.user_information.data.is_camera_on;
+    this.peerUserInformationData.showShareScreen =
+      user.user_information.is_shared_screen;
     this.cameraData.isSelected = user.user_information.data.is_camera_on;
     this.isVideoMinimize = user.user_information.data.is_camera_on;
-    this.peerUserInformationData.peerImage = user.user_information.data.img_url
+    this.peerUserInformationData.peerImage = user.user_information.data.img_url;
   }
   changePosition() {
     this.dragPosition = { x: this.dragPosition.x, y: this.dragPosition.y };
   }
-
 }

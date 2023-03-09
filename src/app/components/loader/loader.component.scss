@@ -1,8 +1,48 @@
-.loaderpanel {
-    width: 100%;
-    text-align: center;
-    margin: 0 auto;
-    top: calc(50% - 74px);
-    bottom: calc(50% - 74px);
-    position: absolute;
-}
+.wrapper {
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    font-family: Roboto;
+    font-style: normal;
+    background-color: white;
+  
+    .pulse {
+      height: 75px;
+      width: 75px;
+      background: linear-gradient(#0058dd, #00d1ff);
+      border-radius: 50%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      &:before,
+      &:after {
+        content: "";
+        position: absolute;
+        width: 100px;
+        height: 100px;
+        background: linear-gradient(#0058dd, #00d1ff);
+        border-radius: 50%;
+        z-index: 1;
+        opacity: 0.3;
+      }
+      &:before {
+        animation: pulse 3s ease infinite;
+      }
+      &:after {
+        animation: pulse 3s 1s ease infinite;
+      }
+      img {
+        z-index: 2;
+      }
+  
+      @keyframes pulse {
+        100% {
+          transform: scale(2);
+          opacity: 0;
+        }
+      }
+    }
+  }
