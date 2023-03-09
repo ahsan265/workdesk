@@ -123,6 +123,7 @@ export class CallConsoleComponent implements OnInit, OnDestroy, AfterViewInit {
     this.cameraData.isSelected = false;
     this.screenShareData.isSelected = false;
     this.miceData.isSelected = true;
+    this.secondpeerUserInformationData.showLoaderAnimation = true;
   }
   async ngOnInit() {
     this.StreamingService.setCallType.subscribe(isVideo => {
@@ -232,7 +233,8 @@ export class CallConsoleComponent implements OnInit, OnDestroy, AfterViewInit {
     });
   }
   public async seletecOutputForCamera(event: boolean) {
-    if (event == true) {
+    if (!this.screenShareData.isSelected) {
+    if (event === true) {
       this.videoStream = await this.StreamingService.startVideo(
         this.CallsOperationService.peerUserId
       );
@@ -242,10 +244,14 @@ export class CallConsoleComponent implements OnInit, OnDestroy, AfterViewInit {
       this.StreamingService.stopVideo();
     }
     this.cameraoperation(event)
+  } else {
+    this.MessageService.setErrorMessage(
+      'Cannot turn on camera while sharing screen.'
+    );
+  }
   }
   //comera oepration 
   async cameraoperation(event: boolean) {
-    if (!this.screenShareData.isSelected) {
       event === true
         ? (this.PeerMiniCameraScreen.showCamera = true)
         : (this.PeerMiniCameraScreen.showCamera = false);
@@ -260,11 +266,7 @@ export class CallConsoleComponent implements OnInit, OnDestroy, AfterViewInit {
       if (this.agentOperationInformationData.isMinimize) {
         this.miniCameraOperation(event);
       }
-    } else {
-      this.MessageService.setErrorMessage(
-        'Cannot turn on camera while sharing screen.'
-      );
-    }
+     
   }
   seletecOutputForMircrophone(event: boolean) {
     this.miceData.isSelected = event;
