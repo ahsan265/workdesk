@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 import { OverlayService } from '@gigaaa/gigaaa-components';
 import { Subject } from 'rxjs';
 import { CallConsoleComponent } from 'src/app/callInterface/call-console/call-console.component';
-import { screenShareData } from 'src/app/callInterface/callsInterfaceData';
+import { miceData, screenShareData } from 'src/app/callInterface/callsInterfaceData';
 import { CloseDialogOverlayRef } from 'src/app/callInterface/overLayService/closeDialogService';
 import { CallsService } from 'src/app/calls/callService/calls.service';
 import { CallSocketService } from 'src/app/workdeskSockets/callSocket/call-socket.service';
@@ -31,7 +31,8 @@ export class StreamingService {
   getLocalStream = new Subject<MediaStream>();
   peerUserId!: string;
   setCallType = new Subject<boolean>();
-  isAudioInputEnabled: boolean = true;
+  isAudioInputEnabled!: boolean;
+  miceData = miceData;
 
   constructor(
     private MessageService: MessageService,
@@ -97,7 +98,6 @@ export class StreamingService {
     } else {
       audio.replaceTrack(audioTrack);
     } this.PeerConnectionService.getAudioCodec()
-
     const offer: RTCSessionDescriptionInit =
       await this.PeerConnectionService.peerConnection.createOffer({
         offerToReceiveAudio: true,
@@ -192,7 +192,7 @@ export class StreamingService {
       data: userInformation.user_information.data
     });
     await navigator.mediaDevices
-      .getUserMedia({ video: true })
+      .getUserMedia({ video: true, audio: false })
       .then((stream) => {
         mediastream = stream;
         this.getLocalStream.next(stream);
@@ -485,6 +485,7 @@ export class StreamingService {
       let constraint = { audio: { deviceId: idOfMicrophone } };
       navigator.mediaDevices.getUserMedia(constraint).then(async (stream) => {
         this.localStream.addTrack(stream.getAudioTracks()[0]);
+        this.audioChecker();
         const audio = this.PeerConnectionService.peerConnection
           .getSenders()
           .find((audioTrack: any) => {
@@ -499,11 +500,13 @@ export class StreamingService {
 
   // checker for audio 
   audioChecker() {
-    if (this.isAudioInputEnabled === true) {
+    if (this.miceData.isSelected === true) {
       this.unmunteAudio();
     }
     else {
       this.muteAudio();
     }
   }
+
+
 }
