@@ -162,6 +162,11 @@ input::-webkit-inner-spin-button {
     min-width: 240px;
 }
 
+::ng-deep .multiSelectWrapper.language .dropdown {
+    max-height: 100px;
+    overflow-y: scroll;
+}
+
 .divider {
     background: #E3E3EB;
     height: 1px;

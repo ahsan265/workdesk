@@ -6,10 +6,10 @@
         <app-card [cardData]="ticketData1"></app-card>
     </div>
 </div>
-<div class="filterWrapper" >
+<div class="filterWrapper">
     <div class="leftFilter">
         <div class="multiSelectWrapper">
-            <app-one-select-dropdown [oneSelectData]="oneSelectData"></app-one-select-dropdown>
+            <app-multi-select-dropdown [multiSelectData]="priorityData"></app-multi-select-dropdown>
         </div>
     </div>
     <div class="rightFilter">
@@ -18,8 +18,8 @@
             </app-one-select-dropdown>
         </div>
         <div class="multiSelectWrapper status">
-            <app-one-select-dropdown [oneSelectData]="oneSelectData3">
-            </app-one-select-dropdown>
+            <app-multi-select-dropdown [multiSelectData]="statusType">
+            </app-multi-select-dropdown>
         </div>
         <div class="multiSelectWrapper search">
             <app-search-input-field [searchInputData]="searchInputData">
