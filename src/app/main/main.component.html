@@ -11,7 +11,8 @@
       (onLoggedUser)="onGetLoggedUser($event)" (isOnlineButtonClicked)="setOnlineStatus($event)"
       [showOnlineButton]="true" [currentUserStatus]="this.statusOnline" [showPreferences]="true"
       [preferenceUrl]="'preference'" [addonData]="addOns" (userSwitched)="userSwitched($event)"
-      (switchOrganization)="openOgranizationSwitcher($event)" [showOrganization]="true" [organizationData]="organizationData">
+      (switchOrganization)="openOgranizationSwitcher($event)" [showOrganization]="true"
+      [organizationData]="organizationData" [notifiactionData]="notifiactionData">
     </gigaaa-header>
     <div class="workdeskWrap">
       <router-outlet></router-outlet>

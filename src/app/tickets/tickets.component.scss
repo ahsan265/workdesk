@@ -228,13 +228,18 @@ table tbody tr td:nth-child(7) img {
     height: 30px;
 }
 
+table tbody tr td:nth-child(7)>div:hover div.closeIcon {
+    display: inline-flex;
+}
+
+
 table tbody tr td:nth-child(7) div.closeIcon {
     border-radius: 50%;
     width: 15px;
     height: 15px;
     background: #162741;
     border: 1px solid #FFFFFF;
-    display: inline-flex;
+    display: none;
     flex-wrap: nowrap;
     justify-content: center;
     align-items: center;

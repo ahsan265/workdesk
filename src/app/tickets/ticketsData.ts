@@ -4,7 +4,7 @@ import { OneSelect } from "../models/oneSelect";
 import { SearchInput } from "../models/searchInput";
 
 const TicketsCard: Card = {
-    icon: '../../assets/images/dropdown/checkmart_white.svg',
+    icon: '../../assets/images/tickets/total_tickets.svg',
     title: 'Total Tickets',
     color: '#EDEDF6',
     mainResult: '12',
@@ -14,7 +14,7 @@ const TicketsCard: Card = {
     iconDown: '../../assets/images/cards/arrowDown.svg'
 };
 const TicketsCard1: Card = {
-    icon: '../../assets/images/dropdown/checkmart_white.svg',
+    icon: '../../assets/images/tickets/total_assigned.svg',
     title: 'Total Assigned to you',
     color: '#E2F9F7',
     mainResult: '12',
