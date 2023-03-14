@@ -10,7 +10,7 @@ import {
 const CallsHeaderData: CallsHeaderModel = {
   agentImage: '../../../assets/images/callInterface/default_user.svg',
   isMinimize: true,
-  name: 'Waiting for agent ...',
+  name: 'Waiting for user ...',
   initials: 'AA',
   minimizeIcon: '../../../assets/images/callInterface/minimizeicon.svg',
   maximizeIcon: '../../../assets/images/callInterface/maximizeicon.svg'
