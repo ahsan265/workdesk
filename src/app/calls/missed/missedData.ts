@@ -220,7 +220,9 @@ const callTypeMissed: MultiSelect = {
   showSearchBar: false,
   data: [
     { id: 1, name: 'Audio', selected: false },
-    { id: 2, name: 'Video', selected: false }
+    { id: 2, name: 'Video', selected: false },
+    { id: 3, name: 'Live chat', selected: false }
+
   ]
 };
 const languaugesMissed: MultiSelect = {
@@ -232,7 +234,7 @@ const languaugesMissed: MultiSelect = {
   ]
 };
 const searchInputData: SearchInput = {
-  placeholder: 'Search by name or user ID',
+  placeholder: 'Search by User name or Reason',
   searchText: ''
 };
 const missedData: callsIndicatorData = {

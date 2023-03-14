@@ -14,7 +14,7 @@ import { GigaaaApiService } from '../workdeskServices/gigaaaApiService/gigaaa-ap
 import { CommonService } from '../workdeskServices/commonEndpoint/common.service';
 import { SharedServices } from '../workdeskServices/sharedResourcesService/shared-resource-service.service';
 import { Router } from '@angular/router';
-import { organizationData, organizationDoneModalData, organizationModalData } from './mainData';
+import { notifiactionData, organizationData, organizationDoneModalData, organizationModalData } from './mainData';
 
 @Component({
   selector: 'app-main',
@@ -37,6 +37,7 @@ export class MainComponent implements OnInit {
   showSwitchDoneOganization: boolean = false;
   organizationModalData = organizationModalData
   organizationDoneModalData = organizationDoneModalData
+  notifiactionData=notifiactionData;
 
   constructor(
     public authService: AuthService,

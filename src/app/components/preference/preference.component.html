@@ -25,7 +25,7 @@
             User wait time
         </div>
         <div class="text">
-            Set how long it takes for the Agent to respond to a request.
+            Set how long Agent will wait for User in call
         </div>
         <div class="timerSetting">
             <input type="number" value="1">
@@ -42,12 +42,12 @@
             Language
         </div>
         <div class="multiSelectWrapper languauge">
-            <app-multi-select-dropdown [multiSelectData]="languauges" (multiSelectOutput)="langugaOutput($event)">
-            </app-multi-select-dropdown>
+            <app-one-select-dropdown [oneSelectData]="languauges" (oneSelectOutput)="langugaOutput($event)">
+            </app-one-select-dropdown>
         </div>
         <div class="divider">
         </div>
-        <div class="heading">
+        <!-- <div class="heading">
             Appearance
         </div>
         <div class="smallHeading theme">
@@ -64,7 +64,7 @@
             </div>
         </div>
         <div class="divider">
-        </div>
+        </div> -->
         <div class="heading">
             Notifications
         </div>

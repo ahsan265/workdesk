@@ -76,7 +76,9 @@ const callTypeAnswered: MultiSelect = {
   showSearchBar: false,
   data: [
     { id: 1, name: 'Audio', selected: false },
-    { id: 2, name: 'Video', selected: false }
+    { id: 2, name: 'Video', selected: false },
+    { id: 3, name: 'Live chat', selected: false }
+
   ]
 };
 
@@ -156,7 +158,7 @@ const answeredData: callsIndicatorData = {
   isAgent: false
 };
 const searchInputData: SearchInput = {
-  placeholder: 'Search by name or user ID',
+  placeholder: 'Search by Agent name',
   searchText: ''
 };
 const languaugesAnswered: MultiSelect = {
@@ -167,4 +169,4 @@ const languaugesAnswered: MultiSelect = {
 
   ]
 };
-export { dataTableSettings, agents, callTypeAnswered, paginationData ,answeredData,searchInputData,languaugesAnswered};
+export { dataTableSettings, agents, callTypeAnswered, paginationData, answeredData, searchInputData, languaugesAnswered };

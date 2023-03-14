@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { AuthService } from '../services/auth.service';
-import { oneSelectData, oneSelectData2, oneSelectData3, searchInputData, tableData, TicketsCard, TicketsCard1, ticketsTableSetting } from './ticketsData';
+import {  oneSelectData2, oneSelectData3, priorityData, searchInputData, statusType, tableData, TicketsCard, TicketsCard1, ticketsTableSetting } from './ticketsData';
 
 @Component({
   selector: 'app-tickets',
@@ -14,8 +14,8 @@ export class TicketsComponent {
   ticketData = TicketsCard;
   ticketData1 = TicketsCard1;
   oneSelectData2 = oneSelectData2;
-  oneSelectData3 = oneSelectData3;
-  oneSelectData = oneSelectData;
+  statusType = statusType;
+  priorityData = priorityData;
   searchInputData = searchInputData;
   ticketsTableSetting = ticketsTableSetting;
   tableData=tableData;
