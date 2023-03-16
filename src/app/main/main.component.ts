@@ -16,6 +16,8 @@ import { CommonService } from '../workdeskServices/commonEndpoint/common.service
 import { SharedServices } from '../workdeskServices/sharedResourcesService/shared-resource-service.service';
 import { Router } from '@angular/router';
 import { organizationData, organizationDoneModalData, organizationModalData } from './mainData';
+import { OverlayService } from '@gigaaa/gigaaa-components';
+import { SwitchOrganizationComponent } from '../modals/switch-organization/switch-organization.component';
 
 @Component({
   selector: 'app-main',
@@ -46,7 +48,8 @@ export class MainComponent implements OnInit {
     private CommonService: CommonService,
     private GigaaaApiService: GigaaaApiService,
     private SharedServices: SharedServices,
-    private Router: Router
+    private Router: Router,
+    private OverlayService: OverlayService
   ) { }
   organizationData = organizationData
   ngOnInit() {
@@ -66,9 +69,9 @@ export class MainComponent implements OnInit {
         this.authService.user.next(this.authService.getLoggedUser());
       }
     })
-    this.SharedServices.switchOrganizationDialog.subscribe((data: boolean) => {
-      this.showSwitchOganization = data;
-    })
+    // this.SharedServices.switchOrganizationDialog.subscribe((data: boolean) => {
+    //   this.showSwitchOganization = data;
+    // })
     this.SharedServices.switchOrganizationDoneDialog.subscribe((data: boolean) => {
       setTimeout(() => {
         this.organizationData.name = ((this.getOrganizationService.getLastUsedOrganization().is_individual) ? this.getOrganizationService.getLastUsedOrganization().contact_person :
@@ -144,6 +147,12 @@ export class MainComponent implements OnInit {
   openOgranizationSwitcher(value: boolean) {
     if (value) {
       this.showSwitchOganization = value;
+      this.OverlayService.open({
+        component: SwitchOrganizationComponent,
+        backdropClass: 'dark-backdrop',
+        panelClass: 'swtichOrganizationPopup',
+        hasBackdrop: true
+      })
     }
   }
 

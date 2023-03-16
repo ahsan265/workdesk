@@ -1,25 +1,27 @@
-<div class="headerWrapper">
-    <span class="heading">Choose the organization to work with</span>
-</div>
-<div class="discriptionWrapper">
-    <span class="discription">
-        Incoming Customer support requests are monitored and managed within our Workdesk. Provide Customers with
-        information immediately through either call or chat and explore many more powerful features.
-    </span>
-</div>
+<div class="switchOrganizationWrapper">
+    <div class="headerWrapper">
+        <span class="heading">Choose the organization to work with</span>
+    </div>
+    <div class="discriptionWrapper">
+        <span class="discription">
+            Incoming Customer support requests are monitored and managed within our Workdesk. Provide Customers with
+            information immediately through either call or chat and explore many more powerful features.
+        </span>
+    </div>
 
-<div class="organizationPanel">
-    <div class="card" *ngFor="let data of this.organizations" [style.border-color]="data.last_used?'#1C54DB':'inehrit'"
-        (click)="setLastUsedOrganization(data)">
-        <div class="imageWrapper">
-            <img [src]="data.is_individual===true?'../../../assets/images/components/org_individual.svg':'../../../assets/images/components/org_business.svg'"
-                alt="">
-        </div>
-        <div class="agentName">
-            {{data.is_individual===true?data.contact_person:data.name}}
+    <div class="organizationPanel">
+        <div class="card" *ngFor="let data of this.organizations"
+            [style.border-color]="data.last_used?'#1C54DB':'inehrit'" (click)="setLastUsedOrganization(data)">
+            <div class="imageWrapper">
+                <img [src]="data.is_individual===true?'../../../assets/images/components/org_individual.svg':'../../../assets/images/components/org_business.svg'"
+                    alt="">
+            </div>
+            <div class="agentName">
+                {{data.is_individual===true?data.contact_person:data.name}}
+            </div>
         </div>
     </div>
-</div>
-<div class="actionPanel">
-    <button (click)="closeOrganizationSwitcher()" class="Cancel">Close</button>
+    <div class="actionPanel">
+        <button (click)="closeOrganizationSwitcher()" class="Cancel">Close</button>
+    </div>
 </div>
