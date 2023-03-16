@@ -56,10 +56,12 @@
   top: 0px;
 }
 
-::ng-deep .filterWrapper .leftFilter.ticket .dropdownWrapper .selectDropdown {
-  background: #ededf6 !important;
-  border: none !important;
+::ng-deep .filterWrapper .leftFilter .dropdownWrapper .selectDropdown {
+  background: #ededf6;
+  border: none;
 }
+
+
 
 ::ng-deep .searchWrap {
   justify-content: flex-end;
