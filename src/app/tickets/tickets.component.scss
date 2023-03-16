@@ -9,10 +9,10 @@
     justify-content: space-between;
 }
 
-// ::ng-deep .filterWrapper .leftFilter .dropdownWrapper .selectDropdown {
-//     background: #ededf6;
-//     border: none;
-// }
+::ng-deep .filterWrapper .leftFilter.tickets .dropdownWrapper .selectDropdown {
+    background: #FFFFFF;
+    border: 1px solid rgba(208, 208, 222, .6);
+}
 
 ::ng-deep .card .cardTitleSpan {
     text-transform: none !important;
