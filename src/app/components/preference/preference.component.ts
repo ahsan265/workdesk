@@ -14,7 +14,7 @@ export class PreferenceComponent {
   allLanguageData = allLanguageData;
 
   constructor(private authService: AuthService, private CanloadService: CanloadService) {
-    this.authService.pageTitle.next('Preference');
+    this.authService.pageTitle.next('Preferences');
   }
 
   langugaOutput(event: number) {
