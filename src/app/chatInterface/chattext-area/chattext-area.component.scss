@@ -67,6 +67,11 @@ input::placeholder {
     letter-spacing: 0.02em;
     color: #FFFFFF;
     cursor: pointer;
+    transition: 0.4;
+}
+
+.endChat:hover {
+    background: #DB0B48;
 }
 
 .sendMessage {
@@ -74,4 +79,8 @@ input::placeholder {
     right: 180px;
     top: 26px;
     cursor: pointer;
+}
+
+svg.sendMessage:hover {
+    fill: #1C54DB;
 }

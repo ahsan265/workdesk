@@ -101,6 +101,8 @@ import { PreferenceComponent } from './components/preference/preference.componen
 import { DashboardCallComponent } from './dashboard/dashboard-call/dashboard-call.component';
 import { DashboardChatsComponent } from './dashboard/dashboard-chats/dashboard-chats.component';
 import { TicketsComponent } from './tickets/tickets.component';
+import { AssignComponent } from './components/assign/assign.component';
+import { ColorBackPipe } from './pipes/nameBackground/color-back.pipe';
 
 @NgModule({
   declarations: [
@@ -116,6 +118,7 @@ import { TicketsComponent } from './tickets/tickets.component';
     ChartLineComponent,
     ChartDoughnutComponent,
     FilterPipe,
+    ColorBackPipe,
     PageWrapperComponent,
     AgentSettingsComponent,
     LandingPageComponent,
@@ -164,7 +167,9 @@ import { TicketsComponent } from './tickets/tickets.component';
     PreferenceComponent,
     DashboardCallComponent,
     DashboardChatsComponent,
-    TicketsComponent
+    TicketsComponent,
+    AssignComponent,
+
   ],
   imports: [
     CommonModule,

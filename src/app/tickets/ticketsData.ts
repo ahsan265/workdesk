@@ -25,15 +25,12 @@ const TicketsCard1: Card = {
 };
 const oneSelectData2: OneSelect[] = [{ id: 1, name: 'Assignee', selected: true }, { id: 1, name: 'Chats', selected: false }];
 const oneSelectData3: OneSelect[] = [{ id: 1, name: 'Status', selected: true }, { id: 1, name: 'Chats', selected: false }];
-const priorityData: MultiSelect = {
-    showSearchBar: false,
-    showSelectAll: false,
-    title: 'Status',
-    data: [{ id: 0, name: 'All priority', selected: true }, { id: 1, name: 'Urgent', selected: false },
+const priorityData: OneSelect[] = [
+    { id: 0, name: 'All priority', selected: true }, { id: 1, name: 'Urgent', selected: false },
     { id: 2, name: 'High', selected: false },
     { id: 3, name: 'Normal', selected: false },
-    { id: 4, name: 'Low', selected: false }]
-};
+    { id: 4, name: 'Low', selected: false }];
+
 const searchInputData: SearchInput = {
     placeholder: 'Search by user or ticket name',
     searchText: ''

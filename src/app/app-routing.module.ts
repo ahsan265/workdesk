@@ -17,9 +17,10 @@ import { MissedComponent } from './calls/missed/missed/missed.component';
 import { AnsweredComponent } from './calls/answered/answered/answered.component';
 import { ChatConsoleComponent } from './chatInterface/chat-console/chat-console.component';
 import { PreferenceComponent } from './components/preference/preference.component';
-import { DashboardCallComponent } from './dashboard/dashboard-call/dashboard-call.component';
 import { DashboardChatsComponent } from './dashboard/dashboard-chats/dashboard-chats.component';
 import { TicketsComponent } from './tickets/tickets.component';
+import { AssignComponent } from './components/assign/assign.component';
+import { DashboardCallComponent } from './dashboard/dashboard-call/dashboard-call.component';
 
 const routes: Routes = [
   { path: '', component: LandingPageComponent },
@@ -63,6 +64,7 @@ const routes: Routes = [
   },
   { path: 'loading', component: LoaderComponent, canActivate: [AuthService] },
   { path: 'chat', component: ChatConsoleComponent, canActivate: [AuthService] },
+  { path: 'testing', component: AssignComponent, canActivate: [AuthService] },
   { path: '**', component: PageNotFoundComponent }
 ];
 
@@ -75,4 +77,4 @@ const routes: Routes = [
   ],
   exports: [RouterModule]
 })
-export class AppRoutingModule {}
+export class AppRoutingModule { }

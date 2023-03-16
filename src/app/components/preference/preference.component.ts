@@ -18,7 +18,6 @@ export class PreferenceComponent {
   }
 
   langugaOutput(event: number) {
-    console.log(event)
   }
   onGetSwitchAllLanguage(event: any) {
 

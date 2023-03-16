@@ -14,7 +14,9 @@
 //     border: none;
 // }
 
-
+::ng-deep .card .cardTitleSpan {
+    text-transform: none !important;
+}
 
 // ::ng-deep .filterWrapper .leftFilter .dropdownWrapper {
 //   padding-left: 30px;
@@ -249,11 +251,13 @@ table tbody tr td:nth-child(7) div.closeIcon {
 }
 
 table tbody tr td:nth-child(7) {
-    text-align: center;
+    justify-content: center;
+    display: flex;
+    align-items: center;
 }
 
 table tbody tr td:nth-child(7) div {
-    position: relative;
+    position: absolute;
     width: 30px;
     height: 30px;
     display: inline-flex;
@@ -263,6 +267,7 @@ table tbody tr td:nth-child(7) div.closeIcon img {
     width: 9px;
     height: 15px;
 }
+
 
 table tbody tr td:nth-child(1) span {
     margin-right: 10px;

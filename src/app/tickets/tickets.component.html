@@ -9,7 +9,7 @@
 <div class="filterWrapper">
     <div class="leftFilter">
         <div class="multiSelectWrapper">
-            <app-multi-select-dropdown [multiSelectData]="priorityData"></app-multi-select-dropdown>
+            <app-one-select-dropdown [oneSelectData]="priorityData"></app-one-select-dropdown>
         </div>
     </div>
     <div class="rightFilter">
@@ -31,7 +31,7 @@
     </div>
 </div>
 <div class="inPageWrapper">
-    <app-page-wrapper>
+    <app-page-wrapper #assignTickets>
         <div class="tableWrapper">
             <table>
                 <thead>
@@ -41,7 +41,6 @@
                         </th>
                     </tr>
                 </thead>
-
                 <tbody>
                     <tr *ngFor="let data of tableData">
                         <td>
@@ -72,11 +71,15 @@
                         <td>
                             <div>
                                 <img class="agentImage" src="../../assets/images/tickets/default_agent.svg" alt="">
-                                <div class="closeIcon">
+                                <div class="closeIcon" (click)="showAssignTicket(data.tickerNumber)"
+                                    [style.display]="showAssignTickets?'none':''">
                                     <img [src]="data.assignee" alt="">
                                 </div>
+                                <div class="assignAgentWrapper"
+                                    *ngIf="showAssignTickets && data.tickerNumber===this.indexValue">
+                                    <app-assign></app-assign>
+                                </div>
                             </div>
-
                         </td>
                     </tr>
                 </tbody>

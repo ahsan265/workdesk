@@ -4,13 +4,7 @@ import { SwitchButton } from "src/app/models/switchButton";
 
 const languauges: OneSelect[] =
   [
-    { id: 1, name: 'Arabic', selected: false },
-    { id: 2, name: 'English', selected: true },
-    { id: 3, name: 'German', selected: false },
-    { id: 4, name: 'Russian', selected: false },
-    { id: 5, name: 'Spanish', selected: false },
-    { id: 6, name: 'Turkish', selected: false },
-    { id: 7, name: 'Urdu', selected: false }
+    { id: 1, name: 'English', selected: true },
   ]
 
 const allLanguageData: SwitchButton = {
