@@ -1,0 +1,68 @@
+<div class="assignWrapper">
+    <div class="heading">
+        Assign
+    </div>
+    <div class="assigneeWrapper">
+        <div class="assignedPanel" *ngFor="let data of assignedAgent;">
+            <div class="agentInformation">
+                <div class="imageWrapper" *ngIf="data.image!==''">
+                    <img height="20" width="20" [src]="data.image" alt="" srcset="">
+                </div>
+                <div class="colorCircle" *ngIf="data.image===''"
+                    [style.background]="data.firstName | colorBack:data.lastName">
+                    {{data.firstName
+                    | nameInitials : data.lastName}}
+                </div>
+                <div class="agentName">
+                    {{data.firstName}} {{data.lastName}}
+                </div>
+            </div>
+            <div class="removeAssign">
+                <img height="16" width="10" [src]="data.icon" alt="" srcset="">
+            </div>
+        </div>
+        <div class="assignedPanel">
+            <div class="agentInformation">
+                <img height="20" width="20" src="../../../assets/images/tickets/default_agent.svg" alt="" srcset="">
+                <div class="agentName">
+                    Peter Handerson
+                </div>
+            </div>
+            <div class="removeAssign">
+                <img height="16" width="10" src="../../../assets/images/assignAgent/unassign_icon.svg" alt="" srcset="">
+            </div>
+        </div>
+    </div>
+    <div class="heading" style="justify-content: start;padding-left: 16px;">
+        Agents
+    </div>
+    <div class="multiSelectWrapper search">
+        <app-search-input-field [searchInputData]="searchInputData" (searchOutputData)="getSearchValue($event)">
+        </app-search-input-field>
+        <div class="toAssigneeWrapper">
+            <div class="assignedPanel toBe" *ngFor="let data of UnAssignedAgent;">
+                <div class="agentInformation">
+                    <div class="imageWrapper">
+                        <div *ngIf="data.image!==''">
+                            <img height="20" width="20" [src]="data.image" alt="" srcset="" class="toBe">
+                        </div>
+                        <div class="colorCircle toBe" *ngIf="data.image===''"
+                            [style.background]="data.firstName | colorBack:data.lastName">
+                            {{data.firstName
+                            | nameInitials : data.lastName}}
+                        </div>
+                    </div>
+                    <div class="agentName">
+                        {{data.firstName}} {{data.lastName}}
+                    </div>
+                    <div class="assignText toBe">
+                        {{data.assignText}}
+                    </div>
+                </div>
+                <div class="removeAssign toBe">
+                    <img height="16" width="10" [src]="data.icon" alt="" srcset="">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
