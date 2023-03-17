@@ -52,11 +52,7 @@ export class CallingScreenComponent implements OnInit {
   @ViewChild('localVideo') localVideo!: ElementRef<HTMLMediaElement>;
   remoteStream!: MediaStream;
   @Output() unSplitScreenOutput = new EventEmitter();
-  // @HostListener('window:resize', ['$event'])
-  // getScreenSize() {
-  //     this.AgentUserInformation?.innerWidth < 769 ? this.collapsedSidebar = true : this.collapsedSidebar = false;
-  //     window?.innerWidth < 769 ? this.showCollapseButton = false : this.showCollapseButton = true;
-  // }
+
   remoteVideoObjectNormal = {
     height: '100%',
     width: '100%'
@@ -158,19 +154,30 @@ export class CallingScreenComponent implements OnInit {
       data.isCameraOn === true || data.isScreenShareOn === true
         ? (this.isRemoteEnabled = true)
         : (this.isRemoteEnabled = false);
-      data.isScreenShareOn === true
-        ? this.render.setStyle(
+      if (data.isScreenShareOn === true) {
+        this.render.setStyle(
           this.remoteVideo.nativeElement,
           'object-fit',
           'contain'
-        )
-        : this.render.setStyle(
+        );
+        (this.agentOperationInformation.IsVideoMinimize) ?
+          (this.isRemoteEnabled = false)
+          : (this.isRemoteEnabled = true);
+
+      }
+      else {
+        this.render.setStyle(
           this.remoteVideo.nativeElement,
           'object-fit',
           'cover'
         );
-
+      }
     });
+    this.AgentUserInformation.screenOperation.subscribe(data => {
+      this.secondPeerInformationdata.showShareScreen === true && data === true ?
+      (this.isRemoteEnabled = false)
+      : (this.isRemoteEnabled = true);
+    })
   }
   UnslplitScreen($event: boolean) {
     this.unSplitScreenOutput.emit($event);
@@ -229,4 +236,6 @@ export class CallingScreenComponent implements OnInit {
       test_output_audio1.play();
     }
   }
+
+
 }

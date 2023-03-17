@@ -32,7 +32,7 @@
             secondPeerInformationdata.showLoaderAnimation === true
               ? 'block'
               : 'none'
-        }"  class="loaderAnimation"></div>
+        }" class="loaderAnimation"></div>
     </div>
   </div>
   <div class="callViewWrapperNormal" *ngIf="isSplit">
@@ -60,7 +60,7 @@
       <div [ngStyle]="{
           display:
             peerInformationdata.showLoaderAnimation === true ? 'inline-block' : 'none'
-        }"  class="loaderAnimation"></div>
+        }" class="loaderAnimation"></div>
     </div>
   </div>
   <div *ngIf="isSplit" class="unSplit" (click)="UnslplitScreen(!isSplit)">
@@ -71,6 +71,7 @@
         agentOperationInformation.IsVideoMinimize === true
           ? 'calc(100% - 50px)'
           : 'calc(100% - 78px)'
+         
     }">
     <video style="left: 0px" [hidden]="!(peerInformationdata.showVideo && isSplit) " [ngStyle]="
         isSplit ? remoteVideoObjectSplitNormal : remoteVideoObjectNormal

@@ -12,6 +12,8 @@ import { DevicesInformationService } from '../devicesInformation/devices-informa
 })
 export class AgentUserInformation {
   selectedSpearkerSubject = new Subject<any>();
+  screenOperation = new Subject<boolean>();
+
   constructor(private DevicesInformationService: DevicesInformationService) { }
 
   public getCallInformation() {
