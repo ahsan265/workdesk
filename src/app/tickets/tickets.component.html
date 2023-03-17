@@ -13,9 +13,11 @@
         </div>
     </div>
     <div class="rightFilter">
-        <div class="multiSelectWrapper assign">
+        <div class="multiSelectWrapper assign" #assignTicketsDropdown (click)="showAssignPopup()">
             <app-one-select-dropdown [oneSelectData]="oneSelectData2">
             </app-one-select-dropdown>
+            <div class="assignAgentWrapper"> <app-assign *ngIf="showAssignDropdown"></app-assign>
+            </div>
         </div>
         <div class="multiSelectWrapper status">
             <app-multi-select-dropdown [multiSelectData]="statusType">

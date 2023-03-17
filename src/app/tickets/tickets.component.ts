@@ -20,8 +20,11 @@ export class TicketsComponent {
   ticketsTableSetting = ticketsTableSetting;
   tableData = tableData;
   showAssignTickets: boolean = false
+  showAssignDropdown: boolean = false
+
   indexValue!: number
   @ViewChild('assignTickets') assignTickets: any = HTMLElement;
+  @ViewChild('assignTicketsDropdown') assignTicketsDropdown: any = HTMLElement;
 
 
   @HostListener('document:click', ['$event'])
@@ -29,7 +32,12 @@ export class TicketsComponent {
     if (!this.assignTickets?.nativeElement?.contains(event?.target)) {
       this.showAssignTickets = false;
     }
+    if (!this.assignTicketsDropdown?.nativeElement?.contains(event?.target)) {
+      this.showAssignDropdown = false
+    }
+
   }
+
   getArray(number: number) {
     return new Array(number);
   }
@@ -37,5 +45,8 @@ export class TicketsComponent {
   showAssignTicket(index: number) {
     this.indexValue = index;
     this.showAssignTickets = !this.showAssignTickets;
+  }
+  showAssignPopup() {
+    this.showAssignDropdown = !this.showAssignDropdown;
   }
 }

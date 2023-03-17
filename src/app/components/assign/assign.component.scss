@@ -3,10 +3,11 @@
     height: 392px;
     background: #FFFFFF;
     border: 1px solid #E1E1EA;
-    box-shadow: 4px 4px 17px -3px rgb(0 0 0 / 14%);
+    box-shadow: 4px 4px 17px -3px rgba(0, 0, 0, 0.14);
     border-radius: 4px;
     position: absolute;
-    right: 0px;
+    right: -30px;
+    top: 32px;
     z-index: 1;
 }
 
@@ -32,7 +33,6 @@
     padding: 7px;
     border-bottom: 1px solid #E3E3EB;
     overflow: scroll;
-    align-items: center;
 }
 
 .assignedPanel {
@@ -73,6 +73,7 @@
 .removeAssign {
     display: inline-flex;
     transition: 0.4s;
+
 }
 
 .multiSelectWrapper.search {
@@ -92,6 +93,7 @@
     color: #707096;
     margin-left: 10px;
     transition: 0.4s;
+    cursor: pointer;
 }
 
 .toAssigneeWrapper {
