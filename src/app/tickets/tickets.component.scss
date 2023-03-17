@@ -24,6 +24,13 @@
 // ::ng-deep .searchWrap {
 //     margin-right: 10px;
 // }
+.rightFilter .multiSelectWrapper.assign .assignAgentWrapper {
+    position: absolute;
+    right: 30px;
+    width: inherit;
+    height: inherit;
+    top: 4px;
+}
 
 ::ng-deep .filterWrapper .rightFilter .dropdownWrapper,
 ::ng-deep .filterWrapper .leftFilter .dropdownWrapper {
@@ -65,6 +72,10 @@
 
 .multiSelectWrapper.assign {
     width: 170px;
+}
+
+::ng-deep .rightFilter .multiSelectWrapper.assign .dropdown {
+    display: none;
 }
 
 .multiSelectWrapper.status {
