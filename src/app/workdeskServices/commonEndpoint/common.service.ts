@@ -347,10 +347,17 @@ export class CommonService {
     }
   }
   /// get conversation type
-  public getConversationType(conversation: boolean): string {
-    return conversation === false
-      ? '../../../assets/images/request_type/audio.svg'
-      : '../../../assets/images/request_type/video.svg';
+  public getConversationType(conversation: string): string {
+    switch (conversation) {
+      case 'audio':
+        return '../../../assets/images/request_type/audio.svg';
+      case 'video':
+        return '../../../assets/images/request_type/video.svg';
+      case 'chat':
+        return '../../../assets/images/request_type/video.svg';
+      default:
+        return '../../../assets/images/os/Windows.svg';
+    }
   }
 
   // get email logged in user

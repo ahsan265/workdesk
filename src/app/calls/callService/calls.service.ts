@@ -1,17 +1,14 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable no-undef */
 /* eslint-disable sort-imports */
-import { ChangeDetectorRef, Injectable } from '@angular/core';
-import { ReplaySubject, Subject } from 'rxjs';
+import {Injectable } from '@angular/core';
+import { ReplaySubject } from 'rxjs';
 import {
-  AnsweredCallModel,
-  IncomingCallModel,
-  MissedCallModel,
   newCallModelAnswered,
   newCallModelIncoming,
   newCallModelMissed,
   newCallModelOngoing,
-  OngoingCallModel
+
 } from 'src/app/models/callModel';
 import { OneSelect } from 'src/app/models/oneSelect';
 import { QueueSocketService } from 'src/app/workdeskSockets/queueSocket/queue-socket.service';
@@ -100,11 +97,6 @@ export class CallsService {
 
   }
 
-  // get call type
-
-  getCallType(isVideo: boolean) {
-    return isVideo === true ? 'Video' : 'Audio';
-  }
   // calulate time
   calculatetime(totalSeconds: number) {
     totalSeconds = Number(totalSeconds);

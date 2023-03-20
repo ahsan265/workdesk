@@ -81,7 +81,7 @@
 }
 
 .assignText {
-    font-family: 'Roboto', sans-serif;
+    font-family: "Roboto", sans-serif;
     font-style: normal;
     font-weight: 400;
     font-size: 12px;
@@ -94,6 +94,7 @@
     margin-left: 10px;
     transition: 0.4s;
     cursor: pointer;
+    margin-right: 10px;
 }
 
 .toAssigneeWrapper {
@@ -173,4 +174,5 @@ img.toBe {
 ::ng-deep .multiSelectWrapper.search .searchLabel {
     width: 275px;
     margin-left: 6px;
+    margin-right: 6px;
 }
