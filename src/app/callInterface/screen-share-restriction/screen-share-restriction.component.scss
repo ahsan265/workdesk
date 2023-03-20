@@ -8,6 +8,7 @@
   position: initial;
   text-align: center;
   display: flex;
+  justify-content: center;
 }
 
 .ShareScreenMessage {
@@ -24,7 +25,7 @@
 
 .shareScreenIcon {
   display: inline-flex;
-  margin: 4px 15px 6px 36px;
+  margin: 4px 15px 6px 0px;
   vertical-align: middle;
   height: 14px;
   width: 13px;
