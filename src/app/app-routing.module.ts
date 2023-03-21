@@ -21,6 +21,7 @@ import { DashboardChatsComponent } from './dashboard/dashboard-chats/dashboard-c
 import { TicketsComponent } from './tickets/tickets.component';
 import { AssignComponent } from './components/assign/assign.component';
 import { DashboardCallComponent } from './dashboard/dashboard-call/dashboard-call.component';
+import { TicketsCreationComponent } from './tickets-creation/tickets-creation.component';
 
 const routes: Routes = [
   { path: '', component: LandingPageComponent },
@@ -52,6 +53,7 @@ const routes: Routes = [
       },
       { path: 'agents', component: AgentsComponent },
       { path: 'tickets', component: TicketsComponent },
+      { path: 'tickets/createticket', component: TicketsCreationComponent },
       { path: 'agents/settings/:id', component: AgentSettingsComponent },
       { path: 'preference', component: PreferenceComponent }
     ]
@@ -64,7 +66,6 @@ const routes: Routes = [
   },
   { path: 'loading', component: LoaderComponent, canActivate: [AuthService] },
   { path: 'chat', component: ChatConsoleComponent, canActivate: [AuthService] },
-  { path: 'testing', component: AssignComponent, canActivate: [AuthService] },
   { path: '**', component: PageNotFoundComponent }
 ];
 

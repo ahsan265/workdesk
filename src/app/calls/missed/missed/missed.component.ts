@@ -70,14 +70,14 @@ export class MissedComponent implements OnInit {
       this.pagination.itemsPerPage = data.items_per_page
       this.missedCallData = data.calls.map((missedCallData: MissedCallModel) => ({
         agent_name: missedCallData.name,
-        call_uuid: missedCallData.call_uuid,
+        call_uuid: missedCallData.request_uuid,
         called_at: this.CallsService
           .getCalledAtTimeDate(missedCallData.missed_at, this.aggregate),
         callType: {
           image: this.CommonService.getConversationType(
-            missedCallData.is_video
+            missedCallData.request_type
           ),
-          text: this.CallsService.getCallType(missedCallData.is_video)
+          text: missedCallData.request_type.toLocaleUpperCase()
         },
         resaon: missedCallData.reason,
         user_details: {

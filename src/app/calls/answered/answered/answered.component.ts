@@ -94,11 +94,11 @@ export class AnsweredComponent implements OnInit {
           ],
           callType: {
             image: this.CommonService.getConversationType(
-              answeredData.is_video
+              answeredData.request_type
             ),
-            text: this.CallsService.getCallType(answeredData.is_video)
+            text: answeredData.request_type
           },
-          call_uuid: answeredData.call_uuid,
+          call_uuid: answeredData.request_uuid,
           duration: this.CallsService
             .getCalledAtTimeDate(answeredData.call_started_at, this.aggregate),
           agent_name: answeredData.agent.display_name,
@@ -122,7 +122,7 @@ export class AnsweredComponent implements OnInit {
       this.callType.data.map(data => {
         data.selected = false;
       })
-      this.searchInputData.searchText='';
+      this.searchInputData.searchText = '';
     })
 
   }

@@ -86,11 +86,11 @@ export class OngoingComponent implements OnInit {
           ],
           callType: {
             image: this.CommonService.getConversationType(
-              answeredData.is_video
+              answeredData.request_type
             ),
-            text: this.CallsSrvice.getCallType(answeredData.is_video)
+            text:answeredData.request_type
           },
-          call_uuid: answeredData.call_uuid,
+          call_uuid: answeredData.request_uuid,
           duration: answeredData.call_started_at,
           agent_name: answeredData.agent.display_name,
           user_id: this.CallsSrvice.getUserId(answeredData.user_id),

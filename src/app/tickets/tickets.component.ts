@@ -1,4 +1,5 @@
 import { Component, HostListener, ViewChild } from '@angular/core';
+import { Router } from '@angular/router';
 import { AuthService } from '../services/auth.service';
 import { oneSelectData2, oneSelectData3, priorityData, searchInputData, statusType, tableData, TicketsCard, TicketsCard1, ticketsTableSetting } from './ticketsData';
 
@@ -8,7 +9,7 @@ import { oneSelectData2, oneSelectData3, priorityData, searchInputData, statusTy
   styleUrls: ['./tickets.component.scss']
 })
 export class TicketsComponent {
-  constructor(private AuthService: AuthService) {
+  constructor(private AuthService: AuthService,private Router:Router) {
     this.AuthService.pageTitle.next('Tickets');
   }
   ticketData = TicketsCard;
@@ -48,5 +49,10 @@ export class TicketsComponent {
   }
   showAssignPopup() {
     this.showAssignDropdown = !this.showAssignDropdown;
+  }
+
+  openCreateTickets()
+  {
+    this.Router.navigate(['tickets','createticket'])
   }
 }

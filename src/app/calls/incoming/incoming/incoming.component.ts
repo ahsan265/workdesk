@@ -68,7 +68,7 @@ export class IncomingComponent implements OnInit {
       (data: newCallModelIncoming) => {
         this.incomingData = data.calls.map((incomingData) => ({
           hashIcon: '#',
-          call_uuid: incomingData.call_uuid,
+          call_uuid: incomingData.request_uuid,
           language_icon: '',
           utilites: [
             {
@@ -88,9 +88,9 @@ export class IncomingComponent implements OnInit {
           ],
           callType: {
             image: this.CommonService.getConversationType(
-              incomingData.is_video
+              incomingData.request_type
             ),
-            text: this.CallsService.getCallType(incomingData.is_video)
+            text: incomingData.request_type
           },
           name: incomingData.name,
           user_id: this.CallsService.getUserId(incomingData.user_id),

@@ -103,6 +103,7 @@ import { DashboardChatsComponent } from './dashboard/dashboard-chats/dashboard-c
 import { TicketsComponent } from './tickets/tickets.component';
 import { AssignComponent } from './components/assign/assign.component';
 import { ColorBackPipe } from './pipes/nameBackground/color-back.pipe';
+import { TicketsCreationComponent } from './tickets-creation/tickets-creation.component';
 
 @NgModule({
   declarations: [
@@ -169,6 +170,7 @@ import { ColorBackPipe } from './pipes/nameBackground/color-back.pipe';
     DashboardChatsComponent,
     TicketsComponent,
     AssignComponent,
+    TicketsCreationComponent,
 
   ],
   imports: [

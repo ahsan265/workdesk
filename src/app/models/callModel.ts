@@ -19,10 +19,10 @@ export interface tableHeading {
 
 export interface IncomingCallModel {
   browser: string;
-  call_uuid: string;
+  request_uuid: string;
   desktop: boolean;
   device: string;
-  is_video: boolean;
+  request_type: string;
   language_icon: string;
   language_id: number;
   mobile: false;
@@ -31,17 +31,18 @@ export interface IncomingCallModel {
   tablet: false;
   user_id: string;
   waiting_started_at: string;
-  on_hold:boolean;
+  on_hold: boolean;
+  anonymous_uuid: string;
 }
 
 export interface OngoingCallModel {
   agent_joined: boolean;
   browser: string;
   call_started_at: string;
-  call_uuid: string;
+  request_uuid: string;
   desktop: boolean;
   device: string;
-  is_video: boolean;
+  request_type: string;
   language_icon: string;
   language_id: number;
   mobile: boolean;
@@ -64,10 +65,10 @@ export interface agentDetails {
 
 export interface MissedCallModel {
   browser: string;
-  call_uuid: string;
+  request_uuid: string;
   desktop: boolean;
   device: string;
-  is_video: boolean;
+  request_type: string;
   language_icon: string;
   language_id: number;
   missed_at: string;
@@ -87,10 +88,10 @@ export interface AnsweredCallModel {
   call_ended_at: string;
   call_started_at: string;
   call_time: number;
-  call_uuid: string;
+  request_uuid: string;
   desktop: boolean;
   device: string;
-  is_video: boolean;
+  request_type: string;
   language_icon: string;
   language_id: number;
   mobile: boolean;
@@ -220,7 +221,7 @@ export interface UtlitiesIcon {
 }
 export interface AgentUtlitiesIcon {
   image: string;
-  is_disabled:boolean;
+  is_disabled: boolean;
 }
 export interface ImageText {
   text: string;
