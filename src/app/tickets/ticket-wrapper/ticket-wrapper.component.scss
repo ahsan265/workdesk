@@ -59,6 +59,17 @@
 
 ::ng-deep .ticketsPanel .createTicketWrapper {
     padding: 0px !important;
+    width: 100% !important;
+    background: none !important;
+    height: calc(100vh - 200px) !important;
+}
+
+::ng-deep .ticketsPanel .buttonsWrapper {
+    width: 100% !important;
+}
+
+::ng-deep .ticketsPanel .ticketNumberWrapper {
+    display: none;
 }
 
 ::ng-deep .ticketsPanel .ticketsArea {

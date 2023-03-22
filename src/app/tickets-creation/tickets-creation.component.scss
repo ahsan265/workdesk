@@ -1,7 +1,9 @@
 .createTicketWrapper {
-    height: calc(100% - 30px);
+    height: calc(100vh - 127px);
     background: #FAFAFD;
-    padding: 30px 30px 0px 30px;
+    padding: 30px 30px 30px 30px;
+    width: calc(100% - 60px);
+    display: flex;
 }
 
 .headingWrapper {
@@ -14,7 +16,8 @@
     border: 1px solid #E1E1EA;
     border-radius: 4px;
     padding: 30px;
-    height: fit-content;
+    width: 100%;
+    position: relative;
 }
 
 .ticketNumberWrapper {
@@ -22,10 +25,9 @@
     font-family: "Roboto";
     font-style: normal;
     font-weight: 500;
-    font-size: 16px;
-    line-height: 18px;
+    font-size: 14px;
+    line-height: 16px;
     align-items: flex-start;
-    height: -moz-fit-content;
     height: fit-content;
     text-align: right;
     letter-spacing: 0.02em;
@@ -193,11 +195,13 @@
 }
 
 .buttonsWrapper {
-    width: 100%;
+    width: calc(100% - 60px);
     display: flex;
     height: 60px;
     border-top: 1px solid #E3E3EB;
-    justify-content: space-between;
     align-items: flex-end;
     margin-top: 20px;
+    position: absolute;
+    bottom: 30px;
+    justify-content: space-between;
 }

@@ -77,7 +77,7 @@ export class MissedComponent implements OnInit {
           image: this.CommonService.getConversationType(
             missedCallData.request_type
           ),
-          text: this.CallsService.getCallTypeUpperCase(missedCallData.request_type)
+          text: this.CallsService.getCallTypeName(missedCallData.request_type)
         },
         resaon: missedCallData.reason,
         user_details: {

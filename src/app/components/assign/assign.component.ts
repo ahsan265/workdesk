@@ -9,6 +9,7 @@ import { assignedAgentData, searchInputData, unAssignedAgentData } from './assig
 })
 export class AssignComponent {
   searchInputData = searchInputData;
+  @Input() header: string = 'Assign';
   @Input() assignedAgent: assignedAgent[] = assignedAgentData;
   @Input() UnAssignedAgent: unAssignedAgent[] = unAssignedAgentData;
   @Output() assignedAgentList = new EventEmitter();

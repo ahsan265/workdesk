@@ -34,7 +34,28 @@ const backButtonData: Button = {
   textColor: '#162741',
   active: true
 };
+const priorityData: OneSelect[] = [
+  { id: 0, name: 'Priority', selected: true }, { id: 1, name: 'Urgent', selected: false },
+  { id: 2, name: 'High', selected: false },
+  { id: 3, name: 'Normal', selected: false },
+  { id: 4, name: 'Low', selected: false }];
+
+const statusType: OneSelect[] = [{
+  id: 0,
+  name: 'Done',
+  selected: false
+},
+{
+  id: 1,
+  name: 'In progress',
+  selected: false
+},
+{
+  id: 2,
+  name: 'Not started',
+  selected: false
+}]
 
 export {
-  ranges, oneSelectData, backButtonData
+  ranges, oneSelectData, backButtonData, priorityData, statusType
 }

@@ -96,7 +96,7 @@ export class AnsweredComponent implements OnInit {
             image: this.CommonService.getConversationType(
               answeredData.request_type
             ),
-            text: this.CallsService.getCallTypeUpperCase(answeredData.request_type)
+            text: this.CallsService.getCallTypeName(answeredData.request_type)
           },
           call_uuid: answeredData.request_uuid,
           duration: this.CallsService

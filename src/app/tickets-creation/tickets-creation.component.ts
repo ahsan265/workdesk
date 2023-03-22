@@ -1,11 +1,10 @@
-import { Component, HostListener, ViewChild } from '@angular/core';
+import { Component, HostListener, Input, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import dayjs from 'dayjs';
-import {  saveButtonData } from '../agent-settings/agent-settingData';
+import { saveButtonData } from '../agent-settings/agent-settingData';
 import { CalendarService } from '../calendarService/calendar.service';
 import { AuthService } from '../services/auth.service';
-import { priorityData, statusType } from '../tickets/ticketsData';
-import { backButtonData, ranges } from './ticketsCreationData';
+import { backButtonData, priorityData, ranges, statusType } from './ticketsCreationData';
 
 @Component({
   selector: 'app-tickets-creation',
@@ -15,7 +14,7 @@ import { backButtonData, ranges } from './ticketsCreationData';
 export class TicketsCreationComponent {
   oneSelectData = priorityData;
   statusType = statusType;
-  backButtonData =backButtonData ;
+  backButtonData = backButtonData;
   saveButtonData = saveButtonData;
   constructor(private AuthService: AuthService,
     private calendarService: CalendarService,
