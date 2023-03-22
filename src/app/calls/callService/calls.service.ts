@@ -204,7 +204,16 @@ export class CallsService {
     await this.GigaaaApiService.setChatAnswer(this.CommonService.getEndpointsParamLocal().token, this.CommonService.getEndpointsParamLocal().organization, this.CommonService.getEndpointsParamLocal().project, data)
   }
 
-  getCallTypeUpperCase(data: string) {
-    return data.charAt(0).toUpperCase() + data.slice(1)
+  getCallTypeName(data: string) {
+    switch (data) {
+      case 'audio':
+        return 'Audio Call';
+      case 'video':
+        return 'Video Call';
+      case 'chat':
+        return 'Live Chat';
+      default:
+        return 'Audio Call';
+    }
   }
 }

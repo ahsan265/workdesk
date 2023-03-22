@@ -88,7 +88,7 @@ export class OngoingComponent implements OnInit {
             image: this.CommonService.getConversationType(
               answeredData.request_type
             ),
-            text: this.CallsSrvice.getCallTypeUpperCase(answeredData.request_type) 
+            text: this.CallsSrvice.getCallTypeName(answeredData.request_type) 
           },
           call_uuid: answeredData.request_uuid,
           duration: answeredData.request_started_at,

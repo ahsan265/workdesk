@@ -52,7 +52,7 @@ const incomingTableSetting: tableSettings = {
     {
       index: 4,
       header: 'Request  Type',
-      width: 10,
+      width: 13,
       isHeaderImage: true,
       showHeader: true,
       isDropdown: false,
@@ -63,7 +63,18 @@ const incomingTableSetting: tableSettings = {
     {
       index: 4,
       header: 'Wait Time',
-      width: 20,
+      width: 15,
+      isHeaderImage: true,
+      showHeader: true,
+      isDropdown: false,
+      checkmark: true,
+      isImageItem: false,
+      isUserItem: false
+    },
+    {
+      index: 4,
+      header: '',
+      width: 22,
       isHeaderImage: true,
       showHeader: true,
       isDropdown: false,

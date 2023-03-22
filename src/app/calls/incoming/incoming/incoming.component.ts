@@ -90,14 +90,14 @@ export class IncomingComponent implements OnInit {
             image: this.CommonService.getConversationType(
               incomingData.request_type
             ),
-            text: this.CallsService.getCallTypeUpperCase(incomingData.request_type) 
+            text: this.CallsService.getCallTypeName(incomingData.request_type)
           },
           name: incomingData.name,
           user_id: this.CallsService.getUserId(incomingData.user_id),
           time: incomingData.waiting_started_at,
           userImage: '../../../assets/images/callInterface/user.png',
           showUserImage: false,
-          callPickButton: 'Answer',
+          callPickButton: incomingData.request_type==='chat'?'Join':'Answer',
           disableButton: (incomingData.on_hold === true || this.AgentSocketService.isInCall === true) ? true : false
 
         }));
