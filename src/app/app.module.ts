@@ -104,6 +104,8 @@ import { TicketsComponent } from './tickets/tickets.component';
 import { AssignComponent } from './components/assign/assign.component';
 import { ColorBackPipe } from './pipes/nameBackground/color-back.pipe';
 import { TicketsCreationComponent } from './tickets-creation/tickets-creation.component';
+import { TicketWrapperComponent } from './tickets/ticket-wrapper/ticket-wrapper.component';
+import { TicketProfileComponent } from './tickets/ticket-profile/ticket-profile.component';
 
 @NgModule({
   declarations: [
@@ -171,6 +173,8 @@ import { TicketsCreationComponent } from './tickets-creation/tickets-creation.co
     TicketsComponent,
     AssignComponent,
     TicketsCreationComponent,
+    TicketWrapperComponent,
+    TicketProfileComponent,
 
   ],
   imports: [

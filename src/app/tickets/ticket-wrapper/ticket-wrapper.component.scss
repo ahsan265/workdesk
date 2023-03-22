@@ -1,0 +1,68 @@
+.ticketsInformationWrapper {
+    display: flex;
+    height: calc(100vh - 127px);
+    background: #FAFAFD;
+    padding: 30px;
+}
+
+.ticketsPanel {
+    background: #FFFFFF;
+    border: 1px solid #E1E1EA;
+    border-radius: 4px;
+    width: 100%;
+    padding: 0px 30px 30px 30px;
+}
+
+.menuWrapper {
+    display: flex;
+    margin: -2px 0px 0px 0px;
+    border-bottom: 1px solid rgba(208, 208, 222, 0.6);
+    position: relative;
+    height: 31px;
+    z-index: 1;
+    padding-top: 30px;
+}
+
+.ticketsUl {
+    display: flex;
+    padding: 0;
+    margin: 0px;
+    margin-bottom: -1px;
+}
+
+.ticketsLi {
+    list-style: none;
+    margin-right: 22px;
+    padding: 6px 0;
+    width: fit-content;
+    display: flex;
+}
+
+.ticketsA {
+    text-decoration: none;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 12px;
+    align-items: center;
+    line-height: 14px;
+    letter-spacing: 0.02em;
+    color: #162741;
+}
+
+.ticketsActive {
+    border-bottom: 2px solid #1c54db;
+
+    a {
+        color: #162741;
+    }
+}
+
+::ng-deep .ticketsPanel .createTicketWrapper {
+    padding: 0px !important;
+}
+
+::ng-deep .ticketsPanel .ticketsArea {
+    padding: 0px !important;
+    border: 0px !important;
+    margin-top: 30px;
+}

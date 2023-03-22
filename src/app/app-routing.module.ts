@@ -22,6 +22,8 @@ import { TicketsComponent } from './tickets/tickets.component';
 import { AssignComponent } from './components/assign/assign.component';
 import { DashboardCallComponent } from './dashboard/dashboard-call/dashboard-call.component';
 import { TicketsCreationComponent } from './tickets-creation/tickets-creation.component';
+import { TicketProfileComponent } from './tickets/ticket-profile/ticket-profile.component';
+import { TicketWrapperComponent } from './tickets/ticket-wrapper/ticket-wrapper.component';
 
 const routes: Routes = [
   { path: '', component: LandingPageComponent },
@@ -52,7 +54,15 @@ const routes: Routes = [
         ]
       },
       { path: 'agents', component: AgentsComponent },
-      { path: 'tickets', component: TicketsComponent },
+      {
+        path: 'tickets', component: TicketsComponent
+      },
+      {path: 'tickets/manage', component: TicketWrapperComponent, children: [
+          { path: '', redirectTo: 'profile', pathMatch: 'full' },
+          { path: 'profile', component: TicketProfileComponent },
+          { path: 'updateticket', component: TicketsCreationComponent }
+        ]
+      },
       { path: 'tickets/createticket', component: TicketsCreationComponent },
       { path: 'agents/settings/:id', component: AgentSettingsComponent },
       { path: 'preference', component: PreferenceComponent }
@@ -73,7 +83,7 @@ const routes: Routes = [
   imports: [
     RouterModule.forRoot(routes, {
       enableTracing: false, // <-- debugging purposes only
-      scrollPositionRestoration: 'disabled'
+      scrollPositionRestoration: 'disabled',
     })
   ],
   exports: [RouterModule]

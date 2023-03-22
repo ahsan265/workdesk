@@ -30,7 +30,7 @@ const backButtonData: Button = {
   title: 'Cancel',
   // icon: '../assets/images/sidebar/agents.svg',
   backgroundColor: '#FFFFFF',
-  borderColor: '#E1E1EA',
+  borderColor: '1px solid #E1E1EA',
   textColor: '#162741',
   active: true
 };

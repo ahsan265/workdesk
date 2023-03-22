@@ -1,0 +1,17 @@
+<div class="ticketsInformationWrapper">
+    <div class="ticketsPanel">
+        <div class="menuWrapper">
+            <ul class="ticketsUl">
+                <li class="ticketsLi" [routerLinkActive]="['active', 'ticketsActive']">
+                    <a class="ticketsA" routerLink="profile">Profile</a>
+                </li>
+                <li class="ticketsLi" [routerLinkActive]="['active', 'ticketsActive']">
+                    <a class="ticketsA" routerLink="updateticket">Tickets</a>
+                </li>
+            </ul>
+        </div>
+        <div>
+            <router-outlet></router-outlet>
+        </div>
+    </div>
+</div>
