@@ -354,7 +354,7 @@ export class CommonService {
       case 'video':
         return '../../../assets/images/request_type/video.svg';
       case 'chat':
-        return '../../../assets/images/request_type/video.svg';
+        return '../../../assets/images/request_type/live_chat_icon.svg';
       default:
         return '../../../assets/images/os/Windows.svg';
     }
