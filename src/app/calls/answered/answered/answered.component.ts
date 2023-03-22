@@ -96,11 +96,11 @@ export class AnsweredComponent implements OnInit {
             image: this.CommonService.getConversationType(
               answeredData.request_type
             ),
-            text: answeredData.request_type
+            text: this.CallsService.getCallTypeUpperCase(answeredData.request_type)
           },
           call_uuid: answeredData.request_uuid,
           duration: this.CallsService
-            .getCalledAtTimeDate(answeredData.call_started_at, this.aggregate),
+            .getCalledAtTimeDate(answeredData.request_started_at, this.aggregate),
           agent_name: answeredData.agent.display_name,
           user_id: this.CallsService.getUserId(answeredData.user_id),
           agent_details: {

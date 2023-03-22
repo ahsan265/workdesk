@@ -38,7 +38,7 @@ export interface IncomingCallModel {
 export interface OngoingCallModel {
   agent_joined: boolean;
   browser: string;
-  call_started_at: string;
+  request_started_at: string;
   request_uuid: string;
   desktop: boolean;
   device: string;
@@ -85,9 +85,9 @@ export interface MissedCallModel {
 export interface AnsweredCallModel {
   agent_joined: boolean;
   browser: string;
-  call_ended_at: string;
-  call_started_at: string;
-  call_time: number;
+  request_ended_at: string;
+  request_started_at: string;
+  request_time: number;
   request_uuid: string;
   desktop: boolean;
   device: string;

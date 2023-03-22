@@ -1,7 +1,7 @@
 /* eslint-disable no-unused-vars */
 /* eslint-disable no-undef */
 /* eslint-disable sort-imports */
-import {Injectable } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { ReplaySubject } from 'rxjs';
 import {
   newCallModelAnswered,
@@ -11,6 +11,8 @@ import {
 
 } from 'src/app/models/callModel';
 import { OneSelect } from 'src/app/models/oneSelect';
+import { CommonService } from 'src/app/workdeskServices/commonEndpoint/common.service';
+import { GigaaaApiService } from 'src/app/workdeskServices/gigaaaApiService/gigaaa-api-service.service';
 import { QueueSocketService } from 'src/app/workdeskSockets/queueSocket/queue-socket.service';
 import { callType } from '../callsData';
 
@@ -19,6 +21,8 @@ import { callType } from '../callsData';
 })
 export class CallsService {
   constructor(private QueueSocketService: QueueSocketService,
+    private GigaaaApiService: GigaaaApiService,
+    private CommonService: CommonService
   ) { }
   sendDataToIncomingTabsSubject = new ReplaySubject<newCallModelIncoming>(0);
   sendDataToMissedTabsSubject = new ReplaySubject<newCallModelMissed>(0);
@@ -45,7 +49,7 @@ export class CallsService {
     time_range: string,
     items_per_page: number,
     page_number: number,
-    search_value:string
+    search_value: string
   ) {
     this.QueueSocketService.sendQueueParameterPagination({
       call_type: callType,
@@ -54,7 +58,7 @@ export class CallsService {
       time_range: time_range,
       items_per_page: items_per_page,
       page: page_number,
-      search_value:search_value,
+      search_value: search_value,
     });
   }
 
@@ -191,6 +195,16 @@ export class CallsService {
     else {
       return '00:00'
     }
+  }
 
+  async awnseredChat(uuid: string) {
+    const data = {
+      "chat_uuid": uuid
+    }
+    await this.GigaaaApiService.setChatAnswer(this.CommonService.getEndpointsParamLocal().token, this.CommonService.getEndpointsParamLocal().organization, this.CommonService.getEndpointsParamLocal().project, data)
+  }
+
+  getCallTypeUpperCase(data: string) {
+    return data.charAt(0).toUpperCase() + data.slice(1)
   }
 }

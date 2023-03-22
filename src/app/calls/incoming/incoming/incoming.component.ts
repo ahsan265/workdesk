@@ -90,7 +90,7 @@ export class IncomingComponent implements OnInit {
             image: this.CommonService.getConversationType(
               incomingData.request_type
             ),
-            text: incomingData.request_type
+            text: this.CallsService.getCallTypeUpperCase(incomingData.request_type) 
           },
           name: incomingData.name,
           user_id: this.CallsService.getUserId(incomingData.user_id),
@@ -117,20 +117,15 @@ export class IncomingComponent implements OnInit {
     });
   }
 
-  async getCallsId(event: any) {
-    let data = { call_uuid: event.call_uuid };
-    // await this.GigaaaApiService.getcalltype(
-    //   this.CommonService.getEndpointsParamLocal().token,
-    //   this.CommonService.getEndpointsParamLocal().organization,
-    //   this.CommonService.getEndpointsParamLocal().project,
-    //   data
-    // );
-    this.OverlayService.open({
-      component: CallConsoleComponent,
-      data: event,
-      panelClass: 'dialog-panel',
-      isPopup: false
-    });
+  getCallsId(event: any) {
+    const data: IncomingCallModelTable = event;
+    (data.callType.text.toLowerCase() === 'chat') ? this.CallsService.awnseredChat(data.call_uuid) :
+      this.OverlayService.open({
+        component: CallConsoleComponent,
+        data: data,
+        panelClass: 'dialog-panel',
+        isPopup: false
+      });
   }
 
   change(event: any) {
