@@ -9,7 +9,7 @@ import { oneSelectData2, oneSelectData3, priorityData, searchInputData, statusTy
   styleUrls: ['./tickets.component.scss']
 })
 export class TicketsComponent {
-  constructor(private AuthService: AuthService,private Router:Router) {
+  constructor(private AuthService: AuthService, private Router: Router) {
     this.AuthService.pageTitle.next('Tickets');
   }
   ticketData = TicketsCard;
@@ -51,8 +51,10 @@ export class TicketsComponent {
     this.showAssignDropdown = !this.showAssignDropdown;
   }
 
-  openCreateTickets()
-  {
-    this.Router.navigate(['tickets','createticket'])
+  openCreateTickets() {
+    this.Router.navigate(['tickets', 'createticket'])
+  }
+  openTicketInformation() {
+    this.Router.navigate(['tickets', 'manage'])
   }
 }

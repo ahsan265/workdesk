@@ -1,0 +1,58 @@
+<div class="profileWrapper">
+    <div class="profileHeader">
+        <div class="leftHeader">
+            <div class="agentImage">
+
+            </div>
+            <div class="agentInformation">
+                <div class="agentName">
+                    Andrea Peterson Williams
+                </div>
+                <div class="agentUserID">
+                    <span>USER ID:</span> 114257
+                </div>
+            </div>
+
+        </div>
+        <div class="rightHeader">
+
+            <gigaaa-button (buttonOutput)="onGetBackButtonOutput($event)"
+                [buttonData]="viewProfileButton"></gigaaa-button>
+        </div>
+    </div>
+</div>
+<div class="divider">
+
+</div>
+
+<div class="formInformation">
+    <div class="header">
+        User information
+    </div>
+    <div form="agentProfileForm" [formGroup]="agentProfileForm">
+        <div class="firstLastName">
+            <div class="inputWrapper textField">
+                <div class="label">First name</div>
+                <input class="agentSettingsTextField" type="text" formControlName="first_name" />
+            </div>
+            <div class="inputWrapper textField">
+                <div class="label">Last name</div>
+                <input class="agentSettingsTextField" type="text" formControlName="last_name" />
+            </div>
+        </div>
+        <div class="firstLastName">
+            <div class="inputWrapper">
+                <div class="label">Phone</div>
+                <input class="agentSettingsTextField" type="number" formControlName="Phone" />
+            </div>
+            <div class="inputWrapper">
+                <div class="label">Agent name</div>
+                <input class="agentSettingsTextField" type="email" formControlName="email" />
+            </div>
+        </div>
+    </div>
+    <div class="buttonsWrapper">
+        <gigaaa-button (buttonOutput)="onGetBackButtonOutput($event)" [buttonData]="backButtonData"></gigaaa-button>
+        <gigaaa-button (buttonOutput)="onGetSaveButtonOutput($event)" [buttonData]="saveButtonData"></gigaaa-button>
+    </div>
+</div>
