@@ -35,10 +35,10 @@ const backButtonData: Button = {
   active: true
 };
 const priorityData: OneSelect[] = [
-  { id: 0, name: 'Priority', selected: true }, { id: 1, name: 'Urgent', selected: false },
-  { id: 2, name: 'High', selected: false },
-  { id: 3, name: 'Normal', selected: false },
-  { id: 4, name: 'Low', selected: false }];
+  { id: 0, name: 'Urgent', selected: true },
+  { id: 1, name: 'High', selected: false },
+  { id: 2, name: 'Normal', selected: false },
+  { id: 3, name: 'Low', selected: false }];
 
 const statusType: OneSelect[] = [{
   id: 0,
