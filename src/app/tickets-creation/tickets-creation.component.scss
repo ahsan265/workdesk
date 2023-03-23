@@ -18,6 +18,10 @@
     padding: 30px;
     width: 100%;
     position: relative;
+    overflow: overlay;
+}
+.ticketsArea::-webkit-scrollbar{
+    display: none;
 }
 
 .ticketNumberWrapper {
