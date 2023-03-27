@@ -16,13 +16,21 @@
 }
 
 ::ng-deep .sidebarWrap .logoWrap .logoImage {
-  height: 44px;
+  height: 25px;
   width: 140px;
+  padding: 11px 0px 11px 0px;
+  cursor: pointer;
 }
 
 ::ng-deep .sidebarWrap .logoWrap .logoImageCollapsed {
   height: 24px;
   width: 44.3px;
+  padding: 11px 0px 11px 0px;
+  cursor: pointer;
+}
+
+::ng-deep .pageTitleWrap svg {
+  display: none;
 }
 
 .headerAppWrapper {
