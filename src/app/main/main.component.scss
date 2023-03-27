@@ -6,6 +6,7 @@
   overflow: hidden;
 
 }
+
 ::ng-deep .mainContainer .sidebarWrap {
   z-index: 1;
 }
@@ -15,13 +16,13 @@
 }
 
 ::ng-deep .sidebarWrap .logoWrap .logoImage {
-  height: 50px;
+  height: 44px;
+  width: 140px;
 }
 
 ::ng-deep .sidebarWrap .logoWrap .logoImageCollapsed {
-  height: 50px;
+  height: 24px;
   width: 44.3px;
-  margin-left: 10px;
 }
 
 .headerAppWrapper {
