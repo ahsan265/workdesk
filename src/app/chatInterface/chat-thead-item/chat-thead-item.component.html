@@ -1,7 +1,7 @@
 <div class="threadItemPanel" *ngFor="let thread of this.chatData">
     <div class="thread">
         <div class="userImage">
-            <img src="../../../assets/images/callInterface/default_user.svg" alt="">
+            <img [src]="thread.image" alt="">
         </div>
         <div class="informationWrapper">
             <div class="userDetailsLast">
@@ -17,7 +17,7 @@
                     {{thread.last_message}}
                 </div>
                 <div class="counerWrapper">
-                    <div class="counter">
+                    <div class="counter" *ngIf="thread.counter!==null">
                         {{thread.counter}}
                     </div>
                 </div>

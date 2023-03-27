@@ -9,6 +9,7 @@ import { GigaaaApiService } from 'src/app/workdeskServices/gigaaaApiService/giga
 import { SharedServices } from 'src/app/workdeskServices/sharedResourcesService/shared-resource-service.service';
 import { AgentSocketService } from '../agentSocket/agent-socket.service';
 import { AnalyticsSocketService } from '../analyticsSocket/analytics-socket.service';
+import { ChatSocketService } from '../chatSocket/chat-socket.service';
 import { QueueSocketService } from '../queueSocket/queue-socket.service';
 
 @Injectable({
@@ -20,8 +21,9 @@ export class ConnectionSecurityService {
     private AgentSocketService: AgentSocketService,
     private QueueSocketService: QueueSocketService,
     private AnalyticsSocketService: AnalyticsSocketService,
+    private ChatSocketService: ChatSocketService,
     private CommonService: CommonService,
-    private SharedServices:SharedServices
+    private SharedServices: SharedServices
   ) { }
   public async createConnectionEndpoint(
     token: string,
@@ -35,13 +37,15 @@ export class ConnectionSecurityService {
         projectId
       );
     localStorage.setItem('connection-id', JSON.stringify(connection));
-   await this.CommonService.getAgentRole();
+    await this.CommonService.getAgentRole();
     this.AgentSocketService.closeAgentSocketConnection();
     this.QueueSocketService.closeQueueSocketConnection();
     this.AnalyticsSocketService.closeAnalyticsSocketConnection();
+    this.ChatSocketService.closeChatSocket();
     this.AnalyticsSocketService.callAnalyticsSocketEndpoint();
     this.AgentSocketService.callAgentSocketEndpoint();
     this.QueueSocketService.callQueueSocketEndpoint();
+    this.ChatSocketService.startChat();
     this.SharedServices.loadCommonEps(1);
 
 
