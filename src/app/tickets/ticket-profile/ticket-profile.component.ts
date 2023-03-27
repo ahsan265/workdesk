@@ -21,7 +21,7 @@ export class TicketProfileComponent {
     ]),
     first_name: new FormControl('', [Validators.required]),
     last_name: new FormControl('', [Validators.required]),
-    phone: new FormControl('', [Validators.required])
+    Phone: new FormControl('', [Validators.required])
   });
   constructor(private Router: Router) {
   }

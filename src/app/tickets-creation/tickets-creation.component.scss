@@ -20,7 +20,8 @@
     position: relative;
     overflow: overlay;
 }
-.ticketsArea::-webkit-scrollbar{
+
+.ticketsArea::-webkit-scrollbar {
     display: none;
 }
 
@@ -199,13 +200,20 @@
 }
 
 .buttonsWrapper {
-    width: calc(100% - 60px);
-    display: flex;
-    height: 60px;
+    width: 100%;
+    justify-content: space-between;
+    height: 480px;
+    position: relative;
+    bottom: 0;
+}
+
+.buttonPanel {
     border-top: 1px solid #E3E3EB;
-    align-items: flex-end;
-    margin-top: 20px;
+    width: 100%;
     position: absolute;
-    bottom: 30px;
+    padding-top: 30px;
+    bottom: 0;
+    align-items: flex-end;
+    display: flex;
     justify-content: space-between;
 }

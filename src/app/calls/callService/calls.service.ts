@@ -197,12 +197,7 @@ export class CallsService {
     }
   }
 
-  async awnseredChat(uuid: string) {
-    const data = {
-      "chat_uuid": uuid
-    }
-    await this.GigaaaApiService.setChatAnswer(this.CommonService.getEndpointsParamLocal().token, this.CommonService.getEndpointsParamLocal().organization, this.CommonService.getEndpointsParamLocal().project, data)
-  }
+
 
   getCallTypeName(data: string) {
     switch (data) {

@@ -1,6 +1,6 @@
-import { chatThreadModel } from "src/app/models/chatModel";
+import {  chatThreadModelData } from "src/app/models/chatModel";
 
-const chatThreadData: chatThreadModel[] = [
+const chatThreadData: chatThreadModelData[] = [
     {
         counter: 2,
         date: 'Today',
@@ -34,6 +34,8 @@ const chatThreadData: chatThreadModel[] = [
         name: 'Ahsan'
     }
 ]
+
+
 export {
     chatThreadData
 }

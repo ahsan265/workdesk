@@ -19,6 +19,7 @@ import {
 } from '../models/callModel';
 import { getDefaultInputsLoadOnce } from './defaultLoadService/incoming.Service';
 import { SharedServices } from '../workdeskServices/sharedResourcesService/shared-resource-service.service';
+import { ChatSocketService } from '../workdeskSockets/chatSocket/chat-socket.service';
 
 @Component({
   selector: 'app-calls',
@@ -46,7 +47,8 @@ export class CallsComponent implements OnInit {
     private CallsService: CallsService,
     private QueueSocketService: QueueSocketService,
     private SharedServices: SharedServices,
-    private getDefaultInputsLoadOnce: getDefaultInputsLoadOnce
+    private getDefaultInputsLoadOnce: getDefaultInputsLoadOnce,
+    private ChatSocketService: ChatSocketService
 
   ) {
     this.authService.pageTitle.next('Calls');
@@ -56,6 +58,7 @@ export class CallsComponent implements OnInit {
         this.getDefaultInputsLoadOnce.getUserLangage();
       }
     });
+
   }
   ranges = ranges;
   aggregate: string = 'this_week';

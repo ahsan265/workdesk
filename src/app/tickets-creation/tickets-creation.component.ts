@@ -1,5 +1,5 @@
 import { Component, HostListener, Input, ViewChild } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import dayjs from 'dayjs';
 import { saveButtonData } from '../agent-settings/agent-settingData';
 import { CalendarService } from '../calendarService/calendar.service';
@@ -18,9 +18,17 @@ export class TicketsCreationComponent {
   saveButtonData = saveButtonData;
   constructor(private AuthService: AuthService,
     private calendarService: CalendarService,
-    private Router: Router
+    private Router: Router,
+    private route: ActivatedRoute
   ) {
-    this.AuthService.pageTitle.next('Create ticket');
+    const response: boolean = this.Router.url.toString().includes('updateticket');
+    if (response === false) {
+      this.AuthService.pageTitle.next('Create ticket');
+    } else {
+      this.AuthService.pageTitle.next('Tickets');
+    }
+
+
   }
   @ViewChild('assignTicketsDropdown') assignTicketsDropdown: any = HTMLElement;
   @ViewChild('assignUserDropdown') assignUserDropdown: any = HTMLElement;

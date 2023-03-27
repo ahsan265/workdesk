@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
+import { filter, map } from 'rxjs/operators';
 import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
@@ -7,9 +9,8 @@ import { AuthService } from 'src/app/services/auth.service';
   styleUrls: ['./ticket-wrapper.component.scss']
 })
 export class TicketWrapperComponent {
-  constructor(private AuthService:AuthService)
-  {
-    this.AuthService.pageTitle.next('Tickets')
+  constructor() {
+
   }
 
 }

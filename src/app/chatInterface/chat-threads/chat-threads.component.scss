@@ -10,4 +10,9 @@
     height: calc(100vh - 118px);
     width: 340px;
     position: relative;
+    overflow: overlay;
+}
+
+.threadsWrapper::-webkit-scrollbar {
+    display: none;
 }

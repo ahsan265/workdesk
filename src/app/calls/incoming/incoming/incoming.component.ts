@@ -1,4 +1,5 @@
 import { Component, HostListener, OnInit, ViewChild } from '@angular/core';
+import { Router } from '@angular/router';
 import { GigaaaDaterangepickerDirective, OverlayService } from '@gigaaa/gigaaa-components';
 import dayjs from 'dayjs';
 import { noAgentTobaleData } from 'src/app/agents/agentsData';
@@ -9,8 +10,10 @@ import {
   IncomingCallModelTable,
   newCallModelIncoming
 } from 'src/app/models/callModel';
+import { ChatOperationService } from 'src/app/workdeskServices/chatInterfaceServices/chatOperation/chat-operation.service';
 import { CommonService } from 'src/app/workdeskServices/commonEndpoint/common.service';
 import { AgentSocketService } from 'src/app/workdeskSockets/agentSocket/agent-socket.service';
+import { ChatSocketService } from 'src/app/workdeskSockets/chatSocket/chat-socket.service';
 import { languaugesIncoming, searchInputData } from '../../callsData';
 import { CallsService } from '../../callService/calls.service';
 import { getDefaultInputsLoadOnce } from '../../defaultLoadService/incoming.Service';
@@ -62,7 +65,9 @@ export class IncomingComponent implements OnInit {
     private calendarService: CalendarService,
     private AgentSocketService: AgentSocketService,
     private CallsService: CallsService,
-    private getDefaultInputsLoadOnce: getDefaultInputsLoadOnce
+    private getDefaultInputsLoadOnce: getDefaultInputsLoadOnce,
+    private ChatOperationService: ChatOperationService,
+    private Router: Router
   ) {
     this.CallsService.sendDataToIncomingTabsSubject.subscribe(
       (data: newCallModelIncoming) => {
@@ -97,7 +102,7 @@ export class IncomingComponent implements OnInit {
           time: incomingData.waiting_started_at,
           userImage: '../../../assets/images/callInterface/user.png',
           showUserImage: false,
-          callPickButton: incomingData.request_type==='chat'?'Join':'Answer',
+          callPickButton: incomingData.request_type === 'chat' ? 'Join' : 'Answer',
           disableButton: (incomingData.on_hold === true || this.AgentSocketService.isInCall === true) ? true : false
 
         }));
@@ -117,9 +122,9 @@ export class IncomingComponent implements OnInit {
     });
   }
 
-  getCallsId(event: any) {
+  async getCallsId(event: any) {
     const data: IncomingCallModelTable = event;
-    (data.callType.text.toLowerCase() === 'chat') ? this.CallsService.awnseredChat(data.call_uuid) :
+    (data.callType.text.toLowerCase() === 'live chat') ? (this.ChatOperationService.awnseredChat(data.call_uuid), this.Router.navigate(['chat'])) :
       this.OverlayService.open({
         component: CallConsoleComponent,
         data: data,

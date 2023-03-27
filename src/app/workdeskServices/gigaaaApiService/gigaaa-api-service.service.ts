@@ -58,7 +58,7 @@ export class GigaaaApiService {
       .toPromise();
   }
 
-  public getAllCountries(project: string, oranization:string): Promise<any> {
+  public getAllCountries(project: string, oranization: string): Promise<any> {
     const httpOptions: any = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
@@ -68,7 +68,7 @@ export class GigaaaApiService {
     };
 
     return this.http
-      .get(this.workdeskurl_cs + '/private/countries?project=' + project+"&organization="+oranization, httpOptions)
+      .get(this.workdeskurl_cs + '/private/countries?project=' + project + "&organization=" + oranization, httpOptions)
       .toPromise();
   }
   public getAllLanguages(): Promise<any> {
@@ -686,7 +686,7 @@ export class GigaaaApiService {
       httpOptions
     );
   }
- 
+
   // get loggedin agent uuid
   public async getloggedinagentuuid(
     accesstoken: string,
@@ -885,7 +885,7 @@ export class GigaaaApiService {
         throw err;
       });
   }
-
+  // for join chat 
   public async setChatAnswer(
     accesstoken: string,
     orguuid: string,
@@ -906,7 +906,7 @@ export class GigaaaApiService {
         '/private/organization/' +
         orguuid +
         '/project/' +
-        intid+'/chat/answer',
+        intid + '/chat/answer',
         id,
         httpOptions
       )
@@ -915,4 +915,36 @@ export class GigaaaApiService {
         throw err;
       });
   }
+
+  // for end chat 
+  public async setChatEnd(
+    accesstoken: string,
+    orguuid: string,
+    intid: string,
+    id: any
+  ): Promise<any> {
+    const httpOptions: any = {
+      method: 'POST',
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        Accept: 'application/json',
+        Authorization: `Bearer ${accesstoken}`
+      })
+    };
+    return await this.http
+      .post(
+        this.workdeskurl_cs +
+        '/private/organization/' +
+        orguuid +
+        '/project/' +
+        intid + '/chat/end',
+        id,
+        httpOptions
+      )
+      .toPromise()
+      .catch((err) => {
+        throw err;
+      });
+  }
+
 }
