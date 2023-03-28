@@ -54,6 +54,7 @@ const icons = {
   logoCollapsed: '../assets/images/sidebar/workdesk_logo_short.png'
 };
 
+
 const sidebarData: any = [
   {
     iconUrl: icons.integrationIcon,

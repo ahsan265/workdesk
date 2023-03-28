@@ -22,7 +22,7 @@ export class LandingPageComponent implements OnInit {
   showLinkExpireModal: boolean = false;
   showNonComplientAccountModal: boolean = false;
   landingPageData: any = {
-    logo: '../../assets/images/landingpage/workdesk_logo.svg',
+    logo: '../../assets/images/landingpage/workdesk_logo_lp.svg',
     title: ['Automate your <br> customer <br> service'],
     text: ['Offer an elevated customer <br> experience with gigaaa AI <br> Customer Support solution'],
     message: ['Make every customer more satisfied by giving them <br> the exact information they  need, right when they <br> need it.'],

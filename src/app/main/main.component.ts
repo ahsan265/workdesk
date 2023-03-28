@@ -66,9 +66,9 @@ export class MainComponent implements OnInit {
         this.authService.user.next(this.authService.getLoggedUser());
       }
     })
-    this.SharedServices.switchOrganizationDialog.subscribe((data: boolean) => {
-      this.showSwitchOganization = data;
-    })
+    // this.SharedServices.switchOrganizationDialog.subscribe((data: boolean) => {
+    //   this.showSwitchOganization = data;
+    // })
     this.SharedServices.switchOrganizationDoneDialog.subscribe((data: boolean) => {
       setTimeout(() => {
         this.organizationData.name = ((this.getOrganizationService.getLastUsedOrganization().is_individual) ? this.getOrganizationService.getLastUsedOrganization().contact_person :

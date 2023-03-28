@@ -60,6 +60,12 @@
   align-items: center;
 }
 
+.accountSettingsWrap {
+  display: flex;
+  justify-content: flex-end;
+  min-width: 110px;
+  align-items: center;
+}
 
 .dialog-panel {
   background: transparent;
