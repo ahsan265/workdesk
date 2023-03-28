@@ -50,8 +50,8 @@ const icons = {
   activeChatIcon: '../assets/images/sidebar/chat_clicked.svg',
   ticketIcon: '../assets/images/tickets/ticket_not_selected.svg',
   activeticketIcon: '../assets/images/tickets/ticket_selected.svg',
-  logo: '../assets/images/sidebar/workdesk_logo_long.png',
-  logoCollapsed: '../assets/images/sidebar/workdesk_logo_short.png'
+  logo: '../assets/images/sidebar/workdesk_logo.svg',
+  logoCollapsed: '../assets/images/sidebar/workdesk_logo_wt.svg'
 };
 
 

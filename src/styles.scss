@@ -115,6 +115,31 @@
   flex-wrap: wrap;
 }
 
+.swtichOrganizationPopup {
+  width: 778px;
+  height: 427px;
+  background: #FFFFFF;
+  box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.23);
+  border-radius: 4px;
+  display: flex;
+  justify-content: center;
+  align-content: center;
+  flex-wrap: wrap;
+}
+
+.swtichOrganizationDonePopup {
+  width: 402px;
+  height: 256px;
+  background: #FFFFFF;
+  box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.23);
+  border-radius: 4px;
+  display: flex;
+  justify-content: center;
+  align-content: center;
+  flex-wrap: wrap;
+}
+
+
 .addAgent {
   width: 504px;
   height: 480px;
