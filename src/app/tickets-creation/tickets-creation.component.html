@@ -7,12 +7,10 @@
                 </div>
                 <input class="assignText" type="text" placeholder="">
             </div>
-            <div  class="ticketNumberWrapper">
+            <div class="ticketNumberWrapper">
                 <span>ID:</span> 378103
             </div>
         </div>
-
-
         <div class="assigningArea">
 
             <div class="setPriority">
@@ -103,12 +101,11 @@
             </div>
 
         </div>
-
-        <div class="buttonsWrapper ">
-            <div class="buttonPanel">
-                <gigaaa-button (buttonOutput)="onGetBackButtonOutput($event)" [buttonData]="backButtonData"></gigaaa-button>
-                <gigaaa-button (buttonOutput)="onGetSaveButtonOutput($event)" [buttonData]="saveButtonData"></gigaaa-button>
-            </div>
+    </div>
+    <div class="buttonsWrapper ">
+        <div class="buttonPanel">
+            <gigaaa-button (buttonOutput)="onGetBackButtonOutput($event)" [buttonData]="backButtonData"></gigaaa-button>
+            <gigaaa-button (buttonOutput)="onGetSaveButtonOutput($event)" [buttonData]="saveButtonData"></gigaaa-button>
         </div>
     </div>
 </div>

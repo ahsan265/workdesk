@@ -1,9 +1,17 @@
 .createTicketWrapper {
     height: calc(100vh - 127px);
     background: #FAFAFD;
-    padding: 30px 30px 30px 30px;
+    margin: 30px 30px 30px 30px;
     width: calc(100% - 60px);
-    display: flex;
+    overflow: overlay;
+    background: #FFFFFF;
+    border: 1px solid #E1E1EA;
+    border-radius: 4px;
+
+}
+
+.createTicketWrapper::-webkit-scrollbar {
+    display: none;
 }
 
 .headingWrapper {
@@ -12,13 +20,10 @@
 }
 
 .ticketsArea {
-    background: #FFFFFF;
-    border: 1px solid #E1E1EA;
-    border-radius: 4px;
     padding: 30px;
-    width: 100%;
     position: relative;
     overflow: overlay;
+    height: calc(100% - 160px);
 }
 
 .ticketsArea::-webkit-scrollbar {
@@ -202,18 +207,16 @@
 .buttonsWrapper {
     width: 100%;
     justify-content: space-between;
-    height: 480px;
     position: relative;
-    bottom: 0;
 }
 
 .buttonPanel {
     border-top: 1px solid #E3E3EB;
-    width: 100%;
-    position: absolute;
-    padding-top: 30px;
-    bottom: 0;
+    width: calc(100% - 60px);
+    position: relative;
+    padding: 30px 0px 0px 0px;
     align-items: flex-end;
     display: flex;
     justify-content: space-between;
+    margin: 0px 30px 0px 30px;
 }

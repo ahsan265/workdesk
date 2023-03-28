@@ -1,8 +1,9 @@
 .ticketsInformationWrapper {
     display: flex;
-    height: calc(100vh - 127px);
+    height: max-content;
     background: #FAFAFD;
     padding: 30px;
+    overflow: overlay;
 }
 
 .ticketsPanel {
@@ -11,6 +12,7 @@
     border-radius: 4px;
     width: 100%;
     padding: 0px 30px 30px 30px;
+    height: calc(100vh - 160px);
 }
 
 .menuWrapper {
@@ -57,23 +59,33 @@
     }
 }
 
-::ng-deep .ticketsPanel .createTicketWrapper {
+::ng-deep .ticketsInformationWrapper .ticketsPanel .createTicketWrapper {
     padding: 0px !important;
     width: 100% !important;
     background: none !important;
-    height: calc(100vh - 200px) !important;
+    height: calc(100vh - 190px) !important;
+    overflow: overlay !important;
+    margin: 0px !important;
+    border: none !important;
 }
 
-::ng-deep .ticketsPanel .buttonPanel {
+
+::ng-deep .ticketsInformationWrapper .createTicketWrapper .buttonPanel {
+    margin: 0px !important;
     width: 100% !important;
 }
 
-::ng-deep .ticketsPanel .ticketNumberWrapper {
+::ng-deep .ticketsInformationWrapper .buttonWrapper {
+    width: 100% !important;
+}
+
+::ng-deep .ticketsInformationWrapper .ticketsPanel .ticketNumberWrapper {
     display: none !important;
 }
 
-::ng-deep .ticketsPanel .ticketsArea {
+::ng-deep .ticketsInformationWrapper .ticketsPanel .ticketsArea {
     padding: 0px !important;
     border: 0px !important;
-    margin-top: 30px;
+    margin-top: 20px;
+    height: calc(100% - 120px);
 }
