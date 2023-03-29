@@ -415,7 +415,7 @@ export class CommonService {
   // restrict Router
   public restrictRoute() {
     if (!this.getIsAdminOrAgent()) {
-      this.Router.navigate(['calls']);
+      this.Router.navigate(['requests']);
     }
     else {
       this.Router.navigate(['/dashboard']);
