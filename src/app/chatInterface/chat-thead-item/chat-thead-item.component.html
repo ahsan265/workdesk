@@ -1,5 +1,6 @@
-<div class="threadItemPanel" *ngFor="let thread of this.chatData">
-    <div class="thread">
+<div class="threadItemPanel" *ngFor="let thread of this.chatData" (click)="selectThread(thread)">
+    <div class="thread"
+        [style.background]="thread.uuid===selectedUuid?'rgba(255, 255, 255, 0.33);':'rgba(255, 255, 255, 0.33);'">
         <div class="userImage">
             <img [src]="thread.image" alt="">
         </div>
@@ -9,11 +10,11 @@
                     {{thread.name}}
                 </div>
                 <div class="timer">
-                    {{thread.date}}
+                    {{thread.date|timenow}}
                 </div>
             </div>
             <div class="userMessageDetails">
-                <div class="lastMessage">
+                <div class="lastMessage" [style.color]="thread.last_message?'#162741':'#737C8A'">
                     {{thread.last_message}}
                 </div>
                 <div class="counerWrapper">

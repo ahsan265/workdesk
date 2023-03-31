@@ -106,6 +106,7 @@ import { ColorBackPipe } from './pipes/nameBackground/color-back.pipe';
 import { TicketsCreationComponent } from './tickets-creation/tickets-creation.component';
 import { TicketWrapperComponent } from './tickets/ticket-wrapper/ticket-wrapper.component';
 import { TicketProfileComponent } from './tickets/ticket-profile/ticket-profile.component';
+import { TimenowPipe } from './pipes/timeNow/timenow.pipe';
 
 @NgModule({
   declarations: [
@@ -175,6 +176,7 @@ import { TicketProfileComponent } from './tickets/ticket-profile/ticket-profile.
     TicketsCreationComponent,
     TicketWrapperComponent,
     TicketProfileComponent,
+    TimenowPipe,
 
   ],
   imports: [

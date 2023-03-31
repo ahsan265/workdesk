@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
+import { ChatSocketService } from 'src/app/workdeskSockets/chatSocket/chat-socket.service';
 import { CommonService } from '../../commonEndpoint/common.service';
 import { GigaaaApiService } from '../../gigaaaApiService/gigaaa-api-service.service';
 import { MessageService } from '../../messageService/message.service';
@@ -10,6 +11,7 @@ import { MessageService } from '../../messageService/message.service';
 export class ChatOperationService {
   incomingChatUuid: BehaviorSubject<string>;
   constructor(private GigaaaApiService: GigaaaApiService, private CommonService: CommonService,
+    private ChatSocketService:ChatSocketService,
     private MessageService: MessageService) {
     this.incomingChatUuid = new BehaviorSubject('');
   }
@@ -17,7 +19,7 @@ export class ChatOperationService {
   public async endChat() {
     try {
       const data = {
-        "chat_uuid": this.incomingChatUuid.getValue()
+        "chat_uuid": this.ChatSocketService.lastSelectMessageUuid
       }
       await this.GigaaaApiService.setChatEnd(this.CommonService.getEndpointsParamLocal().token, this.CommonService.getEndpointsParamLocal().organization, this.CommonService.getEndpointsParamLocal().project, data)
     }
