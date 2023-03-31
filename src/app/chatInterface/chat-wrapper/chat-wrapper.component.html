@@ -1,60 +1,62 @@
-<div class="messageItem" *ngFor="let i of  this.getIteration();">
-    <div class="senderPanel">
-        <div class="senderMessage">
-            <div class="message">
-                Aenean et hendrerit elit. Vestibulum risus mauris, pretium sed posuere vel, pretium auctor
-                velitdssssssssssssssss.
+<div *ngIf="showChatMessage" #scrollMe>
+    <!-- <div class="messageItem" *ngFor="let i of  this.getIteration();">
+        <div class="senderPanel">
+            <div class="senderMessage">
+                <div class="message">
+                    Aenean et hendrerit elit. Vestibulum risus mauris, pretium sed posuere vel, pretium auctor
+                    velitdssssssssssssssss.
+                </div>
             </div>
         </div>
-    </div>
-    <div class="senderPanel">
-        <div class="senderMessage">
-            <div class="message">
-                Aenean et hendrerit elit. Vestibulum risus mauris, pretium sed posuere vel, pretium auctor velit.
+        <div class="senderPanel">
+            <div class="senderMessage">
+                <div class="message">
+                    Aenean et hendrerit elit. Vestibulum risus mauris, pretium sed posuere vel, pretium auctor velit.
+                </div>
             </div>
         </div>
+        <div class="recieverPanel">
+            <div class="recieveMessage">
+                <div class="message recv">
+                    Aenean et hendrerit elit. Vestibulum risus mauris, pretium sed posuere vel, pretium auctor velit.
+                </div>
+            </div>
+        </div>
+    </div> -->
+    <div class="dividerPanel" *ngIf="showSelectMessage">
+        <div class="dividerBar">
+        </div>
+        <div class="dividerText">Live chat has been started</div>
+        <div class="dividerBar">
+        </div>
     </div>
-    <div class="recieverPanel">
-        <div class="recieveMessage">
-            <div class="message recv">
-                Aenean et hendrerit elit. Vestibulum risus mauris, pretium sed posuere vel, pretium auctor velit.
+    <div class="messageItem" *ngFor="let msg of selectedChatData.data">
+        <div class="senderPanel" *ngIf="msg.is_agent">
+            <div class="userImage">
+                <img [src]="msg.images.original" alt="">
+            </div>
+            <div class="senderMessage">
+                <div class="senderName">
+                    Alex
+                </div>
+                <div class="message">
+                    {{msg.message}}
+                </div>
+            </div>
+        </div>
+        <div class="recieverPanel" *ngIf="!msg.is_agent">
+            <div class="userImage recv">
+                <img src="../../../assets/images/callInterface/default_user.svg" alt="">
+            </div>
+            <div class="recieveMessage">
+                <div class="message recv">
+                    {{msg.message}}
+                </div>
             </div>
         </div>
     </div>
 </div>
-<div class="dividerPanel">
-    <div class="dividerBar">
-    </div>
-    <div class="dividerText">Live chat has been started</div>
-    <div class="dividerBar">
-    </div>
-</div>
-<div class="messageItem">
-    <div class="senderPanel">
-        <div class="userImage">
-            <img src="../../../assets/images/callInterface/default_user.svg" alt="">
-        </div>
-        <div class="senderMessage">
-            <div class="senderName">
-                Alex
-            </div>
-            <div class="message">
-                hello
-            </div>
-        </div>
-    </div>
-    <div class="recieverPanel">
-        <div class="userImage recv">
-            <img src="../../../assets/images/callInterface/default_user.svg" alt="">
-        </div>
-        <div class="recieveMessage">
-            <div class="message recv">
-                hello
-            </div>
-        </div>
-    </div>
-</div>
-<app-no-chat></app-no-chat>
+<app-no-chat *ngIf="showChatMessage===false"></app-no-chat>
 <div class="scrollBottom">
     <img src="../../../assets/images/chatInterface/scroll_arrow.svg" alt="">
 </div>

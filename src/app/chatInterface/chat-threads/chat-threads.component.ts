@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { chatThreadModelData } from 'src/app/models/chatModel';
 import { chatThreadData } from './chatThreadData';
 
 @Component({
@@ -9,4 +10,7 @@ import { chatThreadData } from './chatThreadData';
 export class ChatThreadsComponent {
 
   public chatThreadData = chatThreadData;
+
+  selectedConversationOutPut(event: chatThreadModelData) {
+  }
 }

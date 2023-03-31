@@ -1,6 +1,7 @@
-<div class="typingWrapper">
-    <input name="" id="" cols="30" rows="10" placeholder="Type message" />
-    <svg class="sendMessage" width="18" height="21" viewBox="0 0 18 21" fill="none" xmlns="http://www.w3.org/2000/svg">
+<form class="typingWrapper" [formGroup]="messageForm">
+    <input formControlName="message" name="" id="" cols="30" rows="10" placeholder="Type message" />
+    <svg (click)="sendMessage()" class="sendMessage" width="18" height="21" viewBox="0 0 18 21" fill="none"
+        xmlns="http://www.w3.org/2000/svg">
         <path
             d="M14.65 11.5181L3.21807 18.1184C2.27812 18.661 1.12635 17.881 1.2814 16.8068L2.15158 10.778C2.1885 10.5222 2.1885 10.2624 2.15158 10.0066L1.2814 3.97779C1.12635 2.90357 2.27812 2.12356 3.21807 2.66624L14.65 9.26647C15.5167 9.76684 15.5167 11.0178 14.65 11.5181Z"
             stroke="#616B7B" stroke-width="1.4" />
@@ -8,4 +9,4 @@
     </svg>
     <div class="closeChatWrapper"> <button class="endChat" (click)="endChat()">End chat</button>
     </div>
-</div>
+</form>
