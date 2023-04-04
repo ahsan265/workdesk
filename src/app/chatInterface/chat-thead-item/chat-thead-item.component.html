@@ -1,24 +1,27 @@
-<div class="threadItemPanel" *ngFor="let thread of this.chatData" (click)="selectThread(thread)">
-    <div class="thread" [ngClass]="thread.uuid===selectedUuid?'selectedThread':'thread'">
-        <div class="userImage">
-            <img [src]="thread.image" alt="">
-        </div>
-        <div class="informationWrapper">
-            <div class="userDetailsLast">
-                <div class="userName">
-                    {{thread.name}}
-                </div>
-                <div class="timer">
-                    {{thread.date|timenow}}
-                </div>
+<div class="threadsWrapper" scrolling [scrollClass]="'threadsWrapper'" >
+    <div class="threadItemPanel" *ngFor="let thread of this.chatData" (click)="selectThread(thread)">
+        <div class="thread" [ngClass]="thread.uuid===selectedUuid?'selectedThread':'thread'">
+            <div class="userImage">
+                <img [src]="thread.image" alt="">
             </div>
-            <div class="userMessageDetails">
-                <div class="lastMessage" [style.color]="thread.last_message?'#162741':'#737C8A'">
-                    {{ thread.is_agent_message?'you:':thread.name+':'}} {{thread.last_message}}
+            <div class="informationWrapper">
+                <div class="userDetailsLast">
+                    <div class="userName">
+                        {{thread.name}}
+                    </div>
+                    <div class="timer">
+                        {{thread.date|timenow}}
+                    </div>
                 </div>
-                <div class="counerWrapper">
-                    <div class="counter" *ngIf="thread.counter!==null">
-                        {{thread.counter}}
+                <div class="userMessageDetails">
+                    <div *ngIf="thread.last_message!==null" class="lastMessage"
+                        [style.color]="thread.last_message?'#162741':'#737C8A'">
+                        {{ thread.is_agent_message?'you:':thread.name+':'}} {{thread.last_message}}
+                    </div>
+                    <div class="counerWrapper">
+                        <div class="counter" *ngIf="thread.counter!==null">
+                            {{thread.counter}}
+                        </div>
                     </div>
                 </div>
             </div>

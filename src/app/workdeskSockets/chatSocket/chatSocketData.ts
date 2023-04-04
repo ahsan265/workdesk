@@ -2,15 +2,7 @@ import { chatSendMessageModel, chatThreadModel, getMessageDataModel } from "src/
 
 const chatThreadDummyData: chatThreadModel = {
     type: 'threads',
-    selected_thread: 'dhgajhsdghjasgdajhsg', data: [{
-        date_time: '20-03-2023',
-        images: undefined,
-        last_message: 'hello',
-        unread_messages_count: 0,
-        username: 'anon',
-        uuid: 'jsdkhfs78',
-        is_agent_message: false
-    }]
+    selected_thread: 'dhgajhsdghjasgdajhsg', data: []
 }
 const defaultSelectChatData: getMessageDataModel = {
     data: [],

@@ -7,18 +7,22 @@
 
 .senderMessage {
     display: flex;
-    width: fit-content;
     justify-content: left;
     align-items: flex-start;
     background: rgba(237, 237, 246, 0.3);
     border: 1px solid rgba(255, 255, 255, 0.63);
     border-radius: 10px 10px 10px 0px;
     flex: none;
+    height: fit-content;
+    position: relative;
     order: 1;
+    overflow-x: hidden;
+    overflow-wrap: anywhere;
     flex-grow: 0;
-    width: fit-content;
+ max-width: calc(100vw - 580px);
     padding: 10px;
     flex-direction: column;
+    text-overflow: revert;
 }
 
 .userImage {
@@ -77,6 +81,10 @@
     flex-grow: 0;
     padding: 10px;
     direction: ltr;
+    overflow-x: hidden;
+    overflow-wrap: anywhere;
+    max-width: calc(100vw - 580px);
+
 }
 
 .senderPanel {

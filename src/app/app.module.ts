@@ -108,6 +108,7 @@ import { TicketWrapperComponent } from './tickets/ticket-wrapper/ticket-wrapper.
 import { TicketProfileComponent } from './tickets/ticket-profile/ticket-profile.component';
 import { TimenowPipe } from './pipes/timeNow/timenow.pipe';
 import { scrollDownDirective } from './chatInterface/chatDirectives/arrowDownDirective';
+import { scrollingDirective } from './chatInterface/chatDirectives/scrollShowDirective';
 
 @NgModule({
   declarations: [
@@ -178,7 +179,8 @@ import { scrollDownDirective } from './chatInterface/chatDirectives/arrowDownDir
     TicketWrapperComponent,
     TicketProfileComponent,
     TimenowPipe,
-    scrollDownDirective
+    scrollDownDirective,
+    scrollingDirective
 
   ],
   imports: [
@@ -237,4 +239,4 @@ import { scrollDownDirective } from './chatInterface/chatDirectives/arrowDownDir
   ],
   bootstrap: [AppComponent]
 })
-export class AppModule {}
+export class AppModule { }
