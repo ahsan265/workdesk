@@ -12,15 +12,19 @@ export class ChattextAreaComponent {
   messageForm = new FormGroup({
     message: new FormControl('', [Validators.required])
   });
+  disableTextArea: boolean = false;
   constructor(private ChatOperationService: ChatOperationService, private ChatSocketService: ChatSocketService) {
-
+    this.ChatSocketService.liveChatThread.asObservable().subscribe(data => {
+      console.log(data.data)
+      data.data.length !== 0 ? this.messageForm.controls?.message.enable() : this.messageForm.controls?.message.disable();
+    })
   }
   endChat() {
     this.ChatOperationService.endChat();
   }
 
   sendMessage() {
-    if (this.messageForm.controls?.message.value !== null) {
+    if (this.messageForm.controls?.message.value !== null && this.messageForm.controls?.message.value !== '') {
       this.ChatSocketService.sendMessageDataText(this.messageForm.controls?.message.value, this.ChatSocketService.lastSelectMessageUuid);
       this.messageForm.patchValue(
         {

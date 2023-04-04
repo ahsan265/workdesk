@@ -7,6 +7,7 @@ export interface chatThreadModelData {
     last_message: string;
     counter: number;
     uuid: string;
+    is_agent_message: boolean;
 }
 
 export interface chatThreadModel {

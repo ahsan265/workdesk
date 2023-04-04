@@ -7,7 +7,7 @@
 .chatArea {
     position: relative;
     overflow: hidden;
-    height: 100vh;
+    height: calc(100vh - 108px);
     display: flex;
     padding: 16px;
     background: linear-gradient(127.72deg, rgba(213, 213, 224, 0.76) 3.76%, rgba(232, 241, 255, 0.76) 98.38%);
@@ -43,7 +43,7 @@
     width: calc(100% - 200px);
     height: fit-content;
     position: fixed;
-    bottom: 24px;
+    bottom: 0px;
 }
 
 .chatReaderWrapper {
@@ -51,4 +51,6 @@
     display: flex;
     width: 100%;
     height: calc(100vh - 210px);
+    align-items: center;
+    justify-content: center;
 }

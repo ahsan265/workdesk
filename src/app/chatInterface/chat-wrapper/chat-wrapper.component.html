@@ -1,4 +1,4 @@
-<div *ngIf="showChatMessage" #scrollMe>
+<div *ngIf="showChatMessage">
     <!-- <div class="messageItem" *ngFor="let i of  this.getIteration();">
         <div class="senderPanel">
             <div class="senderMessage">
@@ -33,11 +33,11 @@
     <div class="messageItem" *ngFor="let msg of selectedChatData.data">
         <div class="senderPanel" *ngIf="msg.is_agent">
             <div class="userImage">
-                <img [src]="msg.images.original" alt="">
+                <img [src]="this.CommonService.getLoggedInAgentData().images.original" alt="">
             </div>
             <div class="senderMessage">
                 <div class="senderName">
-                    Alex
+                    {{ this.CommonService.getLoggedInAgentData().first_name}}
                 </div>
                 <div class="message">
                     {{msg.message}}
@@ -46,7 +46,7 @@
         </div>
         <div class="recieverPanel" *ngIf="!msg.is_agent">
             <div class="userImage recv">
-                <img src="../../../assets/images/callInterface/default_user.svg" alt="">
+                <img [src]="msg.images.original" alt="">
             </div>
             <div class="recieveMessage">
                 <div class="message recv">
@@ -57,6 +57,6 @@
     </div>
 </div>
 <app-no-chat *ngIf="showChatMessage===false"></app-no-chat>
-<div class="scrollBottom">
+<div class="scrollBottom" *ngIf="showScrollArrow">
     <img src="../../../assets/images/chatInterface/scroll_arrow.svg" alt="">
 </div>
