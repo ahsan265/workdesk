@@ -76,6 +76,7 @@
     order: 1;
     flex-grow: 0;
     padding: 10px;
+    direction: ltr;
 }
 
 .senderPanel {
@@ -133,7 +134,7 @@
     width: 35px;
     height: 35px;
     bottom: 120px;
-    right: 55px;
+    right: 25px;
     display: flex;
     flex-wrap: nowrap;
     align-items: center;

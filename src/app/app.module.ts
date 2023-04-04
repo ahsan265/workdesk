@@ -107,6 +107,7 @@ import { TicketsCreationComponent } from './tickets-creation/tickets-creation.co
 import { TicketWrapperComponent } from './tickets/ticket-wrapper/ticket-wrapper.component';
 import { TicketProfileComponent } from './tickets/ticket-profile/ticket-profile.component';
 import { TimenowPipe } from './pipes/timeNow/timenow.pipe';
+import { scrollDownDirective } from './chatInterface/chatDirectives/arrowDownDirective';
 
 @NgModule({
   declarations: [
@@ -177,6 +178,7 @@ import { TimenowPipe } from './pipes/timeNow/timenow.pipe';
     TicketWrapperComponent,
     TicketProfileComponent,
     TimenowPipe,
+    scrollDownDirective
 
   ],
   imports: [

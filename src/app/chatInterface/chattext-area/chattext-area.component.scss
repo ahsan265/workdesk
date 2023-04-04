@@ -84,3 +84,37 @@ input::placeholder {
 svg.sendMessage:hover {
     fill: #1C54DB;
 }
+
+svg.sendMessage:hover path {
+    stroke: #ffffff;
+}
+
+.chatTextPanel {
+    display: block;
+}
+
+.typingIndicator {
+    font-family: "Roboto", sans-serif;
+    font-style: italic;
+    font-weight: 500;
+    font-size: 12px;
+    line-height: 25px;
+    display: flex;
+    align-items: center;
+    letter-spacing: 0.02em;
+    color: #7D8696;
+}
+
+button.endChat:disabled {
+    background: #ECECF3;
+    color: #A4A4A4;
+    border: none;
+}
+
+input:disabled>svg.sendMessage {
+    fill: #616B7B;
+}
+
+input:disabled>svg.sendMessage:hover {
+    fill: #616B7B;
+}

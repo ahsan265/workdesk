@@ -48,7 +48,7 @@ export class TimenowPipe implements PipeTransform {
     }
     if (seconds < 0) {
       seconds = Math.abs(seconds);
-      token = 'from now';
+      token = 'now';
       list_choice = 2;
     }
     let i = 0,

@@ -40,7 +40,6 @@ export class ChatSocketService {
       if (!Array.isArray(data)) {
         switch (data.type) {
           case 'threads':
-            console.log(data)
             this.liveChatThread.next(data);
             break;
           case 'thread_messages':

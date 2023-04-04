@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import {  chatThreadModelData } from 'src/app/models/chatModel';
+import { chatThreadModelData } from 'src/app/models/chatModel';
+import { CommonService } from 'src/app/workdeskServices/commonEndpoint/common.service';
 import { ChatSocketService } from 'src/app/workdeskSockets/chatSocket/chat-socket.service';
 import { chatThreadData } from '../chat-threads/chatThreadData';
 
@@ -15,7 +16,7 @@ export class ChatTheadItemComponent implements OnInit {
   @Output() selectedConversationOutPut = new EventEmitter();
   chatData = chatThreadData;
   selectedUuid: string = '';
-  constructor(private ChatSocketService: ChatSocketService) {
+  constructor(private ChatSocketService: ChatSocketService, private CommonService: CommonService) {
     this.ChatSocketService.liveChatThread.asObservable().subscribe(data => {
       this.selectedUuid = data.selected_thread;
       this.chatData = data.data.map(((thread) => ({
@@ -24,7 +25,8 @@ export class ChatTheadItemComponent implements OnInit {
         image: thread.images?.original,
         last_message: thread.last_message,
         name: thread.username,
-        uuid: thread.uuid
+        uuid: thread.uuid,
+        is_agent_message: thread.is_agent_message
       })))
     })
     this.chatData.length !== 0 ?
@@ -32,6 +34,7 @@ export class ChatTheadItemComponent implements OnInit {
 
   }
   ngOnInit(): void {
+
   }
   selectThread(chatThreadModelData: chatThreadModelData) {
     this.selectedConversationOutPut.next(chatThreadModelData);

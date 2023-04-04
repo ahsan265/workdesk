@@ -92,7 +92,7 @@ const callTypeIncoming: MultiSelect = {
   data: [
     { id: 1, name: 'Audio', selected: false },
     { id: 2, name: 'Video', selected: false },
-    { id: 3, name: 'Live chat', selected: false },
+    { id: 3, name: 'Chat', selected: false },
 
   ]
 };

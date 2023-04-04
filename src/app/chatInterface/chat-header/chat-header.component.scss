@@ -42,4 +42,10 @@
 
 .closeIcon {
     cursor: pointer;
+    transform: rotate(0deg);
+    transition: 0.4s;
+}
+
+.closeIcon:hover {
+    transform: rotate(90deg);
 }
