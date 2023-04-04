@@ -18,7 +18,7 @@ export class ChatSocketService {
   chatSendMessageLast!: BehaviorSubject<chatSendMessageModel>
   lastSelectMessageUuid: string = '';
 
-  isSocketOpen: any;
+  isSocketOpen: number=0;
   constructor(private MessageService: MessageService) {
     this.liveChatThread = new BehaviorSubject(chatThreadDummyData);
     this.chatMessageDataSelected = new BehaviorSubject(defaultSelectChatData);
@@ -66,26 +66,32 @@ export class ChatSocketService {
 
   }
   public getMessagesForThread(value: string) {
-    this.lastSelectMessageUuid = value;
-    const chatSendMessage: selectedThreadModel = {
-      action: 'select_thread',
-      data: value
+    if (this.ws?.OPEN === this.isSocketOpen) {
+      this.lastSelectMessageUuid = value;
+      const chatSendMessage: selectedThreadModel = {
+        action: 'select_thread',
+        data: value
+      }
+      const sendSelectedThreadData = JSON.stringify(chatSendMessage);
+      this.ws.send(sendSelectedThreadData);
+
     }
-    const sendSelectedThreadData = JSON.stringify(chatSendMessage);
-    this.ws.send(sendSelectedThreadData);
+
   }
   public sendMessageDataText(message: string, uuid: string) {
-    const chatSendMessage: chatSendMessageModel = {
-      action: 'message',
-      data: {
-        conversation_uuid: uuid,
-        message: message,
-        type: 'text'
+    if (this.ws?.OPEN === this.isSocketOpen) {
+      const chatSendMessage: chatSendMessageModel = {
+        action: 'message',
+        data: {
+          conversation_uuid: uuid,
+          message: message,
+          type: 'text'
+        }
       }
+      this.chatSendMessageLast.next(chatSendMessage);
+      const sendMessageData = JSON.stringify(chatSendMessage);
+      this.ws.send(sendMessageData);
     }
-    this.chatSendMessageLast.next(chatSendMessage);
-    const sendMessageData = JSON.stringify(chatSendMessage);
-    this.ws.send(sendMessageData);
   }
   public closeChatSocket() {
     if (this.ws?.OPEN === this.isSocketOpen) {

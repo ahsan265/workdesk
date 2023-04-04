@@ -3,12 +3,9 @@
 
     <div class="chatArea">
         <div class="threadArea">
-            <app-chat-threads>
-            </app-chat-threads>
+            <app-chat-thead-item></app-chat-thead-item>
         </div>
-
-        <div class="readingArea" arrowDowm [scrollClass]="'.readingArea'" [nonScrollClass]="'.chatArea'"
-            (showScrollDown)="showScrollDown($event)">
+        <div class="readingArea" (showScrollDown)="showScrollDown($event)">
             <div class="chatReaderWrapper">
                 <app-chat-wrapper #showScrollButton></app-chat-wrapper>
             </div>

@@ -10,10 +10,6 @@ import { chatThreadData } from '../chat-threads/chatThreadData';
   styleUrls: ['./chat-thead-item.component.scss']
 })
 export class ChatTheadItemComponent implements OnInit {
-
-  @Input() selectedConversation!: chatThreadModelData;
-
-  @Output() selectedConversationOutPut = new EventEmitter();
   chatData = chatThreadData;
   selectedUuid: string = '';
   constructor(private ChatSocketService: ChatSocketService, private CommonService: CommonService) {
@@ -37,7 +33,6 @@ export class ChatTheadItemComponent implements OnInit {
 
   }
   selectThread(chatThreadModelData: chatThreadModelData) {
-    this.selectedConversationOutPut.next(chatThreadModelData);
     this.ChatSocketService.getMessagesForThread(chatThreadModelData.uuid);
   }
 }
