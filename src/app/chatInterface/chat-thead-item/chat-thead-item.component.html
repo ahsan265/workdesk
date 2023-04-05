@@ -1,4 +1,4 @@
-<div class="threadsWrapper" scrolling [scrollClass]="'threadsWrapper'" >
+<div class="threadsWrapper" scrolling [scrollClass]="'threadsWrapper'">
     <div class="threadItemPanel" *ngFor="let thread of this.chatData" (click)="selectThread(thread)">
         <div class="thread" [ngClass]="thread.uuid===selectedUuid?'selectedThread':'thread'">
             <div class="userImage">
@@ -14,9 +14,13 @@
                     </div>
                 </div>
                 <div class="userMessageDetails">
-                    <div *ngIf="thread.last_message!==null" class="lastMessage"
+                    <div *ngIf="thread.last_message!==null && thread.isTyping===false" class="lastMessage"
+                        [style.color]="thread.counter==0?'#162741':'#737C8A'">
+                        {{ thread.is_agent_message?'You:':thread.name+':'}} {{thread.last_message}}
+                    </div>
+                    <div *ngIf="thread.isTyping" class="lastMessage"
                         [style.color]="thread.last_message?'#162741':'#737C8A'">
-                        {{ thread.is_agent_message?'you:':thread.name+':'}} {{thread.last_message}}
+                        Typing....
                     </div>
                     <div class="counerWrapper">
                         <div class="counter" *ngIf="thread.counter!==null">

@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
-import { chatSendMessageModel, chatThreadModel, getMessageDataModel, selectedThreadModel } from 'src/app/models/chatModel';
+import { chatSendMessageModel, chatThreadModel, chatThreadModelData, getMessageDataModel, hasTyping, selectedThreadModel, typingChatModel, typingChatSendModel } from 'src/app/models/chatModel';
 import { connectionSecurityModel } from 'src/app/models/connectionSecurity';
 import { MessageService } from 'src/app/workdeskServices/messageService/message.service';
 import { environment } from 'src/environments/environment';
-import { chatThreadDummyData, defaultSelectChatData, defaultSendChatData } from './chatSocketData';
+import { chatThreadDummyData, defaultSelectChatData, defaultSendChatData, defaultTypingData } from './chatSocketData';
 
 @Injectable({
   providedIn: 'root'
@@ -16,13 +16,15 @@ export class ChatSocketService {
   liveChatThread!: BehaviorSubject<chatThreadModel>;
   chatMessageDataSelected!: BehaviorSubject<getMessageDataModel>;
   chatSendMessageLast!: BehaviorSubject<chatSendMessageModel>
-  lastSelectMessageUuid: string = '';
+  typingMessage!: BehaviorSubject<hasTyping>
+  lastSelectThreadUuid!: chatThreadModelData;
 
-  isSocketOpen: number=0;
+  isSocketOpen: number = 0;
   constructor(private MessageService: MessageService) {
     this.liveChatThread = new BehaviorSubject(chatThreadDummyData);
     this.chatMessageDataSelected = new BehaviorSubject(defaultSelectChatData);
-    this.chatSendMessageLast = new BehaviorSubject(defaultSendChatData)
+    this.chatSendMessageLast = new BehaviorSubject(defaultSendChatData);
+    this.typingMessage = new BehaviorSubject(defaultTypingData);
   }
   // dial webrtcCall
   public async startChat(): Promise<any> {
@@ -45,6 +47,9 @@ export class ChatSocketService {
           case 'thread_messages':
             this.chatMessageDataSelected.next(data)
             break;
+          case 'typing':
+            this.getIsTyping(data)
+            break;
           default:
         }
       }
@@ -65,12 +70,12 @@ export class ChatSocketService {
   public sendDataforCall(value: any) {
 
   }
-  public getMessagesForThread(value: string) {
+  public getMessagesForThread(value: chatThreadModelData) {
     if (this.ws?.OPEN === this.isSocketOpen) {
-      this.lastSelectMessageUuid = value;
+      this.lastSelectThreadUuid = value;
       const chatSendMessage: selectedThreadModel = {
         action: 'select_thread',
-        data: value
+        data: value.uuid
       }
       const sendSelectedThreadData = JSON.stringify(chatSendMessage);
       this.ws.send(sendSelectedThreadData);
@@ -78,12 +83,12 @@ export class ChatSocketService {
     }
 
   }
-  public sendMessageDataText(message: string, uuid: string) {
+  public sendMessageDataText(message: string, id: chatThreadModelData) {
     if (this.ws?.OPEN === this.isSocketOpen) {
       const chatSendMessage: chatSendMessageModel = {
         action: 'message',
         data: {
-          conversation_uuid: uuid,
+          conversation_uuid: id.uuid,
           message: message,
           type: 'text'
         }
@@ -93,6 +98,40 @@ export class ChatSocketService {
       this.ws.send(sendMessageData);
     }
   }
+
+  public sendIsTypingMessage(uuid: string) {
+    if (this.ws?.OPEN === this.isSocketOpen) {
+      const isreadMessage: typingChatSendModel = { action: "typing", data: { conversation_uuid: uuid } }
+      const sendMessageData = JSON.stringify(isreadMessage);
+      this.ws.send(sendMessageData);
+    }
+  }
+
+  // get typing data 
+  public getIsTyping(typingChatModel: typingChatModel) {
+    let counter = 0;
+    let typingInterval = setInterval(() => {
+      counter++
+      if (counter === 1) {
+        const typingResponse: hasTyping = {
+          isTyping: true,
+          data: { conversation_uuid: typingChatModel.data.conversation_uuid }
+        }
+        this.typingMessage.next(typingResponse);
+      }
+      else if (counter === 5) {
+        const typingResponse: hasTyping = {
+          isTyping: false,
+          data: { conversation_uuid: typingChatModel.data.conversation_uuid }
+        }
+        this.typingMessage.next(typingResponse);
+        clearInterval(typingInterval);
+      }
+
+    }, 1000);
+
+  }
+
   public closeChatSocket() {
     if (this.ws?.OPEN === this.isSocketOpen) {
       this.ws?.close();

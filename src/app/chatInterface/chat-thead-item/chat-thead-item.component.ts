@@ -3,6 +3,7 @@ import { chatThreadModelData } from 'src/app/models/chatModel';
 import { CommonService } from 'src/app/workdeskServices/commonEndpoint/common.service';
 import { ChatSocketService } from 'src/app/workdeskSockets/chatSocket/chat-socket.service';
 import { chatThreadData } from '../chat-threads/chatThreadData';
+import { ChatOperationService } from 'src/app/workdeskServices/chatInterfaceServices/chatOperation/chat-operation.service';
 
 @Component({
   selector: 'app-chat-thead-item',
@@ -12,7 +13,8 @@ import { chatThreadData } from '../chat-threads/chatThreadData';
 export class ChatTheadItemComponent implements OnInit {
   chatData = chatThreadData;
   selectedUuid: string = '';
-  constructor(private ChatSocketService: ChatSocketService, private CommonService: CommonService) {
+  typingThread: String = ''
+  constructor(private ChatSocketService: ChatSocketService, private ChatOperationService: ChatOperationService) {
     this.ChatSocketService.liveChatThread.asObservable().subscribe(data => {
       this.selectedUuid = data.selected_thread;
       this.chatData = data.data.map(((thread) => ({
@@ -22,17 +24,33 @@ export class ChatTheadItemComponent implements OnInit {
         last_message: thread.last_message,
         name: thread.username,
         uuid: thread.uuid,
-        is_agent_message: thread.is_agent_message
+        is_agent_message: thread.is_agent_message,
+        isTyping: false
       })))
+      this.ChatSocketService.lastSelectThreadUuid = this.chatData[0];
     })
     this.chatData.length !== 0 ?
-      this.ChatSocketService.getMessagesForThread(this.chatData[0].uuid) : '';
+      this.ChatSocketService.getMessagesForThread(this.chatData[0]) : '';
+    this.ChatSocketService.typingMessage.asObservable().subscribe(isTdata => {
+      this.chatData.filter(data => {
+        if (data.uuid === isTdata.data.conversation_uuid && isTdata.isTyping === true) {
+          data.isTyping = true;
+        }
+        else {
+          data.isTyping = false;
+        }
+      })
+    })
+
 
   }
   ngOnInit(): void {
 
   }
   selectThread(chatThreadModelData: chatThreadModelData) {
-    this.ChatSocketService.getMessagesForThread(chatThreadModelData.uuid);
+    if (chatThreadModelData.counter !== null) {
+      this.ChatOperationService.setUnreadToRead(chatThreadModelData.uuid, this.ChatOperationService.getAllUnreadMessage());
+    }
+    this.ChatSocketService.getMessagesForThread(chatThreadModelData);
   }
 }

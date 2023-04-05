@@ -1,4 +1,4 @@
-import { chatSendMessageModel, chatThreadModel, getMessageDataModel } from "src/app/models/chatModel"
+import { chatSendMessageModel, chatThreadModel, getMessageDataModel, hasTyping, typingChatModel } from "src/app/models/chatModel"
 
 const chatThreadDummyData: chatThreadModel = {
     type: 'threads',
@@ -17,8 +17,15 @@ const defaultSendChatData: chatSendMessageModel = {
         type: 'text'
     }
 }
+const defaultTypingData: hasTyping = {
+    isTyping: false,
+    data: {
+        conversation_uuid: '',
+    }
+}
 export {
     chatThreadDummyData,
     defaultSelectChatData,
-    defaultSendChatData
+    defaultSendChatData,
+    defaultTypingData
 }
