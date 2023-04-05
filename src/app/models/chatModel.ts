@@ -8,6 +8,7 @@ export interface chatThreadModelData {
     counter: number;
     uuid: string;
     is_agent_message: boolean;
+    isTyping: boolean;
 }
 
 export interface chatThreadModel {
@@ -48,10 +49,24 @@ export interface receivedMessage {
     images: ImagesModel;
     is_agent: boolean;
     date_time: string;
+    is_read: boolean;
 }
 export interface selectedThreadModel {
     action: string;
     data: string;
 }
 
+export interface typingChatModel {
+    type: string,
+    data: conversationIdModel
+}
+export interface typingChatSendModel {
+    action: string,
+    data: conversationIdModel
+}
+export interface hasTyping {
+    isTyping: boolean;
+    data: conversationIdModel
+}
+export interface conversationIdModel { conversation_uuid: string }
 

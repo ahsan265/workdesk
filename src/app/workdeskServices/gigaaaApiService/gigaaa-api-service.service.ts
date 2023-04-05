@@ -947,4 +947,31 @@ export class GigaaaApiService {
       });
   }
 
+  public async updateUnreadMessage(
+    token: string,
+    organizationId: string,
+    projectId: string,
+    c_uuid: string,
+    messageUuid: number[]
+  ): Promise<any> {
+    const httpOptions: any = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        Accept: 'application/json',
+        Authorization: `Bearer ${token}`
+      })
+    };
+    return await this.http
+      .put(
+        this.workdeskurl_cs +
+        '/private/organization/' + organizationId + '/project/' + projectId + '/conversation/' + c_uuid,
+        { messages: messageUuid },
+        httpOptions
+      )
+      .toPromise()
+      .catch((err) => {
+        throw err;
+      });
+  }
+
 }
