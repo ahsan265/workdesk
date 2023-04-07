@@ -14,7 +14,7 @@
                     </div>
                 </div>
                 <div class="userMessageDetails">
-                    <div *ngIf="thread.last_message!==null && thread.isTyping===false" class="lastMessage"
+                    <div *ngIf="thread.last_message!==null && thread.isTyping===false " class="lastMessage"
                         [style.color]="thread.counter==0?'#162741':'#737C8A'">
                         {{ thread.is_agent_message?'You:':thread.name+':'}} {{thread.last_message}}
                     </div>

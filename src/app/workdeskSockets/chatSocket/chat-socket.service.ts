@@ -110,16 +110,14 @@ export class ChatSocketService {
   // get typing data 
   public getIsTyping(typingChatModel: typingChatModel) {
     let counter = 0;
+    const typingResponse: hasTyping = {
+      isTyping: true,
+      data: { conversation_uuid: typingChatModel.data.conversation_uuid }
+    }
+    this.typingMessage.next(typingResponse);
     let typingInterval = setInterval(() => {
       counter++
-      if (counter === 1) {
-        const typingResponse: hasTyping = {
-          isTyping: true,
-          data: { conversation_uuid: typingChatModel.data.conversation_uuid }
-        }
-        this.typingMessage.next(typingResponse);
-      }
-      else if (counter === 5) {
+   if (counter === 1) {
         const typingResponse: hasTyping = {
           isTyping: false,
           data: { conversation_uuid: typingChatModel.data.conversation_uuid }
@@ -128,7 +126,7 @@ export class ChatSocketService {
         clearInterval(typingInterval);
       }
 
-    }, 1000);
+    }, 5000);
 
   }
 
