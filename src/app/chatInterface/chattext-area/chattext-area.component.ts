@@ -4,6 +4,7 @@ import { ChatOperationService } from 'src/app/workdeskServices/chatInterfaceServ
 import { ChatSocketService } from 'src/app/workdeskSockets/chatSocket/chat-socket.service';
 import { chatThreadModelData } from 'src/app/models/chatModel';
 import { selectedThreadData } from '../chat-threads/chatThreadData';
+import { defaultSelectChatData } from 'src/app/workdeskSockets/chatSocket/chatSocketData';
 
 @Component({
   selector: 'app-chattext-area',
@@ -25,7 +26,7 @@ export class ChattextAreaComponent implements OnDestroy {
     // get typing status;
     this.ChatSocketService.typingMessage.asObservable().subscribe(data => {
       this.chatThreadModelData = this.ChatSocketService.lastSelectThreadUuid;
-      this.chatThreadModelData.isTyping = data.isTyping || false;
+      this.chatThreadModelData.isTyping = data.isTyping ;
     })
     // detct typing 
     this.messageForm.controls.message.valueChanges.subscribe(() => {
@@ -46,6 +47,7 @@ export class ChattextAreaComponent implements OnDestroy {
   }
   endChat() {
     this.ChatOperationService.endChat();
+    this.ChatSocketService.chatMessageDataSelected.next(defaultSelectChatData)
   }
   sendMessage() {
     if (this.messageForm.controls?.message.value !== null && this.messageForm.controls?.message.value !== '') {
