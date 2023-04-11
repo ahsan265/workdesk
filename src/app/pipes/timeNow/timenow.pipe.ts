@@ -23,7 +23,7 @@ export class TimenowPipe implements PipeTransform {
         time = +new Date();
     }
     let time_formats = [
-      [60, 'seconds', 1], // 60
+      [60, 'Now', 1], // 60
       [120, '1 minute ago', '1 minute from now'], // 60*2
       [3600, 'minutes', 60], // 60*60, 60
       [7200, '1 hour ago', '1 hour from now'], // 60*60*2
@@ -52,13 +52,18 @@ export class TimenowPipe implements PipeTransform {
       list_choice = 2;
     }
     let i = 0,
-      format;
+      format: any = [];
     while (format = time_formats[i++])
       if (seconds < format[0]) {
         if (typeof format[2] == 'string')
           return format[list_choice];
         else
-          return Math.floor(seconds / format[2]) + ' ' + format[1] + ' ' + token;
+          if (seconds < 60 && seconds > 0) {
+            return 'now'
+          }
+          else {
+            return Math.floor(seconds / format[2]) + ' ' + format[1] + ' ' + token;
+          }
       }
     return time;
   }

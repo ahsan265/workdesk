@@ -123,7 +123,6 @@ export class DashboardCallComponent {
 
   ) {
     this.getFirstLoad();
-    this.authService.pageTitle.next('Dashboard');
     this.getCardsAndChartsData();
     this.alwaysShowCalendars = true;
   }
@@ -158,7 +157,7 @@ export class DashboardCallComponent {
   private getFirstLoad(): void {
     this.SharedServices.LoadcommonEpsubject.subscribe(async (data) => {
       if (data === 1) {
-        this.CommonService.restrictRoute();
+        // this.CommonService.restrictRoute();
         this.setDefaultDate();
         this.languauges = await this.CommonService.getProjectLanguagesForUser();
         this.countries = await this.CommonService.getLocations();

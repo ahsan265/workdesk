@@ -13,13 +13,15 @@
                         {{thread.date|timenow}}
                     </div>
                 </div>
-                <div class="userMessageDetails">
-                    <div *ngIf="thread.last_message!==null && thread.isTyping===false " class="lastMessage"
-                        [style.color]="thread.counter==0?'#162741':'#737C8A'">
-                        {{ thread.is_agent_message?'You:':thread.name+':'}} {{thread.last_message}}
+                <div class="userMessageDetails" *ngIf="thread.last_message!==null || thread.isTyping===true">
+                    <div *ngIf="thread.last_message!==null && (thread.isTyping===false || thread.uuid===selectedUuid)"
+                        class="lastMessage"
+                        [ngStyle]="{'color':thread.counter===null?'#737C8A':'#162741','font-weight':thread.counter===null?'400':'500'}">
+                        {{ thread.is_agent_message?'You:':thread.name+':'}}
+                        {{thread.last_message}}
                     </div>
-                    <div *ngIf="thread.isTyping" class="lastMessage"
-                        [style.color]="thread.last_message?'#162741':'#737C8A'">
+                    <div *ngIf="thread.isTyping && thread.uuid!==selectedUuid" class="lastMessage"
+                        [style.color]="'#737C8A'">
                         Typing....
                     </div>
                     <div class="counerWrapper">

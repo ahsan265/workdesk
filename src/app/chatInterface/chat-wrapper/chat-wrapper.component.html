@@ -31,6 +31,13 @@
         </div>
     </div>
     <div class="messageItem" *ngFor="let msg of selectedChatData.data">
+        <div class="dividerPanel" *ngIf="msg.id===this.setNewMessage()">
+            <div class="dividerBar">
+            </div>
+            <div class="dividerText">New Messages</div>
+            <div class="dividerBar">
+            </div>
+        </div>
         <div class="senderPanel" *ngIf="msg.is_agent">
             <div class="userImage">
                 <img [src]="this.CommonService.getLoggedInAgentData().images.original" alt="">
@@ -56,7 +63,9 @@
         </div>
     </div>
 </div>
-<app-no-chat *ngIf="showChatMessage===false"></app-no-chat>
+<img *ngIf="this.chatThread.data.length!==0 && this.selectedChatData.data.length===0"
+    src="../../../assets/images/chatInterface/no_chats.svg" alt="">
+<app-no-chat *ngIf="this.chatThread.data.length===0"></app-no-chat>
 <div class="scrollBottom" *ngIf="showScrollArrow">
     <img src="../../../assets/images/chatInterface/scroll_arrow.svg" alt="">
 </div>

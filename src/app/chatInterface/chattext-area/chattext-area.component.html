@@ -1,7 +1,7 @@
 <div class="chatTextPanel">
     <div class="typingWrapper" [formGroup]="messageForm">
         <input (click)="checkReadMessage()" formControlName="message" name="" id="" cols="1" rows="10"
-            placeholder="Type message">
+            placeholder="Type message" (keyup.enter)="sendMessage()">
         <svg (keyup.enter)="sendMessage()" (click)="sendMessage()" class="sendMessage" width="18" height="21"
             viewBox="0 0 18 21" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path
@@ -14,7 +14,7 @@
         </div>
     </div>
     <div class="typingIndicator">
-        {{(this.chatThreadModelData?.isTyping===true
-            )? this.chatThreadModelData.name +' typing...':''}}
+        {{(this.showTyping===true
+        )? this.selectedChatThreadModelData.name +' typing...':''}}
     </div>
 </div>
