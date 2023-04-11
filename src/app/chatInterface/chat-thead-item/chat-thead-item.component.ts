@@ -27,8 +27,12 @@ export class ChatTheadItemComponent implements OnInit {
         is_agent_message: thread.is_agent_message,
         isTyping: false
       })))
+      this.chatData.find(data => {
+        if (data.uuid === this.selectedUuid) {
+          this.ChatSocketService.lastSelectThreadUuid.next(data);
+        }
+      })
     })
-    this.ChatSocketService.lastSelectThreadUuid = this.chatData[0];
     this.chatData.length !== 0 ?
       this.ChatSocketService.getMessagesForThread(this.chatData[0]) : '';
     this.ChatSocketService.typingMessage.asObservable().subscribe(isTdata => {

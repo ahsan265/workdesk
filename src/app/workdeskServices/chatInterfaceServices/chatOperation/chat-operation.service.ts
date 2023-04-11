@@ -4,7 +4,7 @@ import { ChatSocketService } from 'src/app/workdeskSockets/chatSocket/chat-socke
 import { CommonService } from '../../commonEndpoint/common.service';
 import { GigaaaApiService } from '../../gigaaaApiService/gigaaa-api-service.service';
 import { MessageService } from '../../messageService/message.service';
-import { receivedMessage } from 'src/app/models/chatModel';
+import { getMessageDataModel, receivedMessage } from 'src/app/models/chatModel';
 
 @Injectable({
   providedIn: 'root'
@@ -20,7 +20,7 @@ export class ChatOperationService {
   public async endChat() {
     try {
       const data = {
-        "chat_uuid": this.ChatSocketService.lastSelectThreadUuid.uuid
+        "chat_uuid": this.ChatSocketService.lastSelectThreadUuid.getValue().uuid
       }
       await this.GigaaaApiService.setChatEnd(this.CommonService.getEndpointsParamLocal().token, this.CommonService.getEndpointsParamLocal().organization, this.CommonService.getEndpointsParamLocal().project, data)
     }
@@ -75,6 +75,18 @@ export class ChatOperationService {
       }
       else {
         return [];
+      }
+    })
+    return ids;
+  }
+  getFirstUnreadMessage(messageData: getMessageDataModel) {
+    let ids: number = 0;
+    messageData.data.find((response: receivedMessage) => {
+      if (response.is_read === false && response.is_agent === false) {
+        return ids = response.id
+      }
+      else {
+        return ids;
       }
     })
     return ids;

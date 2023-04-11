@@ -1,4 +1,4 @@
-import { chatSendMessageModel, chatThreadModel, getMessageDataModel, hasTyping, typingChatModel } from "src/app/models/chatModel"
+import { chatSendMessageModel, chatThreadModel, chatThreadModelData, getMessageDataModel, hasTyping, typingChatModel } from "src/app/models/chatModel"
 
 const chatThreadDummyData: chatThreadModel = {
     type: 'threads',
@@ -23,9 +23,22 @@ const defaultTypingData: hasTyping = {
         conversation_uuid: '',
     }
 }
+
+const selectedThreadData: chatThreadModelData = {
+    counter: 0,
+    date: "2023-04-05T13:16:54Z",
+    image: "https://data.gigaaa.link/customer_support/images/human_agents/default/original.png",
+    isTyping: false,
+    is_agent_message: false,
+    last_message: '',
+    name: "Anonymous",
+    uuid: ""
+}
+
 export {
     chatThreadDummyData,
     defaultSelectChatData,
     defaultSendChatData,
-    defaultTypingData
+    defaultTypingData,
+    selectedThreadData
 }

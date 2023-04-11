@@ -1,18 +1,4 @@
 <div class="picturearea">
-  <!-- <img [src]="imageView" alt="" style="position: relative;
-  height: inherit;
-  width: inherit;
-  display: flex;">
-</div> -->
-  <!-- <canvas #layer1 id="layer1" class="canvanImage"
-    style=" object-fit: cover ;position: relative; height: 282px; width: 282px; display: flex">
-  </canvas>
-  <div cdkDragBoundary=".picturearea" (mouseup)="dragEvent($event)" cdkDrag class="content" [style.width.px]="width"
-    [style.height.px]="height" [style.backgroundColor]="color">
-    <div class="resize" [style.width.px]="width"
-    [style.height.px]="height"></div>
-  </div> -->
-
   <image-cropper [imageChangedEvent]="this.imageView" [maintainAspectRatio]="true"
     [containWithinAspectRatio]="containWithinAspectRatio" [aspectRatio]="1 / 1" [resizeToWidth]="282"
     [resizeToHeight]="282" [cropperStaticHeight]="230" [cropperStaticWidth]="230" [onlyScaleDown]="true"
@@ -33,7 +19,4 @@
       d="M11.8203 6.82019H6.82031V11.8202H5.17969V6.82019H0.179688V5.17957H5.17969V0.179565H6.82031V5.17957H11.8203V6.82019Z"
       fill="#7D8696" />
   </svg>
-</div>
-<div id="result">
-
 </div>

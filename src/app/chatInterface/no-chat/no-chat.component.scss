@@ -52,4 +52,9 @@
     margin-top: 28px;
     border-radius: 41px;
     cursor: pointer;
+    transition: 0.4s;
+}
+
+.goBack:hover {
+    background: #184CC8;
 }

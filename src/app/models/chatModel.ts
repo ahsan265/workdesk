@@ -8,7 +8,7 @@ export interface chatThreadModelData {
     counter: number;
     uuid: string;
     is_agent_message: boolean;
-    isTyping: boolean;
+    isTyping?: boolean;
 }
 
 export interface chatThreadModel {

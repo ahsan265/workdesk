@@ -36,6 +36,11 @@
     color: #162741;
 }
 
+.textUnread {
+    font-weight: 500;
+    color: #162741;
+}
+
 .counter {
     background: #162741;
     border-radius: 12px;
@@ -86,12 +91,12 @@
 .lastMessage {
     font-family: "Roboto";
     font-style: normal;
-    font-weight: 500;
+    font-weight: 400;
     font-size: 12px;
     line-height: 160%;
     align-items: center;
     letter-spacing: 0.02em;
-    color: #162741;
+    color: #737C8A;
     width: 165px;
     overflow: hidden;
     white-space: nowrap;

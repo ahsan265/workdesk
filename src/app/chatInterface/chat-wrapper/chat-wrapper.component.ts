@@ -1,5 +1,6 @@
 import { AfterViewChecked, Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
-import { getMessageDataModel } from 'src/app/models/chatModel';
+import { chatThreadModel, getMessageDataModel } from 'src/app/models/chatModel';
+import { ChatOperationService } from 'src/app/workdeskServices/chatInterfaceServices/chatOperation/chat-operation.service';
 import { CommonService } from 'src/app/workdeskServices/commonEndpoint/common.service';
 import { ChatSocketService } from 'src/app/workdeskSockets/chatSocket/chat-socket.service';
 
@@ -13,19 +14,20 @@ export class ChatWrapperComponent implements OnInit, AfterViewChecked {
   selectedChatData!: getMessageDataModel
   showSelectMessage: boolean = false;
   showScrollArrow: boolean = false;
-
+  chatThread!: chatThreadModel
   @ViewChild('scrollMe') private myScrollContainer!: ElementRef;
   getIteration() {
-
     return Array(4);
   }
-  constructor(private ChatSocketService: ChatSocketService, public CommonService: CommonService) {
+  constructor(private ChatSocketService: ChatSocketService, public CommonService: CommonService,
+    private ChatOperationService: ChatOperationService) {
     this.ChatSocketService.liveChatThread.asObservable().subscribe(data => {
+      this.chatThread = data;
       (data.data.length !== 0) ? this.showChatMessage = true : this.showChatMessage = false;
     })
     this.ChatSocketService.chatMessageDataSelected.asObservable().subscribe(data => {
       this.selectedChatData = data;
-      this.selectedChatData.data.length !== 0 ? this.showSelectMessage = true : this.showSelectMessage = false;
+      this.selectedChatData.data.length !== 0 ? (this.showSelectMessage = true) : (this.showSelectMessage = false);
     })
   }
   ngOnInit(): void {
@@ -41,5 +43,10 @@ export class ChatWrapperComponent implements OnInit, AfterViewChecked {
   }
   showScrollDown(event: boolean) {
     (event) ? this.showScrollArrow = true : this.showScrollArrow = false
+  }
+
+  //set border for first Unread Meassage 
+  setNewMessage() {
+    return this.ChatOperationService.getFirstUnreadMessage(this.selectedChatData);
   }
 }

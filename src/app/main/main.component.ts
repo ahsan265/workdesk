@@ -17,6 +17,7 @@ import { Router } from '@angular/router';
 import { notifiactionData, organizationData, organizationDoneModalData, organizationModalData } from './mainData';
 import { OverlayService } from '@gigaaa/gigaaa-components';
 import { SwitchOrganizationComponent } from '../modals/switch-organization/switch-organization.component';
+import { ChatSocketService } from '../workdeskSockets/chatSocket/chat-socket.service';
 
 @Component({
   selector: 'app-main',
@@ -49,7 +50,8 @@ export class MainComponent implements OnInit {
     private GigaaaApiService: GigaaaApiService,
     private SharedServices: SharedServices,
     private Router: Router,
-    private OverlayService: OverlayService
+    private OverlayService: OverlayService,
+    private ChatSocketService: ChatSocketService
 
   ) { }
   organizationData = organizationData
@@ -81,6 +83,15 @@ export class MainComponent implements OnInit {
     this.SharedServices.reloadProjects.subscribe((data: boolean) => {
       if (data) {
         this.getOrganizationService.getOrganization(this.CommonService.getEndpointsParamLocal().token);
+      }
+    })
+    this.ChatSocketService.unreadThread.asObservable().subscribe(isUnread => {
+      if (this.sidebarData.length !== 0) {
+        this.sidebarData.find(data => {
+          if (data.name.includes('Chats')) {
+            isUnread === true ? data.name = 'Chats  ' + '•' : data.name = 'Chats';
+          }
+        })
       }
     })
   }

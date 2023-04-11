@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, ReplaySubject } from 'rxjs';
 import { chatSendMessageModel, chatThreadModel, chatThreadModelData, getMessageDataModel, hasTyping, selectedThreadModel, typingChatModel, typingChatSendModel } from 'src/app/models/chatModel';
 import { connectionSecurityModel } from 'src/app/models/connectionSecurity';
 import { MessageService } from 'src/app/workdeskServices/messageService/message.service';
 import { environment } from 'src/environments/environment';
-import { chatThreadDummyData, defaultSelectChatData, defaultSendChatData, defaultTypingData } from './chatSocketData';
+import { chatThreadDummyData, defaultSelectChatData, defaultSendChatData, defaultTypingData, selectedThreadData } from './chatSocketData';
 
 @Injectable({
   providedIn: 'root'
@@ -13,18 +13,21 @@ export class ChatSocketService {
 
   ws!: WebSocket;
   protected websocket_url = `${environment.websocket_url}`;
-  liveChatThread!: BehaviorSubject<chatThreadModel>;
+  liveChatThread: BehaviorSubject<chatThreadModel>;
   chatMessageDataSelected!: BehaviorSubject<getMessageDataModel>;
-  chatSendMessageLast!: BehaviorSubject<chatSendMessageModel>
-  typingMessage!: BehaviorSubject<hasTyping>
-  lastSelectThreadUuid!: chatThreadModelData;
-
+  chatSendMessageLast: BehaviorSubject<chatSendMessageModel>
+  typingMessage: BehaviorSubject<hasTyping>
+  lastSelectThreadUuid: BehaviorSubject<chatThreadModelData>;
+  unreadThread: BehaviorSubject<boolean>
   isSocketOpen: number = 0;
   constructor(private MessageService: MessageService) {
     this.liveChatThread = new BehaviorSubject(chatThreadDummyData);
     this.chatMessageDataSelected = new BehaviorSubject(defaultSelectChatData);
     this.chatSendMessageLast = new BehaviorSubject(defaultSendChatData);
     this.typingMessage = new BehaviorSubject(defaultTypingData);
+    this.lastSelectThreadUuid = new BehaviorSubject(selectedThreadData);
+    this.unreadThread = new BehaviorSubject(false);
+
   }
   // dial webrtcCall
   public async startChat(): Promise<any> {
@@ -43,6 +46,7 @@ export class ChatSocketService {
         switch (data.type) {
           case 'threads':
             this.liveChatThread.next(data);
+            this.getUnreadThreads(data);
             break;
           case 'thread_messages':
             this.chatMessageDataSelected.next(data)
@@ -72,7 +76,7 @@ export class ChatSocketService {
   }
   public getMessagesForThread(value: chatThreadModelData) {
     if (this.ws?.OPEN === this.isSocketOpen) {
-      this.lastSelectThreadUuid = value;
+      this.lastSelectThreadUuid.next(value);
       const chatSendMessage: selectedThreadModel = {
         action: 'select_thread',
         data: value.uuid
@@ -117,7 +121,7 @@ export class ChatSocketService {
     this.typingMessage.next(typingResponse);
     let typingInterval = setInterval(() => {
       counter++
-   if (counter === 1) {
+      if (counter === 1) {
         const typingResponse: hasTyping = {
           isTyping: false,
           data: { conversation_uuid: typingChatModel.data.conversation_uuid }
@@ -134,5 +138,13 @@ export class ChatSocketService {
     if (this.ws?.OPEN === this.isSocketOpen) {
       this.ws?.close();
     }
+  }
+
+  // get Uncount Message for when chat is not open 
+  public getUnreadThreads(chatThread: chatThreadModel) {
+    const result = chatThread.data.filter(data => {
+      return data.unread_messages_count !== null
+    })
+    result.length !== 0 ? this.unreadThread.next(true) : this.unreadThread.next(false);
   }
 }
