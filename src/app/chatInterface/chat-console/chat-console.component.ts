@@ -12,6 +12,9 @@ import { ChatWrapperComponent } from '../chat-wrapper/chat-wrapper.component';
 export class ChatConsoleComponent {
   @ViewChild('showScrollButton') showScrollButton!: ChatWrapperComponent;
   showScrollDown(event: any) {
-     this.showScrollButton.showScrollDown(event);
+    this.showScrollButton.showScrollDown(event);
+  }
+  constructor(private ChatSocketService: ChatSocketService) {
+    this.ChatSocketService.isSocketOpen == 0 ? this.ChatSocketService.startChat() : ''
   }
 }

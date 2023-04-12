@@ -85,11 +85,12 @@ export class MainComponent implements OnInit {
         this.getOrganizationService.getOrganization(this.CommonService.getEndpointsParamLocal().token);
       }
     })
+    // chat unread indication
     this.ChatSocketService.unreadThread.asObservable().subscribe(isUnread => {
       if (this.sidebarData.length !== 0) {
         this.sidebarData.find(data => {
           if (data.name.includes('Chats')) {
-            isUnread === true ? data.name = 'Chats  ' + '•' : data.name = 'Chats';
+            isUnread === true ? data.iconUrl = '../assets/images/sidebar/chat_icon_unread.svg' : data.iconUrl = '../assets/images/sidebar/chat.svg'
           }
         })
       }
