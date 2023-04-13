@@ -15,7 +15,6 @@ export class ChatWrapperComponent implements OnInit, AfterViewChecked {
   showSelectMessage: boolean = false;
   showScrollArrow: boolean = false;
   chatThread!: chatThreadModel
-  @ViewChild('scrollMe') private myScrollContainer!: ElementRef;
   getIteration() {
     return Array(4);
   }
@@ -31,18 +30,12 @@ export class ChatWrapperComponent implements OnInit, AfterViewChecked {
     })
   }
   ngOnInit(): void {
-    this.scrollToBottom()
   }
   ngAfterViewChecked(): void {
-    this.scrollToBottom()
   }
-  scrollToBottom() {
-    try {
-      this.myScrollContainer.nativeElement.scrollTop = this.myScrollContainer.nativeElement.scrollHeight;
-    } catch (err) { }
-  }
+
   showScrollDown(event: boolean) {
-    (event) ? this.showScrollArrow = true : this.showScrollArrow = false
+    (event) ? this.showScrollArrow = false : this.showScrollArrow = true
   }
 
   //set border for first Unread Meassage 

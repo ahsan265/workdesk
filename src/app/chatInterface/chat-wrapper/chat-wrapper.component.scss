@@ -97,7 +97,7 @@
 
 .recieverPanel {
     display: flex;
-    width: calc(100vw - 440px);
+    width: calc(100vw - 410px);
     margin-bottom: 20px;
     align-items: self-start;
     direction: rtl;
@@ -134,19 +134,18 @@
     color: rgba(22, 39, 65, 0.72);
 }
 
-.scrollBottom {
-    background: linear-gradient(145.49deg, #FFFFFF 13.81%, #D4DEF2 93.6%);
-    border: 1px solid #FFFFFF;
-    box-shadow: 0px 2px 4px #c3d5ef;
-    border-radius: 31px;
-    position: fixed;
-    width: 35px;
-    height: 35px;
-    bottom: 120px;
-    right: 25px;
+
+
+.chatWrapper {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+}
+
+.imageNoChatData {
+    height: 100%;
+    width: 100%;
     display: flex;
-    flex-wrap: nowrap;
-    align-items: center;
     justify-content: center;
-    cursor: pointer;
+    align-items: center;
 }

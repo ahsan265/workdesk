@@ -115,7 +115,11 @@ export class AgentSocketService {
     this.CommonService.getIsAdminOrAgent();
     this.AgentListSubject.next(AgentList);
     this.getAgentOnlineStatus(AgentList);
-
+    AgentList.find((data) => {
+      if (this.CommonService.getEmailForLoggedInUser() === data.email) {
+        this.CommonService.loggedInAgentDetails(data);
+      }
+    });
   }
   private getAgentOnlineStatus(AgentList: AgentList[]) {
     const user = JSON.parse(localStorage.getItem('gigaaa-user') || '{}');

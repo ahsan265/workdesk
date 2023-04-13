@@ -72,11 +72,7 @@ export class AgentService {
     }
   }
   public getAgentWiseData(AgentList: AgentList[]) {
-    AgentList.forEach((data) => {
-      if (this.checkIsLoggedInAgent(data.email)) {
-        this.CommonService.loggedInAgentDetails(data);
-      }
-    });
+
     const data = this.CommonService.getLoggedInAgentData();
     if (
       data.role === 'Admin' &&

@@ -52,7 +52,7 @@ export class ChatTheadItemComponent implements OnInit {
 
   }
   selectThread(chatThreadModelData: chatThreadModelData) {
-    if (chatThreadModelData.counter !== null) {
+    if (this.ChatOperationService.getAllUnreadMessage().length !== 0) {
       this.ChatOperationService.setUnreadToRead(chatThreadModelData.uuid, this.ChatOperationService.getAllUnreadMessage());
     }
     this.ChatSocketService.getMessagesForThread(chatThreadModelData);
