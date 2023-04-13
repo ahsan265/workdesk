@@ -88,14 +88,6 @@ const sidebarData: any = [
     isLink: true
   },
   {
-    iconUrl: icons.ticketIcon,
-    activeIconUrl: icons.activeticketIcon,
-    name: 'Tickets',
-    routeUrl: ['tickets'],
-    dropdown: false,
-    isLink: true
-  },
-  {
     iconUrl: icons.chatIcon,
     activeIconUrl: icons.activeChatIcon,
     name: 'Chats',
@@ -127,14 +119,6 @@ const sidebarDataAgent: any = [
     activeIconUrl: icons.activeAgentIcon,
     name: 'Agents',
     routeUrl: ['agents'],
-    dropdown: false,
-    isLink: true
-  },
-  {
-    iconUrl: icons.ticketIcon,
-    activeIconUrl: icons.activeticketIcon,
-    name: 'Tickets',
-    routeUrl: ['tickets'],
     dropdown: false,
     isLink: true
   },
