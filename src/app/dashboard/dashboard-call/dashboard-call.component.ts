@@ -11,6 +11,7 @@ import { SharedServices } from 'src/app/workdeskServices/sharedResourcesService/
 import { cardDataTotalVisitors, countries, languauges, oneSelectData, ranges } from '../dashboardData';
 import { DashboardEndpointService } from '../dashboardService/dashboard-endpoint.service';
 import DataLabelsPlugin from 'chartjs-plugin-datalabels';
+import { OneSelect } from 'src/app/models/oneSelect';
 
 @Component({
   selector: 'app-dashboard-call',
@@ -150,7 +151,7 @@ export class DashboardCallComponent {
   private async callRouteLoad() {
     this.languauges = await this.CommonService.getProjectLanguagesForUser();
     if (this.CommonService.getEndpointsParamLocal().project != undefined) {
-      this.dashboardEps.getAnalyticsData([], [], this.aggregate);
+      this.dashboardEps.getAnalyticsData([], [], this.aggregate, 'calls_filter');
       this.countries = await this.CommonService.getLocations();
     }
   }
@@ -171,7 +172,8 @@ export class DashboardCallComponent {
     this.dashboardEps.getAnalyticsData(
       this.idOfLanguage,
       this.idOfLocation,
-      this.aggregate
+      this.aggregate,
+      'calls_filter'
     );
   }
   public languaugesOutput(languaugesOutput: number[]) {
@@ -179,7 +181,8 @@ export class DashboardCallComponent {
     this.dashboardEps.getAnalyticsData(
       this.idOfLanguage,
       this.idOfLocation,
-      this.aggregate
+      this.aggregate,
+      'calls_filter'
     );
   }
 
@@ -214,7 +217,8 @@ export class DashboardCallComponent {
     this.dashboardEps.getAnalyticsData(
       this.idOfLanguage,
       this.idOfLocation,
-      this.aggregate
+      this.aggregate,
+      'calls_filter'
     );
   }
 
@@ -230,6 +234,12 @@ export class DashboardCallComponent {
       startDate: dayjs().startOf('week').add(1, 'day'),
       endDate: dayjs().endOf('week').add(1, 'day'),
       aggregate: this.aggregate
+    }
+  }
+  // select Dashboard type
+  oneSelectOutput(event: OneSelect) {
+    if (event.name === 'Chats') {
+      this.CommonService.setDashboardType(['dashboard', 'chats']);
     }
   }
 }

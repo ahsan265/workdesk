@@ -1,6 +1,6 @@
 <div class="filterWrapper" scroll [nonScrollClass]="'.filterWrapper'" [scrollClass]="'.inPageWrapper'">
   <div class="leftFilter">
-    <app-one-select-dropdown [oneSelectData]="oneSelectData"></app-one-select-dropdown>
+    <app-one-select-dropdown [oneSelectData]="oneSelectData" (oneSelectOutput)="oneSelectOutput($event)"></app-one-select-dropdown>
   </div>
   <div class="rightFilterWrapper">
     <div class="rightFilter">

@@ -2,6 +2,7 @@ export interface analyticParamModel {
     time_range: string;
     languages: number[];
     countries: number[];
+    type:string;
 }
 
 export interface barCountModel {

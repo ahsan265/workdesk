@@ -11,6 +11,7 @@ import { SharedServices } from 'src/app/workdeskServices/sharedResourcesService/
 import { oneSelectData, countries, languauges, cardDataTotalVisitors, ranges } from '../dashboardData';
 import { DashboardEndpointService } from '../dashboardService/dashboard-endpoint.service';
 import DataLabelsPlugin from 'chartjs-plugin-datalabels';
+import { OneSelect } from 'src/app/models/oneSelect';
 
 @Component({
   selector: 'app-dashboard-chats',
@@ -152,7 +153,7 @@ export class DashboardChatsComponent {
     this.languauges = await this.CommonService.getProjectLanguagesForUser();
     this.countries = await this.CommonService.getLocations();
     if (this.CommonService.getEndpointsParamLocal().project != undefined) {
-      this.dashboardEps.getAnalyticsData([], [], this.aggregate);
+      this.dashboardEps.getAnalyticsData([], [], this.aggregate, 'chat_filter');
     }
   }
   private getFirstLoad(): void {
@@ -172,7 +173,8 @@ export class DashboardChatsComponent {
     this.dashboardEps.getAnalyticsData(
       this.idOfLanguage,
       this.idOfLocation,
-      this.aggregate
+      this.aggregate,
+      'chat_filter'
     );
   }
   public languaugesOutput(languaugesOutput: number[]) {
@@ -180,7 +182,8 @@ export class DashboardChatsComponent {
     this.dashboardEps.getAnalyticsData(
       this.idOfLanguage,
       this.idOfLocation,
-      this.aggregate
+      this.aggregate,
+      'chat_filter'
     );
   }
 
@@ -215,7 +218,8 @@ export class DashboardChatsComponent {
     this.dashboardEps.getAnalyticsData(
       this.idOfLanguage,
       this.idOfLocation,
-      this.aggregate
+      this.aggregate,
+      'chat_filter'
     );
   }
 
@@ -233,4 +237,10 @@ export class DashboardChatsComponent {
       aggregate: this.aggregate
     }
   }
+    // select Dashboard type
+    oneSelectOutput(event: OneSelect) {
+      if (event.name === 'Calls') {
+        this.CommonService.setDashboardType(['dashboard', 'calls']);
+      }
+    }
 }

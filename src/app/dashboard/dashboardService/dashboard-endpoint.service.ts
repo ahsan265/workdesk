@@ -9,6 +9,7 @@ import { CalendarService } from 'src/app/calendarService/calendar.service';
 import { ChartLabel } from 'src/app/chartsfunction/chartLabel';
 import { ChartsData } from 'src/app/chartsfunction/chartData';
 import { AnalyticsSocketService } from 'src/app/workdeskSockets/analyticsSocket/analytics-socket.service';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
@@ -24,7 +25,8 @@ export class DashboardEndpointService {
     private chartLabel: ChartLabel,
     private chartsData: ChartsData,
     private calanderService: CalendarService,
-    private AnalyticsSocketService: AnalyticsSocketService
+    private AnalyticsSocketService: AnalyticsSocketService,
+    private Router:Router
   ) {
     this.getAnalyticsDataObjectSocket();
   }
@@ -128,13 +130,15 @@ export class DashboardEndpointService {
   public getAnalyticsData(
     languages: Array<number>,
     location: Array<number>,
-    selectedRange: string
+    selectedRange: string,
+    type: string
   ) {
     this.selectedRange = selectedRange;
     this.AnalyticsSocketService.sendAnalyticssParameter({
       time_range: selectedRange,
       countries: location,
-      languages: languages
+      languages: languages,
+      type: type
     })
   }
 
@@ -190,4 +194,6 @@ export class DashboardEndpointService {
     };
     return ChartDataSet;
   }
+
+
 }

@@ -32,17 +32,24 @@ export class AnalyticsSocketService {
       this.sendAnalyticssParameter({
         time_range: "this_week",
         countries: [],
-        languages: []
+        languages: [],
+        type: 'calls_filter'
       });
     };
     this.ws.onmessage = (e) => {
       if (e.data !== 'ping') {
         const data = JSON.parse(e.data)
         switch (data.type) {
-          case 'aggregates':
+          case 'calls_aggregates':
             this.getAnalyticsBarChartData(JSON.parse(e.data));
             break;
-          case 'counts':
+          case 'calls_counts':
+            this.getAnalyticsCardData(JSON.parse(e.data));
+            break;
+          case 'chats_aggregates':
+            this.getAnalyticsBarChartData(JSON.parse(e.data));
+            break;
+          case 'chats_counts':
             this.getAnalyticsCardData(JSON.parse(e.data));
             break;
           default:

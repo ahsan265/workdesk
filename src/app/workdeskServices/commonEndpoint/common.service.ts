@@ -422,4 +422,8 @@ export class CommonService {
     }
 
   }
+  // set dashboard type 
+  setDashboardType(name: string[]) {
+    this.Router.navigate(name)
+  }
 }

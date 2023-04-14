@@ -17,7 +17,6 @@ export class ChatConsoleComponent implements OnInit, AfterViewChecked {
   constructor(private ChatSocketService: ChatSocketService) {
     this.ChatSocketService.isSocketOpen == 0 ? this.ChatSocketService.startChat() : '';
     this.ChatSocketService.chatMessageDataSelected.asObservable().subscribe(data => {
-
       data.data.find(response => {
         if (response.is_agent === true && response.is_read === false) {
           this.isReadMessage = true;
