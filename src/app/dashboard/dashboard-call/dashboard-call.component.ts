@@ -12,6 +12,7 @@ import { cardDataTotalVisitors, countries, languauges, oneSelectData, ranges } f
 import { DashboardEndpointService } from '../dashboardService/dashboard-endpoint.service';
 import DataLabelsPlugin from 'chartjs-plugin-datalabels';
 import { OneSelect } from 'src/app/models/oneSelect';
+import { Card } from 'src/app/models/card';
 
 @Component({
   selector: 'app-dashboard-call',
@@ -137,10 +138,10 @@ export class DashboardCallComponent {
     }
   }
   getCardsAndChartsData() {
-    this.dashboardEps.cardDataSubject.subscribe((data: any) => {
-      this.incomingCardData = data?.incoming;
-      this.missedCardData = data?.missed;
-      this.answeredCardData = data?.answered;
+    this.dashboardEps.cardDataSubject.subscribe((data: Card[]) => {
+      this.incomingCardData = data[0];
+      this.missedCardData = data[1];
+      this.answeredCardData = data[2];
     });
     this.dashboardEps.chartDataSubject.subscribe((data: ChartData<'bar'>[]) => {
       this.barChartData1 = data[0];

@@ -138,10 +138,10 @@ export class DashboardChatsComponent {
     }
   }
   getCardsAndChartsData() {
-    this.dashboardEps.cardDataSubject.subscribe((data: any) => {
-      this.incomingCardData = data?.incoming;
-      this.missedCardData = data?.missed;
-      this.answeredCardData = data?.answered;
+    this.dashboardEps.cardDataSubject.asObservable().subscribe((data: any) => {
+      this.incomingCardData = data[0];
+      this.missedCardData =  data[1]
+      this.answeredCardData =  data[2]
     });
     this.dashboardEps.chartDataSubject.subscribe((data: ChartData<'bar'>[]) => {
       this.barChartData1 = data[0];
@@ -153,13 +153,13 @@ export class DashboardChatsComponent {
     this.languauges = await this.CommonService.getProjectLanguagesForUser();
     this.countries = await this.CommonService.getLocations();
     if (this.CommonService.getEndpointsParamLocal().project != undefined) {
-      this.dashboardEps.getAnalyticsData([], [], this.aggregate, 'chat_filter');
+      this.dashboardEps.getAnalyticsData([], [], this.aggregate, 'chats_filter');
     }
   }
   private getFirstLoad(): void {
     this.SharedServices.LoadcommonEpsubject.subscribe(async (data) => {
       if (data === 1) {
-        this.CommonService.restrictRoute();
+       // this.CommonService.restrictRoute();
         this.setDefaultDate();
         this.languauges = await this.CommonService.getProjectLanguagesForUser();
         this.countries = await this.CommonService.getLocations();
@@ -174,7 +174,7 @@ export class DashboardChatsComponent {
       this.idOfLanguage,
       this.idOfLocation,
       this.aggregate,
-      'chat_filter'
+      'chats_filter'
     );
   }
   public languaugesOutput(languaugesOutput: number[]) {
@@ -183,7 +183,7 @@ export class DashboardChatsComponent {
       this.idOfLanguage,
       this.idOfLocation,
       this.aggregate,
-      'chat_filter'
+      'chats_filter'
     );
   }
 
@@ -219,7 +219,7 @@ export class DashboardChatsComponent {
       this.idOfLanguage,
       this.idOfLocation,
       this.aggregate,
-      'chat_filter'
+      'chats_filter'
     );
   }
 
@@ -237,10 +237,10 @@ export class DashboardChatsComponent {
       aggregate: this.aggregate
     }
   }
-    // select Dashboard type
-    oneSelectOutput(event: OneSelect) {
-      if (event.name === 'Calls') {
-        this.CommonService.setDashboardType(['dashboard', 'calls']);
-      }
+  // select Dashboard type
+  oneSelectOutput(event: OneSelect) {
+    if (event.name === 'Calls') {
+      this.CommonService.setDashboardType(['dashboard', 'calls']);
     }
+  }
 }

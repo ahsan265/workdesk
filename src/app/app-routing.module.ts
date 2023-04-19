@@ -57,14 +57,14 @@ const routes: Routes = [
       {
         path: 'tickets', component: TicketsComponent
       },
-      {path: 'tickets/manage', component: TicketWrapperComponent, children: [
-          { path: '', redirectTo: 'profile', pathMatch: 'full' },
-          { path: 'profile', component: TicketProfileComponent },
-          { path: 'updateticket', component: TicketsCreationComponent }
-        ]
-      },
-      { path: 'tickets/createticket', component: TicketsCreationComponent },
-      { path: 'agents/settings/:id', component: AgentSettingsComponent },
+      // {path: 'tickets/manage', component: TicketWrapperComponent, children: [
+      //     { path: '', redirectTo: 'profile', pathMatch: 'full' },
+      //     { path: 'profile', component: TicketProfileComponent },
+      //     { path: 'updateticket', component: TicketsCreationComponent }
+      //   ]
+      // },
+      // { path: 'tickets/createticket', component: TicketsCreationComponent },
+      // { path: 'agents/settings/:id', component: AgentSettingsComponent },
       { path: 'preference', component: PreferenceComponent }
     ]
   },

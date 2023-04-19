@@ -22,7 +22,7 @@ const languauges: MultiSelect = {
   data: []
 };
 
-const cardDataTotalVisitors: Card = {
+const cardDataTotalVisitors: any = {
   icon: '../../assets/images/dropdown/checkmart_white.svg',
   title: '',
   color: '#FFFFFF',

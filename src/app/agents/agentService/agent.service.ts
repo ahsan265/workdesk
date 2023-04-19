@@ -25,7 +25,8 @@ export class AgentService {
     private GigaaaApiService: GigaaaApiService,
     private CommonService: CommonService,
     private MessageService: MessageService
-  ) {}
+  ) {
+  }
   // send agent params from agent component using service
   public sendAgentDefaultParameter(
     languages: number[],
@@ -343,4 +344,5 @@ export class AgentService {
       this.MessageService.setErrorMessage(error.error.error);
     }
   }
+
 }

@@ -974,4 +974,66 @@ export class GigaaaApiService {
       });
   }
 
+  // table customization  update 
+
+  public async tableCustomization(
+    token: string,
+    organizationId: string,
+    projectId: string,
+    customization_id: number,
+    customization_value: string,
+    table_identifier: string
+  ): Promise<any> {
+    const httpOptions: any = {
+      method: 'POST',
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        Accept: 'application/json',
+        Authorization: `Bearer ${token}`
+      })
+    };
+    return await this.http
+      .post(
+        this.workdeskurl_cs +
+        '/private/organization/' + organizationId + '/project/' + projectId + '/table-customization',
+        {
+          customization_id: customization_id,
+          customization_value: customization_value,
+          table_identifier: table_identifier
+        },
+        httpOptions
+      )
+      .toPromise()
+      .catch((err) => {
+        throw err;
+      });
+  }
+
+  // table customization  list 
+
+  public async tableCustomizationList(
+    token: string,
+    organizationId: string,
+    projectId: string,
+    table_identifier: string,
+  ): Promise<any> {
+    const httpOptions: any = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        Accept: 'application/json',
+        Authorization: `Bearer ${token}`
+      })
+    };
+    return await this.http
+      .get(
+        this.workdeskurl_cs +
+        '/private/organization/' + organizationId + '/project/' + projectId + '/table-customization?table_identifier=' + table_identifier,
+        httpOptions
+      )
+      .toPromise()
+      .catch((err) => {
+        throw err;
+      });
+  }
+
 }

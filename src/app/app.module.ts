@@ -109,6 +109,9 @@ import { TicketProfileComponent } from './tickets/ticket-profile/ticket-profile.
 import { TimenowPipe } from './pipes/timeNow/timenow.pipe';
 import { scrollDownDirective } from './chatInterface/chatDirectives/arrowDownDirective';
 import { scrollingDirective } from './chatInterface/chatDirectives/scrollShowDirective';
+import { AgentTableComponent } from './agents/agent-table/agent-table.component';
+import { UpdateColumnFieldComponent } from './components/update-column-field/update-column-field.component';
+import { editColumnDirective } from './directives/showEditColumnDirective';
 
 @NgModule({
   declarations: [
@@ -180,7 +183,10 @@ import { scrollingDirective } from './chatInterface/chatDirectives/scrollShowDir
     TicketProfileComponent,
     TimenowPipe,
     scrollDownDirective,
-    scrollingDirective
+    scrollingDirective,
+    editColumnDirective,
+    AgentTableComponent,
+    UpdateColumnFieldComponent
 
   ],
   imports: [
