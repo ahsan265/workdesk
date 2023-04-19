@@ -9,6 +9,7 @@ import { CalendarService } from 'src/app/calendarService/calendar.service';
 import { ChartLabel } from 'src/app/chartsfunction/chartLabel';
 import { ChartsData } from 'src/app/chartsfunction/chartData';
 import { AnalyticsSocketService } from 'src/app/workdeskSockets/analyticsSocket/analytics-socket.service';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
@@ -18,13 +19,14 @@ export class DashboardEndpointService {
   missedIcon = '../../assets/images/components/total_missed.svg';
   answeredIcon = '../../assets/images/components/total_answered.svg';
   selectedRange = 'this_week'
-  cardDataSubject = new Subject();
+  cardDataSubject = new Subject<Card[]>();
   chartDataSubject = new Subject<ChartData<'bar'>[]>();
   constructor(
     private chartLabel: ChartLabel,
     private chartsData: ChartsData,
     private calanderService: CalendarService,
-    private AnalyticsSocketService: AnalyticsSocketService
+    private AnalyticsSocketService: AnalyticsSocketService,
+    private Router: Router
   ) {
     this.getAnalyticsDataObjectSocket();
   }
@@ -116,11 +118,11 @@ export class DashboardEndpointService {
         relatedDateRange,
         percencateAwnseredCard
       );
-      const finalCardsData = {
-        incoming: incomingCardRes,
-        missed: missedCardRes,
-        answered: answeredCardRes
-      };
+      const finalCardsData = [
+        incomingCardRes,
+        missedCardRes,
+        answeredCardRes
+      ];
       this.cardDataSubject.next(finalCardsData);
     })
   }
@@ -128,13 +130,15 @@ export class DashboardEndpointService {
   public getAnalyticsData(
     languages: Array<number>,
     location: Array<number>,
-    selectedRange: string
+    selectedRange: string,
+    type: string
   ) {
     this.selectedRange = selectedRange;
     this.AnalyticsSocketService.sendAnalyticssParameter({
       time_range: selectedRange,
       countries: location,
-      languages: languages
+      languages: languages,
+      type: type
     })
   }
 
@@ -154,7 +158,7 @@ export class DashboardEndpointService {
     urls: string,
     title: string,
     color: string,
-    mainResult: any,
+    mainResult: number,
     secondResultText: string,
     secondResultNumber: number
   ) {
@@ -190,4 +194,6 @@ export class DashboardEndpointService {
     };
     return ChartDataSet;
   }
+
+
 }

@@ -3,7 +3,7 @@
 /* eslint-disable sort-imports */
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { InvitedAgentTableLanguage } from 'src/app/models/agent';
+import { InvitedAgentTableLanguage, TableSettingsModel, tableSettingsDataModel } from 'src/app/models/agent';
 import { AgentLanguages, AgentList } from 'src/app/models/agentSocketModel';
 import { Country } from 'src/app/models/country';
 import { language } from 'src/app/models/language';
@@ -15,6 +15,7 @@ import { AuthService } from 'src/app/services/auth.service';
 import { GigaaaApiService } from '../gigaaaApiService/gigaaa-api-service.service';
 import { MessageService } from '../messageService/message.service';
 import { FlagsData } from '../WorkdeskServicesData';
+import { tableSettings } from 'src/app/models/callModel';
 
 @Injectable({
   providedIn: 'root'
@@ -421,5 +422,18 @@ export class CommonService {
       this.Router.navigate(['/dashboard']);
     }
 
+  }
+  // set dashboard type 
+  setDashboardType(name: string[]) {
+    this.Router.navigate(name)
+  }
+
+  // set Table value Update 
+
+  public updateColumnTable(tableSettingsData: tableSettingsDataModel[], tableSettings: TableSettingsModel[]) {
+    tableSettingsData.forEach(element => {
+      tableSettings[element.customization_id].header = element.customization_value
+    });
+    return tableSettings;
   }
 }

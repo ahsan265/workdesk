@@ -11,6 +11,7 @@ import { SharedServices } from 'src/app/workdeskServices/sharedResourcesService/
 import { oneSelectData, countries, languauges, cardDataTotalVisitors, ranges } from '../dashboardData';
 import { DashboardEndpointService } from '../dashboardService/dashboard-endpoint.service';
 import DataLabelsPlugin from 'chartjs-plugin-datalabels';
+import { OneSelect } from 'src/app/models/oneSelect';
 
 @Component({
   selector: 'app-dashboard-chats',
@@ -137,10 +138,10 @@ export class DashboardChatsComponent {
     }
   }
   getCardsAndChartsData() {
-    this.dashboardEps.cardDataSubject.subscribe((data: any) => {
-      this.incomingCardData = data?.incoming;
-      this.missedCardData = data?.missed;
-      this.answeredCardData = data?.answered;
+    this.dashboardEps.cardDataSubject.asObservable().subscribe((data: any) => {
+      this.incomingCardData = data[0];
+      this.missedCardData =  data[1]
+      this.answeredCardData =  data[2]
     });
     this.dashboardEps.chartDataSubject.subscribe((data: ChartData<'bar'>[]) => {
       this.barChartData1 = data[0];
@@ -152,13 +153,13 @@ export class DashboardChatsComponent {
     this.languauges = await this.CommonService.getProjectLanguagesForUser();
     this.countries = await this.CommonService.getLocations();
     if (this.CommonService.getEndpointsParamLocal().project != undefined) {
-      this.dashboardEps.getAnalyticsData([], [], this.aggregate);
+      this.dashboardEps.getAnalyticsData([], [], this.aggregate, 'chats_filter');
     }
   }
   private getFirstLoad(): void {
     this.SharedServices.LoadcommonEpsubject.subscribe(async (data) => {
       if (data === 1) {
-        this.CommonService.restrictRoute();
+       // this.CommonService.restrictRoute();
         this.setDefaultDate();
         this.languauges = await this.CommonService.getProjectLanguagesForUser();
         this.countries = await this.CommonService.getLocations();
@@ -172,7 +173,8 @@ export class DashboardChatsComponent {
     this.dashboardEps.getAnalyticsData(
       this.idOfLanguage,
       this.idOfLocation,
-      this.aggregate
+      this.aggregate,
+      'chats_filter'
     );
   }
   public languaugesOutput(languaugesOutput: number[]) {
@@ -180,7 +182,8 @@ export class DashboardChatsComponent {
     this.dashboardEps.getAnalyticsData(
       this.idOfLanguage,
       this.idOfLocation,
-      this.aggregate
+      this.aggregate,
+      'chats_filter'
     );
   }
 
@@ -215,7 +218,8 @@ export class DashboardChatsComponent {
     this.dashboardEps.getAnalyticsData(
       this.idOfLanguage,
       this.idOfLocation,
-      this.aggregate
+      this.aggregate,
+      'chats_filter'
     );
   }
 
@@ -231,6 +235,12 @@ export class DashboardChatsComponent {
       startDate: dayjs().startOf('week').add(1, 'day'),
       endDate: dayjs().endOf('week').add(1, 'day'),
       aggregate: this.aggregate
+    }
+  }
+  // select Dashboard type
+  oneSelectOutput(event: OneSelect) {
+    if (event.name === 'Calls') {
+      this.CommonService.setDashboardType(['dashboard', 'calls']);
     }
   }
 }

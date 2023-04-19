@@ -16,7 +16,7 @@ export class DashboardComponent implements OnInit {
   }
   constructor(private CommonService: CommonService, private authService: AuthService,
   ) {
-    this.CommonService.restrictRoute();
+   // this.CommonService.restrictRoute();
     this.authService.pageTitle.next('Dashboard');
   }
 }

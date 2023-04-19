@@ -2,10 +2,7 @@
   <div class="filterWrapper">
     <div class="leftFilter">
       <div class="multiSelectWrapper activity">
-        <app-one-select-dropdown
-          [oneSelectData]="oneSelectData"
-          (oneSelectOutput)="agentTypeOutput($event)"
-        >
+        <app-one-select-dropdown [oneSelectData]="oneSelectData" (oneSelectOutput)="agentTypeOutput($event)">
         </app-one-select-dropdown>
       </div>
       <div class="indicatorWrapper">
@@ -15,56 +12,32 @@
     </div>
     <div class="rightFilter">
       <div class="multiSelectWrapper onlineStatus">
-        <app-one-select-dropdown
-          [oneSelectData]="onlineStatuses"
-          (oneSelectOutput)="agentStatusOutput($event)"
-        >
+        <app-one-select-dropdown [oneSelectData]="onlineStatuses" (oneSelectOutput)="agentStatusOutput($event)">
         </app-one-select-dropdown>
       </div>
       <div class="multiSelectWrapper languauge">
-        <app-multi-select-dropdown
-          [multiSelectData]="languauges"
-          (multiSelectOutput)="langugaOutput($event)"
-        >
+        <app-multi-select-dropdown [multiSelectData]="languauges" (multiSelectOutput)="langugaOutput($event)">
         </app-multi-select-dropdown>
       </div>
       <div class="multiSelectWrapper search">
-        <app-search-input-field
-          [searchInputData]="searchInputData"
-          (searchOutputData)="getSearchValue($event)"
-        >
+        <app-search-input-field [searchInputData]="searchInputData" (searchOutputData)="getSearchValue($event)">
         </app-search-input-field>
       </div>
       <div class="multiSelectWrapper">
         <!-- <gigaaa-button (click)="showInviteModal()" [buttonData]="buttonData"></gigaaa-button> -->
-        <button
-          class="addAgentButton"
-          [disabled]="!this.buttonData.active"
-          (click)="showInviteModal()"
-        >
+        <button class="addAgentButton" [disabled]="!this.buttonData.active" (click)="showInviteModal()">
           +
         </button>
       </div>
     </div>
   </div>
   <div class="tableWrapper">
-    <gigaaa-workdesk-table
-      [tableData]="agentdata"
-      [tableSettings]="tableSetting"
-      (agentSetting)="getSettingsPage($event)"
-    >
-    </gigaaa-workdesk-table>
-    <app-no-table-data
-      *ngIf="agentdata.length === 0"
-      [notableClass]="noAgentTobaleData"
-    ></app-no-table-data>
+    <app-agent-table [agentData]="agentdata" [tableSettings]="tableSetting" (agentSetting)="getSettingsPage($event)">
+    </app-agent-table>
+    <app-no-table-data *ngIf="agentdata.length === 0" [notableClass]="noAgentTobaleData"></app-no-table-data>
   </div>
 </app-page-wrapper>
 
-<app-modal-wrapper
-  (closeModal)="onCloseAgentInvite($event)"
-  [modalData]="addAgentModelData"
-  *ngIf="showInviteModel"
->
+<app-modal-wrapper (closeModal)="onCloseAgentInvite($event)" [modalData]="addAgentModelData" *ngIf="showInviteModel">
   <app-add-agent></app-add-agent>
 </app-modal-wrapper>

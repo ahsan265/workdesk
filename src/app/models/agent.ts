@@ -29,9 +29,16 @@ export interface AgentModelTable {
   is_organization_admin: boolean;
 }
 
+export interface TableSettingsModel {
+  index: number;
+  header: string;
+  width: number;
+  showEditField: boolean;
+}
+
 export interface UtlitiesIcon {
   image: string;
-  is_disabled:boolean;
+  is_disabled: boolean;
 }
 export interface ImageText {
   text: string;
@@ -61,4 +68,9 @@ export interface InvitedAgentsModel {
 export interface agentInvitationList {
   email: string;
   language: number[];
+}
+export interface tableSettingsDataModel {
+  customization_id: number,
+  customization_value: string,
+  table_identifier: string
 }

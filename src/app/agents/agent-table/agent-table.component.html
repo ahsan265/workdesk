@@ -1,0 +1,43 @@
+<div class="tableWrap">
+    <table>
+        <thead>
+            <tr>
+                <th [style.width.%]="head.width" *ngFor="let head of this.tableSettings; ">
+                    <span *ngIf="!head.showEditField">{{head.header}}</span>
+                    <div *ngIf="!head.showEditField" (click)="showEditField(head.header)">
+                        <img src="../../../assets/images/pencil.svg" alt="">
+                    </div>
+                    <app-update-column-field [headerValue]="head" [openEditFiedl]="head.showEditField"
+                        (updatedField)="updatedField($event)"></app-update-column-field>
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let data of agentData; let i=index; "
+                [style.opacity]="data.invitation_accepted===true?'1':'0.5'">
+                <td><span class="editIcon"><img [style.visibility]="data.is_logged_in?'visible':'hidden'"
+                            [src]="data.loggedIn_user_icon" alt=""></span>
+                    <span class="agentImage">
+                        <img class="agentPic" [src]="data.agent_details.image" alt="">
+                        <div [style.background]="data.is_online_icon_color" class="onlineIcon"></div>
+                    </span>
+                    <div>
+                        <span>{{data.agent_details.text}}</span>
+                        <span>{{data.email}}</span>
+                    </div>
+                </td>
+                <td><img [style.visibility]="data.activity_icon!==''?'visible':'hidden'" [src]="data.activity_icon"
+                        alt="">
+                    {{data.agent_name}}</td>
+                <td><img [style.opacity]="utilites.is_disabled?'0.5':'1'" class="utilities"
+                        *ngFor="let utilites of data.utilites;" [src]="utilites.image" alt="" srcset=""></td>
+                <td>{{data.role}} <span><img *ngIf="data.is_organization_admin" style="vertical-align: inherit;"
+                            [src]="data.organization_admin_icon" alt=""></span></td>
+                <td>
+                    <div *ngIf="data.show_edit" (click)="getSettings(data.routeUrl)"><img class="callType"
+                            [src]="data.edit_icon" alt=""></div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>

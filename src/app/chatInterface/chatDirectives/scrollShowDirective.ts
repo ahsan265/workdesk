@@ -10,7 +10,6 @@ export class scrollingDirective {
     @HostListener('document:wheel', ['$event']) private onScroll(event: any) {
         if (event.target.offsetParent.className === this.scrollClass) {
             if (this.el.nativeElement.classList.contains(this.scrollClass)) {
-                event.stopPropagation();
                 this.scroll = 'overlay';
             }
         }
@@ -20,7 +19,6 @@ export class scrollingDirective {
     }
     @HostListener('document:click', ['$event']) private onclick(event: any) {
         if (this.el.nativeElement.classList.contains(this.scrollClass)) {
-            event.stopPropagation();
             this.scroll = 'hidden';
         }
     }
