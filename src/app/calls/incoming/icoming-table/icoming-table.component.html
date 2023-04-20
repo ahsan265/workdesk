@@ -1,0 +1,33 @@
+<div class="tableWrap">
+    <table>
+        <thead>
+            <tr>
+                <th [style.width.%]="head.width" *ngFor="let head of this.tableSettings; ">
+                    <span *ngIf="!head.showEditField">{{head.header}}</span>
+                    <div *ngIf="!head.showEditField" (click)="showEditField(head.header)">
+                        <img src="../../../assets/images/pencil.svg" alt="">
+                    </div>
+                    <app-update-column-field [headerValue]="head" [openEditFiedl]="head.showEditField"
+                        (updatedField)="updatedField($event)"></app-update-column-field>
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let data of incomingCallData; let i=index; ">
+                <td><span>{{data.hashIcon}}</span>{{i+1}}</td>
+                <td><img class="userImage" [src]="data.userImage" alt="">{{data.name}}</td>
+                <td><Span>ID </Span>{{data.user_id}}</td>
+                <td><img class="utilities" *ngFor="let utilites of data.utilites;" [src]="utilites.image" alt=""
+                        srcset=""></td>
+                <td><img class="callType" [src]="data.callType.image" alt=""><span>{{data.callType.text}}</span></td>
+                <td>{{this.getTimer(data.time)}}</td>
+                <td>
+                    <app-call-pick-button [isButtonDisabled]="data.disableButton" (click)="getCallId(data)"
+                        [buttonText]="data.callPickButton">
+                    </app-call-pick-button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+</div>

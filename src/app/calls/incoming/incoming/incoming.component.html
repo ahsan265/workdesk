@@ -37,14 +37,15 @@
         </div>
       </div>
       <div class="multiSelectWrapper search">
-        <app-search-input-field [searchInputData]="searchInputData" (searchOutputData)="getSearchValue($event)"></app-search-input-field>
+        <app-search-input-field [searchInputData]="searchInputData"
+          (searchOutputData)="getSearchValue($event)"></app-search-input-field>
       </div>
     </div>
   </div>
 </div>
 
 <div class="tableWrapper">
-  <gigaaa-workdesk-table [tableData]="incomingData" [tableSettings]="tableSettings" (callId)="getCallsId($event)">
-  </gigaaa-workdesk-table>
+  <app-incoming-table [incomingCallData]="incomingData" (callUuid)="getCallsId($event)">
+  </app-incoming-table>
   <app-no-table-data *ngIf="incomingData.length === 0" [notableClass]="nodata"></app-no-table-data>
 </div>

@@ -73,7 +73,7 @@ export interface MissedCallModel {
   language_id: number;
   missed_at: string;
   mobile: boolean;
-  name: string;
+  user_name: string;
   operating_system: string;
   reason: string;
   tablet: boolean;

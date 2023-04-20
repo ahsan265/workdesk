@@ -69,7 +69,7 @@ export class MissedComponent implements OnInit {
       this.pagination.totolPages = data.total_pages;
       this.pagination.itemsPerPage = data.items_per_page
       this.missedCallData = data.calls.map((missedCallData: MissedCallModel) => ({
-        agent_name: missedCallData.name,
+        agent_name: missedCallData.user_name,
         call_uuid: missedCallData.request_uuid,
         called_at: this.CallsService
           .getCalledAtTimeDate(missedCallData.missed_at, this.aggregate),
@@ -82,7 +82,7 @@ export class MissedComponent implements OnInit {
         resaon: missedCallData.reason,
         user_details: {
           image: '../../../assets/images/callInterface/user.png',
-          text: missedCallData.name
+          text: missedCallData.user_name
         },
         user_id: this.CallsService.getUserId(missedCallData.user_id),
         utilites: [
