@@ -44,7 +44,7 @@
   </div>
 </div>
 <div class="tableWrapper">
-  <gigaaa-workdesk-table [tableData]="ongoingData" [tableSettings]="tableSettings">
-  </gigaaa-workdesk-table>
+  <app-ongoing-table [ongoingCallData]="ongoingData" [tableSettings]="tableSettings">
+  </app-ongoing-table>
   <app-no-table-data *ngIf="ongoingData.length=== 0" [notableClass]="nodata"></app-no-table-data>
 </div>

@@ -32,7 +32,7 @@
     </div>
   </div>
   <div class="tableWrapper">
-    <app-agent-table [agentData]="agentdata" [tableSettings]="tableSetting" (agentSetting)="getSettingsPage($event)">
+    <app-agent-table [agentData]="agentdata" (agentSetting)="getSettingsPage($event)">
     </app-agent-table>
     <app-no-table-data *ngIf="agentdata.length === 0" [notableClass]="noAgentTobaleData"></app-no-table-data>
   </div>

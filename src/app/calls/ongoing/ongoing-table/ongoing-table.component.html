@@ -1,0 +1,35 @@
+<div class="tableWrap">
+    <table>
+        <thead>
+            <tr>
+                <th [style.width.%]="head.width" *ngFor="let head of this.tableSettings; ">
+                    <span *ngIf="!head.showEditField">{{head.header}}</span>
+                    <div *ngIf="!head.showEditField" (click)="showEditField(head.header)">
+                        <img src="../../../assets/images/pencil.svg" alt="">
+                    </div>
+                    <app-update-column-field [headerValue]="head" [openEditFiedl]="head.showEditField"
+                        (updatedField)="updatedField($event)"></app-update-column-field>
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let data of ongoingCallData; let i=index; ">
+                <td><img class="userImage" [src]="data.user_details.image" alt="">{{data.user_details.text}}</td>
+                <td><Span>ID </Span>{{data.user_id}}</td>
+                <td><img class="utilities" *ngFor="let utilites of data.utilites;" [src]="utilites.image" alt=""
+                        srcset=""></td>
+                <td><img class="callType" [src]="data.callType.image" alt=""><span>{{data.callType.text}}</span></td>
+                <td>{{this.getTimer(data.duration)}}</td>
+                <td><img class="callType" [src]="data.agent_details.image" alt="">
+                    <div>
+                        <span>{{data.agent_name}}</span>
+                        <span>{{data.agent_details.text}}</span>
+                    </div>
+                </td>
+
+
+            </tr>
+        </tbody>
+    </table>
+
+</div>

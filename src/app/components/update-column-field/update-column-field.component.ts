@@ -1,22 +1,29 @@
-import { Component, EventEmitter, HostListener, Input, Output, ViewChild } from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, HostListener, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-update-column-field',
   templateUrl: './update-column-field.component.html',
-  styleUrls: ['./update-column-field.component.scss']
+  styleUrls: ['./update-column-field.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class UpdateColumnFieldComponent {
+export class UpdateColumnFieldComponent implements OnInit {
   @Input() headerValue: any = '';
+  @Input() characterLimit: number = 12;
   @Output() updatedField = new EventEmitter<any>();
   textFieldForm = new FormGroup({
     textField: new FormControl('', [Validators.required])
+
   });
+  counter: number = 0;
   @Input() openEditFiedl: boolean = false;
 
   constructor() {
+
+  }
+  ngOnInit(): void {
     this.textFieldForm.patchValue({
-      textField: this.headerValue
+      textField: this.headerValue.header
     })
   }
 
@@ -27,9 +34,7 @@ export class UpdateColumnFieldComponent {
         headerInformation: this.headerValue
       }
       this.updatedField.emit(data)
-      this.textFieldForm.patchValue({
-        textField: ''
-      })
+
     }
     else {
       const data = {
@@ -38,7 +43,6 @@ export class UpdateColumnFieldComponent {
       }
       this.updatedField.emit(data)
     }
-
   }
 
   // close the field()
@@ -49,6 +53,7 @@ export class UpdateColumnFieldComponent {
     //     headerInformation: this.headerValue
     //   }
     //   this.updatedField.emit(data)
+
     // }
   }
 

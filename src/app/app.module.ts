@@ -112,6 +112,11 @@ import { scrollingDirective } from './chatInterface/chatDirectives/scrollShowDir
 import { AgentTableComponent } from './agents/agent-table/agent-table.component';
 import { UpdateColumnFieldComponent } from './components/update-column-field/update-column-field.component';
 import { editColumnDirective } from './directives/showEditColumnDirective';
+import { AnsweredTableComponent } from './calls/answered/answered-table/answered-table.component';
+import { IcomingTableComponent } from './calls/incoming/icoming-table/icoming-table.component';
+import { MissedTableComponent } from './calls/missed/missed-table/missed-table.component';
+import { OngoingTableComponent } from './calls/ongoing/ongoing-table/ongoing-table.component';
+import { CallPickButtonComponent } from './calls/incoming/call-pick-button/call-pick-button.component';
 
 @NgModule({
   declarations: [
@@ -186,7 +191,12 @@ import { editColumnDirective } from './directives/showEditColumnDirective';
     scrollingDirective,
     editColumnDirective,
     AgentTableComponent,
-    UpdateColumnFieldComponent
+    UpdateColumnFieldComponent,
+    AnsweredTableComponent,
+    IcomingTableComponent,
+    MissedTableComponent,
+    OngoingTableComponent,
+    CallPickButtonComponent
 
   ],
   imports: [

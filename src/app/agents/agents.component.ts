@@ -40,7 +40,6 @@ export class AgentsComponent implements OnInit {
   oneSelectData = oneSelect;
   onlineStatuses = onlineStatuses;
   buttonData = buttonData;
-  tableSetting = agentTableSetting;
   addAgentModelData = agentModelData;
   agentdata: AgentModelTable[] = [];
   agentdataWithNoSearch: AgentModelTable[] = [];

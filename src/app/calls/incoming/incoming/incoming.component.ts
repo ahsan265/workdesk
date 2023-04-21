@@ -10,14 +10,13 @@ import {
   IncomingCallModelTable,
   newCallModelIncoming
 } from 'src/app/models/callModel';
-import { ChatOperationService } from 'src/app/workdeskServices/chatInterfaceServices/chatOperation/chat-operation.service';
 import { CommonService } from 'src/app/workdeskServices/commonEndpoint/common.service';
 import { AgentSocketService } from 'src/app/workdeskSockets/agentSocket/agent-socket.service';
-import { ChatSocketService } from 'src/app/workdeskSockets/chatSocket/chat-socket.service';
 import { languaugesIncoming, searchInputData } from '../../callsData';
 import { CallsService } from '../../callService/calls.service';
 import { getDefaultInputsLoadOnce } from '../../defaultLoadService/incoming.Service';
 import { callTypeIncoming, incomingTableSetting } from '../../defaultLoadService/incomingData';
+import { ChatOperationService } from 'src/app/workdeskServices/chatInterfaceServices/chatOperation/chat-operation.service';
 
 @Component({
   selector: 'app-incoming',

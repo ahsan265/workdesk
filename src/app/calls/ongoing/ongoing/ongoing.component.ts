@@ -57,7 +57,7 @@ export class OngoingComponent implements OnInit {
     private CallsSrvice: CallsService,
     private CommonService: CommonService,
     private calendarService: CalendarService,
-    private getDefaultInputsLoadOnce: getDefaultInputsLoadOnce
+    private getDefaultInputsLoadOnce: getDefaultInputsLoadOnce,
 
   ) {
     this.CallsSrvice.sendDataToOngoingTabsSubject.subscribe(

@@ -8,6 +8,6 @@ export class editColumnDirective {
     constructor(private ElementRef: ElementRef) { }
     @HostListener('document:click', ['$event.target']) private onScroll(event: any) {
         const clickedInside: boolean = this.ElementRef.nativeElement.contains(event);
-        (clickedInside) ? this.closeField.emit(true) : this.closeField.emit(false);
+        (!clickedInside) ? this.closeField.emit(false) : this.closeField.emit(true);
     }
 }

@@ -436,4 +436,61 @@ export class CommonService {
     });
     return tableSettings;
   }
+  // get ellapsed time
+  public onGoingTimer(entry: string) {
+    // later record end time
+    if (entry == null) {
+      return "Call not joined"
+    }
+    let endTime = new Date();
+    let startTime = new Date(entry);
+    // time difference in ms
+    let timeDiff = endTime.getTime() - startTime.getTime()
+    // strip the miliseconds
+    timeDiff /= 1000;
+
+    // get seconds
+    let seconds = Math.round(timeDiff % 60);
+
+    // remove seconds from the date
+    timeDiff = Math.floor(timeDiff / 60);
+
+    // get minutes
+    let minutes = Math.round(timeDiff % 60);
+
+    // remove minutes from the date
+    timeDiff = Math.floor(timeDiff / 60);
+
+    // get hours
+    let hours = Math.round(timeDiff % 24);
+
+    // remove hours from the date
+    timeDiff = Math.floor(timeDiff / 24);
+
+    // the rest of timeDiff is number of days
+    let days = timeDiff;
+    //  setTimeout(this.display(startTime.getTime()), 1000);
+
+    return ("0" + minutes).slice(-2) + ":" + ("0" + seconds).slice(-2);
+  }
+  // get ellapsed time
+  public getElapsedTime(entry: string) {
+    let myDate = new Date(entry);
+    let totalSeconds = Math.floor(
+      (new Date().getTime() - myDate.getTime()) / 1000
+    );
+    let seconds = 0;
+    let hours = 0;
+    let minutes = 0;
+    if (totalSeconds >= 3600) {
+      hours = Math.floor(totalSeconds / 3600);
+      totalSeconds -= 3600 * hours;
+    }
+    if (totalSeconds >= 60) {
+      minutes = Math.floor(totalSeconds / 60);
+      totalSeconds -= 60 * minutes;
+    }
+    seconds = totalSeconds;
+    return 0 + ':' + seconds;
+  }
 }
