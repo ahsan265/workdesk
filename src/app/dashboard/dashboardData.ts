@@ -22,11 +22,11 @@ const languauges: MultiSelect = {
   data: []
 };
 
-const cardDataTotalVisitors: any = {
+const cardDataTotalVisitors: Card = {
   icon: '../../assets/images/dropdown/checkmart_white.svg',
   title: '',
   color: '#FFFFFF',
-  mainResult: '0',
+  mainResult: 0,
   secondResultText: '',
   secondResultNumber: 0,
   iconUp: '../../assets/images/cards/arrowUp.svg',

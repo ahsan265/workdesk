@@ -74,7 +74,7 @@ export class AnsweredComponent implements OnInit {
         this.answeredData = data.calls.map((answeredData: AnsweredCallModel) => ({
           user_details: {
             image: '../../../assets/images/callInterface/user.png',
-            text: answeredData.name
+            text: answeredData.user_name
           },
           utilites: [
             {

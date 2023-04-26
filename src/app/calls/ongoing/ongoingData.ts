@@ -24,7 +24,7 @@ const ongoingTableSetting: TableSettingsModel[] = [
   {
     index: 3,
     header: 'Request Type',
-    width: 10,
+    width: 12,
     showEditField: false
   },
   {
@@ -36,7 +36,7 @@ const ongoingTableSetting: TableSettingsModel[] = [
   {
     index: 4,
     header: 'Agent',
-    width: 25,
+    width: 23,
     showEditField: false
   }
 ];

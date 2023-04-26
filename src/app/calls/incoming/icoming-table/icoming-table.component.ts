@@ -4,7 +4,7 @@ import { TableSettingsModel, tableSettingsDataModel } from 'src/app/models/agent
 import { IncomingCallModelTable } from 'src/app/models/callModel';
 import { CommonService } from 'src/app/workdeskServices/commonEndpoint/common.service';
 import { GigaaaApiService } from 'src/app/workdeskServices/gigaaaApiService/gigaaa-api-service.service';
-import { incomingTableSetting } from '../../defaultLoadService/incomingData';
+import { incomingTableSetting } from '../incomingData';
 
 @Component({
   selector: 'app-incoming-table',

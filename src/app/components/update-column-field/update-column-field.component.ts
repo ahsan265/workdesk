@@ -41,20 +41,21 @@ export class UpdateColumnFieldComponent implements OnInit {
         value: this.textFieldForm.controls.textField.value,
         headerInformation: this.headerValue
       }
-      this.updatedField.emit(data)
+     // this.updatedField.emit(data)
     }
   }
 
   // close the field()
   closeFieldBox(event: boolean) {
-    // if (event !== true) {
-    //   const data = {
-    //     value: this.textFieldForm.controls.textField.value,
-    //     headerInformation: this.headerValue
-    //   }
-    //   this.updatedField.emit(data)
-
-    // }
-  }
-
+    if(event===false)
+    {
+      const data = {
+        value: '',
+        headerInformation: this.headerValue
+      }
+      this.updatedField.emit(data)
+     
+    }
+  
+    }
 }
