@@ -117,6 +117,7 @@ import { IcomingTableComponent } from './calls/incoming/icoming-table/icoming-ta
 import { MissedTableComponent } from './calls/missed/missed-table/missed-table.component';
 import { OngoingTableComponent } from './calls/ongoing/ongoing-table/ongoing-table.component';
 import { CallPickButtonComponent } from './calls/incoming/call-pick-button/call-pick-button.component';
+import { RouterModule } from '@angular/router';
 
 @NgModule({
   declarations: [

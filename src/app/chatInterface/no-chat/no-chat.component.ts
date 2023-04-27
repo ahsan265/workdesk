@@ -12,6 +12,6 @@ export class NoChatComponent {
   }
 
   goBack() {
-    this.router.navigate(['requests'])
+    this.router.navigate(['requests','incoming'])
   }
 }
