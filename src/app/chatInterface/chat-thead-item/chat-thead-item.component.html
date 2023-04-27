@@ -1,4 +1,4 @@
-<div class="threadsWrapper" scrolling [scrollClass]="'threadsWrapper'">
+<div class="threadsWrapper" scrolling [scrollClass]="'.threadsWrapper'">
     <div class="threadItemPanel" *ngFor="let thread of this.chatData" (click)="selectThread(thread)">
         <div class="thread" [ngClass]="thread.uuid===selectedUuid?'selectedThread':'thread'">
             <div class="userImage">
