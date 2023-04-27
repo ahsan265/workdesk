@@ -234,6 +234,7 @@ export class AgentsComponent implements OnInit {
   }
 
   getSettingsPage(event: string[]) {
+    console.log(event);
     const data = this.AgentService.getAgentByUuid(event[2], this.AgentList);
     const FreeSeats =
       this.AgentSocketService.freeSeatsInformation.getValue().free_seats;

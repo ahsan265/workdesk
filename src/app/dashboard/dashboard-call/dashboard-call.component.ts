@@ -121,7 +121,6 @@ export class DashboardCallComponent {
     private SharedServices: SharedServices,
     private dashboardEps: DashboardEndpointService,
     private calendarService: CalendarService,
-    private router: Router
 
   ) {
     this.getFirstLoad();
@@ -129,7 +128,7 @@ export class DashboardCallComponent {
     this.alwaysShowCalendars = true;
   }
   async ngOnInit(): Promise<void> {
-    this.countries = await this.CommonService.getLocations();
+    // this.countries = await this.CommonService.getLocations();
     if (this.CommonService.getEndpointsParamLocal().token === this.authService.user.value?.api_token) {
       this.callRouteLoad()
     }

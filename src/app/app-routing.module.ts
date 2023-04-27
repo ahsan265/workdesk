@@ -54,6 +54,7 @@ const routes: Routes = [
         ]
       },
       { path: 'agents', component: AgentsComponent },
+      { path: 'agents/settings/:id', component: AgentSettingsComponent },
       {
         path: 'tickets', component: TicketsComponent
       },

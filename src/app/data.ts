@@ -3,7 +3,7 @@ import { CallsModel } from "./models/callModel";
 
 const websites = [
   {
-    text: 'Neo Console',
+    text: 'Exa Console',
     url: ['https://gconsole.io/'],
     image: '../assets/images/sidebar/console_logo.svg'
   }

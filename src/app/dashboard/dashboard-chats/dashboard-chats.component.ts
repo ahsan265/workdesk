@@ -154,9 +154,7 @@ export class DashboardChatsComponent {
     iconUp: result.iconUp,
     iconDown: result.iconDown
       }))
-      // this.incomingCardData =   this.chatCardsData[0];
-      // this.missedCardData =    this.chatCardsData[1]
-      // this.answeredCardData =    this.chatCardsData[2]
+
     });
     this.dashboardEps.chartDataSubject.subscribe((data: ChartData<'bar'>[]) => {
       this.barChartData1 = data[0];
