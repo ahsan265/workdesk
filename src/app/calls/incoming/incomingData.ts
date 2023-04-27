@@ -5,19 +5,19 @@ const incomingTableSetting: TableSettingsModel[] = [
   {
     index: 0,
     header: 'Queue',
-    width: 10,
+    width: 12,
     showEditField: false
   },
   {
     index: 1,
     header: 'User',
-    width: 20,
+    width: 15,
     showEditField: false
   },
   {
     index: 2,
     header: 'User id',
-    width: 20,
+    width: 15,
     showEditField: false
   },
   {
@@ -41,7 +41,7 @@ const incomingTableSetting: TableSettingsModel[] = [
   {
     index: 4,
     header: '',
-    width: 22,
+    width: 10,
     showEditField: false
   }
 ];

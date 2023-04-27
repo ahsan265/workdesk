@@ -26,7 +26,7 @@ export interface IncomingCallModel {
   language_icon: string;
   language_id: number;
   mobile: false;
-  name: string;
+  user_name: string;
   operating_system: string;
   tablet: false;
   user_id: string;
@@ -46,7 +46,7 @@ export interface OngoingCallModel {
   language_icon: string;
   language_id: number;
   mobile: boolean;
-  name: string;
+  user_name: string;
   operating_system: string;
   tablet: boolean;
   user_id: string;
@@ -95,7 +95,7 @@ export interface AnsweredCallModel {
   language_icon: string;
   language_id: number;
   mobile: boolean;
-  name: string;
+  user_name: string;
   operating_system: string;
   tablet: boolean;
   user_id: string;

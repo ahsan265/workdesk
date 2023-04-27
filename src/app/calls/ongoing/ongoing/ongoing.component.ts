@@ -66,7 +66,7 @@ export class OngoingComponent implements OnInit {
         this.ongoingData = data.calls.map((answeredData) => ({
           user_details: {
             image: '../../../assets/images/callInterface/user.png',
-            text: answeredData.name
+            text: answeredData.user_name
           },
           utilites: [
             {

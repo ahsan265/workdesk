@@ -8,10 +8,12 @@ import { CalendarService } from 'src/app/calendarService/calendar.service';
 import { AuthService } from 'src/app/services/auth.service';
 import { CommonService } from 'src/app/workdeskServices/commonEndpoint/common.service';
 import { SharedServices } from 'src/app/workdeskServices/sharedResourcesService/shared-resource-service.service';
-import { oneSelectData, countries, languauges, cardDataTotalVisitors, ranges } from '../dashboardData';
+import { countries, languauges, cardDataTotalVisitors, ranges } from '../dashboardData';
 import { DashboardEndpointService } from '../dashboardService/dashboard-endpoint.service';
 import DataLabelsPlugin from 'chartjs-plugin-datalabels';
 import { OneSelect } from 'src/app/models/oneSelect';
+import { chatCardsData, chatSelectionData } from './dashboardChatData';
+import { Card } from 'src/app/models/card';
 
 @Component({
   selector: 'app-dashboard-chats',
@@ -19,18 +21,21 @@ import { OneSelect } from 'src/app/models/oneSelect';
   styleUrls: ['./dashboard-chats.component.scss']
 })
 export class DashboardChatsComponent {
-  oneSelectData = oneSelectData;
+  oneSelectData = chatSelectionData;
   countries = countries;
   languauges = languauges;
   incomingCardData = cardDataTotalVisitors;
   missedCardData = cardDataTotalVisitors;
   answeredCardData = cardDataTotalVisitors;
+  chatCardsData=chatCardsData;
   startDate: string = '';
   endDate: string = '';
 
   idOfLanguage: Array<number> = [];
   idOfLocation: Array<number> = [];
-
+  incomingChatIcon = '../../assets/images/components/chat_incoming.svg';
+  missedChatIcon = '../../assets/images/components/chat_missed.svg';
+  answeredChatIcon = '../../assets/images/components/chat_answer.svg';
   @ViewChild(BaseChartDirective) chart: BaseChartDirective | undefined;
   @ViewChild(GigaaaDaterangepickerDirective, { static: false })
   pickerDirective: GigaaaDaterangepickerDirective | undefined;
@@ -138,10 +143,20 @@ export class DashboardChatsComponent {
     }
   }
   getCardsAndChartsData() {
-    this.dashboardEps.cardDataSubject.asObservable().subscribe((data: any) => {
-      this.incomingCardData = data[0];
-      this.missedCardData =  data[1]
-      this.answeredCardData =  data[2]
+    this.dashboardEps.cardDataSubject.asObservable().subscribe((data: Card[]) => {
+    this.chatCardsData=  data.map((result,i)=>({
+      icon: this.chatCardsData[i].icon,
+    title: result.title,
+    color: result.color,
+    mainResult: result.mainResult,
+    secondResultText: result.secondResultText,
+    secondResultNumber: result.secondResultNumber,
+    iconUp: result.iconUp,
+    iconDown: result.iconDown
+      }))
+      // this.incomingCardData =   this.chatCardsData[0];
+      // this.missedCardData =    this.chatCardsData[1]
+      // this.answeredCardData =    this.chatCardsData[2]
     });
     this.dashboardEps.chartDataSubject.subscribe((data: ChartData<'bar'>[]) => {
       this.barChartData1 = data[0];

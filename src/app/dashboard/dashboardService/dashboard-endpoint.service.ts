@@ -18,6 +18,8 @@ export class DashboardEndpointService {
   icomingIcon = '../../assets/images/components/calls_incoming.svg';
   missedIcon = '../../assets/images/components/total_missed.svg';
   answeredIcon = '../../assets/images/components/total_answered.svg';
+
+
   selectedRange = 'this_week'
   cardDataSubject = new Subject<Card[]>();
   chartDataSubject = new Subject<ChartData<'bar'>[]>();
@@ -55,7 +57,7 @@ export class DashboardEndpointService {
       );
       const imissedData = this.chartsData.calculateChartData(data.missed);
       const answeredData = this.chartsData.calculateChartData(
-        data.missed
+        data.answered
       );
       const incomingChartRes: ChartData<'bar'> = this.chartDataForm(
         incomingData,

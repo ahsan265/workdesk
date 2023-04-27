@@ -36,7 +36,7 @@ const missedTableSetting: TableSettingsModel[] = [
   {
     index: 4,
     header: 'Requested at',
-    width: 10,
+    width: 12,
     showEditField: false
 
   },
@@ -50,7 +50,7 @@ const missedTableSetting: TableSettingsModel[] = [
   {
     index: 4,
     header: 'Reason',
-    width: 15,
+    width: 13,
     showEditField: false
   }
 ];
@@ -79,7 +79,7 @@ const answeredTablaSetting: TableSettingsModel[] = [
   {
     index: 3,
     header: 'Request Type',
-    width: 10,
+    width: 12,
     showEditField: false
   },
   {
@@ -91,7 +91,7 @@ const answeredTablaSetting: TableSettingsModel[] = [
   {
     index: 4,
     header: 'Agent',
-    width: 25,
+    width: 23,
     showEditField: false
   }
 ];

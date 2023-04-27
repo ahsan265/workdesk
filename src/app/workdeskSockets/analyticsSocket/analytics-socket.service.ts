@@ -35,6 +35,12 @@ export class AnalyticsSocketService {
         languages: [],
         type: 'calls_filter'
       });
+      this.sendAnalyticssParameter({
+        time_range: "this_week",
+        countries: [],
+        languages: [],
+        type: 'chats_filter'
+      });
     };
     this.ws.onmessage = (e) => {
       if (e.data !== 'ping') {

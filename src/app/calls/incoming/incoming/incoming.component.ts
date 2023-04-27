@@ -15,7 +15,7 @@ import { AgentSocketService } from 'src/app/workdeskSockets/agentSocket/agent-so
 import { languaugesIncoming, searchInputData } from '../../callsData';
 import { CallsService } from '../../callService/calls.service';
 import { getDefaultInputsLoadOnce } from '../../defaultLoadService/incoming.Service';
-import { callTypeIncoming, incomingTableSetting } from '../../defaultLoadService/incomingData';
+import { callTypeIncoming, incomingTableSetting } from '../incomingData';
 import { ChatOperationService } from 'src/app/workdeskServices/chatInterfaceServices/chatOperation/chat-operation.service';
 
 @Component({
@@ -96,7 +96,7 @@ export class IncomingComponent implements OnInit {
             ),
             text: this.CallsService.getCallTypeName(incomingData.request_type)
           },
-          name: incomingData.name,
+          name: incomingData.user_name,
           user_id: this.CallsService.getUserId(incomingData.user_id),
           time: incomingData.waiting_started_at,
           userImage: '../../../assets/images/callInterface/user.png',
