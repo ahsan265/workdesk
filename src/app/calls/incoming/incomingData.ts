@@ -6,43 +6,50 @@ const incomingTableSetting: TableSettingsModel[] = [
     index: 0,
     header: 'Queue',
     width: 12,
-    showEditField: false
+    showEditField: false,
+    canEdit:false
   },
   {
     index: 1,
     header: 'User',
     width: 15,
-    showEditField: false
+    showEditField: false,
+    canEdit:false
   },
   {
     index: 2,
     header: 'User id',
     width: 15,
-    showEditField: false
+    showEditField: false,
+    canEdit:false
   },
   {
     index: 3,
     header: 'User Info',
     width: 20,
-    showEditField: false
+    showEditField: false,
+    canEdit:false
   },
   {
     index: 4,
     header: 'Request  Type',
     width: 13,
-    showEditField: false
+    showEditField: false,
+    canEdit:false
   },
   {
     index: 4,
     header: 'Wait Time',
     width: 15,
-    showEditField: false
+    showEditField: false,
+    canEdit:false
   },
   {
     index: 4,
     header: '',
     width: 10,
-    showEditField: false
+    showEditField: false,
+    canEdit:false
   }
 ];
 

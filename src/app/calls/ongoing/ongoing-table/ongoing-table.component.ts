@@ -15,12 +15,12 @@ import { ongoingTableSetting } from '../ongoingData';
 
 })
 export class OngoingTableComponent implements OnInit {
-  @Input() tableSettings=ongoingTableSetting;
+  @Input() tableSettings = ongoingTableSetting;
   @Input() ongoingCallData: OngoingCallModelTable[] = [];
   @Output() callUuid = new EventEmitter<string>();
 
   constructor(private ChangeDetectorRef: ChangeDetectorRef,
-    private GigaaaApiService:GigaaaApiService,
+    private GigaaaApiService: GigaaaApiService,
     private CommonService: CommonService) {
     interval(1000).subscribe(() => {
       this.ChangeDetectorRef.detectChanges();
@@ -28,9 +28,15 @@ export class OngoingTableComponent implements OnInit {
     this.GigaaaApiService.tableCustomizationList(this.CommonService.getEndpointsParamLocal().token, this.CommonService.getEndpointsParamLocal().organization, this.CommonService.getEndpointsParamLocal().project, 'ongoing').then((data: tableSettingsDataModel[]) => {
       if (data.length !== 0) {
         this.tableSettings = this.CommonService.updateColumnTable(data, ongoingTableSetting);
+        this.tableSettings.forEach(element => {
+          element.canEdit = this.CommonService.getIsAdminOrAgent();
+        })
       }
       else {
         this.tableSettings = ongoingTableSetting;
+        this.tableSettings.forEach(element => {
+          element.canEdit = this.CommonService.getIsAdminOrAgent();
+        })
       }
     })
   }

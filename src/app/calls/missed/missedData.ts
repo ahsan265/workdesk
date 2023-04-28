@@ -10,48 +10,52 @@ const missedTableSetting: TableSettingsModel[] = [
     index: 0,
     header: 'User',
     width: 15,
-    showEditField: false
+    showEditField: false,
+    canEdit:false
   },
   {
     index: 1,
     header: 'User id',
     width: 10,
-    showEditField: false
-
+    showEditField: false,
+    canEdit:false
   },
   {
     index: 2,
     header: 'User Info',
     width: 15,
-    showEditField: false
-
+    showEditField: false,
+    canEdit:false
   },
   {
     index: 3,
     header: 'Request Type',
     width: 15,
-    showEditField: false
-
+    showEditField: false,
+    canEdit:false
   },
   {
     index: 4,
     header: 'Requested at',
     width: 12,
-    showEditField: false
+    showEditField: false,
+    canEdit:false
 
   },
   {
     index: 4,
     header: 'Wait Time',
     width: 15,
-    showEditField: false
+    showEditField: false,
+    canEdit:false
 
   },
   {
     index: 4,
     header: 'Reason',
     width: 13,
-    showEditField: false
+    showEditField: false,
+    canEdit:false
   }
 ];
 
@@ -60,39 +64,44 @@ const answeredTablaSetting: TableSettingsModel[] = [
     index: 0,
     header: 'User',
     width: 20,
-    showEditField: false
+    showEditField: false,
+    canEdit:false
   },
   {
     index: 1,
     header: 'User id',
     width: 15,
-    showEditField: false
+    showEditField: false,
+    canEdit:false
 
   },
   {
     index: 2,
     header: 'User Info',
     width: 15,
-    showEditField: false
-
+    showEditField: false,
+    canEdit:false
   },
   {
     index: 3,
     header: 'Request Type',
     width: 12,
-    showEditField: false
+    showEditField: false,
+    canEdit:false
   },
   {
     index: 4,
     header: 'Requested At',
     width: 15,
-    showEditField: false
+    showEditField: false,
+    canEdit:false
   },
   {
     index: 4,
     header: 'Agent',
     width: 23,
-    showEditField: false
+    showEditField: false,
+    canEdit:false
   }
 ];
 

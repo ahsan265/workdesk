@@ -65,6 +65,7 @@ export class AgentsComponent implements OnInit {
     private OverlayService: OverlayService
   ) {
     this.authService.pageTitle.next('Agents');
+
   }
 
   ngOnInit(): void {
@@ -185,10 +186,10 @@ export class AgentsComponent implements OnInit {
             AgentList.active
           ) === true
             ? this.AgentService.getAgentRole(
-                AgentList.is_organization_admin,
-                AgentList.is_organization_owner,
-                AgentList.role
-              )
+              AgentList.is_organization_admin,
+              AgentList.is_organization_owner,
+              AgentList.role
+            )
             : 'Pending',
         show_edit: AgentList.show_edit,
         utilites: this.AgentService.getLanguageFlagById(AgentList.languages),
@@ -199,13 +200,13 @@ export class AgentsComponent implements OnInit {
         ),
         is_organization_admin:
           AgentList.is_organization_admin === true &&
-          AgentList.is_organization_owner === false &&
-          this.AgentService.setAgentInvitedProperty(
-            AgentList.invited,
-            AgentList.inactive,
-            AgentList.active
-          ) &&
-          AgentList.role === 'Admin'
+            AgentList.is_organization_owner === false &&
+            this.AgentService.setAgentInvitedProperty(
+              AgentList.invited,
+              AgentList.inactive,
+              AgentList.active
+            ) &&
+            AgentList.role === 'Admin'
             ? true
             : false,
         loggedIn_user_icon: '../assets/images/tickSign.svg',
@@ -234,7 +235,6 @@ export class AgentsComponent implements OnInit {
   }
 
   getSettingsPage(event: string[]) {
-    console.log(event);
     const data = this.AgentService.getAgentByUuid(event[2], this.AgentList);
     const FreeSeats =
       this.AgentSocketService.freeSeatsInformation.getValue().free_seats;

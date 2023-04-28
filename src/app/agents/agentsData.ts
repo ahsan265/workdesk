@@ -82,33 +82,36 @@ const agentTableSetting: TableSettingsModel[] =
       index: 0,
       header: 'Agent',
       width: 30,
-      showEditField: false
-
+      showEditField: false,
+      canEdit:false
     },
     {
       index: 1,
       header: 'Full Name',
       width: 20,
-      showEditField: false
-
+      showEditField: false,
+      canEdit:false
     },
     {
       index: 2,
       header: 'Language',
       width: 20,
-      showEditField: false
+      showEditField: false,
+      canEdit:false
     },
     {
       index: 3,
       header: 'Role',
       width: 10,
-      showEditField: false
+      showEditField: false,
+      canEdit:false
     },
     {
       index: 4,
       header: '',
       width: 20,
-      showEditField: false
+      showEditField: false,
+      canEdit:false
     }
   ];
 
@@ -224,7 +227,7 @@ const agentTableSetting: TableSettingsModel[] =
   };
   const agentIndicatorData = {
     hightlightText: 0 + '/' + 0,
-    text: 'Agents available',
+    text: '',
     icon: '../assets/images/components/agent_free.svg',
     backgroundColor: '#FEFEFF',
     borderColor: '1px solid #E1E1EA',
