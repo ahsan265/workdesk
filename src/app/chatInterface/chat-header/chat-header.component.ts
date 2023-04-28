@@ -12,6 +12,6 @@ export class ChatHeaderComponent {
   }
   close()
   {
-    this.Router.navigate(['requests']);
+    this.Router.navigate(['requests','incoming']);
   }
 }

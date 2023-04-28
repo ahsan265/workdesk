@@ -1,10 +1,6 @@
 <router-outlet></router-outlet>
-<!-- <app-restriction-modal *ngIf="showModal" (function)="onCancelButtonClicked($event)"></app-restriction-modal> -->
-
-<!-- for non complient -->
 <app-modal-wrapper
   (closeModal)="onCloseNonComplientAccount($event)"
-  *ngIf="showNonComplientAccountModal"
->
+  *ngIf="showNonComplientAccountModal">
   <app-wrong-invitation-account></app-wrong-invitation-account>
 </app-modal-wrapper>
