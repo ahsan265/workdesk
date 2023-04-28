@@ -13,7 +13,7 @@ import { missedTableSetting } from '../missedData';
 })
 export class MissedTableComponent {
   showDropdown: boolean = false
-  @Input() tableSettings=missedTableSetting;
+  @Input() tableSettings = missedTableSetting;
   @Input() misseedCallData: MissedCallModelTable[] = [];
   @Input() showPagination: boolean = false;
   @Input() pagination: paginationModel = { currentPage: 1, itemsPerPage: 5, totalItems: 50, totolPages: 12 };
@@ -32,9 +32,15 @@ export class MissedTableComponent {
     this.GigaaaApiService.tableCustomizationList(this.CommonService.getEndpointsParamLocal().token, this.CommonService.getEndpointsParamLocal().organization, this.CommonService.getEndpointsParamLocal().project, 'missed').then((data: tableSettingsDataModel[]) => {
       if (data.length !== 0) {
         this.tableSettings = this.CommonService.updateColumnTable(data, missedTableSetting);
+        this.tableSettings.forEach(element => {
+          element.canEdit = this.CommonService.getIsAdminOrAgent();
+        })
       }
       else {
         this.tableSettings = missedTableSetting;
+        this.tableSettings.forEach(element => {
+          element.canEdit = this.CommonService.getIsAdminOrAgent();
+        })
       }
     })
   }

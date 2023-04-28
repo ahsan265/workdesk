@@ -34,6 +34,7 @@ export interface TableSettingsModel {
   header: string;
   width: number;
   showEditField: boolean;
+  canEdit:boolean;
 }
 
 export interface UtlitiesIcon {

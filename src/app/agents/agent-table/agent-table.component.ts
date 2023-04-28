@@ -3,6 +3,7 @@ import { TableSettingsModel, tableSettingsDataModel } from 'src/app/models/agent
 import { CommonService } from 'src/app/workdeskServices/commonEndpoint/common.service';
 import { GigaaaApiService } from 'src/app/workdeskServices/gigaaaApiService/gigaaa-api-service.service';
 import { agentTableSetting } from '../agentsData';
+import { SharedServices } from 'src/app/workdeskServices/sharedResourcesService/shared-resource-service.service';
 
 @Component({
   selector: 'app-agent-table',
@@ -14,13 +15,26 @@ export class AgentTableComponent {
   @Input() agentData: any[] = [];
   @Output() agentSetting = new EventEmitter<string[]>();
   showField: boolean = false;
-  constructor(private GigaaaApiService: GigaaaApiService, private CommonService: CommonService) {
+  constructor(private SharedServices: SharedServices, private GigaaaApiService: GigaaaApiService, private CommonService: CommonService) {
     this.GigaaaApiService.tableCustomizationList(this.CommonService.getEndpointsParamLocal().token, this.CommonService.getEndpointsParamLocal().organization, this.CommonService.getEndpointsParamLocal().project, 'Agent').then((data: tableSettingsDataModel[]) => {
       if (data.length !== 0) {
         this.tableSettings = this.CommonService.updateColumnTable(data, agentTableSetting);
+        agentTableSetting.forEach(element => {
+          element.canEdit = this.CommonService.getIsAdminOrAgent();
+        })
       }
       else {
         this.tableSettings = agentTableSetting;
+        agentTableSetting.forEach(element => {
+          element.canEdit = this.CommonService.getIsAdminOrAgent();
+        })
+      }
+    })
+    this.SharedServices.LoadcommonEpsubject.subscribe(data => {
+      if (data === 1) {
+        agentTableSetting.forEach(element => {
+          element.canEdit = this.CommonService.getIsAdminOrAgent();
+        })
       }
     })
   }
