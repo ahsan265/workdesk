@@ -6,44 +6,50 @@ const ongoingTableSetting: TableSettingsModel[] = [
   {
     index: 0,
     header: 'User',
+    defaultValue: 'User',
     width: 20,
     showEditField: false,
-    canEdit:false
+    canEdit: false
   },
   {
     index: 1,
     header: 'User id',
+    defaultValue: 'User id',
     width: 10,
     showEditField: false,
-    canEdit:false
+    canEdit: false
   },
   {
     index: 2,
     header: 'User Info',
+    defaultValue: 'User Info',
     width: 15,
     showEditField: false,
-    canEdit:false
+    canEdit: false
   },
   {
     index: 3,
     header: 'Request Type',
+    defaultValue: 'Request Type',
     width: 12,
     showEditField: false,
-    canEdit:false
+    canEdit: false
   },
   {
     index: 4,
     header: 'Duration',
+    defaultValue: 'Duration',
     width: 15,
     showEditField: false,
-    canEdit:false
+    canEdit: false
   },
   {
     index: 4,
     header: 'Agent',
+    defaultValue: 'Agent',
     width: 23,
     showEditField: false,
-    canEdit:false
+    canEdit: false
   }
 ];
 const callTypeOngoing: MultiSelect = {

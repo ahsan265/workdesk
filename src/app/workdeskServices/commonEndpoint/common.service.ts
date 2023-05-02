@@ -432,7 +432,8 @@ export class CommonService {
 
   public updateColumnTable(tableSettingsData: tableSettingsDataModel[], tableSettings: TableSettingsModel[]) {
     tableSettingsData.forEach(element => {
-      tableSettings[element.customization_id].header = element.customization_value
+      tableSettings[element.customization_id].header === '' ? tableSettings[element.customization_id].header = tableSettings[element.customization_id].defaultValue :
+        tableSettings[element.customization_id].header = element.customization_value;
     });
     return tableSettings;
   }

@@ -5,6 +5,7 @@ import { AnsweredCallModelTable, tableHeading } from 'src/app/models/callModel';
 import { CommonService } from 'src/app/workdeskServices/commonEndpoint/common.service';
 import { GigaaaApiService } from 'src/app/workdeskServices/gigaaaApiService/gigaaa-api-service.service';
 import { answeredTablaSetting } from '../../missed/missedData';
+import { headerDataModel } from 'src/app/models/user';
 
 @Component({
   selector: 'app-answered-table',
@@ -71,9 +72,9 @@ export class AnsweredTableComponent {
     this.itemPerPage.emit(event.value);
   }
 
-  showEditField(name: string) {
+  showEditField(index: number) {
     this.tableSettings.forEach(data => {
-      if (data.header === name) {
+      if (data.index === index) {
         data.showEditField = true;
       }
       else {
@@ -82,7 +83,7 @@ export class AnsweredTableComponent {
     })
   }
   // upate field 
-  async updatedField(event: any) {
+  async updatedField(event: headerDataModel) {
     if (event.value !== '') {
       this.tableSettings.forEach(data => {
         data.showEditField = false;
@@ -97,6 +98,11 @@ export class AnsweredTableComponent {
       this.tableSettings.forEach(data => {
         data.showEditField = false;
       })
+      await this.GigaaaApiService.tableCustomization(this.CommonService.getEndpointsParamLocal().token, this.CommonService.getEndpointsParamLocal().organization, this.CommonService.getEndpointsParamLocal().project, event.headerInformation.index, event.headerInformation.defaultValue, 'answered')
+      const data = await this.GigaaaApiService.tableCustomizationList(this.CommonService.getEndpointsParamLocal().token, this.CommonService.getEndpointsParamLocal().organization, this.CommonService.getEndpointsParamLocal().project, 'answered');
+      if (data.length !== 0) {
+        this.tableSettings = this.CommonService.updateColumnTable(data, this.tableSettings);
+      }
     }
   }
 }

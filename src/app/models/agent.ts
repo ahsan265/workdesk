@@ -33,8 +33,9 @@ export interface TableSettingsModel {
   index: number;
   header: string;
   width: number;
+  defaultValue: string;
   showEditField: boolean;
-  canEdit:boolean;
+  canEdit: boolean;
 }
 
 export interface UtlitiesIcon {
