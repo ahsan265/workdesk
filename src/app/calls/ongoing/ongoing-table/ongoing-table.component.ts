@@ -6,6 +6,7 @@ import { OngoingCallModelTable, tableHeading } from 'src/app/models/callModel';
 import { CommonService } from 'src/app/workdeskServices/commonEndpoint/common.service';
 import { GigaaaApiService } from 'src/app/workdeskServices/gigaaaApiService/gigaaa-api-service.service';
 import { ongoingTableSetting } from '../ongoingData';
+import { headerDataModel } from 'src/app/models/user';
 
 @Component({
   selector: 'app-ongoing-table',
@@ -57,9 +58,9 @@ export class OngoingTableComponent implements OnInit {
     return this.CommonService.onGoingTimer(entry);
   }
 
-  showEditField(name: string) {
+  showEditField(index: number) {
     this.tableSettings.forEach(data => {
-      if (data.header === name) {
+      if (data.index === index) {
         data.showEditField = true;
       }
       else {
@@ -68,7 +69,7 @@ export class OngoingTableComponent implements OnInit {
     })
   }
   // upate field 
-  async updatedField(event: any) {
+  async updatedField(event: headerDataModel) {
     if (event.value !== '') {
       this.tableSettings.forEach(data => {
         data.showEditField = false;
@@ -83,6 +84,9 @@ export class OngoingTableComponent implements OnInit {
       this.tableSettings.forEach(data => {
         data.showEditField = false;
       })
+      await this.GigaaaApiService.tableCustomization(this.CommonService.getEndpointsParamLocal().token, this.CommonService.getEndpointsParamLocal().organization, this.CommonService.getEndpointsParamLocal().project, event.headerInformation.index, event.headerInformation.defaultValue, 'ongoing')
+      const data = await this.GigaaaApiService.tableCustomizationList(this.CommonService.getEndpointsParamLocal().token, this.CommonService.getEndpointsParamLocal().organization, this.CommonService.getEndpointsParamLocal().project, 'ongoing');
+      this.tableSettings = this.CommonService.updateColumnTable(data, this.tableSettings);
     }
   }
 }

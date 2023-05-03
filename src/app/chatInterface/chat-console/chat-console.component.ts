@@ -31,12 +31,12 @@ export class ChatConsoleComponent implements OnInit, AfterViewChecked {
   }
 
   ngOnInit() {
-     this.scrollToBottom();
+    this.scrollToBottom();
   }
 
   ngAfterViewChecked() {
     if (this.isReadMessage) {
-     this.scrollToBottom();
+      this.scrollToBottom();
       this.isReadMessage = false;
     }
   }

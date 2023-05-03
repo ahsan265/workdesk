@@ -1,5 +1,6 @@
 import { ChangeDetectionStrategy, Component, EventEmitter, HostListener, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { TableSettingsModel } from 'src/app/models/agent';
 
 @Component({
   selector: 'app-update-column-field',
@@ -8,7 +9,7 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class UpdateColumnFieldComponent implements OnInit {
-  @Input() headerValue: any = '';
+  @Input() headerValue!: TableSettingsModel;
   @Input() characterLimit: number = 12;
   @Output() updatedField = new EventEmitter<any>();
   textFieldForm = new FormGroup({
@@ -41,21 +42,18 @@ export class UpdateColumnFieldComponent implements OnInit {
         value: this.textFieldForm.controls.textField.value,
         headerInformation: this.headerValue
       }
-     // this.updatedField.emit(data)
+      this.textFieldForm.patchValue({
+        textField: this.headerValue.defaultValue
+      })
+      this.updatedField.emit(data)
     }
   }
 
   // close the field()
   closeFieldBox(event: boolean) {
-    if(event===false)
-    {
-      const data = {
-        value: '',
-        headerInformation: this.headerValue
-      }
-      this.updatedField.emit(data)
-     
+    if (event === false) {
+      this.updateField()
     }
-  
-    }
+
+  }
 }

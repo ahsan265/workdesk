@@ -1,4 +1,4 @@
-import { Component, HostListener, ViewChild } from '@angular/core';
+import { Component, HostListener, ViewChild, ViewEncapsulation } from '@angular/core';
 import { Router } from '@angular/router';
 import { GigaaaDaterangepickerDirective } from '@gigaaa/gigaaa-components';
 import { ChartConfiguration, ChartType, ChartData } from 'chart.js';
@@ -17,7 +17,8 @@ import { Card } from 'src/app/models/card';
 @Component({
   selector: 'app-dashboard-call',
   templateUrl: './dashboard-call.component.html',
-  styleUrls: ['./dashboard-call.component.scss']
+  styleUrls: ['./dashboard-call.component.scss'],
+
 })
 export class DashboardCallComponent {
   oneSelectData = oneSelectData;

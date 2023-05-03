@@ -1,5 +1,4 @@
 import { Button } from './button';
-import { Organization } from './organization';
 
 export interface Modal {
   title: string;

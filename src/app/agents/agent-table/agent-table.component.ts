@@ -4,6 +4,7 @@ import { CommonService } from 'src/app/workdeskServices/commonEndpoint/common.se
 import { GigaaaApiService } from 'src/app/workdeskServices/gigaaaApiService/gigaaa-api-service.service';
 import { agentTableSetting } from '../agentsData';
 import { SharedServices } from 'src/app/workdeskServices/sharedResourcesService/shared-resource-service.service';
+import { headerDataModel } from 'src/app/models/user';
 
 @Component({
   selector: 'app-agent-table',
@@ -37,6 +38,7 @@ export class AgentTableComponent {
         })
       }
     })
+
   }
 
   ngOnInit(): void {
@@ -51,21 +53,24 @@ export class AgentTableComponent {
 
   }
 
-  showEditField(name: string) {
+  showEditField(id: number) {
     this.tableSettings.forEach(data => {
-      if (data.header === name) {
+      if (data.index === id) {
         data.showEditField = true;
       }
       else {
         data.showEditField = false;
       }
     })
+
   }
-  async updatedField(event: any) {
+  async updatedField(event: headerDataModel) {
+    console.log(event)
     if (event.value !== '') {
       this.tableSettings.forEach(data => {
         data.showEditField = false;
       })
+
       await this.GigaaaApiService.tableCustomization(this.CommonService.getEndpointsParamLocal().token, this.CommonService.getEndpointsParamLocal().organization, this.CommonService.getEndpointsParamLocal().project, event.headerInformation.index, event.value, 'Agent')
       const data = await this.GigaaaApiService.tableCustomizationList(this.CommonService.getEndpointsParamLocal().token, this.CommonService.getEndpointsParamLocal().organization, this.CommonService.getEndpointsParamLocal().project, 'Agent');
       if (data.length !== 0) {
@@ -76,6 +81,9 @@ export class AgentTableComponent {
       this.tableSettings.forEach(data => {
         data.showEditField = false;
       })
+      await this.GigaaaApiService.tableCustomization(this.CommonService.getEndpointsParamLocal().token, this.CommonService.getEndpointsParamLocal().organization, this.CommonService.getEndpointsParamLocal().project, event.headerInformation.index, event.headerInformation.defaultValue, 'Agent')
+      const data = await this.GigaaaApiService.tableCustomizationList(this.CommonService.getEndpointsParamLocal().token, this.CommonService.getEndpointsParamLocal().organization, this.CommonService.getEndpointsParamLocal().project, 'Agent');
+      this.tableSettings = this.CommonService.updateColumnTable(data, this.tableSettings);
     }
   }
 

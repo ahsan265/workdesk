@@ -1,3 +1,4 @@
+import { TableSettingsModel } from './agent';
 import { Languages } from './languages';
 
 export interface Profile {
@@ -50,4 +51,9 @@ export interface MemberData {
   role: string;
   languages: [];
   isFirst: boolean;
+}
+
+export interface headerDataModel {
+  value: string;
+  headerInformation: TableSettingsModel;
 }
