@@ -12,13 +12,13 @@ import { cardDataTotalVisitors, countries, languauges, oneSelectData, ranges } f
 import { DashboardEndpointService } from '../dashboardService/dashboard-endpoint.service';
 import DataLabelsPlugin from 'chartjs-plugin-datalabels';
 import { OneSelect } from 'src/app/models/oneSelect';
-import { Card } from 'src/app/models/card';
+import { Card, cardTypeModel } from 'src/app/models/card';
+import { chartModel } from 'src/app/models/chartModel';
 
 @Component({
   selector: 'app-dashboard-call',
   templateUrl: './dashboard-call.component.html',
   styleUrls: ['./dashboard-call.component.scss'],
-
 })
 export class DashboardCallComponent {
   oneSelectData = oneSelectData;
@@ -138,15 +138,21 @@ export class DashboardCallComponent {
     }
   }
   getCardsAndChartsData() {
-    this.dashboardEps.cardDataSubject.subscribe((data: Card[]) => {
-      this.incomingCardData = data[0];
-      this.missedCardData = data[1];
-      this.answeredCardData = data[2];
+    this.dashboardEps.cardDataSubject.subscribe((data: cardTypeModel) => {
+      if (data.type === 'calls_count') {
+        this.incomingCardData = data.data[0];
+        this.missedCardData = data.data[1];
+        this.answeredCardData = data.data[2];
+      }
     });
-    this.dashboardEps.chartDataSubject.subscribe((data: ChartData<'bar'>[]) => {
-      this.barChartData1 = data[0];
-      this.barChartData2 = data[1];
-      this.barChartData3 = data[2];
+    this.dashboardEps.chartDataSubject.subscribe((data: chartModel) => {
+      if (data.type === 'calls_aggregates') {
+        this.barChartData1 = data.data[0];
+        this.barChartData2 = data.data[1];
+        this.barChartData3 = data.data[2];
+      }
+
+
     });
   }
   private async callRouteLoad() {

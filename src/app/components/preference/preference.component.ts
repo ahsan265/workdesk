@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from 'src/app/services/auth.service';
 import { CanloadService } from 'src/app/services/canLoad/canload.service';
-import { allLanguageData, languauges } from './preferenceData';
+import { allLanguageData, chatWaitTimeData, languauges, userWaitTimeData, waitTimeData } from './preferenceData';
 
 @Component({
   selector: 'app-preference',
@@ -12,6 +12,9 @@ import { allLanguageData, languauges } from './preferenceData';
 export class PreferenceComponent {
   languauges = languauges;
   allLanguageData = allLanguageData;
+  waitTimeData = waitTimeData
+  userWaitTimeData = userWaitTimeData
+  chatWaitTimeData = chatWaitTimeData
 
   constructor(private authService: AuthService, private CanloadService: CanloadService) {
     this.authService.pageTitle.next('Preferences');

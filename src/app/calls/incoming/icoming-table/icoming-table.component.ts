@@ -29,13 +29,13 @@ export class IcomingTableComponent {
       if (data.length !== 0) {
         this.tableSettings = this.CommonService.updateColumnTable(data, incomingTableSetting);
         this.tableSettings.forEach(element => {
-          element.canEdit = this.CommonService.getIsAdminOrAgent();
+          element.canEdit = this.CommonService.getIsAdminOrAgent() && this.CommonService.getLoggedInAgentData().is_organization_owner;;
         })
       }
       else {
         this.tableSettings = incomingTableSetting;
         this.tableSettings.forEach(element => {
-          element.canEdit = this.CommonService.getIsAdminOrAgent();
+          element.canEdit = this.CommonService.getIsAdminOrAgent() && this.CommonService.getLoggedInAgentData().is_organization_owner;;
         })
       }
     })

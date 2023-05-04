@@ -10,7 +10,7 @@ import { headerDataModel } from 'src/app/models/user';
 @Component({
   selector: 'app-answered-table',
   templateUrl: './answered-table.component.html',
-  styleUrls: ['./answered-table.component.scss']
+  styleUrls: ['./answered-table.component.scss',]
 })
 export class AnsweredTableComponent {
   showDropdown: boolean = false
@@ -33,13 +33,13 @@ export class AnsweredTableComponent {
       if (data.length !== 0) {
         this.tableSettings = this.CommonService.updateColumnTable(data, answeredTablaSetting);
         this.tableSettings.forEach(element => {
-          element.canEdit = this.CommonService.getIsAdminOrAgent();
+          element.canEdit = this.CommonService.getIsAdminOrAgent() && this.CommonService.getLoggedInAgentData().is_organization_owner;
         })
       }
       else {
         this.tableSettings = answeredTablaSetting;
         this.tableSettings.forEach(element => {
-          element.canEdit = this.CommonService.getIsAdminOrAgent();
+          element.canEdit = this.CommonService.getIsAdminOrAgent() && this.CommonService.getLoggedInAgentData().is_organization_owner;
         })
       }
     })

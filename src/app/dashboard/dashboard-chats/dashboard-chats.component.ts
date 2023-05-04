@@ -13,7 +13,8 @@ import { DashboardEndpointService } from '../dashboardService/dashboard-endpoint
 import DataLabelsPlugin from 'chartjs-plugin-datalabels';
 import { OneSelect } from 'src/app/models/oneSelect';
 import { chatCardsData, chatSelectionData } from './dashboardChatData';
-import { Card } from 'src/app/models/card';
+import { cardTypeModel } from 'src/app/models/card';
+import { chartModel } from 'src/app/models/chartModel';
 
 @Component({
   selector: 'app-dashboard-chats',
@@ -27,7 +28,7 @@ export class DashboardChatsComponent {
   incomingCardData = cardDataTotalVisitors;
   missedCardData = cardDataTotalVisitors;
   answeredCardData = cardDataTotalVisitors;
-  chatCardsData=chatCardsData;
+  chatCardsData = chatCardsData;
   startDate: string = '';
   endDate: string = '';
 
@@ -143,23 +144,26 @@ export class DashboardChatsComponent {
     }
   }
   getCardsAndChartsData() {
-    this.dashboardEps.cardDataSubject.asObservable().subscribe((data: Card[]) => {
-    this.chatCardsData=  data.map((result,i)=>({
-      icon: this.chatCardsData[i].icon,
-    title: result.title,
-    color: result.color,
-    mainResult: result.mainResult,
-    secondResultText: result.secondResultText,
-    secondResultNumber: result.secondResultNumber,
-    iconUp: result.iconUp,
-    iconDown: result.iconDown
-      }))
-
+    this.dashboardEps.cardDataSubject.asObservable().subscribe((data: cardTypeModel) => {
+      if (data.type === 'chats_counts') {
+        this.chatCardsData = data.data.map((result, i) => ({
+          icon: this.chatCardsData[i].icon,
+          title: result.title,
+          color: result.color,
+          mainResult: result.mainResult,
+          secondResultText: result.secondResultText,
+          secondResultNumber: result.secondResultNumber,
+          iconUp: result.iconUp,
+          iconDown: result.iconDown
+        }))
+      }
     });
-    this.dashboardEps.chartDataSubject.subscribe((data: ChartData<'bar'>[]) => {
-      this.barChartData1 = data[0];
-      this.barChartData2 = data[1];
-      this.barChartData3 = data[2];
+    this.dashboardEps.chartDataSubject.subscribe((data: chartModel) => {
+      if (data.type === 'chats_aggregates') {
+        this.barChartData1 = data.data[0];
+        this.barChartData2 = data.data[1];
+        this.barChartData3 = data.data[2];
+      }
     });
   }
   private async callRouteLoad() {
@@ -172,7 +176,7 @@ export class DashboardChatsComponent {
   private getFirstLoad(): void {
     this.SharedServices.LoadcommonEpsubject.subscribe(async (data) => {
       if (data === 1) {
-       // this.CommonService.restrictRoute();
+        // this.CommonService.restrictRoute();
         this.setDefaultDate();
         this.languauges = await this.CommonService.getProjectLanguagesForUser();
         this.countries = await this.CommonService.getLocations();

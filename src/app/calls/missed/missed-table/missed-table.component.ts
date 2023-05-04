@@ -34,13 +34,13 @@ export class MissedTableComponent {
       if (data.length !== 0) {
         this.tableSettings = this.CommonService.updateColumnTable(data, missedTableSetting);
         this.tableSettings.forEach(element => {
-          element.canEdit = this.CommonService.getIsAdminOrAgent();
+          element.canEdit = this.CommonService.getIsAdminOrAgent() && this.CommonService.getLoggedInAgentData().is_organization_owner;;
         })
       }
       else {
         this.tableSettings = missedTableSetting;
         this.tableSettings.forEach(element => {
-          element.canEdit = this.CommonService.getIsAdminOrAgent();
+          element.canEdit = this.CommonService.getIsAdminOrAgent() && this.CommonService.getLoggedInAgentData().is_organization_owner;;
         })
       }
     })
