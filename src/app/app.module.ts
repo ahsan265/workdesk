@@ -118,6 +118,7 @@ import { MissedTableComponent } from './calls/missed/missed-table/missed-table.c
 import { OngoingTableComponent } from './calls/ongoing/ongoing-table/ongoing-table.component';
 import { CallPickButtonComponent } from './calls/incoming/call-pick-button/call-pick-button.component';
 import { RouterModule } from '@angular/router';
+import { TimerWidgetComponent } from './components/timer-widget/timer-widget.component';
 
 @NgModule({
   declarations: [
@@ -197,7 +198,8 @@ import { RouterModule } from '@angular/router';
     IcomingTableComponent,
     MissedTableComponent,
     OngoingTableComponent,
-    CallPickButtonComponent
+    CallPickButtonComponent,
+    TimerWidgetComponent
 
   ],
   imports: [

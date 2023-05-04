@@ -38,9 +38,7 @@
             ],
             "styles": [
               "src/styles.scss",
-              "node_modules/ngx-toastr/toastr.css",
-              "node_modules/@gigaaa/gigaaa-components/styles/table.scss"
-
+              "node_modules/ngx-toastr/toastr.css"
             ],
             "scripts": [],
             "additionalEnvironmentVariables": []

@@ -7,5 +7,9 @@ export interface Card {
   secondResultNumber: number;
   iconUp?: string;
   iconDown?: string;
+}
 
+export interface cardTypeModel {
+  type: string;
+  data: Card[];
 }

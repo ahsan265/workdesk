@@ -2,7 +2,6 @@
 /* eslint-disable no-undef */
 /* eslint-disable sort-imports */
 import { Injectable } from '@angular/core';
-import { Card } from '@gigaaa/gigaaa-components/lib/models/card';
 import { ChartData } from 'chart.js';
 import { Subject } from 'rxjs';
 import { CalendarService } from 'src/app/calendarService/calendar.service';
@@ -10,6 +9,8 @@ import { ChartLabel } from 'src/app/chartsfunction/chartLabel';
 import { ChartsData } from 'src/app/chartsfunction/chartData';
 import { AnalyticsSocketService } from 'src/app/workdeskSockets/analyticsSocket/analytics-socket.service';
 import { Router } from '@angular/router';
+import { Card, cardTypeModel } from 'src/app/models/card';
+import { chartModel } from 'src/app/models/chartModel';
 
 @Injectable({
   providedIn: 'root'
@@ -21,8 +22,8 @@ export class DashboardEndpointService {
 
 
   selectedRange = 'this_week'
-  cardDataSubject = new Subject<Card[]>();
-  chartDataSubject = new Subject<ChartData<'bar'>[]>();
+  cardDataSubject = new Subject<cardTypeModel>();
+  chartDataSubject = new Subject<chartModel>();
   constructor(
     private chartLabel: ChartLabel,
     private chartsData: ChartsData,
@@ -77,10 +78,15 @@ export class DashboardEndpointService {
         missedChartRes,
         answeredChartRes
       ];
-      this.chartDataSubject.next(groupChart);
+      const finalChart: chartModel = {
+        type: data.type,
+        data: groupChart
+      }
+      this.chartDataSubject.next(finalChart);
     });
     // for cards data
     this.AnalyticsSocketService.AnalyticsCardSubject.subscribe(data => {
+      console.log(data)
       // cards data calcultation
       const incomingCard = data.incoming.count;
       const percencateIncomingCard = this.getpercentagecalculated(
@@ -125,7 +131,11 @@ export class DashboardEndpointService {
         missedCardRes,
         answeredCardRes
       ];
-      this.cardDataSubject.next(finalCardsData);
+      const card: cardTypeModel = {
+        type: data.type,
+        data: finalCardsData
+      }
+      this.cardDataSubject.next(card);
     })
   }
   // call the cards count endpoint for

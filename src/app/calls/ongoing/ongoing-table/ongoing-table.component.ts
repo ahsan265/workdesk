@@ -30,13 +30,13 @@ export class OngoingTableComponent implements OnInit {
       if (data.length !== 0) {
         this.tableSettings = this.CommonService.updateColumnTable(data, ongoingTableSetting);
         this.tableSettings.forEach(element => {
-          element.canEdit = this.CommonService.getIsAdminOrAgent();
+          element.canEdit = this.CommonService.getIsAdminOrAgent() && this.CommonService.getLoggedInAgentData().is_organization_owner;;
         })
       }
       else {
         this.tableSettings = ongoingTableSetting;
         this.tableSettings.forEach(element => {
-          element.canEdit = this.CommonService.getIsAdminOrAgent();
+          element.canEdit = this.CommonService.getIsAdminOrAgent() && this.CommonService.getLoggedInAgentData().is_organization_owner;;
         })
       }
     })

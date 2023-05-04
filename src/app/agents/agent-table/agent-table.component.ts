@@ -21,7 +21,7 @@ export class AgentTableComponent {
       if (data.length !== 0) {
         this.tableSettings = this.CommonService.updateColumnTable(data, agentTableSetting);
         agentTableSetting.forEach(element => {
-          element.canEdit = this.CommonService.getIsAdminOrAgent();
+          element.canEdit = this.CommonService.getIsAdminOrAgent() && this.CommonService.getLoggedInAgentData().is_organization_owner;
         })
       }
       else {
