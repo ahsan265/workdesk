@@ -5,6 +5,7 @@ import { GigaaaApiService } from 'src/app/workdeskServices/gigaaaApiService/giga
 import { agentTableSetting } from '../agentsData';
 import { SharedServices } from 'src/app/workdeskServices/sharedResourcesService/shared-resource-service.service';
 import { headerDataModel } from 'src/app/models/user';
+import { AgentSocketService } from 'src/app/workdeskSockets/agentSocket/agent-socket.service';
 
 @Component({
   selector: 'app-agent-table',
@@ -16,7 +17,7 @@ export class AgentTableComponent {
   @Input() agentData: any[] = [];
   @Output() agentSetting = new EventEmitter<string[]>();
   showField: boolean = false;
-  constructor(private SharedServices: SharedServices, private GigaaaApiService: GigaaaApiService, private CommonService: CommonService) {
+  constructor(private AgentSocketService: AgentSocketService, private GigaaaApiService: GigaaaApiService, private CommonService: CommonService) {
     this.GigaaaApiService.tableCustomizationList(this.CommonService.getEndpointsParamLocal().token, this.CommonService.getEndpointsParamLocal().organization, this.CommonService.getEndpointsParamLocal().project, 'Agent').then((data: tableSettingsDataModel[]) => {
       if (data.length !== 0) {
         this.tableSettings = this.CommonService.updateColumnTable(data, agentTableSetting);
@@ -27,14 +28,14 @@ export class AgentTableComponent {
       else {
         this.tableSettings = agentTableSetting;
         agentTableSetting.forEach(element => {
-          element.canEdit = this.CommonService.getIsAdminOrAgent();
+          element.canEdit = this.CommonService.getIsAdminOrAgent() && this.CommonService.getLoggedInAgentData().is_organization_owner;
         })
       }
     })
-    this.SharedServices.LoadcommonEpsubject.subscribe(data => {
-      if (data === 1) {
+    this.AgentSocketService.loggedAgentData.subscribe(data => {
+      if (data) {
         agentTableSetting.forEach(element => {
-          element.canEdit = this.CommonService.getIsAdminOrAgent();
+          element.canEdit = this.CommonService.getIsAdminOrAgent() && this.CommonService.getLoggedInAgentData().is_organization_owner;
         })
       }
     })

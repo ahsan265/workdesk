@@ -6,6 +6,8 @@ import { CommonService } from 'src/app/workdeskServices/commonEndpoint/common.se
 import { GigaaaApiService } from 'src/app/workdeskServices/gigaaaApiService/gigaaa-api-service.service';
 import { incomingTableSetting } from '../incomingData';
 import { headerDataModel } from 'src/app/models/user';
+import { SharedServices } from 'src/app/workdeskServices/sharedResourcesService/shared-resource-service.service';
+import { AgentSocketService } from 'src/app/workdeskSockets/agentSocket/agent-socket.service';
 
 @Component({
   selector: 'app-incoming-table',
@@ -19,7 +21,7 @@ export class IcomingTableComponent {
   @Input() incomingCallData: IncomingCallModelTable[] = [];
   @Output() callUuid = new EventEmitter<string>();
 
-  constructor(private ChangeDetectorRef: ChangeDetectorRef,
+  constructor(private AgentSocketService: AgentSocketService, private ChangeDetectorRef: ChangeDetectorRef,
     private GigaaaApiService: GigaaaApiService,
     private CommonService: CommonService) {
     interval(1000).subscribe(() => {
@@ -36,6 +38,13 @@ export class IcomingTableComponent {
         this.tableSettings = incomingTableSetting;
         this.tableSettings.forEach(element => {
           element.canEdit = this.CommonService.getIsAdminOrAgent() && this.CommonService.getLoggedInAgentData().is_organization_owner;;
+        })
+      }
+    })
+    this.AgentSocketService.loggedAgentData.subscribe(data => {
+      if (data) {
+        this.tableSettings.forEach(element => {
+          element.canEdit = this.CommonService.getIsAdminOrAgent() && this.CommonService.getLoggedInAgentData().is_organization_owner;
         })
       }
     })
@@ -56,14 +65,16 @@ export class IcomingTableComponent {
     return this.CommonService.getElapsedTime(entry);
   }
   showEditField(index: number) {
-    this.tableSettings.forEach(data => {
-      if (data.index === index) {
-        data.showEditField = true;
-      }
-      else {
-        data.showEditField = false;
-      }
-    })
+    if (this.CommonService.getIsAdminOrAgent() && this.CommonService.getLoggedInAgentData().is_organization_owner) {
+      this.tableSettings.forEach(data => {
+        if (data.index === index) {
+          data.showEditField = true;
+        }
+        else {
+          data.showEditField = false;
+        }
+      })
+    }
   }
   // upate field 
   async updatedField(event: headerDataModel) {

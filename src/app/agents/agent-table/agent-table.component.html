@@ -4,8 +4,7 @@
             <tr>
                 <th [style.width.%]="head.width" *ngFor="let head of this.tableSettings; ">
 
-                    <div *ngIf="!head.showEditField  && head.canEdit"
-                        [ngClass]="!head.showEditField  && head.canEdit?'editHeader':''"
+                    <div *ngIf="!head.showEditField" [ngClass]="!head.showEditField  && head.canEdit?'editHeader':''"
                         (click)="showEditField(head.index)">
                         {{head.header}}</div>
                     <!-- <div *ngIf="!head.showEditField && head.canEdit" (click)="showEditField(head.index)">

@@ -33,7 +33,7 @@ export class AgentSocketService {
   isUserAgentOrAdmin: string = '';
   isInCall: boolean = false;
   public isInCallValue: BehaviorSubject<boolean>;
-
+  public loggedAgentData = new Subject<AgentList>();
   constructor(private CommonService: CommonService, private Router: Router, private SharedServices: SharedServices) {
     this.isInCallValue = new BehaviorSubject(this.isInCall);
     this.freeSeatsInformation = new BehaviorSubject(freeSeats)
@@ -117,6 +117,8 @@ export class AgentSocketService {
     this.getAgentOnlineStatus(AgentList);
     AgentList.find((data) => {
       if (this.CommonService.getEmailForLoggedInUser() === data.email) {
+
+        this.loggedAgentData.next(data);
         this.CommonService.loggedInAgentDetails(data);
       }
     });
