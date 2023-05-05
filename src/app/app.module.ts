@@ -72,7 +72,6 @@ import { AddAgentComponent } from './modals/add-agent/add-agent.component';
 import { AgentListingComponent } from './modals/add-agent/agent-listing/agent-listing.component';
 import { scrollStageDirective } from './directives/scrollDirective';
 import { CountersComponent } from './components/counters/counters.component';
-
 import { WrongInvitationAccountComponent } from './modals/wrong-invitation-account/wrong-invitation-account.component';
 import { LoaderComponent } from './components/loader/loader.component';
 import { AuthService } from './services/auth.service';
@@ -117,7 +116,6 @@ import { IcomingTableComponent } from './calls/incoming/icoming-table/icoming-ta
 import { MissedTableComponent } from './calls/missed/missed-table/missed-table.component';
 import { OngoingTableComponent } from './calls/ongoing/ongoing-table/ongoing-table.component';
 import { CallPickButtonComponent } from './calls/incoming/call-pick-button/call-pick-button.component';
-import { RouterModule } from '@angular/router';
 import { TimerWidgetComponent } from './components/timer-widget/timer-widget.component';
 
 @NgModule({
