@@ -44,7 +44,7 @@ const ongoingTableSetting: TableSettingsModel[] = [
     canEdit: false
   },
   {
-    index: 4,
+    index: 5,
     header: 'Agent',
     defaultValue: 'Agent',
     width: 23,

@@ -86,7 +86,6 @@ export class DashboardEndpointService {
     });
     // for cards data
     this.AnalyticsSocketService.AnalyticsCardSubject.subscribe(data => {
-      console.log(data)
       // cards data calcultation
       const incomingCard = data.incoming.count;
       const percencateIncomingCard = this.getpercentagecalculated(

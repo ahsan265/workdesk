@@ -54,18 +54,18 @@ export class AgentTableComponent {
   }
 
   showEditField(id: number) {
-    this.tableSettings.forEach(data => {
-      if (data.index === id) {
-        data.showEditField = true;
-      }
-      else {
-        data.showEditField = false;
-      }
-    })
-
+    if (this.CommonService.getIsAdminOrAgent() && this.CommonService.getLoggedInAgentData().is_organization_owner) {
+      agentTableSetting.forEach(data => {
+        if (data.index === id) {
+          data.showEditField = true;
+        }
+        else {
+          data.showEditField = false;
+        }
+      })
+    }
   }
   async updatedField(event: headerDataModel) {
-    console.log(event)
     if (event.value !== '') {
       this.tableSettings.forEach(data => {
         data.showEditField = false;
@@ -81,9 +81,9 @@ export class AgentTableComponent {
       this.tableSettings.forEach(data => {
         data.showEditField = false;
       })
-      await this.GigaaaApiService.tableCustomization(this.CommonService.getEndpointsParamLocal().token, this.CommonService.getEndpointsParamLocal().organization, this.CommonService.getEndpointsParamLocal().project, event.headerInformation.index, event.headerInformation.defaultValue, 'Agent')
-      const data = await this.GigaaaApiService.tableCustomizationList(this.CommonService.getEndpointsParamLocal().token, this.CommonService.getEndpointsParamLocal().organization, this.CommonService.getEndpointsParamLocal().project, 'Agent');
-      this.tableSettings = this.CommonService.updateColumnTable(data, this.tableSettings);
+      // await this.GigaaaApiService.tableCustomization(this.CommonService.getEndpointsParamLocal().token, this.CommonService.getEndpointsParamLocal().organization, this.CommonService.getEndpointsParamLocal().project, event.headerInformation.index, event.headerInformation.defaultValue, 'Agent')
+      // const data = await this.GigaaaApiService.tableCustomizationList(this.CommonService.getEndpointsParamLocal().token, this.CommonService.getEndpointsParamLocal().organization, this.CommonService.getEndpointsParamLocal().project, 'Agent');
+      // this.tableSettings = this.CommonService.updateColumnTable(data, this.tableSettings);
     }
   }
 

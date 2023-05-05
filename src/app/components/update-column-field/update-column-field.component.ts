@@ -43,7 +43,7 @@ export class UpdateColumnFieldComponent implements OnInit {
         headerInformation: this.headerValue
       }
       this.textFieldForm.patchValue({
-        textField: this.headerValue.defaultValue
+        textField: this.headerValue.header
       })
       this.updatedField.emit(data)
     }

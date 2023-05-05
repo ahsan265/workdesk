@@ -48,7 +48,7 @@ const missedTableSetting: TableSettingsModel[] = [
 
   },
   {
-    index: 4,
+    index: 5,
     header: 'Wait Time',
     defaultValue: 'Wait Time',
     width: 15,
@@ -57,7 +57,7 @@ const missedTableSetting: TableSettingsModel[] = [
 
   },
   {
-    index: 4,
+    index: 6,
     header: 'Reason',
     defaultValue: 'Reason',
     width: 13,
@@ -109,7 +109,7 @@ const answeredTablaSetting: TableSettingsModel[] = [
     canEdit: false
   },
   {
-    index: 4,
+    index: 5,
     header: 'Agent',
     defaultValue: 'Agent',
     width: 23,

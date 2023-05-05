@@ -43,7 +43,7 @@ const incomingTableSetting: TableSettingsModel[] = [
     canEdit: false
   },
   {
-    index: 4,
+    index: 5,
     header: 'Wait Time',
     defaultValue: 'Wait Time',
     width: 15,
@@ -51,7 +51,7 @@ const incomingTableSetting: TableSettingsModel[] = [
     canEdit: false
   },
   {
-    index: 4,
+    index: 6,
     header: '',
     defaultValue: '',
     width: 10,

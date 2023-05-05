@@ -22,7 +22,7 @@
     position: relative;
     display: inline-flex;
     width: calc(100% - 350px);
-    height: calc(100vh - 205px);
+    height: calc(100vh - 205.5px);
     padding: 0px 0px 0px 16px;
     overflow-y: overlay;
     transition: 0.4s;
@@ -42,10 +42,13 @@
 }
 
 .typingArea {
-    width: calc(100% - 200px);
+    width: calc(100% - 385px);
+    height: -moz-fit-content;
     height: fit-content;
     position: fixed;
     bottom: 0px;
+    right: 0px;
+    padding: 0px 15px 0px 15px;
 }
 
 .chatReaderWrapper {

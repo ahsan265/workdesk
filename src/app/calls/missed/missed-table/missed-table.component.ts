@@ -98,11 +98,6 @@ export class MissedTableComponent {
       this.tableSettings.forEach(data => {
         data.showEditField = false;
       })
-      await this.GigaaaApiService.tableCustomization(this.CommonService.getEndpointsParamLocal().token, this.CommonService.getEndpointsParamLocal().organization, this.CommonService.getEndpointsParamLocal().project, event.headerInformation.index, event.headerInformation.defaultValue, 'missed')
-      const data = await this.GigaaaApiService.tableCustomizationList(this.CommonService.getEndpointsParamLocal().token, this.CommonService.getEndpointsParamLocal().organization, this.CommonService.getEndpointsParamLocal().project, 'missed');
-      if (data.length !== 0) {
-        this.tableSettings = this.CommonService.updateColumnTable(data, this.tableSettings);
-      }
     }
   }
 }
