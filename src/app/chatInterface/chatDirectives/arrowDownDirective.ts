@@ -9,7 +9,7 @@ export class scrollDownDirective {
     constructor() { }
     @HostListener('document:wheel', ['$event']) private onScroll(event: any) {
         const element = document.querySelector(this.scrollClass) as HTMLElement;
-        const data = (Math.floor(element.scrollTop)=== (element.scrollHeight - element.offsetHeight));
+        const data = (Math.floor(element.scrollTop) === (element.scrollHeight - element.offsetHeight));
         this.showScrollDown.emit(data);
     }
 }

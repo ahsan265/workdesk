@@ -9,10 +9,11 @@ input {
     line-height: 120%;
     transition: 0.4s;
     align-items: center;
-    width: inherit;
+    width: calc(100% - 20px);
     letter-spacing: 0.02em;
     color: #162741;
     border: 1.4px solid #52A3DD;
+
 
 }
 

@@ -5,11 +5,12 @@ import { AnsweredCallModelTable, tableHeading } from 'src/app/models/callModel';
 import { CommonService } from 'src/app/workdeskServices/commonEndpoint/common.service';
 import { GigaaaApiService } from 'src/app/workdeskServices/gigaaaApiService/gigaaa-api-service.service';
 import { answeredTablaSetting } from '../../missed/missedData';
+import { headerDataModel } from 'src/app/models/user';
 
 @Component({
   selector: 'app-answered-table',
   templateUrl: './answered-table.component.html',
-  styleUrls: ['./answered-table.component.scss']
+  styleUrls: ['./answered-table.component.scss',]
 })
 export class AnsweredTableComponent {
   showDropdown: boolean = false
@@ -31,9 +32,15 @@ export class AnsweredTableComponent {
     this.GigaaaApiService.tableCustomizationList(this.CommonService.getEndpointsParamLocal().token, this.CommonService.getEndpointsParamLocal().organization, this.CommonService.getEndpointsParamLocal().project, 'answered').then((data: tableSettingsDataModel[]) => {
       if (data.length !== 0) {
         this.tableSettings = this.CommonService.updateColumnTable(data, answeredTablaSetting);
+        this.tableSettings.forEach(element => {
+          element.canEdit = this.CommonService.getIsAdminOrAgent() && this.CommonService.getLoggedInAgentData().is_organization_owner;
+        })
       }
       else {
         this.tableSettings = answeredTablaSetting;
+        this.tableSettings.forEach(element => {
+          element.canEdit = this.CommonService.getIsAdminOrAgent() && this.CommonService.getLoggedInAgentData().is_organization_owner;
+        })
       }
     })
   }
@@ -65,9 +72,9 @@ export class AnsweredTableComponent {
     this.itemPerPage.emit(event.value);
   }
 
-  showEditField(name: string) {
+  showEditField(index: number) {
     this.tableSettings.forEach(data => {
-      if (data.header === name) {
+      if (data.index === index) {
         data.showEditField = true;
       }
       else {
@@ -76,7 +83,7 @@ export class AnsweredTableComponent {
     })
   }
   // upate field 
-  async updatedField(event: any) {
+  async updatedField(event: headerDataModel) {
     if (event.value !== '') {
       this.tableSettings.forEach(data => {
         data.showEditField = false;

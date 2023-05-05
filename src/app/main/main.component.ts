@@ -41,6 +41,7 @@ export class MainComponent implements OnInit {
   organizationModalData = organizationModalData
   organizationDoneModalData = organizationDoneModalData
   notifiactionData = notifiactionData;
+  showPreference: boolean = false;
 
   constructor(
     public authService: AuthService,
@@ -70,6 +71,9 @@ export class MainComponent implements OnInit {
           this.sidebarData = data;
         })
         this.authService.user.next(this.authService.getLoggedUser());
+        const response = this.CommonService.getIsAdminOrAgent();
+        const isOwner = this.CommonService.getLoggedInAgentData().is_organization_owner;
+        (response === true && isOwner === true) ? this.showPreference = true : this.showPreference = false;
       }
     })
     this.SharedServices.switchOrganizationDoneDialog.subscribe((data: boolean) => {
@@ -83,6 +87,7 @@ export class MainComponent implements OnInit {
     this.SharedServices.reloadProjects.subscribe((data: boolean) => {
       if (data) {
         this.getOrganizationService.getOrganization(this.CommonService.getEndpointsParamLocal().token);
+
       }
     })
     // chat unread indication

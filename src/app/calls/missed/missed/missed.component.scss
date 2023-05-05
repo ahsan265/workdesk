@@ -119,9 +119,14 @@
   width: max-content !important;
 }
 
-::ng-deep .calendarLocationLanguage .md-drppicker .ranges {
-  height: 371px;
-}
+// ::ng-deep .md-drppicker table {
+//   border: none !important;
+//   box-shadow: none !important;
+// }
+
+// ::ng-deep .calendarLocationLanguage .md-drppicker .ranges {
+//   height: 407px;
+// }
 
 .calendarSelectMenu {
   height: 34px;

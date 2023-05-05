@@ -9,7 +9,7 @@
       [showPortal]="true" (noLoggedUsers)="onNoLoggedUsers($event)" [oauthUrl]="oauthUrl" [slideOpened]="slideOpened"
       [redirectUri]="redirectUri" [pageTitle]="pageTitle" [portalData]="websites"
       (onLoggedUser)="onGetLoggedUser($event)" (isOnlineButtonClicked)="setOnlineStatus($event)"
-      [showOnlineButton]="true" [currentUserStatus]="this.statusOnline" [showPreferences]="true"
+      [showOnlineButton]="true" [currentUserStatus]="this.statusOnline" [showPreferences]="showPreference"
       [preferenceUrl]="'preference'" [addonData]="addOns" (userSwitched)="userSwitched($event)"
       (switchOrganization)="openOgranizationSwitcher($event)" [showOrganization]="true"
       [organizationData]="organizationData" [notifiactionData]="notifiactionData" [showNotification]="true">

@@ -5,6 +5,7 @@ import { IncomingCallModelTable } from 'src/app/models/callModel';
 import { CommonService } from 'src/app/workdeskServices/commonEndpoint/common.service';
 import { GigaaaApiService } from 'src/app/workdeskServices/gigaaaApiService/gigaaa-api-service.service';
 import { incomingTableSetting } from '../incomingData';
+import { headerDataModel } from 'src/app/models/user';
 
 @Component({
   selector: 'app-incoming-table',
@@ -27,9 +28,15 @@ export class IcomingTableComponent {
     this.GigaaaApiService.tableCustomizationList(this.CommonService.getEndpointsParamLocal().token, this.CommonService.getEndpointsParamLocal().organization, this.CommonService.getEndpointsParamLocal().project, 'incoming').then((data: tableSettingsDataModel[]) => {
       if (data.length !== 0) {
         this.tableSettings = this.CommonService.updateColumnTable(data, incomingTableSetting);
+        this.tableSettings.forEach(element => {
+          element.canEdit = this.CommonService.getIsAdminOrAgent() && this.CommonService.getLoggedInAgentData().is_organization_owner;;
+        })
       }
       else {
         this.tableSettings = incomingTableSetting;
+        this.tableSettings.forEach(element => {
+          element.canEdit = this.CommonService.getIsAdminOrAgent() && this.CommonService.getLoggedInAgentData().is_organization_owner;;
+        })
       }
     })
   }
@@ -48,9 +55,9 @@ export class IcomingTableComponent {
     this.ChangeDetectorRef.markForCheck();
     return this.CommonService.getElapsedTime(entry);
   }
-  showEditField(name: string) {
+  showEditField(index: number) {
     this.tableSettings.forEach(data => {
-      if (data.header === name) {
+      if (data.index === index) {
         data.showEditField = true;
       }
       else {
@@ -59,7 +66,7 @@ export class IcomingTableComponent {
     })
   }
   // upate field 
-  async updatedField(event: any) {
+  async updatedField(event: headerDataModel) {
     if (event.value !== '') {
       this.tableSettings.forEach(data => {
         data.showEditField = false;

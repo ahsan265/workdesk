@@ -76,171 +76,179 @@ const buttonData: any = {
   active: true
 };
 
-const agentTableSetting: TableSettingsModel[] = 
+const agentTableSetting: TableSettingsModel[] =
   [
     {
       index: 0,
       header: 'Agent',
+      defaultValue: 'Agent',
       width: 30,
-      showEditField: false
-
+      showEditField: false,
+      canEdit: false
     },
     {
       index: 1,
       header: 'Full Name',
+      defaultValue: 'Full Name',
       width: 20,
-      showEditField: false
-
+      showEditField: false,
+      canEdit: false
     },
     {
       index: 2,
       header: 'Language',
+      defaultValue: 'Language',
       width: 20,
-      showEditField: false
+      showEditField: false,
+      canEdit: false
     },
     {
       index: 3,
       header: 'Role',
+      defaultValue: 'Role',
       width: 10,
-      showEditField: false
+      showEditField: false,
+      canEdit: false
     },
     {
       index: 4,
       header: '',
+      defaultValue: '',
       width: 20,
-      showEditField: false
+      showEditField: false,
+      canEdit: false
     }
   ];
 
 
-  const agents: any[] = [
-    {
-      id: '1',
-      agent: 'srdjanmarinkovic31@gmail.com',
-      name: 'Srdjan Marinkovic',
-      role: 'Admin',
-      routeUrl: ['agents', 'settings', '1'],
-      checked: false,
-      isDropdown: false,
-      language_id: [
-        { id: 56, image: '/assets/images/Flags/english.svg' },
-        { id: 56, image: '/assets/images/Flags/english.svg' }
-      ],
-      editIcon: true,
-      canEdit: true,
-      invitation_accepted: true,
-      checkmark: true,
-      userItem: {
-        text: 'video',
-        image: '../../../assets/images/callInterface/user.png',
-        color: '#3EDE26'
-      }
-    },
-    {
-      id: '2',
-      agent: 'nikola@gmail.com',
-      name: 'Nikola Narancic',
-      role: 'Admin',
-      routeUrl: ['agents', 'settings', '2'],
-      checked: false,
-      isDropdown: false,
-      language_id: [
-        { id: 56, image: '/assets/images/Flags/english.svg' },
-        { id: 56, image: '/assets/images/Flags/english.svg' }
-      ],
-      editIcon: true,
-      canEdit: true,
-      invitation_accepted: true,
-      checkmark: false,
-      userItem: {
-        text: 'video',
-        image: '../../../assets/images/callInterface/user.png',
-        color: '#FF155A'
-      }
-    },
-    {
-      id: '3',
-      agent: 'alex@gmail.com',
-      name: 'Alex Stefanovic',
-      role: 'Admin',
-      routeUrl: ['agents', 'settings', '3'],
-      checked: false,
-      isDropdown: false,
-      language_id: [
-        { id: 56, image: '/assets/images/Flags/english.svg' },
-        { id: 56, image: '/assets/images/Flags/english.svg' }
-      ],
-      editIcon: true,
-      canEdit: true,
-      invitation_accepted: true,
-      checkmark: false,
-      userItem: {
-        text: 'video',
-        image: '../../../assets/images/callInterface/user.png',
-        color: '#FF155A'
-      }
-    },
-    {
-      id: '4',
-      agent: 'muhamed@gmail.com',
-      name: 'Muhamed Ahsan',
-      role: 'Admin',
-      routeUrl: ['agents', 'settings', '4'],
-      checked: false,
-      isDropdown: false,
-      language_id: [
-        { id: 56, image: '/assets/images/Flags/english.svg' },
-        { id: 56, image: '/assets/images/Flags/english.svg' }
-      ],
-      editIcon: true,
-      canEdit: true,
-      invitation_accepted: false,
-      checkmark: false,
-      userItem: {
-        text: 'video',
-        image: '../../../assets/images/callInterface/user.png',
-        color: '#FF155A'
-      }
+const agents: any[] = [
+  {
+    id: '1',
+    agent: 'srdjanmarinkovic31@gmail.com',
+    name: 'Srdjan Marinkovic',
+    role: 'Admin',
+    routeUrl: ['agents', 'settings', '1'],
+    checked: false,
+    isDropdown: false,
+    language_id: [
+      { id: 56, image: '/assets/images/Flags/english.svg' },
+      { id: 56, image: '/assets/images/Flags/english.svg' }
+    ],
+    editIcon: true,
+    canEdit: true,
+    invitation_accepted: true,
+    checkmark: true,
+    userItem: {
+      text: 'video',
+      image: '../../../assets/images/callInterface/user.png',
+      color: '#3EDE26'
     }
-  ];
-  const noAgentTobaleData = {
-    display: 'block',
-    width: '100%',
-    height: '160px',
-    background: '#fafafd',
-    border: '1px solid #e3e3eb',
-    'border-top': 'none',
-    margin: '0 -1px',
-    'margin-top': '1px'
-  };
-  const agentModelData = {
-    title: 'Invite Human Agents',
-    image: '',
-    onlyOneButton: true,
-    buttonOne: true,
-    buttonTwo: false,
-    width: '589px',
-    height: '400px'
-  };
-  const agentIndicatorData = {
-    hightlightText: 0 + '/' + 0,
-    text: 'Agents available',
-    icon: '../assets/images/components/agent_free.svg',
-    backgroundColor: '#FEFEFF',
-    borderColor: '1px solid #E1E1EA',
-    textColor: '#737D8D',
-    isAgent: true
-  };
-  export {
-    languauges,
-    buttonData,
-    searchInputData,
-    oneSelect,
-    agentTableSetting,
-    agents,
-    selectedAgentType,
-    agentModelData,
-    agentIndicatorData,
-    noAgentTobaleData,
-    onlineStatuses
-  };
+  },
+  {
+    id: '2',
+    agent: 'nikola@gmail.com',
+    name: 'Nikola Narancic',
+    role: 'Admin',
+    routeUrl: ['agents', 'settings', '2'],
+    checked: false,
+    isDropdown: false,
+    language_id: [
+      { id: 56, image: '/assets/images/Flags/english.svg' },
+      { id: 56, image: '/assets/images/Flags/english.svg' }
+    ],
+    editIcon: true,
+    canEdit: true,
+    invitation_accepted: true,
+    checkmark: false,
+    userItem: {
+      text: 'video',
+      image: '../../../assets/images/callInterface/user.png',
+      color: '#FF155A'
+    }
+  },
+  {
+    id: '3',
+    agent: 'alex@gmail.com',
+    name: 'Alex Stefanovic',
+    role: 'Admin',
+    routeUrl: ['agents', 'settings', '3'],
+    checked: false,
+    isDropdown: false,
+    language_id: [
+      { id: 56, image: '/assets/images/Flags/english.svg' },
+      { id: 56, image: '/assets/images/Flags/english.svg' }
+    ],
+    editIcon: true,
+    canEdit: true,
+    invitation_accepted: true,
+    checkmark: false,
+    userItem: {
+      text: 'video',
+      image: '../../../assets/images/callInterface/user.png',
+      color: '#FF155A'
+    }
+  },
+  {
+    id: '4',
+    agent: 'muhamed@gmail.com',
+    name: 'Muhamed Ahsan',
+    role: 'Admin',
+    routeUrl: ['agents', 'settings', '4'],
+    checked: false,
+    isDropdown: false,
+    language_id: [
+      { id: 56, image: '/assets/images/Flags/english.svg' },
+      { id: 56, image: '/assets/images/Flags/english.svg' }
+    ],
+    editIcon: true,
+    canEdit: true,
+    invitation_accepted: false,
+    checkmark: false,
+    userItem: {
+      text: 'video',
+      image: '../../../assets/images/callInterface/user.png',
+      color: '#FF155A'
+    }
+  }
+];
+const noAgentTobaleData = {
+  display: 'block',
+  width: '100%',
+  height: '160px',
+  background: '#fafafd',
+  border: '1px solid #e3e3eb',
+  'border-top': 'none',
+  margin: '0 -1px',
+  'margin-top': '1px'
+};
+const agentModelData = {
+  title: 'Invite Human Agents',
+  image: '',
+  onlyOneButton: true,
+  buttonOne: true,
+  buttonTwo: false,
+  width: '589px',
+  height: '400px'
+};
+const agentIndicatorData = {
+  hightlightText: 0 + '/' + 0,
+  text: '',
+  icon: '../assets/images/components/agent_free.svg',
+  backgroundColor: '#FEFEFF',
+  borderColor: '1px solid #E1E1EA',
+  textColor: '#737D8D',
+  isAgent: true
+};
+export {
+  languauges,
+  buttonData,
+  searchInputData,
+  oneSelect,
+  agentTableSetting,
+  agents,
+  selectedAgentType,
+  agentModelData,
+  agentIndicatorData,
+  noAgentTobaleData,
+  onlineStatuses
+};

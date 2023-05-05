@@ -13,7 +13,7 @@ export class ChatConsoleComponent implements OnInit, AfterViewChecked {
   @ViewChild('showScrollButton') showScrollButton!: ChatWrapperComponent;
   @ViewChild('textAreaComponent') textAreaComponent!: ChattextAreaComponent;
   isReadMessage: boolean = false;
-  showScrollArrow: boolean = false;
+  showScrollArrow!: any;
   constructor(private ChatSocketService: ChatSocketService) {
     this.ChatSocketService.isSocketOpen == 0 ? this.ChatSocketService.startChat() : '';
     this.ChatSocketService.chatMessageDataSelected.asObservable().subscribe(data => {
@@ -31,12 +31,12 @@ export class ChatConsoleComponent implements OnInit, AfterViewChecked {
   }
 
   ngOnInit() {
-     this.scrollToBottom();
+    this.scrollToBottom();
   }
 
   ngAfterViewChecked() {
     if (this.isReadMessage) {
-     this.scrollToBottom();
+      this.scrollToBottom();
       this.isReadMessage = false;
     }
   }

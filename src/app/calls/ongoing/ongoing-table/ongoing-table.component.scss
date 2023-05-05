@@ -40,40 +40,36 @@ table {
     overflow: hidden;
 }
 
-table thead tr th div {
-    display: inline-flex;
+table thead tr th div.editHeader {
     transition: 0.4s;
-    margin-left: 12px;
-    width: 28px;
-    height: 27px;
-    justify-content: center;
-    visibility: hidden;
     align-items: center;
-    vertical-align: inherit;
+    height: 32px;
+    display: inline-flex;
+    width: calc(100% - 20px);
 }
+
 
 table thead tr th div img {
     width: 14px;
     height: 17px;
 }
 
+
 table thead tr th:hover div {
-    justify-content: center;
     align-items: center;
     visibility: visible;
-    display: inline-flex;
     cursor: pointer;
-
 }
 
-table thead tr th div:hover {
 
+.editHeader:hover {
     background: #D8D8F5;
+    padding-left: 12px;
+    background: #F0F0F5;
     border-radius: 4px;
-    display: inline-flex;
-    justify-content: center;
-    align-items: center;
+    width: fit-content;
 }
+
 
 td:first-child {
     text-align: left;

@@ -3,10 +3,10 @@
         <thead>
             <tr>
                 <th [style.width.%]="head.width" *ngFor="let head of this.tableSettings; ">
-                    <span *ngIf="!head.showEditField">{{head.header}}</span>
-                    <div *ngIf="!head.showEditField" (click)="showEditField(head.header)">
-                        <img src="../../../assets/images/pencil.svg" alt="">
-                    </div>
+                    <div *ngIf="!head.showEditField  && head.canEdit"
+                        [ngClass]="!head.showEditField  && head.canEdit?'editHeader':''"
+                        (click)="showEditField(head.index)">
+                        {{head.header}}</div>
                     <app-update-column-field [headerValue]="head" [openEditFiedl]="head.showEditField"
                         (updatedField)="updatedField($event)"></app-update-column-field>
                 </th>

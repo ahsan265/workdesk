@@ -9,49 +9,60 @@ const missedTableSetting: TableSettingsModel[] = [
   {
     index: 0,
     header: 'User',
+    defaultValue: 'User',
     width: 15,
-    showEditField: false
+    showEditField: false,
+    canEdit: false
   },
   {
     index: 1,
     header: 'User id',
+    defaultValue: 'User id',
     width: 10,
-    showEditField: false
-
+    showEditField: false,
+    canEdit: false
   },
   {
     index: 2,
     header: 'User Info',
+    defaultValue: 'User Info',
     width: 15,
-    showEditField: false
-
+    showEditField: false,
+    canEdit: false
   },
   {
     index: 3,
     header: 'Request Type',
+    defaultValue: 'Request Type',
     width: 15,
-    showEditField: false
-
+    showEditField: false,
+    canEdit: false
   },
   {
     index: 4,
     header: 'Requested at',
+    defaultValue: 'Requested at',
     width: 12,
-    showEditField: false
+    showEditField: false,
+    canEdit: false
 
   },
   {
-    index: 4,
+    index: 5,
     header: 'Wait Time',
+    defaultValue: 'Wait Time',
     width: 15,
-    showEditField: false
+    showEditField: false,
+    canEdit: false
 
   },
   {
-    index: 4,
+    index: 6,
     header: 'Reason',
+    defaultValue: 'Reason',
     width: 13,
-    showEditField: false
+    showEditField: false,
+    canEdit: false
   }
 ];
 
@@ -59,40 +70,51 @@ const answeredTablaSetting: TableSettingsModel[] = [
   {
     index: 0,
     header: 'User',
+    defaultValue: 'User',
     width: 20,
-    showEditField: false
+    showEditField: false,
+    canEdit: false
   },
   {
     index: 1,
     header: 'User id',
+    defaultValue: 'User id',
     width: 15,
-    showEditField: false
+    showEditField: false,
+    canEdit: false
 
   },
   {
     index: 2,
     header: 'User Info',
+    defaultValue: 'User Info',
     width: 15,
-    showEditField: false
-
+    showEditField: false,
+    canEdit: false
   },
   {
     index: 3,
     header: 'Request Type',
+    defaultValue: 'Request Type',
     width: 12,
-    showEditField: false
+    showEditField: false,
+    canEdit: false
   },
   {
     index: 4,
     header: 'Requested At',
+    defaultValue: 'Requested At',
     width: 15,
-    showEditField: false
+    showEditField: false,
+    canEdit: false
   },
   {
-    index: 4,
+    index: 5,
     header: 'Agent',
+    defaultValue: 'Agent',
     width: 23,
-    showEditField: false
+    showEditField: false,
+    canEdit: false
   }
 ];
 

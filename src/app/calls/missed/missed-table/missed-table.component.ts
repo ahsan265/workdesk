@@ -5,6 +5,7 @@ import { MissedCallModelTable, tableHeading } from 'src/app/models/callModel';
 import { CommonService } from 'src/app/workdeskServices/commonEndpoint/common.service';
 import { GigaaaApiService } from 'src/app/workdeskServices/gigaaaApiService/gigaaa-api-service.service';
 import { missedTableSetting } from '../missedData';
+import { headerDataModel } from 'src/app/models/user';
 
 @Component({
   selector: 'app-missed-table',
@@ -13,7 +14,7 @@ import { missedTableSetting } from '../missedData';
 })
 export class MissedTableComponent {
   showDropdown: boolean = false
-  @Input() tableSettings=missedTableSetting;
+  @Input() tableSettings = missedTableSetting;
   @Input() misseedCallData: MissedCallModelTable[] = [];
   @Input() showPagination: boolean = false;
   @Input() pagination: paginationModel = { currentPage: 1, itemsPerPage: 5, totalItems: 50, totolPages: 12 };
@@ -32,9 +33,15 @@ export class MissedTableComponent {
     this.GigaaaApiService.tableCustomizationList(this.CommonService.getEndpointsParamLocal().token, this.CommonService.getEndpointsParamLocal().organization, this.CommonService.getEndpointsParamLocal().project, 'missed').then((data: tableSettingsDataModel[]) => {
       if (data.length !== 0) {
         this.tableSettings = this.CommonService.updateColumnTable(data, missedTableSetting);
+        this.tableSettings.forEach(element => {
+          element.canEdit = this.CommonService.getIsAdminOrAgent() && this.CommonService.getLoggedInAgentData().is_organization_owner;;
+        })
       }
       else {
         this.tableSettings = missedTableSetting;
+        this.tableSettings.forEach(element => {
+          element.canEdit = this.CommonService.getIsAdminOrAgent() && this.CommonService.getLoggedInAgentData().is_organization_owner;;
+        })
       }
     })
   }
@@ -65,9 +72,9 @@ export class MissedTableComponent {
     this.pagination.itemsPerPage = event.value;
     this.itemPerPage.emit(event.value);
   }
-  showEditField(name: string) {
+  showEditField(index: number) {
     this.tableSettings.forEach(data => {
-      if (data.header === name) {
+      if (data.index === index) {
         data.showEditField = true;
       }
       else {
@@ -76,7 +83,7 @@ export class MissedTableComponent {
     })
   }
   // upate field 
-  async updatedField(event: any) {
+  async updatedField(event: headerDataModel) {
     if (event.value !== '') {
       this.tableSettings.forEach(data => {
         data.showEditField = false;
