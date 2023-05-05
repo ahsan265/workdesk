@@ -7,6 +7,7 @@ import { CommonService } from 'src/app/workdeskServices/commonEndpoint/common.se
 import { GigaaaApiService } from 'src/app/workdeskServices/gigaaaApiService/gigaaa-api-service.service';
 import { ongoingTableSetting } from '../ongoingData';
 import { headerDataModel } from 'src/app/models/user';
+import { SharedServices } from 'src/app/workdeskServices/sharedResourcesService/shared-resource-service.service';
 
 @Component({
   selector: 'app-ongoing-table',
@@ -20,7 +21,7 @@ export class OngoingTableComponent implements OnInit {
   @Input() ongoingCallData: OngoingCallModelTable[] = [];
   @Output() callUuid = new EventEmitter<string>();
 
-  constructor(private ChangeDetectorRef: ChangeDetectorRef,
+  constructor(private SharedServices: SharedServices, private ChangeDetectorRef: ChangeDetectorRef,
     private GigaaaApiService: GigaaaApiService,
     private CommonService: CommonService) {
     interval(1000).subscribe(() => {
@@ -37,6 +38,13 @@ export class OngoingTableComponent implements OnInit {
         this.tableSettings = ongoingTableSetting;
         this.tableSettings.forEach(element => {
           element.canEdit = this.CommonService.getIsAdminOrAgent() && this.CommonService.getLoggedInAgentData().is_organization_owner;;
+        })
+      }
+    })
+    this.SharedServices.LoadcommonEpsubject.subscribe(data => {
+      if (data === 1) {
+        this.tableSettings.forEach(element => {
+          element.canEdit = this.CommonService.getIsAdminOrAgent() && this.CommonService.getLoggedInAgentData().is_organization_owner;
         })
       }
     })
@@ -59,14 +67,16 @@ export class OngoingTableComponent implements OnInit {
   }
 
   showEditField(index: number) {
-    this.tableSettings.forEach(data => {
-      if (data.index === index) {
-        data.showEditField = true;
-      }
-      else {
-        data.showEditField = false;
-      }
-    })
+    if (this.CommonService.getIsAdminOrAgent() && this.CommonService.getLoggedInAgentData().is_organization_owner) {
+      this.tableSettings.forEach(data => {
+        if (data.index === index) {
+          data.showEditField = true;
+        }
+        else {
+          data.showEditField = false;
+        }
+      })
+    }
   }
   // upate field 
   async updatedField(event: headerDataModel) {

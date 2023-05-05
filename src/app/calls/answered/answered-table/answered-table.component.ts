@@ -6,6 +6,8 @@ import { CommonService } from 'src/app/workdeskServices/commonEndpoint/common.se
 import { GigaaaApiService } from 'src/app/workdeskServices/gigaaaApiService/gigaaa-api-service.service';
 import { answeredTablaSetting } from '../../missed/missedData';
 import { headerDataModel } from 'src/app/models/user';
+import { SharedServices } from 'src/app/workdeskServices/sharedResourcesService/shared-resource-service.service';
+import { AgentSocketService } from 'src/app/workdeskSockets/agentSocket/agent-socket.service';
 
 @Component({
   selector: 'app-answered-table',
@@ -28,17 +30,24 @@ export class AnsweredTableComponent {
       this.showDropdown = false;
     }
   }
-  constructor(private GigaaaApiService: GigaaaApiService, private CommonService: CommonService) {
+  constructor(private AgentSocketService: AgentSocketService, private GigaaaApiService: GigaaaApiService, private CommonService: CommonService) {
     this.GigaaaApiService.tableCustomizationList(this.CommonService.getEndpointsParamLocal().token, this.CommonService.getEndpointsParamLocal().organization, this.CommonService.getEndpointsParamLocal().project, 'answered').then((data: tableSettingsDataModel[]) => {
       if (data.length !== 0) {
         this.tableSettings = this.CommonService.updateColumnTable(data, answeredTablaSetting);
-        this.tableSettings.forEach(element => {
+        answeredTablaSetting.forEach(element => {
           element.canEdit = this.CommonService.getIsAdminOrAgent() && this.CommonService.getLoggedInAgentData().is_organization_owner;
         })
       }
       else {
         this.tableSettings = answeredTablaSetting;
-        this.tableSettings.forEach(element => {
+        answeredTablaSetting.forEach(element => {
+          element.canEdit = this.CommonService.getIsAdminOrAgent() && this.CommonService.getLoggedInAgentData().is_organization_owner;
+        })
+      }
+    })
+    this.AgentSocketService.loggedAgentData.subscribe(data => {
+      if (data) {
+        answeredTablaSetting.forEach(element => {
           element.canEdit = this.CommonService.getIsAdminOrAgent() && this.CommonService.getLoggedInAgentData().is_organization_owner;
         })
       }
@@ -73,14 +82,17 @@ export class AnsweredTableComponent {
   }
 
   showEditField(index: number) {
-    this.tableSettings.forEach(data => {
-      if (data.index === index) {
-        data.showEditField = true;
-      }
-      else {
-        data.showEditField = false;
-      }
-    })
+    if (this.CommonService.getIsAdminOrAgent() && this.CommonService.getLoggedInAgentData().is_organization_owner) {
+
+      this.tableSettings.forEach(data => {
+        if (data.index === index) {
+          data.showEditField = true;
+        }
+        else {
+          data.showEditField = false;
+        }
+      })
+    }
   }
   // upate field 
   async updatedField(event: headerDataModel) {
