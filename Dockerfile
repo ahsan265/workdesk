@@ -4,8 +4,8 @@ WORKDIR /usr/src/app
 
 RUN npm i @angular/cli -g
 
-RUN npm config set @gigaaa:registry https://gitlab.gigaaa.link/api/v4/projects/59/packages/npm/
-RUN npm config set -- '//gitlab.gigaaa.link/api/v4/projects/59/packages/npm/:_authToken' "8Yze-d9mir9xZ827zdHo"
+RUN npm config set @gigaaa:registry https://gitlab.exafy.io/api/v4/projects/59/packages/npm/
+RUN npm config set -- '//gitlab.exafy.io/api/v4/projects/59/packages/npm/:_authToken' "glpat-SPS2fqh91xu6cBM9EAPE"
 
 COPY . .
 
