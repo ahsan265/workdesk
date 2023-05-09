@@ -1,5 +1,6 @@
 import { OneSelect } from "src/app/models/oneSelect";
-import { tickerModesl } from "src/app/models/preferenceModel";
+import { tickerModel } from "src/app/models/preferenceModel";
+import { RequestTimeModel } from "src/app/models/settings";
 import { SwitchButton } from "src/app/models/switchButton";
 
 const languauges: OneSelect[] =
@@ -13,67 +14,75 @@ const allLanguageData: SwitchButton = {
   buttonChecked: false
 };
 
-const waitTimeData: tickerModesl = {
+const waitTimeData: tickerModel = {
+  name: 'call',
   mainHeading: 'Wait time',
   text: 'Set how long it takes for the Agent to respond to a request.',
   tickers: [{
     header: 'min',
-    value: "0",
-    min: "0",
-    max: "60",
+    value: 0,
+    min: 0,
+    max: 60,
   },
   {
     header: 'sec',
-    value: "30",
-    min: "30",
-    max: "60",
+    value: 30,
+    min: 0,
+    max: 60,
   }]
 }
 
-const userWaitTimeData: tickerModesl = {
+const userWaitTimeData: tickerModel = {
+  name: 'user',
   mainHeading: 'User wait time',
   text: 'Set how long Agent will wait for User in call.',
   tickers: [{
     header: 'min',
-    value: "0",
-    min: "0",
-    max: "60",
+    value: 0,
+    min: 0,
+    max: 60,
   },
   {
     header: 'sec',
-    value: "15",
-    min: "15",
-    max: "60",
+    value: 15,
+    min: 0,
+    max: 60,
   }]
 }
 
-const chatWaitTimeData: tickerModesl = {
+const chatWaitTimeData: tickerModel = {
+  name: 'chat',
   mainHeading: 'Chat wait time',
   text: "Set how long chat will remain inactive before it's ended automatically.",
   tickers: [{
     header: 'h',
-    value: "0",
-    min: "0",
-    max: "24",
+    value: 0,
+    min: 0,
+    max: 23,
   }, {
     header: 'min',
-    value: "0",
-    min: "0",
-    max: "60",
+    value: 0,
+    min: 0,
+    max: 60,
   },
   {
     header: 'sec',
-    value: "15",
-    min: "15",
-    max: "60",
+    value: 0,
+    min: 0,
+    max: 60,
   }]
 }
 
+const DefaultTimeDataResponse: RequestTimeModel = {
+  call_wait_time: 15,
+  chat_wait_time: 15,
+  user_wait_time: 15
+}
 export {
   languauges,
   allLanguageData,
   userWaitTimeData,
   waitTimeData,
-  chatWaitTimeData
-
+  chatWaitTimeData,
+  DefaultTimeDataResponse
 }

@@ -1036,4 +1036,61 @@ export class GigaaaApiService {
       });
   }
 
+  // get default requests time 
+  public async getDefaultRequestTime(
+    token: string,
+    organizationId: string,
+    projectId: string,
+  ): Promise<any> {
+    const httpOptions: any = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        Accept: 'application/json',
+        Authorization: `Bearer ${token}`
+      })
+    };
+    return await this.http
+      .get(
+        this.workdeskurl_cs +
+        '/private/organization/' + organizationId + '/project/' + projectId + '/settings',
+        httpOptions
+      )
+      .toPromise()
+      .catch((err) => {
+        throw err;
+      });
+  }
+  // set Request 
+  public async setDefaultRequestTime(
+    token: string,
+    organizationId: string,
+    projectId: string,
+    call_wait_time: number,
+    user_wait_time: number,
+    chat_wait_time: number
+  ): Promise<any> {
+    const httpOptions: any = {
+      method: 'POST',
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        Accept: 'application/json',
+        Authorization: `Bearer ${token}`
+      })
+    };
+    return await this.http
+      .post(
+        this.workdeskurl_cs +
+        '/private/organization/' + organizationId + '/project/' + projectId + '/settings',
+        {
+          call_wait_time: call_wait_time,
+          user_wait_time: user_wait_time,
+          chat_wait_time: chat_wait_time
+        },
+        httpOptions
+      )
+      .toPromise()
+      .catch((err) => {
+        throw err;
+      });
+  }
 }

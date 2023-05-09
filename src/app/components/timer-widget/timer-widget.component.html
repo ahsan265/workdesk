@@ -6,7 +6,8 @@
 </div>
 <div class="timerSetting">
     <div class="tickerWrapper" *ngFor="let ticker of timerwWidgetData.tickers; let i = index;">
-        <input type="number" class="sec" [value]="ticker.value" [min]="ticker.min" [max]="ticker.max">
+        <input (change)="getValue($event,ticker)" (keydown)="keyUp($event)" type="number" class="sec"
+            [value]="ticker.value" [min]="ticker.min" [max]="ticker.max">
         <div class="timerText">
             {{ticker.header}}
         </div>

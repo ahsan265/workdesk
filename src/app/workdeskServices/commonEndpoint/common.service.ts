@@ -16,6 +16,7 @@ import { GigaaaApiService } from '../gigaaaApiService/gigaaa-api-service.service
 import { MessageService } from '../messageService/message.service';
 import { FlagsData } from '../WorkdeskServicesData';
 import { tableSettings } from 'src/app/models/callModel';
+import { timer } from 'src/app/models/preferenceModel';
 
 @Injectable({
   providedIn: 'root'
@@ -494,4 +495,19 @@ export class CommonService {
     seconds = totalSeconds;
     return 0 + ':' + seconds;
   }
+
+  // convert second into minute , hours, seconds
+  public toHoursAndMinutes(totalSeconds: number): timer {
+    const totalMinutes = Math.floor(totalSeconds / 60);
+    const seconds = totalSeconds % 60;
+    const hours = Math.floor(totalMinutes / 60);
+    const minutes = totalMinutes % 60;
+    return { h: hours, min: minutes, sec: seconds };
+  }
+  toSeconds(hours: number, minutes: number, seconds: number) {
+    return hours * 3600 + minutes * 60 + seconds;
+  }
+
+
+
 }

@@ -3,9 +3,12 @@
         <div class="heading settings">
             Settings
         </div>
-        <app-timer-widget [timerwWidgetData]="waitTimeData"></app-timer-widget>
-        <app-timer-widget [timerwWidgetData]="userWaitTimeData"></app-timer-widget>
-        <app-timer-widget [timerwWidgetData]="chatWaitTimeData"></app-timer-widget>
+        <app-timer-widget [timerwWidgetData]="waitTimeData"
+            (selectedWidgetOutput)="selectedWidgetOutput($event)"></app-timer-widget>
+        <app-timer-widget [timerwWidgetData]="userWaitTimeData"
+            (selectedWidgetOutput)="selectedWidgetOutput($event)"></app-timer-widget>
+        <app-timer-widget [timerwWidgetData]="chatWaitTimeData"
+            (selectedWidgetOutput)="selectedWidgetOutput($event)"></app-timer-widget>
         <div class="smallHeading settings">
             Language
         </div>
@@ -52,7 +55,7 @@
 
         <div class="actionPanel">
             <button class="backButton" (click)="goBack()">Back</button>
-            <Button class="saveButton" (click)="goBack()">Save</Button>
+            <Button class="saveButton" (click)="saveData()">Save</Button>
         </div>
 
     </div>
