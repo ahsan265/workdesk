@@ -42,8 +42,9 @@ export class MainComponent implements OnInit {
   showSwitchDoneOganization: boolean = false;
   organizationModalData = organizationModalData
   organizationDoneModalData = organizationDoneModalData
-  notifiactionData: NotificationComponentModel[] = [];
+  notificationData: NotificationComponentModel[] = [];
   showPreference: boolean = false;
+  isUnreadNotification: boolean = false;
 
   constructor(
     public authService: AuthService,
@@ -73,7 +74,10 @@ export class MainComponent implements OnInit {
         await this.getOrganizationService.getProjectList(this.getOrganizationService.project).then(data => {
           this.sidebarData = data;
         })
-        this.notifiactionData = await this.CommonService.getAllNotification();
+        await this.CommonService.getAllNotification().then(data => {
+          this.notificationData = data;
+          this.isUnreadNotification = this.CommonService.checkIsUnread(data);
+        })
         this.authService.user.next(this.authService.getLoggedUser());
         const response = this.CommonService.getIsAdminOrAgent();
         const isOwner = this.CommonService.getLoggedInAgentData().is_organization_owner;
@@ -90,7 +94,9 @@ export class MainComponent implements OnInit {
         icon: this.CommonService.getNotificationIcon(data.type),
         id: data.data.id
       }
-      this.notifiactionData.push(newNotification);
+      this.notificationData.push(newNotification);
+      this.isUnreadNotification = this.CommonService.checkIsUnread(this.notificationData);
+
     })
     this.SharedServices.switchOrganizationDoneDialog.subscribe((data: boolean) => {
       setTimeout(() => {
@@ -189,19 +195,23 @@ export class MainComponent implements OnInit {
   }
   async clearNotificationByOne(event: NotificationComponentModel) {
     await this.CommonService.deleteNotificationOne([event.id])
-    const selectedObject = this.notifiactionData.findIndex(data => {
+    const selectedObject = this.notificationData.findIndex(data => {
       data.id === event.id;
     })
-    this.notifiactionData.splice(selectedObject, 1);
+    this.notificationData.splice(selectedObject, 1);
   }
   async clearAllNotificationByAll(event: boolean) {
-    if (event && this.notifiactionData.length !== 0) {
+    if (event && this.notificationData.length !== 0) {
       let id: number[] = []
-      this.notifiactionData.forEach(data => {
+      this.notificationData.forEach(data => {
         id.push(data.id);
       })
       await this.CommonService.deleteNotificationOne(id)
-      this.notifiactionData.length = 0;
+      this.notificationData.length = 0;
     }
+  }
+  // to read Notification
+  selectedNotification(event: NotificationComponentModel) {
+    this.CommonService.setUnreadTOread(event.id);
   }
 }

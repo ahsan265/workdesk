@@ -13,6 +13,8 @@ export class GeneralSocketService {
   ws!: WebSocket;
   protected websocket_url = `${environment.websocket_url}`;
   public NotificationSocketData = new Subject<NotificationModels>();
+  public NotificationReadS = new Subject<NotificationModels>();
+
   isSocketOpen: number = 0;
   constructor(private MessageService: MessageService) {
 
@@ -30,6 +32,14 @@ export class GeneralSocketService {
     // recieve data and send it to required place
     this.ws.onmessage = async (e: any) => {
       let data = JSON.parse(e.data)
+      switch (data.type) {
+        case 'logout':
+          break;
+        case 'notification_is_read':
+          console.log(data)
+          break;
+        default:
+      }
       this.NotificationSocketData.next(data)
     };
     this.ws.onerror = (e: any) => {
