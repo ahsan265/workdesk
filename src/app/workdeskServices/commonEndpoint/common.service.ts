@@ -287,13 +287,30 @@ export class CommonService {
       header: data.data.title,
       date: this.timeNow(data.data.created_at),
       message: data.data.content,
-      isOpen: false,
+      isOpen: data.data.is_read,
       icon: this.getNotificationIcon(data.type),
       id: data.data.id
     }))
     return res;
   }
+  //  set unread to read Notification
 
+  public async setUnreadTOread(id: number) {
+    try {
+      await this.GigaaaApiService.setUnreadToreadNotification(this.getEndpointsParamLocal().token, this.getEndpointsParamLocal().organization,
+        this.getEndpointsParamLocal().project, id)
+    }
+    catch (error: any) {
+      this.MessageService.setErrorMessage(error.error.error);
+    }
+  }
+  // check is any Unread  notification
+  public checkIsUnread(data: NotificationComponentModel[]) {
+    const response = data.filter(element => {
+      return element.isOpen === false;
+    })
+    return response.length !== 0 ? true : false;
+  }
 
   // map notioficat data 
   // public delete notification one by one

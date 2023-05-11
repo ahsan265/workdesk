@@ -1146,4 +1146,33 @@ export class GigaaaApiService {
         throw err;
       });
   }
+
+  // set unread to read notification 
+  public async setUnreadToreadNotification(
+    token: string,
+    organizationId: string,
+    projectId: string,
+    id: number,
+  ): Promise<any> {
+    const httpOptions: any = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        Accept: 'application/json',
+        Authorization: `Bearer ${token}`
+      })
+    };
+    return await this.http
+      .put(
+        this.workdeskurl_cs +
+        '/private/organization/' + organizationId + '/project/' + projectId + '/notification/' + id + '/read ',
+        {
+
+        },
+        httpOptions
+      )
+      .toPromise()
+      .catch((err) => {
+        throw err;
+      });
+  }
 }
