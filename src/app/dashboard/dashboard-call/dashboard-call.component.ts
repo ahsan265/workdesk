@@ -139,7 +139,7 @@ export class DashboardCallComponent {
   }
   getCardsAndChartsData() {
     this.dashboardEps.cardDataSubject.subscribe((data: cardTypeModel) => {
-      if (data.type === 'calls_count') {
+      if (data.type === 'calls_counts') {
         this.incomingCardData = data.data[0];
         this.missedCardData = data.data[1];
         this.answeredCardData = data.data[2];

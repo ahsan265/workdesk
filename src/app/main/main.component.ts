@@ -18,6 +18,8 @@ import { notifiactionData, organizationData, organizationDoneModalData, organiza
 import { OverlayService } from '@gigaaa/gigaaa-components';
 import { SwitchOrganizationComponent } from '../modals/switch-organization/switch-organization.component';
 import { ChatSocketService } from '../workdeskSockets/chatSocket/chat-socket.service';
+import { NotificationComponentModel } from '../models/notification';
+import { GeneralSocketService } from '../workdeskSockets/generalSocket/general-socket.service';
 
 @Component({
   selector: 'app-main',
@@ -40,7 +42,7 @@ export class MainComponent implements OnInit {
   showSwitchDoneOganization: boolean = false;
   organizationModalData = organizationModalData
   organizationDoneModalData = organizationDoneModalData
-  notifiactionData = notifiactionData;
+  notifiactionData: NotificationComponentModel[] = [];
   showPreference: boolean = false;
 
   constructor(
@@ -52,7 +54,8 @@ export class MainComponent implements OnInit {
     private SharedServices: SharedServices,
     private Router: Router,
     private OverlayService: OverlayService,
-    private ChatSocketService: ChatSocketService
+    private ChatSocketService: ChatSocketService,
+    private GeneralSocketService: GeneralSocketService
 
   ) { }
   organizationData = organizationData
@@ -70,11 +73,24 @@ export class MainComponent implements OnInit {
         await this.getOrganizationService.getProjectList(this.getOrganizationService.project).then(data => {
           this.sidebarData = data;
         })
+        this.notifiactionData = await this.CommonService.getAllNotification();
         this.authService.user.next(this.authService.getLoggedUser());
         const response = this.CommonService.getIsAdminOrAgent();
         const isOwner = this.CommonService.getLoggedInAgentData().is_organization_owner;
         (response === true && isOwner === true) ? this.showPreference = true : this.showPreference = false;
+
       }
+    })
+    this.GeneralSocketService.NotificationSocketData.subscribe(data => {
+      const newNotification = {
+        header: data.data.title,
+        date: this.CommonService.timeNow(data.data.created_at),
+        message: data.data.content,
+        isOpen: false,
+        icon: this.CommonService.getNotificationIcon(data.type),
+        id: data.data.id
+      }
+      this.notifiactionData.push(newNotification);
     })
     this.SharedServices.switchOrganizationDoneDialog.subscribe((data: boolean) => {
       setTimeout(() => {
@@ -171,5 +187,21 @@ export class MainComponent implements OnInit {
     }
 
   }
-
+  async clearNotificationByOne(event: NotificationComponentModel) {
+    await this.CommonService.deleteNotificationOne([event.id])
+    const selectedObject = this.notifiactionData.findIndex(data => {
+      data.id === event.id;
+    })
+    this.notifiactionData.splice(selectedObject, 1);
+  }
+  async clearAllNotificationByAll(event: boolean) {
+    if (event && this.notifiactionData.length !== 0) {
+      let id: number[] = []
+      this.notifiactionData.forEach(data => {
+        id.push(data.id);
+      })
+      await this.CommonService.deleteNotificationOne(id)
+      this.notifiactionData.length = 0;
+    }
+  }
 }

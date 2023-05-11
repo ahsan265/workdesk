@@ -5,10 +5,11 @@
     (isSidebarOpen)="isSidebarOpen($event)">
   </gigaaa-sidebar>
   <div class="headerAppWrapper">
-    <gigaaa-header *ngIf="this.authService.isLoggedIn() " [showSettings]="true" [showLanguages]="false"
-      [showPortal]="true" (noLoggedUsers)="onNoLoggedUsers($event)" [oauthUrl]="oauthUrl" [slideOpened]="slideOpened"
-      [redirectUri]="redirectUri" [pageTitle]="pageTitle" [portalData]="websites"
-      (onLoggedUser)="onGetLoggedUser($event)" (isOnlineButtonClicked)="setOnlineStatus($event)"
+    <gigaaa-header (clearNotificationByAll)="clearAllNotificationByAll($event)"
+      (clearNotificationByOne)="clearNotificationByOne($event)" *ngIf="this.authService.isLoggedIn() "
+      [showSettings]="true" [showLanguages]="false" [showPortal]="true" (noLoggedUsers)="onNoLoggedUsers($event)"
+      [oauthUrl]="oauthUrl" [slideOpened]="slideOpened" [redirectUri]="redirectUri" [pageTitle]="pageTitle"
+      [portalData]="websites" (onLoggedUser)="onGetLoggedUser($event)" (isOnlineButtonClicked)="setOnlineStatus($event)"
       [showOnlineButton]="true" [currentUserStatus]="this.statusOnline" [showPreferences]="showPreference"
       [preferenceUrl]="'preference'" [addonData]="addOns" (userSwitched)="userSwitched($event)"
       (switchOrganization)="openOgranizationSwitcher($event)" [showOrganization]="true"

@@ -11,6 +11,7 @@ import { AgentSocketService } from '../agentSocket/agent-socket.service';
 import { AnalyticsSocketService } from '../analyticsSocket/analytics-socket.service';
 import { ChatSocketService } from '../chatSocket/chat-socket.service';
 import { QueueSocketService } from '../queueSocket/queue-socket.service';
+import { GeneralSocketService } from '../generalSocket/general-socket.service';
 
 @Injectable({
   providedIn: 'root'
@@ -23,7 +24,8 @@ export class ConnectionSecurityService {
     private AnalyticsSocketService: AnalyticsSocketService,
     private ChatSocketService: ChatSocketService,
     private CommonService: CommonService,
-    private SharedServices: SharedServices
+    private SharedServices: SharedServices,
+    private GeneralSocketService: GeneralSocketService
   ) { }
   public async createConnectionEndpoint(
     token: string,
@@ -42,12 +44,12 @@ export class ConnectionSecurityService {
     this.QueueSocketService.closeQueueSocketConnection();
     this.AnalyticsSocketService.closeAnalyticsSocketConnection();
     this.ChatSocketService.closeChatSocket();
+    this.GeneralSocketService.closeSocket();
     this.AnalyticsSocketService.callAnalyticsSocketEndpoint();
     this.AgentSocketService.callAgentSocketEndpoint();
     this.QueueSocketService.callQueueSocketEndpoint();
     this.ChatSocketService.startChat();
+    this.GeneralSocketService.startGeneralSocket();
     this.SharedServices.loadCommonEps(1);
-
-
   }
 }
