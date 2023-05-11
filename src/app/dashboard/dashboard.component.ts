@@ -13,16 +13,16 @@ import { oneSelectData } from './dashboardData';
   styleUrls: ['./dashboard.component.scss']
 })
 export class DashboardComponent implements OnInit {
-  oneSelectData = oneSelectData;
+  // oneSelectData = oneSelectData;
   ngOnInit(): void {
   }
   constructor(private CommonService: CommonService, private authService: AuthService,
   ) {
-   // this.CommonService.restrictRoute();
+    // this.CommonService.restrictRoute();
     this.authService.pageTitle.next('Dashboard');
-    this.oneSelectData.forEach(data=>{
-      (data.name==='Calls')?
-        data.selected=true:data.selected=false;
-    })
+    // this.oneSelectData.forEach(data => {
+    //   (data.name === 'Calls') ?
+    //     data.selected = true : data.selected = false;
+    // })
   }
 }

@@ -172,7 +172,7 @@ export class AgentSocketService {
   }
   // get last used parameters
   public getLastUsedParams() {
-    if (this.lastUsedParameter !== '{}') {
+    if (this.lastUsedParameter !== undefined) {
       this.sendAgentsParameter(this.lastUsedParameter);
     }
   }

@@ -1093,4 +1093,57 @@ export class GigaaaApiService {
         throw err;
       });
   }
+
+
+  // get All Notification
+  public async getAllNotification(
+    token: string,
+    organizationId: string,
+    projectId: string,
+  ): Promise<any> {
+    const httpOptions: any = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        Accept: 'application/json',
+        Authorization: `Bearer ${token}`
+      })
+    };
+    return await this.http
+      .get(
+        this.workdeskurl_cs +
+        '/private/organization/' + organizationId + '/project/' + projectId + '/notifications',
+        httpOptions
+      )
+      .toPromise()
+      .catch((err) => {
+        throw err;
+      });
+  }
+
+  // delete notification 
+  // delete agents
+  public async deletNotification(
+    accesstoken: string,
+    organizationId: string,
+    projectId: string,
+    notificationId: any
+  ): Promise<any> {
+    const httpOptions: any = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        Accept: 'application/json',
+        Authorization: `Bearer ${accesstoken}`
+      })
+    };
+    return this.http
+      .delete(
+        this.workdeskurl_cs +
+        '/private/organization/' + organizationId + '/project/' + projectId + '/notifications?ids=' + notificationId,
+        httpOptions
+      )
+      .toPromise()
+      .catch((err) => {
+        throw err;
+      });
+  }
 }
