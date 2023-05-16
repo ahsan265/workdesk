@@ -27,10 +27,14 @@ export class PreferenceComponent {
     private PreferenceService: PreferenceService) {
     this.authService.pageTitle.next('Preferences');
     this.PreferenceService.getDefaultTime();
-    this.callWaitTime = this.CommonService.toSeconds(0, waitTimeData.tickers[0].value, waitTimeData.tickers[1].value)
-    this.userWaitTime = this.CommonService.toSeconds(0, userWaitTimeData.tickers[0].value, userWaitTimeData.tickers[1].value)
-    this.chatWaitTime = this.CommonService.toSeconds(chatWaitTimeData.tickers[0].value, chatWaitTimeData.tickers[1].value, chatWaitTimeData.tickers[2].value)
-
+    // this.callWaitTime = this.CommonService.toSeconds(0, waitTimeData.tickers[0].value, waitTimeData.tickers[1].value)
+    // this.userWaitTime = this.CommonService.toSeconds(0, userWaitTimeData.tickers[0].value, userWaitTimeData.tickers[1].value)
+    // this.chatWaitTime = this.CommonService.toSeconds(chatWaitTimeData.tickers[0].value, chatWaitTimeData.tickers[1].value, chatWaitTimeData.tickers[2].value)
+    this.PreferenceService.waitingTimes.asObservable().subscribe(data => {
+      this.callWaitTime = data.call_wait_time;
+      this.userWaitTime = data.user_wait_time;
+      this.chatWaitTime = data.chat_wait_time;
+    })
   }
 
   langugaOutput(event: number) {

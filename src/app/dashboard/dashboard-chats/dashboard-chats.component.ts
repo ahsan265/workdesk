@@ -148,7 +148,7 @@ export class DashboardChatsComponent {
       if (data.type === 'chats_counts') {
         this.chatCardsData = data.data.map((result, i) => ({
           icon: this.chatCardsData[i].icon,
-          title: result.title,
+          title: this.chatCardsData[i].title,
           color: result.color,
           mainResult: result.mainResult,
           secondResultText: result.secondResultText,

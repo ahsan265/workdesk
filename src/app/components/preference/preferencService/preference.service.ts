@@ -5,6 +5,7 @@ import { CommonService } from 'src/app/workdeskServices/commonEndpoint/common.se
 import { GigaaaApiService } from 'src/app/workdeskServices/gigaaaApiService/gigaaa-api-service.service';
 import { waitTimeData, userWaitTimeData, chatWaitTimeData } from '../preferenceData';
 import { MessageService } from 'src/app/workdeskServices/messageService/message.service';
+import { Subject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -13,6 +14,7 @@ export class PreferenceService {
   waitTimeData = waitTimeData
   userWaitTimeData = userWaitTimeData
   chatWaitTimeData = chatWaitTimeData
+  public waitingTimes = new Subject<RequestTimeModel>();
   constructor(private MessageService: MessageService, private GigaaaApiService: GigaaaApiService, private commonService: CommonService) { }
   async getDefaultTime() {
     const requestWaitData: RequestTimeModel = await this.GigaaaApiService.getDefaultRequestTime(this.commonService.getEndpointsParamLocal().token,
@@ -20,7 +22,7 @@ export class PreferenceService {
     const callWaitTime = this.commonService.toHoursAndMinutes(requestWaitData.call_wait_time)
     const userWaitTime = this.commonService.toHoursAndMinutes(requestWaitData.user_wait_time)
     const chatWaitTime = this.commonService.toHoursAndMinutes(requestWaitData.chat_wait_time)
-    // const data = [{ type: 'call', time: callWaitTime }, { type: 'user', time: userWaitTime }, { type: 'chat', time: chatWaitTime }];
+    this.waitingTimes.next(requestWaitData);
     this.defaultOperation({ type: 'call', time: callWaitTime });
     this.defaultOperation({ type: 'user', time: userWaitTime });
     this.defaultOperation({ type: 'chat', time: chatWaitTime });
@@ -64,7 +66,7 @@ export class PreferenceService {
     try {
       await this.GigaaaApiService.setDefaultRequestTime(this.commonService.getEndpointsParamLocal().token,
         this.commonService.getEndpointsParamLocal().organization, this.commonService.getEndpointsParamLocal().project, callWaitTime, userWaitTime, chatWaitime)
-      this.MessageService.setSuccessMessage('Updated');
+      this.MessageService.setSuccessMessage('Changes has been saved.');
     }
     catch (error: any) {
       this.MessageService.setErrorMessage(error.error.error);
