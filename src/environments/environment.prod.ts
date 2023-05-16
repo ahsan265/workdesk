@@ -6,14 +6,14 @@ export const environment = {
   backendApi: process.env.BACKEND_API || 'https://api.gigaaa.link/v2',
   analyticsApi:
     process.env.ANALYTICS_API || 'https://api.gigaaa.link/v2/analytics',
-  oauth_url: process.env.OAUTH_URL || 'https://accounts.gigaaa.link/oauth',
+  oauth_url: process.env.OAUTH_URL || 'https://accounts.dev.gconsole.io/oauth',
   redirect_uri: process.env.REDIRECT_URI || 'http://localhost:4202/callback',
   uri: process.env.URI || 'http://localhost:4202/',
-  login: process.env.LOGIN || 'https://accounts.gigaaa.link/oauth/token',
+  login: process.env.LOGIN || 'https://accounts.dev.gconsole.io/oauth/token',
   client_id: Number(process.env.CLIENT_ID) || 8,
   accounts_client_id: Number(process.env.ACCOUNTS_CLIENT_ID) || 8,
   accounts_url:
-    process.env.ACCOUNTS_URL || 'https://accounts.gigaaa.link/oauth',
+    process.env.ACCOUNTS_URL || 'https://accounts.dev.gconsole.io/oauth',
   accounts_callback_url:
     process.env.ACCOUNTS_CALLBACK_URL || 'http://localhost:4202',
   currentUser: process.env.CURRENT_USER || 'https://api.gigaaa.link/users/me',

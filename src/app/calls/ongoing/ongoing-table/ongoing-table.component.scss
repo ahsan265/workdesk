@@ -45,7 +45,6 @@ table thead tr th div.editHeader {
     align-items: center;
     height: 32px;
     display: inline-flex;
-    width: calc(100% - 20px);
 }
 
 
@@ -68,6 +67,7 @@ table thead tr th:hover div {
     background: #F0F0F5;
     border-radius: 4px;
     width: fit-content;
+    padding-right: 12px;
 }
 
 

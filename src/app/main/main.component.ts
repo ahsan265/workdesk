@@ -141,13 +141,13 @@ export class MainComponent implements OnInit {
     this.slideOpened = slideOpened;
   }
 
-  getSelectedDropdownItem(event: any) {
-    this.GigaaaApiService.updateLastUsediPorject(
+  async getSelectedDropdownItem(event: any) {
+    await this.GigaaaApiService.updateLastUsediPorject(
       this.CommonService.getEndpointsParamLocal().token,
       this.CommonService.getEndpointsParamLocal().organization,
       { project: event.uuid[0] }
     );
-    this.getOrganizationService.getOrganization(
+    await this.getOrganizationService.getOrganization(
       this.CommonService.getEndpointsParamLocal().token
     );
   }

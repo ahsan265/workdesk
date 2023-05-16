@@ -4,24 +4,24 @@
 
 export const environment = {
   production: false,
-  apiUrl: 'https://api.gigaaa.link/v1/api/v1',
-  backendApi: 'https://api.gigaaa.link/v2',
-  analyticsApi: 'https://api.gigaaa.link/v2/analytics',
-  oauth_url: 'https://accounts.gigaaa.link/oauth',
+  apiUrl: 'https://api.dev.gconsole.io/v1/api/v1',
+  backendApi: 'https://api.dev.gconsole.io/v2',
+  analyticsApi: 'https://api.dev.gconsole.io/v2/analytics',
+  oauth_url: 'https://accounts.dev.gconsole.io//oauth',
   redirect_uri: 'http://localhost:4202/callback',
   uri: 'http://localhost:4202/',
-  login: 'https://accounts.gigaaa.link/oauth/token',
+  login: 'https://accounts.dev.gconsole.io//oauth/token',
   client_id: 8,
   accounts_client_id: 8,
-  accounts_url: 'https://accounts.gigaaa.link/oauth',
+  accounts_url: 'https://accounts.dev.gconsole.io/oauth',
   accounts_callback_url: 'http://localhost:4202',
-  currentUser: 'https://api.gigaaa.link/users/me',
-  prod_url_cs: 'https://api.gigaaa.link/cs/v2',
-  prod_url_workdesk: 'https://api.gigaaa.link',
-  prod_anlytics: 'https://api.gigaaa.link/cs/private',
-  websocket_url: 'wss://api.gigaaa.link/cs/v2',
-  logged_user: 'https://api.gigaaa.link/v1/api/v1',
-  
+  currentUser: 'https://api.dev.gconsole.io/users/me',
+  prod_url_cs: 'https://api.dev.gconsole.io/cs/v2',
+  prod_url_workdesk: 'https://api.dev.gconsole.io',
+  prod_anlytics: 'https://api.dev.gconsole.io/cs/private',
+  websocket_url: 'wss://api.dev.gconsole.io/cs/v2',
+  logged_user: 'https://api.dev.gconsole.io/v1/api/v1',
+
 
   iceServerConfiguration: [
     {

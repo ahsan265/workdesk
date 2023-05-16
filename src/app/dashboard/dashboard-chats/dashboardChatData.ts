@@ -5,35 +5,35 @@ const chatSelectionData: OneSelect[] = [{ id: 0, name: 'Calls', selected: false 
 ];
 
 const chatCardsData: Card[] = [{
-    icon: '../../assets/images/components/chat_incoming.svg',
-    title: '',
-    color: '#FFFFFF',
-    mainResult: 0,
-    secondResultText: '',
-    secondResultNumber: 0,
-    iconUp: '../../assets/images/cards/arrowUp.svg',
-    iconDown: '../../assets/images/cards/arrowDown.svg'
-  },
-  {
-    icon: '../../assets/images/components/chat_missed.svg',
-    title: '',
-    color: '#FFFFFF',
-    mainResult: 0,
-    secondResultText: '',
-    secondResultNumber: 0,
-    iconUp: '../../assets/images/cards/arrowUp.svg',
-    iconDown: '../../assets/images/cards/arrowDown.svg'
-  },
-  {
-    icon: '../../assets/images/components/chat_answer.svg',
-    title: '',
-    color: '#FFFFFF',
-    mainResult: 0,
-    secondResultText: '',
-    secondResultNumber: 0,
-    iconUp: '../../assets/images/cards/arrowUp.svg',
-    iconDown: '../../assets/images/cards/arrowDown.svg'
-  }];
-export{
-    chatSelectionData,chatCardsData
+  icon: '../../assets/images/components/chat_incoming.svg',
+  title: 'Total Joined',
+  color: '#FFFFFF',
+  mainResult: 0,
+  secondResultText: '',
+  secondResultNumber: 0,
+  iconUp: '../../assets/images/cards/arrowUp.svg',
+  iconDown: '../../assets/images/cards/arrowDown.svg'
+},
+{
+  icon: '../../assets/images/components/chat_missed.svg',
+  title: 'Total Missed',
+  color: '#FFFFFF',
+  mainResult: 0,
+  secondResultText: '',
+  secondResultNumber: 0,
+  iconUp: '../../assets/images/cards/arrowUp.svg',
+  iconDown: '../../assets/images/cards/arrowDown.svg'
+},
+{
+  icon: '../../assets/images/components/chat_answer.svg',
+  title: 'Total Answered',
+  color: '#FFFFFF',
+  mainResult: 0,
+  secondResultText: '',
+  secondResultNumber: 0,
+  iconUp: '../../assets/images/cards/arrowUp.svg',
+  iconDown: '../../assets/images/cards/arrowDown.svg'
+}];
+export {
+  chatSelectionData, chatCardsData
 }
