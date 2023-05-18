@@ -18,7 +18,7 @@ export class AgentSettingService {
     private CommonService: CommonService,
     private MessageService: MessageService,
     private Router: Router
-  ) {}
+  ) { }
 
   // get agentS Updated Data ()
   public async updateAgentSettings(
@@ -33,7 +33,7 @@ export class AgentSettingService {
         agentUuid,
         agentsetting
       );
-      this.MessageService.setSuccessMessage('All Changes Saved.');
+      this.MessageService.setSuccessMessage('Changes has been saved.');
     } catch (err: any) {
       this.MessageService.setErrorMessage(err.error.error);
     }
@@ -123,8 +123,8 @@ export class AgentSettingService {
     );
     this.MessageService.setSuccessMessage('Agent Invitation has been resent.');
   }
-  public updateAgentImage() {}
-  public updateLoggedInUserImage() {}
+  public updateAgentImage() { }
+  public updateLoggedInUserImage() { }
 
   public async UpdatePassword(data: any, id: number) {
     await this.GigaaaApiService.updatePassword(
@@ -147,8 +147,8 @@ export class AgentSettingService {
       );
       data.all_languages === true
         ? this.MessageService.setSuccessMessage(
-            'All project languages are assigned to you.'
-          )
+          'All project languages are assigned to you.'
+        )
         : '';
     } catch (error: any) {
       this.MessageService.setErrorMessage(error.error.error);

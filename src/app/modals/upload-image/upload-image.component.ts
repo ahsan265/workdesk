@@ -40,7 +40,7 @@ export class UploadImageComponent implements OnInit, OnDestroy {
   progressbarvalue: any = 0;
   filesize: any;
   imageUploaded: any;
-  constructor( @Inject(component_data) public data: AgentList, private OverlayService: OverlayService,private AgentService:AgentService) { }
+  constructor(@Inject(component_data) public data: AgentList, private OverlayService: OverlayService, private AgentService: AgentService) { }
   showSaveButton: boolean = false;
   showCancelButton: boolean = true;
   @ViewChild('ImageCropperComponent') ImageCropperComponent!: ImageCropperComponent;
@@ -129,7 +129,7 @@ export class UploadImageComponent implements OnInit, OnDestroy {
           this.croppicture = true;
           this.showCancelButton = false;
           this.showSaveButton = true;
-          this.imageUploaded=event;
+          this.imageUploaded = event;
 
         }
       }
@@ -141,8 +141,8 @@ export class UploadImageComponent implements OnInit, OnDestroy {
   }
 
   saveImageUpload() {
-    (this.AgentService.checkIsLoggedInAgent(this.data.email))?
-    this.ImageCropperComponent.updateUserProfilePicture():
-     this.ImageCropperComponent.agentupdateuserprofilepic(this.data.uuid);
+    (this.AgentService.checkIsLoggedInAgent(this.data.email)) ?
+      this.ImageCropperComponent.updateUserProfilePicture() :
+      this.ImageCropperComponent.agentupdateuserprofilepic(this.data.uuid);
   }
 }

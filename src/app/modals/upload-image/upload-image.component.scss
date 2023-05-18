@@ -89,11 +89,18 @@ button {
 
 .savePanel {
   width: 50%;
+  text-align: right;
 }
 
 .cancelPanel {
   width: 50%;
+  text-align: left;
+}
+
+.cancelPanel.right {
+  width: 100%;
   text-align: right;
+
 }
 
 .buttonSave {

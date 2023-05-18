@@ -62,7 +62,7 @@ export class IcomingTableComponent {
   // get ellapsed time
   getTimer(entry: string) {
     this.ChangeDetectorRef.markForCheck();
-    return this.CommonService.onGoingTimer(entry);
+    return this.CommonService.onGoingTimer(entry, 'm');
   }
   showEditField(index: number) {
     if (this.CommonService.getIsAdminOrAgent() && this.CommonService.getLoggedInAgentData().is_organization_owner) {

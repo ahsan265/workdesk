@@ -45,8 +45,16 @@ export class TimerWidgetComponent {
   }
   // find the slot 
   findTimerSlot(toIncrease: string) {
-    const data = this.timerwWidgetData.tickers.find(data => {
-      if (data.header === toIncrease) { data.value++ };
+    console.log(toIncrease)
+    this.timerwWidgetData.tickers.find(data => {
+      if (data.header === toIncrease) {
+        if (toIncrease === 'h' && data.value < 23) {
+          data.value++;
+        }
+        else if (toIncrease === 'min') {
+          data.value++
+        }
+      };
     })
   }
 }

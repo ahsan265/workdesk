@@ -490,7 +490,7 @@ export class CommonService {
     return tableSettings;
   }
   // get ellapsed time
-  public onGoingTimer(entry: string) {
+  public onGoingTimer(entry: string, typeFormat: string) {
     // later record end time
     if (entry == null) {
       return "Call not joined"
@@ -521,10 +521,16 @@ export class CommonService {
     timeDiff = Math.floor(timeDiff / 24);
 
     // the rest of timeDiff is number of days
-    let days = timeDiff;
+    // let days = timeDiff;
     //  setTimeout(this.display(startTime.getTime()), 1000);
-
-    return ("0" + minutes).slice(-2) + ":" + ("0" + seconds).slice(-2);
+    switch (typeFormat) {
+      case 'h':
+        return ("0" + hours).slice(-2) + ":" + ("0" + minutes).slice(-2) + ":" + ("0" + seconds).slice(-2);
+      case 'm':
+        return ("0" + minutes).slice(-2) + ":" + ("0" + seconds).slice(-2);
+      default:
+        return ("0" + minutes).slice(-2) + ":" + ("0" + seconds).slice(-2);
+    }
   }
   // get ellapsed time
   public getElapsedTime(entry: string) {

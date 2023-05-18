@@ -32,16 +32,24 @@
   </div>
   <app-image-cropper [imageView]="imageUploaded" #ImageCropperComponent></app-image-cropper>
 </div>
-<div class="actionButtonWrapper">
-  <div class="savePanel" [style.width]="showSaveButton === true ? '100%' : '50%'"
-    [style.text-align]="showSaveButton === true ? 'right' : 'left'">
-    <button *ngIf="showSaveButton" class="buttonSave" (click)="saveImageUpload()">
-      Change
-    </button>
-  </div>
-  <div class="cancelPanel" [style.display]="showCancelButton === false ? 'none' : 'inline-block'">
+
+<div class="actionButtonWrapper" *ngIf="showCancelButton===true && this.showSaveButton===false">
+  <div class="cancelPanel right">
     <button *ngIf="showCancelButton" class="buttonCancel" (click)="closeImageModal()">
       Cancel
+    </button>
+  </div>
+</div>
+
+<div class="actionButtonWrapper" *ngIf="showCancelButton===false && this.showSaveButton===true">
+  <div class="cancelPanel">
+    <button class="buttonCancel" (click)="closeImageModal()">
+      Cancel
+    </button>
+  </div>
+  <div class="savePanel">
+    <button class="buttonSave" (click)="saveImageUpload()">
+      Change
     </button>
   </div>
 </div>

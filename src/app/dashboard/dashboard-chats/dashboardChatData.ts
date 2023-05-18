@@ -6,7 +6,7 @@ const chatSelectionData: OneSelect[] = [{ id: 0, name: 'Calls', selected: false 
 
 const chatCardsData: Card[] = [{
   icon: '../../assets/images/components/chat_incoming.svg',
-  title: 'Total Joined',
+  title: 'Total Incoming',
   color: '#FFFFFF',
   mainResult: 0,
   secondResultText: '',
@@ -26,7 +26,7 @@ const chatCardsData: Card[] = [{
 },
 {
   icon: '../../assets/images/components/chat_answer.svg',
-  title: 'Total Answered',
+  title: 'Total Joined',
   color: '#FFFFFF',
   mainResult: 0,
   secondResultText: '',

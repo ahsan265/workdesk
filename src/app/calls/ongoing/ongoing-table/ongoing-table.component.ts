@@ -63,7 +63,7 @@ export class OngoingTableComponent implements OnInit {
   // get ellapsed time
   getTimer(entry: string) {
     this.ChangeDetectorRef.markForCheck();
-    return this.CommonService.onGoingTimer(entry);
+    return this.CommonService.onGoingTimer(entry,'h');
   }
 
   showEditField(index: number) {
