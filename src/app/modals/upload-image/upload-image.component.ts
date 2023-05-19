@@ -1,7 +1,7 @@
 /* eslint-disable no-undef */
 import { Component, Inject, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { component_data, OverlayService } from '@gigaaa/gigaaa-components';
-import { ImageTransform } from 'ngx-image-cropper';
+import { ImageTransform, base64ToFile } from 'ngx-image-cropper';
 import { AgentService } from 'src/app/agents/agentService/agent.service';
 import { AgentList } from 'src/app/models/agentSocketModel';
 import { ImageCropperComponent } from 'src/app/uploadImages/image-cropper/image-cropper.component';
@@ -40,7 +40,7 @@ export class UploadImageComponent implements OnInit, OnDestroy {
   progressbarvalue: any = 0;
   filesize: any;
   imageUploaded: any;
-  constructor( @Inject(component_data) public data: AgentList, private OverlayService: OverlayService,private AgentService:AgentService) { }
+  constructor(@Inject(component_data) public data: AgentList, private OverlayService: OverlayService, private AgentService: AgentService) { }
   showSaveButton: boolean = false;
   showCancelButton: boolean = true;
   @ViewChild('ImageCropperComponent') ImageCropperComponent!: ImageCropperComponent;
@@ -111,11 +111,6 @@ export class UploadImageComponent implements OnInit, OnDestroy {
     this.filesize = this.bytesToSize(event.target.files[0].size);
     this.uploadpicture = false;
     this.croppicture = false;
-    // const reader = new FileReader();
-    // reader.readAsDataURL(event);
-    // reader.onload = () => {
-    //   this.imageUploaded = reader.result;
-    // };
     this.loadpicture = true;
 
     setInterval(() => {
@@ -129,7 +124,7 @@ export class UploadImageComponent implements OnInit, OnDestroy {
           this.croppicture = true;
           this.showCancelButton = false;
           this.showSaveButton = true;
-          this.imageUploaded=event;
+          this.imageUploaded = event;
 
         }
       }
@@ -141,8 +136,44 @@ export class UploadImageComponent implements OnInit, OnDestroy {
   }
 
   saveImageUpload() {
-    (this.AgentService.checkIsLoggedInAgent(this.data.email))?
-    this.ImageCropperComponent.updateUserProfilePicture():
-     this.ImageCropperComponent.agentupdateuserprofilepic(this.data.uuid);
+    (this.AgentService.checkIsLoggedInAgent(this.data.email)) ?
+      this.ImageCropperComponent.updateUserProfilePicture() :
+      this.ImageCropperComponent.agentupdateuserprofilepic(this.data.uuid);
+  }
+
+  getUploadDragImage(event: any) {
+    this.filename = event.name;
+    this.filesize = this.bytesToSize(event.size);
+    this.uploadpicture = false;
+    this.croppicture = false;
+    this.loadpicture = true;
+    setInterval(() => {
+      if (this.progressbarvalue != 100) {
+        this.progressbarvalue += 1;
+      }
+      if (this.progressbarvalue == 100) {
+        if (this.loadpicture == true) {
+          this.uploadpicture = false;
+          this.loadpicture = false;
+          this.croppicture = true;
+          this.showCancelButton = false;
+          this.showSaveButton = true;
+          this.imageUploaded = event;
+          // let data: any = URL.createObjectURL(event)
+          // var image = new Image();
+          // image.src = URL.createObjectURL(data);
+          // this.imageUploaded = data;
+          // console.log(this.imageUploaded)
+
+
+          const reader = new FileReader();
+          reader.readAsDataURL(event);
+          reader.onload = () => {
+            let data = reader.result;
+          };
+
+        }
+      }
+    }, 50);
   }
 }

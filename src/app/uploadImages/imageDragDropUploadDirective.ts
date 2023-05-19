@@ -17,7 +17,7 @@ export class DragNDropDirective {
     new EventEmitter();
   @HostBinding('style.background') private background = '#eee';
 
-  constructor() {}
+  constructor() { }
 
   @HostListener('dragover', ['$event']) public onDragOver(evt: any) {
     evt.preventDefault();
@@ -31,12 +31,12 @@ export class DragNDropDirective {
     this.background = '#eee';
   }
 
-  @HostListener('drop', ['$event']) public onDrop(evt: any) {
+  @HostListener('drop', ['$event']) public onDrop(evt: DragEvent) {
     evt.preventDefault();
     evt.stopPropagation();
     this.background = '#eee';
-    let files = evt.dataTransfer.files;
-    let valid_files: File = files;
-    this.filesChangeEmiter.emit(valid_files);
+    // let files: File = evt.dataTransfer?.files[0];
+    // let valid_files: File = files;
+    this.filesChangeEmiter.emit(evt.dataTransfer?.files[0]);
   }
 }

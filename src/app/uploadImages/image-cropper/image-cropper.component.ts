@@ -56,7 +56,7 @@ export class ImageCropperComponent implements OnInit, OnDestroy {
   public scale = 1.0;
   public scaleMultiplier = 0.8;
   isDrag = 1;
-    canvasRotation = 0;
+  canvasRotation = 0;
 
 
   showCropper = false;
@@ -123,7 +123,7 @@ export class ImageCropperComponent implements OnInit, OnDestroy {
     //     this.updateUserProfilePicture(base64);
     //   }
     // });
-   
+
 
   }
   // fileChangeEvent(event:any)
@@ -134,8 +134,8 @@ export class ImageCropperComponent implements OnInit, OnDestroy {
     if (this.scale !== 1.0) {
       this.scale -= .1;
       this.transform = {
-          ...this.transform,
-          scale: this.scale
+        ...this.transform,
+        scale: this.scale
       };
     }
   }
@@ -143,8 +143,8 @@ export class ImageCropperComponent implements OnInit, OnDestroy {
     if (this.scale !== 1.6) {
       this.scale += .1;
       this.transform = {
-          ...this.transform,
-          scale: this.scale
+        ...this.transform,
+        scale: this.scale
       };
     }
   }
@@ -158,8 +158,8 @@ export class ImageCropperComponent implements OnInit, OnDestroy {
         this.initX = drag.getBoundingClientRect().left - main.getBoundingClientRect().left;
       }
     });
- this.renderer.listen(document, 'mouseup', (e) => {
-  });
+    this.renderer.listen(document, 'mouseup', (e) => {
+    });
   }
 
   // crop image
@@ -211,7 +211,7 @@ export class ImageCropperComponent implements OnInit, OnDestroy {
   }
 
   public updateUserProfilePicture() {
-   
+
     const file: any = base64ToFile(this.croppedImage);
     this.GigaaaApiService.uploaduserprofilepic(
       this.CommonService.getEndpointsParamLocal().token,
@@ -259,17 +259,17 @@ export class ImageCropperComponent implements OnInit, OnDestroy {
   ///////////////////
   imageCropped(event: ImageCroppedEvent) {
     this.croppedImage = event.base64;
-}
+  }
 
-imageLoaded() {
+  imageLoaded() {
     this.showCropper = true;
-}
+  }
 
-cropperReady(sourceImageDimensions: Dimensions) {
-}
+  cropperReady(sourceImageDimensions: Dimensions) {
+  }
 
-loadImageFailed() {
-  this.MessageService.setErrorMessage('Please reupload photo again.')
-  this.OverlayService.close();
-}
+  loadImageFailed() {
+    this.MessageService.setErrorMessage('Please reupload photo again.')
+    this.OverlayService.close();
+  }
 }

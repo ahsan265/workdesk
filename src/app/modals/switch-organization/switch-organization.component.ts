@@ -33,9 +33,7 @@ export class SwitchOrganizationComponent implements OnInit {
   }
 
   // close the dialog for organization switching 
-
   closeOrganizationSwitcher() {
-    // this.SharedServices.switchOrganization(false);
     this.OverlayService.close();
   }
 
@@ -43,10 +41,12 @@ export class SwitchOrganizationComponent implements OnInit {
 
   public async setLastUsedOrganization(organization: any) {
     try {
-      await this.GigaaaApiService.setLastUsedOrganization(this.CommonService.getEndpointsParamLocal().token, organization.uuid);
-      await this.getOrganizationService.getOrganization(this.CommonService.getEndpointsParamLocal().token);
-      this.OverlayService.close();
-      this.showDoneSwitchOrganization();
+      if (organization.uuid !== this.CommonService.getEndpointsParamLocal().organization) {
+        await this.GigaaaApiService.setLastUsedOrganization(this.CommonService.getEndpointsParamLocal().token, organization.uuid);
+        await this.getOrganizationService.getOrganization(this.CommonService.getEndpointsParamLocal().token);
+        this.OverlayService.close();
+        this.showDoneSwitchOrganization();
+      }
     }
     catch (error: any) {
       this.MessageService.setErrorMessage(error.error.error)
