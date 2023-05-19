@@ -6,16 +6,27 @@ image-cropper {
   font-weight: 600 !important;
 }
 
+.headingWrapper {
+  display: flex;
+  justify-content: space-between;
+}
+
 .headingUpload {
-  font-family: 'Roboto';
+  font-family: "Roboto";
   font-style: normal;
   font-weight: 500;
   font-size: 18px;
-  line-height: 305.19%;
+  line-height: 20px;
   display: flex;
   align-items: center;
   letter-spacing: 0.02em;
   color: #162741;
+}
+
+
+.closeIcon {
+  display: inline-flex;
+  justify-content: right;
 }
 
 button {

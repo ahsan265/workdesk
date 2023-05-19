@@ -27,7 +27,7 @@ export class ChatSocketService {
     this.typingMessage = new BehaviorSubject(defaultTypingData);
     this.lastSelectThreadUuid = new BehaviorSubject(selectedThreadData);
     this.unreadThread = new BehaviorSubject(false);
- 
+
   }
   // dial webrtcCall
   public async startChat(): Promise<any> {

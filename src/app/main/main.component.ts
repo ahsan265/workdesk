@@ -142,14 +142,16 @@ export class MainComponent implements OnInit {
   }
 
   async getSelectedDropdownItem(event: any) {
-    await this.GigaaaApiService.updateLastUsediPorject(
-      this.CommonService.getEndpointsParamLocal().token,
-      this.CommonService.getEndpointsParamLocal().organization,
-      { project: event.uuid[0] }
-    );
-    await this.getOrganizationService.getOrganization(
-      this.CommonService.getEndpointsParamLocal().token
-    );
+    if (event[0].uuid !== this.CommonService.getEndpointsParamLocal().project) {
+      await this.GigaaaApiService.updateLastUsediPorject(
+        this.CommonService.getEndpointsParamLocal().token,
+        this.CommonService.getEndpointsParamLocal().organization,
+        { project: event.uuid[0] }
+      );
+      await this.getOrganizationService.getOrganization(
+        this.CommonService.getEndpointsParamLocal().token
+      );
+    }
   }
 
   setOnlineStatus(event: boolean): void {

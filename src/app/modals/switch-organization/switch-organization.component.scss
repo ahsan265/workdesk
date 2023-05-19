@@ -131,17 +131,19 @@
 }
 
 .agentName {
-    font-family: 'Roboto', sans-serif;
+    font-family: "Roboto", sans-serif;
     font-style: normal;
     font-weight: 500;
     font-size: 14px;
     line-height: 16px;
-    width: 100%;
-    display: flex;
+    width: 107px;
     align-items: center;
     letter-spacing: 0.02em;
     color: #162741;
     position: absolute;
     bottom: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
     margin: 15px;
 }

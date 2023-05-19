@@ -45,7 +45,6 @@ export class TimerWidgetComponent {
   }
   // find the slot 
   findTimerSlot(toIncrease: string) {
-    console.log(toIncrease)
     this.timerwWidgetData.tickers.find(data => {
       if (data.header === toIncrease) {
         if (toIncrease === 'h' && data.value < 23) {
