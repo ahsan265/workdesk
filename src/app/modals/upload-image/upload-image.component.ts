@@ -124,7 +124,7 @@ export class UploadImageComponent implements OnInit, OnDestroy {
           this.croppicture = true;
           this.showCancelButton = false;
           this.showSaveButton = true;
-          this.imageUploaded = event;
+          this.imageUploaded = event.target.files[0];
 
         }
       }
@@ -159,19 +159,6 @@ export class UploadImageComponent implements OnInit, OnDestroy {
           this.showCancelButton = false;
           this.showSaveButton = true;
           this.imageUploaded = event;
-          // let data: any = URL.createObjectURL(event)
-          // var image = new Image();
-          // image.src = URL.createObjectURL(data);
-          // this.imageUploaded = data;
-          // console.log(this.imageUploaded)
-
-
-          const reader = new FileReader();
-          reader.readAsDataURL(event);
-          reader.onload = () => {
-            let data = reader.result;
-          };
-
         }
       }
     }, 50);
