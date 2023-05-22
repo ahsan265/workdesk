@@ -31,7 +31,7 @@ export class LandingPageComponent implements OnInit {
     { text: 'Video Calls', icon: '../assets/images/landingpage/video_calls_icon.svg' }, { text: 'Audio Calls', icon: '../assets/images/landingpage/audio_call_icon.svg' }, { text: 'Multilingual', icon: '../assets/images/landingpage/multilingual_icon.svg' }, { text: 'Ticketing', icon: '../assets/images/landingpage/ticketing_icon.svg' }, { text: 'Chats', icon: '../assets/images/landingpage/chats_icon.svg' }]
   }
   oauthUrl = `${environment.oauth_url}`;
-  accountUrl = `${environment.accounts_url}`;
+  accountUrl = `${environment.register_account}`;
   constructor(
     private router: Router,
     private authService: AuthService,
