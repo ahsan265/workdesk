@@ -49,7 +49,7 @@ export class LandingPageComponent implements OnInit {
       (data: inviteLinkModel) => {
         this.showLinkExpireModal = data.already_used;
         if (data.has_to_register) {
-          window.open(this.accountUrl, '_self');
+          this.headerService.login('register');
         }
       }
     );
@@ -66,7 +66,7 @@ export class LandingPageComponent implements OnInit {
   }
   register(event: boolean) {
     if (event) {
-      window.open(this.accountUrl, '_self');
+      event ? this.headerService.login('register') : '';
     }
   }
   showInviteModal() {
