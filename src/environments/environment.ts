@@ -10,7 +10,7 @@ export const environment = {
   oauth_url: 'https://accounts.dev.gconsole.io//oauth',
   redirect_uri: 'http://localhost:4202/callback',
   uri: 'http://localhost:4202/',
-  login: 'https://accounts.dev.gconsole.io//oauth/token',
+  login: 'https://accounts.dev.gconsole.io/oauth/token',
   client_id: 8,
   accounts_client_id: 8,
   accounts_url: 'https://accounts.dev.gconsole.io/oauth',
@@ -21,7 +21,7 @@ export const environment = {
   prod_anlytics: 'https://api.dev.gconsole.io/cs/private',
   websocket_url: 'wss://api.dev.gconsole.io/cs/v2',
   logged_user: 'https://api.dev.gconsole.io/v1/api/v1',
-
+  register_account:'https://accounts.dev.gconsole.io/register',
 
   iceServerConfiguration: [
     {

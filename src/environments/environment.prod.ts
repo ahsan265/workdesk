@@ -23,5 +23,7 @@ export const environment = {
     process.env.PROD_ANALYTICS || 'https://api.gigaaa.link/cs/private',
   websocket_url:
     process.env.WEBSOCKET_URL || 'wss://api.gigaaa.link/cs/v2',
-  logged_user: process.env.LOGGED_USER || 'https://api.gigaaa.link/v1/api/v1'
+  logged_user: process.env.LOGGED_USER || 'https://api.gigaaa.link/v1/api/v1',
+  register_account:process.env.ACCOUNTS_UI_REGISTER_URL ||'https://accounts.dev.gconsole.io/register',
+
 };
