@@ -27,6 +27,7 @@ import { GeneralSocketService } from '../workdeskSockets/generalSocket/general-s
   styleUrls: ['./main.component.scss']
 })
 export class MainComponent implements OnInit {
+  isUserSwitched: boolean = false;
   pageTitle: string = '';
   slideOpened: boolean = false;
   oauthUrl = `${environment.oauth_url}`;
@@ -67,10 +68,14 @@ export class MainComponent implements OnInit {
     this.AgentSocketService.AgentLiveStatus.subscribe((data: boolean) => {
       this.statusOnline = data;
     });
+    // this.getOrganizationService.LastUsedOrganization.asObservable().subscribe(data => {
+    //   this.organizationData.name = ((data.is_individual) ? data.contact_person :
+    //     data.name) || '';
+    // })
     this.SharedServices.LoadcommonEpsubject.subscribe(async data => {
       if (data === 1) {
-        this.organizationData.name = ((this.getOrganizationService.getLastUsedOrganization().is_individual) ? this.getOrganizationService.getLastUsedOrganization().contact_person :
-          this.getOrganizationService.getLastUsedOrganization().name) || '';
+        this.organizationData.name = ((this.getOrganizationService.LastUsedOrganization.value.is_individual) ? this.getOrganizationService.LastUsedOrganization.value.contact_person :
+          this.getOrganizationService.LastUsedOrganization.value.name) || '';
         await this.getOrganizationService.getProjectList(this.getOrganizationService.project).then(data => {
           this.sidebarData = data;
         })
@@ -79,13 +84,14 @@ export class MainComponent implements OnInit {
           this.isUnreadNotification = this.CommonService.checkIsUnread(data);
         })
         this.authService.user.next(this.authService.getLoggedUser());
-        const response = this.CommonService.getIsAdminOrAgent();
+        const isAdmin = this.CommonService.getIsAdminOrAgent();
         const isOwner = this.CommonService.getLoggedInAgentData().is_organization_owner;
-        (response === true && isOwner === true) ? this.showPreference = true : this.showPreference = false;
+        (isAdmin === true && isOwner === true) ? this.showPreference = true : this.showPreference = false;
 
       }
     })
     this.GeneralSocketService.NotificationSocketData.subscribe(data => {
+      const selectedNotification = data;
       const newNotification = {
         header: data.data.title,
         date: this.CommonService.timeNow(data.data.created_at),
@@ -94,23 +100,17 @@ export class MainComponent implements OnInit {
         icon: this.CommonService.getNotificationIcon(data.type),
         id: data.data.id
       }
-      this.notificationData.push(newNotification);
-      this.isUnreadNotification = this.CommonService.checkIsUnread(this.notificationData);
+      this.notificationData.find(data => {
+        if (data.id === selectedNotification.data.id && selectedNotification.data.is_read === true) {
+          data.isOpen = true;
+        }
 
-    })
-    this.SharedServices.switchOrganizationDoneDialog.subscribe((data: boolean) => {
-      setTimeout(() => {
-        this.organizationData.name = ((this.getOrganizationService.getLastUsedOrganization().is_individual) ? this.getOrganizationService.getLastUsedOrganization().contact_person :
-          this.getOrganizationService.getLastUsedOrganization().name) || '';
-        this.showSwitchDoneOganization = data;
-      }, 500);
+      })
+      this.isUnreadNotification = this.CommonService.checkIsUnread(this.notificationData);
     })
     // for reload projects
     this.SharedServices.reloadProjects.subscribe((data: boolean) => {
-      if (data) {
-        this.getOrganizationService.getOrganization(this.CommonService.getEndpointsParamLocal().token);
-
-      }
+      (data) ? this.getOrganizationService.getOrganization(this.CommonService.getEndpointsParamLocal().token, true) : '';
     })
     // chat unread indication
     this.ChatSocketService.unreadThread.asObservable().subscribe(isUnread => {
@@ -131,10 +131,10 @@ export class MainComponent implements OnInit {
     }
   }
   userSwitched(event: boolean) {
+    this.isUserSwitched = event;
   }
-  onGetLoggedUser(event: any) {
-    this.getOrganizationService.getOrganization(event.api_token);
-
+  async onGetLoggedUser(event: any) {
+    await this.getOrganizationService.getOrganization(event.api_token, this.isUserSwitched);
   }
 
   isSlideOpened(slideOpened: boolean) {
@@ -142,14 +142,15 @@ export class MainComponent implements OnInit {
   }
 
   async getSelectedDropdownItem(event: any) {
-    if (event[0].uuid !== this.CommonService.getEndpointsParamLocal().project) {
+    if (event.uuid[0] !== this.CommonService.getEndpointsParamLocal().project) {
       await this.GigaaaApiService.updateLastUsediPorject(
         this.CommonService.getEndpointsParamLocal().token,
         this.CommonService.getEndpointsParamLocal().organization,
         { project: event.uuid[0] }
       );
       await this.getOrganizationService.getOrganization(
-        this.CommonService.getEndpointsParamLocal().token
+        this.CommonService.getEndpointsParamLocal().token,
+        true
       );
     }
   }

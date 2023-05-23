@@ -80,6 +80,12 @@ export class AgentSocketService {
             break;
           default:
         }
+        switch (data.action) {
+          case 'logout':
+            this.Router.navigate(['logout']);
+            break;
+          default:
+        }
       }
       else if (Array.isArray(data)) {
         this.getAgentList(data)

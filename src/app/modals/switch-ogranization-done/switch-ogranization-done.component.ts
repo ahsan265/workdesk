@@ -9,7 +9,7 @@ import { SharedServices } from 'src/app/workdeskServices/sharedResourcesService/
   styleUrls: ['./switch-ogranization-done.component.scss']
 })
 export class SwitchOgranizationDoneComponent implements OnInit {
-  name!: string;
+  name: string = '';
   constructor(private SharedServices: SharedServices,
     private getOrganizationService: getOrganizationService, private OverlayService: OverlayService) {
   }
@@ -18,8 +18,10 @@ export class SwitchOgranizationDoneComponent implements OnInit {
     this.OverlayService.close()
   }
   ngOnInit(): void {
-    this.name = ((this.getOrganizationService.getLastUsedOrganization().is_individual) ? this.getOrganizationService.getLastUsedOrganization().contact_person :
-      this.getOrganizationService.getLastUsedOrganization().name) || '';
+    this.getOrganizationService.LastUsedOrganization.asObservable().subscribe(data => {
+      this.name = (data.is_individual) ? (data.contact_person || '') : (data.name || '');
+    })
+
   }
 
 }
