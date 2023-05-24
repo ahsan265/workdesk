@@ -46,6 +46,7 @@ export class GeneralSocketService {
       this.MessageService.setErrorMessage(e.type);
     };
     this.ws.onclose = async (e: any) => {
+      this.isSocketOpen = 0;
     };
   }
 

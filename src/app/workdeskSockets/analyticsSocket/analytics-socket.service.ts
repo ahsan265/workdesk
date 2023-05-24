@@ -17,14 +17,14 @@ export class AnalyticsSocketService {
   public AnalyticsCardSubject = new Subject<cardDataModel>();
 
   constructor(private CommonService: CommonService, private Router: Router) { }
-  public callAnalyticsSocketEndpoint() {
+  public async callAnalyticsSocketEndpoint() {
     const connectionId: connectionSecurityModel = JSON.parse(
       localStorage.getItem('connection-id') || '{}'
     );
     let url = this.websocket_url + '/analytics?connection=' + connectionId.connection;
-    this.socketStates(url);
+    await this.socketStates(url);
   }
-  private socketStates(url: string) {
+  private async socketStates(url: string):Promise<void> {
     this.ws = new WebSocket(url);
     // on socket connection open
     this.ws.onopen = (e) => {
@@ -62,9 +62,8 @@ export class AnalyticsSocketService {
         }
 
       }
-      // e.data !== 'ping' ? this.getBarChartData(JSON.parse(e.data)) : '';
     };
-    this.ws.onclose = (e) => { };
+    this.ws.onclose = (e) => { this.isSocketOpen = 0; };
     this.ws.onerror = (e) => { };
   }
 

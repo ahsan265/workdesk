@@ -30,7 +30,7 @@ export class ChatSocketService {
 
   }
   // dial webrtcCall
-  public async startChat(): Promise<any> {
+  public async startChat(): Promise<void> {
     const connectionId: connectionSecurityModel = JSON.parse(
       localStorage.getItem('connection-id') || '{}'
     );
@@ -63,6 +63,7 @@ export class ChatSocketService {
 
     };
     this.ws.onclose = async (e: any) => {
+      this.isSocketOpen = 0;
     };
   }
 

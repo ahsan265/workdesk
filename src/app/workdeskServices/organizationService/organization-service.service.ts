@@ -109,7 +109,7 @@ export class getOrganizationService {
           })
         }
         else {
-          this.CommonService.restrictRoute();
+          this.router.navigate(['dashboard']);
         }
       })
       .catch((err: any) => {

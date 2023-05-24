@@ -135,6 +135,7 @@ export class DashboardChatsComponent {
     this.alwaysShowCalendars = true;
   }
   async ngOnInit(): Promise<void> {
+    this.CommonService.restrictRoute();
     this.countries = await this.CommonService.getLocations();
     if (this.CommonService.getEndpointsParamLocal().token === this.authService.user.value?.api_token) {
       this.callRouteLoad()
