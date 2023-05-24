@@ -32,14 +32,9 @@ export class GeneralSocketService {
     // recieve data and send it to required place
     this.ws.onmessage = async (e: any) => {
       let data = JSON.parse(e.data)
-      switch (data.type) {
-        case 'logout':
-          break;
-        case 'notification_is_read':
-          this.NotificationSocketData.next(data)
-          break;
-        default:
-      }
+      this.NotificationSocketData.next(data)
+
+   
 
     };
     this.ws.onerror = (e: any) => {

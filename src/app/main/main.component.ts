@@ -92,21 +92,35 @@ export class MainComponent implements OnInit {
     })
     this.GeneralSocketService.NotificationSocketData.subscribe(data => {
       const selectedNotification = data;
-      const newNotification = {
-        header: data.data.title,
-        date: this.CommonService.timeNow(data.data.created_at),
-        message: data.data.content,
-        isOpen: false,
-        icon: this.CommonService.getNotificationIcon(data.type),
-        id: data.data.id
-      }
-      this.notificationData.find(data => {
-        if (data.id === selectedNotification.data.id && selectedNotification.data.is_read === true) {
-          data.isOpen = true;
-        }
+      switch (data.type) {
+        case 'logout':
+          break;
+        case 'notification_is_read':
+          this.notificationData.find(data => {
+            if (data.id === selectedNotification.data.id && selectedNotification.data.is_read === true) {
+              data.isOpen = true;
+            }
+          })
+          this.isUnreadNotification = this.CommonService.checkIsUnread(this.notificationData);
+          break;
+        case 'invitation_accepted':
+          const newNotification = {
+            header: data.data.title,
+            date: this.CommonService.timeNow(data.data.created_at),
+            message: data.data.content,
+            isOpen: false,
+            icon: this.CommonService.getNotificationIcon(data.type),
+            id: data.data.id
+          }
+          this.notificationData.push(newNotification);
+          this.isUnreadNotification = this.CommonService.checkIsUnread(this.notificationData);
 
-      })
-      this.isUnreadNotification = this.CommonService.checkIsUnread(this.notificationData);
+          break;
+        default:
+      }
+
+
+
     })
     // for reload projects
     this.SharedServices.reloadProjects.subscribe((data: boolean) => {
