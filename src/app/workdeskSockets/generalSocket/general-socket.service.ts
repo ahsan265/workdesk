@@ -36,11 +36,11 @@ export class GeneralSocketService {
         case 'logout':
           break;
         case 'notification_is_read':
-          console.log(data)
+          this.NotificationSocketData.next(data)
           break;
         default:
       }
-      this.NotificationSocketData.next(data)
+
     };
     this.ws.onerror = (e: any) => {
       this.MessageService.setErrorMessage(e.type);

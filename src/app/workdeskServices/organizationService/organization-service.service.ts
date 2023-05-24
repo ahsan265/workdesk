@@ -20,6 +20,8 @@ import { SharedServices } from '../sharedResourcesService/shared-resource-servic
 })
 export class getOrganizationService {
   public LastUsedproject: BehaviorSubject<Project>;
+  public LastUsedOrganization: BehaviorSubject<Organization>;
+
   sidebarData = sidebarData;
   sidebarDataAgent = sidebarDataAgent;
   organizationData: Organization[] = [];
@@ -37,9 +39,10 @@ export class getOrganizationService {
   ) {
 
     this.LastUsedproject = new BehaviorSubject(this.getProjects());
+    this.LastUsedOrganization = new BehaviorSubject(this.getLastUsedOrganization());
   }
   // get organization for workdesk
-  public async getOrganization(token: string) {
+  public async getOrganization(token: string, isAllowed: boolean) {
     await this.AgentinviteService.sendtAgentInvitationCode();
     this.gigaaaService
       .getOrganization(token)
@@ -51,6 +54,7 @@ export class getOrganizationService {
             if (data.last_used === true) {
               const lastUsedOgranization = data.uuid;
               localStorage.setItem('gigaaa-organz', JSON.stringify(data));
+              this.LastUsedOrganization.next(data)
               this.project = data.projects.map((elemnt) => ({
                 name: elemnt?.title,
                 uuid: elemnt?.uuid,
@@ -68,6 +72,7 @@ export class getOrganizationService {
                     lastUsedOgranization,
                     project.uuid
                   );
+                  (isAllowed === true) ? this.CommonService.restrictRoute() : '';
                 }
               })
             }

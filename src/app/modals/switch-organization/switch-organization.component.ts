@@ -43,7 +43,7 @@ export class SwitchOrganizationComponent implements OnInit {
     try {
       if (organization.uuid !== this.CommonService.getEndpointsParamLocal().organization) {
         await this.GigaaaApiService.setLastUsedOrganization(this.CommonService.getEndpointsParamLocal().token, organization.uuid);
-        await this.getOrganizationService.getOrganization(this.CommonService.getEndpointsParamLocal().token);
+        await this.getOrganizationService.getOrganization(this.CommonService.getEndpointsParamLocal().token, true);
         this.OverlayService.close();
         this.showDoneSwitchOrganization();
       }
@@ -58,7 +58,6 @@ export class SwitchOrganizationComponent implements OnInit {
       hasBackdrop: true,
       backdropClass: 'dark-backdrop',
       panelClass: 'swtichOrganizationDonePopup'
-
     })
   }
 
