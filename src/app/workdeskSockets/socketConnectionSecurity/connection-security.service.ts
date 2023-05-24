@@ -32,6 +32,7 @@ export class ConnectionSecurityService {
     ogranizationId: string,
     projectId: string
   ) {
+    await this.CommonService.getAgentRole();
     const connection: connectionSecurityModel =
       await this.gigaaaApiService.getConnectionId(
         token,
@@ -39,16 +40,15 @@ export class ConnectionSecurityService {
         projectId
       );
     localStorage.setItem('connection-id', JSON.stringify(connection));
-    await this.CommonService.getAgentRole();
     this.AgentSocketService.closeAgentSocketConnection();
     this.QueueSocketService.closeQueueSocketConnection();
     this.AnalyticsSocketService.closeAnalyticsSocketConnection();
     this.ChatSocketService.closeChatSocket();
     this.GeneralSocketService.closeSocket();
-    this.AnalyticsSocketService.callAnalyticsSocketEndpoint();
-    this.AgentSocketService.callAgentSocketEndpoint();
-    this.QueueSocketService.callQueueSocketEndpoint();
-    this.ChatSocketService.startChat();
+    await this.AnalyticsSocketService.callAnalyticsSocketEndpoint();
+    await this.AgentSocketService.callAgentSocketEndpoint();
+    await this.QueueSocketService.callQueueSocketEndpoint();
+    await this.ChatSocketService.startChat();
     this.GeneralSocketService.startGeneralSocket();
     this.SharedServices.loadCommonEps(1);
   }

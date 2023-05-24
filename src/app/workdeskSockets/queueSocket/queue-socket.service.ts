@@ -27,16 +27,16 @@ export class QueueSocketService {
 
   constructor(private CommonService: CommonService) {
   }
-  public callQueueSocketEndpoint() {
+  public async callQueueSocketEndpoint() {
     const connectionId: connectionSecurityModel = JSON.parse(
       localStorage.getItem('connection-id') || '{}'
     );
     let url =
       this.websocket_url + '/queue?connection=' + connectionId.connection;
-    this.socketStates(url);
+    await this.socketStates(url);
   }
 
-  private socketStates(url: string) {
+  private async socketStates(url: string): Promise<void> {
     this.ws = new WebSocket(url);
     // on socket connection open
     this.ws.onopen = (e) => {
@@ -47,7 +47,7 @@ export class QueueSocketService {
     this.ws.onmessage = (e) => {
       e.data != 'test' ? this.getQueueSocketList(JSON.parse(e.data)) : '';
     };
-    this.ws.onclose = (e) => { };
+    this.ws.onclose = (e) => { this.isSocketOpen = 0; };
     this.ws.onerror = (e) => { };
   }
 
@@ -66,16 +66,6 @@ export class QueueSocketService {
   }
 
   public getQueueSocketList(QueueList: any) {
-    // this.defaultCallData = {
-    //   finished: QueueList.finished,
-    //   incoming: QueueList.incoming,
-    //   missed: QueueList.missed,
-    //   ongoing: QueueList.ongoing,
-    //   new_call: QueueList.new_call
-    // }
-    // if (QueueList.new_call === true && this.CommonService.getLoggedAgentStatus() === true) {
-    //   this.CommonService.getDesktopNotification("Customer Support", "Please connect call")
-    // }
     switch (QueueList.type) {
       case 'missed':
         this.defaultCallData.missed = QueueList;

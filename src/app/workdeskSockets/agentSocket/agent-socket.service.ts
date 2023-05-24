@@ -17,6 +17,7 @@ import { CommonService } from 'src/app/workdeskServices/commonEndpoint/common.se
 import { SharedServices } from 'src/app/workdeskServices/sharedResourcesService/shared-resource-service.service';
 import { environment } from 'src/environments/environment';
 import { freeSeats } from './agentSocketData';
+import { getOrganizationService } from 'src/app/workdeskServices/organizationService/organization-service.service';
 
 @Injectable({
   providedIn: 'root'
@@ -34,20 +35,20 @@ export class AgentSocketService {
   isInCall: boolean = false;
   public isInCallValue: BehaviorSubject<boolean>;
   public loggedAgentData = new Subject<AgentList>();
-  constructor(private CommonService: CommonService, private Router: Router, private SharedServices: SharedServices) {
+  constructor(private CommonService: CommonService, private Router: Router, private SharedServices: SharedServices,) {
     this.isInCallValue = new BehaviorSubject(this.isInCall);
     this.freeSeatsInformation = new BehaviorSubject(freeSeats)
   }
 
-  public callAgentSocketEndpoint() {
+  public async callAgentSocketEndpoint() {
     const connectionId: connectionSecurityModel = JSON.parse(
       localStorage.getItem('connection-id') || '{}'
     );
     let url =
       this.websocket_url + '/agents?connection=' + connectionId.connection;
-    this.socketStates(url);
+   await this.socketStates(url);
   }
-  private socketStates(url: string) {
+  private async socketStates(url: string):Promise<void> {
     this.ws = new WebSocket(url);
     // on socket connection open
     this.ws.onopen = (e) => {
@@ -123,7 +124,8 @@ export class AgentSocketService {
     this.getAgentOnlineStatus(AgentList);
     AgentList.find((data) => {
       if (this.CommonService.getEmailForLoggedInUser() === data.email) {
-
+        (this.CommonService.getLoggedInAgentData().role !== data.role) ?
+          this.SharedServices.reloadProject(true) : '';
         this.loggedAgentData.next(data);
         this.CommonService.loggedInAgentDetails(data);
       }

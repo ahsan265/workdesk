@@ -467,12 +467,10 @@ export class CommonService {
 
   // restrict Router
   public restrictRoute() {
-    if (!this.getIsAdminOrAgent()) {
+    if (this.getIsAdminOrAgent() === false) {
       this.Router.navigate(['requests']);
     }
-    else {
-      this.Router.navigate(['/dashboard']);
-    }
+
 
   }
   // set dashboard type 
