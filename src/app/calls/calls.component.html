@@ -1,12 +1,18 @@
 <div class="menuWrapper">
   <ul class="callsUl">
     <li class="callsLi" [routerLinkActive]="['active', 'callsActive']">
-      <a class="callsA" routerLink="incoming" >Incoming</a>
-      <app-counters class="counterWrapper" [counterValue]="this.incomingData.length"></app-counters>
+      <a class="callsA" routerLink="incoming">Incoming</a>
+      <app-counters
+        class="counterWrapper"
+        [counterValue]="this.incomingData.length"
+      ></app-counters>
     </li>
     <li class="callsLi" [routerLinkActive]="['active', 'callsActive']">
       <a class="callsA" routerLink="ongoing">Ongoing</a>
-      <app-counters class="counterWrapper" [counterValue]="this.ongoingData.length"></app-counters>
+      <app-counters
+        class="counterWrapper"
+        [counterValue]="this.ongoingData.length"
+      ></app-counters>
     </li>
     <li class="callsLi" [routerLinkActive]="['active', 'callsActive']">
       <a class="callsA" routerLink="missed">Missed</a>

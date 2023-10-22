@@ -25,8 +25,7 @@ export class QueueSocketService {
   public callDataSubject = new Subject<any>();
   defaultCallData = defaultCallData;
 
-  constructor(private CommonService: CommonService) {
-  }
+  constructor(private CommonService: CommonService) {}
   public async callQueueSocketEndpoint() {
     const connectionId: connectionSecurityModel = JSON.parse(
       localStorage.getItem('connection-id') || '{}'
@@ -47,8 +46,10 @@ export class QueueSocketService {
     this.ws.onmessage = (e) => {
       e.data != 'test' ? this.getQueueSocketList(JSON.parse(e.data)) : '';
     };
-    this.ws.onclose = (e) => { this.isSocketOpen = 0; };
-    this.ws.onerror = (e) => { };
+    this.ws.onclose = (e) => {
+      this.isSocketOpen = 0;
+    };
+    this.ws.onerror = (e) => {};
   }
 
   public sendQueueParameter(QueueSocketparamter: QueueSocketparamter) {
@@ -58,7 +59,9 @@ export class QueueSocketService {
     }
   }
 
-  public sendQueueParameterPagination(QueueSocketparamter: QueueSocketparamterForPagination) {
+  public sendQueueParameterPagination(
+    QueueSocketparamter: QueueSocketparamterForPagination
+  ) {
     if (this.isSocketOpen === 1) {
       const queueParameterObject = JSON.stringify(QueueSocketparamter);
       this.ws?.send(queueParameterObject);
@@ -77,8 +80,14 @@ export class QueueSocketService {
         break;
       case 'incoming':
         this.defaultCallData.incoming = QueueList;
-        if (QueueList.new_call === true && this.CommonService.getLoggedAgentStatus() === true) {
-          this.CommonService.getDesktopNotification("Customer Support", "Please connect call")
+        if (
+          QueueList.new_call === true &&
+          this.CommonService.getLoggedAgentStatus() === true
+        ) {
+          this.CommonService.getDesktopNotification(
+            'Customer Support',
+            'Please connect call'
+          );
         }
         this.callDataSubject.next(QueueList);
         break;
@@ -89,7 +98,6 @@ export class QueueSocketService {
       default:
         break;
     }
-
   }
   public sendQueueDateParameter(QueueDateRangeParam: QueueDateRangeParam) {
     if (this.isSocketOpen === 1) {

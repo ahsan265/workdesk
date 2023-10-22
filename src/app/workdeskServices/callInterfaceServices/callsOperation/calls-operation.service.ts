@@ -5,7 +5,10 @@ import { PeerConnectionService } from '../peerConnection/peer-connection.service
 import { StreamingService } from '../stream/streaming.service';
 import { AgentUserInformation } from 'src/app/workdeskServices/callInterfaceServices/agentUserInformation/agent-user-information.service';
 import { AuthService } from 'src/app/services/auth.service';
-import { devcieInformationModel, PeersCallsInformationModel } from 'src/app/models/callInterfaceModel';
+import {
+  PeersCallsInformationModel,
+  devcieInformationModel
+} from 'src/app/models/callInterfaceModel';
 import { Subject } from 'rxjs';
 import { DevicesInformationService } from '../devicesInformation/devices-information.service';
 import { CommonService } from '../../commonEndpoint/common.service';
@@ -27,7 +30,7 @@ export class CallsOperationService {
     private AgentUserInformation: AgentUserInformation,
     private CommonService: CommonService,
     private AuthService: AuthService
-  ) { }
+  ) {}
 
   // add incoming call handler
   addIncomingCallHandler() {
@@ -60,7 +63,7 @@ export class CallsOperationService {
                 false,
                 true,
                 false,
-                this.AuthService.getLoggedUser(),
+                this.AuthService.getLoggedUser()
               );
               await this.StreamingService.selectedDeviceForStream(false);
               this.startTimer.next(false);
@@ -72,8 +75,11 @@ export class CallsOperationService {
               const timer = new Date(Date.now());
               this.AgentUserInformation.setLastCallDuration(timer);
               this.AgentUserInformation.setRefreshStatus(true);
-              callsData.call_type === 'Video' ? (this.AgentUserInformation.updateCameraStatus(true), this.StreamingService.setCallType.next(true), this.StreamingService.startVideo(this.peerUserId)) :
-                this.StreamingService.sendFirstOffer(this.peerUserId);
+              callsData.call_type === 'Video'
+                ? (this.AgentUserInformation.updateCameraStatus(true),
+                  this.StreamingService.setCallType.next(true),
+                  this.StreamingService.startVideo(this.peerUserId))
+                : this.StreamingService.sendFirstOffer(this.peerUserId);
               this.startTimer.next(true);
             } else {
               this.sendPeerInformation.next(callsData.peer_information.data);
@@ -102,13 +108,15 @@ export class CallsOperationService {
             this.MessageService.setInformationMessage(msg.data.msg);
             break;
           case 'err':
-            this.MessageService.setErrorMessage('There seems to be a system error.');
+            this.MessageService.setErrorMessage(
+              'There seems to be a system error.'
+            );
             this.StreamingService.hangUpCall();
             break;
           default:
         }
       },
-      (error: any) => { }
+      (error: any) => {}
     );
   }
 

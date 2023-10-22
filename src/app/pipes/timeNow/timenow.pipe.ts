@@ -5,9 +5,7 @@ import { CommonService } from 'src/app/workdeskServices/commonEndpoint/common.se
   name: 'timenow'
 })
 export class TimenowPipe implements PipeTransform {
-  constructor(private CommonService: CommonService) {
-
-  }
+  constructor(private CommonService: CommonService) {}
   transform(value: unknown, ...args: unknown[]): unknown {
     return this.time_ago(value);
   }

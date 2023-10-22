@@ -14,7 +14,7 @@ interface ComponentDialogConnfiguration {
   providedIn: 'root'
 })
 export class OverlayService {
-  constructor(private overlay: Overlay, private injector: Injector) { }
+  constructor(private overlay: Overlay, private injector: Injector) {}
   DEFAULT_CONFIG: ComponentDialogConnfiguration = {
     hasBackdrop: false,
     backdropClass: 'dark-backdrop',
@@ -67,9 +67,7 @@ export class OverlayService {
     injectionTokens.set(overlayToken, config.data);
     return Injector.create({
       parent: this.injector,
-      providers: [
-        { provide: overlayToken, useValue: config.data }
-      ]
+      providers: [{ provide: overlayToken, useValue: config.data }]
     });
   }
   private getOverlayConfig(

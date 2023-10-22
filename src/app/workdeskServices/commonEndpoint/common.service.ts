@@ -3,7 +3,11 @@
 /* eslint-disable sort-imports */
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { InvitedAgentTableLanguage, TableSettingsModel, tableSettingsDataModel } from 'src/app/models/agent';
+import {
+  InvitedAgentTableLanguage,
+  TableSettingsModel,
+  tableSettingsDataModel
+} from 'src/app/models/agent';
 import { AgentLanguages, AgentList } from 'src/app/models/agentSocketModel';
 import { Country } from 'src/app/models/country';
 import { language } from 'src/app/models/language';
@@ -17,7 +21,10 @@ import { MessageService } from '../messageService/message.service';
 import { FlagsData } from '../WorkdeskServicesData';
 import { tableSettings } from 'src/app/models/callModel';
 import { timer } from 'src/app/models/preferenceModel';
-import { NotificationComponentModel, NotificationModels } from 'src/app/models/notification';
+import {
+  NotificationComponentModel,
+  NotificationModels
+} from 'src/app/models/notification';
 
 @Injectable({
   providedIn: 'root'
@@ -40,20 +47,27 @@ export class CommonService {
     private MessageService: MessageService,
     private Authservice: AuthService,
     private Router: Router
-  ) { }
+  ) {}
   // get the list of countries
   public async getLocations(): Promise<MultiSelect> {
     try {
       const countryList: Country[] =
-        await this.GigaaaApiService.getAllCountries(this.getEndpointsParamLocal().project, this.getEndpointsParamLocal().organization);
+        await this.GigaaaApiService.getAllCountries(
+          this.getEndpointsParamLocal().project,
+          this.getEndpointsParamLocal().organization
+        );
 
-      let sortedCountry = countryList.filter(e => e.name === 'Undefined').concat(countryList.filter(d => d.name !== 'Undefined').sort(
-        (cOne: Country, cTwo: Country) => {
-          let countryOne = cOne.count_of_call_requests;
-          let countryTwo = cTwo.count_of_call_requests;
-          return countryTwo - countryOne;
-        }
-      ));
+      let sortedCountry = countryList
+        .filter((e) => e.name === 'Undefined')
+        .concat(
+          countryList
+            .filter((d) => d.name !== 'Undefined')
+            .sort((cOne: Country, cTwo: Country) => {
+              let countryOne = cOne.count_of_call_requests;
+              let countryTwo = cTwo.count_of_call_requests;
+              return countryTwo - countryOne;
+            })
+        );
       const countriesList: OneSelect[] = sortedCountry.map((item: Country) => ({
         name: item.name,
         id: item.id,
@@ -182,7 +196,6 @@ export class CommonService {
       localStorage.getItem('agent-online-status') || '{}'
     );
 
-
     return isLoggedIn;
   }
   // get locations Id
@@ -277,47 +290,57 @@ export class CommonService {
     return this.Authservice.getLoggedUser().email === email ? true : false;
   }
 
-
-  // get All Notification 
+  // get All Notification
 
   public async getAllNotification() {
-    const data: NotificationModels[] = await this.GigaaaApiService.getAllNotification(this.getEndpointsParamLocal().token, this.getEndpointsParamLocal().organization,
-      this.getEndpointsParamLocal().project);
-    const res: NotificationComponentModel[] = data.map(data => ({
+    const data: NotificationModels[] =
+      await this.GigaaaApiService.getAllNotification(
+        this.getEndpointsParamLocal().token,
+        this.getEndpointsParamLocal().organization,
+        this.getEndpointsParamLocal().project
+      );
+    const res: NotificationComponentModel[] = data.map((data) => ({
       header: data.data.title,
       date: this.timeNow(data.data.created_at),
       message: data.data.content,
       isOpen: data.data.is_read,
       icon: this.getNotificationIcon(data.type),
       id: data.data.id
-    }))
+    }));
     return res;
   }
   //  set unread to read Notification
 
   public async setUnreadTOread(id: number) {
     try {
-      await this.GigaaaApiService.setUnreadToreadNotification(this.getEndpointsParamLocal().token, this.getEndpointsParamLocal().organization,
-        this.getEndpointsParamLocal().project, id)
-    }
-    catch (error: any) {
+      await this.GigaaaApiService.setUnreadToreadNotification(
+        this.getEndpointsParamLocal().token,
+        this.getEndpointsParamLocal().organization,
+        this.getEndpointsParamLocal().project,
+        id
+      );
+    } catch (error: any) {
       this.MessageService.setErrorMessage(error.error.error);
     }
   }
   // check is any Unread  notification
   public checkIsUnread(data: NotificationComponentModel[]) {
-    const response = data.filter(element => {
+    const response = data.filter((element) => {
       return element.isOpen === false;
-    })
+    });
     return response.length !== 0 ? true : false;
   }
 
-  // map notioficat data 
+  // map notioficat data
   // public delete notification one by one
 
   public async deleteNotificationOne(id: number[]) {
-    await this.GigaaaApiService.deletNotification(this.getEndpointsParamLocal().token, this.getEndpointsParamLocal().organization,
-      this.getEndpointsParamLocal().project, id)
+    await this.GigaaaApiService.deletNotification(
+      this.getEndpointsParamLocal().token,
+      this.getEndpointsParamLocal().organization,
+      this.getEndpointsParamLocal().project,
+      id
+    );
   }
   // get language flags
   public getLanguageFlags(id: number): string {
@@ -435,17 +458,20 @@ export class CommonService {
   }
   // get is logged in user is Admin or Agent
   public async getAgentRole() {
-    const data = await this.GigaaaApiService.getroleofagent(this.getEndpointsParamLocal().token, this.getEndpointsParamLocal().organization, this.getEndpointsParamLocal().project)
+    const data = await this.GigaaaApiService.getroleofagent(
+      this.getEndpointsParamLocal().token,
+      this.getEndpointsParamLocal().organization,
+      this.getEndpointsParamLocal().project
+    );
     localStorage.setItem('is-admin', JSON.stringify(data['is_admin']));
   }
-
 
   // logged in agent data
   public loggedInAgentDetails(data: AgentList) {
     localStorage.setItem('agent-logged', JSON.stringify(data));
   }
 
-  // get loggedin Agent Data 
+  // get loggedin Agent Data
   public getLoggedInAgentData() {
     const Agent: AgentList = JSON.parse(
       localStorage.getItem('agent-logged') || '{}'
@@ -455,13 +481,15 @@ export class CommonService {
 
   public getDesktopNotification(title: any, body: any) {
     Notification.requestPermission().then((permission) => {
-      if (permission = "granted") {
-        var notification = new Notification(title, { body: body, icon: '../assets/images/sidebar/workdesk_logo_short.png' });
+      if ((permission = 'granted')) {
+        var notification = new Notification(title, {
+          body: body,
+          icon: '../assets/images/sidebar/workdesk_logo_short.png'
+        });
         setTimeout(function () {
           notification.close();
         }, 3000);
       }
-
     });
   }
 
@@ -470,20 +498,24 @@ export class CommonService {
     if (this.getIsAdminOrAgent() === false) {
       this.Router.navigate(['requests']);
     }
-
-
   }
-  // set dashboard type 
+  // set dashboard type
   setDashboardType(name: string[]) {
-    this.Router.navigate(name)
+    this.Router.navigate(name);
   }
 
-  // set Table value Update 
+  // set Table value Update
 
-  public updateColumnTable(tableSettingsData: tableSettingsDataModel[], tableSettings: TableSettingsModel[]) {
-    tableSettingsData.forEach(element => {
-      tableSettings[element.customization_id].header === '' ? tableSettings[element.customization_id].header = tableSettings[element.customization_id].defaultValue :
-        tableSettings[element.customization_id].header = element.customization_value;
+  public updateColumnTable(
+    tableSettingsData: tableSettingsDataModel[],
+    tableSettings: TableSettingsModel[]
+  ) {
+    tableSettingsData.forEach((element) => {
+      tableSettings[element.customization_id].header === ''
+        ? (tableSettings[element.customization_id].header =
+            tableSettings[element.customization_id].defaultValue)
+        : (tableSettings[element.customization_id].header =
+            element.customization_value);
     });
     return tableSettings;
   }
@@ -491,12 +523,12 @@ export class CommonService {
   public onGoingTimer(entry: string, typeFormat: string) {
     // later record end time
     if (entry == null) {
-      return "Call not joined"
+      return 'Call not joined';
     }
     let endTime = new Date();
     let startTime = new Date(entry);
     // time difference in ms
-    let timeDiff = endTime.getTime() - startTime.getTime()
+    let timeDiff = endTime.getTime() - startTime.getTime();
     // strip the miliseconds
     timeDiff /= 1000;
 
@@ -523,11 +555,17 @@ export class CommonService {
     //  setTimeout(this.display(startTime.getTime()), 1000);
     switch (typeFormat) {
       case 'h':
-        return ("0" + hours).slice(-2) + ":" + ("0" + minutes).slice(-2) + ":" + ("0" + seconds).slice(-2);
+        return (
+          ('0' + hours).slice(-2) +
+          ':' +
+          ('0' + minutes).slice(-2) +
+          ':' +
+          ('0' + seconds).slice(-2)
+        );
       case 'm':
-        return ("0" + minutes).slice(-2) + ":" + ("0" + seconds).slice(-2);
+        return ('0' + minutes).slice(-2) + ':' + ('0' + seconds).slice(-2);
       default:
-        return ("0" + minutes).slice(-2) + ":" + ("0" + seconds).slice(-2);
+        return ('0' + minutes).slice(-2) + ':' + ('0' + seconds).slice(-2);
     }
   }
   // get ellapsed time
@@ -565,7 +603,6 @@ export class CommonService {
 
   // get date in formation yyyy-mm-dd
   timeNow(time: any) {
-
     switch (typeof time) {
       case 'number':
         break;
@@ -600,7 +637,7 @@ export class CommonService {
       list_choice = 1;
 
     if (seconds == 0) {
-      return 'Just now'
+      return 'Just now';
     }
     if (seconds < 0) {
       seconds = Math.abs(seconds);
@@ -609,19 +646,17 @@ export class CommonService {
     }
     let i = 0,
       format: any = [];
-    while (format = time_formats[i++])
+    while ((format = time_formats[i++]))
       if (seconds < format[0]) {
-        if (typeof format[2] == 'string')
-          return format[list_choice];
-        else
-          if (seconds < 60 && seconds > 0) {
-            return 'now'
-          }
-          else {
-            return Math.floor(seconds / format[2]) + ' ' + format[1] + ' ' + token;
-          }
+        if (typeof format[2] == 'string') return format[list_choice];
+        else if (seconds < 60 && seconds > 0) {
+          return 'now';
+        } else {
+          return (
+            Math.floor(seconds / format[2]) + ' ' + format[1] + ' ' + token
+          );
+        }
       }
     return time;
   }
-
 }

@@ -8,9 +8,8 @@ describe('TimerWidgetComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ TimerWidgetComponent ]
-    })
-    .compileComponents();
+      declarations: [TimerWidgetComponent]
+    }).compileComponents();
 
     fixture = TestBed.createComponent(TimerWidgetComponent);
     component = fixture.componentInstance;

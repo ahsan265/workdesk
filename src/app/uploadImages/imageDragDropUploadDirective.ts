@@ -17,7 +17,7 @@ export class DragNDropDirective {
     new EventEmitter();
   @HostBinding('style.background') private background = '#eee';
 
-  constructor() { }
+  constructor() {}
 
   @HostListener('dragover', ['$event']) public onDragOver(evt: any) {
     evt.preventDefault();

@@ -7,12 +7,10 @@ import { Router } from '@angular/router';
   styleUrls: ['./page-not-found.component.scss']
 })
 export class PageNotFoundComponent implements OnInit {
+  constructor(private Router: Router) {}
 
-  constructor(private Router: Router) { }
-
-  ngOnInit(): void {
-  }
+  ngOnInit(): void {}
   gotToHome() {
-    this.Router.navigate(['dashboard'])
+    this.Router.navigate(['dashboard']);
   }
 }

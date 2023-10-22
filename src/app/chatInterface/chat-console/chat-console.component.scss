@@ -1,75 +1,79 @@
 .chatConsoleWrapper {
-    height: 100vh;
-    width: 100%;
-    overflow: hidden;
+  height: 100vh;
+  width: 100%;
+  overflow: hidden;
 }
 
 .chatArea {
-    position: relative;
-    overflow: hidden;
-    height: calc(100vh - 108px);
-    display: flex;
-    padding: 16px;
-    background: linear-gradient(127.72deg, rgba(213, 213, 224, 0.76) 3.76%, rgba(232, 241, 255, 0.76) 98.38%);
+  position: relative;
+  overflow: hidden;
+  height: calc(100vh - 108px);
+  display: flex;
+  padding: 16px;
+  background: linear-gradient(
+    127.72deg,
+    rgba(213, 213, 224, 0.76) 3.76%,
+    rgba(232, 241, 255, 0.76) 98.38%
+  );
 }
 
 .threadArea {
-    display: inline-flex;
-    height: calc(100vh - 115px);
+  display: inline-flex;
+  height: calc(100vh - 115px);
 }
 
 .readingArea {
-    position: relative;
-    display: inline-flex;
-    width: calc(100% - 350px);
-    height: calc(100vh - 205.5px);
-    padding: 0px 0px 0px 16px;
-    overflow-y: overlay;
-    transition: 0.4s;
-    scroll-behavior: smooth;
+  position: relative;
+  display: inline-flex;
+  width: calc(100% - 350px);
+  height: calc(100vh - 205.5px);
+  padding: 0px 0px 0px 16px;
+  overflow-y: overlay;
+  transition: 0.4s;
+  scroll-behavior: smooth;
 }
 
 .readingArea::-webkit-scrollbar {
-    background: rgba(215, 223, 239, 0.62);
-    border-radius: 4px;
-    width: 8px;
+  background: rgba(215, 223, 239, 0.62);
+  border-radius: 4px;
+  width: 8px;
 }
 
 ::-webkit-scrollbar-thumb {
-    background: #97A7C0;
-    border-radius: 8px;
-    width: 8px;
+  background: #97a7c0;
+  border-radius: 8px;
+  width: 8px;
 }
 
 .typingArea {
-    width: calc(100% - 385px);
-    height: -moz-fit-content;
-    height: fit-content;
-    position: fixed;
-    bottom: 0px;
-    right: 0px;
-    padding: 0px 15px 0px 15px;
+  width: calc(100% - 385px);
+  height: -moz-fit-content;
+  height: fit-content;
+  position: fixed;
+  bottom: 0px;
+  right: 0px;
+  padding: 0px 15px 0px 15px;
 }
 
 .chatReaderWrapper {
-    position: relative;
-    width: 100%;
-    height: calc(100vh - 210px);
+  position: relative;
+  width: 100%;
+  height: calc(100vh - 210px);
 }
 
 .scrollBottom {
-    background: linear-gradient(145.49deg, #FFFFFF 13.81%, #D4DEF2 93.6%);
-    border: 1px solid #FFFFFF;
-    box-shadow: 0px 2px 4px #c3d5ef;
-    border-radius: 31px;
-    position: fixed;
-    width: 35px;
-    height: 35px;
-    bottom: 120px;
-    right: 40px;
-    display: flex;
-    flex-wrap: nowrap;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
+  background: linear-gradient(145.49deg, #ffffff 13.81%, #d4def2 93.6%);
+  border: 1px solid #ffffff;
+  box-shadow: 0px 2px 4px #c3d5ef;
+  border-radius: 31px;
+  position: fixed;
+  width: 35px;
+  height: 35px;
+  bottom: 120px;
+  right: 40px;
+  display: flex;
+  flex-wrap: nowrap;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
 }

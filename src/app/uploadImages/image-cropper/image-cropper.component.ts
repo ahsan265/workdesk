@@ -10,7 +10,12 @@ import {
   ViewChild
 } from '@angular/core';
 import { OverlayService } from '@gigaaa/gigaaa-components';
-import { base64ToFile, Dimensions, ImageCroppedEvent, ImageTransform } from 'ngx-image-cropper';
+import {
+  Dimensions,
+  ImageCroppedEvent,
+  ImageTransform,
+  base64ToFile
+} from 'ngx-image-cropper';
 import { CommonService } from 'src/app/workdeskServices/commonEndpoint/common.service';
 import { GigaaaApiService } from 'src/app/workdeskServices/gigaaaApiService/gigaaa-api-service.service';
 import { MessageService } from 'src/app/workdeskServices/messageService/message.service';
@@ -58,7 +63,6 @@ export class ImageCropperComponent implements OnInit, OnDestroy {
   isDrag = 1;
   canvasRotation = 0;
 
-
   showCropper = false;
   containWithinAspectRatio = true;
   transform: ImageTransform = {};
@@ -74,10 +78,8 @@ export class ImageCropperComponent implements OnInit, OnDestroy {
     private MessageService: MessageService,
     private SharedServices: SharedServices,
     private OverlayService: OverlayService
-  ) { }
-  ngOnDestroy(): void {
-
-  }
+  ) {}
+  ngOnDestroy(): void {}
 
   imageLoad(image: string) {
     this.image = new Image();
@@ -123,8 +125,6 @@ export class ImageCropperComponent implements OnInit, OnDestroy {
     //     this.updateUserProfilePicture(base64);
     //   }
     // });
-
-
   }
   // fileChangeEvent(event:any)
   // {
@@ -132,7 +132,7 @@ export class ImageCropperComponent implements OnInit, OnDestroy {
   // }
   zoomOut() {
     if (this.scale !== 1.0) {
-      this.scale -= .1;
+      this.scale -= 0.1;
       this.transform = {
         ...this.transform,
         scale: this.scale
@@ -141,7 +141,7 @@ export class ImageCropperComponent implements OnInit, OnDestroy {
   }
   zoomIn() {
     if (this.scale !== 1.6) {
-      this.scale += .1;
+      this.scale += 0.1;
       this.transform = {
         ...this.transform,
         scale: this.scale
@@ -149,34 +149,42 @@ export class ImageCropperComponent implements OnInit, OnDestroy {
     }
   }
   dragEvent(event: MouseEvent) {
-
     this.renderer.listen(document, 'mousemove', (e) => {
       if (this.isDrag === 1) {
         const main = document.querySelector('.picturearea') as HTMLElement;
         const drag = document.querySelector('.content') as HTMLElement;
-        this.initY = drag.getBoundingClientRect().top - main.getBoundingClientRect().top;
-        this.initX = drag.getBoundingClientRect().left - main.getBoundingClientRect().left;
+        this.initY =
+          drag.getBoundingClientRect().top - main.getBoundingClientRect().top;
+        this.initX =
+          drag.getBoundingClientRect().left - main.getBoundingClientRect().left;
       }
     });
-    this.renderer.listen(document, 'mouseup', (e) => {
-    });
+    this.renderer.listen(document, 'mouseup', (e) => {});
   }
 
   // crop image
   cropImages() {
+    const x0 = this.initX * this.hRatio * 3.5;
+    const y0 = this.initY * this.vRatio * 3.5;
 
-    const x0 = (this.initX * this.hRatio) * 3.5;
-    const y0 = (this.initY * this.vRatio) * 3.5;
-
-    this.context.clearRect(0, 0, this.context.canvas.width, this.context.canvas.height);
-    this.context.drawImage(this.image,
-      x0, y0,   // Start at 70/20 pixels from the left and the top of the image (crop),
-      this.height * 2.5, this.width * 2.5,   // "Get" a `50 * 50` (w * h) area from the source image (crop),
-      0, 0,     // Place the result at 0, 0 in the canvas,
-      this.image.height, this.image.width);
-    this.context.restore()
-
-
+    this.context.clearRect(
+      0,
+      0,
+      this.context.canvas.width,
+      this.context.canvas.height
+    );
+    this.context.drawImage(
+      this.image,
+      x0,
+      y0, // Start at 70/20 pixels from the left and the top of the image (crop),
+      this.height * 2.5,
+      this.width * 2.5, // "Get" a `50 * 50` (w * h) area from the source image (crop),
+      0,
+      0, // Place the result at 0, 0 in the canvas,
+      this.image.height,
+      this.image.width
+    );
+    this.context.restore();
   }
 
   expandCroppingZone(event: MouseEvent) {
@@ -211,7 +219,6 @@ export class ImageCropperComponent implements OnInit, OnDestroy {
   }
 
   public updateUserProfilePicture() {
-
     const file: any = base64ToFile(this.croppedImage);
     this.GigaaaApiService.uploaduserprofilepic(
       this.CommonService.getEndpointsParamLocal().token,
@@ -265,11 +272,10 @@ export class ImageCropperComponent implements OnInit, OnDestroy {
     this.showCropper = true;
   }
 
-  cropperReady(sourceImageDimensions: Dimensions) {
-  }
+  cropperReady(sourceImageDimensions: Dimensions) {}
 
   loadImageFailed() {
-    this.MessageService.setErrorMessage('Please reupload photo again.')
+    this.MessageService.setErrorMessage('Please reupload photo again.');
     this.OverlayService.close();
   }
 }

@@ -12,7 +12,7 @@ image-cropper {
 }
 
 .headingUpload {
-  font-family: "Roboto";
+  font-family: 'Roboto';
   font-style: normal;
   font-weight: 500;
   font-size: 18px;
@@ -22,7 +22,6 @@ image-cropper {
   letter-spacing: 0.02em;
   color: #162741;
 }
-
 
 .closeIcon {
   display: inline-flex;
@@ -111,7 +110,6 @@ button {
 .cancelPanel.right {
   width: 100%;
   text-align: right;
-
 }
 
 .buttonSave {
@@ -420,7 +418,9 @@ mat-slider {
   background-color: #1c54db;
 }
 
-::ng-deep .mat-slider-min-value:not(.mat-slider-thumb-label-showing) .mat-slider-thumb {
+::ng-deep
+  .mat-slider-min-value:not(.mat-slider-thumb-label-showing)
+  .mat-slider-thumb {
   background-color: #d0d0de;
 }
 

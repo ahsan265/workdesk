@@ -4,7 +4,10 @@ import { Router } from '@angular/router';
 import { OverlayService } from '@gigaaa/gigaaa-components';
 import { Subject } from 'rxjs';
 import { CallConsoleComponent } from 'src/app/callInterface/call-console/call-console.component';
-import { miceData, screenShareData } from 'src/app/callInterface/callsInterfaceData';
+import {
+  miceData,
+  screenShareData
+} from 'src/app/callInterface/callsInterfaceData';
 import { CloseDialogOverlayRef } from 'src/app/callInterface/overLayService/closeDialogService';
 import { CallsService } from 'src/app/calls/callService/calls.service';
 import { CallSocketService } from 'src/app/workdeskSockets/callSocket/call-socket.service';
@@ -57,13 +60,15 @@ export class StreamingService {
     }
     const userInformation = this.AgentUserInformation.getCallInformation();
     if (userInformation.last_used_microphone !== undefined) {
-      this.mediaConstraint.audio = { deviceId: userInformation.last_used_microphone.id }
+      this.mediaConstraint.audio = {
+        deviceId: userInformation.last_used_microphone.id
+      };
     }
     await navigator.mediaDevices
       .getUserMedia(this.mediaConstraint)
       .then((stream) => {
         this.localStream = stream;
-        stream.getVideoTracks()[0].stop()
+        stream.getVideoTracks()[0].stop();
         this.getLocalStream.next(stream);
       });
   }
@@ -97,7 +102,8 @@ export class StreamingService {
       );
     } else {
       audio.replaceTrack(audioTrack);
-    } this.PeerConnectionService.getAudioCodec()
+    }
+    this.PeerConnectionService.getAudioCodec();
     const offer: RTCSessionDescriptionInit =
       await this.PeerConnectionService.peerConnection.createOffer({
         offerToReceiveAudio: true,
@@ -106,7 +112,7 @@ export class StreamingService {
       });
     await this.PeerConnectionService.peerConnection
       .setLocalDescription(offer)
-      .catch((err: any) => { });
+      .catch((err: any) => {});
     this.CallSocketService.sendDataforCall({
       type: 'offer',
       peer_id: peerId,
@@ -145,7 +151,6 @@ export class StreamingService {
         track.enabled = true;
       });
       this.isAudioInputEnabled = true;
-
     }
   }
   // stop video
@@ -222,15 +227,15 @@ export class StreamingService {
 
         audio === undefined
           ? this.PeerConnectionService.peerConnection.addTrack(
-            audioTrack,
-            this.localStream
-          )
+              audioTrack,
+              this.localStream
+            )
           : audio.replaceTrack(audioTrack);
         video === undefined
           ? this.PeerConnectionService.peerConnection.addTrack(
-            videoTrack,
-            this.localStream
-          )
+              videoTrack,
+              this.localStream
+            )
           : video.replaceTrack(videoTrack);
       })
       .then(async () => {
@@ -243,7 +248,7 @@ export class StreamingService {
           });
         await this.PeerConnectionService.peerConnection
           .setLocalDescription(offer)
-          .catch((err: any) => { });
+          .catch((err: any) => {});
         this.restoreLastUsedMicrophone();
         this.CallSocketService.sendDataforCall({
           type: 'offer',
@@ -295,7 +300,10 @@ export class StreamingService {
       }
       // for audio track
       if (audio === undefined) {
-        this.PeerConnectionService.peerConnection.addTrack(localAudio, this.localStream)
+        this.PeerConnectionService.peerConnection.addTrack(
+          localAudio,
+          this.localStream
+        );
       } else {
         audio.replaceTrack(localAudio);
       }
@@ -309,7 +317,7 @@ export class StreamingService {
         });
       await this.PeerConnectionService.peerConnection
         .setLocalDescription(offer)
-        .catch((err: any) => { });
+        .catch((err: any) => {});
       this.restoreLastUsedMicrophone();
       this.CallSocketService.sendDataforCall({
         type: 'offer',
@@ -416,7 +424,6 @@ export class StreamingService {
       } else {
         this.AgentUserInformation.updateScreenShareStutus(false);
         this.sendFirstOffer(peerId);
-
       }
     }
     this.restoreLastUsedMicrophone();
@@ -460,7 +467,10 @@ export class StreamingService {
         audio?.replaceTrack(stream.getAudioTracks()[0]);
       });
     }
-    if (this.DevicesInformationService.getBrowserName() !== 'firefox' || this.DevicesInformationService.getBrowserName() !== 'safari') {
+    if (
+      this.DevicesInformationService.getBrowserName() !== 'firefox' ||
+      this.DevicesInformationService.getBrowserName() !== 'safari'
+    ) {
       const selectedSpeaker = {
         id: devices.audioOutputDevice[0].deviceId,
         groupId: devices.audioOutputDevice[0].groupId,
@@ -469,7 +479,8 @@ export class StreamingService {
         isSelected: true,
         selectedbackgroundColor: '#243247',
         hoverColor: '',
-        selectedIcon: '../../../assets/images/callInterface/green_check_icon.svg',
+        selectedIcon:
+          '../../../assets/images/callInterface/green_check_icon.svg',
         voiceLevels: 0
       };
       this.AgentUserInformation.updateLastUsedSpeaker(selectedSpeaker);
@@ -480,7 +491,6 @@ export class StreamingService {
   public restoreLastUsedMicrophone() {
     const userInformation = this.AgentUserInformation.getCallInformation();
     if (userInformation.last_used_microphone !== undefined) {
-
       const idOfMicrophone = userInformation.last_used_microphone.id;
       let constraint = { audio: { deviceId: idOfMicrophone } };
       navigator.mediaDevices.getUserMedia(constraint).then(async (stream) => {
@@ -498,15 +508,12 @@ export class StreamingService {
     }
   }
 
-  // checker for audio 
+  // checker for audio
   audioChecker() {
     if (this.miceData.isSelected === true) {
       this.unmunteAudio();
-    }
-    else {
+    } else {
       this.muteAudio();
     }
   }
-
-
 }

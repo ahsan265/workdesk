@@ -8,9 +8,8 @@ describe('ChattextAreaComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ ChattextAreaComponent ]
-    })
-    .compileComponents();
+      declarations: [ChattextAreaComponent]
+    }).compileComponents();
 
     fixture = TestBed.createComponent(ChattextAreaComponent);
     component = fixture.componentInstance;

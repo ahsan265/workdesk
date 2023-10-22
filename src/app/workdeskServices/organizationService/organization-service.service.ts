@@ -7,7 +7,11 @@ import { OverlayService } from '@gigaaa/gigaaa-components';
 import { BehaviorSubject } from 'rxjs';
 import { sidebarData, sidebarDataAgent } from 'src/app/data';
 import { AccountNotpartComponent } from 'src/app/modals/account-not-part/account-notpart.component';
-import { Organization, Project, sidebarDropdownData } from 'src/app/models/organization';
+import {
+  Organization,
+  Project,
+  sidebarDropdownData
+} from 'src/app/models/organization';
 import { ConnectionSecurityService } from 'src/app/workdeskSockets/socketConnectionSecurity/connection-security.service';
 import { AgentInviteService } from '../agentInviteService/agent-invite.service';
 import { CommonService } from '../commonEndpoint/common.service';
@@ -37,9 +41,10 @@ export class getOrganizationService {
     private OverlayService: OverlayService,
     private CommonService: CommonService
   ) {
-
     this.LastUsedproject = new BehaviorSubject(this.getProjects());
-    this.LastUsedOrganization = new BehaviorSubject(this.getLastUsedOrganization());
+    this.LastUsedOrganization = new BehaviorSubject(
+      this.getLastUsedOrganization()
+    );
   }
   // get organization for workdesk
   public async getOrganization(token: string, isAllowed: boolean) {
@@ -54,14 +59,14 @@ export class getOrganizationService {
             if (data.last_used === true) {
               const lastUsedOgranization = data.uuid;
               localStorage.setItem('gigaaa-organz', JSON.stringify(data));
-              this.LastUsedOrganization.next(data)
+              this.LastUsedOrganization.next(data);
               this.project = data.projects.map((elemnt) => ({
                 name: elemnt?.title,
                 uuid: elemnt?.uuid,
                 last_used: elemnt?.last_used
-              }))
+              }));
               //this.getProjectList(this.project);
-              this.project.forEach(async project => {
+              this.project.forEach(async (project) => {
                 if (project.last_used === true) {
                   localStorage.setItem(
                     'gigaaa-project',
@@ -72,9 +77,9 @@ export class getOrganizationService {
                     lastUsedOgranization,
                     project.uuid
                   );
-                  (isAllowed === true) ? this.CommonService.restrictRoute() : '';
+                  isAllowed === true ? this.CommonService.restrictRoute() : '';
                 }
-              })
+              });
             }
           });
         } else {
@@ -84,7 +89,7 @@ export class getOrganizationService {
             panelClass: 'notAccount',
             hasBackdrop: true,
             backdropClass: 'dark-backdrop'
-          })
+          });
         }
       })
       .catch((err: any) => {
@@ -92,7 +97,7 @@ export class getOrganizationService {
       });
   }
 
-  // check user belong to project and organization 
+  // check user belong to project and organization
 
   public async checkUserIsAuthorized(token: string) {
     await this.AgentinviteService.sendtAgentInvitationCode();
@@ -106,9 +111,8 @@ export class getOrganizationService {
             panelClass: 'notAccount',
             hasBackdrop: true,
             backdropClass: 'dark-backdrop'
-          })
-        }
-        else {
+          });
+        } else {
           this.router.navigate(['dashboard']);
         }
       })
@@ -129,33 +133,32 @@ export class getOrganizationService {
   // get projects list
   public async getProjectList(project: sidebarDropdownData[]): Promise<any> {
     let lastUsedProject: string = '';
-    let sidebar: any
+    let sidebar: any;
     project.forEach((data: any) => {
       if (data.last_used === true) {
         lastUsedProject = data.name;
         if (this.CommonService.getIsAdminOrAgent() === true) {
           this.sidebarData.forEach((element: any) => {
             if (element.dropdown === true) {
-              element.dropdownItems = project.map((data => ({
+              element.dropdownItems = project.map((data) => ({
                 name: data.name,
                 uuid: [data.uuid],
                 isLink: false,
-                selected: (data.name === lastUsedProject) ? true : false
-              })))
+                selected: data.name === lastUsedProject ? true : false
+              }));
               element.name = lastUsedProject;
             }
           });
           sidebar = this.sidebarData;
-        }
-        else {
+        } else {
           this.sidebarDataAgent.forEach((element: any) => {
             if (element.dropdown === true) {
-              element.dropdownItems = project.map((data => ({
+              element.dropdownItems = project.map((data) => ({
                 name: data.name,
                 uuid: [data.uuid],
                 isLink: false,
-                selected: (data.last_used === true) ? true : false
-              })))
+                selected: data.last_used === true ? true : false
+              }));
               element.name = lastUsedProject;
             }
           });

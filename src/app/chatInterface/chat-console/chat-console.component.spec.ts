@@ -8,9 +8,8 @@ describe('ChatConsoleComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ ChatConsoleComponent ]
-    })
-    .compileComponents();
+      declarations: [ChatConsoleComponent]
+    }).compileComponents();
 
     fixture = TestBed.createComponent(ChatConsoleComponent);
     component = fixture.componentInstance;

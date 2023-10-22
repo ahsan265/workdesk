@@ -1,6 +1,10 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { assignedAgent, unAssignedAgent } from 'src/app/models/tickets';
-import { assignedAgentData, searchInputData, unAssignedAgentData } from './assignData';
+import {
+  assignedAgentData,
+  searchInputData,
+  unAssignedAgentData
+} from './assignData';
 
 @Component({
   selector: 'app-assign',
@@ -14,9 +18,5 @@ export class AssignComponent {
   @Input() UnAssignedAgent: unAssignedAgent[] = unAssignedAgentData;
   @Output() assignedAgentList = new EventEmitter();
 
-  getSearchValue(event: string) {
-
-  }
-
-
+  getSearchValue(event: string) {}
 }

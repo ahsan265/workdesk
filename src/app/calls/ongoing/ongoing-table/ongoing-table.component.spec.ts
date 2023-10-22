@@ -8,9 +8,8 @@ describe('OngoingTableComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ OngoingTableComponent ]
-    })
-    .compileComponents();
+      declarations: [OngoingTableComponent]
+    }).compileComponents();
 
     fixture = TestBed.createComponent(OngoingTableComponent);
     component = fixture.componentInstance;

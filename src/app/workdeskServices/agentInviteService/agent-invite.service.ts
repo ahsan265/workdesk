@@ -20,7 +20,7 @@ export class AgentInviteService {
     private ActivatedRoute: ActivatedRoute,
     private MessageService: MessageService,
     private Router: Router
-  ) { }
+  ) {}
 
   public async sendtAgentInvitationCode() {
     let code = this.getInvitationCode();
@@ -42,26 +42,24 @@ export class AgentInviteService {
   }
 
   public getInvitedAgentDetails() {
-    this.ActivatedRoute.queryParams.subscribe(
-      (data) => {
-        let code = data['invitation_code'];
-        if (code != null) {
-          localStorage.setItem('gigaaa-invitation', JSON.stringify(code));
-          this.GigaaaApiService.getinvitationdetails(code).subscribe(
-            (data: inviteLinkModel) => {
-              if (data != null) {
-                // localStorage.removeItem('gigaaa-invitation');
-                this.agentInviteSubject.next(data);
-              }
-            }, (err: any) => {
-              this.agentInviteLinkExpireSubject.next(true);
-              this.MessageService.setErrorMessage(err.error.error);
+    this.ActivatedRoute.queryParams.subscribe((data) => {
+      let code = data['invitation_code'];
+      if (code != null) {
+        localStorage.setItem('gigaaa-invitation', JSON.stringify(code));
+        this.GigaaaApiService.getinvitationdetails(code).subscribe(
+          (data: inviteLinkModel) => {
+            if (data != null) {
+              // localStorage.removeItem('gigaaa-invitation');
+              this.agentInviteSubject.next(data);
             }
-          );
-        }
-      },
-
-    );
+          },
+          (err: any) => {
+            this.agentInviteLinkExpireSubject.next(true);
+            this.MessageService.setErrorMessage(err.error.error);
+          }
+        );
+      }
+    });
   }
   private getInvitationCode() {
     return localStorage.getItem('gigaaa-invitation');

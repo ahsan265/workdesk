@@ -24,12 +24,38 @@ export class LandingPageComponent implements OnInit {
   landingPageData: any = {
     logo: '../../assets/images/landingpage/workdesk_logo_lp.svg',
     title: ['Automate your <br> customer <br> service'],
-    text: ['Offer an elevated customer <br> experience with gigaaa AI <br> Customer Support solution'],
-    message: ['Make every customer more satisfied by giving them <br> the exact information they  need, right when they <br> need it.'],
+    text: [
+      'Offer an elevated customer <br> experience with gigaaa AI <br> Customer Support solution'
+    ],
+    message: [
+      'Make every customer more satisfied by giving them <br> the exact information they  need, right when they <br> need it.'
+    ],
     image: '../../assets/images/landingpage/workdesk_hero.svg',
-    icons: [{ text: 'Customer Support', icon: '../assets/images/landingpage/customer_support_icon.svg' }, { text: '24/7', icon: '../assets/images/landingpage/24_7_icon.svg' },
-    { text: 'Video Calls', icon: '../assets/images/landingpage/video_calls_icon.svg' }, { text: 'Audio Calls', icon: '../assets/images/landingpage/audio_call_icon.svg' }, { text: 'Multilingual', icon: '../assets/images/landingpage/multilingual_icon.svg' }, { text: 'Ticketing', icon: '../assets/images/landingpage/ticketing_icon.svg' }, { text: 'Chats', icon: '../assets/images/landingpage/chats_icon.svg' }]
-  }
+    icons: [
+      {
+        text: 'Customer Support',
+        icon: '../assets/images/landingpage/customer_support_icon.svg'
+      },
+      { text: '24/7', icon: '../assets/images/landingpage/24_7_icon.svg' },
+      {
+        text: 'Video Calls',
+        icon: '../assets/images/landingpage/video_calls_icon.svg'
+      },
+      {
+        text: 'Audio Calls',
+        icon: '../assets/images/landingpage/audio_call_icon.svg'
+      },
+      {
+        text: 'Multilingual',
+        icon: '../assets/images/landingpage/multilingual_icon.svg'
+      },
+      {
+        text: 'Ticketing',
+        icon: '../assets/images/landingpage/ticketing_icon.svg'
+      },
+      { text: 'Chats', icon: '../assets/images/landingpage/chats_icon.svg' }
+    ]
+  };
   oauthUrl = `${environment.oauth_url}`;
   accountUrl = `${environment.register_account}`;
   constructor(
@@ -38,7 +64,7 @@ export class LandingPageComponent implements OnInit {
     private headerService: GigaaaHeaderService,
     private AgentInviteService: AgentInviteService,
     private SharedServices: SharedServices
-  ) { }
+  ) {}
 
   ngOnInit(): void {
     this.AgentInviteService.getInvitedAgentDetails();
@@ -53,10 +79,9 @@ export class LandingPageComponent implements OnInit {
         }
       }
     );
-    this.AgentInviteService.agentInviteLinkExpireSubject.subscribe(data => {
+    this.AgentInviteService.agentInviteLinkExpireSubject.subscribe((data) => {
       this.showLinkExpireModal = data;
-    })
-
+    });
   }
 
   onLogin(event: boolean) {

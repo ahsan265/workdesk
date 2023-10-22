@@ -10,7 +10,13 @@ import dayjs from 'dayjs';
 import { CalendarService } from 'src/app/calendarService/calendar.service';
 import { ranges } from 'src/app/dashboard/dashboardData';
 import { answeredTablaSetting } from '../../missed/missedData';
-import { answeredData, callTypeAnswered, languaugesAnswered, paginationData, searchInputData } from '../answeredData';
+import {
+  answeredData,
+  callTypeAnswered,
+  languaugesAnswered,
+  paginationData,
+  searchInputData
+} from '../answeredData';
 import { CallsService } from '../../callService/calls.service';
 import { noAgentTobaleData } from 'src/app/agents/agentsData';
 import { getDefaultInputsLoadOnce } from '../../defaultLoadService/incoming.Service';
@@ -64,67 +70,73 @@ export class AnsweredComponent implements OnInit {
     private CommonService: CommonService,
     private calendarService: CalendarService,
     private getDefaultInputsLoadOnce: getDefaultInputsLoadOnce
-
   ) {
     this.CallsService.sendDataToAnsweredTabsSubject.subscribe(
       (data: newCallModelAnswered) => {
         this.pagination.totalItems = data.items_count;
         this.pagination.totolPages = data.total_pages;
         this.pagination.itemsPerPage = data.items_per_page;
-        this.answeredData = data.calls.map((answeredData: AnsweredCallModel) => ({
-          user_details: {
-            image: '../../../assets/images/callInterface/user.png',
-            text: answeredData.user_name
-          },
-          utilites: [
-            {
-              image: this.CommonService.getLanguageFlags(
-                answeredData.language_id
-              )
+        this.answeredData = data.calls.map(
+          (answeredData: AnsweredCallModel) => ({
+            user_details: {
+              image: '../../../assets/images/callInterface/user.png',
+              text: answeredData.user_name
             },
-            { image: this.CommonService.getBrowserFlag(answeredData.browser) },
-            {
-              image: this.CommonService.getDeviceType(answeredData.desktop)
+            utilites: [
+              {
+                image: this.CommonService.getLanguageFlags(
+                  answeredData.language_id
+                )
+              },
+              {
+                image: this.CommonService.getBrowserFlag(answeredData.browser)
+              },
+              {
+                image: this.CommonService.getDeviceType(answeredData.desktop)
+              },
+              {
+                image: this.CommonService.getOperatingSystem(
+                  answeredData.operating_system
+                )
+              }
+            ],
+            callType: {
+              image: this.CommonService.getConversationType(
+                answeredData.request_type
+              ),
+              text: this.CallsService.getCallTypeName(answeredData.request_type)
             },
-            {
-              image: this.CommonService.getOperatingSystem(
-                answeredData.operating_system
-              )
-            }
-          ],
-          callType: {
-            image: this.CommonService.getConversationType(
-              answeredData.request_type
+            call_uuid: answeredData.request_uuid,
+            duration: this.CallsService.getCalledAtTimeDate(
+              answeredData.request_started_at,
+              this.aggregate
             ),
-            text: this.CallsService.getCallTypeName(answeredData.request_type)
-          },
-          call_uuid: answeredData.request_uuid,
-          duration: this.CallsService
-            .getCalledAtTimeDate(answeredData.request_started_at, this.aggregate),
-          agent_name: answeredData.agent.display_name,
-          user_id: this.CallsService.getUserId(answeredData.user_id),
-          agent_details: {
-            image: answeredData.agent.images[96],
-            text: answeredData.agent.email
-          }
-        }));
-        this.unfilterAnsweredData = this.answeredData
-        this.callsIndicatorData.text = this.pagination.totalItems + ' answered requests';
-
+            agent_name: answeredData.agent.display_name,
+            user_id: this.CallsService.getUserId(answeredData.user_id),
+            agent_details: {
+              image: answeredData.agent.images[96],
+              text: answeredData.agent.email
+            }
+          })
+        );
+        this.unfilterAnsweredData = this.answeredData;
+        this.callsIndicatorData.text =
+          this.pagination.totalItems + ' answered requests';
       }
     );
   }
   async ngOnInit(): Promise<void> {
-    this.getDefaultInputsLoadOnce.answeredlanguage.asObservable().subscribe(data => {
-      this.languauges = data;
-      this.languageIds = [];
-      this.callTypeName = [];
-      this.callType.data.map(data => {
-        data.selected = false;
-      })
-      this.searchInputData.searchText = '';
-    })
-
+    this.getDefaultInputsLoadOnce.answeredlanguage
+      .asObservable()
+      .subscribe((data) => {
+        this.languauges = data;
+        this.languageIds = [];
+        this.callTypeName = [];
+        this.callType.data.map((data) => {
+          data.selected = false;
+        });
+        this.searchInputData.searchText = '';
+      });
   }
 
   change(event: any) {
@@ -211,12 +223,10 @@ export class AnsweredComponent implements OnInit {
           this.pageNumber,
           this.lastUsedSearch
         );
+      } else {
+        clearTimeout(this.timer);
       }
-      else {
-        clearTimeout(this.timer)
-      }
-    }, 500)
-
+    }, 500);
   }
   // get page number
   pagenumber(event: number) {
@@ -248,5 +258,4 @@ export class AnsweredComponent implements OnInit {
       this.lastUsedSearch
     );
   }
-
 }

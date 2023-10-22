@@ -1,7 +1,7 @@
-import dayjs from "dayjs";
-import { callsIndicatorData } from "src/app/models/callIndicatorModel";
-import { MultiSelect } from "src/app/models/multiSelect";
-import { SearchInput } from "src/app/models/searchInput";
+import dayjs from 'dayjs';
+import { callsIndicatorData } from 'src/app/models/callIndicatorModel';
+import { MultiSelect } from 'src/app/models/multiSelect';
+import { SearchInput } from 'src/app/models/searchInput';
 
 const dataTableSettings: any[] = [
   {
@@ -78,17 +78,15 @@ const callTypeAnswered: MultiSelect = {
     { id: 1, name: 'Audio', selected: false },
     { id: 2, name: 'Video', selected: false },
     { id: 3, name: 'Chat', selected: false }
-
   ]
 };
 
-const paginationData: any =
-{
+const paginationData: any = {
   currentPage: 1,
   itemsPerPage: 10,
   totalItems: 50,
   totolPages: 12
-}
+};
 
 const agents = [
   {
@@ -165,8 +163,14 @@ const languaugesAnswered: MultiSelect = {
   title: 'Language',
   showSelectAll: true,
   showSearchBar: false,
-  data: [
-
-  ]
+  data: []
 };
-export { dataTableSettings, agents, callTypeAnswered, paginationData, answeredData, searchInputData, languaugesAnswered };
+export {
+  dataTableSettings,
+  agents,
+  callTypeAnswered,
+  paginationData,
+  answeredData,
+  searchInputData,
+  languaugesAnswered
+};

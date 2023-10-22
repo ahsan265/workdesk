@@ -11,8 +11,8 @@ export class ImageUploaderComponent implements OnInit {
   @Output() getUploadDragImage = new EventEmitter<File>();
 
   filename: any;
-  constructor() { }
-  ngOnInit(): void { }
+  constructor() {}
+  ngOnInit(): void {}
   saveFiles(files: FileList) {
     if (files.length > 1) {
     }
@@ -25,5 +25,4 @@ export class ImageUploaderComponent implements OnInit {
   dragImageUpload(event: any) {
     this.getUploadDragImage.emit(event);
   }
-
 }

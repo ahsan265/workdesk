@@ -25,8 +25,7 @@ export class AgentService {
     private GigaaaApiService: GigaaaApiService,
     private CommonService: CommonService,
     private MessageService: MessageService
-  ) {
-  }
+  ) {}
   // send agent params from agent component using service
   public sendAgentDefaultParameter(
     languages: number[],
@@ -73,7 +72,6 @@ export class AgentService {
     }
   }
   public getAgentWiseData(AgentList: AgentList[]) {
-
     const data = this.CommonService.getLoggedInAgentData();
     if (
       data.role === 'Admin' &&
@@ -344,5 +342,4 @@ export class AgentService {
       this.MessageService.setErrorMessage(error.error.error);
     }
   }
-
 }

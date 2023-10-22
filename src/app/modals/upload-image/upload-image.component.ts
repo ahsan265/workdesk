@@ -1,6 +1,6 @@
 /* eslint-disable no-undef */
 import { Component, Inject, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { component_data, OverlayService } from '@gigaaa/gigaaa-components';
+import { OverlayService, component_data } from '@gigaaa/gigaaa-components';
 import { ImageTransform, base64ToFile } from 'ngx-image-cropper';
 import { AgentService } from 'src/app/agents/agentService/agent.service';
 import { AgentList } from 'src/app/models/agentSocketModel';
@@ -40,13 +40,17 @@ export class UploadImageComponent implements OnInit, OnDestroy {
   progressbarvalue: any = 0;
   filesize: any;
   imageUploaded: any;
-  constructor(@Inject(component_data) public data: AgentList, private OverlayService: OverlayService, private AgentService: AgentService) { }
+  constructor(
+    @Inject(component_data) public data: AgentList,
+    private OverlayService: OverlayService,
+    private AgentService: AgentService
+  ) {}
   showSaveButton: boolean = false;
   showCancelButton: boolean = true;
-  @ViewChild('ImageCropperComponent') ImageCropperComponent!: ImageCropperComponent;
+  @ViewChild('ImageCropperComponent')
+  ImageCropperComponent!: ImageCropperComponent;
 
-  ngOnDestroy(): void {
-  }
+  ngOnDestroy(): void {}
 
   ngOnInit(): void {
     this.uploadpicture = true;
@@ -125,7 +129,6 @@ export class UploadImageComponent implements OnInit, OnDestroy {
           this.showCancelButton = false;
           this.showSaveButton = true;
           this.imageUploaded = event.target.files[0];
-
         }
       }
     }, 50);
@@ -136,9 +139,9 @@ export class UploadImageComponent implements OnInit, OnDestroy {
   }
 
   saveImageUpload() {
-    (this.AgentService.checkIsLoggedInAgent(this.data.email)) ?
-      this.ImageCropperComponent.updateUserProfilePicture() :
-      this.ImageCropperComponent.agentupdateuserprofilepic(this.data.uuid);
+    this.AgentService.checkIsLoggedInAgent(this.data.email)
+      ? this.ImageCropperComponent.updateUserProfilePicture()
+      : this.ImageCropperComponent.agentupdateuserprofilepic(this.data.uuid);
   }
 
   getUploadDragImage(event: any) {

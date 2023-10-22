@@ -6,10 +6,8 @@ import { Component, Input, OnInit } from '@angular/core';
   styleUrls: ['./no-table-data.component.scss']
 })
 export class NoTableDataComponent implements OnInit {
+  @Input() notableClass: any;
+  constructor() {}
 
-  @Input() notableClass: any
-  constructor() {
-  }
-
-  ngOnInit(): void { }
+  ngOnInit(): void {}
 }

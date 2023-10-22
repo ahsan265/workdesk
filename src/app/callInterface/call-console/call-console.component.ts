@@ -29,12 +29,12 @@ import {
   minimizeCallControlData,
   minimizeScreenData,
   minimizeScreenVideoData,
+  minmizeMiniCameraMargins,
+  normalMiniCameraMargins,
   peerMiniCameraDetails,
   peerUserInformationData,
   screenShareData,
-  secondPeerUserInformationData,
-  normalMiniCameraMargins,
-  minmizeMiniCameraMargins
+  secondPeerUserInformationData
 } from '../callsInterfaceData';
 import { MicrophoneVoiceIndicatorComponent } from '../microphone-voice-indicator/microphone-voice-indicator.component';
 import { MiniCameraScreenComponent } from '../mini-camera-screen/mini-camera-screen.component';
@@ -237,39 +237,38 @@ export class CallConsoleComponent implements OnInit, OnDestroy, AfterViewInit {
   }
   public async seletecOutputForCamera(event: boolean) {
     if (!this.screenShareData.isSelected) {
-    if (event === true) {
-      this.videoStream = await this.StreamingService.startVideo(
-        this.CallsOperationService.peerUserId
-      );
-      this.stream.setStream(this.videoStream);
-      this.miniCameraVideoStream.setMiniCameraSteam(this.videoStream);
+      if (event === true) {
+        this.videoStream = await this.StreamingService.startVideo(
+          this.CallsOperationService.peerUserId
+        );
+        this.stream.setStream(this.videoStream);
+        this.miniCameraVideoStream.setMiniCameraSteam(this.videoStream);
+      } else {
+        this.StreamingService.stopVideo();
+      }
+      this.cameraoperation(event);
     } else {
-      this.StreamingService.stopVideo();
+      this.MessageService.setErrorMessage(
+        'Cannot turn on camera while sharing screen.'
+      );
     }
-    this.cameraoperation(event)
-  } else {
-    this.MessageService.setErrorMessage(
-      'Cannot turn on camera while sharing screen.'
-    );
-  }
   }
   //comera oepration
   async cameraoperation(event: boolean) {
-      event === true
-        ? (this.PeerMiniCameraScreen.showCamera = true)
-        : (this.PeerMiniCameraScreen.showCamera = false);
+    event === true
+      ? (this.PeerMiniCameraScreen.showCamera = true)
+      : (this.PeerMiniCameraScreen.showCamera = false);
 
-      if (this.isSplit === true) {
-        event === true
-          ? (this.peerUserInformationData.showVideo = true)
-          : (this.peerUserInformationData.showVideo = false);
-      }
-      this.cameraData.isSelected = event;
-      this.isVideoMinimize = event;
-      if (this.agentOperationInformationData.isMinimize) {
-        this.miniCameraOperation(event);
-      }
-     
+    if (this.isSplit === true) {
+      event === true
+        ? (this.peerUserInformationData.showVideo = true)
+        : (this.peerUserInformationData.showVideo = false);
+    }
+    this.cameraData.isSelected = event;
+    this.isVideoMinimize = event;
+    if (this.agentOperationInformationData.isMinimize) {
+      this.miniCameraOperation(event);
+    }
   }
   seletecOutputForMircrophone(event: boolean) {
     this.miceData.isSelected = event;

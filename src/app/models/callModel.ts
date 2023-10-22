@@ -1,5 +1,5 @@
-import { Agent } from "./agent";
-import { ImagesModel } from "./imagesModel";
+import { Agent } from './agent';
+import { ImagesModel } from './imagesModel';
 
 export interface tableSettings {
   tableName: string;
@@ -53,7 +53,7 @@ export interface OngoingCallModel {
   user_joined: boolean;
   wait_time: number;
   waiting_started_at: string;
-  agent: agentDetails
+  agent: agentDetails;
 }
 
 export interface agentDetails {
@@ -118,17 +118,17 @@ export interface newCallModelMissed {
   page_number: number;
   total_pages: number;
   type: string;
-  calls: MissedCallModel[]
+  calls: MissedCallModel[];
 }
 
 export interface newCallModelIncoming {
   new_call: boolean;
   type: string;
-  calls: IncomingCallModel[]
+  calls: IncomingCallModel[];
 }
 export interface newCallModelOngoing {
   type: string;
-  calls: OngoingCallModel[]
+  calls: OngoingCallModel[];
 }
 export interface paginationModelSocket {
   items_count: number;

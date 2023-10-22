@@ -8,9 +8,7 @@ import { chatThreadData } from './chatThreadData';
   styleUrls: ['./chat-threads.component.scss']
 })
 export class ChatThreadsComponent {
-
   public chatThreadData = chatThreadData;
 
-  selectedConversationOutPut(event: chatThreadModelData) {
-  }
+  selectedConversationOutPut(event: chatThreadModelData) {}
 }

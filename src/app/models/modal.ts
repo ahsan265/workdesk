@@ -9,4 +9,3 @@ export interface Modal {
   width: string;
   height: string;
 }
-

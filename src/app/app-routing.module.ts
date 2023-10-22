@@ -56,7 +56,8 @@ const routes: Routes = [
       { path: 'agents', component: AgentsComponent },
       { path: 'agents/settings/:id', component: AgentSettingsComponent },
       {
-        path: 'tickets', component: TicketsComponent
+        path: 'tickets',
+        component: TicketsComponent
       },
       // {path: 'tickets/manage', component: TicketWrapperComponent, children: [
       //     { path: '', redirectTo: 'profile', pathMatch: 'full' },
@@ -67,8 +68,7 @@ const routes: Routes = [
       // { path: 'tickets/createticket', component: TicketsCreationComponent },
       // { path: 'agents/settings/:id', component: AgentSettingsComponent },
       { path: 'preference', component: PreferenceComponent }
-    ],
-
+    ]
   },
   { path: 'callback', component: CallbackComponent },
   {
@@ -85,9 +85,9 @@ const routes: Routes = [
   imports: [
     RouterModule.forRoot(routes, {
       enableTracing: false, // <-- debugging purposes only
-      scrollPositionRestoration: 'disabled',
+      scrollPositionRestoration: 'disabled'
     })
   ],
   exports: [RouterModule]
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {}

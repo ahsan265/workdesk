@@ -1,9 +1,4 @@
-import {
-  Directive,
-  HostBinding,
-  HostListener,
-  Input,
-} from '@angular/core';
+import { Directive, HostBinding, HostListener, Input } from '@angular/core';
 import { AgentUserInformation } from 'src/app/workdeskServices/callInterfaceServices/agentUserInformation/agent-user-information.service';
 
 @Directive({

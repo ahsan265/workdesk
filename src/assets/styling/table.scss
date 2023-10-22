@@ -1,59 +1,57 @@
 table {
-    width: 100%;
-    border: 1px solid rgba(208, 208, 222, 0.6);
-    box-sizing: border-box;
-    background: white;
-    border-collapse: collapse;
-    border-radius: 4px;
-    border-bottom-left-radius: 0px;
-    border-bottom-right-radius: 0px;
-    border-style: hidden;
-    box-shadow: 0 0 0 1px rgba(208, 208, 222, 0.6);
-    overflow: hidden;
+  width: 100%;
+  border: 1px solid rgba(208, 208, 222, 0.6);
+  box-sizing: border-box;
+  background: white;
+  border-collapse: collapse;
+  border-radius: 4px;
+  border-bottom-left-radius: 0px;
+  border-bottom-right-radius: 0px;
+  border-style: hidden;
+  box-shadow: 0 0 0 1px rgba(208, 208, 222, 0.6);
+  overflow: hidden;
 }
 
 th {
-    font-size: 12px;
-    color: #737D8D;
-    font-family: 'Roboto', sans-serif;
-    text-transform: uppercase;
-    font-weight: 500;
+  font-size: 12px;
+  color: #737d8d;
+  font-family: 'Roboto', sans-serif;
+  text-transform: uppercase;
+  font-weight: 500;
 }
 
 td {
-    cursor: pointer;
-    color: #445167;
-    font-size: 12px;
-    font-family: 'Roboto', sans-serif;
+  cursor: pointer;
+  color: #445167;
+  font-size: 12px;
+  font-family: 'Roboto', sans-serif;
 }
 
 thead tr {
-    height: 55px;
-    max-height: 55px;
-    background: white;
-    font-size: 16px;
-    border-bottom: 1px solid #E3E3EB;
-
+  height: 55px;
+  max-height: 55px;
+  background: white;
+  font-size: 16px;
+  border-bottom: 1px solid #e3e3eb;
 }
 
 table tbody tr td {
-    font-style: normal;
-    text-align: center;
+  font-style: normal;
+  text-align: center;
 }
 
 table tbody tr {
-    transition: 0.4s;
+  transition: 0.4s;
 }
 
 tbody tr {
-    height: 50px;
-    max-height: 50px;
-    border: 0 none;
-    border-bottom: 1px solid #E3E3EB;
-    transition: 0.4s;
-
+  height: 50px;
+  max-height: 50px;
+  border: 0 none;
+  border-bottom: 1px solid #e3e3eb;
+  transition: 0.4s;
 }
 
 table tbody tr:hover {
-    background: #EDEDF6;
+  background: #ededf6;
 }

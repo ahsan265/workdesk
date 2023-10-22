@@ -4,6 +4,6 @@ export interface callsIndicatorData {
   backgroundColor: string;
   borderColor: string;
   textColor: string;
-  hightlightText: string,
+  hightlightText: string;
   isAgent: boolean;
 }

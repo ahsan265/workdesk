@@ -9,8 +9,5 @@ import { AuthService } from 'src/app/services/auth.service';
   styleUrls: ['./ticket-wrapper.component.scss']
 })
 export class TicketWrapperComponent {
-  constructor() {
-
-  }
-
+  constructor() {}
 }

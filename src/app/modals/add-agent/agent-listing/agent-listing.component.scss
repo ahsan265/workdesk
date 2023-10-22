@@ -8,7 +8,7 @@
   border-radius: 4px;
   display: flex;
   padding: 0px;
-  color: #616B7B;
+  color: #616b7b;
   padding-left: 10px;
 }
 
@@ -29,7 +29,7 @@
   height: 393px;
   position: relative;
   overflow-x: hidden;
-  overflow-y: hidden
+  overflow-y: hidden;
 }
 
 .agentListWrapper {
@@ -39,7 +39,6 @@
 }
 
 .agentTitle {
-
   font-family: 'Roboto';
   font-style: normal;
   font-weight: 400;
@@ -50,7 +49,6 @@
   letter-spacing: 0.02em;
 
   color: #162741;
-
 }
 
 .agentdescp {
@@ -62,7 +60,7 @@
   display: flex;
   align-items: center;
   letter-spacing: 0.02em;
-  color: #616B7B;
+  color: #616b7b;
   margin-top: 15px;
 }
 
@@ -103,7 +101,7 @@
 .addNewListing {
   width: 32px;
   height: 32px;
-  background: #D8D8F5;
+  background: #d8d8f5;
   border-radius: 4px;
   cursor: pointer;
   margin-left: 10px;
@@ -146,14 +144,14 @@
   height: 95px;
   justify-content: flex-end;
   bottom: 0;
-  background: #FFFFFF;
+  background: #ffffff;
   box-shadow: 0px -1px 4px rgba(0, 0, 0, 0.25);
 }
 
 .sendAgentInvitedListing {
   width: 108px;
   height: 36px;
-  font-family: "Roboto", sans-serif;
+  font-family: 'Roboto', sans-serif;
   background: #1c54db;
   border-radius: 4px;
   padding: 0px;
@@ -168,8 +166,8 @@
 }
 
 .sendAgentInvitedListing:disabled {
-  background: #ECECF3;
-  color: #A4A4A4;
+  background: #ececf3;
+  color: #a4a4a4;
 }
 
 .agentInvitationList {
@@ -183,8 +181,8 @@
   flex-direction: row;
   align-items: center;
   padding: 0px 10px 0px 10px;
-  background: #FFFFFF;
-  border: 1px solid #E3E3EB;
+  background: #ffffff;
+  border: 1px solid #e3e3eb;
   border-radius: 4px;
   width: 421px;
   height: 61px;
@@ -227,8 +225,8 @@
 }
 
 .inivationCard:hover {
-  background: #EDEDF6;
+  background: #ededf6;
 }
-.inivationCard:hover .removeCard svg path{
+.inivationCard:hover .removeCard svg path {
   fill: #162741;
 }

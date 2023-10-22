@@ -11,54 +11,66 @@ import { getMessageDataModel, receivedMessage } from 'src/app/models/chatModel';
 })
 export class ChatOperationService {
   incomingChatUuid: BehaviorSubject<string>;
-  constructor(private GigaaaApiService: GigaaaApiService, private CommonService: CommonService,
+  constructor(
+    private GigaaaApiService: GigaaaApiService,
+    private CommonService: CommonService,
     private ChatSocketService: ChatSocketService,
-    private MessageService: MessageService) {
+    private MessageService: MessageService
+  ) {
     this.incomingChatUuid = new BehaviorSubject('');
   }
 
   public async endChat() {
     try {
       const data = {
-        "chat_uuid": this.ChatSocketService.lastSelectThreadUuid.getValue().uuid
-      }
-      await this.GigaaaApiService.setChatEnd(this.CommonService.getEndpointsParamLocal().token, this.CommonService.getEndpointsParamLocal().organization, this.CommonService.getEndpointsParamLocal().project, data)
-    }
-    catch (error: any) {
+        chat_uuid: this.ChatSocketService.lastSelectThreadUuid.getValue().uuid
+      };
+      await this.GigaaaApiService.setChatEnd(
+        this.CommonService.getEndpointsParamLocal().token,
+        this.CommonService.getEndpointsParamLocal().organization,
+        this.CommonService.getEndpointsParamLocal().project,
+        data
+      );
+    } catch (error: any) {
       this.MessageService.setErrorMessage(error.error.error);
     }
-
   }
 
   async awnseredChat(uuid: string) {
     try {
       const data = {
-        "chat_uuid": uuid
-      }
+        chat_uuid: uuid
+      };
       this.incomingChatUuid.next(uuid);
-      await this.GigaaaApiService.setChatAnswer(this.CommonService.getEndpointsParamLocal().token, this.CommonService.getEndpointsParamLocal().organization, this.CommonService.getEndpointsParamLocal().project, data)
-    }
-    catch (error: any) {
+      await this.GigaaaApiService.setChatAnswer(
+        this.CommonService.getEndpointsParamLocal().token,
+        this.CommonService.getEndpointsParamLocal().organization,
+        this.CommonService.getEndpointsParamLocal().project,
+        data
+      );
+    } catch (error: any) {
       this.MessageService.setErrorMessage(error.error.error);
     }
-
   }
 
   setTypingIndicationInterval(conversation_uuid: string) {
     this.ChatSocketService.sendIsTypingMessage(conversation_uuid);
   }
 
-  // unready message 
+  // unready message
   setUnreadToRead(conversation_uuid: string, messageIds: number[]) {
     try {
-      this.GigaaaApiService.updateUnreadMessage(this.CommonService.getEndpointsParamLocal().token, this.CommonService.getEndpointsParamLocal().organization, this.CommonService.getEndpointsParamLocal().project, conversation_uuid, messageIds)
-    }
-    catch (error: any) {
-
-    }
+      this.GigaaaApiService.updateUnreadMessage(
+        this.CommonService.getEndpointsParamLocal().token,
+        this.CommonService.getEndpointsParamLocal().organization,
+        this.CommonService.getEndpointsParamLocal().project,
+        conversation_uuid,
+        messageIds
+      );
+    } catch (error: any) {}
   }
 
-  // get selected Thread 
+  // get selected Thread
   // getSelectedThread(threadUuid: string) {
   //   const data = this.ChatSocketService.liveChatThread.getValue();
   //   const selectThread = data.data.filter(response => {
@@ -71,25 +83,22 @@ export class ChatOperationService {
     let ids: number[] = [];
     data.data.filter((response: receivedMessage) => {
       if (response.is_read === false && response.is_agent === false) {
-        return ids.push(response.id)
-      }
-      else {
+        return ids.push(response.id);
+      } else {
         return [];
       }
-    })
+    });
     return ids;
   }
   getFirstUnreadMessage(messageData: getMessageDataModel) {
     let ids: number = 0;
     messageData.data.find((response: receivedMessage) => {
       if (response.is_read === false && response.is_agent === false) {
-        return ids = response.id
-      }
-      else {
+        return (ids = response.id);
+      } else {
         return ids;
       }
-    })
+    });
     return ids;
   }
-
 }

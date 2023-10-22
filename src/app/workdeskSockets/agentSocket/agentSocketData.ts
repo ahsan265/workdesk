@@ -1,4 +1,4 @@
-import { FreeSeats } from "src/app/models/agentSocketModel";
+import { FreeSeats } from 'src/app/models/agentSocketModel';
 
 const agentLoggedData: any = {
   active: true,
@@ -35,5 +35,5 @@ const freeSeats: FreeSeats = {
   count: 0,
   free_seats: false,
   type: 'free_seats'
-}
-export { agentLoggedData ,freeSeats};
+};
+export { agentLoggedData, freeSeats };

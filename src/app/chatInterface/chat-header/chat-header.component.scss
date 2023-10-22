@@ -1,51 +1,50 @@
 .chatHeader {
-    height: 76px;
-    background: #162741;
-    box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.23);
+  height: 76px;
+  background: #162741;
+  box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.23);
 }
 
 .leftHeader {
-    display: inline-flex;
-    width: calc(50% - 30px);
-    padding-left: 30px;
+  display: inline-flex;
+  width: calc(50% - 30px);
+  padding-left: 30px;
 }
 
 .rightHeader {
-    display: inline-flex;
-    width: calc(50% - 20px);
-    justify-content: end;
-    padding-right: 20px;
-    height: 76px;
-    align-items: center;
-    vertical-align: bottom;
+  display: inline-flex;
+  width: calc(50% - 20px);
+  justify-content: end;
+  padding-right: 20px;
+  height: 76px;
+  align-items: center;
+  vertical-align: bottom;
 }
 
-
 .chatHeaderText {
-    display: inline-flex;
-    font-family: "Roboto";
-    font-style: normal;
-    font-weight: 500;
-    font-size: 18px;
-    line-height: 70px;
-    letter-spacing: 0.02em;
-    color: #FFFFFF;
-    margin-left: 16px;
+  display: inline-flex;
+  font-family: 'Roboto';
+  font-style: normal;
+  font-weight: 500;
+  font-size: 18px;
+  line-height: 70px;
+  letter-spacing: 0.02em;
+  color: #ffffff;
+  margin-left: 16px;
 }
 
 .minimizeIcon {
-    margin-right: 22px;
-    height: 30px;
-    width: fit-content;
-    cursor: pointer;
+  margin-right: 22px;
+  height: 30px;
+  width: fit-content;
+  cursor: pointer;
 }
 
 .closeIcon {
-    cursor: pointer;
-    transform: rotate(0deg);
-    transition: 0.4s;
+  cursor: pointer;
+  transform: rotate(0deg);
+  transition: 0.4s;
 }
 
 .closeIcon:hover {
-    transform: rotate(90deg);
+  transform: rotate(90deg);
 }

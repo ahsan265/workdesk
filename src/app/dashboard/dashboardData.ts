@@ -3,16 +3,16 @@ import { Card } from '../models/card';
 import { MultiSelect } from '../models/multiSelect';
 import { OneSelect } from '../models/oneSelect';
 
-const oneSelectData: OneSelect[] = [{ id: 0, name: 'Calls', selected: true }, { id: 1, name: 'Chats', selected: false }
+const oneSelectData: OneSelect[] = [
+  { id: 0, name: 'Calls', selected: true },
+  { id: 1, name: 'Chats', selected: false }
 ];
 
 const countries: MultiSelect = {
   title: 'Location',
   showSelectAll: true,
   showSearchBar: true,
-  data: [
-
-  ]
+  data: []
 };
 
 const languauges: MultiSelect = {

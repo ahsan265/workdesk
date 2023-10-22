@@ -198,7 +198,6 @@ import { TimerWidgetComponent } from './components/timer-widget/timer-widget.com
     OngoingTableComponent,
     CallPickButtonComponent,
     TimerWidgetComponent
-
   ],
   imports: [
     CommonModule,
@@ -256,4 +255,4 @@ import { TimerWidgetComponent } from './components/timer-widget/timer-widget.com
   ],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {}

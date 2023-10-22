@@ -1,26 +1,39 @@
-import { Component, HostListener, ViewChild, ViewEncapsulation } from '@angular/core';
+import {
+  Component,
+  HostListener,
+  OnDestroy,
+  ViewChild,
+  ViewEncapsulation
+} from '@angular/core';
 import { Router } from '@angular/router';
 import { GigaaaDaterangepickerDirective } from '@gigaaa/gigaaa-components';
-import { ChartConfiguration, ChartType, ChartData } from 'chart.js';
+import { ChartConfiguration, ChartData, ChartType } from 'chart.js';
 import dayjs from 'dayjs';
 import { BaseChartDirective } from 'ng2-charts';
 import { CalendarService } from 'src/app/calendarService/calendar.service';
 import { AuthService } from 'src/app/services/auth.service';
 import { CommonService } from 'src/app/workdeskServices/commonEndpoint/common.service';
 import { SharedServices } from 'src/app/workdeskServices/sharedResourcesService/shared-resource-service.service';
-import { cardDataTotalVisitors, countries, languauges, oneSelectData, ranges } from '../dashboardData';
+import {
+  cardDataTotalVisitors,
+  countries,
+  languauges,
+  oneSelectData,
+  ranges
+} from '../dashboardData';
 import { DashboardEndpointService } from '../dashboardService/dashboard-endpoint.service';
 import DataLabelsPlugin from 'chartjs-plugin-datalabels';
 import { OneSelect } from 'src/app/models/oneSelect';
 import { Card, cardTypeModel } from 'src/app/models/card';
 import { chartModel } from 'src/app/models/chartModel';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-dashboard-call',
   templateUrl: './dashboard-call.component.html',
-  styleUrls: ['./dashboard-call.component.scss'],
+  styleUrls: ['./dashboard-call.component.scss']
 })
-export class DashboardCallComponent {
+export class DashboardCallComponent implements OnDestroy {
   oneSelectData = oneSelectData;
   countries = countries;
   languauges = languauges;
@@ -116,50 +129,60 @@ export class DashboardCallComponent {
   public barChartData2!: ChartData<'bar'>;
   public barChartData3!: ChartData<'bar'>;
   browserRefresh = false;
+  subscription = new Subscription();
   constructor(
     private authService: AuthService,
     private CommonService: CommonService,
     private SharedServices: SharedServices,
     private dashboardEps: DashboardEndpointService,
-    private calendarService: CalendarService,
-
+    private calendarService: CalendarService
   ) {
     this.getFirstLoad();
     this.getCardsAndChartsData();
     this.alwaysShowCalendars = true;
   }
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe();
+  }
   async ngOnInit(): Promise<void> {
     this.CommonService.restrictRoute();
     // this.countries = await this.CommonService.getLocations();
-    if (this.CommonService.getEndpointsParamLocal().token === this.authService.user.value?.api_token) {
-      this.callRouteLoad()
-    }
-    else {
+    if (
+      this.CommonService.getEndpointsParamLocal().token ===
+      this.authService.user.value?.api_token
+    ) {
+      this.callRouteLoad();
+    } else {
       this.authService.user.next(this.authService.getLoggedUser());
     }
   }
   getCardsAndChartsData() {
-    this.dashboardEps.cardDataSubject.subscribe((data: cardTypeModel) => {
-      if (data.type === 'calls_counts') {
-        this.incomingCardData = data.data[0];
-        this.missedCardData = data.data[1];
-        this.answeredCardData = data.data[2];
+    this.subscription = this.dashboardEps.cardDataSubject.subscribe(
+      (data: cardTypeModel) => {
+        if (data.type === 'calls_counts') {
+          this.incomingCardData = data.data[0];
+          this.missedCardData = data.data[1];
+          this.answeredCardData = data.data[2];
+        }
       }
-    });
+    );
     this.dashboardEps.chartDataSubject.subscribe((data: chartModel) => {
       if (data.type === 'calls_aggregates') {
         this.barChartData1 = data.data[0];
         this.barChartData2 = data.data[1];
         this.barChartData3 = data.data[2];
       }
-
-
     });
   }
   private async callRouteLoad() {
     this.languauges = await this.CommonService.getProjectLanguagesForUser();
     if (this.CommonService.getEndpointsParamLocal().project != undefined) {
-      this.dashboardEps.getAnalyticsData([], [], this.aggregate, 'calls_filter');
+      this.dashboardEps.getAnalyticsData(
+        [],
+        [],
+        this.aggregate,
+        'calls_filter'
+      );
       this.countries = await this.CommonService.getLocations();
     }
   }
@@ -234,15 +257,15 @@ export class DashboardCallComponent {
     this.showCalendar = !this.showCalendar;
   }
 
-  //default date param 
+  //default date param
 
   setDefaultDate() {
-    this.aggregate = "this_week";
+    this.aggregate = 'this_week';
     this.selected = {
       startDate: dayjs().startOf('week').add(1, 'day'),
       endDate: dayjs().endOf('week').add(1, 'day'),
       aggregate: this.aggregate
-    }
+    };
   }
   // select Dashboard type
   oneSelectOutput(event: OneSelect) {

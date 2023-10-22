@@ -1,178 +1,176 @@
 .assignWrapper {
-    width: 288px;
-    height: 392px;
-    background: #FFFFFF;
-    border: 1px solid #E1E1EA;
-    box-shadow: 4px 4px 17px -3px rgba(0, 0, 0, 0.14);
-    border-radius: 4px;
-    position: absolute;
-    right: -30px;
-    top: 32px;
-    z-index: 1;
+  width: 288px;
+  height: 392px;
+  background: #ffffff;
+  border: 1px solid #e1e1ea;
+  box-shadow: 4px 4px 17px -3px rgba(0, 0, 0, 0.14);
+  border-radius: 4px;
+  position: absolute;
+  right: -30px;
+  top: 32px;
+  z-index: 1;
 }
 
 .heading {
-    font-family: "Roboto", sans-serif;
-    font-style: normal;
-    font-weight: 500;
-    font-size: 14px;
-    line-height: 51px;
-    height: 51px;
-    display: flex;
-    align-items: center;
-    text-align: center;
-    letter-spacing: 0.02em;
-    color: #162741;
-    justify-content: center;
+  font-family: 'Roboto', sans-serif;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 51px;
+  height: 51px;
+  display: flex;
+  align-items: center;
+  text-align: center;
+  letter-spacing: 0.02em;
+  color: #162741;
+  justify-content: center;
 }
 
 .assigneeWrapper {
-    height: 84px;
-    display: flex;
-    flex-direction: column;
-    padding: 7px;
-    border-bottom: 1px solid #E3E3EB;
-    overflow: scroll;
+  height: 84px;
+  display: flex;
+  flex-direction: column;
+  padding: 7px;
+  border-bottom: 1px solid #e3e3eb;
+  overflow: scroll;
 }
 
 .assignedPanel {
-    height: 35px;
-    display: flex;
-    align-items: center;
-    padding: 0px 11px 0px 7px;
-    background: #FAFAFD;
-    border-radius: 4px;
-    justify-content: space-between;
-    margin-bottom: 6px;
-    transition: 0.4s;
-
+  height: 35px;
+  display: flex;
+  align-items: center;
+  padding: 0px 11px 0px 7px;
+  background: #fafafd;
+  border-radius: 4px;
+  justify-content: space-between;
+  margin-bottom: 6px;
+  transition: 0.4s;
 }
 
 .agentInformation {
-    display: inline-flex;
-    align-items: center;
-    width: 225px;
+  display: inline-flex;
+  align-items: center;
+  width: 225px;
 }
 
 .agentName {
-    font-family: "Roboto";
-    font-style: normal;
-    font-weight: 400;
-    font-size: 12px;
-    line-height: 279%;
-    letter-spacing: 0.02em;
-    color: #162741;
-    margin-left: 16px;
-    width: 168px;
-    overflow: hidden;
-    white-space: nowrap;
-    text-overflow: ellipsis;
-    text-align: left;
+  font-family: 'Roboto';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 279%;
+  letter-spacing: 0.02em;
+  color: #162741;
+  margin-left: 16px;
+  width: 168px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  text-align: left;
 }
 
 .removeAssign {
-    display: inline-flex;
-    transition: 0.4s;
-
+  display: inline-flex;
+  transition: 0.4s;
 }
 
 .multiSelectWrapper.search {
-    height: 35px;
+  height: 35px;
 }
 
 .assignText {
-    font-family: "Roboto", sans-serif;
-    font-style: normal;
-    font-weight: 400;
-    font-size: 12px;
-    line-height: 305.19%;
-    display: inline-flex;
-    align-items: center;
-    text-align: center;
-    letter-spacing: 0.02em;
-    color: #707096;
-    margin-left: 10px;
-    transition: 0.4s;
-    cursor: pointer;
-    margin-right: 10px;
+  font-family: 'Roboto', sans-serif;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 305.19%;
+  display: inline-flex;
+  align-items: center;
+  text-align: center;
+  letter-spacing: 0.02em;
+  color: #707096;
+  margin-left: 10px;
+  transition: 0.4s;
+  cursor: pointer;
+  margin-right: 10px;
 }
 
 .toAssigneeWrapper {
-    height: 142px;
-    display: flex;
-    flex-direction: column-reverse;
-    justify-content: flex-end;
-    padding: 7px;
-    overflow: scroll;
+  height: 142px;
+  display: flex;
+  flex-direction: column-reverse;
+  justify-content: flex-end;
+  padding: 7px;
+  overflow: scroll;
 }
 
 .toAssigneeWrapper::-webkit-scrollbar,
 .assigneeWrapper::-webkit-scrollbar {
-    display: none;
+  display: none;
 }
 
 .imageWrapper {
-    display: inline-flex;
-    height: 20px;
-    width: 20px;
+  display: inline-flex;
+  height: 20px;
+  width: 20px;
 }
 
 .colorCircle {
-    display: inline-flex;
-    height: 20px;
-    width: 20px;
-    border-radius: 50%;
-    font-family: "Roboto";
-    font-style: normal;
-    font-weight: 500;
-    font-size: 10px;
-    line-height: 120%;
-    align-items: center;
-    letter-spacing: 0.02em;
-    color: #FFFFFF;
-    justify-content: center;
+  display: inline-flex;
+  height: 20px;
+  width: 20px;
+  border-radius: 50%;
+  font-family: 'Roboto';
+  font-style: normal;
+  font-weight: 500;
+  font-size: 10px;
+  line-height: 120%;
+  align-items: center;
+  letter-spacing: 0.02em;
+  color: #ffffff;
+  justify-content: center;
 }
 
-.assignedPanel.tobe:hover>.agentInformation>.removeAssign.toBe {
-    display: inline-flex;
+.assignedPanel.tobe:hover > .agentInformation > .removeAssign.toBe {
+  display: inline-flex;
 }
 
 .removeAssign.toBe {
-    display: none;
+  display: none;
 }
 
 .assignText.toBe {
-    display: none;
+  display: none;
 }
 
 img.toBe {
-    display: none;
+  display: none;
 }
 
 .colorCircle.toBe {
-    display: none;
+  display: none;
 }
 
 .assignedPanel.toBe:hover {
-    img.toBe {
-        display: inline-flex;
-    }
+  img.toBe {
+    display: inline-flex;
+  }
 
-    .assignText.toBe {
-        display: inline-flex;
-    }
+  .assignText.toBe {
+    display: inline-flex;
+  }
 
-    .removeAssign.toBe {
-        display: inline-flex;
-    }
+  .removeAssign.toBe {
+    display: inline-flex;
+  }
 
-    .colorCircle.toBe {
-        display: inline-flex;
-    }
+  .colorCircle.toBe {
+    display: inline-flex;
+  }
 }
 
 ::ng-deep .multiSelectWrapper.search .searchLabel {
-    width: 275px;
-    margin-left: 6px;
-    margin-right: 6px;
+  width: 275px;
+  margin-left: 6px;
+  margin-right: 6px;
 }

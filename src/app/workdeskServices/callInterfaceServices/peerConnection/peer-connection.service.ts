@@ -17,8 +17,7 @@ export class PeerConnectionService {
   constructor(
     private CallSocketService: CallSocketService,
     private DevicesInformationService: DevicesInformationService
-  ) {
-  }
+  ) {}
 
   public async createPeerConnection(): Promise<void> {
     let forTurnsSupported = [
@@ -55,8 +54,7 @@ export class PeerConnectionService {
         urls: 'turn:turn.gigaaa.link:3478',
         username: 'username',
         credential: 'password'
-      }
-      ,
+      },
       {
         urls: 'turns:turn.gigaaa.link:3478?transport=tcp',
         username: 'username',
@@ -140,9 +138,7 @@ export class PeerConnectionService {
         return await this.peerConnection.createAnswer();
       })
       .then(async (answer) => {
-        await this.peerConnection.setLocalDescription(
-          answer
-        );
+        await this.peerConnection.setLocalDescription(answer);
         if (this.candidates.length != 0) {
           this.candidates.map((c) => this.peerConnection.addIceCandidate(c));
         }
@@ -167,20 +163,19 @@ export class PeerConnectionService {
     this.getVideoCodec();
     await this.peerConnection
       .setRemoteDescription(new RTCSessionDescription(data))
-      .catch(async (error: any) => { });
+      .catch(async (error: any) => {});
     if (this.candidates.length != 0) {
       this.candidates.map((c) => this.peerConnection.addIceCandidate(c));
     }
   }
   // handle ice Condate Messages
   public async handleIceCandidateMessage(data: RTCIceCandidate): Promise<void> {
-    if (data.candidate !== "") {
-      await this.peerConnection
-        .addIceCandidate(data)
-        .catch((error: any) => { });
-      (this.DevicesInformationService.getBrowserName() === 'firefox') ? this.candidates.push(data) : this.candidates = [];
+    if (data.candidate !== '') {
+      await this.peerConnection.addIceCandidate(data).catch((error: any) => {});
+      this.DevicesInformationService.getBrowserName() === 'firefox'
+        ? this.candidates.push(data)
+        : (this.candidates = []);
     }
-
   }
 
   // to get audio codec
@@ -190,28 +185,27 @@ export class PeerConnectionService {
       const transreivers = this.peerConnection.getTransceivers()[0];
       const codecs = RTCRtpSender.getCapabilities('audio')?.codecs;
       const requiredCodec: any = [];
-      codecs?.forEach(data => {
+      codecs?.forEach((data) => {
         if (data.mimeType === 'audio/opus') {
           requiredCodec.push(data);
         }
-      })
+      });
       if (transreivers.setCodecPreferences !== undefined) {
         transreivers.setCodecPreferences(requiredCodec);
       }
     }
-
   }
-  // update codec for video 
+  // update codec for video
   getVideoCodec() {
     if (this.DevicesInformationService.getBrowserName() !== 'firefox') {
       const transreivers = this.peerConnection.getTransceivers()[1];
       const codecs = RTCRtpSender.getCapabilities('video')?.codecs;
       const requiredCodec: any = [];
-      codecs?.forEach(data => {
+      codecs?.forEach((data) => {
         if (data.mimeType === 'video/VP8') {
           requiredCodec.push(data);
         }
-      })
+      });
       if (transreivers.setCodecPreferences !== undefined) {
         transreivers.setCodecPreferences(requiredCodec);
       }

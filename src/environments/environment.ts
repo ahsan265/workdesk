@@ -21,7 +21,7 @@ export const environment = {
   prod_anlytics: 'https://api.dev.gconsole.io/cs/private',
   websocket_url: 'wss://api.dev.gconsole.io/cs/v2',
   logged_user: 'https://api.dev.gconsole.io/v1/api/v1',
-  register_account:'https://accounts.dev.gconsole.io/register',
+  register_account: 'https://accounts.dev.gconsole.io/register',
 
   iceServerConfiguration: [
     {

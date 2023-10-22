@@ -1,7 +1,17 @@
 import { Component, HostListener, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from '../services/auth.service';
-import { oneSelectData2, oneSelectData3, priorityData, searchInputData, statusType, tableData, TicketsCard, TicketsCard1, ticketsTableSetting } from './ticketsData';
+import {
+  TicketsCard,
+  TicketsCard1,
+  oneSelectData2,
+  oneSelectData3,
+  priorityData,
+  searchInputData,
+  statusType,
+  tableData,
+  ticketsTableSetting
+} from './ticketsData';
 
 @Component({
   selector: 'app-tickets',
@@ -20,13 +30,12 @@ export class TicketsComponent {
   searchInputData = searchInputData;
   ticketsTableSetting = ticketsTableSetting;
   tableData = tableData;
-  showAssignTickets: boolean = false
-  showAssignDropdown: boolean = false
+  showAssignTickets: boolean = false;
+  showAssignDropdown: boolean = false;
 
-  indexValue!: number
+  indexValue!: number;
   @ViewChild('assignTickets') assignTickets: any = HTMLElement;
   @ViewChild('assignTicketsDropdown') assignTicketsDropdown: any = HTMLElement;
-
 
   @HostListener('document:click', ['$event'])
   clickout(event: any) {
@@ -34,9 +43,8 @@ export class TicketsComponent {
       this.showAssignTickets = false;
     }
     if (!this.assignTicketsDropdown?.nativeElement?.contains(event?.target)) {
-      this.showAssignDropdown = false
+      this.showAssignDropdown = false;
     }
-
   }
 
   getArray(number: number) {
@@ -52,9 +60,9 @@ export class TicketsComponent {
   }
 
   openCreateTickets() {
-    this.Router.navigate(['tickets', 'createticket'])
+    this.Router.navigate(['tickets', 'createticket']);
   }
   openTicketInformation() {
-    this.Router.navigate(['tickets', 'manage'])
+    this.Router.navigate(['tickets', 'manage']);
   }
 }

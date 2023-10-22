@@ -10,12 +10,15 @@ import { getOrganizationService } from 'src/app/workdeskServices/organizationSer
   styleUrls: ['./loader.component.scss']
 })
 export class LoaderComponent implements OnInit {
-
-  constructor(private router: Router,
-    private getOrganizationService: getOrganizationService, private CommonService: CommonService) { }
+  constructor(
+    private router: Router,
+    private getOrganizationService: getOrganizationService,
+    private CommonService: CommonService
+  ) {}
 
   ngOnInit(): void {
-      this.getOrganizationService.checkUserIsAuthorized(this.CommonService.getEndpointsParamLocal().token)
+    this.getOrganizationService.checkUserIsAuthorized(
+      this.CommonService.getEndpointsParamLocal().token
+    );
   }
-
 }

@@ -5,14 +5,19 @@ import { noAgentTobaleData } from 'src/app/agents/agentsData';
 import { CalendarService } from 'src/app/calendarService/calendar.service';
 import { ranges } from 'src/app/dashboard/dashboardData';
 import {
-  newCallModelOngoing,
-  OngoingCallModelTable
+  OngoingCallModelTable,
+  newCallModelOngoing
 } from 'src/app/models/callModel';
 import { MultiSelect } from 'src/app/models/multiSelect';
 import { CommonService } from 'src/app/workdeskServices/commonEndpoint/common.service';
 import { CallsService } from '../../callService/calls.service';
 import { getDefaultInputsLoadOnce } from '../../defaultLoadService/incoming.Service';
-import { callTypeOngoing, languaugesOngoing, ongoingTableSetting, searchInputData } from '../../ongoing/ongoingData';
+import {
+  callTypeOngoing,
+  languaugesOngoing,
+  ongoingTableSetting,
+  searchInputData
+} from '../../ongoing/ongoingData';
 
 @Component({
   selector: 'app-ongoing',
@@ -38,7 +43,7 @@ export class OngoingComponent implements OnInit {
     aggregate: this.aggregate
   };
   callType = callTypeOngoing;
-  languauges !: MultiSelect;
+  languauges!: MultiSelect;
   searchInputData = searchInputData;
   @ViewChild(GigaaaDaterangepickerDirective, { static: false })
   pickerDirective: GigaaaDaterangepickerDirective | undefined;
@@ -57,12 +62,10 @@ export class OngoingComponent implements OnInit {
     private CallsSrvice: CallsService,
     private CommonService: CommonService,
     private calendarService: CalendarService,
-    private getDefaultInputsLoadOnce: getDefaultInputsLoadOnce,
-
+    private getDefaultInputsLoadOnce: getDefaultInputsLoadOnce
   ) {
     this.CallsSrvice.sendDataToOngoingTabsSubject.subscribe(
       (data: newCallModelOngoing) => {
-
         this.ongoingData = data.calls.map((answeredData) => ({
           user_details: {
             image: '../../../assets/images/callInterface/user.png',
@@ -88,7 +91,7 @@ export class OngoingComponent implements OnInit {
             image: this.CommonService.getConversationType(
               answeredData.request_type
             ),
-            text: this.CallsSrvice.getCallTypeName(answeredData.request_type) 
+            text: this.CallsSrvice.getCallTypeName(answeredData.request_type)
           },
           call_uuid: answeredData.request_uuid,
           duration: answeredData.request_started_at,
@@ -104,15 +107,17 @@ export class OngoingComponent implements OnInit {
     );
   }
   async ngOnInit(): Promise<void> {
-    this.getDefaultInputsLoadOnce.ongoingLangauge.asObservable().subscribe(data => {
-      this.languauges = data;
-      this.languageIds = [];
-      this.callTypeName = [];
-      this.callType.data.map(data => {
-        data.selected = false;
-      })
-      this.searchInputData.searchText = '';
-    });
+    this.getDefaultInputsLoadOnce.ongoingLangauge
+      .asObservable()
+      .subscribe((data) => {
+        this.languauges = data;
+        this.languageIds = [];
+        this.callTypeName = [];
+        this.callType.data.map((data) => {
+          data.selected = false;
+        });
+        this.searchInputData.searchText = '';
+      });
   }
 
   change(event: any) {
@@ -175,9 +180,13 @@ export class OngoingComponent implements OnInit {
   // get ongoing data
   getSearchValue(value: string) {
     this.lastUsedSearch = value;
-    this.ongoingData = this.CallsSrvice.search(value, this.ongoingData, this.unfilterOngoingData)
+    this.ongoingData = this.CallsSrvice.search(
+      value,
+      this.ongoingData,
+      this.unfilterOngoingData
+    );
     if (value.length === 0 && this.ongoingData.length === 0) {
-      this.ongoingData = this.unfilterOngoingData
+      this.ongoingData = this.unfilterOngoingData;
     }
   }
 }

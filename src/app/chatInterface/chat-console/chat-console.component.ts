@@ -1,4 +1,10 @@
-import { AfterViewChecked, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import {
+  AfterViewChecked,
+  Component,
+  ElementRef,
+  OnInit,
+  ViewChild
+} from '@angular/core';
 import { ChatSocketService } from 'src/app/workdeskSockets/chatSocket/chat-socket.service';
 import { ChatWrapperComponent } from '../chat-wrapper/chat-wrapper.component';
 import { ChattextAreaComponent } from '../chattext-area/chattext-area.component';
@@ -6,7 +12,7 @@ import { ChattextAreaComponent } from '../chattext-area/chattext-area.component'
 @Component({
   selector: 'app-chat-console',
   templateUrl: './chat-console.component.html',
-  styleUrls: ['./chat-console.component.scss'],
+  styleUrls: ['./chat-console.component.scss']
 })
 export class ChatConsoleComponent implements OnInit, AfterViewChecked {
   @ViewChild('scrollMe') private scrollBottom!: ElementRef;
@@ -15,19 +21,24 @@ export class ChatConsoleComponent implements OnInit, AfterViewChecked {
   isReadMessage: boolean = false;
   showScrollArrow!: any;
   constructor(private ChatSocketService: ChatSocketService) {
-    this.ChatSocketService.isSocketOpen === 0 ? this.ChatSocketService.startChat() : '';
-    this.ChatSocketService.chatMessageDataSelected.asObservable().subscribe(data => {
-      data.data.find(response => {
-        if (response.is_agent === true && response.is_read === false) {
-          this.isReadMessage = true;
-        }
-      })
-    })
-
+    this.ChatSocketService.isSocketOpen === 0
+      ? this.ChatSocketService.startChat()
+      : '';
+    this.ChatSocketService.chatMessageDataSelected
+      .asObservable()
+      .subscribe((data) => {
+        data.data.find((response) => {
+          if (response.is_agent === true && response.is_read === false) {
+            this.isReadMessage = true;
+          }
+        });
+      });
   }
   showScrollDown(event: any) {
-    (event) ? this.showScrollArrow = false : this.showScrollArrow = true
-    if (event) { this.textAreaComponent.checkReadMessage(); }
+    event ? (this.showScrollArrow = false) : (this.showScrollArrow = true);
+    if (event) {
+      this.textAreaComponent.checkReadMessage();
+    }
   }
 
   ngOnInit() {
@@ -43,10 +54,9 @@ export class ChatConsoleComponent implements OnInit, AfterViewChecked {
 
   scrollToBottom(): void {
     try {
-      this.scrollBottom.nativeElement.scrollTop = this.scrollBottom.nativeElement.scrollHeight;
+      this.scrollBottom.nativeElement.scrollTop =
+        this.scrollBottom.nativeElement.scrollHeight;
       this.showScrollArrow = false;
-    } catch (err) { }
+    } catch (err) {}
   }
-
-
 }

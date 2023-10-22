@@ -7,8 +7,7 @@ import {
   newCallModelAnswered,
   newCallModelIncoming,
   newCallModelMissed,
-  newCallModelOngoing,
-
+  newCallModelOngoing
 } from 'src/app/models/callModel';
 import { OneSelect } from 'src/app/models/oneSelect';
 import { CommonService } from 'src/app/workdeskServices/commonEndpoint/common.service';
@@ -20,10 +19,11 @@ import { callType } from '../callsData';
   providedIn: 'root'
 })
 export class CallsService {
-  constructor(private QueueSocketService: QueueSocketService,
+  constructor(
+    private QueueSocketService: QueueSocketService,
     private GigaaaApiService: GigaaaApiService,
     private CommonService: CommonService
-  ) { }
+  ) {}
   sendDataToIncomingTabsSubject = new ReplaySubject<newCallModelIncoming>(0);
   sendDataToMissedTabsSubject = new ReplaySubject<newCallModelMissed>(0);
   sendDataToOngoingTabsSubject = new ReplaySubject<newCallModelOngoing>(0);
@@ -32,8 +32,7 @@ export class CallsService {
     languageId: number[],
     callType: string[],
     tabName: string,
-    time_range: string,
-
+    time_range: string
   ) {
     this.QueueSocketService.sendQueueParameter({
       call_type: callType,
@@ -58,7 +57,7 @@ export class CallsService {
       time_range: time_range,
       items_per_page: items_per_page,
       page: page_number,
-      search_value: search_value,
+      search_value: search_value
     });
   }
 
@@ -98,7 +97,6 @@ export class CallsService {
       default:
         break;
     }
-
   }
 
   // calulate time
@@ -147,57 +145,93 @@ export class CallsService {
     return 0 + ':' + seconds;
   }
 
-  // search call details 
+  // search call details
   public search(data: string, AgentList: any[], AllAgentsData: any[]) {
     const result: any[] = AllAgentsData.filter((obj: any) => {
       if (obj.user_id != null) {
-        return obj.agent_name.toLowerCase().includes(data.toLowerCase()) || obj.user_id.toLowerCase().includes(data.toLowerCase());
-      }
-      else if (obj.user_id === null) {
+        return (
+          obj.agent_name.toLowerCase().includes(data.toLowerCase()) ||
+          obj.user_id.toLowerCase().includes(data.toLowerCase())
+        );
+      } else if (obj.user_id === null) {
         return obj.agent_name.toLowerCase().includes(data.toLowerCase());
       }
-    })
+    });
     if (data.length === 0) {
       return AgentList;
-    }
-    else {
+    } else {
       return result;
     }
   }
 
   getCalledAtTimeDate(val: string, selectedRange: string) {
-    const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "June",
-      "July", "Aug", "Sep", "Oct", "Nov", "Dec"];
-    const Days = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
+    const monthNames = [
+      'Jan',
+      'Feb',
+      'Mar',
+      'Apr',
+      'May',
+      'June',
+      'July',
+      'Aug',
+      'Sep',
+      'Oct',
+      'Nov',
+      'Dec'
+    ];
+    const Days = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
     let time;
     let myDate = new Date(val);
-    if (selectedRange === "today" || selectedRange === "yesterday") {
-      time = ("0" + myDate.getHours()).slice(-2) + ":" + ("0" + myDate.getMinutes()).slice(-2)
+    if (selectedRange === 'today' || selectedRange === 'yesterday') {
+      time =
+        ('0' + myDate.getHours()).slice(-2) +
+        ':' +
+        ('0' + myDate.getMinutes()).slice(-2);
       return time;
-    }
-    else if (selectedRange === "this_month" || selectedRange === "last_month") {
-      time = myDate.getDate() + '\xa0' + monthNames[myDate.getMonth()] + '\xa0' + ("0" + myDate.getHours()).slice(-2) + ":" + ("0" + myDate.getMinutes()).slice(-2);
+    } else if (
+      selectedRange === 'this_month' ||
+      selectedRange === 'last_month'
+    ) {
+      time =
+        myDate.getDate() +
+        '\xa0' +
+        monthNames[myDate.getMonth()] +
+        '\xa0' +
+        ('0' + myDate.getHours()).slice(-2) +
+        ':' +
+        ('0' + myDate.getMinutes()).slice(-2);
 
       return time;
-    }
-    else if (selectedRange === "this_week" || selectedRange === "last_week") {
-      time = myDate.getDate() + '\xa0' + monthNames[myDate.getMonth()] + '\xa0' + ("0" + myDate.getHours()).slice(-2) + ":" + ("0" + myDate.getMinutes()).slice(-2);
+    } else if (selectedRange === 'this_week' || selectedRange === 'last_week') {
+      time =
+        myDate.getDate() +
+        '\xa0' +
+        monthNames[myDate.getMonth()] +
+        '\xa0' +
+        ('0' + myDate.getHours()).slice(-2) +
+        ':' +
+        ('0' + myDate.getMinutes()).slice(-2);
       return time;
-    }
-    else if (selectedRange === "this_year" || selectedRange === "last_year") {
-      time = myDate.getDate() + '\xa0' + monthNames[myDate.getMonth()] + '\xa0' + ("0" + myDate.getHours()).slice(-2) + ":" + ("0" + myDate.getMinutes()).slice(-2);
+    } else if (selectedRange === 'this_year' || selectedRange === 'last_year') {
+      time =
+        myDate.getDate() +
+        '\xa0' +
+        monthNames[myDate.getMonth()] +
+        '\xa0' +
+        ('0' + myDate.getHours()).slice(-2) +
+        ':' +
+        ('0' + myDate.getMinutes()).slice(-2);
       return time;
-    }
-    else if (selectedRange === "custom") {
-      time = ("0" + myDate.getHours()).slice(-2) + ":" + ("0" + myDate.getMinutes()).slice(-2)
+    } else if (selectedRange === 'custom') {
+      time =
+        ('0' + myDate.getHours()).slice(-2) +
+        ':' +
+        ('0' + myDate.getMinutes()).slice(-2);
       return time;
-    }
-    else {
-      return '00:00'
+    } else {
+      return '00:00';
     }
   }
-
-
 
   getCallTypeName(data: string) {
     switch (data) {

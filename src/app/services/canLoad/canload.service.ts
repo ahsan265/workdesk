@@ -7,13 +7,14 @@ import { CommonService } from 'src/app/workdeskServices/commonEndpoint/common.se
   providedIn: 'root'
 })
 export class CanloadService implements CanLoad {
-
-  constructor(private CommonService: CommonService, private Router: Router) { }
+  constructor(private CommonService: CommonService, private Router: Router) {}
   canLoad(): boolean {
-    return (this.CommonService.getIsAdminOrAgent() ? true : false)
+    return this.CommonService.getIsAdminOrAgent() ? true : false;
   }
 
   redirectionUserWise() {
-    this.canLoad() === true ? this.Router.navigate(['dashboard']) : this.Router.navigate(['calls'])
+    this.canLoad() === true
+      ? this.Router.navigate(['dashboard'])
+      : this.Router.navigate(['calls']);
   }
 }

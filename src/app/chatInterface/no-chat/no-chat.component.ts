@@ -7,11 +7,9 @@ import { Router } from '@angular/router';
   styleUrls: ['./no-chat.component.scss']
 })
 export class NoChatComponent {
-  constructor(private router: Router) {
-
-  }
+  constructor(private router: Router) {}
 
   goBack() {
-    this.router.navigate(['requests','incoming'])
+    this.router.navigate(['requests', 'incoming']);
   }
 }

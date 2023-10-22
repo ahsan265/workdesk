@@ -26,7 +26,7 @@ export class ConnectionSecurityService {
     private CommonService: CommonService,
     private SharedServices: SharedServices,
     private GeneralSocketService: GeneralSocketService
-  ) { }
+  ) {}
   public async createConnectionEndpoint(
     token: string,
     ogranizationId: string,

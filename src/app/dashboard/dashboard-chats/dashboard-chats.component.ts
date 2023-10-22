@@ -1,14 +1,19 @@
 import { Component, HostListener, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { GigaaaDaterangepickerDirective } from '@gigaaa/gigaaa-components';
-import { ChartConfiguration, ChartType, ChartData } from 'chart.js';
+import { ChartConfiguration, ChartData, ChartType } from 'chart.js';
 import dayjs from 'dayjs';
 import { BaseChartDirective } from 'ng2-charts';
 import { CalendarService } from 'src/app/calendarService/calendar.service';
 import { AuthService } from 'src/app/services/auth.service';
 import { CommonService } from 'src/app/workdeskServices/commonEndpoint/common.service';
 import { SharedServices } from 'src/app/workdeskServices/sharedResourcesService/shared-resource-service.service';
-import { countries, languauges, cardDataTotalVisitors, ranges } from '../dashboardData';
+import {
+  cardDataTotalVisitors,
+  countries,
+  languauges,
+  ranges
+} from '../dashboardData';
 import { DashboardEndpointService } from '../dashboardService/dashboard-endpoint.service';
 import DataLabelsPlugin from 'chartjs-plugin-datalabels';
 import { OneSelect } from 'src/app/models/oneSelect';
@@ -127,7 +132,6 @@ export class DashboardChatsComponent {
     private dashboardEps: DashboardEndpointService,
     private calendarService: CalendarService,
     private router: Router
-
   ) {
     this.getFirstLoad();
     this.authService.pageTitle.next('Dashboard');
@@ -137,28 +141,32 @@ export class DashboardChatsComponent {
   async ngOnInit(): Promise<void> {
     this.CommonService.restrictRoute();
     this.countries = await this.CommonService.getLocations();
-    if (this.CommonService.getEndpointsParamLocal().token === this.authService.user.value?.api_token) {
-      this.callRouteLoad()
-    }
-    else {
+    if (
+      this.CommonService.getEndpointsParamLocal().token ===
+      this.authService.user.value?.api_token
+    ) {
+      this.callRouteLoad();
+    } else {
       this.authService.user.next(this.authService.getLoggedUser());
     }
   }
   getCardsAndChartsData() {
-    this.dashboardEps.cardDataSubject.asObservable().subscribe((data: cardTypeModel) => {
-      if (data.type === 'chats_counts') {
-        this.chatCardsData = data.data.map((result, i) => ({
-          icon: this.chatCardsData[i].icon,
-          title: this.chatCardsData[i].title,
-          color: result.color,
-          mainResult: result.mainResult,
-          secondResultText: result.secondResultText,
-          secondResultNumber: result.secondResultNumber,
-          iconUp: result.iconUp,
-          iconDown: result.iconDown
-        }))
-      }
-    });
+    this.dashboardEps.cardDataSubject
+      .asObservable()
+      .subscribe((data: cardTypeModel) => {
+        if (data.type === 'chats_counts') {
+          this.chatCardsData = data.data.map((result, i) => ({
+            icon: this.chatCardsData[i].icon,
+            title: this.chatCardsData[i].title,
+            color: result.color,
+            mainResult: result.mainResult,
+            secondResultText: result.secondResultText,
+            secondResultNumber: result.secondResultNumber,
+            iconUp: result.iconUp,
+            iconDown: result.iconDown
+          }));
+        }
+      });
     this.dashboardEps.chartDataSubject.subscribe((data: chartModel) => {
       if (data.type === 'chats_aggregates') {
         this.barChartData1 = data.data[0];
@@ -171,7 +179,12 @@ export class DashboardChatsComponent {
     this.languauges = await this.CommonService.getProjectLanguagesForUser();
     this.countries = await this.CommonService.getLocations();
     if (this.CommonService.getEndpointsParamLocal().project != undefined) {
-      this.dashboardEps.getAnalyticsData([], [], this.aggregate, 'chats_filter');
+      this.dashboardEps.getAnalyticsData(
+        [],
+        [],
+        this.aggregate,
+        'chats_filter'
+      );
     }
   }
   private getFirstLoad(): void {
@@ -245,15 +258,15 @@ export class DashboardChatsComponent {
     this.showCalendar = !this.showCalendar;
   }
 
-  //default date param 
+  //default date param
 
   setDefaultDate() {
-    this.aggregate = "this_week";
+    this.aggregate = 'this_week';
     this.selected = {
       startDate: dayjs().startOf('week').add(1, 'day'),
       endDate: dayjs().endOf('week').add(1, 'day'),
       aggregate: this.aggregate
-    }
+    };
   }
   // select Dashboard type
   oneSelectOutput(event: OneSelect) {

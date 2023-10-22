@@ -35,9 +35,13 @@ export class AgentSocketService {
   isInCall: boolean = false;
   public isInCallValue: BehaviorSubject<boolean>;
   public loggedAgentData = new Subject<AgentList>();
-  constructor(private CommonService: CommonService, private Router: Router, private SharedServices: SharedServices,) {
+  constructor(
+    private CommonService: CommonService,
+    private Router: Router,
+    private SharedServices: SharedServices
+  ) {
     this.isInCallValue = new BehaviorSubject(this.isInCall);
-    this.freeSeatsInformation = new BehaviorSubject(freeSeats)
+    this.freeSeatsInformation = new BehaviorSubject(freeSeats);
   }
 
   public async callAgentSocketEndpoint() {
@@ -46,9 +50,9 @@ export class AgentSocketService {
     );
     let url =
       this.websocket_url + '/agents?connection=' + connectionId.connection;
-   await this.socketStates(url);
+    await this.socketStates(url);
   }
-  private async socketStates(url: string):Promise<void> {
+  private async socketStates(url: string): Promise<void> {
     this.ws = new WebSocket(url);
     // on socket connection open
     this.ws.onopen = (e) => {
@@ -62,7 +66,7 @@ export class AgentSocketService {
       this.sendParameterForSeats();
     };
     this.ws.onmessage = (e) => {
-      let data = JSON.parse(e.data)
+      let data = JSON.parse(e.data);
 
       if (!Array.isArray(data)) {
         switch (data.type) {
@@ -87,15 +91,13 @@ export class AgentSocketService {
             break;
           default:
         }
-      }
-      else if (Array.isArray(data)) {
-        this.getAgentList(data)
-
+      } else if (Array.isArray(data)) {
+        this.getAgentList(data);
       }
       //e.data !== 'ping' ? this.getAgentList(JSON.parse(e.data)) : '';
     };
-    this.ws.onclose = (e) => { };
-    this.ws.onerror = (e) => { };
+    this.ws.onclose = (e) => {};
+    this.ws.onerror = (e) => {};
   }
   public sendAgentsParameter(AgentParameter: AgentParameter) {
     if (this.isSocketOpen === 1) {
@@ -124,8 +126,9 @@ export class AgentSocketService {
     this.getAgentOnlineStatus(AgentList);
     AgentList.find((data) => {
       if (this.CommonService.getEmailForLoggedInUser() === data.email) {
-        (this.CommonService.getLoggedInAgentData().role !== data.role) ?
-          this.SharedServices.reloadProject(true) : '';
+        this.CommonService.getLoggedInAgentData().role !== data.role
+          ? this.SharedServices.reloadProject(true)
+          : '';
         this.loggedAgentData.next(data);
         this.CommonService.loggedInAgentDetails(data);
       }
@@ -190,6 +193,4 @@ export class AgentSocketService {
       this.ws?.close();
     }
   }
-
-
 }

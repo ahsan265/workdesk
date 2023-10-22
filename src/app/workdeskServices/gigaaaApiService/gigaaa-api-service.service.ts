@@ -68,7 +68,14 @@ export class GigaaaApiService {
     };
 
     return this.http
-      .get(this.workdeskurl_cs + '/private/countries?project=' + project + "&organization=" + oranization, httpOptions)
+      .get(
+        this.workdeskurl_cs +
+          '/private/countries?project=' +
+          project +
+          '&organization=' +
+          oranization,
+        httpOptions
+      )
       .toPromise();
   }
   public getAllLanguages(): Promise<any> {
@@ -98,10 +105,10 @@ export class GigaaaApiService {
     return this.http
       .get(
         this.workdeskurl_cs +
-        '/private/agent/languages?organization=' +
-        organization +
-        '&project=' +
-        project,
+          '/private/agent/languages?organization=' +
+          organization +
+          '&project=' +
+          project,
         httpOptions
       )
       .toPromise();
@@ -154,18 +161,18 @@ export class GigaaaApiService {
     };
     return this.http.get(
       this.workdeskurl_cs +
-      '/private/agents?show_active=' +
-      show_active +
-      '&show_invited=' +
-      show_invited +
-      '&show_inactive=' +
-      show_inactive +
-      '&languages=' +
-      languages +
-      '&organization=' +
-      subsid +
-      '&integration=' +
-      intid,
+        '/private/agents?show_active=' +
+        show_active +
+        '&show_invited=' +
+        show_invited +
+        '&show_inactive=' +
+        show_inactive +
+        '&languages=' +
+        languages +
+        '&organization=' +
+        subsid +
+        '&integration=' +
+        intid,
       httpOptions
     );
   }
@@ -181,10 +188,10 @@ export class GigaaaApiService {
     };
     return this.http.get(
       this.workdeskurl_cs +
-      '/statistics?subscription=' +
-      subsid +
-      '&integration=' +
-      intid,
+        '/statistics?subscription=' +
+        subsid +
+        '&integration=' +
+        intid,
       httpOptions
     );
   }
@@ -204,11 +211,11 @@ export class GigaaaApiService {
 
     return this.http.get(
       this.workdeskurl_cs +
-      'queue?organization=' +
-      orgid +
-      '&integration=' +
-      intid +
-      '&languages=',
+        'queue?organization=' +
+        orgid +
+        '&integration=' +
+        intid +
+        '&languages=',
       httpOptions
     );
   }
@@ -304,10 +311,10 @@ export class GigaaaApiService {
     return await this.http
       .post(
         this.workdeskurl_cs +
-        '/private/start-call?organization=' +
-        orguuid +
-        '&project=' +
-        intid,
+          '/private/start-call?organization=' +
+          orguuid +
+          '&project=' +
+          intid,
         id,
         httpOptions
       )
@@ -335,10 +342,10 @@ export class GigaaaApiService {
     formdata.append('image', file);
     return this.http.post(
       this.workdeskurl_cs +
-      '/private/agents/image?organization=' +
-      organization +
-      '&project=' +
-      project,
+        '/private/agents/image?organization=' +
+        organization +
+        '&project=' +
+        project,
       formdata,
       httpOptions
     );
@@ -363,12 +370,12 @@ export class GigaaaApiService {
     formdata.append('image', file);
     return this.http.post(
       this.workdeskurl_cs +
-      '/private/agents/image?organization=' +
-      orgid +
-      '&project=' +
-      intgid +
-      '&agent=' +
-      uuid,
+        '/private/agents/image?organization=' +
+        orgid +
+        '&project=' +
+        intgid +
+        '&agent=' +
+        uuid,
       formdata,
       httpOptions
     );
@@ -391,10 +398,10 @@ export class GigaaaApiService {
     return await this.http
       .put(
         this.workdeskurl_cs +
-        '/customer-support/agents/' +
-        id +
-        '?subscription=' +
-        subsid,
+          '/customer-support/agents/' +
+          id +
+          '?subscription=' +
+          subsid,
         addrole,
         httpOptions
       )
@@ -405,7 +412,11 @@ export class GigaaaApiService {
   }
 
   //get visitors
-  public async getvisitorlist(accesstoken: string, orgid: string, intid: string): Promise<any> {
+  public async getvisitorlist(
+    accesstoken: string,
+    orgid: string,
+    intid: string
+  ): Promise<any> {
     const httpOptions: any = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
@@ -413,21 +424,27 @@ export class GigaaaApiService {
         Authorization: `Bearer ${accesstoken}`
       })
     };
-    return await this.http.get(
-      this.gigaabackendUlr +
-      '/workdesk/visitors?organization=' +
-      orgid +
-      '&integration=' +
-      intid,
-      httpOptions
-    ).toPromise()
+    return await this.http
+      .get(
+        this.gigaabackendUlr +
+          '/workdesk/visitors?organization=' +
+          orgid +
+          '&integration=' +
+          intid,
+        httpOptions
+      )
+      .toPromise()
       .catch((err) => {
         throw err;
       });
   }
 
   //get visitors
-  public async getroleofagent(accesstoken: string, orgid: string, intid: string): Promise<any> {
+  public async getroleofagent(
+    accesstoken: string,
+    orgid: string,
+    intid: string
+  ): Promise<any> {
     const httpOptions: any = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
@@ -435,14 +452,16 @@ export class GigaaaApiService {
         Authorization: `Bearer ${accesstoken}`
       })
     };
-    return this.http.get(
-      this.workdeskurl_cs +
-      '/private/is-admin?organization=' +
-      orgid +
-      '&project=' +
-      intid,
-      httpOptions
-    ).toPromise()
+    return this.http
+      .get(
+        this.workdeskurl_cs +
+          '/private/is-admin?organization=' +
+          orgid +
+          '&project=' +
+          intid,
+        httpOptions
+      )
+      .toPromise()
       .catch((err) => {
         throw err;
       });
@@ -459,10 +478,10 @@ export class GigaaaApiService {
     };
     return this.http.get(
       this.workdeskurl_cs +
-      'queue/websocket/access-token?organization=' +
-      orgid +
-      '&integration=' +
-      intid,
+        'queue/websocket/access-token?organization=' +
+        orgid +
+        '&integration=' +
+        intid,
       httpOptions
     );
   }
@@ -486,10 +505,10 @@ export class GigaaaApiService {
     return await this.http
       .post(
         this.workdeskurl_cs +
-        '/private/v2/invitation?organization=' +
-        uuid +
-        '&project=' +
-        project,
+          '/private/v2/invitation?organization=' +
+          uuid +
+          '&project=' +
+          project,
         agentdata,
         httpOptions
       )
@@ -540,12 +559,12 @@ export class GigaaaApiService {
     return this.http
       .delete(
         this.workdeskurl_cs +
-        '/private/agents/' +
-        agentuuid +
-        '?organization=' +
-        orgid +
-        '&project=' +
-        intid,
+          '/private/agents/' +
+          agentuuid +
+          '?organization=' +
+          orgid +
+          '&project=' +
+          intid,
         httpOptions
       )
       .toPromise()
@@ -569,10 +588,10 @@ export class GigaaaApiService {
     };
     return this.http.get(
       this.workdeskurl_cs +
-      '/private/is-online?organization=' +
-      orgid +
-      '&integration=' +
-      intid,
+        '/private/is-online?organization=' +
+        orgid +
+        '&integration=' +
+        intid,
       httpOptions
     );
   }
@@ -594,10 +613,10 @@ export class GigaaaApiService {
     return await this.http
       .put(
         this.workdeskurl_cs +
-        '/private/is-online?organization=' +
-        orgid +
-        '&integration=' +
-        intid,
+          '/private/is-online?organization=' +
+          orgid +
+          '&integration=' +
+          intid,
         online,
         httpOptions
       )
@@ -624,12 +643,12 @@ export class GigaaaApiService {
     return await this.http
       .post(
         this.workdeskurl_cs +
-        '/private/invitation/resend?agent=' +
-        agentuuid +
-        '&organization=' +
-        orgid +
-        '&project=' +
-        intid,
+          '/private/invitation/resend?agent=' +
+          agentuuid +
+          '&organization=' +
+          orgid +
+          '&project=' +
+          intid,
         {},
         httpOptions
       )
@@ -658,12 +677,12 @@ export class GigaaaApiService {
     return await this.http
       .put(
         this.workdeskurl_cs +
-        '/private/agents/' +
-        agentUuid +
-        '?organization=' +
-        organizationId +
-        '&project=' +
-        projectId,
+          '/private/agents/' +
+          agentUuid +
+          '?organization=' +
+          organizationId +
+          '&project=' +
+          projectId,
         agentBody,
         httpOptions
       )
@@ -704,10 +723,10 @@ export class GigaaaApiService {
     return await this.http
       .get(
         this.workdeskurl_cs +
-        '/private-project/agent?organization=' +
-        orgid +
-        '&project=' +
-        intid,
+          '/private-project/agent?organization=' +
+          orgid +
+          '&project=' +
+          intid,
         httpOptions
       )
       .toPromise()
@@ -782,12 +801,12 @@ export class GigaaaApiService {
     return await this.http
       .put(
         this.workdeskurl_cs +
-        '/private/agent/all-languages/' +
-        agentUuid +
-        '?organization=' +
-        organizationId +
-        '&project=' +
-        projectId,
+          '/private/agent/all-languages/' +
+          agentUuid +
+          '?organization=' +
+          organizationId +
+          '&project=' +
+          projectId,
         languageBody,
         httpOptions
       )
@@ -797,10 +816,9 @@ export class GigaaaApiService {
       });
   }
 
-
   public async setLastUsedOrganization(
     token: string,
-    organizationId: string,
+    organizationId: string
   ): Promise<any> {
     const httpOptions: any = {
       headers: new HttpHeaders({
@@ -812,9 +830,9 @@ export class GigaaaApiService {
     return await this.http
       .put(
         this.workdeskurl_cs +
-        '/private/organization/' +
-        organizationId +
-        '/last-used',
+          '/private/organization/' +
+          organizationId +
+          '/last-used',
         {},
         httpOptions
       )
@@ -841,12 +859,12 @@ export class GigaaaApiService {
     return this.http
       .delete(
         this.workdeskurl_cs +
-        '/private/agents/image?organization=' +
-        orgid +
-        '&project=' +
-        intid +
-        '&agent=' +
-        agentUuid,
+          '/private/agents/image?organization=' +
+          orgid +
+          '&project=' +
+          intid +
+          '&agent=' +
+          agentUuid,
         httpOptions
       )
       .toPromise()
@@ -855,7 +873,7 @@ export class GigaaaApiService {
       });
   }
 
-  // set active agent when agent is disbaled by cs on console. 
+  // set active agent when agent is disbaled by cs on console.
 
   public async setInavtiveAgentToActive(
     token: string,
@@ -874,10 +892,13 @@ export class GigaaaApiService {
     return await this.http
       .put(
         this.workdeskurl_cs +
-        '/private/agents/' +
-        uuid +
-        '/deactivate?organization=' + organizationId + '&project=' + projectId,
-        { "inactive": inactive },
+          '/private/agents/' +
+          uuid +
+          '/deactivate?organization=' +
+          organizationId +
+          '&project=' +
+          projectId,
+        { inactive: inactive },
         httpOptions
       )
       .toPromise()
@@ -885,7 +906,7 @@ export class GigaaaApiService {
         throw err;
       });
   }
-  // for join chat 
+  // for join chat
   public async setChatAnswer(
     accesstoken: string,
     orguuid: string,
@@ -903,10 +924,11 @@ export class GigaaaApiService {
     return await this.http
       .post(
         this.workdeskurl_cs +
-        '/private/organization/' +
-        orguuid +
-        '/project/' +
-        intid + '/chat/answer',
+          '/private/organization/' +
+          orguuid +
+          '/project/' +
+          intid +
+          '/chat/answer',
         id,
         httpOptions
       )
@@ -916,7 +938,7 @@ export class GigaaaApiService {
       });
   }
 
-  // for end chat 
+  // for end chat
   public async setChatEnd(
     accesstoken: string,
     orguuid: string,
@@ -934,10 +956,11 @@ export class GigaaaApiService {
     return await this.http
       .post(
         this.workdeskurl_cs +
-        '/private/organization/' +
-        orguuid +
-        '/project/' +
-        intid + '/chat/end',
+          '/private/organization/' +
+          orguuid +
+          '/project/' +
+          intid +
+          '/chat/end',
         id,
         httpOptions
       )
@@ -964,7 +987,12 @@ export class GigaaaApiService {
     return await this.http
       .put(
         this.workdeskurl_cs +
-        '/private/organization/' + organizationId + '/project/' + projectId + '/conversation/' + c_uuid,
+          '/private/organization/' +
+          organizationId +
+          '/project/' +
+          projectId +
+          '/conversation/' +
+          c_uuid,
         { messages: messageUuid },
         httpOptions
       )
@@ -974,7 +1002,7 @@ export class GigaaaApiService {
       });
   }
 
-  // table customization  update 
+  // table customization  update
 
   public async tableCustomization(
     token: string,
@@ -995,7 +1023,11 @@ export class GigaaaApiService {
     return await this.http
       .post(
         this.workdeskurl_cs +
-        '/private/organization/' + organizationId + '/project/' + projectId + '/table-customization',
+          '/private/organization/' +
+          organizationId +
+          '/project/' +
+          projectId +
+          '/table-customization',
         {
           customization_id: customization_id,
           customization_value: customization_value,
@@ -1009,13 +1041,13 @@ export class GigaaaApiService {
       });
   }
 
-  // table customization  list 
+  // table customization  list
 
   public async tableCustomizationList(
     token: string,
     organizationId: string,
     projectId: string,
-    table_identifier: string,
+    table_identifier: string
   ): Promise<any> {
     const httpOptions: any = {
       headers: new HttpHeaders({
@@ -1027,7 +1059,12 @@ export class GigaaaApiService {
     return await this.http
       .get(
         this.workdeskurl_cs +
-        '/private/organization/' + organizationId + '/project/' + projectId + '/table-customization?table_identifier=' + table_identifier,
+          '/private/organization/' +
+          organizationId +
+          '/project/' +
+          projectId +
+          '/table-customization?table_identifier=' +
+          table_identifier,
         httpOptions
       )
       .toPromise()
@@ -1036,11 +1073,11 @@ export class GigaaaApiService {
       });
   }
 
-  // get default requests time 
+  // get default requests time
   public async getDefaultRequestTime(
     token: string,
     organizationId: string,
-    projectId: string,
+    projectId: string
   ): Promise<any> {
     const httpOptions: any = {
       headers: new HttpHeaders({
@@ -1052,7 +1089,11 @@ export class GigaaaApiService {
     return await this.http
       .get(
         this.workdeskurl_cs +
-        '/private/organization/' + organizationId + '/project/' + projectId + '/settings',
+          '/private/organization/' +
+          organizationId +
+          '/project/' +
+          projectId +
+          '/settings',
         httpOptions
       )
       .toPromise()
@@ -1060,7 +1101,7 @@ export class GigaaaApiService {
         throw err;
       });
   }
-  // set Request 
+  // set Request
   public async setDefaultRequestTime(
     token: string,
     organizationId: string,
@@ -1080,7 +1121,11 @@ export class GigaaaApiService {
     return await this.http
       .post(
         this.workdeskurl_cs +
-        '/private/organization/' + organizationId + '/project/' + projectId + '/settings',
+          '/private/organization/' +
+          organizationId +
+          '/project/' +
+          projectId +
+          '/settings',
         {
           call_wait_time: call_wait_time,
           user_wait_time: user_wait_time,
@@ -1094,12 +1139,11 @@ export class GigaaaApiService {
       });
   }
 
-
   // get All Notification
   public async getAllNotification(
     token: string,
     organizationId: string,
-    projectId: string,
+    projectId: string
   ): Promise<any> {
     const httpOptions: any = {
       headers: new HttpHeaders({
@@ -1111,7 +1155,11 @@ export class GigaaaApiService {
     return await this.http
       .get(
         this.workdeskurl_cs +
-        '/private/organization/' + organizationId + '/project/' + projectId + '/notifications',
+          '/private/organization/' +
+          organizationId +
+          '/project/' +
+          projectId +
+          '/notifications',
         httpOptions
       )
       .toPromise()
@@ -1120,7 +1168,7 @@ export class GigaaaApiService {
       });
   }
 
-  // delete notification 
+  // delete notification
   // delete agents
   public async deletNotification(
     accesstoken: string,
@@ -1138,7 +1186,12 @@ export class GigaaaApiService {
     return this.http
       .delete(
         this.workdeskurl_cs +
-        '/private/organization/' + organizationId + '/project/' + projectId + '/notifications?ids=' + notificationId,
+          '/private/organization/' +
+          organizationId +
+          '/project/' +
+          projectId +
+          '/notifications?ids=' +
+          notificationId,
         httpOptions
       )
       .toPromise()
@@ -1147,12 +1200,12 @@ export class GigaaaApiService {
       });
   }
 
-  // set unread to read notification 
+  // set unread to read notification
   public async setUnreadToreadNotification(
     token: string,
     organizationId: string,
     projectId: string,
-    id: number,
+    id: number
   ): Promise<any> {
     const httpOptions: any = {
       headers: new HttpHeaders({
@@ -1164,10 +1217,14 @@ export class GigaaaApiService {
     return await this.http
       .put(
         this.workdeskurl_cs +
-        '/private/organization/' + organizationId + '/project/' + projectId + '/notification/' + id + '/read ',
-        {
-
-        },
+          '/private/organization/' +
+          organizationId +
+          '/project/' +
+          projectId +
+          '/notification/' +
+          id +
+          '/read ',
+        {},
         httpOptions
       )
       .toPromise()

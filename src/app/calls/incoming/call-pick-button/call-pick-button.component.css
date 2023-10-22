@@ -1,17 +1,17 @@
 .buttonClass {
-    width: 73px;
-    height: 25px;
-    background: #1C54DB;
-    border-radius: 4px;
-    color: #FFFFFF;
-    outline: none;
-    border: none;
-    cursor: pointer;
+  width: 73px;
+  height: 25px;
+  background: #1c54db;
+  border-radius: 4px;
+  color: #ffffff;
+  outline: none;
+  border: none;
+  cursor: pointer;
 }
 
 button:disabled.buttonClass,
 button[disabled].buttonClass {
-    background: #ECECF3;
-    color: #A4A4A4;
-    cursor: default;
+  background: #ececf3;
+  color: #a4a4a4;
+  cursor: default;
 }

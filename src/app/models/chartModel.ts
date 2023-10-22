@@ -1,6 +1,6 @@
-import { ChartData } from "chart.js";
+import { ChartData } from 'chart.js';
 
 export interface chartModel {
-    type: string;
-    data: ChartData<'bar'>[]
+  type: string;
+  data: ChartData<'bar'>[];
 }

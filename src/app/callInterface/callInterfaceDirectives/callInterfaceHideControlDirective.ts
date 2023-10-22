@@ -5,30 +5,31 @@ import { AgentUserInformation } from 'src/app/workdeskServices/callInterfaceServ
   selector: '[callControll]'
 })
 export class callInterfaceHideControlDirective {
-
   isAnimated: boolean = false;
 
   @HostBinding('style.transform') private transform = 'translatey(0px)';
-  constructor(private AgentUserInformation: AgentUserInformation) {
-  }
+  constructor(private AgentUserInformation: AgentUserInformation) {}
 
   @HostListener('document:click', ['$event']) public onStop(evt: any) {
     const user = this.AgentUserInformation.getCallInformation();
     // if (user.peer_information?.data?.isScreenShareOn === true) {
     let timeout;
-    if (this.isAnimated === false && user.peer_information?.data?.isScreenShareOn === true) {
+    if (
+      this.isAnimated === false &&
+      user.peer_information?.data?.isScreenShareOn === true
+    ) {
       evt.preventDefault();
       evt.stopPropagation();
       clearTimeout(timeout);
-      (user.is_minimize === false) ? this.transform = 'translatey(500px)' :
-        this.transform = 'translatey(0px)';
+      user.is_minimize === false
+        ? (this.transform = 'translatey(500px)')
+        : (this.transform = 'translatey(0px)');
 
       this.isAnimated = true;
     } else if (this.isAnimated === true) {
       timeout = setTimeout(() => {
         this.transform = 'translatey(0px)';
         this.isAnimated = false;
-
       }, 500);
     }
     // } else {

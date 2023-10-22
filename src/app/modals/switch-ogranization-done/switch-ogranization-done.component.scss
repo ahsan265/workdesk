@@ -1,42 +1,42 @@
 .doneOrganizationWrapper {
-    width: 342px;
-    height: 184px;
+  width: 342px;
+  height: 184px;
 }
 
 .heading {
-    font-family: 'Roboto', sans-serif;
-    font-style: normal;
-    font-weight: 500;
-    font-size: 16px;
-    line-height: 305.19%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    letter-spacing: 0.02em;
-    color: #162741;
+  font-family: 'Roboto', sans-serif;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 305.19%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  letter-spacing: 0.02em;
+  color: #162741;
 }
 
 .description {
-    font-family: "Roboto", sans-serif;
-    font-style: normal;
-    font-weight: 400;
-    font-size: 13px;
-    line-height: 130%;
-    letter-spacing: 0.02em;
-    display: block;
-    color: #6A7585;
-    width: 100%;
-    text-align: center;
+  font-family: 'Roboto', sans-serif;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 13px;
+  line-height: 130%;
+  letter-spacing: 0.02em;
+  display: block;
+  color: #6a7585;
+  width: 100%;
+  text-align: center;
 }
 
 .description span {
-    color: #162741;
-    font-weight: 500;
+  color: #162741;
+  font-weight: 500;
 }
 
 .doneIconWrapper {
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    margin-top: 35px;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  margin-top: 35px;
 }

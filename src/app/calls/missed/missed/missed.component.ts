@@ -1,4 +1,11 @@
-import { callTypeMissed, languaugesMissed, missedData, missedTableSetting, paginationData, searchInputData } from '../../missed/missedData';
+import {
+  callTypeMissed,
+  languaugesMissed,
+  missedData,
+  missedTableSetting,
+  paginationData,
+  searchInputData
+} from '../../missed/missedData';
 import { Component, HostListener, OnInit, ViewChild } from '@angular/core';
 import {
   MissedCallModel,
@@ -62,66 +69,75 @@ export class MissedComponent implements OnInit {
     private CommonService: CommonService,
     private calendarService: CalendarService,
     private getDefaultInputsLoadOnce: getDefaultInputsLoadOnce
-
   ) {
-    this.CallsService.sendDataToMissedTabsSubject.subscribe((data: newCallModelMissed) => {
-      this.pagination.totalItems = data.items_count;
-      this.pagination.totolPages = data.total_pages;
-      this.pagination.itemsPerPage = data.items_per_page
-      this.missedCallData = data.calls.map((missedCallData: MissedCallModel) => ({
-        agent_name: missedCallData.user_name,
-        call_uuid: missedCallData.request_uuid,
-        called_at: this.CallsService
-          .getCalledAtTimeDate(missedCallData.missed_at, this.aggregate),
-        callType: {
-          image: this.CommonService.getConversationType(
-            missedCallData.request_type
-          ),
-          text: this.CallsService.getCallTypeName(missedCallData.request_type)
-        },
-        resaon: missedCallData.reason,
-        user_details: {
-          image: '../../../assets/images/callInterface/user.png',
-          text: missedCallData.user_name
-        },
-        user_id: this.CallsService.getUserId(missedCallData.user_id),
-        utilites: [
-          {
-            image: this.CommonService.getLanguageFlags(
-              missedCallData.language_id
-            )
-          },
-          {
-            image: this.CommonService.getBrowserFlag(missedCallData.browser)
-          },
-          {
-            image: this.CommonService.getDeviceType(missedCallData.desktop)
-          },
-          {
-            image: this.CommonService.getOperatingSystem(
-              missedCallData.operating_system
-            )
-          }
-        ],
-        wait_time: this.CallsService
-          .calculatetime(missedCallData.wait_time)
-          .toString()
-      }));
-      this.unfilterMissedCallData = this.missedCallData;
-      this.callsIndicatorData.text = this.pagination.totalItems + ' missed requests';
-    }
+    this.CallsService.sendDataToMissedTabsSubject.subscribe(
+      (data: newCallModelMissed) => {
+        this.pagination.totalItems = data.items_count;
+        this.pagination.totolPages = data.total_pages;
+        this.pagination.itemsPerPage = data.items_per_page;
+        this.missedCallData = data.calls.map(
+          (missedCallData: MissedCallModel) => ({
+            agent_name: missedCallData.user_name,
+            call_uuid: missedCallData.request_uuid,
+            called_at: this.CallsService.getCalledAtTimeDate(
+              missedCallData.missed_at,
+              this.aggregate
+            ),
+            callType: {
+              image: this.CommonService.getConversationType(
+                missedCallData.request_type
+              ),
+              text: this.CallsService.getCallTypeName(
+                missedCallData.request_type
+              )
+            },
+            resaon: missedCallData.reason,
+            user_details: {
+              image: '../../../assets/images/callInterface/user.png',
+              text: missedCallData.user_name
+            },
+            user_id: this.CallsService.getUserId(missedCallData.user_id),
+            utilites: [
+              {
+                image: this.CommonService.getLanguageFlags(
+                  missedCallData.language_id
+                )
+              },
+              {
+                image: this.CommonService.getBrowserFlag(missedCallData.browser)
+              },
+              {
+                image: this.CommonService.getDeviceType(missedCallData.desktop)
+              },
+              {
+                image: this.CommonService.getOperatingSystem(
+                  missedCallData.operating_system
+                )
+              }
+            ],
+            wait_time: this.CallsService.calculatetime(
+              missedCallData.wait_time
+            ).toString()
+          })
+        );
+        this.unfilterMissedCallData = this.missedCallData;
+        this.callsIndicatorData.text =
+          this.pagination.totalItems + ' missed requests';
+      }
     );
   }
   async ngOnInit(): Promise<void> {
-    this.getDefaultInputsLoadOnce.missedLanguage.asObservable().subscribe(data => {
-      this.languauges = data;
-      this.languageIds = [];
-      this.callTypeName = [];
-      this.callType.data.map(data => {
-        data.selected = false;
-      })
-      this.searchInputData.searchText = '';
-    })
+    this.getDefaultInputsLoadOnce.missedLanguage
+      .asObservable()
+      .subscribe((data) => {
+        this.languauges = data;
+        this.languageIds = [];
+        this.callTypeName = [];
+        this.callType.data.map((data) => {
+          data.selected = false;
+        });
+        this.searchInputData.searchText = '';
+      });
   }
 
   change(event: any) {
@@ -207,11 +223,10 @@ export class MissedComponent implements OnInit {
           this.pageNumber,
           this.lastUsedSearch
         );
+      } else {
+        clearTimeout(this.timer);
       }
-      else {
-        clearTimeout(this.timer)
-      }
-    }, 500)
+    }, 500);
 
     // this.missedCallData = this.CallsService.search(value, this.missedCallData, this.unfilterMissedCallData);
     // this.callsIndicatorData.text = this.missedCallData.length + ' missed requests';
@@ -249,5 +264,4 @@ export class MissedComponent implements OnInit {
       this.lastUsedSearch
     );
   }
-
 }

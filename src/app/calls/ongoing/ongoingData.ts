@@ -1,7 +1,7 @@
-import { TableSettingsModel } from "src/app/models/agent";
-import { tableHeading } from "src/app/models/callModel";
-import { MultiSelect } from "src/app/models/multiSelect";
-import { SearchInput } from "src/app/models/searchInput";
+import { TableSettingsModel } from 'src/app/models/agent';
+import { tableHeading } from 'src/app/models/callModel';
+import { MultiSelect } from 'src/app/models/multiSelect';
+import { SearchInput } from 'src/app/models/searchInput';
 const ongoingTableSetting: TableSettingsModel[] = [
   {
     index: 0,
@@ -70,8 +70,12 @@ const languaugesOngoing: MultiSelect = {
   title: 'Language',
   showSelectAll: true,
   showSearchBar: false,
-  data: [
-  ]
+  data: []
 };
 
-export { ongoingTableSetting, callTypeOngoing, searchInputData, languaugesOngoing };
+export {
+  ongoingTableSetting,
+  callTypeOngoing,
+  searchInputData,
+  languaugesOngoing
+};

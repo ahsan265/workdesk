@@ -1,6 +1,7 @@
 <router-outlet></router-outlet>
 <app-modal-wrapper
   (closeModal)="onCloseNonComplientAccount($event)"
-  *ngIf="showNonComplientAccountModal">
+  *ngIf="showNonComplientAccountModal"
+>
   <app-wrong-invitation-account></app-wrong-invitation-account>
 </app-modal-wrapper>

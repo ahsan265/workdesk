@@ -1,60 +1,60 @@
 .noChatWrapper {
-    display: flex;
-    width: 100%;
-    flex-wrap: nowrap;
-    height: fit-content;
-    align-items: center;
-    flex-direction: column;
-    justify-content: center;
+  display: flex;
+  width: 100%;
+  flex-wrap: nowrap;
+  height: fit-content;
+  align-items: center;
+  flex-direction: column;
+  justify-content: center;
 }
 
 .mainHeading {
-    font-family: 'Roboto', sans-serif;
-    font-style: normal;
-    font-weight: 500;
-    font-size: 32px;
-    line-height: 38px;
-    align-items: center;
-    text-align: center;
-    letter-spacing: 0.02em;
-    width: 100%;
-    color: #162741;
-    margin-top: 62px;
+  font-family: 'Roboto', sans-serif;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 32px;
+  line-height: 38px;
+  align-items: center;
+  text-align: center;
+  letter-spacing: 0.02em;
+  width: 100%;
+  color: #162741;
+  margin-top: 62px;
 }
 
 .smallText {
-    font-family: "Roboto", sans-serif;
-    font-style: normal;
-    font-weight: 400;
-    font-size: 24px;
-    line-height: 28px;
-    align-items: center;
-    width: 100%;
-    text-align: center;
-    letter-spacing: 0.02em;
-    color: #162741;
-    margin-top: 28px;
+  font-family: 'Roboto', sans-serif;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 24px;
+  line-height: 28px;
+  align-items: center;
+  width: 100%;
+  text-align: center;
+  letter-spacing: 0.02em;
+  color: #162741;
+  margin-top: 28px;
 }
 
 .goBack {
-    width: 165px;
-    height: 56px;
-    font-family: "Roboto", sans-serif;
-    font-style: normal;
-    font-weight: 400;
-    font-size: 24.1611px;
-    line-height: 120%;
-    align-items: center;
-    letter-spacing: 0.02em;
-    border: none;
-    color: #FFFFFF;
-    background: #1C54DB;
-    margin-top: 28px;
-    border-radius: 41px;
-    cursor: pointer;
-    transition: 0.4s;
+  width: 165px;
+  height: 56px;
+  font-family: 'Roboto', sans-serif;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 24.1611px;
+  line-height: 120%;
+  align-items: center;
+  letter-spacing: 0.02em;
+  border: none;
+  color: #ffffff;
+  background: #1c54db;
+  margin-top: 28px;
+  border-radius: 41px;
+  cursor: pointer;
+  transition: 0.4s;
 }
 
 .goBack:hover {
-    background: #184CC8;
+  background: #184cc8;
 }

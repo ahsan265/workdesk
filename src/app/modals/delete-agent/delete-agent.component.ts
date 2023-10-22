@@ -1,5 +1,5 @@
 import { Component, Inject, Input, OnInit } from '@angular/core';
-import { component_data, OverlayService } from '@gigaaa/gigaaa-components';
+import { OverlayService, component_data } from '@gigaaa/gigaaa-components';
 import { AgentSettingService } from 'src/app/agent-settings/agentSettingService/agent-setting.service';
 import { AgentList } from 'src/app/models/agentSocketModel';
 import { MessageService } from 'src/app/workdeskServices/messageService/message.service';
@@ -19,16 +19,18 @@ export class DeleteAgentComponent implements OnInit {
     private AgentSettingService: AgentSettingService,
     @Inject(component_data) public data: any,
     private OverlayService: OverlayService
-
   ) {
     this.agentData = data;
   }
 
-  ngOnInit(): void { }
+  ngOnInit(): void {}
 
   public async deleteAgent(): Promise<void> {
     try {
-      await this.AgentSettingService.deleteAgent(this.agentData?.uuid, 'Agent deleted successfully.');
+      await this.AgentSettingService.deleteAgent(
+        this.agentData?.uuid,
+        'Agent deleted successfully.'
+      );
       this.OverlayService.close();
     } catch (err: any) {
       this.MessageService.setErrorMessage(err.error.error);
@@ -36,6 +38,6 @@ export class DeleteAgentComponent implements OnInit {
   }
   // close popup
   closePopup() {
-    this.OverlayService.close()
+    this.OverlayService.close();
   }
 }

@@ -1,111 +1,158 @@
 <div class="createTicketWrapper">
-    <div class="ticketsArea">
-        <div class="headingWrapper">
-            <div class="textFeild">
-                <div class="textLabel">
-                    Ticket name
-                </div>
-                <input class="assignText" type="text" placeholder="">
-            </div>
-            <div class="ticketNumberWrapper">
-                <span>ID:</span> 378103
-            </div>
-        </div>
-        <div class="assigningArea">
-
-            <div class="setPriority">
-                <div class="textFeild">
-                    <div class="textLabel">
-                        Priority
-                    </div>
-                    <app-one-select-dropdown [oneSelectData]="oneSelectData">
-                    </app-one-select-dropdown>
-                </div>
-                <div class="textFeild">
-                    <div class="textLabel">
-                        Due date
-                    </div>
-                    <div class="multiSelectWrapper calendar" #calendarDropdown (click)="onOpenCalendar()">
-                        <div class="calendarLocationLanguage calendarSelectMenu">
-                            <input readonly (change)="change($event)" (rangeClicked)="rangeClicked($event)" type="text"
-                                placeholder="Choose date" GigaaaDatepicker [(ngModel)]="selected"
-                                [showCustomRangeLabel]="false" [alwaysShowCalendars]="true" [ranges]="ranges"
-                                [linkedCalendars]="true" [showRangeLabelOnInput]="true" class="calendarInput" [locale]="{
-                              applyLabel: 'Apply',
-                              format: 'DD-MM-YYYY',
-                              firstDay: 1,
-                              customRangeLabel: 'Custom range'
-                            }" [showCancel]="true" startKey="startDate" endKey="endDate" />
-                            <svg (click)="onOpenCalendar()"
-                                [ngClass]="showCalendar ? 'filterArrowRotate' : 'filterArrow'" class="filterArrow"
-                                width="10" height="7" viewBox="0 0 10 7" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <path
-                                    d="M1.55469 0.871094L5 4.31641L8.44531 0.871094L9.5 1.92578L5 6.42578L0.5 1.92578L1.55469 0.871094Z"
-                                    fill="#162741" />
-                            </svg>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="setPriority">
-                <div class="textFeild">
-                    <div class="textLabel">
-                        Assign to
-                    </div>
-                    <div class="multiSelectWrapper assignee" #assignTicketsDropdown (click)="showAssignPopup()">
-                        <div class="assignAgentWrapper create">
-                            2 Assignees <app-assign *ngIf="showAssignDropdown"></app-assign>
-                        </div>
-                        <svg style="float: right;
-                        margin-right: 12px;" (click)="onOpenCalendar()"
-                            [ngClass]="showAssignDropdown ? 'filterArrowRotate' : 'filterArrow'" class="filterArrow"
-                            width="10" height="7" viewBox="0 0 10 7" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path
-                                d="M1.55469 0.871094L5 4.31641L8.44531 0.871094L9.5 1.92578L5 6.42578L0.5 1.92578L1.55469 0.871094Z"
-                                fill="#162741" />
-                        </svg>
-                    </div>
-
-                </div>
-
-                <div class="textFeild">
-                    <div class="textLabel">
-                        Status
-                    </div>
-                    <div class="multiSelectWrapper status">
-
-                        <app-one-select-dropdown [oneSelectData]="statusType" [selectedField]="'Status'">
-
-                        </app-one-select-dropdown>
-                    </div>
-                </div>
-                <div class="textFeild">
-                    <div class="textLabel">
-                        User
-                    </div>
-                    <div class="multiSelectWrapper assignee" #assignUserDropdown (click)="showUserPopup()">
-                        <div class="assignAgentWrapper create">
-                            Select user <app-assign *ngIf="showUserDropdown" [header]="'Assign To'"></app-assign>
-                        </div>
-                        <svg style="float: right;
-                        margin-right: 12px;" (click)="onOpenCalendar()"
-                            [ngClass]="showUserDropdown ? 'filterArrowRotate' : 'filterArrow'" class="filterArrow"
-                            width="10" height="7" viewBox="0 0 10 7" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path
-                                d="M1.55469 0.871094L5 4.31641L8.44531 0.871094L9.5 1.92578L5 6.42578L0.5 1.92578L1.55469 0.871094Z"
-                                fill="#162741" />
-                        </svg>
-                    </div>
-                </div>
-            </div>
-
-        </div>
+  <div class="ticketsArea">
+    <div class="headingWrapper">
+      <div class="textFeild">
+        <div class="textLabel">Ticket name</div>
+        <input class="assignText" type="text" placeholder="" />
+      </div>
+      <div class="ticketNumberWrapper"><span>ID:</span> 378103</div>
     </div>
-    <div class="buttonsWrapper ">
-        <div class="buttonPanel">
-            <gigaaa-button (buttonOutput)="onGetBackButtonOutput($event)" [buttonData]="backButtonData"></gigaaa-button>
-            <gigaaa-button (buttonOutput)="onGetSaveButtonOutput($event)" [buttonData]="saveButtonData"></gigaaa-button>
+    <div class="assigningArea">
+      <div class="setPriority">
+        <div class="textFeild">
+          <div class="textLabel">Priority</div>
+          <app-one-select-dropdown [oneSelectData]="oneSelectData">
+          </app-one-select-dropdown>
         </div>
+        <div class="textFeild">
+          <div class="textLabel">Due date</div>
+          <div
+            class="multiSelectWrapper calendar"
+            #calendarDropdown
+            (click)="onOpenCalendar()"
+          >
+            <div class="calendarLocationLanguage calendarSelectMenu">
+              <input
+                readonly
+                (change)="change($event)"
+                (rangeClicked)="rangeClicked($event)"
+                type="text"
+                placeholder="Choose date"
+                GigaaaDatepicker
+                [(ngModel)]="selected"
+                [showCustomRangeLabel]="false"
+                [alwaysShowCalendars]="true"
+                [ranges]="ranges"
+                [linkedCalendars]="true"
+                [showRangeLabelOnInput]="true"
+                class="calendarInput"
+                [locale]="{
+                  applyLabel: 'Apply',
+                  format: 'DD-MM-YYYY',
+                  firstDay: 1,
+                  customRangeLabel: 'Custom range'
+                }"
+                [showCancel]="true"
+                startKey="startDate"
+                endKey="endDate"
+              />
+              <svg
+                (click)="onOpenCalendar()"
+                [ngClass]="showCalendar ? 'filterArrowRotate' : 'filterArrow'"
+                class="filterArrow"
+                width="10"
+                height="7"
+                viewBox="0 0 10 7"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M1.55469 0.871094L5 4.31641L8.44531 0.871094L9.5 1.92578L5 6.42578L0.5 1.92578L1.55469 0.871094Z"
+                  fill="#162741"
+                />
+              </svg>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="setPriority">
+        <div class="textFeild">
+          <div class="textLabel">Assign to</div>
+          <div
+            class="multiSelectWrapper assignee"
+            #assignTicketsDropdown
+            (click)="showAssignPopup()"
+          >
+            <div class="assignAgentWrapper create">
+              2 Assignees <app-assign *ngIf="showAssignDropdown"></app-assign>
+            </div>
+            <svg
+              style="float: right; margin-right: 12px"
+              (click)="onOpenCalendar()"
+              [ngClass]="
+                showAssignDropdown ? 'filterArrowRotate' : 'filterArrow'
+              "
+              class="filterArrow"
+              width="10"
+              height="7"
+              viewBox="0 0 10 7"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M1.55469 0.871094L5 4.31641L8.44531 0.871094L9.5 1.92578L5 6.42578L0.5 1.92578L1.55469 0.871094Z"
+                fill="#162741"
+              />
+            </svg>
+          </div>
+        </div>
+
+        <div class="textFeild">
+          <div class="textLabel">Status</div>
+          <div class="multiSelectWrapper status">
+            <app-one-select-dropdown
+              [oneSelectData]="statusType"
+              [selectedField]="'Status'"
+            >
+            </app-one-select-dropdown>
+          </div>
+        </div>
+        <div class="textFeild">
+          <div class="textLabel">User</div>
+          <div
+            class="multiSelectWrapper assignee"
+            #assignUserDropdown
+            (click)="showUserPopup()"
+          >
+            <div class="assignAgentWrapper create">
+              Select user
+              <app-assign
+                *ngIf="showUserDropdown"
+                [header]="'Assign To'"
+              ></app-assign>
+            </div>
+            <svg
+              style="float: right; margin-right: 12px"
+              (click)="onOpenCalendar()"
+              [ngClass]="showUserDropdown ? 'filterArrowRotate' : 'filterArrow'"
+              class="filterArrow"
+              width="10"
+              height="7"
+              viewBox="0 0 10 7"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M1.55469 0.871094L5 4.31641L8.44531 0.871094L9.5 1.92578L5 6.42578L0.5 1.92578L1.55469 0.871094Z"
+                fill="#162741"
+              />
+            </svg>
+          </div>
+        </div>
+      </div>
     </div>
+  </div>
+  <div class="buttonsWrapper">
+    <div class="buttonPanel">
+      <gigaaa-button
+        (buttonOutput)="onGetBackButtonOutput($event)"
+        [buttonData]="backButtonData"
+      ></gigaaa-button>
+      <gigaaa-button
+        (buttonOutput)="onGetSaveButtonOutput($event)"
+        [buttonData]="saveButtonData"
+      ></gigaaa-button>
+    </div>
+  </div>
 </div>

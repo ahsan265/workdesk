@@ -1,121 +1,131 @@
 .typingWrapper {
-    position: relative;
-    width: 100%;
-    bottom: 0;
-    box-shadow: 2px 5px 8px rgb(114 114 157 / 16%);
-    border-radius: 10px;
-    background: radial-gradient(52.26% 436.29% at 2.4% -85.42%, rgba(28, 47, 219, 0.0552) 0%, rgba(28, 84, 219, 0) 100%), #EDEDF5;
-    display: flex;
+  position: relative;
+  width: 100%;
+  bottom: 0;
+  box-shadow: 2px 5px 8px rgb(114 114 157 / 16%);
+  border-radius: 10px;
+  background: radial-gradient(
+      52.26% 436.29% at 2.4% -85.42%,
+      rgba(28, 47, 219, 0.0552) 0%,
+      rgba(28, 84, 219, 0) 100%
+    ),
+    #ededf5;
+  display: flex;
 }
 
 input {
-    width: calc(100% - 172px);
-    height: 72px;
-    outline: none;
-    font-family: "Roboto";
-    font-style: normal;
-    font-weight: 400;
-    font-size: 14px;
-    line-height: 120%;
-    letter-spacing: 0.02em;
-    padding-left: 33px;
-    padding-right: 80px;
-    color: #7D8696;
-    border: 1px solid rgba(255, 255, 255, 0.63);
-    border-radius: 10px 0px 0px 10px;
-    background: radial-gradient(52.26% 436.29% at 2.4% -85.42%, rgba(28, 47, 219, 0.0552) 0%, rgba(28, 84, 219, 0) 100%), #EDEDF5;
+  width: calc(100% - 172px);
+  height: 72px;
+  outline: none;
+  font-family: 'Roboto';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 120%;
+  letter-spacing: 0.02em;
+  padding-left: 33px;
+  padding-right: 80px;
+  color: #7d8696;
+  border: 1px solid rgba(255, 255, 255, 0.63);
+  border-radius: 10px 0px 0px 10px;
+  background: radial-gradient(
+      52.26% 436.29% at 2.4% -85.42%,
+      rgba(28, 47, 219, 0.0552) 0%,
+      rgba(28, 84, 219, 0) 100%
+    ),
+    #ededf5;
 }
 
 input::placeholder {
-    font-family: 'Roboto';
-    font-style: normal;
-    font-weight: 400;
-    font-size: 14px;
-    line-height: 120%;
-    display: flex;
-    align-items: center;
-    letter-spacing: 0.02em;
-    color: #7D8696;
+  font-family: 'Roboto';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 120%;
+  display: flex;
+  align-items: center;
+  letter-spacing: 0.02em;
+  color: #7d8696;
 }
 
 .closeChatWrapper {
-    position: relative;
-    display: inline-flex;
-    width: 172px;
-    height: 73px;
-    justify-content: center;
-    align-items: center;
-    border-radius: 0px 10px 10px 0px;
-    border: 1px solid rgba(255, 255, 255, 0.63);
+  position: relative;
+  display: inline-flex;
+  width: 172px;
+  height: 73px;
+  justify-content: center;
+  align-items: center;
+  border-radius: 0px 10px 10px 0px;
+  border: 1px solid rgba(255, 255, 255, 0.63);
 }
 
 .endChat {
-    width: 77px;
-    height: 37px;
-    background: #FF155A;
-    border-radius: 4px;
-    font-family: "Roboto";
-    font-style: normal;
-    font-weight: 400;
-    font-size: 14px;
-    line-height: 120%;
-    outline: none;
-    border: none;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    letter-spacing: 0.02em;
-    color: #FFFFFF;
-    cursor: pointer;
-    transition: 0.4;
+  width: 77px;
+  height: 37px;
+  background: #ff155a;
+  border-radius: 4px;
+  font-family: 'Roboto';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 120%;
+  outline: none;
+  border: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  letter-spacing: 0.02em;
+  color: #ffffff;
+  cursor: pointer;
+  transition: 0.4;
 }
 
 .endChat:hover {
-    background: #DB0B48;
+  background: #db0b48;
 }
 
 .sendMessage {
-    position: absolute;
-    right: 180px;
-    top: 26px;
-    cursor: pointer;
+  position: absolute;
+  right: 180px;
+  top: 26px;
+  cursor: pointer;
 }
 
 svg.sendMessage:hover {
-    fill: #1C54DB;
+  fill: #1c54db;
 }
 
 svg.sendMessage:hover path {
-    stroke: #ffffff;
+  stroke: #ffffff;
 }
 
 .chatTextPanel {
-    display: block;
+  display: block;
 }
 
 .typingIndicator {
-    font-family: "Roboto", sans-serif;
-    font-style: italic;
-    font-weight: 400;
-    font-size: 11px;
-    line-height: 24px;
-    display: flex;
-    height: 24px;
-    align-items: center;
-    letter-spacing: 0.02em;
-    color: #7D8696;
+  font-family: 'Roboto', sans-serif;
+  font-style: italic;
+  font-weight: 400;
+  font-size: 11px;
+  line-height: 24px;
+  display: flex;
+  height: 24px;
+  align-items: center;
+  letter-spacing: 0.02em;
+  color: #7d8696;
 }
 
 button.endChat:disabled {
-    background: #ECECF3;
-    color: #A4A4A4;
-    border: none;
+  background: #ececf3;
+  color: #a4a4a4;
+  border: none;
 }
 
-input:disabled>svg.sendMessage {
-    fill: #616B7B;
+input:disabled > svg.sendMessage {
+  fill: #616b7b;
 }
 
-input:disabled>svg.sendMessage:hover {
-    fill: #616B7B;
+input:disabled > svg.sendMessage:hover {
+  fill: #616b7b;
 }

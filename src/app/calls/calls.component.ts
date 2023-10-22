@@ -49,7 +49,6 @@ export class CallsComponent implements OnInit {
     private SharedServices: SharedServices,
     private getDefaultInputsLoadOnce: getDefaultInputsLoadOnce,
     private ChatSocketService: ChatSocketService
-
   ) {
     this.authService.pageTitle.next('Calls');
     this.alwaysShowCalendars = true;
@@ -58,7 +57,6 @@ export class CallsComponent implements OnInit {
         this.getDefaultInputsLoadOnce.getUserLangage();
       }
     });
-
   }
   ranges = ranges;
   aggregate: string = 'this_week';
@@ -114,10 +112,8 @@ export class CallsComponent implements OnInit {
         this.callSegmentSelection(title);
       });
     this.QueueSocketService.callDataSubject.subscribe((data: any) => {
-      this.callSegmentSelection(data.type)
-
+      this.callSegmentSelection(data.type);
     });
-
   }
 
   callSegmentSelection(title: string) {
@@ -134,6 +130,4 @@ export class CallsComponent implements OnInit {
       this.CallsService.sendDataToTabs(data.ongoing, title);
     }
   }
-
-
 }

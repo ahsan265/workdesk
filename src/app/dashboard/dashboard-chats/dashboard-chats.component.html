@@ -1,33 +1,75 @@
-<div class="filterWrapper" scroll [nonScrollClass]="'.filterWrapper'" [scrollClass]="'.inPageWrapper'">
+<div
+  class="filterWrapper"
+  scroll
+  [nonScrollClass]="'.filterWrapper'"
+  [scrollClass]="'.inPageWrapper'"
+>
   <div class="leftFilter">
-    <app-one-select-dropdown [oneSelectData]="oneSelectData"
-      (oneSelectOutput)="oneSelectOutput($event)"></app-one-select-dropdown>
+    <app-one-select-dropdown
+      [oneSelectData]="oneSelectData"
+      (oneSelectOutput)="oneSelectOutput($event)"
+    ></app-one-select-dropdown>
   </div>
   <div class="rightFilterWrapper">
     <div class="rightFilter">
       <div class="multiSelectWrapper">
-        <app-multi-select-dropdown [multiSelectData]="countries" (multiSelectOutput)="locationOutput($event)">
+        <app-multi-select-dropdown
+          [multiSelectData]="countries"
+          (multiSelectOutput)="locationOutput($event)"
+        >
         </app-multi-select-dropdown>
       </div>
       <div class="multiSelectWrapper">
-        <app-multi-select-dropdown [multiSelectData]="languauges" (multiSelectOutput)="languaugesOutput($event)">
+        <app-multi-select-dropdown
+          [multiSelectData]="languauges"
+          (multiSelectOutput)="languaugesOutput($event)"
+        >
         </app-multi-select-dropdown>
       </div>
-      <div class="multiSelectWrapper calendar" #calendarDropdown (click)="onOpenCalendar()">
+      <div
+        class="multiSelectWrapper calendar"
+        #calendarDropdown
+        (click)="onOpenCalendar()"
+      >
         <div class="calendarLocationLanguage calendarSelectMenu">
-          <input readonly (change)="change($event)" (rangeClicked)="rangeClicked($event)" type="text"
-            placeholder="Choose date" GigaaaDatepicker [(ngModel)]="selected" [showCustomRangeLabel]="false"
-            [alwaysShowCalendars]="true" [ranges]="ranges" [linkedCalendars]="true" [showRangeLabelOnInput]="true"
-            class="calendarInput" [locale]="{
-                applyLabel: 'Apply',
-                format: 'DD-MM-YYYY',
-                firstDay: 1,
-                customRangeLabel: 'Custom range'
-              }" [showCancel]="true" startKey="startDate" endKey="endDate" />
-          <svg (click)="onOpenCalendar()" [ngClass]="showCalendar ? 'filterArrowRotate' : 'filterArrow'"
-            class="filterArrow" width="10" height="7" viewBox="0 0 10 7" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M1.55469 0.871094L5 4.31641L8.44531 0.871094L9.5 1.92578L5 6.42578L0.5 1.92578L1.55469 0.871094Z"
-              fill="#162741" />
+          <input
+            readonly
+            (change)="change($event)"
+            (rangeClicked)="rangeClicked($event)"
+            type="text"
+            placeholder="Choose date"
+            GigaaaDatepicker
+            [(ngModel)]="selected"
+            [showCustomRangeLabel]="false"
+            [alwaysShowCalendars]="true"
+            [ranges]="ranges"
+            [linkedCalendars]="true"
+            [showRangeLabelOnInput]="true"
+            class="calendarInput"
+            [locale]="{
+              applyLabel: 'Apply',
+              format: 'DD-MM-YYYY',
+              firstDay: 1,
+              customRangeLabel: 'Custom range'
+            }"
+            [showCancel]="true"
+            startKey="startDate"
+            endKey="endDate"
+          />
+          <svg
+            (click)="onOpenCalendar()"
+            [ngClass]="showCalendar ? 'filterArrowRotate' : 'filterArrow'"
+            class="filterArrow"
+            width="10"
+            height="7"
+            viewBox="0 0 10 7"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M1.55469 0.871094L5 4.31641L8.44531 0.871094L9.5 1.92578L5 6.42578L0.5 1.92578L1.55469 0.871094Z"
+              fill="#162741"
+            />
           </svg>
         </div>
       </div>
@@ -57,8 +99,13 @@
         <span>Joined</span>
       </div>
       <div class="chart">
-        <canvas baseChart [data]="barChartData1" [options]="barChartOptions" [plugins]="barChartPlugins"
-          [type]="barChartType">
+        <canvas
+          baseChart
+          [data]="barChartData1"
+          [options]="barChartOptions"
+          [plugins]="barChartPlugins"
+          [type]="barChartType"
+        >
         </canvas>
       </div>
     </div>
@@ -68,8 +115,13 @@
         <span>Missed</span>
       </div>
       <div class="chart">
-        <canvas baseChart [data]="barChartData2" [options]="barChartOptions" [plugins]="barChartPlugins"
-          [type]="barChartType">
+        <canvas
+          baseChart
+          [data]="barChartData2"
+          [options]="barChartOptions"
+          [plugins]="barChartPlugins"
+          [type]="barChartType"
+        >
         </canvas>
       </div>
     </div>
@@ -79,8 +131,13 @@
         <span>Answered</span>
       </div>
       <div class="chart">
-        <canvas baseChart [data]="barChartData3" [options]="barChartOptions" [plugins]="barChartPlugins"
-          [type]="barChartType">
+        <canvas
+          baseChart
+          [data]="barChartData3"
+          [options]="barChartOptions"
+          [plugins]="barChartPlugins"
+          [type]="barChartType"
+        >
         </canvas>
       </div>
     </div>

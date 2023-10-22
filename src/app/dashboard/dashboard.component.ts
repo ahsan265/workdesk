@@ -6,7 +6,6 @@ import { CommonService } from '../workdeskServices/commonEndpoint/common.service
 import { AuthService } from '../services/auth.service';
 import { oneSelectData } from './dashboardData';
 
-
 @Component({
   selector: 'app-dashboard',
   templateUrl: './dashboard.component.html',
@@ -14,9 +13,10 @@ import { oneSelectData } from './dashboardData';
 })
 export class DashboardComponent implements OnInit {
   // oneSelectData = oneSelectData;
-  ngOnInit(): void {
-  }
-  constructor(private CommonService: CommonService, private authService: AuthService,
+  ngOnInit(): void {}
+  constructor(
+    private CommonService: CommonService,
+    private authService: AuthService
   ) {
     // this.CommonService.restrictRoute();
     this.authService.pageTitle.next('Dashboard');

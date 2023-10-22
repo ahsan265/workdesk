@@ -1,16 +1,28 @@
 <div class="smallHeading settings">
-    {{timerwWidgetData.mainHeading}}
+  {{ timerwWidgetData.mainHeading }}
 </div>
 <div class="text">
-    {{timerwWidgetData.text}}
+  {{ timerwWidgetData.text }}
 </div>
 <div class="timerSetting">
-    <div class="tickerWrapper" *ngFor="let ticker of timerwWidgetData.tickers; let i = index;">
-        <input (change)="getValue($event,ticker)" (keydown)="keyUp($event)" type="number" class="sec"
-            [value]="ticker.value" [min]="ticker.min" [max]="ticker.max">
-        <div class="timerText">
-            {{ticker.header}}
-        </div>
-        <div class="sperator" *ngIf="timerwWidgetData.tickers.length-1 !==  i ">:</div>
+  <div
+    class="tickerWrapper"
+    *ngFor="let ticker of timerwWidgetData.tickers; let i = index"
+  >
+    <input
+      (change)="getValue($event, ticker)"
+      (keydown)="keyUp($event)"
+      type="number"
+      class="sec"
+      [value]="ticker.value"
+      [min]="ticker.min"
+      [max]="ticker.max"
+    />
+    <div class="timerText">
+      {{ ticker.header }}
     </div>
+    <div class="sperator" *ngIf="timerwWidgetData.tickers.length - 1 !== i">
+      :
+    </div>
+  </div>
 </div>

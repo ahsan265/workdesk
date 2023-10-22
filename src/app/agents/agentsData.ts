@@ -76,50 +76,48 @@ const buttonData: any = {
   active: true
 };
 
-const agentTableSetting: TableSettingsModel[] =
-  [
-    {
-      index: 0,
-      header: 'Agent',
-      defaultValue: 'Agent',
-      width: 30,
-      showEditField: false,
-      canEdit: false
-    },
-    {
-      index: 1,
-      header: 'Full Name',
-      defaultValue: 'Full Name',
-      width: 20,
-      showEditField: false,
-      canEdit: false
-    },
-    {
-      index: 2,
-      header: 'Language',
-      defaultValue: 'Language',
-      width: 20,
-      showEditField: false,
-      canEdit: false
-    },
-    {
-      index: 3,
-      header: 'Role',
-      defaultValue: 'Role',
-      width: 10,
-      showEditField: false,
-      canEdit: false
-    },
-    {
-      index: 4,
-      header: '',
-      defaultValue: '',
-      width: 20,
-      showEditField: false,
-      canEdit: false
-    }
-  ];
-
+const agentTableSetting: TableSettingsModel[] = [
+  {
+    index: 0,
+    header: 'Agent',
+    defaultValue: 'Agent',
+    width: 30,
+    showEditField: false,
+    canEdit: false
+  },
+  {
+    index: 1,
+    header: 'Full Name',
+    defaultValue: 'Full Name',
+    width: 20,
+    showEditField: false,
+    canEdit: false
+  },
+  {
+    index: 2,
+    header: 'Language',
+    defaultValue: 'Language',
+    width: 20,
+    showEditField: false,
+    canEdit: false
+  },
+  {
+    index: 3,
+    header: 'Role',
+    defaultValue: 'Role',
+    width: 10,
+    showEditField: false,
+    canEdit: false
+  },
+  {
+    index: 4,
+    header: '',
+    defaultValue: '',
+    width: 20,
+    showEditField: false,
+    canEdit: false
+  }
+];
 
 const agents: any[] = [
   {

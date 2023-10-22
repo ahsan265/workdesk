@@ -15,41 +15,52 @@ import { SwitchOgranizationDoneComponent } from '../switch-ogranization-done/swi
 })
 export class SwitchOrganizationComponent implements OnInit {
   organizations: Organization[] = [];
-  constructor(private SharedServices: SharedServices,
+  constructor(
+    private SharedServices: SharedServices,
     private GigaaaApiService: GigaaaApiService,
     private CommonService: CommonService,
     private MessageService: MessageService,
-    private getOrganizationService: getOrganizationService, private OverlayService: OverlayService) {
-
-    this.GigaaaApiService.getOrganization(this.CommonService.getEndpointsParamLocal().token).then((data: any) => {
-      this.organizations = data
-    })
+    private getOrganizationService: getOrganizationService,
+    private OverlayService: OverlayService
+  ) {
+    this.GigaaaApiService.getOrganization(
+      this.CommonService.getEndpointsParamLocal().token
+    ).then((data: any) => {
+      this.organizations = data;
+    });
   }
-  ngOnInit(): void {
-  }
+  ngOnInit(): void {}
 
   getCounter(value: number) {
     return new Array(value);
   }
 
-  // close the dialog for organization switching 
+  // close the dialog for organization switching
   closeOrganizationSwitcher() {
     this.OverlayService.close();
   }
 
-  // set last Used Organization 
+  // set last Used Organization
 
   public async setLastUsedOrganization(organization: any) {
     try {
-      if (organization.uuid !== this.CommonService.getEndpointsParamLocal().organization) {
-        await this.GigaaaApiService.setLastUsedOrganization(this.CommonService.getEndpointsParamLocal().token, organization.uuid);
-        await this.getOrganizationService.getOrganization(this.CommonService.getEndpointsParamLocal().token, true);
+      if (
+        organization.uuid !==
+        this.CommonService.getEndpointsParamLocal().organization
+      ) {
+        await this.GigaaaApiService.setLastUsedOrganization(
+          this.CommonService.getEndpointsParamLocal().token,
+          organization.uuid
+        );
+        await this.getOrganizationService.getOrganization(
+          this.CommonService.getEndpointsParamLocal().token,
+          true
+        );
         this.OverlayService.close();
         this.showDoneSwitchOrganization();
       }
-    }
-    catch (error: any) {
-      this.MessageService.setErrorMessage(error.error.error)
+    } catch (error: any) {
+      this.MessageService.setErrorMessage(error.error.error);
     }
   }
   showDoneSwitchOrganization() {
@@ -58,8 +69,6 @@ export class SwitchOrganizationComponent implements OnInit {
       hasBackdrop: true,
       backdropClass: 'dark-backdrop',
       panelClass: 'swtichOrganizationDonePopup'
-    })
+    });
   }
-
-
 }

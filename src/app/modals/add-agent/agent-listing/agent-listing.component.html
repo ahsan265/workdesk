@@ -1,46 +1,82 @@
 <div class="agentListingContainer">
   <div class="inPageWrapper">
     <div class="agentTextFieldsWrapper">
-      <input pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" (keyup)="getEmailByIndex()" class="inputFields"  [(ngModel)]="typedEmail"
-        type="email" placeholder="name@example.com" #email  />
+      <input
+        pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$"
+        (keyup)="getEmailByIndex()"
+        class="inputFields"
+        [(ngModel)]="typedEmail"
+        type="email"
+        placeholder="name@example.com"
+        #email
+      />
       <div class="languageWrapper">
-        <app-multi-select-dropdown [multiSelectData]="this.languages" (multiSelectOutput)="languaugesOutput($event)">
+        <app-multi-select-dropdown
+          [multiSelectData]="this.languages"
+          (multiSelectOutput)="languaugesOutput($event)"
+        >
         </app-multi-select-dropdown>
       </div>
-      <div class="addNewListing" (click)="addAgentListing()"><img
-          src="../../../../assets/images/components/addAgent.svg" alt=""></div>
+      <div class="addNewListing" (click)="addAgentListing()">
+        <img src="../../../../assets/images/components/addAgent.svg" alt="" />
+      </div>
     </div>
   </div>
-  <div class="agentListWrapper" [style.overflow-y]="this.agentIvitationList.length>1?'overlay':'hidden'">
-    <div class="agentTitle">
-      Agent(s)
+  <div
+    class="agentListWrapper"
+    [style.overflow-y]="
+      this.agentIvitationList.length > 1 ? 'overlay' : 'hidden'
+    "
+  >
+    <div class="agentTitle">Agent(s)</div>
+    <div class="agentdescp" *ngIf="this.agentIvitationList.length === 0">
+      Invite human agents to your integration now and get started with AI
+      Customer Support.
     </div>
-    <div class="agentdescp" *ngIf="this.agentIvitationList.length===0">
-      Invite human agents to your integration now and get started with AI Customer Support.
-    </div>
-    <div class="agentInvitationList" *ngIf="this.agentIvitationList.length!==0">
-      <div class="inivationCard" *ngFor="let data of  agentIvitationList; let i=index;">
+    <div
+      class="agentInvitationList"
+      *ngIf="this.agentIvitationList.length !== 0"
+    >
+      <div
+        class="inivationCard"
+        *ngFor="let data of agentIvitationList; let i = index"
+      >
         <div class="invitationCardInfo">
           <div class="email">
-            {{data.email}}
+            {{ data.email }}
           </div>
           <div class="flagWrapper">
-            <img *ngFor="let id of data.language;" [src]="this.getAgentLanguageFlag(id)" alt="">
+            <img
+              *ngFor="let id of data.language"
+              [src]="this.getAgentLanguageFlag(id)"
+              alt=""
+            />
           </div>
         </div>
         <div class="removeCard">
-          <svg width="18" height="17" viewBox="0 0 18 17" fill="none" xmlns="http://www.w3.org/2000/svg"
-            (click)="removeAgentFromListing(i)">
+          <svg
+            width="18"
+            height="17"
+            viewBox="0 0 18 17"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+            (click)="removeAgentFromListing(i)"
+          >
             <path
               d="M13.1797 11.5078L10.1719 8.5L13.1797 5.49219L12.0078 4.32031L9 7.32812L5.99219 4.32031L4.82031 5.49219L7.82812 8.5L4.82031 11.5078L5.99219 12.6797L9 9.67188L12.0078 12.6797L13.1797 11.5078ZM3.10156 2.64062C4.74219 1 6.70833 0.179688 9 0.179688C11.2917 0.179688 13.2448 1 14.8594 2.64062C16.5 4.25521 17.3203 6.20833 17.3203 8.5C17.3203 10.7917 16.5 12.7578 14.8594 14.3984C13.2448 16.013 11.2917 16.8203 9 16.8203C6.70833 16.8203 4.74219 16.013 3.10156 14.3984C1.48698 12.7578 0.679688 10.7917 0.679688 8.5C0.679688 6.20833 1.48698 4.25521 3.10156 2.64062Z"
-              fill="#C7CBD2" />
+              fill="#C7CBD2"
+            />
           </svg>
         </div>
       </div>
     </div>
   </div>
   <div class="sendAgentListingWrapper">
-    <Button (click)="sendAgentInformation()" [disabled]="this.agentIvitationList.length===0"
-      class="sendAgentInvitedListing">Send invitation</Button>
+    <Button
+      (click)="sendAgentInformation()"
+      [disabled]="this.agentIvitationList.length === 0"
+      class="sendAgentInvitedListing"
+      >Send invitation</Button
+    >
   </div>
 </div>

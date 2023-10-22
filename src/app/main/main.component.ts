@@ -14,7 +14,12 @@ import { GigaaaApiService } from '../workdeskServices/gigaaaApiService/gigaaa-ap
 import { CommonService } from '../workdeskServices/commonEndpoint/common.service';
 import { SharedServices } from '../workdeskServices/sharedResourcesService/shared-resource-service.service';
 import { Router } from '@angular/router';
-import { notifiactionData, organizationData, organizationDoneModalData, organizationModalData } from './mainData';
+import {
+  notifiactionData,
+  organizationData,
+  organizationDoneModalData,
+  organizationModalData
+} from './mainData';
 import { OverlayService } from '@gigaaa/gigaaa-components';
 import { SwitchOrganizationComponent } from '../modals/switch-organization/switch-organization.component';
 import { ChatSocketService } from '../workdeskSockets/chatSocket/chat-socket.service';
@@ -41,8 +46,8 @@ export class MainComponent implements OnInit {
   sidebarData: any[] = [];
   showSwitchOganization: boolean = false;
   showSwitchDoneOganization: boolean = false;
-  organizationModalData = organizationModalData
-  organizationDoneModalData = organizationDoneModalData
+  organizationModalData = organizationModalData;
+  organizationDoneModalData = organizationDoneModalData;
   notificationData: NotificationComponentModel[] = [];
   showPreference: boolean = false;
   isUnreadNotification: boolean = false;
@@ -58,9 +63,8 @@ export class MainComponent implements OnInit {
     private OverlayService: OverlayService,
     private ChatSocketService: ChatSocketService,
     private GeneralSocketService: GeneralSocketService
-
-  ) { }
-  organizationData = organizationData
+  ) {}
+  organizationData = organizationData;
   ngOnInit() {
     this.authService.pageTitle.subscribe((res: any) => {
       this.pageTitle = res;
@@ -72,36 +76,49 @@ export class MainComponent implements OnInit {
     //   this.organizationData.name = ((data.is_individual) ? data.contact_person :
     //     data.name) || '';
     // })
-    this.SharedServices.LoadcommonEpsubject.subscribe(async data => {
+    this.SharedServices.LoadcommonEpsubject.subscribe(async (data) => {
       if (data === 1) {
-        this.organizationData.name = ((this.getOrganizationService.LastUsedOrganization.value.is_individual) ? this.getOrganizationService.LastUsedOrganization.value.contact_person :
-          this.getOrganizationService.LastUsedOrganization.value.name) || '';
-        await this.getOrganizationService.getProjectList(this.getOrganizationService.project).then(data => {
-          this.sidebarData = data;
-        })
-        await this.CommonService.getAllNotification().then(data => {
+        this.organizationData.name =
+          (this.getOrganizationService.LastUsedOrganization.value.is_individual
+            ? this.getOrganizationService.LastUsedOrganization.value
+                .contact_person
+            : this.getOrganizationService.LastUsedOrganization.value.name) ||
+          '';
+        await this.getOrganizationService
+          .getProjectList(this.getOrganizationService.project)
+          .then((data) => {
+            this.sidebarData = data;
+          });
+        await this.CommonService.getAllNotification().then((data) => {
           this.notificationData = data;
           this.isUnreadNotification = this.CommonService.checkIsUnread(data);
-        })
+        });
         this.authService.user.next(this.authService.getLoggedUser());
         const isAdmin = this.CommonService.getIsAdminOrAgent();
-        const isOwner = this.CommonService.getLoggedInAgentData().is_organization_owner;
-        (isAdmin === true && isOwner === true) ? this.showPreference = true : this.showPreference = false;
-
+        const isOwner =
+          this.CommonService.getLoggedInAgentData().is_organization_owner;
+        isAdmin === true && isOwner === true
+          ? (this.showPreference = true)
+          : (this.showPreference = false);
       }
-    })
-    this.GeneralSocketService.NotificationSocketData.subscribe(data => {
+    });
+    this.GeneralSocketService.NotificationSocketData.subscribe((data) => {
       const selectedNotification = data;
       switch (data.type) {
         case 'logout':
           break;
         case 'notification_is_read':
-          this.notificationData.find(data => {
-            if (data.id === selectedNotification.data.id && selectedNotification.data.is_read === true) {
+          this.notificationData.find((data) => {
+            if (
+              data.id === selectedNotification.data.id &&
+              selectedNotification.data.is_read === true
+            ) {
               data.isOpen = true;
             }
-          })
-          this.isUnreadNotification = this.CommonService.checkIsUnread(this.notificationData);
+          });
+          this.isUnreadNotification = this.CommonService.checkIsUnread(
+            this.notificationData
+          );
           break;
         case 'invitation_accepted':
           const newNotification = {
@@ -111,31 +128,37 @@ export class MainComponent implements OnInit {
             isOpen: false,
             icon: this.CommonService.getNotificationIcon(data.type),
             id: data.data.id
-          }
+          };
           this.notificationData.push(newNotification);
-          this.isUnreadNotification = this.CommonService.checkIsUnread(this.notificationData);
+          this.isUnreadNotification = this.CommonService.checkIsUnread(
+            this.notificationData
+          );
 
           break;
         default:
       }
-
-
-
-    })
+    });
     // for reload projects
     this.SharedServices.reloadProjects.subscribe((data: boolean) => {
-      (data) ? this.getOrganizationService.getOrganization(this.CommonService.getEndpointsParamLocal().token, true) : '';
-    })
+      data
+        ? this.getOrganizationService.getOrganization(
+            this.CommonService.getEndpointsParamLocal().token,
+            true
+          )
+        : '';
+    });
     // chat unread indication
-    this.ChatSocketService.unreadThread.asObservable().subscribe(isUnread => {
+    this.ChatSocketService.unreadThread.asObservable().subscribe((isUnread) => {
       if (this.sidebarData.length !== 0) {
-        this.sidebarData.find(data => {
+        this.sidebarData.find((data) => {
           if (data.name.includes('Chats')) {
-            isUnread === true ? data.iconUrl = '../assets/images/sidebar/chat_icon_unread.svg' : data.iconUrl = '../assets/images/sidebar/chat.svg'
+            isUnread === true
+              ? (data.iconUrl = '../assets/images/sidebar/chat_icon_unread.svg')
+              : (data.iconUrl = '../assets/images/sidebar/chat.svg');
           }
-        })
+        });
       }
-    })
+    });
   }
 
   onNoLoggedUsers(event: any) {
@@ -148,7 +171,10 @@ export class MainComponent implements OnInit {
     this.isUserSwitched = event;
   }
   async onGetLoggedUser(event: any) {
-    await this.getOrganizationService.getOrganization(event.api_token, this.isUserSwitched);
+    await this.getOrganizationService.getOrganization(
+      event.api_token,
+      this.isUserSwitched
+    );
   }
 
   isSlideOpened(slideOpened: boolean) {
@@ -177,8 +203,7 @@ export class MainComponent implements OnInit {
     return (this.pageTitle = event);
   }
 
-  isSidebarOpen(event: any) {
-  }
+  isSidebarOpen(event: any) {}
 
   onCancelButtonClicked(event: any) {
     if (event) {
@@ -187,14 +212,14 @@ export class MainComponent implements OnInit {
   }
   onCloseModal(event: boolean) {
     if (event) {
-      this.showSwitchOganization = !event
+      this.showSwitchOganization = !event;
     }
   }
 
-  // done switch organization modal 
+  // done switch organization modal
   onCloseSWitchDone(event: boolean) {
     if (event) {
-      this.showSwitchDoneOganization = !event
+      this.showSwitchDoneOganization = !event;
     }
   }
   // swithc organization
@@ -206,24 +231,23 @@ export class MainComponent implements OnInit {
         backdropClass: 'dark-backdrop',
         panelClass: 'swtichOrganizationPopup',
         hasBackdrop: true
-      })
+      });
     }
-
   }
   async clearNotificationByOne(event: NotificationComponentModel) {
-    await this.CommonService.deleteNotificationOne([event.id])
-    const selectedObject = this.notificationData.findIndex(data => {
+    await this.CommonService.deleteNotificationOne([event.id]);
+    const selectedObject = this.notificationData.findIndex((data) => {
       data.id === event.id;
-    })
+    });
     this.notificationData.splice(selectedObject, 1);
   }
   async clearAllNotificationByAll(event: boolean) {
     if (event && this.notificationData.length !== 0) {
-      let id: number[] = []
-      this.notificationData.forEach(data => {
+      let id: number[] = [];
+      this.notificationData.forEach((data) => {
         id.push(data.id);
-      })
-      await this.CommonService.deleteNotificationOne(id)
+      });
+      await this.CommonService.deleteNotificationOne(id);
       this.notificationData.length = 0;
     }
   }

@@ -1,6 +1,16 @@
-import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output, ChangeDetectorRef } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  EventEmitter,
+  Input,
+  Output
+} from '@angular/core';
 import { interval } from 'rxjs';
-import { TableSettingsModel, tableSettingsDataModel } from 'src/app/models/agent';
+import {
+  TableSettingsModel,
+  tableSettingsDataModel
+} from 'src/app/models/agent';
 import { IncomingCallModelTable } from 'src/app/models/callModel';
 import { CommonService } from 'src/app/workdeskServices/commonEndpoint/common.service';
 import { GigaaaApiService } from 'src/app/workdeskServices/gigaaaApiService/gigaaa-api-service.service';
@@ -14,44 +24,58 @@ import { AgentSocketService } from 'src/app/workdeskSockets/agentSocket/agent-so
   templateUrl: './icoming-table.component.html',
   styleUrls: ['./icoming-table.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
-
 })
 export class IcomingTableComponent {
   @Input() tableSettings = incomingTableSetting;
   @Input() incomingCallData: IncomingCallModelTable[] = [];
   @Output() callUuid = new EventEmitter<string>();
 
-  constructor(private AgentSocketService: AgentSocketService, private ChangeDetectorRef: ChangeDetectorRef,
+  constructor(
+    private AgentSocketService: AgentSocketService,
+    private ChangeDetectorRef: ChangeDetectorRef,
     private GigaaaApiService: GigaaaApiService,
-    private CommonService: CommonService) {
+    private CommonService: CommonService
+  ) {
     interval(1000).subscribe(() => {
       this.ChangeDetectorRef.detectChanges();
     });
-    this.GigaaaApiService.tableCustomizationList(this.CommonService.getEndpointsParamLocal().token, this.CommonService.getEndpointsParamLocal().organization, this.CommonService.getEndpointsParamLocal().project, 'incoming').then((data: tableSettingsDataModel[]) => {
+    this.GigaaaApiService.tableCustomizationList(
+      this.CommonService.getEndpointsParamLocal().token,
+      this.CommonService.getEndpointsParamLocal().organization,
+      this.CommonService.getEndpointsParamLocal().project,
+      'incoming'
+    ).then((data: tableSettingsDataModel[]) => {
       if (data.length !== 0) {
-        this.tableSettings = this.CommonService.updateColumnTable(data, incomingTableSetting);
-        this.tableSettings.forEach(element => {
-          element.canEdit = this.CommonService.getIsAdminOrAgent() && this.CommonService.getLoggedInAgentData().is_organization_owner;;
-        })
-      }
-      else {
+        this.tableSettings = this.CommonService.updateColumnTable(
+          data,
+          incomingTableSetting
+        );
+        this.tableSettings.forEach((element) => {
+          element.canEdit =
+            this.CommonService.getIsAdminOrAgent() &&
+            this.CommonService.getLoggedInAgentData().is_organization_owner;
+        });
+      } else {
         this.tableSettings = incomingTableSetting;
-        this.tableSettings.forEach(element => {
-          element.canEdit = this.CommonService.getIsAdminOrAgent() && this.CommonService.getLoggedInAgentData().is_organization_owner;;
-        })
+        this.tableSettings.forEach((element) => {
+          element.canEdit =
+            this.CommonService.getIsAdminOrAgent() &&
+            this.CommonService.getLoggedInAgentData().is_organization_owner;
+        });
       }
-    })
-    this.AgentSocketService.loggedAgentData.subscribe(data => {
+    });
+    this.AgentSocketService.loggedAgentData.subscribe((data) => {
       if (data) {
-        this.tableSettings.forEach(element => {
-          element.canEdit = this.CommonService.getIsAdminOrAgent() && this.CommonService.getLoggedInAgentData().is_organization_owner;
-        })
+        this.tableSettings.forEach((element) => {
+          element.canEdit =
+            this.CommonService.getIsAdminOrAgent() &&
+            this.CommonService.getLoggedInAgentData().is_organization_owner;
+        });
       }
-    })
+    });
   }
 
-  ngOnInit(): void {
-  }
+  ngOnInit(): void {}
   getArray(val: number) {
     return Array(val);
   }
@@ -65,33 +89,49 @@ export class IcomingTableComponent {
     return this.CommonService.onGoingTimer(entry, 'm');
   }
   showEditField(index: number) {
-    if (this.CommonService.getIsAdminOrAgent() && this.CommonService.getLoggedInAgentData().is_organization_owner) {
-      this.tableSettings.forEach(data => {
+    if (
+      this.CommonService.getIsAdminOrAgent() &&
+      this.CommonService.getLoggedInAgentData().is_organization_owner
+    ) {
+      this.tableSettings.forEach((data) => {
         if (data.index === index) {
           data.showEditField = true;
-        }
-        else {
+        } else {
           data.showEditField = false;
         }
-      })
+      });
     }
   }
-  // upate field 
+  // upate field
   async updatedField(event: headerDataModel) {
     if (event.value !== '') {
-      this.tableSettings.forEach(data => {
+      this.tableSettings.forEach((data) => {
         data.showEditField = false;
-      })
-      await this.GigaaaApiService.tableCustomization(this.CommonService.getEndpointsParamLocal().token, this.CommonService.getEndpointsParamLocal().organization, this.CommonService.getEndpointsParamLocal().project, event.headerInformation.index, event.value, 'incoming')
-      const data = await this.GigaaaApiService.tableCustomizationList(this.CommonService.getEndpointsParamLocal().token, this.CommonService.getEndpointsParamLocal().organization, this.CommonService.getEndpointsParamLocal().project, 'incoming');
+      });
+      await this.GigaaaApiService.tableCustomization(
+        this.CommonService.getEndpointsParamLocal().token,
+        this.CommonService.getEndpointsParamLocal().organization,
+        this.CommonService.getEndpointsParamLocal().project,
+        event.headerInformation.index,
+        event.value,
+        'incoming'
+      );
+      const data = await this.GigaaaApiService.tableCustomizationList(
+        this.CommonService.getEndpointsParamLocal().token,
+        this.CommonService.getEndpointsParamLocal().organization,
+        this.CommonService.getEndpointsParamLocal().project,
+        'incoming'
+      );
       if (data.length !== 0) {
-        this.tableSettings = this.CommonService.updateColumnTable(data, this.tableSettings);
+        this.tableSettings = this.CommonService.updateColumnTable(
+          data,
+          this.tableSettings
+        );
       }
-    }
-    else {
-      this.tableSettings.forEach(data => {
+    } else {
+      this.tableSettings.forEach((data) => {
         data.showEditField = false;
-      })
+      });
     }
   }
 }

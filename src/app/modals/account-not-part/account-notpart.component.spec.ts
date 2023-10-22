@@ -8,9 +8,8 @@ describe('AccountNotpartComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ AccountNotpartComponent ]
-    })
-    .compileComponents();
+      declarations: [AccountNotpartComponent]
+    }).compileComponents();
 
     fixture = TestBed.createComponent(AccountNotpartComponent);
     component = fixture.componentInstance;

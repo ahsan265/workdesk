@@ -5,15 +5,11 @@ import * as color from 'string-to-color';
   name: 'colorBack'
 })
 export class ColorBackPipe implements PipeTransform {
-
   transform(value: any, ...args: any[]): string {
     if (value === null) {
       return '#715DFF';
-    }
-    else {
+    } else {
       return color.default(value + args[0]);
     }
-
   }
-
 }

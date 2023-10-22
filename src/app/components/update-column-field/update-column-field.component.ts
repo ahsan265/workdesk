@@ -1,5 +1,14 @@
-import { ChangeDetectionStrategy, Component, EventEmitter, HostListener, Input, OnInit, Output, ViewChild } from '@angular/core';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  EventEmitter,
+  HostListener,
+  Input,
+  OnInit,
+  Output,
+  ViewChild
+} from '@angular/core';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { TableSettingsModel } from 'src/app/models/agent';
 
 @Component({
@@ -14,46 +23,43 @@ export class UpdateColumnFieldComponent implements OnInit {
   @Output() updatedField = new EventEmitter<any>();
   textFieldForm = new FormGroup({
     textField: new FormControl('', [Validators.required])
-
   });
   counter: number = 0;
   @Input() openEditFiedl: boolean = false;
 
-  constructor() {
-
-  }
+  constructor() {}
   ngOnInit(): void {
     this.textFieldForm.patchValue({
       textField: this.headerValue.header
-    })
+    });
   }
 
   updateField() {
-    if (this.textFieldForm.controls.textField.value !== '' && this.textFieldForm.controls.textField.value !== null) {
+    if (
+      this.textFieldForm.controls.textField.value !== '' &&
+      this.textFieldForm.controls.textField.value !== null
+    ) {
       const data = {
         value: this.textFieldForm.controls.textField.value,
         headerInformation: this.headerValue
-      }
-      this.updatedField.emit(data)
-
-    }
-    else {
+      };
+      this.updatedField.emit(data);
+    } else {
       const data = {
         value: this.textFieldForm.controls.textField.value,
         headerInformation: this.headerValue
-      }
+      };
       this.textFieldForm.patchValue({
         textField: this.headerValue.header
-      })
-      this.updatedField.emit(data)
+      });
+      this.updatedField.emit(data);
     }
   }
 
   // close the field()
   closeFieldBox(event: boolean) {
     if (event === false) {
-      this.updateField()
+      this.updateField();
     }
-
   }
 }

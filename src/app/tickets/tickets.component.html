@@ -1,91 +1,117 @@
 <div class="cardWrapper">
-    <div class="card">
-        <app-card [cardData]="ticketData"></app-card>
-    </div>
-    <div class="card">
-        <app-card [cardData]="ticketData1"></app-card>
-    </div>
+  <div class="card">
+    <app-card [cardData]="ticketData"></app-card>
+  </div>
+  <div class="card">
+    <app-card [cardData]="ticketData1"></app-card>
+  </div>
 </div>
 <div class="filterWrapper">
-    <div class="leftFilter tickets">
-        <div class="multiSelectWrapper">
-            <app-one-select-dropdown [oneSelectData]="priorityData"></app-one-select-dropdown>
-        </div>
+  <div class="leftFilter tickets">
+    <div class="multiSelectWrapper">
+      <app-one-select-dropdown
+        [oneSelectData]="priorityData"
+      ></app-one-select-dropdown>
     </div>
-    <div class="rightFilter">
-        <div class="multiSelectWrapper assign" #assignTicketsDropdown (click)="showAssignPopup()">
-            <app-one-select-dropdown [oneSelectData]="oneSelectData2">
-            </app-one-select-dropdown>
-            <div class="assignAgentWrapper"> <app-assign *ngIf="showAssignDropdown"></app-assign>
-            </div>
-        </div>
-        <div class="multiSelectWrapper status">
-            <app-multi-select-dropdown [multiSelectData]="statusType">
-            </app-multi-select-dropdown>
-        </div>
-        <div class="multiSelectWrapper search">
-            <app-search-input-field [searchInputData]="searchInputData">
-            </app-search-input-field>
-        </div>
-        <div class="multiSelectWrapper addButton">
-            <button (click)="openCreateTickets()" class="addTicketsButton">Create ticket</button>
-        </div>
+  </div>
+  <div class="rightFilter">
+    <div
+      class="multiSelectWrapper assign"
+      #assignTicketsDropdown
+      (click)="showAssignPopup()"
+    >
+      <app-one-select-dropdown [oneSelectData]="oneSelectData2">
+      </app-one-select-dropdown>
+      <div class="assignAgentWrapper">
+        <app-assign *ngIf="showAssignDropdown"></app-assign>
+      </div>
     </div>
+    <div class="multiSelectWrapper status">
+      <app-multi-select-dropdown [multiSelectData]="statusType">
+      </app-multi-select-dropdown>
+    </div>
+    <div class="multiSelectWrapper search">
+      <app-search-input-field [searchInputData]="searchInputData">
+      </app-search-input-field>
+    </div>
+    <div class="multiSelectWrapper addButton">
+      <button (click)="openCreateTickets()" class="addTicketsButton">
+        Create ticket
+      </button>
+    </div>
+  </div>
 </div>
 <div class="inPageWrapper" #assignTickets>
-    <app-page-wrapper>
-        <div class="tableWrapper">
-            <table>
-                <thead>
-                    <tr>
-                        <th [style.width.%]="ticket.width" *ngFor="let ticket of ticketsTableSetting;">
-                            {{ticket.header}}
-                        </th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr *ngFor="let data of tableData" (click)="openTicketInformation()">
-                        <td>
-                            <span>{{data.ticketPrefix}}</span>
-                            {{data.tickerNumber}}
-                        </td>
-                        <td>
-                            {{data.ticketName}}
-                        </td>
-                        <td>
-                            {{data.userName}}
-                        </td>
-                        <td>
-                            <img [src]="data.priority.flagIcon" alt="">
-                            {{data.priority.type}}
-                        </td>
-                        <td>
-                            <div class="banner" [ngStyle]="{
-                                color:'data.status.color',
-                                background:'data.status.background'
-                            }">
-                                {{data.status.type}}
-                            </div>
-                        </td>
-                        <td>
-                            {{data.dueDate}}
-                        </td>
-                        <td>
-                            <div>
-                                <img class="agentImage" src="../../assets/images/tickets/default_agent.svg" alt="">
-                                <div class="closeIcon" (click)="showAssignTicket(data.tickerNumber)"
-                                    [style.display]="showAssignTickets?'none':''">
-                                    <img [src]="data.assignee" alt="">
-                                </div>
-                                <div class="assignAgentWrapper"
-                                    *ngIf="showAssignTickets && data.tickerNumber===this.indexValue">
-                                    <app-assign></app-assign>
-                                </div>
-                            </div>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-    </app-page-wrapper>
+  <app-page-wrapper>
+    <div class="tableWrapper">
+      <table>
+        <thead>
+          <tr>
+            <th
+              [style.width.%]="ticket.width"
+              *ngFor="let ticket of ticketsTableSetting"
+            >
+              {{ ticket.header }}
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let data of tableData" (click)="openTicketInformation()">
+            <td>
+              <span>{{ data.ticketPrefix }}</span>
+              {{ data.tickerNumber }}
+            </td>
+            <td>
+              {{ data.ticketName }}
+            </td>
+            <td>
+              {{ data.userName }}
+            </td>
+            <td>
+              <img [src]="data.priority.flagIcon" alt="" />
+              {{ data.priority.type }}
+            </td>
+            <td>
+              <div
+                class="banner"
+                [ngStyle]="{
+                  color: 'data.status.color',
+                  background: 'data.status.background'
+                }"
+              >
+                {{ data.status.type }}
+              </div>
+            </td>
+            <td>
+              {{ data.dueDate }}
+            </td>
+            <td>
+              <div>
+                <img
+                  class="agentImage"
+                  src="../../assets/images/tickets/default_agent.svg"
+                  alt=""
+                />
+                <div
+                  class="closeIcon"
+                  (click)="showAssignTicket(data.tickerNumber)"
+                  [style.display]="showAssignTickets ? 'none' : ''"
+                >
+                  <img [src]="data.assignee" alt="" />
+                </div>
+                <div
+                  class="assignAgentWrapper"
+                  *ngIf="
+                    showAssignTickets && data.tickerNumber === this.indexValue
+                  "
+                >
+                  <app-assign></app-assign>
+                </div>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </app-page-wrapper>
 </div>

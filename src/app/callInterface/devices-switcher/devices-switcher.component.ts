@@ -27,7 +27,7 @@ export class DevicesSwitcherComponent implements OnInit {
     private AgentUserInformation: AgentUserInformation,
     private PeerConnectionService: PeerConnectionService,
     public DevicesInformationService: DevicesInformationService
-  ) { }
+  ) {}
 
   ngOnInit() {
     const userInformation = this.AgentUserInformation.getCallInformation();
@@ -88,7 +88,6 @@ export class DevicesSwitcherComponent implements OnInit {
           }
         };
       });
-    } catch (err) {
-    }
+    } catch (err) {}
   }
 }

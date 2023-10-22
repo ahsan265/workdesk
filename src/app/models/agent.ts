@@ -72,7 +72,7 @@ export interface agentInvitationList {
   language: number[];
 }
 export interface tableSettingsDataModel {
-  customization_id: number,
-  customization_value: string,
-  table_identifier: string
+  customization_id: number;
+  customization_value: string;
+  table_identifier: string;
 }

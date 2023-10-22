@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import {  saveButtonData } from 'src/app/agent-settings/agent-settingData';
+import { saveButtonData } from 'src/app/agent-settings/agent-settingData';
 import { backButtonData } from 'src/app/tickets-creation/ticketsCreationData';
 import { viewProfileButton } from './ticketProfileData';
 
@@ -23,8 +23,7 @@ export class TicketProfileComponent {
     last_name: new FormControl('', [Validators.required]),
     Phone: new FormControl('', [Validators.required])
   });
-  constructor(private Router: Router) {
-  }
+  constructor(private Router: Router) {}
   onGetBackButtonOutput(event: any) {
     if (event) {
       this.Router.navigate(['tickets']);

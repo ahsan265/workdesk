@@ -13,11 +13,14 @@ import { ChatOperationService } from 'src/app/workdeskServices/chatInterfaceServ
 export class ChatTheadItemComponent implements OnInit {
   chatData = chatThreadData;
   selectedUuid: string = '';
-  typingThread: String = ''
-  constructor(private ChatSocketService: ChatSocketService, private ChatOperationService: ChatOperationService) {
-    this.ChatSocketService.liveChatThread.asObservable().subscribe(data => {
+  typingThread: String = '';
+  constructor(
+    private ChatSocketService: ChatSocketService,
+    private ChatOperationService: ChatOperationService
+  ) {
+    this.ChatSocketService.liveChatThread.asObservable().subscribe((data) => {
       this.selectedUuid = data.selected_thread;
-      this.chatData = data.data.map(((thread) => ({
+      this.chatData = data.data.map((thread) => ({
         counter: thread.unread_messages_count,
         date: thread.date_time,
         image: thread.images?.original,
@@ -26,34 +29,36 @@ export class ChatTheadItemComponent implements OnInit {
         uuid: thread.uuid,
         is_agent_message: thread.is_agent_message,
         isTyping: false
-      })))
-      this.chatData.find(data => {
+      }));
+      this.chatData.find((data) => {
         if (data.uuid === this.selectedUuid) {
           this.ChatSocketService.lastSelectThreadUuid.next(data);
         }
-      })
-    })
-    this.chatData.length !== 0 ?
-      this.ChatSocketService.getMessagesForThread(this.chatData[0]) : '';
-    this.ChatSocketService.typingMessage.asObservable().subscribe(isTdata => {
-      this.chatData.filter(data => {
-        if (data.uuid === isTdata.data.conversation_uuid && isTdata.isTyping === true) {
+      });
+    });
+    this.chatData.length !== 0
+      ? this.ChatSocketService.getMessagesForThread(this.chatData[0])
+      : '';
+    this.ChatSocketService.typingMessage.asObservable().subscribe((isTdata) => {
+      this.chatData.filter((data) => {
+        if (
+          data.uuid === isTdata.data.conversation_uuid &&
+          isTdata.isTyping === true
+        ) {
           data.isTyping = true;
-        }
-        else {
+        } else {
           data.isTyping = false;
         }
-      })
-    })
-
-
+      });
+    });
   }
-  ngOnInit(): void {
-
-  }
+  ngOnInit(): void {}
   selectThread(chatThreadModelData: chatThreadModelData) {
     if (this.ChatOperationService.getAllUnreadMessage().length !== 0) {
-      this.ChatOperationService.setUnreadToRead(chatThreadModelData.uuid, this.ChatOperationService.getAllUnreadMessage());
+      this.ChatOperationService.setUnreadToRead(
+        chatThreadModelData.uuid,
+        this.ChatOperationService.getAllUnreadMessage()
+      );
     }
     this.ChatSocketService.getMessagesForThread(chatThreadModelData);
   }

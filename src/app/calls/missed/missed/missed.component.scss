@@ -1,7 +1,6 @@
 .tableWrapper {
   padding: 0 30px;
   position: relative;
-
 }
 
 ::ng-deep .tableWrapper .tableWrap {
@@ -49,7 +48,7 @@
   height: 31px;
 }
 
-::ng-deep .filterWrapper>.leftFilter .dropdownWrapper .selectDropdown {
+::ng-deep .filterWrapper > .leftFilter .dropdownWrapper .selectDropdown {
   background: #ededf6 !important;
   border: none;
 }
@@ -66,7 +65,6 @@
   top: 35px;
   margin-bottom: 2px;
   z-index: 1;
-
 }
 
 .leftFilter {

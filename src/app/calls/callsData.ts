@@ -1,8 +1,6 @@
 import { MultiSelect } from '../models/multiSelect';
 import { SearchInput } from '../models/searchInput';
 
-
-
 const callType: MultiSelect = {
   title: 'Call type',
   showSelectAll: false,
@@ -17,8 +15,7 @@ const languaugesIncoming: MultiSelect = {
   title: 'Language',
   showSelectAll: true,
   showSearchBar: false,
-  data: [
-  ]
+  data: []
 };
 
 const searchInputData: SearchInput = {

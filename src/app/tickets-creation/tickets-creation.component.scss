@@ -1,187 +1,147 @@
 .createTicketWrapper {
-    height: calc(100vh - 127px);
-    background: #FAFAFD;
-    margin: 30px 30px 30px 30px;
-    width: calc(100% - 60px);
-    overflow: overlay;
-    background: #FFFFFF;
-    border: 1px solid #E1E1EA;
-    border-radius: 4px;
-
+  height: calc(100vh - 127px);
+  background: #fafafd;
+  margin: 30px 30px 30px 30px;
+  width: calc(100% - 60px);
+  overflow: overlay;
+  background: #ffffff;
+  border: 1px solid #e1e1ea;
+  border-radius: 4px;
 }
 
 .createTicketWrapper::-webkit-scrollbar {
-    display: none;
+  display: none;
 }
 
 .headingWrapper {
-    display: flex;
-    justify-content: space-between;
+  display: flex;
+  justify-content: space-between;
 }
 
 .ticketsArea {
-    padding: 30px;
-    position: relative;
-    overflow: overlay;
-    height: calc(100% - 160px);
+  padding: 30px;
+  position: relative;
+  overflow: overlay;
+  height: calc(100% - 160px);
 }
 
 .ticketsArea::-webkit-scrollbar {
-    display: none;
+  display: none;
 }
 
 .ticketNumberWrapper {
-    display: inline-flex;
-    font-family: "Roboto";
-    font-style: normal;
-    font-weight: 500;
-    font-size: 14px;
-    line-height: 16px;
-    align-items: flex-start;
-    height: fit-content;
-    text-align: right;
-    letter-spacing: 0.02em;
-    color: #162741;
+  display: inline-flex;
+  font-family: 'Roboto';
+  font-style: normal;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 16px;
+  align-items: flex-start;
+  height: fit-content;
+  text-align: right;
+  letter-spacing: 0.02em;
+  color: #162741;
 }
 
-
-
 :host ::ng-deep .headerWrap {
-    border-bottom: none;
+  border-bottom: none;
 }
 
 .textLabel {
-    font-family: "Roboto";
-    font-style: normal;
-    font-weight: 400;
-    font-size: 13px;
-    line-height: 180%;
-    display: flex;
-    align-items: center;
-    letter-spacing: 0.02em;
-    margin-bottom: 12px;
-    color: #6A7585;
+  font-family: 'Roboto';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 13px;
+  line-height: 180%;
+  display: flex;
+  align-items: center;
+  letter-spacing: 0.02em;
+  margin-bottom: 12px;
+  color: #6a7585;
 }
 
 .assignText {
-    width: 538px;
-    height: 33px;
-    padding: 0px;
-    margin: 0px;
-    background: #FFFFFF;
-    border: 1px solid #E1E1EA;
-    border-radius: 4px;
-    display: flex;
-    padding-left: 12px;
-    font-family: "Roboto";
-    font-style: normal;
-    font-weight: 400;
-    font-size: 12px;
-    line-height: 14px;
-    display: flex;
-    align-items: center;
-    letter-spacing: 0.02em;
-    color: #7D8696;
+  width: 538px;
+  height: 33px;
+  padding: 0px;
+  margin: 0px;
+  background: #ffffff;
+  border: 1px solid #e1e1ea;
+  border-radius: 4px;
+  display: flex;
+  padding-left: 12px;
+  font-family: 'Roboto';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 14px;
+  display: flex;
+  align-items: center;
+  letter-spacing: 0.02em;
+  color: #7d8696;
 }
 
 .assigningArea {
-    display: flex;
-    width: 100%;
-    justify-content: flex-start;
-    flex-direction: column;
+  display: flex;
+  width: 100%;
+  justify-content: flex-start;
+  flex-direction: column;
 }
 
 .setPriority {
-    display: flex;
-    width: 100%;
+  display: flex;
+  width: 100%;
 }
 
 .multiSelectWrapper {
-    width: 260px;
-    margin-right: 10px;
-    position: relative;
+  width: 260px;
+  margin-right: 10px;
+  position: relative;
 }
 
 .filterArrow {
-    margin-left: 10px;
-    transition: 0.4s;
+  margin-left: 10px;
+  transition: 0.4s;
 }
 
 .filterArrowRotate {
-    transform: rotate(180deg);
-    transition: all 0.3s;
+  transform: rotate(180deg);
+  transition: all 0.3s;
 }
 
 .calendarLocationLanguage {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: space-between;
-    padding: 0 11px;
-    background: #ffffff;
-    border: 1px solid rgba(208, 208, 222, 0.6);
-    box-sizing: border-box;
-    border-radius: 4px;
-    cursor: pointer;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 11px;
+  background: #ffffff;
+  border: 1px solid rgba(208, 208, 222, 0.6);
+  box-sizing: border-box;
+  border-radius: 4px;
+  cursor: pointer;
 }
 
 ::ng-deep .calendarLocationLanguage .md-drppicker {
-    right: 0 !important;
-    top: 120% !important;
-    left: 0 !important;
-    width: max-content !important;
+  right: 0 !important;
+  top: 120% !important;
+  left: 0 !important;
+  width: max-content !important;
 }
 
 ::ng-deep .calendarLocationLanguage .md-drppicker .ranges {
-    height: 371px;
+  height: 371px;
 }
 
 .calendarSelectMenu {
-    height: 34px;
+  height: 34px;
+  width: 100%;
+  cursor: pointer;
+
+  input {
+    cursor: pointer;
+    border: none;
     width: 100%;
-    cursor: pointer;
-
-    input {
-        cursor: pointer;
-        border: none;
-        width: 100%;
-        font-style: normal;
-        font-weight: 400;
-        font-size: 12px;
-        line-height: 160%;
-        display: flex;
-        align-items: center;
-        letter-spacing: 0.02em;
-        color: #162741cc;
-    }
-}
-
-.multiSelectWrapper.assignee {
-    background: #FFFFFF;
-    border: 1px solid #E1E1EA;
-    border-radius: 4px;
-    width: 260px;
-    height: 33px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    cursor: pointer;
-    padding: 0px;
-}
-
-.multiSelectWrapper.status {
-    width: 260px;
-}
-
-.textFeild {
-    width: 260px;
-    margin-right: 30px;
-    height: 85px;
-
-}
-
-.assignAgentWrapper {
-    font-family: "Roboto", sans-serif;
     font-style: normal;
     font-weight: 400;
     font-size: 12px;
@@ -189,34 +149,70 @@
     display: flex;
     align-items: center;
     letter-spacing: 0.02em;
-    padding-left: 10px;
-    color: #162741;
-    cursor: pointer;
+    color: #162741cc;
+  }
+}
+
+.multiSelectWrapper.assignee {
+  background: #ffffff;
+  border: 1px solid #e1e1ea;
+  border-radius: 4px;
+  width: 260px;
+  height: 33px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+  padding: 0px;
+}
+
+.multiSelectWrapper.status {
+  width: 260px;
+}
+
+.textFeild {
+  width: 260px;
+  margin-right: 30px;
+  height: 85px;
+}
+
+.assignAgentWrapper {
+  font-family: 'Roboto', sans-serif;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 160%;
+  display: flex;
+  align-items: center;
+  letter-spacing: 0.02em;
+  padding-left: 10px;
+  color: #162741;
+  cursor: pointer;
 }
 
 ::ng-deep .assignAgentWrapper.create .assignWrapper {
-    width: 259px !important;
-    left: 0;
-    top: 40px;
+  width: 259px !important;
+  left: 0;
+  top: 40px;
 }
 
 ::ng-deep .dropdown {
-    z-index: 1;
+  z-index: 1;
 }
 
 .buttonsWrapper {
-    width: 100%;
-    justify-content: space-between;
-    position: relative;
+  width: 100%;
+  justify-content: space-between;
+  position: relative;
 }
 
 .buttonPanel {
-    border-top: 1px solid #E3E3EB;
-    width: calc(100% - 60px);
-    position: relative;
-    padding: 30px 0px 0px 0px;
-    align-items: flex-end;
-    display: flex;
-    justify-content: space-between;
-    margin: 0px 30px 0px 30px;
+  border-top: 1px solid #e3e3eb;
+  width: calc(100% - 60px);
+  position: relative;
+  padding: 30px 0px 0px 0px;
+  align-items: flex-end;
+  display: flex;
+  justify-content: space-between;
+  margin: 0px 30px 0px 30px;
 }

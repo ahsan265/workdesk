@@ -5,7 +5,7 @@ import { groupDeicesInformation } from 'src/app/models/callInterfaceModel';
   providedIn: 'platform'
 })
 export class DevicesInformationService {
-  constructor() { }
+  constructor() {}
 
   public async getAllDevice(): Promise<groupDeicesInformation> {
     const audioInput: InputDeviceInfo[] = [];

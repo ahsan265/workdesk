@@ -45,7 +45,6 @@ const missedTableSetting: TableSettingsModel[] = [
     width: 12,
     showEditField: false,
     canEdit: false
-
   },
   {
     index: 5,
@@ -54,7 +53,6 @@ const missedTableSetting: TableSettingsModel[] = [
     width: 15,
     showEditField: false,
     canEdit: false
-
   },
   {
     index: 6,
@@ -82,7 +80,6 @@ const answeredTablaSetting: TableSettingsModel[] = [
     width: 15,
     showEditField: false,
     canEdit: false
-
   },
   {
     index: 2,
@@ -118,13 +115,12 @@ const answeredTablaSetting: TableSettingsModel[] = [
   }
 ];
 
-const paginationData: any =
-{
+const paginationData: any = {
   currentPage: 1,
   itemsPerPage: 10,
   totalItems: 50,
   totolPages: 12
-}
+};
 const missedCallData: any[] = [
   {
     call_uuid: 'dshfjdgshfjfs',
@@ -183,16 +179,13 @@ const callTypeMissed: MultiSelect = {
     { id: 1, name: 'Audio', selected: false },
     { id: 2, name: 'Video', selected: false },
     { id: 3, name: 'Chat', selected: false }
-
   ]
 };
 const languaugesMissed: MultiSelect = {
   title: 'Language',
   showSelectAll: true,
   showSearchBar: false,
-  data: [
-
-  ]
+  data: []
 };
 const searchInputData: SearchInput = {
   placeholder: 'Search by User name or Reason',
@@ -208,4 +201,13 @@ const missedData: callsIndicatorData = {
   isAgent: false
 };
 
-export { missedTableSetting, missedCallData, answeredTablaSetting, callTypeMissed, searchInputData, languaugesMissed, paginationData, missedData };
+export {
+  missedTableSetting,
+  missedCallData,
+  answeredTablaSetting,
+  callTypeMissed,
+  searchInputData,
+  languaugesMissed,
+  paginationData,
+  missedData
+};

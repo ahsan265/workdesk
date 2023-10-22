@@ -9,9 +9,7 @@ export class CallPickButtonComponent implements OnInit {
   @Input() buttonText!: string;
   @Input() isButtonDisabled: boolean = false;
 
-  constructor() { }
+  constructor() {}
 
-  ngOnInit(): void {
-  }
-
+  ngOnInit(): void {}
 }

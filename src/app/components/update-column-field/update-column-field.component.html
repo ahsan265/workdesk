@@ -1,5 +1,14 @@
 <form [formGroup]="textFieldForm" *ngIf="openEditFiedl">
-    <input editColumn (closeField)="closeFieldBox($event)" type="text" formControlName="textField" [maxlength]="characterLimit"
-        (keyup.enter)="updateField()"
-        [ngClass]="{'input-error': this.textFieldForm.controls.textField.value==='','input-filled': this.textFieldForm.controls.textField.value!==''}">
+  <input
+    editColumn
+    (closeField)="closeFieldBox($event)"
+    type="text"
+    formControlName="textField"
+    [maxlength]="characterLimit"
+    (keyup.enter)="updateField()"
+    [ngClass]="{
+      'input-error': this.textFieldForm.controls.textField.value === '',
+      'input-filled': this.textFieldForm.controls.textField.value !== ''
+    }"
+  />
 </form>

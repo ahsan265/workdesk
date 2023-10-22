@@ -1,6 +1,6 @@
-import dayjs from "dayjs";
-import { Button } from "../models/button";
-import { OneSelect } from "../models/oneSelect";
+import dayjs from 'dayjs';
+import { Button } from '../models/button';
+import { OneSelect } from '../models/oneSelect';
 
 const ranges: any = {
   Today: [dayjs(), dayjs()],
@@ -24,7 +24,9 @@ const ranges: any = {
     dayjs().subtract(1, 'year').endOf('year')
   ]
 };
-const oneSelectData: OneSelect[] = [{ id: 1, name: 'Calls', selected: true }, { id: 1, name: 'Chats', selected: false }
+const oneSelectData: OneSelect[] = [
+  { id: 1, name: 'Calls', selected: true },
+  { id: 1, name: 'Chats', selected: false }
 ];
 const backButtonData: Button = {
   title: 'Cancel',
@@ -38,24 +40,25 @@ const priorityData: OneSelect[] = [
   { id: 0, name: 'Urgent', selected: true },
   { id: 1, name: 'High', selected: false },
   { id: 2, name: 'Normal', selected: false },
-  { id: 3, name: 'Low', selected: false }];
+  { id: 3, name: 'Low', selected: false }
+];
 
-const statusType: OneSelect[] = [{
-  id: 0,
-  name: 'Done',
-  selected: false
-},
-{
-  id: 1,
-  name: 'In progress',
-  selected: false
-},
-{
-  id: 2,
-  name: 'Not started',
-  selected: false
-}]
+const statusType: OneSelect[] = [
+  {
+    id: 0,
+    name: 'Done',
+    selected: false
+  },
+  {
+    id: 1,
+    name: 'In progress',
+    selected: false
+  },
+  {
+    id: 2,
+    name: 'Not started',
+    selected: false
+  }
+];
 
-export {
-  ranges, oneSelectData, backButtonData, priorityData, statusType
-}
+export { ranges, oneSelectData, backButtonData, priorityData, statusType };

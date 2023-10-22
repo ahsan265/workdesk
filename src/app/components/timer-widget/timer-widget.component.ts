@@ -18,11 +18,11 @@ export class TimerWidgetComponent {
   }
   getValue(event: any, ticker: tickers) {
     ticker.value = parseInt(event.target.value);
-    this.timerwWidgetData.tickers.find(data => {
+    this.timerwWidgetData.tickers.find((data) => {
       if (data.header === ticker.header) {
         data.value = ticker.value;
       }
-    })
+    });
     this.checkIncreatment(ticker);
     this.selectedWidgetOutput.emit(this.timerwWidgetData);
   }
@@ -43,18 +43,16 @@ export class TimerWidgetComponent {
         break;
     }
   }
-  // find the slot 
+  // find the slot
   findTimerSlot(toIncrease: string) {
-    this.timerwWidgetData.tickers.find(data => {
+    this.timerwWidgetData.tickers.find((data) => {
       if (data.header === toIncrease) {
         if (toIncrease === 'h' && data.value < 23) {
           data.value++;
+        } else if (toIncrease === 'min') {
+          data.value++;
         }
-        else if (toIncrease === 'min') {
-          data.value++
-        }
-      };
-    })
+      }
+    });
   }
 }
-

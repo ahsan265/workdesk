@@ -10,8 +10,7 @@ image-cropper {
 ::ng-deep .ngx-ic-cropper.ngx-ic-round {
   outline-color: rgb(56 55 55 / 63%) !important;
   border-radius: 50%;
-  border: 1px solid #E1E1EA;
-
+  border: 1px solid #e1e1ea;
 }
 
 ::ng-deep .ngx-ic-cropper .ngx-ic-resize {
@@ -162,7 +161,6 @@ button {
   min-width: 50px;
   min-height: 50px;
   background-repeat: no-repeat;
-
 }
 
 mat-slider {
@@ -351,7 +349,9 @@ mat-slider {
   background-color: #1c54db;
 }
 
-::ng-deep .mat-slider-min-value:not(.mat-slider-thumb-label-showing) .mat-slider-thumb {
+::ng-deep
+  .mat-slider-min-value:not(.mat-slider-thumb-label-showing)
+  .mat-slider-thumb {
   background-color: #d0d0de;
 }
 

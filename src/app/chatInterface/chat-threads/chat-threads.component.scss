@@ -1,32 +1,40 @@
 .threadsWrapper {
-    background: radial-gradient(160.16% 64.38% at 125.13% 83.12%, rgba(227, 229, 239, 0.32) 0%, rgba(151, 169, 215, 0) 100%)
-        /* warning: gradient uses a rotation that is not supported by CSS and may not behave as expected */
-        , radial-gradient(120.52% 48.45% at 91.93% 8.67%, rgba(28, 47, 219, 0.0768) 0%, rgba(28, 84, 219, 0) 100%)
-        /* warning: gradient uses a rotation that is not supported by CSS and may not behave as expected */
-        , #EDEDF5;
-    border: 1px solid rgba(255, 255, 255, 0.63);
-    box-shadow: 2px 5px 8px rgba(114, 114, 157, 0.16);
-    border-radius: 10px;
-    height: calc(100vh - 118px);
-    width: 340px;
-    position: relative;
-    overflow-y: overlay;
+  background: radial-gradient(
+        160.16% 64.38% at 125.13% 83.12%,
+        rgba(227, 229, 239, 0.32) 0%,
+        rgba(151, 169, 215, 0) 100%
+      )
+      /* warning: gradient uses a rotation that is not supported by CSS and may not behave as expected */,
+    radial-gradient(
+        120.52% 48.45% at 91.93% 8.67%,
+        rgba(28, 47, 219, 0.0768) 0%,
+        rgba(28, 84, 219, 0) 100%
+      )
+      /* warning: gradient uses a rotation that is not supported by CSS and may not behave as expected */,
+    #ededf5;
+  border: 1px solid rgba(255, 255, 255, 0.63);
+  box-shadow: 2px 5px 8px rgba(114, 114, 157, 0.16);
+  border-radius: 10px;
+  height: calc(100vh - 118px);
+  width: 340px;
+  position: relative;
+  overflow-y: overlay;
 }
 
 .threadsWrapper::-webkit-scrollbar {
-    background: rgba(232, 238, 250, 0.84);
-    border-radius: 4px;
-    width: 8px;
-    transition: 0.4s;
+  background: rgba(232, 238, 250, 0.84);
+  border-radius: 4px;
+  width: 8px;
+  transition: 0.4s;
 }
 
 .threadsWrapper::-webkit-scrollbar-track {
-    background: rgba(232, 238, 250, 0.84);
-    border-radius: 4px;
-    width: 8px;
+  background: rgba(232, 238, 250, 0.84);
+  border-radius: 4px;
+  width: 8px;
 }
 
 .threadsWrapper::-webkit-scrollbar-thumb {
-    background: #97A7C0;
-    border-radius: 8px;
+  background: #97a7c0;
+  border-radius: 8px;
 }

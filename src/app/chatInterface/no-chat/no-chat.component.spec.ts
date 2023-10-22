@@ -8,9 +8,8 @@ describe('NoChatComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ NoChatComponent ]
-    })
-    .compileComponents();
+      declarations: [NoChatComponent]
+    }).compileComponents();
 
     fixture = TestBed.createComponent(NoChatComponent);
     component = fixture.componentInstance;

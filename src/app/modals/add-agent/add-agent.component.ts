@@ -11,13 +11,9 @@ import { languauges } from './addAgentData';
 export class AddAgentComponent implements OnInit {
   languages = languauges;
   arrayOfLanguages!: MultiSelect;
-  constructor(private OverlayService:OverlayService){
-
-  }
-  ngOnInit(): void {
-  }
-  closeDialog()
-  {
-    this.OverlayService.close()
+  constructor(private OverlayService: OverlayService) {}
+  ngOnInit(): void {}
+  closeDialog() {
+    this.OverlayService.close();
   }
 }

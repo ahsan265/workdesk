@@ -7,11 +7,8 @@ import { Router } from '@angular/router';
   styleUrls: ['./chat-header.component.scss']
 })
 export class ChatHeaderComponent {
-  constructor(private Router:Router) {
-    
-  }
-  close()
-  {
-    this.Router.navigate(['requests','incoming']);
+  constructor(private Router: Router) {}
+  close() {
+    this.Router.navigate(['requests', 'incoming']);
   }
 }

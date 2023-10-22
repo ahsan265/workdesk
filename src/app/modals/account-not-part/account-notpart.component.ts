@@ -7,9 +7,7 @@ import { OverlayService } from '@gigaaa/gigaaa-components';
   styleUrls: ['./account-notpart.component.scss']
 })
 export class AccountNotpartComponent {
-  constructor(private OverlayService: OverlayService) {
-
-  }
+  constructor(private OverlayService: OverlayService) {}
   closeDialog() {
     this.OverlayService.close();
   }

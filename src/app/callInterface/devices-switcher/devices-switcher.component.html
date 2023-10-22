@@ -38,7 +38,13 @@
       </div>
     </div>
   </div>
-  <div class="deviceSwitcherPanel speaker" *ngIf="this.DevicesInformationService.getBrowserName() !== 'firefox' || this.DevicesInformationService.getBrowserName() !== 'safari'">
+  <div
+    class="deviceSwitcherPanel speaker"
+    *ngIf="
+      this.DevicesInformationService.getBrowserName() !== 'firefox' ||
+      this.DevicesInformationService.getBrowserName() !== 'safari'
+    "
+  >
     <div class="deviceHeaderPanel">
       <img
         style="padding: 13px"

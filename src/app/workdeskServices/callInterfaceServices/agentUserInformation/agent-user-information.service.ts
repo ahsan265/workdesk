@@ -12,7 +12,7 @@ import { DevicesInformationService } from '../devicesInformation/devices-informa
 })
 export class AgentUserInformation {
   selectedSpearkerSubject = new Subject<any>();
-  constructor(private DevicesInformationService: DevicesInformationService) { }
+  constructor(private DevicesInformationService: DevicesInformationService) {}
 
   public getCallInformation() {
     return JSON.parse(localStorage.getItem('call-information') || '{}');
@@ -26,7 +26,7 @@ export class AgentUserInformation {
       lastNameInitial: lastNameInitial
     };
   }
-  // set call Type 
+  // set call Type
   public setCallType(status: boolean) {
     const data = this.getCallInformation();
     data['call_type'] = status;
@@ -60,7 +60,7 @@ export class AgentUserInformation {
     user: any
   ) {
     const data = this.getCallInformation();
-    
+
     data['user_information'] = {
       user_id: userId,
       data: {

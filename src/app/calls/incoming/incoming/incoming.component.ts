@@ -1,6 +1,9 @@
 import { Component, HostListener, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
-import { GigaaaDaterangepickerDirective, OverlayService } from '@gigaaa/gigaaa-components';
+import {
+  GigaaaDaterangepickerDirective,
+  OverlayService
+} from '@gigaaa/gigaaa-components';
 import dayjs from 'dayjs';
 import { noAgentTobaleData } from 'src/app/agents/agentsData';
 import { CalendarService } from 'src/app/calendarService/calendar.service';
@@ -21,8 +24,7 @@ import { ChatOperationService } from 'src/app/workdeskServices/chatInterfaceServ
 @Component({
   selector: 'app-incoming',
   templateUrl: './incoming.component.html',
-  styleUrls: ['./incoming.component.scss'],
-
+  styleUrls: ['./incoming.component.scss']
 })
 export class IncomingComponent implements OnInit {
   nodata = noAgentTobaleData;
@@ -101,35 +103,43 @@ export class IncomingComponent implements OnInit {
           time: incomingData.waiting_started_at,
           userImage: '../../../assets/images/callInterface/user.png',
           showUserImage: false,
-          callPickButton: incomingData.request_type === 'chat' ? 'Join' : 'Answer',
-          disableButton: (incomingData.on_hold === true || this.AgentSocketService.isInCall === true) ? true : false
-
+          callPickButton:
+            incomingData.request_type === 'chat' ? 'Join' : 'Answer',
+          disableButton:
+            incomingData.on_hold === true ||
+            this.AgentSocketService.isInCall === true
+              ? true
+              : false
         }));
         this.unfilterIncomingData = this.incomingData;
       }
     );
   }
   async ngOnInit(): Promise<void> {
-    this.getDefaultInputsLoadOnce.incominglanguages.asObservable().subscribe(data => {
-      this.languauges = data;
-      this.languageIds = [];
-      this.callTypeName = [];
-      this.callType.data.map(data => {
-        data.selected = false;
-      })
-      this.searchInputData.searchText = '';
-    });
+    this.getDefaultInputsLoadOnce.incominglanguages
+      .asObservable()
+      .subscribe((data) => {
+        this.languauges = data;
+        this.languageIds = [];
+        this.callTypeName = [];
+        this.callType.data.map((data) => {
+          data.selected = false;
+        });
+        this.searchInputData.searchText = '';
+      });
   }
 
   async getCallsId(event: any) {
     const data: IncomingCallModelTable = event;
-    (data.callType.text.toLowerCase() === 'live chat') ? (this.ChatOperationService.awnseredChat(data.call_uuid), this.Router.navigate(['chat'])) :
-      this.OverlayService.open({
-        component: CallConsoleComponent,
-        data: data,
-        panelClass: 'dialog-panel',
-        isPopup: false
-      });
+    data.callType.text.toLowerCase() === 'live chat'
+      ? (this.ChatOperationService.awnseredChat(data.call_uuid),
+        this.Router.navigate(['chat']))
+      : this.OverlayService.open({
+          component: CallConsoleComponent,
+          data: data,
+          panelClass: 'dialog-panel',
+          isPopup: false
+        });
   }
 
   change(event: any) {
@@ -193,7 +203,11 @@ export class IncomingComponent implements OnInit {
   // filter incoming data
   getSearchValue(value: string) {
     this.lastUsedSearch = value;
-    this.incomingData = this.CallsService.search(value, this.incomingData, this.unfilterIncomingData);
+    this.incomingData = this.CallsService.search(
+      value,
+      this.incomingData,
+      this.unfilterIncomingData
+    );
     if (value.length === 0 && this.incomingData.length === 0) {
       this.incomingData = this.unfilterIncomingData;
     }

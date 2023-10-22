@@ -1,6 +1,5 @@
 // @import '~ngx-toastr/toastr';
 
-
 // @import url('../node_modules/@gigaaa/gigaaa-components/styles/table.scss');
 
 .main {
@@ -37,7 +36,6 @@
   display: inline-block;
 }
 
-
 .cdk-global-overlay-wrapper {
   top: 0;
   margin: 0 auto;
@@ -48,7 +46,7 @@
   z-index: 1;
 }
 
-.cdk-global-overlay-wrapper .dark-backdrop>.addAgent {
+.cdk-global-overlay-wrapper .dark-backdrop > .addAgent {
   height: fit-content !important;
   width: fit-content !important;
 }
@@ -88,7 +86,7 @@
 .imagePopup {
   width: 594px;
   height: fit-content;
-  background: #FFFFFF;
+  background: #ffffff;
   box-shadow: 3px 3px 10px rgb(0 0 0 / 23%);
   border-radius: 4px;
   padding: 30px;
@@ -110,7 +108,7 @@
 .notAccount {
   width: 390px;
   height: 279px;
-  background: #FFFFFF;
+  background: #ffffff;
   box-shadow: 3px 3px 10px rgb(0 0 0 / 23%);
   border-radius: 4px;
   display: flex;
@@ -122,7 +120,7 @@
 .swtichOrganizationPopup {
   width: 778px;
   height: 427px;
-  background: #FFFFFF;
+  background: #ffffff;
   box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.23);
   border-radius: 4px;
   display: flex;
@@ -134,7 +132,7 @@
 .swtichOrganizationDonePopup {
   width: 402px;
   height: 256px;
-  background: #FFFFFF;
+  background: #ffffff;
   box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.23);
   border-radius: 4px;
   display: flex;
@@ -143,11 +141,9 @@
   flex-wrap: wrap;
 }
 
-
 .addAgent {
   width: 504px;
   height: 480px;
-
 }
 
 .modal {
@@ -194,16 +190,17 @@ body {
   box-shadow: none;
 }
 
-.ngx-toastr.toast-success>button.toast-close-button[aria-label='Close'] {
+.ngx-toastr.toast-success > button.toast-close-button[aria-label='Close'] {
   color: #1c54db;
   padding: 15px;
 }
 
-.ngx-toastr.toast-success>button.toast-close-button[aria-label='Close']:hover {
+.ngx-toastr.toast-success
+  > button.toast-close-button[aria-label='Close']:hover {
   color: #1c54db;
 }
 
-.ngx-toastr.toast-warning>button.toast-close-button[aria-label='Close'] {
+.ngx-toastr.toast-warning > button.toast-close-button[aria-label='Close'] {
   color: #ff155a;
   padding: 15px;
 }
@@ -222,7 +219,7 @@ body {
   right: 29px;
 }
 
-#toast-container>.toast-success {
+#toast-container > .toast-success {
   background-color: #dee8ff;
   color: #1c54db;
   border-radius: 4px;
@@ -239,7 +236,7 @@ body {
   transform: translateX(0%);
   transition: 0.4s;
 } */
-#toast-container>.toast-warning {
+#toast-container > .toast-warning {
   background-color: #fedee8;
   color: #ff155a;
   border: 1px solid rgba(255, 21, 90, 0.4);

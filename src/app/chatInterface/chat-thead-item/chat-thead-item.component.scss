@@ -1,169 +1,176 @@
 .threadItemPanel {
-    padding: 11px;
-    width: calc(100% - 22px);
-    height: 58px;
+  padding: 11px;
+  width: calc(100% - 22px);
+  height: 58px;
 }
 
 .userImage {
-    width: 40px;
-    height: 40px;
-    display: inline-flex;
-    border-radius: 50%;
-    border: 1px solid #ffffff;
+  width: 40px;
+  height: 40px;
+  display: inline-flex;
+  border-radius: 50%;
+  border: 1px solid #ffffff;
 }
 
 .userImage img {
-    border-radius: 50%;
+  border-radius: 50%;
 }
 
 .userDetailsLast {
-    height: 22px;
-    display: inline-flex;
-    width: calc(110% - 40px);
-    margin-left: 12px;
+  height: 22px;
+  display: inline-flex;
+  width: calc(110% - 40px);
+  margin-left: 12px;
 }
 
 .userName {
-    display: inline-flex;
-    font-family: "Roboto";
-    font-style: normal;
-    font-weight: 500;
-    font-size: 14px;
-    height: 22px;
-    width: 50%;
-    line-height: 22px;
-    letter-spacing: 0.02em;
-    color: #162741;
+  display: inline-flex;
+  font-family: 'Roboto';
+  font-style: normal;
+  font-weight: 500;
+  font-size: 14px;
+  height: 22px;
+  width: 50%;
+  line-height: 22px;
+  letter-spacing: 0.02em;
+  color: #162741;
 }
 
 .textUnread {
-    font-weight: 500;
-    color: #162741;
+  font-weight: 500;
+  color: #162741;
 }
 
 .counter {
-    background: #162741;
-    border-radius: 12px;
-    width: 15px;
-    height: 15px;
-    font-family: "Roboto";
-    font-style: normal;
-    font-weight: 500;
-    font-size: 10px;
-    line-height: 11px;
-    display: flex;
-    align-items: center;
-    text-align: center;
-    justify-content: center;
-    letter-spacing: 0.02em;
-    color: #FFFFFF;
+  background: #162741;
+  border-radius: 12px;
+  width: 15px;
+  height: 15px;
+  font-family: 'Roboto';
+  font-style: normal;
+  font-weight: 500;
+  font-size: 10px;
+  line-height: 11px;
+  display: flex;
+  align-items: center;
+  text-align: center;
+  justify-content: center;
+  letter-spacing: 0.02em;
+  color: #ffffff;
 }
 
 .informationWrapper {
-    display: block;
-    align-items: center;
-    width: 100%;
+  display: block;
+  align-items: center;
+  width: 100%;
 }
 
 .userMessageDetails {
-    display: inline-flex;
-    width: calc(100% - 14px);
-    justify-content: space-between;
-    margin-left: 12px;
+  display: inline-flex;
+  width: calc(100% - 14px);
+  justify-content: space-between;
+  margin-left: 12px;
 }
 
 .timer {
-    font-family: "Roboto";
-    font-style: normal;
-    font-weight: 400;
-    font-size: 12px;
-    line-height: 22px;
-    display: flex;
-    width: 50%;
-    height: 22px;
-    align-items: center;
-    text-align: right;
-    letter-spacing: 0.02em;
-    color: #737C8A;
-    justify-content: flex-end;
+  font-family: 'Roboto';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 22px;
+  display: flex;
+  width: 50%;
+  height: 22px;
+  align-items: center;
+  text-align: right;
+  letter-spacing: 0.02em;
+  color: #737c8a;
+  justify-content: flex-end;
 }
 
 .lastMessage {
-    font-family: "Roboto";
-    font-style: normal;
-    font-weight: 400;
-    font-size: 12px;
-    line-height: 160%;
-    align-items: center;
-    letter-spacing: 0.02em;
-    color: #737C8A;
-    width: 165px;
-    overflow: hidden;
-    white-space: nowrap;
-    text-overflow: ellipsis;
+  font-family: 'Roboto';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 160%;
+  align-items: center;
+  letter-spacing: 0.02em;
+  color: #737c8a;
+  width: 165px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
 }
 
 .thread {
-    padding: 14px;
-    align-items: center;
-    display: flex;
-    align-items: center;
-    border-radius: 8px;
-    transition: 0.4s;
-    cursor: pointer;
-    border: 1px solid transparent;
+  padding: 14px;
+  align-items: center;
+  display: flex;
+  align-items: center;
+  border-radius: 8px;
+  transition: 0.4s;
+  cursor: pointer;
+  border: 1px solid transparent;
 }
 
 .thread:hover {
-    background: rgba(255, 255, 255, 0.33);
-    border: 1px solid rgba(255, 255, 255, 0.9);
-    box-shadow: 2px 2px 10px rgba(133, 133, 171, 0.23);
+  background: rgba(255, 255, 255, 0.33);
+  border: 1px solid rgba(255, 255, 255, 0.9);
+  box-shadow: 2px 2px 10px rgba(133, 133, 171, 0.23);
 }
 
 .selectedThread {
-    background: rgba(255, 255, 255, 0.33);
-    border: 1px solid rgba(255, 255, 255, 0.9);
-    box-shadow: 2px 2px 10px rgba(133, 133, 171, 0.23);
-    transition: 0.4s;
+  background: rgba(255, 255, 255, 0.33);
+  border: 1px solid rgba(255, 255, 255, 0.9);
+  box-shadow: 2px 2px 10px rgba(133, 133, 171, 0.23);
+  transition: 0.4s;
 }
 
 .counerWrapper {
-    display: inline-flex;
-    width: 30%;
-    justify-content: right;
+  display: inline-flex;
+  width: 30%;
+  justify-content: right;
 }
 
 .threadsWrapper {
-    background: radial-gradient(160.16% 64.38% at 125.13% 83.12%, rgba(227, 229, 239, 0.32) 0%, rgba(151, 169, 215, 0) 100%)
-        /* warning: gradient uses a rotation that is not supported by CSS and may not behave as expected */
-        , radial-gradient(120.52% 48.45% at 91.93% 8.67%, rgba(28, 47, 219, 0.0768) 0%, rgba(28, 84, 219, 0) 100%)
-        /* warning: gradient uses a rotation that is not supported by CSS and may not behave as expected */
-        , #EDEDF5;
-    border: 1px solid rgba(255, 255, 255, 0.63);
-    box-shadow: 2px 5px 8px rgba(114, 114, 157, 0.16);
-    border-radius: 10px;
-    height: calc(100vh - 118px);
-    width: 340px;
-    position: relative;
-    overflow-y: overlay;
-
+  background: radial-gradient(
+        160.16% 64.38% at 125.13% 83.12%,
+        rgba(227, 229, 239, 0.32) 0%,
+        rgba(151, 169, 215, 0) 100%
+      )
+      /* warning: gradient uses a rotation that is not supported by CSS and may not behave as expected */,
+    radial-gradient(
+        120.52% 48.45% at 91.93% 8.67%,
+        rgba(28, 47, 219, 0.0768) 0%,
+        rgba(28, 84, 219, 0) 100%
+      )
+      /* warning: gradient uses a rotation that is not supported by CSS and may not behave as expected */,
+    #ededf5;
+  border: 1px solid rgba(255, 255, 255, 0.63);
+  box-shadow: 2px 5px 8px rgba(114, 114, 157, 0.16);
+  border-radius: 10px;
+  height: calc(100vh - 118px);
+  width: 340px;
+  position: relative;
+  overflow-y: overlay;
 }
 
 .threadsWrapper::-webkit-scrollbar {
-    background: rgba(232, 238, 250, 0.84);
-    border-radius: 4px;
-    width: 8px;
-    transition: 0.4s;
-    padding: 0px;
+  background: rgba(232, 238, 250, 0.84);
+  border-radius: 4px;
+  width: 8px;
+  transition: 0.4s;
+  padding: 0px;
 }
 
 .threadsWrapper::-webkit-scrollbar-track {
-    background: rgba(232, 238, 250, 0.84);
-    border-radius: 4px;
-    width: 8px;
+  background: rgba(232, 238, 250, 0.84);
+  border-radius: 4px;
+  width: 8px;
 }
 
 .threadsWrapper::-webkit-scrollbar-thumb {
-    background: #97A7C0;
-    border-radius: 8px;
+  background: #97a7c0;
+  border-radius: 8px;
 }

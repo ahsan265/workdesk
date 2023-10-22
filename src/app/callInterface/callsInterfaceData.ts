@@ -246,19 +246,19 @@ const normalMiniCameraFullName = {
   display: 'unset'
 };
 
-// mini camera screen margins 
+// mini camera screen margins
 const normalMiniCameraMargins = {
   'z-index': 1,
-  'position': 'absolute',
-  'top': '98px',
-  'left': '20px'
+  position: 'absolute',
+  top: '98px',
+  left: '20px'
 };
 
 const minmizeMiniCameraMargins = {
   'z-index': 1,
-  'position': 'absolute',
-  'top': '60px',
-  'left': '10px'
+  position: 'absolute',
+  top: '60px',
+  left: '10px'
 };
 export {
   CallsHeaderData,

@@ -1,5 +1,5 @@
-import { FreeSeats } from "./models/agentSocketModel";
-import { CallsModel } from "./models/callModel";
+import { FreeSeats } from './models/agentSocketModel';
+import { CallsModel } from './models/callModel';
 
 const websites = [
   {
@@ -14,8 +14,7 @@ const addons = [
     text: 'Analytics',
     url: ['https://analytics.gconsole.io/'],
     image: '../assets/images/sidebar/analytics.svg'
-  },
-
+  }
 ];
 const placeholder = {
   items_count: 10,
@@ -24,20 +23,20 @@ const placeholder = {
   total_pages: 10,
   type: '',
   calls: []
-}
+};
 
 const placeholderIncoming = {
   new_call: false,
   type: 'incoming',
   calls: []
-}
+};
 const defaultCallData: CallsModel = {
   incoming: placeholderIncoming,
   missed: placeholder,
   finished: placeholder,
   ongoing: placeholder,
   new_call: false
-}
+};
 const icons = {
   integrationIcon: '../assets/images/sidebar/integration.svg',
   dashboardIcon: '../assets/images/sidebar/dashboard.svg',
@@ -53,7 +52,6 @@ const icons = {
   logo: '../assets/images/sidebar/workdesk_logo.svg',
   logoCollapsed: '../assets/images/sidebar/workdesk_logo_wt.svg'
 };
-
 
 const sidebarData: any = [
   {
@@ -131,4 +129,11 @@ const sidebarDataAgent: any = [
     isLink: true
   }
 ];
-export { websites, icons, sidebarData, addons, defaultCallData, sidebarDataAgent };
+export {
+  websites,
+  icons,
+  sidebarData,
+  addons,
+  defaultCallData,
+  sidebarDataAgent
+};

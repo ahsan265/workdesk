@@ -8,9 +8,8 @@ describe('CallPickButtonComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ CallPickButtonComponent ]
-    })
-    .compileComponents();
+      declarations: [CallPickButtonComponent]
+    }).compileComponents();
 
     fixture = TestBed.createComponent(CallPickButtonComponent);
     component = fixture.componentInstance;

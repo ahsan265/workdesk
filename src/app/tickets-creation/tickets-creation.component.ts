@@ -4,7 +4,12 @@ import dayjs from 'dayjs';
 import { saveButtonData } from '../agent-settings/agent-settingData';
 import { CalendarService } from '../calendarService/calendar.service';
 import { AuthService } from '../services/auth.service';
-import { backButtonData, priorityData, ranges, statusType } from './ticketsCreationData';
+import {
+  backButtonData,
+  priorityData,
+  ranges,
+  statusType
+} from './ticketsCreationData';
 
 @Component({
   selector: 'app-tickets-creation',
@@ -16,19 +21,20 @@ export class TicketsCreationComponent {
   statusType = statusType;
   backButtonData = backButtonData;
   saveButtonData = saveButtonData;
-  constructor(private AuthService: AuthService,
+  constructor(
+    private AuthService: AuthService,
     private calendarService: CalendarService,
     private Router: Router,
     private route: ActivatedRoute
   ) {
-    const response: boolean = this.Router.url.toString().includes('updateticket');
+    const response: boolean = this.Router.url
+      .toString()
+      .includes('updateticket');
     if (response === false) {
       this.AuthService.pageTitle.next('Create ticket');
     } else {
       this.AuthService.pageTitle.next('Tickets');
     }
-
-
   }
   @ViewChild('assignTicketsDropdown') assignTicketsDropdown: any = HTMLElement;
   @ViewChild('assignUserDropdown') assignUserDropdown: any = HTMLElement;
@@ -100,7 +106,6 @@ export class TicketsCreationComponent {
   }
   onGetBackButtonOutput(event: any) {
     this.Router.navigate(['tickets']);
-
   }
   onGetSaveButtonOutput(event: any) {
     if (event) {

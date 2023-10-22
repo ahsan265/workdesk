@@ -20,8 +20,7 @@ export class DashboardEndpointService {
   missedIcon = '../../assets/images/components/total_missed.svg';
   answeredIcon = '../../assets/images/components/total_answered.svg';
 
-
-  selectedRange = 'this_week'
+  selectedRange = 'this_week';
   cardDataSubject = new Subject<cardTypeModel>();
   chartDataSubject = new Subject<chartModel>();
   constructor(
@@ -36,7 +35,7 @@ export class DashboardEndpointService {
 
   // get Analytics charts
   getAnalyticsDataObjectSocket() {
-    this.AnalyticsSocketService.AnalyticsBarChartSubject.subscribe(data => {
+    this.AnalyticsSocketService.AnalyticsBarChartSubject.subscribe((data) => {
       const incomingLabel = this.chartLabel.caculateChartLabels(
         data.incoming,
         this.selectedRange,
@@ -53,13 +52,9 @@ export class DashboardEndpointService {
         data?.num_bars
       );
 
-      const incomingData = this.chartsData.calculateChartData(
-        data.incoming
-      );
+      const incomingData = this.chartsData.calculateChartData(data.incoming);
       const imissedData = this.chartsData.calculateChartData(data.missed);
-      const answeredData = this.chartsData.calculateChartData(
-        data.answered
-      );
+      const answeredData = this.chartsData.calculateChartData(data.answered);
       const incomingChartRes: ChartData<'bar'> = this.chartDataForm(
         incomingData,
         incomingLabel
@@ -81,11 +76,11 @@ export class DashboardEndpointService {
       const finalChart: chartModel = {
         type: data.type,
         data: groupChart
-      }
+      };
       this.chartDataSubject.next(finalChart);
     });
     // for cards data
-    this.AnalyticsSocketService.AnalyticsCardSubject.subscribe(data => {
+    this.AnalyticsSocketService.AnalyticsCardSubject.subscribe((data) => {
       // cards data calcultation
       const incomingCard = data.incoming.count;
       const percencateIncomingCard = this.getpercentagecalculated(
@@ -99,7 +94,9 @@ export class DashboardEndpointService {
       const percencateAwnseredCard = this.getpercentagecalculated(
         data.answered.increase
       );
-      const relatedDateRange = this.calanderService.getRelatedDateRange(this.selectedRange);
+      const relatedDateRange = this.calanderService.getRelatedDateRange(
+        this.selectedRange
+      );
       // cards model data
       const incomingCardRes = this.fillDashboardCardData(
         this.icomingIcon,
@@ -125,17 +122,13 @@ export class DashboardEndpointService {
         relatedDateRange,
         percencateAwnseredCard
       );
-      const finalCardsData = [
-        incomingCardRes,
-        missedCardRes,
-        answeredCardRes
-      ];
+      const finalCardsData = [incomingCardRes, missedCardRes, answeredCardRes];
       const card: cardTypeModel = {
         type: data.type,
         data: finalCardsData
-      }
+      };
       this.cardDataSubject.next(card);
-    })
+    });
   }
   // call the cards count endpoint for
   public getAnalyticsData(
@@ -150,7 +143,7 @@ export class DashboardEndpointService {
       countries: location,
       languages: languages,
       type: type
-    })
+    });
   }
 
   // calculate percencate of cards value
@@ -205,6 +198,4 @@ export class DashboardEndpointService {
     };
     return ChartDataSet;
   }
-
-
 }

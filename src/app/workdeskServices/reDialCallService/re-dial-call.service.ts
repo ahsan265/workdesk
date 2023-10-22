@@ -7,10 +7,10 @@ import { AgentUserInformation } from '../callInterfaceServices/agentUserInformat
   providedIn: 'platform'
 })
 export class ReDialCallService {
-
-  constructor(private AgentUserInformation: AgentUserInformation,
-    private OverlayService: OverlayService,) {
-
+  constructor(
+    private AgentUserInformation: AgentUserInformation,
+    private OverlayService: OverlayService
+  ) {
     const callInformation = this.AgentUserInformation.getCallInformation();
     if (callInformation.is_refreshed === true) {
       this.OverlayService.open({

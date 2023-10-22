@@ -15,7 +15,7 @@ export class SharedServices {
   public PasswordPopup = new Subject<boolean>();
   public reloadProjects = new Subject<boolean>();
 
-  constructor() { }
+  constructor() {}
 
   // load common eps
   loadCommonEps(value: number) {
@@ -39,17 +39,17 @@ export class SharedServices {
   closePasswordPopup(value: boolean) {
     this.PasswordPopup.next(value);
   }
-  // close add Agent popup 
+  // close add Agent popup
   closeAddAgentPopup(value: boolean) {
-    this.closeAddAgentDialog.next(value)
+    this.closeAddAgentDialog.next(value);
   }
 
-  // close open switch organization dialog 
+  // close open switch organization dialog
   switchOrganization(value: boolean) {
-    this.switchOrganizationDialog.next(value)
+    this.switchOrganizationDialog.next(value);
   }
 
-  // show open and close 
+  // show open and close
   showDoneOrganization(value: boolean) {
     this.switchOrganizationDoneDialog.next(value);
   }

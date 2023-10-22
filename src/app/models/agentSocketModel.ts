@@ -56,5 +56,3 @@ export interface FreeSeats {
   free_seats: boolean;
   count: number;
 }
-
-

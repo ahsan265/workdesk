@@ -8,9 +8,8 @@ describe('SwitchOgranizationDoneComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ SwitchOgranizationDoneComponent ]
-    })
-    .compileComponents();
+      declarations: [SwitchOgranizationDoneComponent]
+    }).compileComponents();
 
     fixture = TestBed.createComponent(SwitchOgranizationDoneComponent);
     component = fixture.componentInstance;

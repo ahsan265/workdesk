@@ -1,36 +1,57 @@
 <div class="threadsWrapper" scrolling [scrollClass]="'.threadsWrapper'">
-    <div class="threadItemPanel" *ngFor="let thread of this.chatData" (click)="selectThread(thread)">
-        <div class="thread" [ngClass]="thread.uuid===selectedUuid?'selectedThread':'thread'">
-            <div class="userImage">
-                <img [src]="thread.image" alt="">
-            </div>
-            <div class="informationWrapper">
-                <div class="userDetailsLast">
-                    <div class="userName">
-                        {{thread.name}}
-                    </div>
-                    <div class="timer">
-                        {{thread.date|timenow}}
-                    </div>
-                </div>
-                <div class="userMessageDetails" *ngIf="thread.last_message!==null || thread.isTyping===true">
-                    <div *ngIf="thread.last_message!==null && (thread.isTyping===false || thread.uuid===selectedUuid)"
-                        class="lastMessage"
-                        [ngStyle]="{'color':thread.counter===null?'#737C8A':'#162741','font-weight':thread.counter===null?'400':'500'}">
-                        {{ thread.is_agent_message?'You:':thread.name+':'}}
-                        {{thread.last_message}}
-                    </div>
-                    <div *ngIf="thread.isTyping && thread.uuid!==selectedUuid" class="lastMessage"
-                        [style.color]="'#737C8A'">
-                        Typing....
-                    </div>
-                    <div class="counerWrapper">
-                        <div class="counter" *ngIf="thread.counter!==null">
-                            {{thread.counter}}
-                        </div>
-                    </div>
-                </div>
-            </div>
+  <div
+    class="threadItemPanel"
+    *ngFor="let thread of this.chatData"
+    (click)="selectThread(thread)"
+  >
+    <div
+      class="thread"
+      [ngClass]="thread.uuid === selectedUuid ? 'selectedThread' : 'thread'"
+    >
+      <div class="userImage">
+        <img [src]="thread.image" alt="" />
+      </div>
+      <div class="informationWrapper">
+        <div class="userDetailsLast">
+          <div class="userName">
+            {{ thread.name }}
+          </div>
+          <div class="timer">
+            {{ thread.date | timenow }}
+          </div>
         </div>
+        <div
+          class="userMessageDetails"
+          *ngIf="thread.last_message !== null || thread.isTyping === true"
+        >
+          <div
+            *ngIf="
+              thread.last_message !== null &&
+              (thread.isTyping === false || thread.uuid === selectedUuid)
+            "
+            class="lastMessage"
+            [ngStyle]="{
+              color: thread.counter === null ? '#737C8A' : '#162741',
+              'font-weight': thread.counter === null ? '400' : '500'
+            }"
+          >
+            {{ thread.is_agent_message ? 'You:' : thread.name + ':' }}
+            {{ thread.last_message }}
+          </div>
+          <div
+            *ngIf="thread.isTyping && thread.uuid !== selectedUuid"
+            class="lastMessage"
+            [style.color]="'#737C8A'"
+          >
+            Typing....
+          </div>
+          <div class="counerWrapper">
+            <div class="counter" *ngIf="thread.counter !== null">
+              {{ thread.counter }}
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
+  </div>
 </div>

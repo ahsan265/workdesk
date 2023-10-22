@@ -1,71 +1,119 @@
-<div class="tableWrap" [style.margin-bottom]="misseedCallData.length===0?'0px':'75px'">
-    <table>
-        <thead>
-            <tr>
-                <th [style.width.%]="head.width" *ngFor="let head of this.tableSettings; ">
-                    <div *ngIf="!head.showEditField" [ngClass]="!head.showEditField  && head.canEdit?'editHeader':''"
-                        (click)="showEditField(head.index)">
-                        {{head.header}}</div>
-                    <app-update-column-field [headerValue]="head" [openEditFiedl]="head.showEditField"
-                        (updatedField)="updatedField($event)"></app-update-column-field>
-                </th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr *ngFor="let data of misseedCallData| paginate
-            : {
-                itemsPerPage: this.pagination.itemsPerPage,
-                currentPage: this.pagination.currentPage,
-                totalItems: this.pagination.totalItems
-              }; let i=index; ">
-                <td><img class="userImage" [src]="data.user_details.image" alt="">{{data.user_details.text}}</td>
-                <td><Span>ID </Span>{{data.user_id}}</td>
-                <td><img class="utilities" *ngFor="let utilites of data.utilites;" [src]="utilites.image" alt=""
-                        srcset=""></td>
-                <td><img class="callType" [src]="data.callType.image" alt=""><span>{{data.callType.text}}</span></td>
-                <td>{{data.called_at}}</td>
-                <td>{{data.wait_time}}</td>
-                <td>{{data.resaon}}
-                </td>
-            </tr>
-        </tbody>
-    </table>
+<div
+  class="tableWrap"
+  [style.margin-bottom]="misseedCallData.length === 0 ? '0px' : '75px'"
+>
+  <table>
+    <thead>
+      <tr>
+        <th
+          [style.width.%]="head.width"
+          *ngFor="let head of this.tableSettings"
+        >
+          <div
+            *ngIf="!head.showEditField"
+            [ngClass]="!head.showEditField && head.canEdit ? 'editHeader' : ''"
+            (click)="showEditField(head.index)"
+          >
+            {{ head.header }}
+          </div>
+          <app-update-column-field
+            [headerValue]="head"
+            [openEditFiedl]="head.showEditField"
+            (updatedField)="updatedField($event)"
+          ></app-update-column-field>
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr
+        *ngFor="
+          let data of misseedCallData
+            | paginate
+              : {
+                  itemsPerPage: this.pagination.itemsPerPage,
+                  currentPage: this.pagination.currentPage,
+                  totalItems: this.pagination.totalItems
+                };
+          let i = index
+        "
+      >
+        <td>
+          <img class="userImage" [src]="data.user_details.image" alt="" />{{
+            data.user_details.text
+          }}
+        </td>
+        <td><Span>ID </Span>{{ data.user_id }}</td>
+        <td>
+          <img
+            class="utilities"
+            *ngFor="let utilites of data.utilites"
+            [src]="utilites.image"
+            alt=""
+            srcset=""
+          />
+        </td>
+        <td>
+          <img class="callType" [src]="data.callType.image" alt="" /><span>{{
+            data.callType.text
+          }}</span>
+        </td>
+        <td>{{ data.called_at }}</td>
+        <td>{{ data.wait_time }}</td>
+        <td>{{ data.resaon }}</td>
+      </tr>
+    </tbody>
+  </table>
 
+  <div class="paginationWrapper" *ngIf="misseedCallData.length !== 0">
+    <div class="leftPagination">
+      <span class="paginationOptions">
+        Page {{ this.pagination?.currentPage }} of
+        {{ this.pagination?.totolPages }} ({{ this.pagination?.totalItems }}
+        items)
+      </span>
 
-    <div class="paginationWrapper" *ngIf="misseedCallData.length!==0">
-        <div class="leftPagination">
-            <span class="paginationOptions">
-                Page {{this.pagination?.currentPage}} of {{this.pagination?.totolPages}}
-                ({{this.pagination?.totalItems}}
-                items)
-            </span>
-
-            <span class="paginationOptions show">
-                Show:
-            </span>
-            <div #dropdown class="custom-select" (click)="onOpenDropdown()">
-                <div class="selectedItemText">
-                    {{this.pagination?.itemsPerPage}}<svg style="transition: 0.4s;" width="10" height="6"
-                        [style.transform]="this.showDropdown?'rotate(180deg)':'rotate(0deg)'" viewBox="0 0 10 6"
-                        fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path
-                            d="M1.55469 0.371094L5 3.81641L8.44531 0.371094L9.5 1.42578L5 5.92578L0.5 1.42578L1.55469 0.371094Z"
-                            fill="#162741" />
-                    </svg>
-                </div>
-                <ul class="dropDown" *ngIf="showDropdown">
-                    <li class="items" *ngFor="let size of tableSizes" (click)="onTableSizeChange(size)"
-                        [style.background]="size.selected?'#EDEDF6':'#FFFFFF'"> {{
-                        size.value }}
-                    </li>
-                </ul>
-            </div>
+      <span class="paginationOptions show"> Show: </span>
+      <div #dropdown class="custom-select" (click)="onOpenDropdown()">
+        <div class="selectedItemText">
+          {{ this.pagination?.itemsPerPage
+          }}<svg
+            style="transition: 0.4s"
+            width="10"
+            height="6"
+            [style.transform]="
+              this.showDropdown ? 'rotate(180deg)' : 'rotate(0deg)'
+            "
+            viewBox="0 0 10 6"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M1.55469 0.371094L5 3.81641L8.44531 0.371094L9.5 1.42578L5 5.92578L0.5 1.42578L1.55469 0.371094Z"
+              fill="#162741"
+            />
+          </svg>
         </div>
-        <div class="rightPagination">
-            <gigaaa-pagination-controls previousLabel="" nextLabel="" [responsive]="true" [directionLinks]="true"
-                (pageChange)="onTableDataChange($event)">
-            </gigaaa-pagination-controls>
-        </div>
+        <ul class="dropDown" *ngIf="showDropdown">
+          <li
+            class="items"
+            *ngFor="let size of tableSizes"
+            (click)="onTableSizeChange(size)"
+            [style.background]="size.selected ? '#EDEDF6' : '#FFFFFF'"
+          >
+            {{ size.value }}
+          </li>
+        </ul>
+      </div>
     </div>
-
+    <div class="rightPagination">
+      <gigaaa-pagination-controls
+        previousLabel=""
+        nextLabel=""
+        [responsive]="true"
+        [directionLinks]="true"
+        (pageChange)="onTableDataChange($event)"
+      >
+      </gigaaa-pagination-controls>
+    </div>
+  </div>
 </div>
